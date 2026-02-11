@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <style>
+      .glow { filter: url(#glow); }
+      .glow-intense { filter: url(#glowIntense); }
+    </style>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowIntense">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="frameworkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#666666;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333333;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="scaffoldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#006699;stop-opacity:0.7" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" fill="#0a0e27"/>
+  
+  <!-- Dry dock floor -->
+  <ellipse cx="64" cy="95" rx="35" ry="8" fill="#006699" stroke="#0099ff" stroke-width="1.5"/>
+  
+  <!-- Support pillars -->
+  <rect x="40" y="60" width="6" height="35" fill="url(#frameworkGradient)" stroke="#0099ff" stroke-width="1"/>
+  <rect x="82" y="60" width="6" height="35" fill="url(#frameworkGradient)" stroke="#0099ff" stroke-width="1"/>
+  
+  <!-- Scaffolding framework left -->
+  <line x1="30" y1="55" x2="55" y2="75" stroke="url(#scaffoldGradient)" stroke-width="2" class="glow"/>
+  <line x1="30" y1="65" x2="55" y2="75" stroke="url(#scaffoldGradient)" stroke-width="2" class="glow"/>
+  
+  <!-- Scaffolding framework right -->
+  <line x1="98" y1="55" x2="73" y2="75" stroke="url(#scaffoldGradient)" stroke-width="2" class="glow"/>
+  <line x1="98" y1="65" x2="73" y2="75" stroke="url(#scaffoldGradient)" stroke-width="2" class="glow"/>
+  
+  <!-- Cross bracing -->
+  <line x1="40" y1="70" x2="88" y2="70" stroke="url(#scaffoldGradient)" stroke-width="1.5" class="glow"/>
+  <line x1="40" y1="80" x2="88" y2="80" stroke="url(#scaffoldGradient)" stroke-width="1.5" class="glow"/>
+  
+  <!-- Construction frame (vertical beams) -->
+  <line x1="55" y1="35" x2="55" y2="75" stroke="url(#frameworkGradient)" stroke-width="3" opacity="0.8"/>
+  <line x1="73" y1="35" x2="73" y2="75" stroke="url(#frameworkGradient)" stroke-width="3" opacity="0.8"/>
+  <line x1="64" y1="25" x2="64" y2="75" stroke="url(#frameworkGradient)" stroke-width="4" opacity="0.6"/>
+  
+  <!-- Construction indicator lights -->
+  <circle cx="45" cy="50" r="2" fill="#ffcc66" class="glow"/>
+  <circle cx="83" cy="50" r="2" fill="#ffcc66" class="glow"/>
+  <circle cx="64" cy="35" r="2" fill="#00ffcc" class="glow-intense"/>
+</svg>

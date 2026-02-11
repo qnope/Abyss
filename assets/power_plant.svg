@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <style>
+      .glow { filter: url(#glow); }
+      .glow-intense { filter: url(#glowIntense); }
+    </style>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowIntense">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="turbineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#006699;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="energyCore" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#ffaa00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0" />
+    </radialGradient>
+    <linearGradient id="ventGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#660000;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" fill="#0a0e27"/>
+  
+  <!-- Turbine blades -->
+  <g transform="translate(64, 50)">
+    <rect x="-2" y="-20" width="4" height="40" fill="url(#turbineGradient)" class="glow"/>
+    <rect x="-20" y="-2" width="40" height="4" fill="url(#turbineGradient)" class="glow" opacity="0.8"/>
+    <circle cx="0" cy="0" r="6" fill="#ffcc66" class="glow-intense"/>
+  </g>
+  
+  <!-- Energy core -->
+  <circle cx="64" cy="50" r="8" fill="url(#energyCore)" class="glow-intense"/>
+  
+  <!-- Energy arcs around turbine -->
+  <path d="M 64 32 Q 75 40 78 50" stroke="#0099ff" stroke-width="2" fill="none" class="glow"/>
+  <path d="M 64 32 Q 53 40 50 50" stroke="#0099ff" stroke-width="2" fill="none" class="glow"/>
+  <path d="M 50 50 Q 53 60 64 68" stroke="#0099ff" stroke-width="2" fill="none" class="glow"/>
+  <path d="M 78 50 Q 75 60 64 68" stroke="#0099ff" stroke-width="2" fill="none" class="glow"/>
+  
+  <!-- Geothermal vent base -->
+  <ellipse cx="64" cy="90" rx="20" ry="8" fill="url(#ventGradient)" class="glow"/>
+  <path d="M 50 90 Q 48 85 50 78" stroke="#ffaa00" stroke-width="2" fill="none" opacity="0.7"/>
+  <path d="M 78 90 Q 80 85 78 78" stroke="#ffaa00" stroke-width="2" fill="none" opacity="0.7"/>
+  <path d="M 64 90 Q 62 80 64 70" stroke="#ffaa00" stroke-width="2" fill="none" opacity="0.6"/>
+</svg>

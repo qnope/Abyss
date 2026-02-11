@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style>
+      .glow { filter: drop-shadow(0 0 8px currentColor); }
+      .strong-glow { filter: drop-shadow(0 0 12px currentColor); }
+    </style>
+    <radialGradient id="fabBg" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#1a2a4a" />
+    <stop offset="100%" stop-color="#0a0e27" />
+  </radialGradient>
+  <radialGradient id="fabGrad" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#00ffcc" />
+    <stop offset="100%" stop-color="#004d66" />
+  </radialGradient>
+    <filter id="fabGlow">
+    <feGaussianBlur stdDeviation="7" result="coloredBlur"/>
+    <feMerge>
+      <feMergeNode in="coloredBlur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  </defs>
+    <!-- Background -->
+  <rect width="128" height="128" fill="url(#fabBg)"/>
+  
+  <!-- FAB Button (Floating Action Button) -->
+  <g filter="url(#fabGlow)">
+    <!-- Outer circle -->
+    <circle cx="64" cy="64" r="38" fill="url(#fabGrad)" stroke="#00ffcc" stroke-width="2"/>
+    
+    <!-- Inner highlight -->
+    <circle cx="64" cy="55" r="32" fill="none" stroke="#00ffcc" stroke-width="1" opacity="0.4"/>
+    
+    <!-- Plus symbol -->
+    <line x1="64" y1="50" x2="64" y2="78" stroke="#1a2a4a" stroke-width="3" stroke-linecap="round"/>
+    <line x1="50" y1="64" x2="78" y2="64" stroke="#1a2a4a" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Glow ring -->
+    <circle cx="64" cy="64" r="42" fill="none" stroke="#00ffcc" stroke-width="1" opacity="0.2"/>
+  </g>
+</svg>

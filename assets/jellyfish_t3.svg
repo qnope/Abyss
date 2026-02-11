@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+    <defs>
+        <radialGradient id="glow-center" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0"/>
+        </radialGradient>
+        <radialGradient id="glow-center-blue" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0"/>
+        </radialGradient>
+        <linearGradient id="body-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1"/>
+            <stop offset="50%" style="stop-color:#0066ff;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050a15;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="body-gradient-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1"/>
+            <stop offset="50%" style="stop-color:#0099ff;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050a15;stop-opacity:1"/>
+        </linearGradient>
+        <filter id="glow-effect">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="strong-glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <!-- Background -->
+    <rect width="128" height="128" fill="#0a0e27"/>
+    
+    <circle cx="64" cy="64" r="42" fill="url(#glow-center)" opacity="0.25"/>
+    <!-- Bell/head -->
+    <circle cx="64" cy="45" r="18" fill="url(#body-gradient-teal)" filter="url(#glow-effect)"/>
+    <!-- Glowing core -->
+    <circle cx="64" cy="45" r="10" fill="{TEAL}" opacity="0.4" filter="url(#strong-glow)"/>
+    <!-- Tentacles -->
+    <path d="M 52 60 Q 48 70 50 82" stroke="{TEAL}" stroke-width="2" fill="none" filter="url(#glow-effect)" opacity="0.9"/>
+    <path d="M 60 62 Q 58 73 58 85" stroke="{TEAL}" stroke-width="2" fill="none" filter="url(#glow-effect)" opacity="0.9"/>
+    <path d="M 68 62 Q 70 73 70 85" stroke="{TEAL}" stroke-width="2" fill="none" filter="url(#glow-effect)" opacity="0.9"/>
+    <path d="M 76 60 Q 80 70 78 82" stroke="{TEAL}" stroke-width="2" fill="none" filter="url(#glow-effect)" opacity="0.9"/>
+    <!-- Tentacle suckers -->
+    <circle cx="48" cy="72" r="1.5" fill="{GLOW_CYAN}" opacity="0.8"/>
+    <circle cx="56" cy="77" r="1.5" fill="{GLOW_CYAN}" opacity="0.8"/>
+    <circle cx="72" cy="77" r="1.5" fill="{GLOW_CYAN}" opacity="0.8"/>
+    <circle cx="80" cy="72" r="1.5" fill="{GLOW_CYAN}" opacity="0.8"/>
+    <!-- Toxic glow aura -->
+    <circle cx="64" cy="45" r="20" fill="none" stroke="{TEAL}" stroke-width="1" opacity="0.3" stroke-dasharray="2,2"/>
+
+</svg>

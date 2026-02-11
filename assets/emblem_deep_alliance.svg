@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shieldGradBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4488ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0055cc;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shieldGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Ocean background -->
+  <rect width="128" height="128" fill="#0a1a2e"/>
+  <!-- Shield shape -->
+  <path d="M 64 16 L 96 28 L 96 56 Q 96 88 64 104 Q 32 88 32 56 L 32 28 Z" fill="url(#shieldGradBlue)" stroke="#88ccff" stroke-width="2" filter="url(#shieldGlow)"/>
+  <!-- Inner shield outline -->
+  <path d="M 64 20 L 92 30 L 92 56 Q 92 85 64 100 Q 36 85 36 56 L 36 30 Z" fill="none" stroke="#aaddff" stroke-width="1" opacity="0.6"/>
+  <!-- Anchor symbol -->
+  <g transform="translate(64, 56)">
+    <circle cx="0" cy="-8" r="4" fill="#ffffff"/>
+    <line x1="0" y1="-4" x2="0" y2="12" stroke="#ffffff" stroke-width="2"/>
+    <path d="M -8 12 Q 0 18 8 12" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="-6" cy="12" r="2" fill="#ffffff"/>
+    <circle cx="6" cy="12" r="2" fill="#ffffff"/>
+  </g>
+</svg>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <style>
+      .glow { filter: url(#glow); }
+      .glow-intense { filter: url(#glowIntense); }
+    </style>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowIntense">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="hangarGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a4d6d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="doorGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#006699;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#006699;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" fill="#0a0e27"/>
+  
+  <!-- Hangar structure -->
+  <rect x="25" y="45" width="78" height="55" fill="url(#hangarGradient)" stroke="#0099ff" stroke-width="2"/>
+  
+  <!-- Hangar roof -->
+  <polygon points="25,45 64,25 103,45" fill="#006699" stroke="#0099ff" stroke-width="1.5"/>
+  
+  <!-- Left door (open) -->
+  <rect x="28" y="48" width="28" height="48" fill="url(#doorGradient)" stroke="#0099ff" stroke-width="1.5" opacity="0.8"/>
+  <line x1="32" y1="48" x2="32" y2="96" stroke="#0099ff" stroke-width="1" opacity="0.6"/>
+  <line x1="36" y1="48" x2="36" y2="96" stroke="#0099ff" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Right door (open) -->
+  <rect x="72" y="48" width="28" height="48" fill="url(#doorGradient)" stroke="#0099ff" stroke-width="1.5" opacity="0.8"/>
+  <line x1="96" y1="48" x2="96" y2="96" stroke="#0099ff" stroke-width="1" opacity="0.6"/>
+  <line x1="92" y1="48" x2="92" y2="96" stroke="#0099ff" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Craft inside - left vessel -->
+  <ellipse cx="42" cy="75" rx="10" ry="12" fill="#006699" stroke="#0099ff" stroke-width="1.5" class="glow"/>
+  <circle cx="42" cy="70" r="3" fill="#00ffcc" class="glow"/>
+  
+  <!-- Craft inside - right vessel -->
+  <ellipse cx="86" cy="75" rx="10" ry="12" fill="#006699" stroke="#0099ff" stroke-width="1.5" class="glow"/>
+  <circle cx="86" cy="70" r="3" fill="#00ffcc" class="glow"/>
+  
+  <!-- Center launch track -->
+  <rect x="62" y="80" width="4" height="24" fill="#006699" stroke="#0099ff" stroke-width="1"/>
+  
+  <!-- Base support -->
+  <ellipse cx="64" cy="105" rx="32" ry="6" fill="#006699" opacity="0.5"/>
+</svg>

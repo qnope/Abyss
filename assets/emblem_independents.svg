@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shieldGradNeutral" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#888899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334455;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shieldGlowNeutral">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Ocean background -->
+  <rect width="128" height="128" fill="#0a1a2e"/>
+  <!-- Shield shape -->
+  <path d="M 64 16 L 96 28 L 96 56 Q 96 88 64 104 Q 32 88 32 56 L 32 28 Z" fill="url(#shieldGradNeutral)" stroke="#aabbcc" stroke-width="2" filter="url(#shieldGlowNeutral)"/>
+  <!-- Star symbol -->
+  <g transform="translate(64, 56)">
+    <polygon points="0,-12 3,-4 12,-4 5,2 8,10 0,5 -8,10 -5,2 -12,-4 -3,-4" fill="#ffffff" stroke="#ddddee" stroke-width="1"/>
+  </g>
+  <!-- Free wave beneath -->
+  <g transform="translate(64, 75)">
+    <path d="M -15 0 Q -10 -4 -5 0 Q 0 -4 5 0 Q 10 -4 15 0" fill="none" stroke="#aabbcc" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  </g>
+</svg>

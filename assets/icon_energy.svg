@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style>
+      .glow { filter: drop-shadow(0 0 8px currentColor); }
+      .strong-glow { filter: drop-shadow(0 0 12px currentColor); }
+    </style>
+    <radialGradient id="energyBg" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#1a2a4a" />
+    <stop offset="100%" stop-color="#0a0e27" />
+  </radialGradient>
+  <radialGradient id="energyGrad" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#00ffff" />
+    <stop offset="100%" stop-color="#0066ff" />
+  </radialGradient>
+    <filter id="energyGlow">
+    <feGaussianBlur stdDeviation="10" result="coloredBlur"/>
+    <feMerge>
+      <feMergeNode in="coloredBlur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  </defs>
+    <!-- Background -->
+  <rect width="128" height="128" fill="url(#energyBg)"/>
+  
+  <!-- Lightning Bolt / Energy Orb -->
+  <g filter="url(#energyGlow)">
+    <!-- Main lightning bolt -->
+    <polygon points="64,20 75,48 55,48 80,95 40,55 60,55" fill="url(#energyGrad)" stroke="#00ffff" stroke-width="1.5"/>
+    
+    <!-- Central core glow -->
+    <circle cx="64" cy="55" r="10" fill="#00ffff" opacity="0.8"/>
+    <circle cx="64" cy="55" r="6" fill="#ffffff" opacity="0.6"/>
+    
+    <!-- Electric arcs around bolt -->
+    <path d="M 45 40 Q 50 35 55 40" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.6"/>
+    <path d="M 73 35 Q 78 38 80 32" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.5"/>
+    <path d="M 40 70 Q 38 78 45 80" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.6"/>
+    <path d="M 85 65 Q 92 70 95 60" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.5"/>
+    
+    <!-- Outer energy ring -->
+    <circle cx="64" cy="55" r="40" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.2"/>
+    <circle cx="64" cy="55" r="36" fill="none" stroke="#0066ff" stroke-width="0.5" opacity="0.15"/>
+  </g>
+</svg>

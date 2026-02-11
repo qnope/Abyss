@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="glow5072" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="deepglow5072" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad15072" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#008899;stop-opacity:0.4" />
+    </linearGradient>
+    <radialGradient id="radial15072" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#003366;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+    <rect width="128" height="128" fill="#1a1530"/>
+  <!-- Rock formation -->
+  <polygon points="20,60 35,40 50,50 45,75 25,85" fill="#2a2540" stroke="#3a3550" stroke-width="1"/>
+  <polygon points="75,65 95,45 110,55 105,85 80,90" fill="#2a2540" stroke="#3a3550" stroke-width="1"/>
+  <!-- Crystal veins - Purple -->
+  <line x1="25" y1="60" x2="45" y2="50" stroke="{PURPLE}" stroke-width="2" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="30" cy="58" r="1.5" fill="{PURPLE}" filter="url(#glow)"/>
+  <circle cx="40" cy="52" r="1.5" fill="{PURPLE}" filter="url(#glow)"/>
+  <!-- Crystal veins - Teal -->
+  <line x1="80" y1="70" x2="105" y2="60" stroke="{TEAL}" stroke-width="2" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="90" cy="67" r="1.5" fill="{TEAL}" filter="url(#glow)"/>
+  <circle cx="100" cy="62" r="1.5" fill="{TEAL}" filter="url(#glow)"/>
+  <!-- Crystal formations -->
+  <polygon points="35,45 38,35 40,45 37,48" fill="{PURPLE}" opacity="0.8" filter="url(#glow)"/>
+  <polygon points="100,50 104,38 107,50 103,53" fill="{TEAL}" opacity="0.8" filter="url(#glow)"/>
+  <!-- Small crystals scattered -->
+  <polygon points="50,70 52,65 54,70 52,72" fill="{PURPLE}" opacity="0.6" filter="url(#glow)"/>
+  <polygon points="60,75 62,70 64,75 62,77" fill="{TEAL}" opacity="0.6" filter="url(#glow)"/>
+  <rect width="128" height="128" fill="url(#grad1)" opacity="0.2"/>
+
+</svg>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <style>
+      @keyframes glow {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes pulse {
+        0%, 100% { r: 1; }
+        50% { r: 1.5; }
+      }
+      .glow { animation: glow 3s ease-in-out infinite; }
+      .pulse { animation: pulse 2s ease-in-out infinite; }
+    </style>
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#1a1f3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#33ffdd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#33bbff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="128" height="128" fill="url(#bgGradient)"/>
+
+  
+  <!-- Layered armor plates -->
+  <g filter="url(#glow)">
+    <!-- Base layer -->
+    <rect x="30" y="45" width="68" height="16" fill="url(#blueGradient)" stroke="#0099ff" stroke-width="1" opacity="0.9"/>
+    <!-- Middle layer -->
+    <rect x="28" y="60" width="72" height="14" fill="url(#tealGradient)" stroke="#00ffcc" stroke-width="1" opacity="0.8" transform="skewX(-5)"/>
+    <!-- Top layer -->
+    <rect x="32" y="75" width="64" height="12" fill="url(#blueGradient)" stroke="#0099ff" stroke-width="1" opacity="0.7"/>
+    <!-- Metallic reflections -->
+    <rect x="35" y="48" width="20" height="10" fill="#33bbff" opacity="0.3"/>
+    <rect x="65" y="62" width="15" height="10" fill="#33ffdd" opacity="0.25"/>
+    <rect x="40" y="78" width="15" height="8" fill="#33bbff" opacity="0.2"/>
+    <!-- Edge highlights -->
+    <line x1="30" y1="45" x2="98" y2="45" stroke="#33ffdd" stroke-width="0.5" opacity="0.6"/>
+  </g>
+    
+</svg>

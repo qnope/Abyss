@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="glow7000" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="deepglow7000" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad17000" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#008899;stop-opacity:0.4" />
+    </linearGradient>
+    <radialGradient id="radial17000" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#003366;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+    <rect width="128" height="128" fill="#0a0e27"/>
+  <defs>
+    <radialGradient id="beacon_glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:{TEAL};stop-opacity:1" />
+      <stop offset="60%" style="stop-color:{BLUE_BRIGHT};stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  <!-- Beacon glow rings -->
+  <circle cx="64" cy="64" r="45" fill="none" stroke="{TEAL}" stroke-width="1" opacity="0.3"/>
+  <circle cx="64" cy="64" r="35" fill="none" stroke="{TEAL}" stroke-width="1" opacity="0.5" filter="url(#glow)"/>
+  <circle cx="64" cy="64" r="25" fill="none" stroke="{BLUE_BRIGHT}" stroke-width="1.5" opacity="0.7" filter="url(#glow)"/>
+  <!-- Dome structure -->
+  <path d="M 45 70 Q 45 45 64 40 Q 83 45 83 70" fill="{TEAL}" opacity="0.8" filter="url(#glow)"/>
+  <path d="M 47 70 Q 47 48 64 43 Q 81 48 81 70" stroke="{BLUE_BRIGHT}" stroke-width="1.5" fill="none" filter="url(#glow)"/>
+  <!-- Base -->
+  <rect x="48" y="70" width="32" height="8" fill="{BLUE_BRIGHT}" opacity="0.7" filter="url(#glow)"/>
+  <rect x="50" y="78" width="28" height="4" fill="{TEAL}" opacity="0.6" filter="url(#glow)"/>
+  <!-- Center light -->
+  <circle cx="64" cy="60" r="5" fill="{TEAL}" filter="url(#deepglow)"/>
+  <circle cx="64" cy="60" r="3" fill="{CYAN}" filter="url(#glow)"/>
+
+</svg>

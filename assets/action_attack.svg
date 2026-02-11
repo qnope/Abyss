@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Gradients -->
+    <radialGradient id="glowTeal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff0033;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff0033;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowOrange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00cc66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc66;stop-opacity:0" />
+    </radialGradient>
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#cc00ff;stop-opacity:0.2" />
+    </linearGradient>
+    
+    <!-- Filters -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowStrong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+  <rect width="128" height="128" fill="url(#oceanGrad)"/>
+  <!-- Left Sword -->
+  <rect x="35" y="50" width="5" height="35" fill="#ff0033" opacity="0.8" transform="rotate(-45 37.5 67.5)" filter="url(#glow)"/>
+  <polygon points="35,47 39,47 42,44 38,44" fill="#ff0033" opacity="0.8" filter="url(#glow)"/>
+  <polygon points="35,87 39,87 38,92 34,92" fill="#ff0033" opacity="0.7"/>
+  
+  <!-- Right Sword -->
+  <rect x="88" y="50" width="5" height="35" fill="#ff0033" opacity="0.8" transform="rotate(45 90.5 67.5)" filter="url(#glow)"/>
+  <polygon points="89,47 93,47 96,44 92,44" fill="#ff0033" opacity="0.8" filter="url(#glow)"/>
+  <polygon points="89,87 93,87 92,92 88,92" fill="#ff0033" opacity="0.7"/>
+  
+  <!-- Central impact zone -->
+  <circle cx="64" cy="68" r="12" fill="url(#glowRed)" opacity="0.6" filter="url(#glowStrong)"/>
+  <circle cx="64" cy="68" r="8" fill="#ff0033" opacity="0.8" filter="url(#glow)"/>
+  
+  <!-- Impact rays -->
+  <path d="M 64 60 L 64 50" stroke="#ff0033" stroke-width="2" fill="none" opacity="0.7" filter="url(#glow)" stroke-linecap="round"/>
+  <path d="M 56 68 L 46 68" stroke="#ff0033" stroke-width="2" fill="none" opacity="0.7" filter="url(#glow)" stroke-linecap="round"/>
+  <path d="M 72 68 L 82 68" stroke="#ff0033" stroke-width="2" fill="none" opacity="0.7" filter="url(#glow)" stroke-linecap="round"/>
+  <path d="M 64 76 L 64 86" stroke="#ff0033" stroke-width="2" fill="none" opacity="0.7" filter="url(#glow)" stroke-linecap="round"/>
+</svg>

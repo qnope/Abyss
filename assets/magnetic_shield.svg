@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+    <defs>
+        <radialGradient id="glow-center" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0"/>
+        </radialGradient>
+        <radialGradient id="glow-center-blue" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0"/>
+        </radialGradient>
+        <linearGradient id="body-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1"/>
+            <stop offset="50%" style="stop-color:#0066ff;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050a15;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="body-gradient-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1"/>
+            <stop offset="50%" style="stop-color:#0099ff;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050a15;stop-opacity:1"/>
+        </linearGradient>
+        <filter id="glow-effect">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="strong-glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <!-- Background -->
+    <rect width="128" height="128" fill="#0a0e27"/>
+    
+    <circle cx="64" cy="64" r="50" fill="url(#glow-center)" opacity="0.15"/>
+    <!-- Main dome outline -->
+    <path d="M 30 64 Q 30 40 64 30 Q 98 40 98 64" fill="none" stroke="{TEAL}" stroke-width="2" opacity="0.9" filter="url(#glow-effect)"/>
+    <!-- Dome fill (translucent) -->
+    <path d="M 30 64 Q 30 40 64 30 Q 98 40 98 64 L 98 90 Q 64 95 30 90 Z" fill="{LIGHT_BLUE}" opacity="0.15" filter="url(#glow-effect)"/>
+    <!-- Energy field lines -->
+    <path d="M 40 55 Q 64 45 88 55" stroke="{TEAL}" stroke-width="1" fill="none" opacity="0.6"/>
+    <path d="M 35 64 Q 64 58 93 64" stroke="{TEAL}" stroke-width="1" fill="none" opacity="0.6"/>
+    <path d="M 40 73 Q 64 83 88 73" stroke="{TEAL}" stroke-width="1" fill="none" opacity="0.6"/>
+    <!-- Vertical energy streams -->
+    <line x1="50" y1="38" x2="50" y2="88" stroke="{LIGHT_BLUE}" stroke-width="0.5" opacity="0.4" stroke-dasharray="2,2"/>
+    <line x1="64" y1="32" x2="64" y2="94" stroke="{LIGHT_BLUE}" stroke-width="0.5" opacity="0.4" stroke-dasharray="2,2"/>
+    <line x1="78" y1="38" x2="78" y2="88" stroke="{LIGHT_BLUE}" stroke-width="0.5" opacity="0.4" stroke-dasharray="2,2"/>
+    <!-- Generator base -->
+    <circle cx="64" cy="85" r="6" fill="{ACCENT_BLUE}" filter="url(#strong-glow)"/>
+    <!-- Outer glow ring -->
+    <circle cx="64" cy="64" r="38" fill="none" stroke="{GLOW_CYAN}" stroke-width="1" opacity="0.3" stroke-dasharray="3,2"/>
+
+</svg>

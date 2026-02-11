@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Gradients -->
+    <radialGradient id="glowTeal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff0033;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff0033;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowOrange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00cc66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc66;stop-opacity:0" />
+    </radialGradient>
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#cc00ff;stop-opacity:0.2" />
+    </linearGradient>
+    
+    <!-- Filters -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowStrong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+  <rect width="128" height="128" fill="url(#oceanGrad)"/>
+  <!-- Plate rim -->
+  <ellipse cx="64" cy="65" rx="30" ry="25" fill="none" stroke="#ff0033" stroke-width="2.5" 
+        opacity="0.7" filter="url(#glow)"/>
+  <ellipse cx="64" cy="65" rx="28" ry="23" fill="none" stroke="#ff0033" stroke-width="1" 
+        opacity="0.5"/>
+  
+  <!-- Empty plate fill (dark) -->
+  <ellipse cx="64" cy="65" rx="27" ry="22" fill="#000a0a" opacity="0.4"/>
+  
+  <!-- Plate center highlight -->
+  <ellipse cx="64" cy="68" rx="20" ry="15" fill="none" stroke="#ff0033" stroke-width="1" 
+        opacity="0.3" stroke-dasharray="2,2"/>
+  
+  <!-- Large X symbol (famine indicator) -->
+  <g stroke="#ff0033" stroke-width="4" stroke-linecap="round" opacity="0.9" filter="url(#glow)">
+    <line x1="45" y1="50" x2="83" y2="80"/>
+    <line x1="83" y1="50" x2="45" y2="80"/>
+  </g>
+  
+  <!-- Danger glow around X -->
+  <g stroke="#ff0033" stroke-width="2" opacity="0.6" filter="url(#glowStrong)">
+    <line x1="45" y1="50" x2="83" y2="80"/>
+    <line x1="83" y1="50" x2="45" y2="80"/>
+  </g>
+  
+  <!-- Plate utensil marks -->
+  <path d="M 38 60 L 45 65" stroke="#ff0033" stroke-width="1" opacity="0.4"/>
+  <path d="M 90 60 L 83 65" stroke="#ff0033" stroke-width="1" opacity="0.4"/>
+</svg>

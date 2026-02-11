@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <style>
+      @keyframes glow {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes pulse {
+        0%, 100% { r: 1; }
+        50% { r: 1.5; }
+      }
+      .glow { animation: glow 3s ease-in-out infinite; }
+      .pulse { animation: pulse 2s ease-in-out infinite; }
+    </style>
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#1a1f3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#33ffdd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#33bbff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="128" height="128" fill="url(#bgGradient)"/>
+
+  
+  <!-- Medical cross -->
+  <g filter="url(#glow)">
+    <!-- Cross -->
+    <rect x="58" y="30" width="12" height="68" fill="url(#blueGradient)" stroke="#0099ff" stroke-width="1" opacity="0.9"/>
+    <rect x="30" y="58" width="68" height="12" fill="url(#tealGradient)" stroke="#00ffcc" stroke-width="1" opacity="0.9"/>
+    <!-- Bioluminescent tentacle -->
+    <path d="M 72 64 Q 85 60 90 50 Q 92 40 88 32" stroke="#9900ff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.8" filter="url(#innerGlow)"/>
+    <circle cx="85" cy="60" r="2" fill="#9900ff" opacity="0.8" class="glow"/>
+    <circle cx="88" cy="45" r="1.5" fill="#9900ff" opacity="0.7"/>
+    <!-- Center circle -->
+    <circle cx="64" cy="64" r="6" fill="#33ffdd" opacity="0.6" class="pulse"/>
+  </g>
+    
+</svg>

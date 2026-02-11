@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="glow3603" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="deepglow3603" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad13603" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#008899;stop-opacity:0.4" />
+    </linearGradient>
+    <radialGradient id="radial13603" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#003366;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+    <rect width="128" height="128" fill="#0d1520"/>
+  <defs>
+    <radialGradient id="smoker_glow" cx="64" cy="60" r="40">
+      <stop offset="0%" style="stop-color:#ff9944;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#ff6633;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  <!-- Chimney structure -->
+  <polygon points="64,30 70,40 68,80 60,80 58,40" fill="#2a1a0a" stroke="#442211" stroke-width="1"/>
+  <polygon points="64,30 70,40 68,80 60,80 58,40" fill="url(#smoker_glow)" opacity="0.6"/>
+  <!-- Black smoke plume -->
+  <ellipse cx="62" cy="50" rx="8" ry="12" fill="#1a1a1a" opacity="0.8"/>
+  <ellipse cx="66" cy="45" rx="6" ry="14" fill="#0a0a0a" opacity="0.7"/>
+  <ellipse cx="64" cy="35" rx="5" ry="10" fill="#1a1a1a" opacity="0.5"/>
+  <!-- Glow around chimney -->
+  <circle cx="64" cy="60" r="30" fill="none" stroke="{ORANGE}" stroke-width="2" opacity="0.6" filter="url(#deepglow)"/>
+  <circle cx="64" cy="60" r="20" fill="none" stroke="#ff9944" stroke-width="1.5" opacity="0.4"/>
+  <!-- Hot rocks -->
+  <circle cx="50" cy="85" r="4" fill="#553333" stroke="{ORANGE}" stroke-width="1" opacity="0.8"/>
+  <circle cx="78" cy="85" r="3" fill="#553333" stroke="#ff6633" stroke-width="0.8" opacity="0.7"/>
+  <rect width="128" height="128" fill="url(#grad1)" opacity="0.2"/>
+
+</svg>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="golemFace" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#8899aa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#445566;stop-opacity:1" />
+    </radialGradient>
+    <filter id="golemGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer dark ocean circle -->
+  <circle cx="64" cy="64" r="62" fill="#0a1a2e" stroke="#003366" stroke-width="2"/>
+  <!-- Face base - geometric/stone -->
+  <circle cx="64" cy="55" r="45" fill="url(#golemFace)" filter="url(#golemGlow)"/>
+  <!-- Stone block body -->
+  <rect x="30" y="75" width="68" height="35" fill="#556677" stroke="#8899aa" stroke-width="2"/>
+  <!-- Stoic expression - simple -->
+  <rect x="48" y="50" width="6" height="6" fill="#223344"/>
+  <rect x="74" y="50" width="6" height="6" fill="#223344"/>
+  <!-- Straight mouth -->
+  <line x1="55" y1="68" x2="73" y2="68" stroke="#8899aa" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Shield symbol -->
+  <path d="M 40 85 L 40 105 L 55 110 L 55 85 Z" fill="none" stroke="#6699bb" stroke-width="2"/>
+  <!-- Fortress/wall pattern -->
+  <line x1="42" y1="90" x2="53" y2="90" stroke="#8899aa" stroke-width="1" opacity="0.6"/>
+  <line x1="42" y1="98" x2="53" y2="98" stroke="#8899aa" stroke-width="1" opacity="0.6"/>
+</svg>

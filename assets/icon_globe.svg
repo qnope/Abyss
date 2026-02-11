@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style>
+      .glow { filter: drop-shadow(0 0 8px currentColor); }
+      .strong-glow { filter: drop-shadow(0 0 12px currentColor); }
+    </style>
+    <radialGradient id="globeBg" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#1a2a4a" />
+    <stop offset="100%" stop-color="#0a0e27" />
+  </radialGradient>
+  <radialGradient id="globeGrad" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#0099ff" />
+    <stop offset="100%" stop-color="#004d99" />
+  </radialGradient>
+    <filter id="globeGlow">
+    <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+    <feMerge>
+      <feMergeNode in="coloredBlur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  </defs>
+    <!-- Background -->
+  <rect width="128" height="128" fill="url(#globeBg)"/>
+  
+  <!-- Globe -->
+  <g filter="url(#globeGlow)">
+    <!-- Main sphere -->
+    <circle cx="64" cy="64" r="35" fill="url(#globeGrad)" stroke="#00ffcc" stroke-width="2"/>
+    
+    <!-- Latitude lines -->
+    <circle cx="64" cy="64" r="35" fill="none" stroke="#00ffcc" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="64" cy="64" rx="35" ry="12" fill="none" stroke="#00ffcc" stroke-width="0.5" opacity="0.4"/>
+    <ellipse cx="64" cy="64" rx="35" ry="18" fill="none" stroke="#00ffcc" stroke-width="0.5" opacity="0.4"/>
+    <ellipse cx="64" cy="64" rx="35" ry="25" fill="none" stroke="#00ffcc" stroke-width="0.5" opacity="0.4"/>
+    
+    <!-- Longitude lines -->
+    <line x1="64" y1="29" x2="64" y2="99" stroke="#00ffcc" stroke-width="0.5" opacity="0.4"/>
+    <line x1="49" y1="37" x2="79" y2="91" stroke="#00ffcc" stroke-width="0.5" opacity="0.3"/>
+    <line x1="79" y1="37" x2="49" y2="91" stroke="#00ffcc" stroke-width="0.5" opacity="0.3"/>
+    
+    <!-- Highlight on top -->
+    <ellipse cx="55" cy="50" rx="8" ry="6" fill="#00ffcc" opacity="0.3"/>
+  </g>
+  
+  <!-- Glow ring around globe -->
+  <circle cx="64" cy="64" r="40" fill="none" stroke="#00ffcc" stroke-width="1" opacity="0.3"/>
+</svg>

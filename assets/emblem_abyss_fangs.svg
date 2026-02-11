@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shieldGradRed" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#990000;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shieldGlowRed">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Ocean background -->
+  <rect width="128" height="128" fill="#0a1a2e"/>
+  <!-- Shield shape -->
+  <path d="M 64 16 L 96 28 L 96 56 Q 96 88 64 104 Q 32 88 32 56 L 32 28 Z" fill="url(#shieldGradRed)" stroke="#ff6666" stroke-width="2" filter="url(#shieldGlowRed)"/>
+  <!-- Shark jaw - open -->
+  <g transform="translate(64, 56)">
+    <path d="M -15 0 L 0 15 L 15 0" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <path d="M -14 -2 L 0 10 L 14 -2" fill="none" stroke="#000000" stroke-width="1" opacity="0.5"/>
+    <!-- Teeth -->
+    <line x1="-12" y1="0" x2="-10" y2="8" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="-6" y1="0" x2="-4" y2="10" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="0" y2="12" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="6" y1="0" x2="4" y2="10" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="12" y1="0" x2="10" y2="8" stroke="#ffffff" stroke-width="1.5"/>
+  </g>
+</svg>

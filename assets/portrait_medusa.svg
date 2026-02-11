@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="medusaFace" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#b88cc8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6644aa;stop-opacity:1" />
+    </radialGradient>
+    <filter id="medusaGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer dark ocean circle -->
+  <circle cx="64" cy="64" r="62" fill="#0a1a2e" stroke="#003366" stroke-width="2"/>
+  <!-- Face base -->
+  <circle cx="64" cy="60" r="42" fill="url(#medusaFace)" filter="url(#medusaGlow)"/>
+  <!-- Crown/tiara -->
+  <path d="M 40 32 L 48 20 L 64 25 L 80 20 L 88 32" fill="#ccaa44" stroke="#ffdd88" stroke-width="1.5"/>
+  <!-- Kind eyes -->
+  <circle cx="50" cy="50" r="6" fill="#ffffff"/>
+  <circle cx="50" cy="50" r="3.5" fill="#6644aa"/>
+  <circle cx="78" cy="50" r="6" fill="#ffffff"/>
+  <circle cx="78" cy="50" r="3.5" fill="#6644aa"/>
+  <!-- Gentle smile -->
+  <path d="M 55 65 Q 64 72 73 65" fill="none" stroke="#ccaa44" stroke-width="2" stroke-linecap="round"/>
+  <!-- Serpent hair strands -->
+  <path d="M 45 35 Q 40 45 42 60" fill="none" stroke="#8844cc" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 83 35 Q 88 45 86 60" fill="none" stroke="#8844cc" stroke-width="2" stroke-linecap="round"/>
+</svg>

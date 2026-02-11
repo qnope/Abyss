@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="titanFace" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#dd8844;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#993333;stop-opacity:1" />
+    </radialGradient>
+    <filter id="titanGlow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer dark ocean circle -->
+  <circle cx="64" cy="64" r="62" fill="#0a1a2e" stroke="#003366" stroke-width="2"/>
+  <!-- Face base - imposing -->
+  <circle cx="64" cy="60" r="45" fill="url(#titanFace)" filter="url(#titanGlow)"/>
+  <!-- Ceremonial crown/helmet -->
+  <path d="M 35 35 L 45 22 L 64 18 L 83 22 L 93 35" fill="#ffdd44" stroke="#ffaa00" stroke-width="2"/>
+  <!-- Dominance - piercing eyes -->
+  <circle cx="48" cy="55" r="7" fill="#ff6600"/>
+  <circle cx="48" cy="55" r="3" fill="#000000"/>
+  <circle cx="80" cy="55" r="7" fill="#ff6600"/>
+  <circle cx="80" cy="55" r="3" fill="#000000"/>
+  <!-- Powerful expression -->
+  <path d="M 55 70 L 64 76 L 73 70" fill="none" stroke="#ffaa00" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Armor plate -->
+  <rect x="30" y="78" width="68" height="30" fill="#663333" stroke="#ffaa00" stroke-width="2" rx="2"/>
+  <!-- Power gesture - raised fist symbol -->
+  <circle cx="64" cy="92" r="6" fill="#ffdd44"/>
+</svg>

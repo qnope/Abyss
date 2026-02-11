@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <style>
+      .glow { filter: url(#glow); }
+      .glow-intense { filter: url(#glowIntense); }
+    </style>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowIntense">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="counterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a4d6d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="scaleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" fill="#0a0e27"/>
+  
+  <!-- Counter structure -->
+  <rect x="28" y="60" width="72" height="40" fill="url(#counterGradient)" stroke="#0099ff" stroke-width="2"/>
+  
+  <!-- Counter top surface -->
+  <rect x="30" y="55" width="68" height="6" fill="#006699" stroke="#0099ff" stroke-width="1"/>
+  
+  <!-- Display panels -->
+  <rect x="35" y="28" width="20" height="28" fill="#0a1a33" stroke="#0099ff" stroke-width="1.5"/>
+  <circle cx="45" cy="38" r="3" fill="#00ffcc" class="glow"/>
+  <circle cx="45" cy="48" r="2" fill="#ffcc66"/>
+  
+  <rect x="73" y="28" width="20" height="28" fill="#0a1a33" stroke="#0099ff" stroke-width="1.5"/>
+  <circle cx="83" cy="38" r="3" fill="#00ffcc" class="glow"/>
+  <circle cx="83" cy="48" r="2" fill="#ffcc66"/>
+  
+  <!-- Balance scale -->
+  <g transform="translate(64, 75)">
+    <line x1="-3" y1="0" x2="3" y2="0" stroke="url(#scaleGradient)" stroke-width="2" class="glow"/>
+    <!-- Left pan -->
+    <rect x="-15" y="2" width="10" height="4" fill="#006699" stroke="#0099ff" stroke-width="1"/>
+    <line x1="-10" y1="2" x2="-10" y2="0" stroke="url(#scaleGradient)" stroke-width="1"/>
+    <!-- Right pan -->
+    <rect x="5" y="2" width="10" height="4" fill="#006699" stroke="#0099ff" stroke-width="1"/>
+    <line x1="10" y1="2" x2="10" y2="0" stroke="url(#scaleGradient)" stroke-width="1"/>
+  </g>
+  
+  <!-- Base foundation -->
+  <ellipse cx="64" cy="105" rx="28" ry="6" fill="#006699" opacity="0.6"/>
+</svg>

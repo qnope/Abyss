@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Gradients -->
+    <radialGradient id="glowTeal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff0033;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff0033;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowOrange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00cc66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc66;stop-opacity:0" />
+    </radialGradient>
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#cc00ff;stop-opacity:0.2" />
+    </linearGradient>
+    
+    <!-- Filters -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowStrong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+  <rect width="128" height="128" fill="url(#oceanGrad)"/>
+  <!-- Tectonic Fault Line -->
+  <path d="M 50 10 L 45 50 L 52 90 L 48 128" stroke="#0099ff" stroke-width="3" fill="none" 
+        stroke-linecap="round" opacity="0.8" filter="url(#glow)"/>
+  
+  <!-- Fault edges/cracks -->
+  <path d="M 45 35 L 35 40 M 45 35 L 38 30" stroke="#0099ff" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M 52 65 L 65 68 M 52 65 L 62 58" stroke="#0099ff" stroke-width="1.5" fill="none" opacity="0.6"/>
+  
+  <!-- Shockwave rings (concentric circles) -->
+  <circle cx="45" cy="50" r="8" fill="none" stroke="#0099ff" stroke-width="1.5" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="45" cy="50" r="14" fill="none" stroke="#0099ff" stroke-width="1" opacity="0.5"/>
+  <circle cx="45" cy="50" r="20" fill="none" stroke="#0099ff" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Secondary shockwaves lower -->
+  <circle cx="48" cy="85" r="10" fill="none" stroke="#0099ff" stroke-width="1.5" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="48" cy="85" r="16" fill="none" stroke="#0099ff" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Energy burst from fault -->
+  <path d="M 40 50 L 25 40 M 40 50 L 28 55 M 40 50 L 30 65" 
+        stroke="#0099ff" stroke-width="2" fill="none" opacity="0.7" filter="url(#glow)" stroke-linecap="round"/>
+  <path d="M 50 50 L 75 42 M 50 50 L 78 55 M 50 50 L 76 68" 
+        stroke="#0099ff" stroke-width="2" fill="none" opacity="0.7" filter="url(#glow)" stroke-linecap="round"/>
+</svg>

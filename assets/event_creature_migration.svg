@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Gradients -->
+    <radialGradient id="glowTeal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff0033;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff0033;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowOrange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00cc66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc66;stop-opacity:0" />
+    </radialGradient>
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#cc00ff;stop-opacity:0.2" />
+    </linearGradient>
+    
+    <!-- Filters -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowStrong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+  <rect width="128" height="128" fill="url(#oceanGrad)"/>
+  <!-- Silhouettes in formation -->
+  <!-- Large creature leading (left) -->
+  <ellipse cx="20" cy="50" rx="8" ry="12" fill="#0099ff" opacity="0.6"/>
+  <path d="M 12 55 L 8 60" stroke="#0099ff" stroke-width="2" fill="none" opacity="0.5"/>
+  
+  <!-- Medium creatures (center-left) -->
+  <ellipse cx="40" cy="35" rx="6" ry="9" fill="#00ffcc" opacity="0.5"/>
+  <path d="M 35 42 L 32 47" stroke="#00ffcc" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <ellipse cx="45" cy="65" rx="6" ry="9" fill="#00ffcc" opacity="0.5"/>
+  
+  <!-- Large creature (center) -->
+  <ellipse cx="64" cy="48" rx="10" ry="14" fill="#00ffcc" opacity="0.6"/>
+  <path d="M 54 58 L 50 65" stroke="#00ffcc" stroke-width="2" fill="none" opacity="0.5"/>
+  
+  <!-- Medium creatures (center-right) -->
+  <ellipse cx="82" cy="70" rx="6" ry="9" fill="#00ffcc" opacity="0.5"/>
+  <path d="M 88 76 L 92 82" stroke="#00ffcc" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <ellipse cx="80" cy="40" rx="6" ry="9" fill="#00ffcc" opacity="0.5"/>
+  
+  <!-- Trailing creatures (right) -->
+  <ellipse cx="100" cy="58" rx="7" ry="10" fill="#0099ff" opacity="0.5"/>
+  <path d="M 107 62 L 112 68" stroke="#0099ff" stroke-width="1.5" fill="none" opacity="0.4"/>
+  
+  <!-- Motion lines showing direction -->
+  <path d="M 5 50 L 15 50" stroke="#0099ff" stroke-width="1" opacity="0.4" stroke-dasharray="2,2"/>
+  <path d="M 10 70 L 20 70" stroke="#0099ff" stroke-width="1" opacity="0.3" stroke-dasharray="2,2"/>
+  <path d="M 50 25 L 65 25" stroke="#0099ff" stroke-width="1" opacity="0.4" stroke-dasharray="2,2"/>
+</svg>

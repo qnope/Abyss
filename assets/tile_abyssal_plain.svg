@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="glow6027" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="deepglow6027" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad16027" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#008899;stop-opacity:0.4" />
+    </linearGradient>
+    <radialGradient id="radial16027" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#003366;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+    <defs>
+    <pattern id="sediment_pattern" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#0d1a3a"/>
+      <circle cx="4" cy="4" r="1.5" fill="#1a2a4a" opacity="0.6"/>
+      <circle cx="12" cy="8" r="1" fill="#1a2a4a" opacity="0.4"/>
+      <path d="M 2 12 Q 5 10 8 12 T 14 12" stroke="#1a2a4a" stroke-width="0.5" fill="none" opacity="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="128" height="128" fill="#050a18"/>
+  <rect width="128" height="128" fill="url(#sediment_pattern)"/>
+  <ellipse cx="64" cy="80" rx="50" ry="30" fill="#0d1a3a" opacity="0.6"/>
+  <path d="M 20 90 Q 30 85 40 90 T 60 90 T 80 90 T 100 90" stroke="#1a3a5a" stroke-width="0.5" fill="none" opacity="0.4"/>
+  <path d="M 15 100 Q 35 95 55 100 T 95 100" stroke="#1a3a5a" stroke-width="0.5" fill="none" opacity="0.3"/>
+  <rect width="128" height="128" fill="url(#grad1_abys)" opacity="0.3"/>
+
+</svg>

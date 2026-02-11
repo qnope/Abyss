@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style>
+      .glow { filter: drop-shadow(0 0 8px currentColor); }
+      .strong-glow { filter: drop-shadow(0 0 12px currentColor); }
+    </style>
+    <radialGradient id="creditsBg" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#1a2a4a" />
+    <stop offset="100%" stop-color="#0a0e27" />
+  </radialGradient>
+  <radialGradient id="coinGrad" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#ffdd00" />
+    <stop offset="50%" stop-color="#ffaa00" />
+    <stop offset="100%" stop-color="#004d66" />
+  </radialGradient>
+    <filter id="coinGlow">
+    <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+    <feMerge>
+      <feMergeNode in="coloredBlur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  </defs>
+    <!-- Background -->
+  <rect width="128" height="128" fill="url(#creditsBg)"/>
+  
+  <!-- Coin -->
+  <g filter="url(#coinGlow)">
+    <!-- Main coin circle -->
+    <circle cx="64" cy="64" r="32" fill="url(#coinGrad)" stroke="#ffaa00" stroke-width="2"/>
+    
+    <!-- Inner circle (depth) -->
+    <circle cx="64" cy="64" r="28" fill="none" stroke="#ffdd00" stroke-width="1" opacity="0.6"/>
+    
+    <!-- Coin ridges (edge pattern) -->
+    <circle cx="64" cy="64" r="32" fill="none" stroke="#ffaa00" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.4"/>
+    
+    <!-- Wave symbol in center -->
+    <path d="M 50 70 Q 55 65 60 70 Q 65 75 70 70 Q 75 65 80 70" fill="none" stroke="#004d66" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Additional glow -->
+    <circle cx="64" cy="64" r="35" fill="none" stroke="#ffdd00" stroke-width="1" opacity="0.2"/>
+  </g>
+</svg>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="glow6260" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="deepglow6260" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad16260" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#008899;stop-opacity:0.4" />
+    </linearGradient>
+    <radialGradient id="radial16260" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#003366;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+    <rect width="128" height="128" fill="#0a0e27"/>
+  <!-- Compass circle -->
+  <circle cx="64" cy="60" r="28" fill="none" stroke="{TEAL}" stroke-width="2" filter="url(#glow)"/>
+  <circle cx="64" cy="60" r="24" fill="none" stroke="{BLUE_BRIGHT}" stroke-width="1" opacity="0.6"/>
+  <!-- Cardinal directions -->
+  <text x="64" y="38" font-family="Arial, sans-serif" font-size="12" font-weight="bold" 
+        fill="{TEAL}" text-anchor="middle" filter="url(#glow)">N</text>
+  <text x="88" y="65" font-family="Arial, sans-serif" font-size="10" fill="{BLUE_BRIGHT}" opacity="0.8">E</text>
+  <text x="40" y="65" font-family="Arial, sans-serif" font-size="10" fill="{BLUE_BRIGHT}" opacity="0.8">W</text>
+  <!-- Needle -->
+  <line x1="64" y1="60" x2="64" y2="38" stroke="{ORANGE}" stroke-width="2" filter="url(#glow)"/>
+  <polygon points="64,36 61,42 67,42" fill="{ORANGE}" filter="url(#glow)"/>
+  <!-- Treasure X -->
+  <path d="M 55 50 L 65 70 M 65 50 L 55 70" stroke="{PINK}" stroke-width="2" opacity="0.8" filter="url(#glow)"/>
+  <!-- Center pivot -->
+  <circle cx="64" cy="60" r="2.5" fill="{TEAL}" filter="url(#glow)"/>
+
+</svg>

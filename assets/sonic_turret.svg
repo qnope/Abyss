@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <style>
+      .glow { filter: url(#glow); }
+      .glow-intense { filter: url(#glowIntense); }
+    </style>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowIntense">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <radialGradient id="turretBase" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#333333;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="sonicCore" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" fill="#0a0e27"/>
+  
+  <!-- Pivot base -->
+  <circle cx="64" cy="85" r="18" fill="url(#turretBase)" stroke="#0099ff" stroke-width="1.5"/>
+  
+  <!-- Cannon barrel -->
+  <rect x="60" y="30" width="8" height="55" fill="#006699" stroke="#0099ff" stroke-width="1" rx="2"/>
+  <circle cx="64" cy="32" r="6" fill="#0099ff" stroke="#0099ff" stroke-width="1.5"/>
+  
+  <!-- Sonic core inside barrel -->
+  <circle cx="64" cy="45" r="4" fill="url(#sonicCore)" class="glow-intense"/>
+  
+  <!-- Pivot joint -->
+  <circle cx="64" cy="85" r="6" fill="#ffcc66" stroke="#0099ff" stroke-width="1" class="glow"/>
+  
+  <!-- Sonic wave rings (concentric circles) -->
+  <circle cx="64" cy="50" r="15" fill="none" stroke="#00ffcc" stroke-width="1.5" opacity="0.7" class="glow"/>
+  <circle cx="64" cy="50" r="22" fill="none" stroke="#00ffcc" stroke-width="1" opacity="0.5" class="glow"/>
+  <circle cx="64" cy="50" r="28" fill="none" stroke="#00ffcc" stroke-width="1" opacity="0.3" class="glow"/>
+  
+  <!-- Pivot arm supports -->
+  <line x1="50" y1="85" x2="50" y2="100" stroke="#006699" stroke-width="2"/>
+  <line x1="78" y1="85" x2="78" y2="100" stroke="#006699" stroke-width="2"/>
+  
+  <!-- Support platform -->
+  <ellipse cx="64" cy="103" rx="20" ry="5" fill="#006699" opacity="0.6"/>
+</svg>

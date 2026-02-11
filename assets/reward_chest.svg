@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="glow606" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="deepglow606" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad1606" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#008899;stop-opacity:0.4" />
+    </linearGradient>
+    <radialGradient id="radial1606" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#003366;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+    <rect width="128" height="128" fill="#0a0e27"/>
+  <!-- Chest body -->
+  <rect x="40" y="50" width="48" height="32" rx="2" fill="{BLUE_DARK}" stroke="{BLUE_BRIGHT}" stroke-width="1.5"/>
+  <!-- Lid -->
+  <path d="M 40 50 Q 40 35 64 30 Q 88 35 88 50" fill="{TEAL}" opacity="0.8" stroke="{BLUE_BRIGHT}" stroke-width="1.5" filter="url(#glow)"/>
+  <!-- Lock -->
+  <circle cx="64" cy="55" r="3" fill="{ORANGE}" filter="url(#glow)"/>
+  <!-- Treasure glow inside -->
+  <ellipse cx="64" cy="68" rx="16" ry="10" fill="{CYAN}" opacity="0.6" filter="url(#deepglow)"/>
+  <ellipse cx="64" cy="68" rx="12" ry="8" fill="{TEAL}" opacity="0.8" filter="url(#glow)"/>
+  <!-- Gold/gems sparkles -->
+  <circle cx="55" cy="65" r="1.5" fill="{ORANGE}" filter="url(#glow)"/>
+  <circle cx="73" cy="70" r="1.5" fill="{ORANGE}" filter="url(#glow)"/>
+  <circle cx="64" cy="72" r="1" fill="#ffff99" filter="url(#glow)"/>
+  <circle cx="60" cy="68" r="1" fill="{PINK}" filter="url(#glow)"/>
+  <!-- Light rays -->
+  <line x1="64" y1="60" x2="64" y2="45" stroke="{CYAN}" stroke-width="1" opacity="0.5" filter="url(#glow)"/>
+  <line x1="50" y1="68" x2="35" y2="68" stroke="{TEAL}" stroke-width="1" opacity="0.4" filter="url(#glow)"/>
+  <line x1="78" y1="68" x2="93" y2="68" stroke="{TEAL}" stroke-width="1" opacity="0.4" filter="url(#glow)"/>
+
+</svg>

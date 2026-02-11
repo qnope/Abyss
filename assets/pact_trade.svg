@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Gradients -->
+    <radialGradient id="glowTeal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff0033;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff0033;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowOrange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00cc66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc66;stop-opacity:0" />
+    </radialGradient>
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#cc00ff;stop-opacity:0.2" />
+    </linearGradient>
+    
+    <!-- Filters -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowStrong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+  <rect width="128" height="128" fill="url(#oceanGrad)"/>
+  <!-- Left Hand -->
+  <ellipse cx="45" cy="65" rx="8" ry="12" fill="#ffcc00" opacity="0.8" filter="url(#glow)"/>
+  <path d="M 38 60 L 32 50" stroke="#ffcc00" stroke-width="2" fill="none" 
+        stroke-linecap="round" opacity="0.7"/>
+  
+  <!-- Right Hand -->
+  <ellipse cx="83" cy="65" rx="8" ry="12" fill="#ffcc00" opacity="0.8" filter="url(#glow)"/>
+  <path d="M 90 60 L 96 50" stroke="#ffcc00" stroke-width="2" fill="none" 
+        stroke-linecap="round" opacity="0.7"/>
+  
+  <!-- Handshake connection -->
+  <path d="M 53 62 L 75 62" stroke="#00cc66" stroke-width="4" opacity="0.8" filter="url(#glow)"/>
+  
+  <!-- Left hand glow -->
+  <circle cx="42" cy="68" r="6" fill="#00cc66" opacity="0.6" filter="url(#glowStrong)"/>
+  
+  <!-- Right hand glow -->
+  <circle cx="86" cy="68" r="6" fill="#00cc66" opacity="0.6" filter="url(#glowStrong)"/>
+  
+  <!-- Coins (left) -->
+  <circle cx="35" cy="85" r="5" fill="#ffcc00" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="35" cy="85" r="3" fill="none" stroke="#ffcc00" stroke-width="1" opacity="0.7"/>
+  <circle cx="28" cy="92" r="5" fill="#ffcc00" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="28" cy="92" r="3" fill="none" stroke="#ffcc00" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Coins (right) -->
+  <circle cx="93" cy="85" r="5" fill="#ffcc00" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="93" cy="85" r="3" fill="none" stroke="#ffcc00" stroke-width="1" opacity="0.7"/>
+  <circle cx="100" cy="92" r="5" fill="#ffcc00" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="100" cy="92" r="3" fill="none" stroke="#ffcc00" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Central glow -->
+  <circle cx="64" cy="62" r="15" fill="url(#glowGreen)" opacity="0.4" filter="url(#glowStrong)"/>
+</svg>

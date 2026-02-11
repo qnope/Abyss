@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="leviathanFace" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#ddaa44;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#996633;stop-opacity:1" />
+    </radialGradient>
+    <filter id="leviathanGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer dark ocean circle -->
+  <circle cx="64" cy="64" r="62" fill="#0a1a2e" stroke="#003366" stroke-width="2"/>
+  <!-- Face base - massive -->
+  <circle cx="64" cy="60" r="45" fill="url(#leviathanFace)" filter="url(#leviathanGlow)"/>
+  <!-- Gold jewelry -->
+  <circle cx="30" cy="40" r="4" fill="#ffdd44" stroke="#ccaa00" stroke-width="1"/>
+  <circle cx="98" cy="40" r="4" fill="#ffdd44" stroke="#ccaa00" stroke-width="1"/>
+  <!-- Calm, wise eyes -->
+  <circle cx="48" cy="55" r="7" fill="#ffdd88"/>
+  <circle cx="48" cy="55" r="3" fill="#333333"/>
+  <circle cx="80" cy="55" r="7" fill="#ffdd88"/>
+  <circle cx="80" cy="55" r="3" fill="#333333"/>
+  <!-- Serene expression -->
+  <path d="M 55 70 Q 64 75 73 70" fill="none" stroke="#ffdd44" stroke-width="2" stroke-linecap="round"/>
+  <!-- Wealth symbols - coins -->
+  <circle cx="35" cy="75" r="3" fill="#ffdd44"/>
+  <circle cx="45" cy="80" r="3" fill="#ffdd44"/>
+  <circle cx="83" cy="80" r="3" fill="#ffdd44"/>
+  <circle cx="93" cy="75" r="3" fill="#ffdd44"/>
+</svg>

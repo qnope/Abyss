@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style>
+      .glow { filter: drop-shadow(0 0 8px currentColor); }
+      .strong-glow { filter: drop-shadow(0 0 12px currentColor); }
+    </style>
+    <radialGradient id="domeBg" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#1a2a4a" />
+    <stop offset="100%" stop-color="#0a0e27" />
+  </radialGradient>
+  <radialGradient id="domeGradient" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#00ffcc" />
+    <stop offset="100%" stop-color="#004d66" />
+  </radialGradient>
+    <filter id="domeGlow">
+    <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+    <feMerge>
+      <feMergeNode in="coloredBlur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  </defs>
+    <!-- Background -->
+  <rect width="128" height="128" fill="url(#domeBg)"/>
+  
+  <!-- Dome structure -->
+  <g filter="url(#domeGlow)">
+    <!-- Dome shape (hemisphere) -->
+    <path d="M 35 85 A 29 29 0 0 1 93 85" fill="none" stroke="#00ffcc" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Support base -->
+    <rect x="38" y="85" width="52" height="8" rx="2" fill="url(#domeGradient)"/>
+    
+    <!-- Structural support lines -->
+    <line x1="50" y1="85" x2="48" y2="50" stroke="#0099ff" stroke-width="1.5" opacity="0.8"/>
+    <line x1="64" y1="85" x2="64" y2="40" stroke="#00ffcc" stroke-width="2" opacity="0.9"/>
+    <line x1="78" y1="85" x2="80" y2="50" stroke="#0099ff" stroke-width="1.5" opacity="0.8"/>
+    
+    <!-- Horizontal reinforcement rings -->
+    <circle cx="64" cy="65" r="18" fill="none" stroke="#00ffcc" stroke-width="1" opacity="0.5"/>
+    <circle cx="64" cy="50" r="12" fill="none" stroke="#0099ff" stroke-width="1" opacity="0.4"/>
+    
+    <!-- Observation window -->
+    <circle cx="64" cy="50" r="6" fill="none" stroke="#00ffcc" stroke-width="1.5" opacity="0.7"/>
+    <circle cx="64" cy="50" r="4" fill="#0099ff" opacity="0.3"/>
+  </g>
+</svg>

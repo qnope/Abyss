@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <style>
+      .glow { filter: url(#glow); }
+      .glow-intense { filter: url(#glowIntense); }
+    </style>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowIntense">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <radialGradient id="habitatGradient" cx="50%" cy="30%">
+      <stop offset="0%" style="stop-color:#1a4d6d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="portholeLights" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#ffcc66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff9900;stop-opacity:0.5" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" fill="#0a0e27"/>
+  
+  <!-- Main habitat module cylinder -->
+  <rect x="35" y="40" width="58" height="55" fill="url(#habitatGradient)" stroke="#0099ff" stroke-width="2" rx="4"/>
+  
+  <!-- Reinforcement bands -->
+  <line x1="32" y1="55" x2="96" y2="55" stroke="#006699" stroke-width="1.5" opacity="0.6"/>
+  <line x1="32" y1="75" x2="96" y2="75" stroke="#006699" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Porthole 1 - top left -->
+  <circle cx="48" cy="52" r="6" fill="#006699" stroke="#0099ff" stroke-width="1.5" class="glow"/>
+  <circle cx="48" cy="52" r="4" fill="url(#portholeLights)" class="glow"/>
+  
+  <!-- Porthole 2 - top right -->
+  <circle cx="80" cy="52" r="6" fill="#006699" stroke="#0099ff" stroke-width="1.5" class="glow"/>
+  <circle cx="80" cy="52" r="4" fill="url(#portholeLights)" class="glow"/>
+  
+  <!-- Porthole 3 - middle left -->
+  <circle cx="48" cy="72" r="6" fill="#006699" stroke="#0099ff" stroke-width="1.5" class="glow"/>
+  <circle cx="48" cy="72" r="4" fill="url(#portholeLights)" class="glow"/>
+  
+  <!-- Porthole 4 - middle right -->
+  <circle cx="80" cy="72" r="6" fill="#006699" stroke="#0099ff" stroke-width="1.5" class="glow"/>
+  <circle cx="80" cy="72" r="4" fill="url(#portholeLights)" class="glow"/>
+  
+  <!-- Door frame -->
+  <rect x="58" y="87" width="12" height="16" fill="#006699" stroke="#0099ff" stroke-width="1.5"/>
+  <line x1="64" y1="87" x2="64" y2="103" stroke="#0099ff" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Base foundation -->
+  <ellipse cx="64" cy="100" rx="30" ry="7" fill="#006699" opacity="0.5"/>
+</svg>

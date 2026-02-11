@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style>
+      .glow { filter: drop-shadow(0 0 8px currentColor); }
+      .strong-glow { filter: drop-shadow(0 0 12px currentColor); }
+    </style>
+    <radialGradient id="biomassBg" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#1a2a4a" />
+    <stop offset="100%" stop-color="#0a0e27" />
+  </radialGradient>
+  <radialGradient id="algaeGrad" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#00ff99" />
+    <stop offset="100%" stop-color="#006633" />
+  </radialGradient>
+    <filter id="biomassGlow">
+    <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+    <feMerge>
+      <feMergeNode in="coloredBlur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  </defs>
+    <!-- Background -->
+  <rect width="128" height="128" fill="url(#biomassBg)"/>
+  
+  <!-- Bioluminescent Algae/Cell -->
+  <g filter="url(#biomassGlow)">
+    <!-- Central nucleus -->
+    <circle cx="64" cy="64" r="15" fill="url(#algaeGrad)" stroke="#00ff99" stroke-width="2"/>
+    
+    <!-- Surrounding cilia/tendrils -->
+    <path d="M 64 49 Q 70 40 75 35" fill="none" stroke="#00ff99" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+    <path d="M 79 64 Q 88 70 95 75" fill="none" stroke="#00ff99" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+    <path d="M 64 79 Q 58 88 52 95" fill="none" stroke="#00ff99" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+    <path d="M 49 64 Q 40 58 33 53" fill="none" stroke="#00ff99" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+    <path d="M 72 52 Q 80 48 88 48" fill="none" stroke="#00ff99" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M 76 76 Q 85 82 92 88" fill="none" stroke="#00ff99" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    
+    <!-- Inner glow -->
+    <circle cx="64" cy="64" r="12" fill="#00ff99" opacity="0.3"/>
+    
+    <!-- Outer glow ring -->
+    <circle cx="64" cy="64" r="40" fill="none" stroke="#00ff99" stroke-width="1" opacity="0.2"/>
+  </g>
+</svg>

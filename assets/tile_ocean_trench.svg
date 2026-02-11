@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="glow623" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="deepglow623" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad1623" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#008899;stop-opacity:0.4" />
+    </linearGradient>
+    <radialGradient id="radial1623" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#003366;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+    <rect width="128" height="128" fill="#050810"/>
+  <defs>
+    <linearGradient id="depth_grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a1a3a;stop-opacity:0.6" />
+      <stop offset="50%" style="stop-color:#000000;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#0a1a3a;stop-opacity:0.6" />
+    </linearGradient>
+  </defs>
+  <!-- Crevasse -->
+  <polygon points="30,20 40,128 88,128 98,20" fill="url(#depth_grad)"/>
+  <!-- Depth lines -->
+  <line x1="35" y1="40" x2="93" y2="40" stroke="#0a2a5a" stroke-width="0.5" opacity="0.5"/>
+  <line x1="32" y1="60" x2="96" y2="60" stroke="#0a2a5a" stroke-width="0.5" opacity="0.4"/>
+  <line x1="30" y1="80" x2="98" y2="80" stroke="#0a2a5a" stroke-width="0.5" opacity="0.3"/>
+  <line x1="28" y1="100" x2="100" y2="100" stroke="#0a2a5a" stroke-width="0.5" opacity="0.2"/>
+  <!-- Jagged edges -->
+  <polygon points="40,128 38,115 42,110 39,100 44,95" fill="#050810" opacity="0.8"/>
+  <polygon points="88,128 90,115 86,110 89,100 84,95" fill="#050810" opacity="0.8"/>
+  <!-- Pressure indicator glow -->
+  <circle cx="64" cy="80" r="20" fill="none" stroke="{BLUE_BRIGHT}" stroke-width="1" opacity="0.3"/>
+  <circle cx="64" cy="80" r="30" fill="none" stroke="{BLUE_DARK}" stroke-width="0.5" opacity="0.2"/>
+
+</svg>

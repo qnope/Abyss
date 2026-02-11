@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <style>
+      @keyframes glow {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes pulse {
+        0%, 100% { r: 1; }
+        50% { r: 1.5; }
+      }
+      .glow { animation: glow 3s ease-in-out infinite; }
+      .pulse { animation: pulse 2s ease-in-out infinite; }
+    </style>
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#1a1f3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#33ffdd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#33bbff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="128" height="128" fill="url(#bgGradient)"/>
+
+  
+  <!-- Coral fragment -->
+  <g filter="url(#glow)">
+    <polygon points="64,20 80,50 75,80 53,90 32,75 40,40" fill="url(#tealGradient)" stroke="#00ffcc" stroke-width="1.5" opacity="0.9"/>
+    <polygon points="70,35 82,55 78,75" fill="#33ffdd" stroke="#0099ff" stroke-width="1" opacity="0.7"/>
+    <circle cx="60" cy="45" r="3" fill="#33ffdd" opacity="0.8" class="glow"/>
+    <circle cx="72" cy="60" r="2" fill="#33bbff" opacity="0.9"/>
+    <line x1="64" y1="20" x2="64" y2="90" stroke="#00ffcc" stroke-width="0.5" opacity="0.4"/>
+  </g>
+  <!-- Metallic shine -->
+  <ellipse cx="70" cy="50" rx="8" ry="12" fill="#33ffdd" opacity="0.3"/>
+    
+</svg>

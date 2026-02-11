@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Gradients -->
+    <radialGradient id="glowTeal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff0033;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff0033;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowOrange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00cc66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc66;stop-opacity:0" />
+    </radialGradient>
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#cc00ff;stop-opacity:0.2" />
+    </linearGradient>
+    
+    <!-- Filters -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowStrong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+  <rect width="128" height="128" fill="url(#oceanGrad)"/>
+  <!-- Shield shape -->
+  <path d="M 40 35 L 88 35 L 88 70 Q 64 88 64 88 Q 40 70 40 70 Z" 
+        fill="#0099ff" opacity="0.6" filter="url(#glow)"/>
+  <path d="M 42 38 L 86 38 L 86 68 Q 64 84 64 84 Q 42 68 42 68 Z" 
+        fill="none" stroke="#0099ff" stroke-width="1.5" opacity="0.4"/>
+  
+  <!-- Shield border (dimmed) -->
+  <path d="M 40 35 L 88 35 L 88 70 Q 64 88 64 88 Q 40 70 40 70 Z" 
+        fill="none" stroke="#0099ff" stroke-width="2" opacity="0.5" filter="url(#glowStrong)"/>
+  
+  <!-- Moon symbol (crescent) -->
+  <circle cx="58" cy="55" r="8" fill="#cc00ff" opacity="0.5" filter="url(#glow)"/>
+  <circle cx="62" cy="55" r="8" fill="#0a0e27" opacity="1"/>
+  
+  <!-- Zzz sleep lines -->
+  <path d="M 72 48 L 82 48" stroke="#cc00ff" stroke-width="2" opacity="0.6" filter="url(#glow)" stroke-linecap="round"/>
+  <path d="M 72 60 L 82 60" stroke="#cc00ff" stroke-width="2" opacity="0.5" filter="url(#glow)" stroke-linecap="round"/>
+  <path d="M 72 72 L 82 72" stroke="#cc00ff" stroke-width="2" opacity="0.4" filter="url(#glow)" stroke-linecap="round"/>
+  
+  <!-- Dormancy indicator -->
+  <text x="85" y="50" font-size="8" fill="#0099ff" opacity="0.5" filter="url(#glow)">24h</text>
+</svg>

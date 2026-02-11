@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="glow9784" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="deepglow9784" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad19784" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#008899;stop-opacity:0.4" />
+    </linearGradient>
+    <radialGradient id="radial19784" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#003366;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+    <rect width="128" height="128" fill="#0a0e27"/>
+  <!-- Outer frame -->
+  <path d="M 45 35 L 45 65 Q 45 75 55 75 L 73 75 Q 83 75 83 65 L 83 35 Z" fill="none" stroke="{BLUE_BRIGHT}" stroke-width="2"/>
+  <path d="M 45 75 L 45 105 Q 45 115 55 115 L 73 115 Q 83 115 83 105 L 83 75 Z" fill="none" stroke="{TEAL}" stroke-width="2"/>
+  <!-- Center line -->
+  <line x1="45" y1="75" x2="83" y2="75" stroke="{BLUE_BRIGHT}" stroke-width="1.5"/>
+  <!-- Sand flowing (top) -->
+  <path d="M 48 40 Q 50 55 55 70 Q 60 65 64 75 Q 60 60 58 45 Z" fill="{ORANGE}" opacity="0.8" filter="url(#glow)"/>
+  <!-- Sand accumulating (bottom) -->
+  <ellipse cx="64" cy="105" rx="12" ry="6" fill="{ORANGE}" opacity="0.8" filter="url(#glow)"/>
+  <ellipse cx="64" cy="103" rx="14" ry="4" fill="{ORANGE}" opacity="0.6" filter="url(#glow)"/>
+  <!-- Glow effect -->
+  <circle cx="64" cy="75" r="8" fill="none" stroke="{BLUE_BRIGHT}" stroke-width="1" opacity="0.5" filter="url(#glow)"/>
+
+</svg>

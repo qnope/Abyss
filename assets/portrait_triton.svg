@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="tritonFace" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#6699bb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334455;stop-opacity:1" />
+    </radialGradient>
+    <filter id="tritonGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer dark ocean circle -->
+  <circle cx="64" cy="64" r="62" fill="#0a1a2e" stroke="#003366" stroke-width="2"/>
+  <!-- Face base -->
+  <circle cx="64" cy="60" r="42" fill="url(#tritonFace)" filter="url(#tritonGlow)"/>
+  <!-- Neutral expression - balanced face -->
+  <circle cx="50" cy="52" r="5" fill="#aabbcc"/>
+  <circle cx="50" cy="52" r="2.5" fill="#000000"/>
+  <circle cx="78" cy="52" r="5" fill="#aabbcc"/>
+  <circle cx="78" cy="52" r="2.5" fill="#000000"/>
+  <!-- Straight mouth - neutral -->
+  <line x1="55" y1="68" x2="73" y2="68" stroke="#aabbcc" stroke-width="2" stroke-linecap="round"/>
+  <!-- Adaptable gear/equipment -->
+  <rect x="35" y="75" width="58" height="18" fill="none" stroke="#6699bb" stroke-width="1.5" rx="3"/>
+  <line x1="48" y1="75" x2="48" y2="93" stroke="#6699bb" stroke-width="1"/>
+  <line x1="64" y1="75" x2="64" y2="93" stroke="#6699bb" stroke-width="1"/>
+  <line x1="80" y1="75" x2="80" y2="93" stroke="#6699bb" stroke-width="1"/>
+</svg>

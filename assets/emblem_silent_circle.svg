@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shieldGradGrey" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#aabbcc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#445566;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shieldGlowGrey">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Ocean background -->
+  <rect width="128" height="128" fill="#0a1a2e"/>
+  <!-- Shield shape -->
+  <path d="M 64 16 L 96 28 L 96 56 Q 96 88 64 104 Q 32 88 32 56 L 32 28 Z" fill="url(#shieldGradGrey)" stroke="#ddddee" stroke-width="2" filter="url(#shieldGlowGrey)"/>
+  <!-- Broken circle/closed eye -->
+  <g transform="translate(64, 56)">
+    <!-- Upper arc -->
+    <path d="M -12 0 Q -12 -10 0 -12 Q 12 -10 12 0" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Lower arc (broken) -->
+    <path d="M -10 8 Q 0 15 10 8" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+    <!-- Lid line -->
+    <line x1="-12" y1="0" x2="12" y2="0" stroke="#888899" stroke-width="1.5" opacity="0.7"/>
+  </g>
+</svg>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="krakenFace" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#663333;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#330000;stop-opacity:1" />
+    </radialGradient>
+    <filter id="krakenGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer dark ocean circle -->
+  <circle cx="64" cy="64" r="62" fill="#0a1a2e" stroke="#003366" stroke-width="2"/>
+  <!-- Face base -->
+  <circle cx="64" cy="60" r="42" fill="url(#krakenFace)" filter="url(#krakenGlow)"/>
+  <!-- Armor plate -->
+  <rect x="32" y="78" width="64" height="32" fill="#1a3a4a" stroke="#003366" stroke-width="1"/>
+  <!-- Scar marks -->
+  <path d="M 50 45 Q 55 55 50 65" fill="none" stroke="#ff3333" stroke-width="2" opacity="0.8"/>
+  <path d="M 78 48 Q 73 58 78 68" fill="none" stroke="#ff3333" stroke-width="2" opacity="0.8"/>
+  <!-- Angry eyes -->
+  <circle cx="50" cy="50" r="6" fill="#ffaa00"/>
+  <circle cx="50" cy="50" r="3" fill="#000000"/>
+  <circle cx="78" cy="50" r="6" fill="#ffaa00"/>
+  <circle cx="78" cy="50" r="3" fill="#000000"/>
+  <!-- Menacing mouth -->
+  <path d="M 55 65 Q 64 72 73 65" fill="none" stroke="#ff3333" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

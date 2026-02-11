@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <style>
+      @keyframes glow {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes pulse {
+        0%, 100% { r: 1; }
+        50% { r: 1.5; }
+      }
+      .glow { animation: glow 3s ease-in-out infinite; }
+      .pulse { animation: pulse 2s ease-in-out infinite; }
+    </style>
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#1a1f3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#33ffdd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#33bbff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="128" height="128" fill="url(#bgGradient)"/>
+
+  
+  <!-- Crystalline battery -->
+  <g filter="url(#glow)">
+    <!-- Main crystal -->
+    <polygon points="64,20 85,45 75,85 53,85 43,45" fill="url(#blueGradient)" stroke="#0099ff" stroke-width="1.5" opacity="0.9"/>
+    <!-- Inner facets -->
+    <line x1="64" y1="20" x2="64" y2="85" stroke="#33ffdd" stroke-width="0.8" opacity="0.4"/>
+    <line x1="43" y1="45" x2="85" y2="45" stroke="#33ffdd" stroke-width="0.8" opacity="0.4"/>
+    <!-- Electric arcs inside -->
+    <path d="M 55 50 Q 60 40 70 45" stroke="#33bbff" stroke-width="1.2" fill="none" opacity="0.8" class="glow"/>
+    <path d="M 60 65 Q 64 55 72 70" stroke="#33bbff" stroke-width="1" fill="none" opacity="0.6"/>
+    <!-- Glow points -->
+    <circle cx="60" cy="50" r="2" fill="#33bbff" opacity="0.8"/>
+    <circle cx="72" cy="65" r="1.5" fill="#33bbff" opacity="0.7"/>
+  </g>
+    
+</svg>

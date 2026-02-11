@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="glow115" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="deepglow115" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="grad1115" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#008899;stop-opacity:0.4" />
+    </linearGradient>
+    <radialGradient id="radial1115" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#003366;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" fill="#0a0e27"/>
+    <rect width="128" height="128" fill="#0a0e27"/>
+  <!-- Directional trail -->
+  <line x1="20" y1="60" x2="45" y2="60" stroke="{BLUE_BRIGHT}" stroke-width="1" opacity="0.3"/>
+  <line x1="25" y1="65" x2="48" y2="65" stroke="{BLUE_BRIGHT}" stroke-width="0.8" opacity="0.2"/>
+  <line x1="28" y1="55" x2="47" y2="55" stroke="{BLUE_BRIGHT}" stroke-width="0.8" opacity="0.2"/>
+  <!-- Submarine hull -->
+  <ellipse cx="70" cy="60" rx="12" ry="8" fill="{TEAL}" opacity="0.9" filter="url(#glow)"/>
+  <path d="M 70 48 Q 70 50 66 52" stroke="{TEAL}" stroke-width="1.5" fill="none" filter="url(#glow)"/>
+  <!-- Viewport -->
+  <circle cx="72" cy="60" r="2.5" fill="{CYAN}" filter="url(#glow)"/>
+  <!-- Fins -->
+  <polygon points="68,68 65,78 70,70" fill="{BLUE_BRIGHT}" opacity="0.7" filter="url(#glow)"/>
+  <polygon points="72,68 75,78 70,70" fill="{BLUE_BRIGHT}" opacity="0.7" filter="url(#glow)"/>
+  <!-- Movement indicator -->
+  <path d="M 82 60 L 95 60" stroke="{TEAL}" stroke-width="1.5" opacity="0.8" filter="url(#glow)"/>
+  <polygon points="95,60 100,55 100,65" fill="{TEAL}" opacity="0.7" filter="url(#glow)"/>
+
+</svg>

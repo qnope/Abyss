@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+    <defs>
+        <radialGradient id="glow-center" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0"/>
+        </radialGradient>
+        <radialGradient id="glow-center-blue" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0"/>
+        </radialGradient>
+        <linearGradient id="body-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1"/>
+            <stop offset="50%" style="stop-color:#0066ff;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050a15;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="body-gradient-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1"/>
+            <stop offset="50%" style="stop-color:#0099ff;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050a15;stop-opacity:1"/>
+        </linearGradient>
+        <filter id="glow-effect">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="strong-glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <!-- Background -->
+    <rect width="128" height="128" fill="#0a0e27"/>
+    
+    <circle cx="64" cy="65" r="40" fill="url(#glow-center)" opacity="0.2"/>
+    <!-- Main translucent body -->
+    <ellipse cx="64" cy="55" rx="25" ry="32" fill="{LIGHT_BLUE}" opacity="0.3" filter="url(#glow-effect)"/>
+    <!-- Outline with glow -->
+    <ellipse cx="64" cy="55" rx="25" ry="32" fill="none" stroke="{TEAL}" stroke-width="2" opacity="0.8" filter="url(#glow-effect)"/>
+    <!-- Tech lines -->
+    <line x1="50" y1="48" x2="78" y2="48" stroke="{TEAL}" stroke-width="0.5" opacity="0.6"/>
+    <line x1="48" y1="55" x2="80" y2="55" stroke="{TEAL}" stroke-width="0.5" opacity="0.6"/>
+    <line x1="50" y1="62" x2="78" y2="62" stroke="{TEAL}" stroke-width="0.5" opacity="0.6"/>
+    <!-- Energy cores -->
+    <circle cx="55" cy="50" r="3" fill="{GLOW_CYAN}" opacity="0.6" filter="url(#strong-glow)"/>
+    <circle cx="73" cy="50" r="3" fill="{GLOW_CYAN}" opacity="0.6" filter="url(#strong-glow)"/>
+    <circle cx="64" cy="65" r="3" fill="{GLOW_CYAN}" opacity="0.6" filter="url(#strong-glow)"/>
+    <!-- Holographic shimmer -->
+    <path d="M 45 45 Q 64 35 83 45" stroke="{TEAL}" stroke-width="1" fill="none" opacity="0.4"/>
+
+</svg>

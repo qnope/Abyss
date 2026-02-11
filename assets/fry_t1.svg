@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+    <defs>
+        <radialGradient id="glow-center" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0"/>
+        </radialGradient>
+        <radialGradient id="glow-center-blue" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#0099ff;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#0a0e27;stop-opacity:0"/>
+        </radialGradient>
+        <linearGradient id="body-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#0099ff;stop-opacity:1"/>
+            <stop offset="50%" style="stop-color:#0066ff;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050a15;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="body-gradient-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:1"/>
+            <stop offset="50%" style="stop-color:#0099ff;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050a15;stop-opacity:1"/>
+        </linearGradient>
+        <filter id="glow-effect">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="strong-glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <!-- Background -->
+    <rect width="128" height="128" fill="#0a0e27"/>
+    
+    <circle cx="64" cy="64" r="45" fill="url(#glow-center)" opacity="0.15"/>
+    <!-- Central drone -->
+    <ellipse cx="64" cy="48" rx="8" ry="12" fill="url(#body-gradient-teal)" filter="url(#glow-effect)"/>
+    <circle cx="64" cy="42" r="2" fill="{GLOW_CYAN}" filter="url(#strong-glow)"/>
+    <!-- Wing drones -->
+    <ellipse cx="48" cy="60" rx="6" ry="10" fill="url(#body-gradient)" opacity="0.8" filter="url(#glow-effect)"/>
+    <circle cx="48" cy="55" r="1.5" fill="{GLOW_CYAN}" filter="url(#strong-glow)"/>
+    <ellipse cx="80" cy="60" rx="6" ry="10" fill="url(#body-gradient)" opacity="0.8" filter="url(#glow-effect)"/>
+    <circle cx="80" cy="55" r="1.5" fill="{GLOW_CYAN}" filter="url(#strong-glow)"/>
+    <!-- Rear drones -->
+    <ellipse cx="55" cy="75" rx="5" ry="8" fill="url(#body-gradient)" opacity="0.7" filter="url(#glow-effect)"/>
+    <ellipse cx="73" cy="75" rx="5" ry="8" fill="url(#body-gradient)" opacity="0.7" filter="url(#glow-effect)"/>
+    <!-- Connection threads -->
+    <line x1="64" y1="48" x2="48" y2="60" stroke="{TEAL}" stroke-width="0.5" opacity="0.4"/>
+    <line x1="64" y1="48" x2="80" y2="60" stroke="{TEAL}" stroke-width="0.5" opacity="0.4"/>
+    <line x1="64" y1="48" x2="55" y2="75" stroke="{TEAL}" stroke-width="0.5" opacity="0.4"/>
+    <line x1="64" y1="48" x2="73" y2="75" stroke="{TEAL}" stroke-width="0.5" opacity="0.4"/>
+
+</svg>

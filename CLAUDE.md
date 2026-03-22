@@ -8,6 +8,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 It is a free game, and it is meant to be a single player.
 Explanation of this game are in `ABYSS.md` file.
 
+It's a turn by turn game. Instead of waiting for hours, we are doing actions, and at the end, we press the "next turn" button.
+
+We have resources, army, technologies etc.
+
 ## Tech
 1. Dart
 2. Flutter

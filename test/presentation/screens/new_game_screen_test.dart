@@ -1,33 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:abyss/domain/game.dart';
-import 'package:abyss/domain/player.dart';
 import 'package:abyss/presentation/screens/new_game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import '../../helpers/fake_game_repository.dart';
 
 void main() {
-  setUp(() async {
-    final path = '/tmp/hive_test_${DateTime.now().millisecondsSinceEpoch}';
-    Hive.init(path);
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(PlayerAdapter());
-    }
-    if (!Hive.isAdapterRegistered(1)) {
-      Hive.registerAdapter(GameAdapter());
-    }
-    await Hive.openBox<Game>('games');
-  });
-
-  tearDown(() async {
-    await Hive.deleteFromDisk();
-  });
-
   group('NewGameScreen', () {
+    late FakeGameRepository repository;
+
+    setUp(() {
+      repository = FakeGameRepository();
+    });
+
     Widget createApp() {
       return MaterialApp(
         theme: AbyssTheme.create(),
-        home: const NewGameScreen(),
+        home: NewGameScreen(repository: repository),
       );
     }
 

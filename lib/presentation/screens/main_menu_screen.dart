@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import '../../data/game_repository.dart';
 import '../../presentation/theme/abyss_colors.dart';
 import 'load_game_screen.dart';
 import 'new_game_screen.dart';
 
 class MainMenuScreen extends StatelessWidget {
-  const MainMenuScreen({super.key});
+  final GameRepository repository;
+
+  const MainMenuScreen({super.key, required this.repository});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +60,7 @@ class MainMenuScreen extends StatelessWidget {
   void _startNewGame(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) => const NewGameScreen(),
+        builder: (_) => NewGameScreen(repository: repository),
       ),
     );
   }
@@ -65,7 +68,7 @@ class MainMenuScreen extends StatelessWidget {
   void _loadGame(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) => const LoadGameScreen(),
+        builder: (_) => LoadGameScreen(repository: repository),
       ),
     );
   }

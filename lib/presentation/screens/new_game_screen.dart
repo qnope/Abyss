@@ -5,7 +5,9 @@ import '../../domain/player.dart';
 import 'game_screen.dart';
 
 class NewGameScreen extends StatefulWidget {
-  const NewGameScreen({super.key});
+  final GameRepository repository;
+
+  const NewGameScreen({super.key, required this.repository});
 
   @override
   State<NewGameScreen> createState() => _NewGameScreenState();
@@ -82,7 +84,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
 
     final player = Player(name: _controller.text.trim());
     final game = Game(player: player);
-    await GameRepository().save(game);
+    await widget.repository.save(game);
 
     if (!mounted) return;
 

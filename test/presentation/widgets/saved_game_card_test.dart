@@ -52,7 +52,7 @@ void main() {
       var loaded = false;
       await tester.pumpWidget(createApp(onLoad: () => loaded = true));
 
-      await tester.tap(find.byType(InkWell));
+      await tester.tap(find.text('Alice'));
       expect(loaded, isTrue);
     });
 

@@ -22,8 +22,7 @@ void main() {
   });
 
   tearDown(() async {
-    await Hive.deleteBoxFromDisk('games');
-    await Hive.close();
+    await Hive.deleteFromDisk();
   });
 
   Widget createApp() {

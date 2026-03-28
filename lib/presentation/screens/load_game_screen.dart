@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/gamewidget.repository.dart';
+import '../../data/game_repository.dart';
 import '../../domain/game.dart';
 import '../theme/abyss_colors.dart';
 import '../widgets/saved_game_card.dart';

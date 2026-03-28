@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../presentation/theme/abyss_colors.dart';
+import 'load_game_screen.dart';
 import 'new_game_screen.dart';
 
 class MainMenuScreen extends StatelessWidget {
@@ -38,6 +39,14 @@ class MainMenuScreen extends StatelessWidget {
                   child: const Text('Nouvelle Partie'),
                 ),
               ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () => _loadGame(context),
+                  child: const Text('Charger une partie'),
+                ),
+              ),
             ],
           ),
         ),
@@ -49,6 +58,14 @@ class MainMenuScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => const NewGameScreen(),
+      ),
+    );
+  }
+
+  void _loadGame(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => const LoadGameScreen(),
       ),
     );
   }

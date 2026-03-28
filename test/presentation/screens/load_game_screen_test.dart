@@ -1,0 +1,111 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:abyss/domain/game.dart';
+import 'package:abyss/domain/player.dart';
+import 'package:abyss/presentation/screens/load_game_screen.dart';
+import 'package:abyss/presentation/theme/abyss_theme.dart';
+
+void main() {
+  late String hivePath;
+
+  setUp(() async {
+    hivePath = '/tmp/hive_test_${DateTime.now().millisecondsSinceEpoch}';
+    Hive.init(hivePath);
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(PlayerAdapter());
+    }
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(GameAdapter());
+    }
+    await Hive.openBox<Game>('games');
+  });
+
+  tearDown(() async {
+    await Hive.close();
+  });
+
+  Widget createApp() {
+    return MaterialApp(
+      theme: AbyssTheme.create(),
+      home: const LoadGameScreen(),
+    );
+  }
+
+  group('LoadGameScreen', () {
+    testWidgets('shows empty state when no saves', (tester) async {
+      await tester.pumpWidget(createApp());
+
+      expect(find.text('Aucune partie sauvegardée'), findsOneWidget);
+      expect(find.byIcon(Icons.folder_open), findsOneWidget);
+    });
+
+    testWidgets('shows saved games with info', (tester) async {
+      final box = Hive.box<Game>('games');
+      await box.add(Game(
+        player: Player(name: 'Alice'),
+        turn: 5,
+        createdAt: DateTime(2026, 3, 15, 14, 30),
+      ));
+      await box.add(Game(
+        player: Player(name: 'Bob'),
+        turn: 12,
+        createdAt: DateTime(2026, 3, 20, 9, 0),
+      ));
+
+      await tester.pumpWidget(createApp());
+
+      expect(find.text('Alice'), findsOneWidget);
+      expect(find.text('Tour 5'), findsOneWidget);
+      expect(find.text('15/03/2026 14:30'), findsOneWidget);
+      expect(find.text('Bob'), findsOneWidget);
+      expect(find.text('Tour 12'), findsOneWidget);
+      expect(find.text('20/03/2026 09:00'), findsOneWidget);
+    });
+
+    testWidgets('shows delete confirmation dialog', (tester) async {
+      final box = Hive.box<Game>('games');
+      await box.add(Game(player: Player(name: 'Alice')));
+
+      await tester.pumpWidget(createApp());
+      await tester.tap(find.byIcon(Icons.delete_outline));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Supprimer la partie ?'), findsOneWidget);
+      expect(find.text('Annuler'), findsOneWidget);
+      expect(find.text('Supprimer'), findsOneWidget);
+    });
+
+    testWidgets('deletes game after confirmation', (tester) async {
+      final box = Hive.box<Game>('games');
+      await box.add(Game(player: Player(name: 'Alice')));
+
+      await tester.pumpWidget(createApp());
+      expect(find.text('Alice'), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.delete_outline));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Supprimer'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Alice'), findsNothing);
+      expect(find.text('Aucune partie sauvegardée'), findsOneWidget);
+    });
+
+    testWidgets('cancel delete keeps game', (tester) async {
+      final box = Hive.box<Game>('games');
+      await box.add(Game(player: Player(name: 'Alice')));
+
+      await tester.pumpWidget(createApp());
+
+      await tester.tap(find.byIcon(Icons.delete_outline));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Annuler'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Alice'), findsOneWidget);
+    });
+  });
+}

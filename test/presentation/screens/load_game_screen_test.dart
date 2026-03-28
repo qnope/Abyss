@@ -22,6 +22,7 @@ void main() {
   });
 
   tearDown(() async {
+    await Hive.deleteBoxFromDisk('games');
     await Hive.close();
   });
 

@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import '../domain/game.dart';
-import '../domain/player.dart';
+import 'hive_adapters.dart';
 
 class GameRepository {
   static const _boxName = 'games';

@@ -8,9 +8,14 @@ import 'package:abyss/presentation/theme/abyss_theme.dart';
 
 void main() {
   setUp(() async {
-    Hive.init('/tmp/hive_test_${DateTime.now().millisecondsSinceEpoch}');
-    Hive.registerAdapter(PlayerAdapter());
-    Hive.registerAdapter(GameAdapter());
+    final path = '/tmp/hive_test_${DateTime.now().millisecondsSinceEpoch}';
+    Hive.init(path);
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(PlayerAdapter());
+    }
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(GameAdapter());
+    }
     await Hive.openBox<Game>('games');
   });
 
@@ -38,7 +43,7 @@ void main() {
       await tester.pumpWidget(createApp());
 
       await tester.tap(find.text('Commencer'));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       expect(find.text('Veuillez entrer un nom'), findsOneWidget);
     });
@@ -48,7 +53,7 @@ void main() {
 
       await tester.enterText(find.byType(TextFormField), 'A');
       await tester.tap(find.text('Commencer'));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       expect(
         find.text('Le nom doit contenir au moins 2 caractères'),

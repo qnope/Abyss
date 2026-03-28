@@ -6,18 +6,20 @@ import 'presentation/theme/abyss_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GameRepository.initialize();
-  runApp(const AbyssApp());
+  runApp(AbyssApp(repository: GameRepository()));
 }
 
 class AbyssApp extends StatelessWidget {
-  const AbyssApp({super.key});
+  final GameRepository repository;
+
+  const AbyssApp({super.key, required this.repository});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ABYSSES',
       theme: AbyssTheme.create(),
-      home: const MainMenuScreen(),
+      home: MainMenuScreen(repository: repository),
     );
   }
 }

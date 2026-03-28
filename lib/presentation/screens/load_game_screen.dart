@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import '../../data/game_repository.dart';
+import '../../data/gamewidget.repository.dart';
 import '../../domain/game.dart';
 import '../theme/abyss_colors.dart';
 import '../widgets/saved_game_card.dart';
 import 'game_screen.dart';
 
 class LoadGameScreen extends StatefulWidget {
-  const LoadGameScreen({super.key});
+  final GameRepository repository;
+
+  const LoadGameScreen({super.key, required this.repository});
 
   @override
   State<LoadGameScreen> createState() => _LoadGameScreenState();
 }
 
 class _LoadGameScreenState extends State<LoadGameScreen> {
-  final _repository = GameRepository();
   late List<Game> _games;
 
   @override
   void initState() {
     super.initState();
-    _games = _repository.loadAll();
+    _games = widget.repository.loadAll();
   }
 
   @override
@@ -104,8 +105,8 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
     );
 
     if (confirmed == true) {
-      await _repository.delete(index);
-      setState(() => _games = _repository.loadAll());
+      await widget.repository.delete(index);
+      setState(() => _games = widget.repository.loadAll());
     }
   }
 }

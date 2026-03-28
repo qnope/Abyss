@@ -1,38 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:abyss/domain/game.dart';
 import 'package:abyss/domain/player.dart';
 import 'package:abyss/presentation/screens/load_game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import '../../helpers/fake_game_repository.dart';
 
 void main() {
-  late String hivePath;
-
-  setUp(() async {
-    hivePath = '/tmp/hive_test_${DateTime.now().millisecondsSinceEpoch}';
-    Hive.init(hivePath);
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(PlayerAdapter());
-    }
-    if (!Hive.isAdapterRegistered(1)) {
-      Hive.registerAdapter(GameAdapter());
-    }
-    await Hive.openBox<Game>('games');
-  });
-
-  tearDown(() async {
-    await Hive.deleteFromDisk();
-  });
-
-  Widget createApp() {
-    return MaterialApp(
-      theme: AbyssTheme.create(),
-      home: const LoadGameScreen(),
-    );
-  }
-
   group('LoadGameScreen', () {
+    late FakeGameRepository repository;
+
+    setUp(() {
+      repository = FakeGameRepository();
+    });
+
+    Widget createApp() {
+      return MaterialApp(
+        theme: AbyssTheme.create(),
+        home: LoadGameScreen(repository: repository),
+      );
+    }
+
     testWidgets('shows empty state when no saves', (tester) async {
       await tester.pumpWidget(createApp());
 
@@ -41,13 +29,12 @@ void main() {
     });
 
     testWidgets('shows saved games with info', (tester) async {
-      final box = Hive.box<Game>('games');
-      await box.add(Game(
+      repository.addGame(Game(
         player: Player(name: 'Alice'),
         turn: 5,
         createdAt: DateTime(2026, 3, 15, 14, 30),
       ));
-      await box.add(Game(
+      repository.addGame(Game(
         player: Player(name: 'Bob'),
         turn: 12,
         createdAt: DateTime(2026, 3, 20, 9, 0),
@@ -64,8 +51,7 @@ void main() {
     });
 
     testWidgets('shows delete confirmation dialog', (tester) async {
-      final box = Hive.box<Game>('games');
-      await box.add(Game(player: Player(name: 'Alice')));
+      repository.addGame(Game(player: Player(name: 'Alice')));
 
       await tester.pumpWidget(createApp());
       await tester.tap(find.byIcon(Icons.delete_outline));
@@ -77,8 +63,7 @@ void main() {
     });
 
     testWidgets('deletes game after confirmation', (tester) async {
-      final box = Hive.box<Game>('games');
-      await box.add(Game(player: Player(name: 'Alice')));
+      repository.addGame(Game(player: Player(name: 'Alice')));
 
       await tester.pumpWidget(createApp());
       expect(find.text('Alice'), findsOneWidget);
@@ -94,8 +79,7 @@ void main() {
     });
 
     testWidgets('cancel delete keeps game', (tester) async {
-      final box = Hive.box<Game>('games');
-      await box.add(Game(player: Player(name: 'Alice')));
+      repository.addGame(Game(player: Player(name: 'Alice')));
 
       await tester.pumpWidget(createApp());
 

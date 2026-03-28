@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/presentation/screens/main_menu_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import '../../helpers/fake_game_repository.dart';
 
 void main() {
   group('MainMenuScreen', () {
     Widget createApp() {
       return MaterialApp(
         theme: AbyssTheme.create(),
-        home: const MainMenuScreen(),
+        home: MainMenuScreen(repository: FakeGameRepository()),
       );
     }
 

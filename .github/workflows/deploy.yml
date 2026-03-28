@@ -50,6 +50,7 @@ jobs:
         with:
           channel: stable
           cache: true
+      - run: flutter create . --platforms=web
       - run: flutter pub get
       - run: flutter build web --release --base-href /Abyss/
       - name: Upload Pages artifact

@@ -36,14 +36,7 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
-      - run: flutter test --coverage
-      - name: Upload coverage
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage/lcov.info
-          retention-days: 7
+      - run: flutter test
 
   build-web:
     name: Build Web

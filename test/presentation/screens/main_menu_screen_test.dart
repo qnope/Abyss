@@ -12,11 +12,12 @@ void main() {
       );
     }
 
-    testWidgets('shows game title and new game button', (tester) async {
+    testWidgets('shows game title and menu buttons', (tester) async {
       await tester.pumpWidget(createApp());
 
       expect(find.text('ABYSSES'), findsOneWidget);
       expect(find.text('Nouvelle Partie'), findsOneWidget);
+      expect(find.text('Charger une partie'), findsOneWidget);
     });
 
     testWidgets('navigates to new game screen', (tester) async {

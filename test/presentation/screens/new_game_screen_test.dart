@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:abyss/data/hive_adapters.dart';
 import 'package:abyss/domain/game.dart';
+import 'package:abyss/domain/player.dart';
 import 'package:abyss/presentation/screens/new_game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 

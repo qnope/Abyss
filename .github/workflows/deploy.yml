@@ -24,6 +24,13 @@ jobs:
         with:
           channel: stable
           cache: true
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+          key: pub-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
       - run: flutter pub get
       - run: flutter analyze --fatal-infos
 
@@ -37,6 +44,13 @@ jobs:
         with:
           channel: stable
           cache: true
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+          key: pub-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
       - run: flutter pub get
       - run: flutter test
 
@@ -50,6 +64,13 @@ jobs:
         with:
           channel: stable
           cache: true
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+          key: pub-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
       - run: flutter create . --platforms=web
       - run: flutter pub get
       - run: flutter build web --release --base-href /Abyss/

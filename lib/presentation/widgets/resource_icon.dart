@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum ResourceType { algae, coral, ore, energy, pearl }
+import '../../domain/resource_type.dart';
 
 class ResourceIcon extends StatelessWidget {
   final ResourceType type;

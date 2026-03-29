@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../data/game_repository.dart';
 import '../../domain/game.dart';
-import '../../presentation/theme/abyss_colors.dart';
+import '../widgets/game_bottom_bar.dart';
+import '../widgets/resource_bar.dart';
+import '../widgets/tab_placeholder.dart';
 import 'main_menu_screen.dart';
 
-class GameScreen extends StatelessWidget {
+class GameScreen extends StatefulWidget {
   final Game game;
   final GameRepository repository;
 
@@ -15,56 +17,76 @@ class GameScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+  State<GameScreen> createState() => _GameScreenState();
+}
 
+class _GameScreenState extends State<GameScreen> {
+  int _currentTab = 0;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tour ${game.turn}'),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            tooltip: 'Sauvegarder et quitter',
-            onPressed: () => _saveAndQuit(context),
-          ),
+      body: Column(
+        children: [
+          ResourceBar(resources: widget.game.resources),
+          Expanded(child: _buildTabContent()),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.waves,
-              size: 64,
-              color: AbyssColors.biolumCyan,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Bienvenue, ${game.player.name}',
-              style: textTheme.headlineMedium,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Votre aventure dans les abysses commence...',
-              style: textTheme.bodyLarge?.copyWith(
-                color: AbyssColors.onSurfaceDim,
-              ),
-            ),
-          ],
-        ),
+      bottomNavigationBar: GameBottomBar(
+        currentTab: _currentTab,
+        turnNumber: widget.game.turn,
+        onTabChanged: (index) => setState(() => _currentTab = index),
+        onNextTurn: _nextTurn,
+        onSettings: _showSettings,
       ),
     );
   }
 
-  Future<void> _saveAndQuit(BuildContext context) async {
-    await repository.save(game);
+  Widget _buildTabContent() {
+    return switch (_currentTab) {
+      0 => const TabPlaceholder(icon: Icons.home, label: 'Base'),
+      1 => const TabPlaceholder(icon: Icons.map, label: 'Carte'),
+      2 => const TabPlaceholder(icon: Icons.shield, label: 'Armee'),
+      3 => const TabPlaceholder(icon: Icons.science, label: 'Tech'),
+      _ => const SizedBox.shrink(),
+    };
+  }
 
-    if (!context.mounted) return;
+  void _nextTurn() {
+    setState(() {
+      widget.game.turn++;
+    });
+  }
 
+  void _showSettings() {
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Parametres'),
+        content: const Text('Que souhaitez-vous faire ?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Annuler'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              _saveAndQuit();
+            },
+            child: const Text('Sauvegarder et quitter'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _saveAndQuit() async {
+    await widget.repository.save(widget.game);
+    if (!mounted) return;
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute<void>(
-        builder: (_) => MainMenuScreen(repository: repository),
+        builder: (_) => MainMenuScreen(repository: widget.repository),
       ),
       (_) => false,
     );

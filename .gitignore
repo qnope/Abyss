@@ -23,8 +23,7 @@ migrate_working_dir/
 # is commented out by default.
 #.vscode/
 
-# Generated files
-*.g.dart
+# Generated files are committed for Hive adapters
 
 # Flutter/Dart/Pub related
 **/doc/api/

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:abyss/domain/resource_type.dart';
 import 'package:abyss/presentation/widgets/resource_icon.dart';
 
 void main() {

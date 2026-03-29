@@ -24,3 +24,4 @@ We have resources, army, technologies etc.
 3. Always run `flutter analyze` and `flutter test` to be sure everything is fine.
 4. Always target under 150 lines of code by file.
 5. Target architecture of 5 layers.
+6. Theme is in `lib/presentation/theme/`. Always use it when creating UI component.

@@ -39,7 +39,7 @@ test/presentation/widgets/
 
 3. **Shape distinctness** — Icons are distinguishable by shape alone (not just color), aiding accessibility: organic curves (algae, coral), sharp geometry (ore), zigzag (energy), circle (pearl).
 
-4. **ResourceType enum** — Lives in the presentation layer for now. Will move to the domain layer when the resource system is built.
+4. **ResourceType enum** — Lives in `lib/domain/resource_type.dart` with Hive annotations (typeId: 2).
 
 5. **Asset path convention** — `assets/icons/resources/{type.name}.svg` — the widget derives paths from the enum name, so adding a resource means adding an enum value and an SVG file.
 

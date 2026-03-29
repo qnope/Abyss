@@ -2,7 +2,6 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -11,8 +10,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   analyze:
@@ -55,7 +54,15 @@ jobs:
       - run: flutter create . --platforms=web
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
-      - run: flutter build web --release --base-href /Abyss/
+      - name: Set base href
+        id: basehref
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "href=/Abyss/" >> "$GITHUB_OUTPUT"
+          else
+            echo "href=/Abyss/test/" >> "$GITHUB_OUTPUT"
+          fi
+      - run: flutter build web --release --base-href ${{ steps.basehref.outputs.href }}
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

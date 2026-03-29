@@ -90,7 +90,10 @@ class _NewGameScreenState extends State<NewGameScreen> {
 
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute<void>(
-        builder: (_) => GameScreen(game: game),
+        builder: (_) => GameScreen(
+          game: game,
+          repository: widget.repository,
+        ),
       ),
       (_) => false,
     );

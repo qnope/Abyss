@@ -73,7 +73,10 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
   void _loadGame(Game game) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute<void>(
-        builder: (_) => GameScreen(game: game),
+        builder: (_) => GameScreen(
+          game: game,
+          repository: widget.repository,
+        ),
       ),
       (_) => false,
     );

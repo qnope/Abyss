@@ -15,7 +15,11 @@ class GameRepository {
   Box<Game> get _box => Hive.box<Game>(_boxName);
 
   Future<void> save(Game game) async {
-    await _box.add(game);
+    if (game.isInBox) {
+      await game.save();
+    } else {
+      await _box.add(game);
+    }
   }
 
   List<Game> loadAll() {

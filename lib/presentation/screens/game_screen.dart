@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import '../../data/game_repository.dart';
 import '../../domain/game.dart';
 import '../../presentation/theme/abyss_colors.dart';
+import 'main_menu_screen.dart';
 
 class GameScreen extends StatelessWidget {
   final Game game;
+  final GameRepository repository;
 
-  const GameScreen({super.key, required this.game});
+  const GameScreen({
+    super.key,
+    required this.game,
+    required this.repository,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +22,13 @@ class GameScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Tour ${game.turn}'),
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.save),
+            tooltip: 'Sauvegarder et quitter',
+            onPressed: () => _saveAndQuit(context),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -40,6 +54,19 @@ class GameScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _saveAndQuit(BuildContext context) async {
+    await repository.save(game);
+
+    if (!context.mounted) return;
+
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(
+        builder: (_) => MainMenuScreen(repository: repository),
+      ),
+      (_) => false,
     );
   }
 }

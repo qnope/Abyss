@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="oreGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#42A5F5"/>
+      <stop offset="100%" stop-color="#1565C0"/>
+    </linearGradient>
+    <linearGradient id="oreFacet" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#90CAF9"/>
+      <stop offset="100%" stop-color="#64B5F6"/>
+    </linearGradient>
+    <filter id="oreGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#oreGlow)">
+    <polygon points="32,6 44,16 46,32 40,50 32,56 24,50 18,32 20,16" fill="url(#oreGrad)" stroke="#0D47A1" stroke-width="0.8"/>
+    <polygon points="32,6 44,16 32,22 20,16" fill="url(#oreFacet)" opacity="0.6"/>
+    <line x1="32" y1="22" x2="46" y2="32" stroke="url(#oreFacet)" stroke-width="0.7" opacity="0.7"/>
+    <line x1="32" y1="22" x2="18" y2="32" stroke="url(#oreFacet)" stroke-width="0.7" opacity="0.7"/>
+    <line x1="32" y1="22" x2="32" y2="56" stroke="url(#oreFacet)" stroke-width="0.5" opacity="0.5"/>
+    <circle cx="30" cy="12" r="2" fill="#E3F2FD" opacity="0.8"/>
+  </g>
+</svg>

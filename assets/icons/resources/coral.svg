@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="coralGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#C2185B"/>
+      <stop offset="100%" stop-color="#FF6E91"/>
+    </linearGradient>
+    <filter id="coralGlow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#coralGlow)">
+    <!-- Main trunk -->
+    <path d="M32 58 C32 58 31 42 32 30 C33 22 32 18 32 14"
+          stroke="url(#coralGrad)" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <!-- Left branch with fork -->
+    <path d="M32 34 C28 30 22 26 18 22"
+          stroke="url(#coralGrad)" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M22 27 C20 24 16 18 14 14"
+          stroke="url(#coralGrad)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- Right branch with fork -->
+    <path d="M32 30 C36 26 42 22 46 18"
+          stroke="url(#coralGrad)" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M42 22 C44 18 48 14 50 10"
+          stroke="url(#coralGrad)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- Center-left small branch -->
+    <path d="M32 24 C28 20 24 16 22 12"
+          stroke="url(#coralGrad)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- Center-right small branch -->
+    <path d="M32 20 C35 16 38 12 40 8"
+          stroke="url(#coralGrad)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

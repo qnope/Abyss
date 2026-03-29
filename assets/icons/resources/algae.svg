@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="algaeGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#2E7D32"/>
+      <stop offset="100%" stop-color="#69F0AE"/>
+    </linearGradient>
+    <filter id="algaeGlow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#algaeGlow)">
+    <!-- Central stem -->
+    <path d="M32 58 C30 45, 34 35, 32 12" stroke="#2E7D32" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- Left leaf -->
+    <path d="M32 38 C26 34, 18 30, 14 24 C18 26, 26 30, 32 32 Z" fill="url(#algaeGrad)"/>
+    <!-- Right leaf -->
+    <path d="M32 28 C38 24, 44 18, 48 12 C44 16, 38 22, 32 24 Z" fill="url(#algaeGrad)"/>
+    <!-- Small left leaf -->
+    <path d="M32 20 C28 17, 22 14, 20 10 C23 13, 28 16, 32 17 Z" fill="url(#algaeGrad)"/>
+  </g>
+</svg>

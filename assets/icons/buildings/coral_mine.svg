@@ -4,7 +4,7 @@
       <stop offset="0%" stop-color="#C2185B"/>
       <stop offset="100%" stop-color="#FF6E91"/>
     </linearGradient>
-    <filter id="coralMineGlow">
+    <filter id="coralMineGlow" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>

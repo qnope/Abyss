@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="solarGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#FF8F00"/>
+      <stop offset="100%" stop-color="#FFD740"/>
+    </linearGradient>
+    <linearGradient id="solarMastGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#616161"/>
+      <stop offset="100%" stop-color="#9E9E9E"/>
+    </linearGradient>
+    <filter id="solarGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#solarGlow)">
+    <!-- Base unit -->
+    <rect x="22" y="52" width="20" height="5" rx="2" fill="#424242" stroke="#616161" stroke-width="0.8"/>
+    <rect x="25" y="50" width="14" height="3" rx="1" fill="#546E7A" stroke="#616161" stroke-width="0.5"/>
+    <!-- Central mast -->
+    <rect x="30.5" y="22" width="3" height="28" rx="0.8" fill="url(#solarMastGrad)" stroke="#424242" stroke-width="0.5"/>
+    <!-- Articulation joint (lower) -->
+    <circle cx="32" cy="38" r="2.2" fill="#757575" stroke="#424242" stroke-width="0.6"/>
+    <circle cx="32" cy="38" r="1" fill="#9E9E9E"/>
+    <!-- Articulation joint (upper) -->
+    <circle cx="32" cy="24" r="2.5" fill="#757575" stroke="#424242" stroke-width="0.6"/>
+    <circle cx="32" cy="24" r="1.2" fill="#9E9E9E"/>
+    <!-- Left panel arm -->
+    <line x1="32" y1="24" x2="14" y2="16" stroke="#9E9E9E" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- Left solar panel -->
+    <polygon points="6,12 14,8 22,16 14,20" fill="url(#solarGrad)" stroke="#FF8F00" stroke-width="0.8"/>
+    <line x1="10" y1="10" x2="18" y2="18" stroke="#FF8F00" stroke-width="0.4" opacity="0.6"/>
+    <line x1="8" y1="14" x2="16" y2="12" stroke="#FF8F00" stroke-width="0.4" opacity="0.6"/>
+    <!-- Right panel arm -->
+    <line x1="32" y1="24" x2="50" y2="16" stroke="#9E9E9E" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- Right solar panel -->
+    <polygon points="42,12 50,8 58,16 50,20" fill="url(#solarGrad)" stroke="#FF8F00" stroke-width="0.8"/>
+    <line x1="46" y1="10" x2="54" y2="18" stroke="#FF8F00" stroke-width="0.4" opacity="0.6"/>
+    <line x1="44" y1="14" x2="52" y2="12" stroke="#FF8F00" stroke-width="0.4" opacity="0.6"/>
+    <!-- Center top panel arm -->
+    <line x1="32" y1="24" x2="32" y2="12" stroke="#9E9E9E" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- Center solar panel -->
+    <polygon points="25,8 32,4 39,8 32,12" fill="url(#solarGrad)" stroke="#FF8F00" stroke-width="0.8"/>
+    <line x1="28.5" y1="6" x2="35.5" y2="10" stroke="#FF8F00" stroke-width="0.4" opacity="0.6"/>
+    <!-- Cables from joint down to base -->
+    <path d="M30,38 C28,42 26,46 26,50" stroke="#FFD740" stroke-width="0.8" fill="none" opacity="0.6"/>
+    <path d="M34,38 C36,42 38,46 38,50" stroke="#FFD740" stroke-width="0.8" fill="none" opacity="0.6"/>
+    <!-- Lightning bolt spark (left panel) -->
+    <polygon points="12,22 10,26 13,25 11,30 15,24 12,25" fill="#FFD740" opacity="0.8"/>
+    <!-- Lightning bolt spark (right panel) -->
+    <polygon points="52,22 50,26 53,25 51,30 55,24 52,25" fill="#FFD740" opacity="0.8"/>
+    <!-- Small zigzag spark (center) -->
+    <polyline points="32,14 30,17 34,19 31,22" stroke="#FFD740" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.7"/>
+    <!-- Light rays above panels -->
+    <line x1="14" y1="5" x2="14" y2="2" stroke="#FFD740" stroke-width="0.8" opacity="0.5"/>
+    <line x1="10" y1="6" x2="8" y2="3" stroke="#FFD740" stroke-width="0.8" opacity="0.4"/>
+    <line x1="18" y1="6" x2="20" y2="3" stroke="#FFD740" stroke-width="0.8" opacity="0.4"/>
+    <line x1="50" y1="5" x2="50" y2="2" stroke="#FFD740" stroke-width="0.8" opacity="0.5"/>
+    <line x1="46" y1="6" x2="44" y2="3" stroke="#FFD740" stroke-width="0.8" opacity="0.4"/>
+    <line x1="54" y1="6" x2="56" y2="3" stroke="#FFD740" stroke-width="0.8" opacity="0.4"/>
+    <line x1="32" y1="1" x2="32" y2="3" stroke="#FFD740" stroke-width="0.8" opacity="0.5" transform="rotate(0,32,2)"/>
+    <line x1="28" y1="2" x2="26" y2="0" stroke="#FFD740" stroke-width="0.8" opacity="0.4"/>
+    <line x1="36" y1="2" x2="38" y2="0" stroke="#FFD740" stroke-width="0.8" opacity="0.4"/>
+    <!-- Energy particle dots -->
+    <circle cx="8" cy="24" r="1" fill="#FFD740" opacity="0.6"/>
+    <circle cx="56" cy="24" r="1" fill="#FFD740" opacity="0.6"/>
+    <circle cx="28" cy="44" r="0.8" fill="#FFD740" opacity="0.5"/>
+    <circle cx="36" cy="44" r="0.8" fill="#FFD740" opacity="0.5"/>
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="afGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#2E7D32"/>
+      <stop offset="100%" stop-color="#69F0AE"/>
+    </linearGradient>
+    <linearGradient id="afTank" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#132238"/>
+      <stop offset="60%" stop-color="#1B3150"/>
+    </linearGradient>
+    <filter id="afGlow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#afGlow)">
+    <!-- Glass dome / tank -->
+    <path d="M12 48 C12 28, 20 14, 32 14 C44 14, 52 28, 52 48 Z" fill="url(#afTank)" opacity="0.7"/>
+    <path d="M12 48 C12 28, 20 14, 32 14 C44 14, 52 28, 52 48 Z" fill="none" stroke="#69F0AE" stroke-width="1.5" opacity="0.5"/>
+    <!-- Algae strands inside -->
+    <path d="M24 48 C22 40, 26 34, 24 26" stroke="#2E7D32" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M32 48 C30 38, 34 30, 32 20" stroke="url(#afGrad)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M40 48 C42 40, 38 34, 40 26" stroke="#2E7D32" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Small leaves -->
+    <path d="M24 34 C20 32, 18 28, 17 26 C19 28, 21 31, 24 32 Z" fill="#69F0AE" opacity="0.6"/>
+    <path d="M32 28 C36 26, 40 22, 42 20 C39 23, 36 26, 32 26 Z" fill="#69F0AE" opacity="0.6"/>
+    <path d="M40 34 C44 32, 46 28, 47 26 C45 29, 43 32, 40 32 Z" fill="#69F0AE" opacity="0.6"/>
+    <!-- Base -->
+    <rect x="10" y="48" width="44" height="5" rx="2" fill="#1B3150"/>
+    <!-- Green glow bubbles -->
+    <circle cx="28" cy="22" r="1.5" fill="#69F0AE" opacity="0.5"/>
+    <circle cx="36" cy="18" r="1" fill="#69F0AE" opacity="0.4"/>
+    <circle cx="22" cy="30" r="1" fill="#69F0AE" opacity="0.3"/>
+  </g>
+</svg>

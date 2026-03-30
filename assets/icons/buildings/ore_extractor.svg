@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="oeGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#42A5F5"/>
+    </linearGradient>
+    <radialGradient id="oeCrystal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#42A5F5"/>
+      <stop offset="100%" stop-color="#1565C0"/>
+    </radialGradient>
+    <filter id="oeGlow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#oeGlow)">
+    <!-- Machine body -->
+    <path d="M16 48 L16 32 L22 28 L22 48 Z" fill="#1B3150"/>
+    <path d="M42 48 L42 32 L48 28 L48 48 Z" fill="#1B3150"/>
+    <!-- Central processing unit -->
+    <rect x="22" y="30" width="20" height="18" rx="2" fill="#132238"/>
+    <rect x="22" y="30" width="20" height="18" rx="2" fill="none" stroke="#42A5F5" stroke-width="1" opacity="0.5"/>
+    <!-- Mechanical arm -->
+    <path d="M32 30 L32 16 L28 12 L36 12 L32 16" stroke="#4A5568" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+    <!-- Ore crystals at bottom -->
+    <polygon points="24,54 28,44 32,54" fill="url(#oeGrad)" opacity="0.8"/>
+    <polygon points="30,54 34,42 38,54" fill="url(#oeCrystal)"/>
+    <polygon points="36,54 40,46 44,54" fill="url(#oeGrad)" opacity="0.7"/>
+    <!-- Processing light -->
+    <circle cx="32" cy="38" r="3" fill="#42A5F5" opacity="0.6"/>
+    <!-- Conveyor dots -->
+    <circle cx="18" cy="42" r="1.5" fill="#42A5F5" opacity="0.4"/>
+    <circle cx="46" cy="42" r="1.5" fill="#42A5F5" opacity="0.4"/>
+    <!-- Sparks -->
+    <circle cx="30" cy="14" r="1" fill="#42A5F5" opacity="0.5"/>
+    <circle cx="35" cy="16" r="0.8" fill="#448AFF" opacity="0.4"/>
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="hqGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#0D1B2A"/>
+      <stop offset="100%" stop-color="#00E5FF"/>
+    </linearGradient>
+    <radialGradient id="hqCore" cx="50%" cy="40%" r="30%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#0D1B2A"/>
+    </radialGradient>
+    <filter id="hqGlow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#hqGlow)">
+    <!-- Base platform -->
+    <path d="M12 48 L32 54 L52 48 L52 44 L32 50 L12 44 Z" fill="#1B3150" opacity="0.8"/>
+    <!-- Main tower -->
+    <path d="M24 44 L24 22 L32 14 L40 22 L40 44 Z" fill="url(#hqGrad)"/>
+    <!-- Left wing -->
+    <path d="M12 44 L12 30 L24 26 L24 44 Z" fill="#132238"/>
+    <!-- Right wing -->
+    <path d="M40 44 L40 26 L52 30 L52 44 Z" fill="#132238"/>
+    <!-- Central glowing core -->
+    <circle cx="32" cy="30" r="6" fill="url(#hqCore)"/>
+    <!-- Top spire -->
+    <path d="M30 14 L32 6 L34 14 Z" fill="#00E5FF" opacity="0.9"/>
+    <!-- Window lights -->
+    <rect x="28" y="36" width="3" height="3" rx="0.5" fill="#00E5FF" opacity="0.7"/>
+    <rect x="33" y="36" width="3" height="3" rx="0.5" fill="#00E5FF" opacity="0.7"/>
+    <rect x="14" y="34" width="2.5" height="2.5" rx="0.5" fill="#448AFF" opacity="0.5"/>
+    <rect x="47" y="34" width="2.5" height="2.5" rx="0.5" fill="#448AFF" opacity="0.5"/>
+  </g>
+</svg>

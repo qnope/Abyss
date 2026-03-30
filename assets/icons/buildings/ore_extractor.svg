@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="oreExtGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#42A5F5"/>
+    </linearGradient>
+    <linearGradient id="oreExtMetal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9E9E9E"/>
+      <stop offset="100%" stop-color="#546E7A"/>
+    </linearGradient>
+    <linearGradient id="oreExtDrill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#78909C"/>
+      <stop offset="100%" stop-color="#37474F"/>
+    </linearGradient>
+    <linearGradient id="oreExtCrystal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#90CAF9"/>
+      <stop offset="100%" stop-color="#64B5F6"/>
+    </linearGradient>
+    <filter id="oreExtGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#oreExtGlow)">
+    <!-- Ground / base plate -->
+    <polygon points="4,54 60,54 58,58 6,58" fill="#37474F" stroke="#263238" stroke-width="0.5"/>
+    <!-- Structural support legs -->
+    <rect x="12" y="34" width="3" height="20" fill="url(#oreExtMetal)" stroke="#455A64" stroke-width="0.4"/>
+    <rect x="49" y="34" width="3" height="20" fill="url(#oreExtMetal)" stroke="#455A64" stroke-width="0.4"/>
+    <rect x="22" y="38" width="2.5" height="16" fill="url(#oreExtMetal)" stroke="#455A64" stroke-width="0.4"/>
+    <rect x="39.5" y="38" width="2.5" height="16" fill="url(#oreExtMetal)" stroke="#455A64" stroke-width="0.4"/>
+    <!-- Cross braces on legs -->
+    <line x1="12" y1="44" x2="15" y2="48" stroke="#90A4AE" stroke-width="0.5"/>
+    <line x1="15" y1="44" x2="12" y2="48" stroke="#90A4AE" stroke-width="0.5"/>
+    <line x1="49" y1="44" x2="52" y2="48" stroke="#90A4AE" stroke-width="0.5"/>
+    <line x1="52" y1="44" x2="49" y2="48" stroke="#90A4AE" stroke-width="0.5"/>
+    <!-- Main platform body -->
+    <rect x="8" y="30" width="48" height="6" rx="1" fill="url(#oreExtGrad)" stroke="#0D47A1" stroke-width="0.7"/>
+    <!-- Platform top plate -->
+    <polygon points="8,30 56,30 54,28 10,28" fill="#42A5F5" opacity="0.3" stroke="#1565C0" stroke-width="0.4"/>
+    <!-- Derrick / drill tower -->
+    <polygon points="28,28 36,28 34,8 30,8" fill="url(#oreExtMetal)" stroke="#455A64" stroke-width="0.6"/>
+    <!-- Tower cross struts -->
+    <line x1="29" y1="14" x2="35" y2="18" stroke="#78909C" stroke-width="0.6"/>
+    <line x1="35" y1="14" x2="29" y2="18" stroke="#78909C" stroke-width="0.6"/>
+    <line x1="29" y1="20" x2="35" y2="24" stroke="#78909C" stroke-width="0.6"/>
+    <line x1="35" y1="20" x2="29" y2="24" stroke="#78909C" stroke-width="0.6"/>
+    <!-- Tower top pulley housing -->
+    <rect x="29" y="6" width="6" height="3" rx="0.5" fill="#455A64" stroke="#37474F" stroke-width="0.4"/>
+    <circle cx="32" cy="7.5" r="1" fill="#90A4AE" stroke="#607D8B" stroke-width="0.3"/>
+    <!-- Drill shaft going down from platform -->
+    <rect x="30.5" y="36" width="3" height="14" fill="url(#oreExtDrill)" stroke="#263238" stroke-width="0.4"/>
+    <!-- Drill bit -->
+    <polygon points="30,50 34,50 32,56" fill="#455A64" stroke="#263238" stroke-width="0.5"/>
+    <!-- Drill spiral grooves -->
+    <line x1="30.5" y1="39" x2="33.5" y2="41" stroke="#90A4AE" stroke-width="0.4" opacity="0.6"/>
+    <line x1="30.5" y1="43" x2="33.5" y2="45" stroke="#90A4AE" stroke-width="0.4" opacity="0.6"/>
+    <line x1="30.5" y1="47" x2="33.5" y2="49" stroke="#90A4AE" stroke-width="0.4" opacity="0.6"/>
+    <!-- Left machinery housing -->
+    <rect x="9" y="22" width="10" height="6" rx="1" fill="url(#oreExtGrad)" stroke="#0D47A1" stroke-width="0.5"/>
+    <!-- Exhaust pipe on left housing -->
+    <rect x="10" y="18" width="2" height="4" fill="#607D8B" stroke="#455A64" stroke-width="0.3"/>
+    <ellipse cx="11" cy="17" rx="1.5" ry="0.8" fill="#90A4AE" opacity="0.6"/>
+    <!-- Right machinery housing -->
+    <rect x="45" y="22" width="10" height="6" rx="1" fill="url(#oreExtGrad)" stroke="#0D47A1" stroke-width="0.5"/>
+    <!-- Tube connecting right housing to tower -->
+    <line x1="45" y1="25" x2="36" y2="22" stroke="#78909C" stroke-width="1" stroke-linecap="round"/>
+    <!-- Conveyor belt from platform going right -->
+    <polygon points="52,34 60,42 58,44 50,36" fill="url(#oreExtMetal)" stroke="#455A64" stroke-width="0.4"/>
+    <!-- Conveyor belt rollers -->
+    <circle cx="53" cy="36" r="0.8" fill="#90A4AE"/>
+    <circle cx="57" cy="40" r="0.8" fill="#90A4AE"/>
+    <!-- Crystal cluster - left side (faceted polygon style) -->
+    <polygon points="7,48 11,44 15,46 14,52 9,52" fill="url(#oreExtGrad)" stroke="#0D47A1" stroke-width="0.6"/>
+    <polygon points="7,48 11,44 10,48" fill="url(#oreExtCrystal)" opacity="0.6"/>
+    <!-- Crystal cluster - right side on conveyor -->
+    <polygon points="57,44 60,41 62,44 61,48 58,48" fill="url(#oreExtGrad)" stroke="#0D47A1" stroke-width="0.6"/>
+    <polygon points="57,44 60,41 59,45" fill="url(#oreExtCrystal)" opacity="0.6"/>
+    <!-- Small crystal near drill -->
+    <polygon points="36,52 39,49 41,52 39,55" fill="url(#oreExtGrad)" stroke="#0D47A1" stroke-width="0.5"/>
+    <polygon points="36,52 39,49 38,52" fill="url(#oreExtCrystal)" opacity="0.5"/>
+    <!-- Sparks / activity at drill tip -->
+    <circle cx="32" cy="55" r="1.2" fill="#E3F2FD" opacity="0.7"/>
+    <circle cx="33.5" cy="54" r="0.6" fill="#BBDEFB" opacity="0.6"/>
+    <!-- Warning light on top of tower -->
+    <circle cx="32" cy="5.5" r="1.2" fill="#42A5F5" opacity="0.7"/>
+    <circle cx="32" cy="5.5" r="0.6" fill="#E3F2FD" opacity="0.9"/>
+    <!-- Rivets / detail on main platform -->
+    <circle cx="18" cy="33" r="0.5" fill="#90A4AE" opacity="0.7"/>
+    <circle cx="26" cy="33" r="0.5" fill="#90A4AE" opacity="0.7"/>
+    <circle cx="38" cy="33" r="0.5" fill="#90A4AE" opacity="0.7"/>
+    <circle cx="46" cy="33" r="0.5" fill="#90A4AE" opacity="0.7"/>
+  </g>
+</svg>

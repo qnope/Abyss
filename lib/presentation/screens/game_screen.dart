@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../data/game_repository.dart';
+import '../../domain/building.dart';
+import '../../domain/building_cost_calculator.dart';
 import '../../domain/game.dart';
+import '../widgets/building_detail_sheet.dart';
+import '../widgets/building_list_view.dart';
 import '../widgets/game_bottom_bar.dart';
 import '../widgets/resource_bar.dart';
 import '../widgets/tab_placeholder.dart';
@@ -44,12 +48,38 @@ class _GameScreenState extends State<GameScreen> {
 
   Widget _buildTabContent() {
     return switch (_currentTab) {
-      0 => const TabPlaceholder(icon: Icons.home, label: 'Base'),
+      0 => BuildingListView(
+        buildings: widget.game.buildings,
+        resources: widget.game.resources,
+        onBuildingTap: _showBuildingDetail,
+      ),
       1 => const TabPlaceholder(icon: Icons.map, label: 'Carte'),
       2 => const TabPlaceholder(icon: Icons.shield, label: 'Armee'),
       3 => const TabPlaceholder(icon: Icons.science, label: 'Tech'),
       _ => const SizedBox.shrink(),
     };
+  }
+
+  void _showBuildingDetail(Building building) {
+    showBuildingDetailSheet(
+      context,
+      building: building,
+      resources: widget.game.resources,
+      allBuildings: widget.game.buildings,
+      onUpgrade: () => _upgradeBuilding(building),
+    );
+  }
+
+  void _upgradeBuilding(Building building) {
+    final calculator = BuildingCostCalculator();
+    final costs = calculator.upgradeCost(building.type, building.level);
+    setState(() {
+      for (final entry in costs.entries) {
+        widget.game.resources[entry.key]!.amount -= entry.value;
+      }
+      building.level++;
+    });
+    Navigator.pop(context);
   }
 
   void _nextTurn() {

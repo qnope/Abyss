@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/building.dart';
+import 'package:abyss/domain/building_type.dart';
 import 'package:abyss/domain/game.dart';
 import 'package:abyss/domain/player.dart';
 import 'package:abyss/domain/resource_type.dart';
@@ -37,6 +39,24 @@ void main() {
       final game = Game(player: player);
       game.turn++;
       expect(game.turn, 2);
+    });
+
+    test('creates with default buildings (1 HQ at level 0)', () {
+      final player = Player(name: 'Nemo');
+      final game = Game(player: player);
+      expect(game.buildings.length, 1);
+      expect(game.buildings.first.type, BuildingType.headquarters);
+      expect(game.buildings.first.level, 0);
+    });
+
+    test('creates with custom buildings list', () {
+      final player = Player(name: 'Nemo');
+      final buildings = [
+        Building(type: BuildingType.headquarters, level: 3),
+      ];
+      final game = Game(player: player, buildings: buildings);
+      expect(game.buildings.length, 1);
+      expect(game.buildings.first.level, 3);
     });
   });
 }

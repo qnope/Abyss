@@ -22,14 +22,14 @@ class Game extends HiveObject {
   final Map<ResourceType, Resource> resources;
 
   @HiveField(4)
-  final List<Building> buildings;
+  final Map<BuildingType, Building> buildings;
 
   Game({
     required this.player,
     this.turn = 1,
     DateTime? createdAt,
     Map<ResourceType, Resource>? resources,
-    List<Building>? buildings,
+    Map<BuildingType, Building>? buildings,
   })  : createdAt = createdAt ?? DateTime.now(),
         resources = resources ?? defaultResources(),
         buildings = buildings ?? defaultBuildings();
@@ -69,9 +69,9 @@ class Game extends HiveObject {
     };
   }
 
-  static List<Building> defaultBuildings() {
-    return [
-      Building(type: BuildingType.headquarters, level: 0),
-    ];
+  static Map<BuildingType, Building> defaultBuildings() {
+    return {
+      BuildingType.headquarters: Building(type: BuildingType.headquarters, level: 0),
+    };
   }
 }

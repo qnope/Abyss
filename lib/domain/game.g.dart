@@ -21,7 +21,7 @@ class GameAdapter extends TypeAdapter<Game> {
       turn: fields[1] as int,
       createdAt: fields[2] as DateTime?,
       resources: (fields[3] as Map?)?.cast<ResourceType, Resource>(),
-      buildings: (fields[4] as List?)?.cast<Building>(),
+      buildings: (fields[4] as Map?)?.cast<BuildingType, Building>(),
     );
   }
 

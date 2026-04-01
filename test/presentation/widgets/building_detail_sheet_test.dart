@@ -23,7 +23,7 @@ Widget _app({
             ctx,
             building: building,
             resources: resources ?? Game.defaultResources(),
-            allBuildings: [building],
+            allBuildings: {building.type: building},
             onUpgrade: onUpgrade ?? () {},
           ),
           child: const Text('Open'),

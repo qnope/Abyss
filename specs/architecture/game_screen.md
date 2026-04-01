@@ -13,7 +13,7 @@ The main gameplay screen with three zones: resource bar (top), tab content (cent
 ├──────────────────────────────────┤
 │                                  │
 │         Tab Content              │  ← Expanded, switches by tab index
-│       (placeholder for now)      │
+│   (Base=BuildingListView, rest=placeholders) │
 │                                  │
 ├──────────────────────────────────┤
 │  ⚙️ Settings  │ Tour 5 │ ▶ Next │  ← Action row
@@ -31,7 +31,7 @@ GameScreen (StatefulWidget)
         │     │     ├── ResourceBarItem × 4 (production)
         │     │     ├── Divider
         │     │     └── ResourceBarItem (pearl)
-        │     └── Expanded → TabPlaceholder
+        │     └── Expanded → tab content (BuildingListView | TabPlaceholder)
         └── bottomNavigationBar: GameBottomBar
               ├── Action row (settings, turn counter, next turn)
               └── BottomNavigationBar (4 tabs)
@@ -48,6 +48,8 @@ GameScreen (StatefulWidget)
 | Action | Handler | Effect |
 |--------|---------|--------|
 | Tap resource | `showResourceDetailSheet()` | Opens modal bottom sheet |
+| Tap building | `_showBuildingDetail()` | Opens BuildingDetailSheet |
+| Upgrade building | `_upgradeBuilding()` | Deducts resources, increments level |
 | Tap tab | `onTabChanged` | Switches `_currentTab` |
 | Next Turn | `_nextTurn()` | Increments `game.turn` |
 | Settings | `_showSettings()` | Opens dialog → save & quit |
@@ -71,7 +73,13 @@ lib/presentation/
   │     ├── resource_detail_sheet.dart
   │     ├── game_bottom_bar.dart
   │     ├── tab_placeholder.dart
-  │     └── animated_resource_amount.dart
+  │     ├── animated_resource_amount.dart
+  │     ├── building_icon.dart
+  │     ├── building_card.dart
+  │     ├── building_list_view.dart
+  │     ├── building_detail_sheet.dart
+  │     └── upgrade_section.dart
   └── extensions/
-        └── resource_type_extensions.dart
+        ├── resource_type_extensions.dart
+        └── building_type_extensions.dart
 ```

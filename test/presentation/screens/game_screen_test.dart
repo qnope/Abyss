@@ -62,5 +62,51 @@ void main() {
 
       expect(find.text('Tour 2'), findsOneWidget);
     });
+
+    testWidgets('Base tab shows building list', (tester) async {
+      await tester.pumpWidget(createApp());
+      await tester.pumpAndSettle();
+
+      expect(find.text('Quartier Général'), findsOneWidget);
+    });
+
+    testWidgets('tapping building card opens detail sheet', (tester) async {
+      tester.view.physicalSize = const Size(800, 1200);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() => tester.view.resetPhysicalSize());
+      addTearDown(() => tester.view.resetDevicePixelRatio());
+
+      await tester.pumpWidget(createApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Quartier Général'));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.textContaining('Centre de commandement'),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('upgrade increases building level', (tester) async {
+      tester.view.physicalSize = const Size(800, 1200);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() => tester.view.resetPhysicalSize());
+      addTearDown(() => tester.view.resetDevicePixelRatio());
+
+      await tester.pumpWidget(createApp());
+      await tester.pumpAndSettle();
+
+      // Open the detail sheet
+      await tester.tap(find.text('Quartier Général'));
+      await tester.pumpAndSettle();
+
+      // Tap Construire (level 0 → 1)
+      await tester.tap(find.text('Construire'));
+      await tester.pumpAndSettle();
+
+      // Sheet closed, verify level changed
+      expect(find.text('Niveau 1'), findsOneWidget);
+    });
   });
 }

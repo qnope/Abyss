@@ -13,7 +13,7 @@ void main() {
     tearDown(clearSvgMocks);
 
     Widget createApp({
-      required List<Building> buildings,
+      required Map<BuildingType, Building> buildings,
       void Function(Building)? onBuildingTap,
     }) {
       return MaterialApp(
@@ -29,9 +29,10 @@ void main() {
     }
 
     testWidgets('displays one BuildingCard per building', (tester) async {
-      final buildings = [
-        Building(type: BuildingType.headquarters, level: 1),
-      ];
+      final buildings = {
+        BuildingType.headquarters:
+            Building(type: BuildingType.headquarters, level: 1),
+      };
       await tester.pumpWidget(createApp(buildings: buildings));
       await tester.pumpAndSettle();
 
@@ -40,9 +41,10 @@ void main() {
 
     testWidgets('calls onBuildingTap with correct building', (tester) async {
       Building? tappedBuilding;
-      final buildings = [
-        Building(type: BuildingType.headquarters, level: 1),
-      ];
+      final buildings = {
+        BuildingType.headquarters:
+            Building(type: BuildingType.headquarters, level: 1),
+      };
       await tester.pumpWidget(
         createApp(
           buildings: buildings,
@@ -52,7 +54,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('Quartier Général'));
-      expect(tappedBuilding, buildings.first);
+      expect(tappedBuilding, buildings[BuildingType.headquarters]);
     });
   });
 }

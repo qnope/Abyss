@@ -45,18 +45,18 @@ void main() {
       final player = Player(name: 'Nemo');
       final game = Game(player: player);
       expect(game.buildings.length, 1);
-      expect(game.buildings.first.type, BuildingType.headquarters);
-      expect(game.buildings.first.level, 0);
+      expect(game.buildings[BuildingType.headquarters]!.type, BuildingType.headquarters);
+      expect(game.buildings[BuildingType.headquarters]!.level, 0);
     });
 
     test('creates with custom buildings list', () {
       final player = Player(name: 'Nemo');
-      final buildings = [
-        Building(type: BuildingType.headquarters, level: 3),
-      ];
+      final buildings = {
+        BuildingType.headquarters: Building(type: BuildingType.headquarters, level: 3),
+      };
       final game = Game(player: player, buildings: buildings);
       expect(game.buildings.length, 1);
-      expect(game.buildings.first.level, 3);
+      expect(game.buildings[BuildingType.headquarters]!.level, 3);
     });
   });
 }

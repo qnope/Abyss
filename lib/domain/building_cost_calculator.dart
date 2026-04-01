@@ -29,7 +29,7 @@ class BuildingCostCalculator {
     required BuildingType type,
     required int currentLevel,
     required Map<ResourceType, Resource> resources,
-    required List<Building> allBuildings,
+    required Map<BuildingType, Building> allBuildings,
   }) {
     if (currentLevel >= maxLevel(type)) {
       return const UpgradeCheck(canUpgrade: false, isMaxLevel: true);
@@ -47,9 +47,7 @@ class BuildingCostCalculator {
     final prereqs = prerequisites(type, currentLevel + 1);
     final missingPrereqs = <BuildingType, int>{};
     for (final entry in prereqs.entries) {
-      final building =
-          allBuildings.where((b) => b.type == entry.key).firstOrNull;
-      final currentBuildingLevel = building?.level ?? 0;
+      final currentBuildingLevel = allBuildings[entry.key]?.level ?? 0;
       if (currentBuildingLevel < entry.value) {
         missingPrereqs[entry.key] = entry.value;
       }

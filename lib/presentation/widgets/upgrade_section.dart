@@ -12,7 +12,7 @@ import 'resource_icon.dart';
 class UpgradeSection extends StatelessWidget {
   final Building building;
   final Map<ResourceType, Resource> resources;
-  final List<Building> allBuildings;
+  final Map<BuildingType, Building> allBuildings;
   final VoidCallback onUpgrade;
 
   const UpgradeSection({
@@ -87,8 +87,7 @@ class UpgradeSection extends StatelessWidget {
   }
 
   Widget _prereqRow(BuildingType type, int level, TextTheme textTheme) {
-    final current =
-        allBuildings.where((b) => b.type == type).firstOrNull?.level ?? 0;
+    final current = allBuildings[type]?.level ?? 0;
     final met = current >= level;
     final color = met ? AbyssColors.onSurface : AbyssColors.error;
 

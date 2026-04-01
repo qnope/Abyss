@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/building.dart';
+import '../../domain/building_type.dart';
 import '../../domain/resource.dart';
 import '../../domain/resource_type.dart';
 import '../extensions/building_type_extensions.dart';
@@ -11,7 +12,7 @@ void showBuildingDetailSheet(
   BuildContext context, {
   required Building building,
   required Map<ResourceType, Resource> resources,
-  required List<Building> allBuildings,
+  required Map<BuildingType, Building> allBuildings,
   required VoidCallback onUpgrade,
 }) {
   showModalBottomSheet<void>(
@@ -28,7 +29,7 @@ void showBuildingDetailSheet(
 class _BuildingDetailSheet extends StatelessWidget {
   final Building building;
   final Map<ResourceType, Resource> resources;
-  final List<Building> allBuildings;
+  final Map<BuildingType, Building> allBuildings;
   final VoidCallback onUpgrade;
 
   const _BuildingDetailSheet({

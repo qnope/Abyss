@@ -86,9 +86,10 @@ void main() {
           amount: 100,
         ),
       };
-      final buildings = [
-        Building(type: BuildingType.headquarters, level: 0),
-      ];
+      final buildings = {
+        BuildingType.headquarters:
+            Building(type: BuildingType.headquarters, level: 0),
+      };
 
       final result = calculator.checkUpgrade(
         type: BuildingType.headquarters,
@@ -114,9 +115,10 @@ void main() {
           amount: 100,
         ),
       };
-      final buildings = [
-        Building(type: BuildingType.headquarters, level: 0),
-      ];
+      final buildings = {
+        BuildingType.headquarters:
+            Building(type: BuildingType.headquarters, level: 0),
+      };
 
       final result = calculator.checkUpgrade(
         type: BuildingType.headquarters,
@@ -140,9 +142,10 @@ void main() {
           amount: 5,
         ),
       };
-      final buildings = [
-        Building(type: BuildingType.headquarters, level: 0),
-      ];
+      final buildings = {
+        BuildingType.headquarters:
+            Building(type: BuildingType.headquarters, level: 0),
+      };
 
       final result = calculator.checkUpgrade(
         type: BuildingType.headquarters,
@@ -166,9 +169,10 @@ void main() {
           amount: 10000,
         ),
       };
-      final buildings = [
-        Building(type: BuildingType.headquarters, level: 10),
-      ];
+      final buildings = {
+        BuildingType.headquarters:
+            Building(type: BuildingType.headquarters, level: 10),
+      };
 
       final result = calculator.checkUpgrade(
         type: BuildingType.headquarters,
@@ -193,7 +197,7 @@ void main() {
           amount: 0,
         ),
       };
-      final buildings = <Building>[];
+      final buildings = <BuildingType, Building>{};
 
       final result = calculator.checkUpgrade(
         type: BuildingType.headquarters,

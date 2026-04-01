@@ -1,4 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import '../domain/building.dart';
+import '../domain/building_type.dart';
 import '../domain/game.dart';
 import '../domain/player.dart';
 import '../domain/resource.dart';
@@ -9,6 +11,8 @@ class GameRepository {
 
   static Future<void> initialize() async {
     await Hive.initFlutter();
+    Hive.registerAdapter(BuildingTypeAdapter());
+    Hive.registerAdapter(BuildingAdapter());
     Hive.registerAdapter(ResourceTypeAdapter());
     Hive.registerAdapter(ResourceAdapter());
     Hive.registerAdapter(PlayerAdapter());

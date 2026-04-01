@@ -1,44 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'game.dart';
+part of 'building.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class GameAdapter extends TypeAdapter<Game> {
+class BuildingAdapter extends TypeAdapter<Building> {
   @override
-  final int typeId = 1;
+  final int typeId = 5;
 
   @override
-  Game read(BinaryReader reader) {
+  Building read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Game(
-      player: fields[0] as Player,
-      turn: fields[1] as int,
-      createdAt: fields[2] as DateTime?,
-      resources: (fields[3] as Map?)?.cast<ResourceType, Resource>(),
-      buildings: (fields[4] as List?)?.cast<Building>(),
+    return Building(
+      type: fields[0] as BuildingType,
+      level: fields[1] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Game obj) {
+  void write(BinaryWriter writer, Building obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.player)
-      ..writeByte(1)
-      ..write(obj.turn)
       ..writeByte(2)
-      ..write(obj.createdAt)
-      ..writeByte(3)
-      ..write(obj.resources)
-      ..writeByte(4)
-      ..write(obj.buildings);
+      ..writeByte(0)
+      ..write(obj.type)
+      ..writeByte(1)
+      ..write(obj.level);
   }
 
   @override
@@ -47,7 +38,7 @@ class GameAdapter extends TypeAdapter<Game> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is GameAdapter &&
+      other is BuildingAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

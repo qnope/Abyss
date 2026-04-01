@@ -1,4 +1,6 @@
 import 'package:hive/hive.dart';
+import 'building.dart';
+import 'building_type.dart';
 import 'player.dart';
 import 'resource.dart';
 import 'resource_type.dart';
@@ -19,13 +21,18 @@ class Game extends HiveObject {
   @HiveField(3)
   final Map<ResourceType, Resource> resources;
 
+  @HiveField(4)
+  final List<Building> buildings;
+
   Game({
     required this.player,
     this.turn = 1,
     DateTime? createdAt,
     Map<ResourceType, Resource>? resources,
+    List<Building>? buildings,
   })  : createdAt = createdAt ?? DateTime.now(),
-        resources = resources ?? defaultResources();
+        resources = resources ?? defaultResources(),
+        buildings = buildings ?? defaultBuildings();
 
   static Map<ResourceType, Resource> defaultResources() {
     return {
@@ -60,5 +67,11 @@ class Game extends HiveObject {
         maxStorage: 100,
       ),
     };
+  }
+
+  static List<Building> defaultBuildings() {
+    return [
+      Building(type: BuildingType.headquarters, level: 0),
+    ];
   }
 }

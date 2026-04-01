@@ -26,8 +26,9 @@ UpgradeCheck (immutable result)
   ├── missingResources: Map<ResourceType, int>
   └── missingPrerequisites: Map<BuildingType, int>
 
-Game.buildings: List<Building>
+Game.buildings: Map<BuildingType, Building>
   └── Defaults via Game.defaultBuildings()
+  └── Keyed by BuildingType (one building per type, like resources)
 ```
 
 ## Headquarters (QG)
@@ -71,6 +72,7 @@ Widgets
 3. **Stateless calculator** — `BuildingCostCalculator` has no dependencies, easy to test and swap formulas.
 4. **UpgradeCheck as result object** — Encapsulates all failure reasons so the UI can display them.
 5. **Switch expressions** — Cost/max-level/prerequisite logic uses exhaustive switch on `BuildingType`, forcing updates when new types are added.
+6. **Map keyed by BuildingType** — Mirrors the `Map<ResourceType, Resource>` pattern. O(1) lookup, enforces one building per type at the type level.
 
 ## Hive Adapter Registration Order
 

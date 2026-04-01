@@ -17,7 +17,12 @@ class GameRepository {
     Hive.registerAdapter(ResourceAdapter());
     Hive.registerAdapter(PlayerAdapter());
     Hive.registerAdapter(GameAdapter());
-    await Hive.openBox<Game>(_boxName);
+    try {
+      await Hive.openBox<Game>(_boxName);
+    } catch (_) {
+      await Hive.deleteBoxFromDisk(_boxName);
+      await Hive.openBox<Game>(_boxName);
+    }
   }
 
   Box<Game> get _box => Hive.box<Game>(_boxName);

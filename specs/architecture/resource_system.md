@@ -34,7 +34,7 @@ Game.resources: Map<ResourceType, Resource>
 
 1. **ResourceType in domain layer** — Moved from presentation so it can be persisted and referenced across layers.
 2. **Map keyed by ResourceType** — O(1) lookup; enum guarantees exactly one entry per type.
-3. **Mutable `amount`** — Updated each turn. `productionPerTurn` stays final until buildings system is built.
+3. **Mutable `amount` and `productionPerTurn`** — `amount` updated each turn; `productionPerTurn` updated when production buildings are upgraded.
 4. **Pearl is special** — Zero production, lower max storage. Separated visually in the UI.
 
 ## Hive Adapter Registration Order

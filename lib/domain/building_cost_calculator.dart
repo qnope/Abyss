@@ -12,17 +12,51 @@ class BuildingCostCalculator {
         ResourceType.coral: 30 * (currentLevel * currentLevel + 1),
         ResourceType.ore: 20 * (currentLevel * currentLevel + 1),
       },
+      BuildingType.algaeFarm => {
+        ResourceType.coral: 20 * (currentLevel * currentLevel + 1),
+      },
+      BuildingType.coralMine => {
+        ResourceType.ore: 15 * (currentLevel * currentLevel + 1),
+      },
+      BuildingType.oreExtractor => {
+        ResourceType.coral: 25 * (currentLevel * currentLevel + 1),
+        ResourceType.energy: 15 * (currentLevel * currentLevel + 1),
+      },
+      BuildingType.solarPanel => {
+        ResourceType.coral: 20 * (currentLevel * currentLevel + 1),
+        ResourceType.ore: 15 * (currentLevel * currentLevel + 1),
+      },
     };
   }
 
   int maxLevel(BuildingType type) => switch (type) {
     BuildingType.headquarters => 10,
+    BuildingType.algaeFarm ||
+    BuildingType.coralMine ||
+    BuildingType.oreExtractor ||
+    BuildingType.solarPanel => 5,
   };
 
   Map<BuildingType, int> prerequisites(BuildingType type, int targetLevel) {
     return switch (type) {
       BuildingType.headquarters => {},
+      BuildingType.algaeFarm ||
+      BuildingType.coralMine ||
+      BuildingType.oreExtractor ||
+      BuildingType.solarPanel => _productionBuildingPrereqs(targetLevel),
     };
+  }
+
+  Map<BuildingType, int> _productionBuildingPrereqs(int targetLevel) {
+    final hqLevel = switch (targetLevel) {
+      1 => 1,
+      2 => 2,
+      3 => 4,
+      4 => 6,
+      5 => 10,
+      _ => 0,
+    };
+    return hqLevel > 0 ? {BuildingType.headquarters: hqLevel} : {};
   }
 
   UpgradeCheck checkUpgrade({
@@ -58,5 +92,15 @@ class BuildingCostCalculator {
       missingResources: missingResources,
       missingPrerequisites: missingPrereqs,
     );
+  }
+
+  static MapEntry<ResourceType, int>? productionPerLevel(BuildingType type) {
+    return switch (type) {
+      BuildingType.headquarters => null,
+      BuildingType.algaeFarm => MapEntry(ResourceType.algae, 5),
+      BuildingType.coralMine => MapEntry(ResourceType.coral, 4),
+      BuildingType.oreExtractor => MapEntry(ResourceType.ore, 3),
+      BuildingType.solarPanel => MapEntry(ResourceType.energy, 3),
+    };
   }
 }

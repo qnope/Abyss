@@ -45,10 +45,12 @@ Game.buildings: Map<BuildingType, Building>
 ## Upgrade Flow
 
 1. Player taps building card → `BuildingDetailSheet` opens
-2. `BuildingCostCalculator.checkUpgrade()` validates resources and prerequisites
+2. `BuildingCostCalculator.checkUpgrade()` validates resources and prerequisites (display)
 3. If valid, button is enabled; if not, missing items shown in red
-4. On upgrade: resources deducted, level incremented, sheet dismissed
+4. On upgrade: `UpgradeBuildingAction` + `ActionExecutor` handle validation and mutation
 5. `setState` refreshes both `ResourceBar` and `BuildingListView`
+
+See [action_system.md](action_system.md) for the full action architecture.
 
 ## Presentation Layer
 

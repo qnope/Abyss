@@ -15,6 +15,14 @@ class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
     switch (reader.readByte()) {
       case 0:
         return BuildingType.headquarters;
+      case 1:
+        return BuildingType.algaeFarm;
+      case 2:
+        return BuildingType.coralMine;
+      case 3:
+        return BuildingType.oreExtractor;
+      case 4:
+        return BuildingType.solarPanel;
       default:
         return BuildingType.headquarters;
     }
@@ -25,6 +33,18 @@ class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
     switch (obj) {
       case BuildingType.headquarters:
         writer.writeByte(0);
+        break;
+      case BuildingType.algaeFarm:
+        writer.writeByte(1);
+        break;
+      case BuildingType.coralMine:
+        writer.writeByte(2);
+        break;
+      case BuildingType.oreExtractor:
+        writer.writeByte(3);
+        break;
+      case BuildingType.solarPanel:
+        writer.writeByte(4);
         break;
     }
   }

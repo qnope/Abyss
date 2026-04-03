@@ -12,7 +12,7 @@ class Resource extends HiveObject {
   int amount;
 
   @HiveField(2)
-  final int productionPerTurn;
+  int productionPerTurn;
 
   @HiveField(3)
   final int maxStorage;

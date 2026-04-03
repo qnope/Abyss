@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../data/game_repository.dart';
 import '../../domain/building.dart';
-import '../../domain/building_cost_calculator.dart';
+import '../../domain/action_executor.dart';
+import '../../domain/upgrade_building_action.dart';
 import '../../domain/game.dart';
 import '../widgets/building_detail_sheet.dart';
 import '../widgets/building_list_view.dart';
@@ -71,15 +72,12 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _upgradeBuilding(Building building) {
-    final calculator = BuildingCostCalculator();
-    final costs = calculator.upgradeCost(building.type, building.level);
-    setState(() {
-      for (final entry in costs.entries) {
-        widget.game.resources[entry.key]!.amount -= entry.value;
-      }
-      building.level++;
-    });
-    Navigator.pop(context);
+    final action = UpgradeBuildingAction(buildingType: building.type);
+    final result = ActionExecutor().execute(action, widget.game);
+    if (result.isSuccess) {
+      setState(() {});
+      Navigator.pop(context);
+    }
   }
 
   void _nextTurn() {

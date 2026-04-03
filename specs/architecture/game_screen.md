@@ -49,7 +49,7 @@ GameScreen (StatefulWidget)
 |--------|---------|--------|
 | Tap resource | `showResourceDetailSheet()` | Opens modal bottom sheet |
 | Tap building | `_showBuildingDetail()` | Opens BuildingDetailSheet |
-| Upgrade building | `_upgradeBuilding()` | Deducts resources, increments level |
+| Upgrade building | `_upgradeBuilding()` | Via `ActionExecutor` + `UpgradeBuildingAction` |
 | Tap tab | `onTabChanged` | Switches `_currentTab` |
 | Next Turn | `_nextTurn()` | Increments `game.turn` |
 | Settings | `_showSettings()` | Opens dialog → save & quit |

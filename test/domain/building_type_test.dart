@@ -7,8 +7,8 @@ void main() {
       expect(BuildingType.headquarters, isNotNull);
     });
 
-    test('enum has exactly 1 value', () {
-      expect(BuildingType.values.length, 1);
+    test('enum has exactly 5 values', () {
+      expect(BuildingType.values.length, 5);
     });
   });
 }

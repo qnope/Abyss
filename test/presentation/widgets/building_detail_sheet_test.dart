@@ -12,6 +12,7 @@ import '../../helpers/test_svg_helper.dart';
 Widget _app({
   required Building building,
   Map<ResourceType, Resource>? resources,
+  Map<BuildingType, Building>? allBuildings,
   VoidCallback? onUpgrade,
 }) {
   return MaterialApp(
@@ -23,7 +24,7 @@ Widget _app({
             ctx,
             building: building,
             resources: resources ?? Game.defaultResources(),
-            allBuildings: {building.type: building},
+            allBuildings: allBuildings ?? {building.type: building},
             onUpgrade: onUpgrade ?? () {},
           ),
           child: const Text('Open'),
@@ -121,6 +122,54 @@ void main() {
       await t.pumpWidget(_app(building: _hq(1)));
       await _openSheet(t);
       expect(find.text('Améliorer'), findsOneWidget);
+    });
+
+    testWidgets('shows costs for algaeFarm level 0->1', (t) async {
+      _useTallSurface(t);
+      final farm = Building(type: BuildingType.algaeFarm, level: 0);
+      await t.pumpWidget(_app(
+        building: farm,
+        allBuildings: {farm.type: farm, BuildingType.headquarters: _hq(1)},
+      ));
+      await _openSheet(t);
+      expect(find.text('80/20'), findsOneWidget);
+    });
+
+    testWidgets('shows HQ prerequisite for algaeFarm when HQ not built',
+        (t) async {
+      _useTallSurface(t);
+      final farm = Building(type: BuildingType.algaeFarm, level: 0);
+      await t.pumpWidget(_app(
+        building: farm,
+        allBuildings: {farm.type: farm, BuildingType.headquarters: _hq()},
+      ));
+      await _openSheet(t);
+      expect(find.text('Quartier Général'), findsOneWidget);
+      expect(find.text('Niv. 1'), findsOneWidget);
+    });
+
+    testWidgets('upgrade button disabled when HQ prerequisite not met',
+        (t) async {
+      _useTallSurface(t);
+      final farm = Building(type: BuildingType.algaeFarm, level: 0);
+      await t.pumpWidget(_app(
+        building: farm,
+        allBuildings: {farm.type: farm, BuildingType.headquarters: _hq()},
+      ));
+      await _openSheet(t);
+      final btn = t.widget<ElevatedButton>(
+        find.byType(ElevatedButton).last,
+      );
+      expect(btn.onPressed, isNull);
+    });
+
+    testWidgets('shows max level message for algaeFarm at level 5',
+        (t) async {
+      _useTallSurface(t);
+      final farm = Building(type: BuildingType.algaeFarm, level: 5);
+      await t.pumpWidget(_app(building: farm));
+      await _openSheet(t);
+      expect(find.text('Niveau maximum atteint'), findsOneWidget);
     });
   });
 }

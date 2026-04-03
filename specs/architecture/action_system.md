@@ -24,7 +24,7 @@ Action (abstract)
 UpgradeBuildingAction extends Action
   ├── buildingType: BuildingType
   ├── validate → delegates to BuildingCostCalculator.checkUpgrade()
-  └── execute → deducts resources, increments level
+  └── execute → deducts resources, increments level, applies production bonus
 
 ActionExecutor (stateless)
   └── execute(Action, Game) → ActionResult

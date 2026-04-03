@@ -8,7 +8,7 @@ Buildings form the player's base. Each building has a type, a level (0 = not bui
 
 ```
 BuildingType (enum, Hive typeId: 4)
-  headquarters
+  headquarters | algaeFarm | coralMine | oreExtractor | solarPanel
 
 Building (HiveObject, typeId: 5)
   ├── type: BuildingType
@@ -18,6 +18,7 @@ BuildingCostCalculator (stateless)
   ├── upgradeCost(type, level) → Map<ResourceType, int>
   ├── maxLevel(type) → int
   ├── prerequisites(type, targetLevel) → Map<BuildingType, int>
+  ├── productionPerLevel(type) → MapEntry<ResourceType, int>?
   └── checkUpgrade(...) → UpgradeCheck
 
 UpgradeCheck (immutable result)
@@ -31,16 +32,28 @@ Game.buildings: Map<BuildingType, Building>
   └── Keyed by BuildingType (one building per type, like resources)
 ```
 
-## Headquarters (QG)
+## Buildings
+
+### Headquarters (QG)
 
 | Property | Value |
 |----------|-------|
-| Level range | 0–10 |
-| Cost formula | `base * (N² + 1)` where N = current level |
-| Coral base | 30 |
-| Ore base | 20 |
+| Max level | 10 |
+| Cost formula | `base * (N² + 1)` |
+| Costs | Coral: 30, Ore: 20 |
 | Prerequisites | None |
-| Mechanical effect | None (placeholder for future gating) |
+| Production | None — gates other buildings |
+
+### Production Buildings
+
+All production buildings share: max level 5, cost formula `base * (N² + 1)`, prerequisite `HQ ≥ 2*(targetLevel - 1)` (min 1). Each upgrade adds a flat `productionPerLevel` bonus to the associated resource.
+
+| Building | Costs | Produces | Per level |
+|----------|-------|----------|-----------|
+| Algae Farm | Coral: 20 | Algae | +5 |
+| Coral Mine | Ore: 15 | Coral | +4 |
+| Ore Extractor | Coral: 25, Energy: 15 | Ore | +3 |
+| Solar Panel | Coral: 20, Ore: 15 | Energy | +3 |
 
 ## Upgrade Flow
 
@@ -75,6 +88,7 @@ Widgets
 4. **UpgradeCheck as result object** — Encapsulates all failure reasons so the UI can display them.
 5. **Switch expressions** — Cost/max-level/prerequisite logic uses exhaustive switch on `BuildingType`, forcing updates when new types are added.
 6. **Map keyed by BuildingType** — Mirrors the `Map<ResourceType, Resource>` pattern. O(1) lookup, enforces one building per type at the type level.
+7. **HQ as prerequisite gate** — Production buildings require HQ at `2*(targetLevel-1)` (min 1), creating a natural upgrade path.
 
 ## Hive Adapter Registration Order
 

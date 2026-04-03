@@ -72,6 +72,10 @@ class Game extends HiveObject {
   static Map<BuildingType, Building> defaultBuildings() {
     return {
       BuildingType.headquarters: Building(type: BuildingType.headquarters, level: 0),
+      BuildingType.algaeFarm: Building(type: BuildingType.algaeFarm, level: 0),
+      BuildingType.coralMine: Building(type: BuildingType.coralMine, level: 0),
+      BuildingType.oreExtractor: Building(type: BuildingType.oreExtractor, level: 0),
+      BuildingType.solarPanel: Building(type: BuildingType.solarPanel, level: 0),
     };
   }
 }

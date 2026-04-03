@@ -39,6 +39,19 @@ void main() {
       expect(find.text('Quartier Général'), findsOneWidget);
     });
 
+    testWidgets('displays all 5 buildings including production buildings',
+        (tester) async {
+      final buildings = Game.defaultBuildings();
+      await tester.pumpWidget(createApp(buildings: buildings));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Quartier Général'), findsOneWidget);
+      expect(find.text('Ferme d\'algues'), findsOneWidget);
+      expect(find.text('Mine de corail'), findsOneWidget);
+      expect(find.text('Extracteur de minerai'), findsOneWidget);
+      expect(find.text('Panneau solaire'), findsOneWidget);
+    });
+
     testWidgets('calls onBuildingTap with correct building', (tester) async {
       Building? tappedBuilding;
       final buildings = {

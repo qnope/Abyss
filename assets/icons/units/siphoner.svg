@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="siphSuit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A1A2E"/>
+      <stop offset="100%" stop-color="#0D0D1A"/>
+    </linearGradient>
+    <linearGradient id="bioCircuit" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#CE93D8"/>
+      <stop offset="100%" stop-color="#7B1FA2"/>
+    </linearGradient>
+    <radialGradient id="holoGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#CE93D8"/>
+      <stop offset="100%" stop-color="#7B1FA2"/>
+    </radialGradient>
+    <filter id="siphGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#siphGlow)">
+    <!-- Corps elance -->
+    <ellipse cx="32" cy="32" rx="7" ry="14" fill="url(#siphSuit)" stroke="#1A1A2E" stroke-width="0.5"/>
+    <!-- Circuits bioluminescents sur le torse -->
+    <path d="M29 22 L29 28 L32 32 L32 38" fill="none" stroke="url(#bioCircuit)" stroke-width="0.8" opacity="0.8"/>
+    <path d="M35 22 L35 28 L32 32" fill="none" stroke="url(#bioCircuit)" stroke-width="0.8" opacity="0.8"/>
+    <path d="M30 26 L34 26" fill="none" stroke="#CE93D8" stroke-width="0.5" opacity="0.6"/>
+    <path d="M29 34 L35 34" fill="none" stroke="#CE93D8" stroke-width="0.5" opacity="0.6"/>
+    <!-- Tete avec masque miroir noir -->
+    <circle cx="32" cy="14" r="6" fill="#0D0D1A" stroke="#1A1A2E" stroke-width="0.5"/>
+    <!-- Masque lisse miroir -->
+    <circle cx="32" cy="14" r="5" fill="#263238"/>
+    <ellipse cx="32" cy="13" rx="3.5" ry="2.5" fill="#37474F" opacity="0.5"/>
+    <!-- Reflet miroir -->
+    <ellipse cx="31" cy="12" rx="2" ry="1.2" fill="#546E7A" opacity="0.3"/>
+    <!-- Bras fins avec circuits -->
+    <line x1="25" y1="24" x2="16" y2="32" stroke="url(#siphSuit)" stroke-width="2" stroke-linecap="round"/>
+    <line x1="39" y1="24" x2="48" y2="32" stroke="url(#siphSuit)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Circuits sur les bras -->
+    <line x1="23" y1="25" x2="18" y2="30" stroke="#CE93D8" stroke-width="0.5" opacity="0.7"/>
+    <line x1="41" y1="25" x2="46" y2="30" stroke="#CE93D8" stroke-width="0.5" opacity="0.7"/>
+    <!-- Bracelets-interfaces holographiques -->
+    <ellipse cx="15" cy="33" rx="3" ry="1.5" fill="none" stroke="#CE93D8" stroke-width="0.8" opacity="0.7"/>
+    <ellipse cx="49" cy="33" rx="3" ry="1.5" fill="none" stroke="#CE93D8" stroke-width="0.8" opacity="0.7"/>
+    <!-- Projections holographiques -->
+    <rect x="11" y="30" width="3" height="2" rx="0.3" fill="#CE93D8" opacity="0.3"/>
+    <rect x="12" y="34" width="4" height="1.5" rx="0.3" fill="#AB47BC" opacity="0.25"/>
+    <rect x="48" y="30" width="3" height="2" rx="0.3" fill="#CE93D8" opacity="0.3"/>
+    <rect x="47" y="34" width="4" height="1.5" rx="0.3" fill="#AB47BC" opacity="0.25"/>
+    <!-- Jambes elancees -->
+    <line x1="30" y1="44" x2="28" y2="54" stroke="url(#siphSuit)" stroke-width="2" stroke-linecap="round"/>
+    <line x1="34" y1="44" x2="36" y2="54" stroke="url(#siphSuit)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Propulsion silencieuse (lueur sous les pieds) -->
+    <ellipse cx="28" cy="56" rx="3" ry="1" fill="#7B1FA2" opacity="0.4"/>
+    <ellipse cx="36" cy="56" rx="3" ry="1" fill="#7B1FA2" opacity="0.4"/>
+    <!-- Aura fantomatique -->
+    <ellipse cx="32" cy="32" rx="12" ry="20" fill="none" stroke="#CE93D8" stroke-width="0.3" opacity="0.15"/>
+  </g>
+</svg>

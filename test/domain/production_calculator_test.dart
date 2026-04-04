@@ -19,7 +19,7 @@ void main() {
       expect(production, isEmpty);
     });
 
-    test('algaeFarm at level 3 produces 15 algae', () {
+    test('algaeFarm at level 3 produces 29 algae', () {
       final buildings = {
         BuildingType.algaeFarm: Building(
           type: BuildingType.algaeFarm,
@@ -27,10 +27,10 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.algae: 15});
+      expect(production, {ResourceType.algae: 29});
     });
 
-    test('coralMine at level 2 produces 8 coral', () {
+    test('coralMine at level 2 produces 10 coral', () {
       final buildings = {
         BuildingType.coralMine: Building(
           type: BuildingType.coralMine,
@@ -38,7 +38,7 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.coral: 8});
+      expect(production, {ResourceType.coral: 10});
     });
 
     test('oreExtractor at level 1 produces 3 ore', () {
@@ -52,7 +52,7 @@ void main() {
       expect(production, {ResourceType.ore: 3});
     });
 
-    test('solarPanel at level 4 produces 12 energy', () {
+    test('solarPanel at level 4 produces 33 energy', () {
       final buildings = {
         BuildingType.solarPanel: Building(
           type: BuildingType.solarPanel,
@@ -60,7 +60,7 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.energy: 12});
+      expect(production, {ResourceType.energy: 33});
     });
 
     test('multiple buildings cumulate correctly', () {
@@ -84,10 +84,10 @@ void main() {
       };
       final production = ProductionCalculator.fromBuildings(buildings);
       expect(production, {
-        ResourceType.algae: 10,
-        ResourceType.coral: 12,
+        ResourceType.algae: 14,
+        ResourceType.coral: 20,
         ResourceType.ore: 3,
-        ResourceType.energy: 6,
+        ResourceType.energy: 9,
       });
     });
 

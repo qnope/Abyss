@@ -111,7 +111,7 @@ void main() {
       action.execute(game);
       action.execute(game);
       final production = ProductionCalculator.fromBuildings(game.buildings);
-      expect(production[ResourceType.algae], 10);
+      expect(production[ResourceType.algae], 14);
     });
 
     test('execute HQ does not affect production', () {

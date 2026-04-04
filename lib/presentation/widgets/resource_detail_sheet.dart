@@ -4,16 +4,17 @@ import '../extensions/resource_type_extensions.dart';
 import '../theme/abyss_colors.dart';
 import 'resource_icon.dart';
 
-void showResourceDetailSheet(BuildContext context, Resource resource) {
+void showResourceDetailSheet(BuildContext context, Resource resource, {required int production}) {
   showModalBottomSheet<void>(
     context: context,
-    builder: (_) => _ResourceDetailSheet(resource: resource),
+    builder: (_) => _ResourceDetailSheet(resource: resource, production: production),
   );
 }
 
 class _ResourceDetailSheet extends StatelessWidget {
   final Resource resource;
-  const _ResourceDetailSheet({required this.resource});
+  final int production;
+  const _ResourceDetailSheet({required this.resource, required this.production});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +34,10 @@ class _ResourceDetailSheet extends StatelessWidget {
           const SizedBox(height: 16),
           Text('${resource.amount} / ${resource.maxStorage}', style: textTheme.titleLarge?.copyWith(color: color)),
           const SizedBox(height: 16),
-          if (resource.productionPerTurn > 0) ...[
+          if (production > 0) ...[
             Align(alignment: Alignment.centerLeft, child: Text('Production', style: textTheme.titleSmall?.copyWith(color: AbyssColors.onSurface))),
             const SizedBox(height: 8),
-            _buildingRow('Bâtiment principal', resource.productionPerTurn, color),
+            _buildingRow('Bâtiment principal', production, color),
           ],
         ],
       ),

@@ -23,6 +23,10 @@ class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
         return BuildingType.oreExtractor;
       case 4:
         return BuildingType.solarPanel;
+      case 5:
+        return BuildingType.laboratory;
+      case 6:
+        return BuildingType.barracks;
       default:
         return BuildingType.headquarters;
     }
@@ -45,6 +49,12 @@ class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
         break;
       case BuildingType.solarPanel:
         writer.writeByte(4);
+        break;
+      case BuildingType.laboratory:
+        writer.writeByte(5);
+        break;
+      case BuildingType.barracks:
+        writer.writeByte(6);
         break;
     }
   }

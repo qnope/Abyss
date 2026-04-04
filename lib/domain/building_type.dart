@@ -9,4 +9,6 @@ enum BuildingType {
   @HiveField(2) coralMine,
   @HiveField(3) oreExtractor,
   @HiveField(4) solarPanel,
+  @HiveField(5) laboratory,
+  @HiveField(6) barracks,
 }

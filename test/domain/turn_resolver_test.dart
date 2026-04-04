@@ -36,9 +36,9 @@ void main() {
       final before = game.resources[ResourceType.algae]!.amount;
       final result = resolver.resolve(game);
 
-      expect(game.resources[ResourceType.algae]!.amount, before + 14);
+      expect(game.resources[ResourceType.algae]!.amount, before + 140);
       expect(result.changes.length, 1);
-      expect(result.changes.first.produced, 14);
+      expect(result.changes.first.produced, 140);
     });
 
     test('multiple buildings produce correctly', () {
@@ -54,8 +54,8 @@ void main() {
       });
       resolver.resolve(game);
 
-      expect(game.resources[ResourceType.algae]!.amount, 105);
-      expect(game.resources[ResourceType.coral]!.amount, 90);
+      expect(game.resources[ResourceType.algae]!.amount, 150);
+      expect(game.resources[ResourceType.coral]!.amount, 180);
     });
 
     test('turn counter increments', () {
@@ -106,13 +106,13 @@ void main() {
           ResourceType.algae: Resource(
             type: ResourceType.algae,
             amount: 100,
-            maxStorage: 500,
+            maxStorage: 5000,
           ),
         },
       );
       final result = resolver.resolve(game);
 
-      expect(game.resources[ResourceType.algae]!.amount, 105);
+      expect(game.resources[ResourceType.algae]!.amount, 150);
       final change = result.changes.firstWhere(
         (c) => c.type == ResourceType.algae,
       );

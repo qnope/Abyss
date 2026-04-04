@@ -165,14 +165,14 @@ void main() {
         await tester.tap(find.text('Confirmer'));
         await tester.pumpAndSettle();
 
-        // Summary shows +5 algae
-        expect(find.text('+5'), findsOneWidget);
+        // Summary shows +50 algae
+        expect(find.text('+50'), findsOneWidget);
 
         await tester.tap(find.text('OK'));
         await tester.pumpAndSettle();
 
-        // Algae went from 100 to 105
-        expect(customGame.resources[ResourceType.algae]!.amount, 105);
+        // Algae went from 100 to 150
+        expect(customGame.resources[ResourceType.algae]!.amount, 150);
       });
 
       testWidgets('resource capped at maxStorage', (tester) async {

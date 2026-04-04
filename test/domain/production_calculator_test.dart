@@ -19,7 +19,7 @@ void main() {
       expect(production, isEmpty);
     });
 
-    test('algaeFarm at level 3 produces 29 algae', () {
+    test('algaeFarm at level 3 produces 290 algae', () {
       final buildings = {
         BuildingType.algaeFarm: Building(
           type: BuildingType.algaeFarm,
@@ -27,10 +27,10 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.algae: 29});
+      expect(production, {ResourceType.algae: 290});
     });
 
-    test('coralMine at level 2 produces 10 coral', () {
+    test('coralMine at level 2 produces 100 coral', () {
       final buildings = {
         BuildingType.coralMine: Building(
           type: BuildingType.coralMine,
@@ -38,10 +38,10 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.coral: 10});
+      expect(production, {ResourceType.coral: 100});
     });
 
-    test('oreExtractor at level 1 produces 3 ore', () {
+    test('oreExtractor at level 1 produces 30 ore', () {
       final buildings = {
         BuildingType.oreExtractor: Building(
           type: BuildingType.oreExtractor,
@@ -49,10 +49,10 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.ore: 3});
+      expect(production, {ResourceType.ore: 30});
     });
 
-    test('solarPanel at level 4 produces 33 energy', () {
+    test('solarPanel at level 4 produces 66 energy', () {
       final buildings = {
         BuildingType.solarPanel: Building(
           type: BuildingType.solarPanel,
@@ -60,7 +60,7 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.energy: 33});
+      expect(production, {ResourceType.energy: 66});
     });
 
     test('multiple buildings cumulate correctly', () {
@@ -84,10 +84,10 @@ void main() {
       };
       final production = ProductionCalculator.fromBuildings(buildings);
       expect(production, {
-        ResourceType.algae: 14,
-        ResourceType.coral: 20,
-        ResourceType.ore: 3,
-        ResourceType.energy: 9,
+        ResourceType.algae: 140,
+        ResourceType.coral: 200,
+        ResourceType.ore: 30,
+        ResourceType.energy: 18,
       });
     });
 

@@ -53,6 +53,31 @@ void main() {
       expect(game.buildings[BuildingType.solarPanel]!.level, 0);
     });
 
+    test('defaultResources returns algae with maxStorage 5000', () {
+      final resources = Game.defaultResources();
+      expect(resources[ResourceType.algae]!.maxStorage, 5000);
+    });
+
+    test('defaultResources returns coral with maxStorage 5000', () {
+      final resources = Game.defaultResources();
+      expect(resources[ResourceType.coral]!.maxStorage, 5000);
+    });
+
+    test('defaultResources returns ore with maxStorage 5000', () {
+      final resources = Game.defaultResources();
+      expect(resources[ResourceType.ore]!.maxStorage, 5000);
+    });
+
+    test('defaultResources returns energy with maxStorage 1000', () {
+      final resources = Game.defaultResources();
+      expect(resources[ResourceType.energy]!.maxStorage, 1000);
+    });
+
+    test('defaultResources returns pearl with maxStorage 100', () {
+      final resources = Game.defaultResources();
+      expect(resources[ResourceType.pearl]!.maxStorage, 100);
+    });
+
     test('default buildings include all 4 production buildings at level 0', () {
       final buildings = Game.defaultBuildings();
       final productionTypes = [

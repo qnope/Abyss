@@ -41,16 +41,18 @@ void main() {
       expect(game.turn, 2);
     });
 
-    test('creates with default buildings (5 buildings at level 0)', () {
+    test('creates with default buildings (7 buildings at level 0)', () {
       final player = Player(name: 'Nemo');
       final game = Game(player: player);
-      expect(game.buildings.length, 5);
+      expect(game.buildings.length, 7);
       expect(game.buildings[BuildingType.headquarters]!.type, BuildingType.headquarters);
       expect(game.buildings[BuildingType.headquarters]!.level, 0);
       expect(game.buildings[BuildingType.algaeFarm]!.level, 0);
       expect(game.buildings[BuildingType.coralMine]!.level, 0);
       expect(game.buildings[BuildingType.oreExtractor]!.level, 0);
       expect(game.buildings[BuildingType.solarPanel]!.level, 0);
+      expect(game.buildings[BuildingType.laboratory]!.level, 0);
+      expect(game.buildings[BuildingType.barracks]!.level, 0);
     });
 
     test('default buildings include all 4 production buildings at level 0', () {

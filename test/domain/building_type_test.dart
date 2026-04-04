@@ -7,8 +7,16 @@ void main() {
       expect(BuildingType.headquarters, isNotNull);
     });
 
-    test('enum has exactly 5 values', () {
-      expect(BuildingType.values.length, 5);
+    test('enum has exactly 7 values', () {
+      expect(BuildingType.values.length, 7);
+    });
+
+    test('laboratory exists', () {
+      expect(BuildingType.laboratory, isNotNull);
+    });
+
+    test('barracks exists', () {
+      expect(BuildingType.barracks, isNotNull);
     });
   });
 }

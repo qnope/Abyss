@@ -88,6 +88,29 @@ void main() {
       expect(cost[ResourceType.coral], 340);
       expect(cost[ResourceType.ore], 255);
     });
+
+    test('laboratory level 0->1: coral=25, ore=20', () {
+      final cost = calculator.upgradeCost(BuildingType.laboratory, 0);
+      expect(cost[ResourceType.coral], 25);
+      expect(cost[ResourceType.ore], 20);
+    });
+
+    test('laboratory at max level 5: empty', () {
+      final cost = calculator.upgradeCost(BuildingType.laboratory, 5);
+      expect(cost, isEmpty);
+    });
+
+    test('barracks level 0->1: coral=20, ore=25, energy=10', () {
+      final cost = calculator.upgradeCost(BuildingType.barracks, 0);
+      expect(cost[ResourceType.coral], 20);
+      expect(cost[ResourceType.ore], 25);
+      expect(cost[ResourceType.energy], 10);
+    });
+
+    test('barracks at max level 5: empty', () {
+      final cost = calculator.upgradeCost(BuildingType.barracks, 5);
+      expect(cost, isEmpty);
+    });
   });
 
   group('maxLevel', () {
@@ -109,6 +132,14 @@ void main() {
 
     test('solarPanel is 5', () {
       expect(calculator.maxLevel(BuildingType.solarPanel), 5);
+    });
+
+    test('laboratory is 5', () {
+      expect(calculator.maxLevel(BuildingType.laboratory), 5);
+    });
+
+    test('barracks is 5', () {
+      expect(calculator.maxLevel(BuildingType.barracks), 5);
     });
   });
 }

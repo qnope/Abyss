@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import '../../data/game_repository.dart';
 import '../../domain/building.dart';
+import '../../domain/building_type.dart';
 import '../../domain/action_executor.dart';
+import '../../domain/recruit_unit_action.dart';
+import '../../domain/unit_cost_calculator.dart';
+import '../../domain/unit_type.dart';
 import '../../domain/upgrade_building_action.dart';
 import '../../domain/game.dart';
 import '../../domain/production_calculator.dart';
 import '../../domain/turn_resolver.dart';
+import '../widgets/army_list_view.dart';
 import '../widgets/building_detail_sheet.dart';
 import '../widgets/turn_confirmation_dialog.dart';
 import '../widgets/turn_summary_dialog.dart';
 import '../widgets/building_list_view.dart';
 import '../widgets/game_bottom_bar.dart';
 import '../widgets/resource_bar.dart';
+import '../widgets/settings_dialog.dart';
 import '../widgets/tab_placeholder.dart';
 import '../widgets/tech_tree_view.dart';
+import '../widgets/unit_detail_sheet.dart';
 import 'game_screen_tech_actions.dart';
 import 'main_menu_screen.dart';
 
@@ -33,7 +40,6 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   int _currentTab = 0;
-
   @override
   Widget build(BuildContext context) {
     final production = ProductionCalculator.fromBuildings(
@@ -65,7 +71,11 @@ class _GameScreenState extends State<GameScreen> {
         onBuildingTap: _showBuildingDetail,
       ),
       1 => const TabPlaceholder(icon: Icons.map, label: 'Carte'),
-      2 => const TabPlaceholder(icon: Icons.shield, label: 'Armee'),
+      2 => ArmyListView(
+        units: widget.game.units,
+        barracksLevel: widget.game.buildings[BuildingType.barracks]!.level,
+        onUnitTap: _showUnitDetail,
+      ),
       3 => TechTreeView(
         techBranches: widget.game.techBranches,
         buildings: widget.game.buildings,
@@ -98,45 +108,50 @@ class _GameScreenState extends State<GameScreen> {
     }
   }
 
+  void _showUnitDetail(UnitType unitType) {
+    final calculator = UnitCostCalculator();
+    final barracksLevel = widget.game.buildings[BuildingType.barracks]!.level;
+    final isUnlocked = calculator.isUnlocked(unitType, barracksLevel);
+    final count = widget.game.units[unitType]?.count ?? 0;
+    final hasRecruitedThisType =
+        widget.game.recruitedUnitTypes.contains(unitType);
+    showUnitDetailSheet(
+      context,
+      unitType: unitType,
+      count: count,
+      isUnlocked: isUnlocked,
+      barracksLevel: barracksLevel,
+      resources: widget.game.resources,
+      hasRecruitedThisType: hasRecruitedThisType,
+      onRecruit: (quantity) => _recruitUnit(unitType, quantity),
+    );
+  }
+
+  void _recruitUnit(UnitType unitType, int quantity) {
+    final action = RecruitUnitAction(unitType: unitType, quantity: quantity);
+    final result = ActionExecutor().execute(action, widget.game);
+    if (result.isSuccess) {
+      setState(() {});
+      Navigator.pop(context);
+    }
+  }
+
   Future<void> _nextTurn() async {
     final production = ProductionCalculator.fromBuildings(
       widget.game.buildings,
       techBranches: widget.game.techBranches,
     );
-
     final confirmed = await showTurnConfirmationDialog(
       context, production: production);
     if (!confirmed || !mounted) return;
-
     final result = TurnResolver().resolve(widget.game);
-
     await widget.repository.save(widget.game);
-
     setState(() {});
-
-    if (!mounted) return;
-    await showTurnSummaryDialog(context, result: result);
+    if (mounted) await showTurnSummaryDialog(context, result: result);
   }
 
-  void _showSettings() {
-    showDialog<void>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Parametres'),
-        content: const Text('Que souhaitez-vous faire ?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Annuler')),
-          ElevatedButton(
-            onPressed: () { Navigator.pop(ctx); _saveAndQuit(); },
-            child: const Text('Sauvegarder et quitter')),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _saveAndQuit() async {
+  Future<void> _showSettings() async {
+    if (!await showSettingsDialog(context) || !mounted) return;
     await widget.repository.save(widget.game);
     if (!mounted) return;
     Navigator.of(context).pushAndRemoveUntil(

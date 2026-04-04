@@ -39,22 +39,22 @@ class Game extends HiveObject {
       ResourceType.algae: Resource(
         type: ResourceType.algae,
         amount: 100,
-        maxStorage: 500,
+        maxStorage: 5000,
       ),
       ResourceType.coral: Resource(
         type: ResourceType.coral,
         amount: 80,
-        maxStorage: 500,
+        maxStorage: 5000,
       ),
       ResourceType.ore: Resource(
         type: ResourceType.ore,
         amount: 50,
-        maxStorage: 500,
+        maxStorage: 5000,
       ),
       ResourceType.energy: Resource(
         type: ResourceType.energy,
         amount: 60,
-        maxStorage: 500,
+        maxStorage: 1000,
       ),
       ResourceType.pearl: Resource(
         type: ResourceType.pearl,

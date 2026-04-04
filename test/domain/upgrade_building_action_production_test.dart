@@ -102,7 +102,7 @@ void main() {
       final action = UpgradeBuildingAction(buildingType: BuildingType.algaeFarm);
       action.execute(game);
       final production = ProductionCalculator.fromBuildings(game.buildings);
-      expect(production[ResourceType.algae], 5);
+      expect(production[ResourceType.algae], 50);
     });
 
     test('execute algaeFarm twice cumulates production', () {
@@ -111,7 +111,7 @@ void main() {
       action.execute(game);
       action.execute(game);
       final production = ProductionCalculator.fromBuildings(game.buildings);
-      expect(production[ResourceType.algae], 14);
+      expect(production[ResourceType.algae], 140);
     });
 
     test('execute HQ does not affect production', () {

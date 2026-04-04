@@ -6,6 +6,8 @@ import 'resource.dart';
 import 'resource_type.dart';
 import 'tech_branch.dart';
 import 'tech_branch_state.dart';
+import 'unit.dart';
+import 'unit_type.dart';
 
 part 'game.g.dart';
 
@@ -29,6 +31,12 @@ class Game extends HiveObject {
   @HiveField(5)
   final Map<TechBranch, TechBranchState> techBranches;
 
+  @HiveField(6)
+  final Map<UnitType, Unit> units;
+
+  @HiveField(7)
+  final List<UnitType> recruitedUnitTypes;
+
   Game({
     required this.player,
     this.turn = 1,
@@ -36,10 +44,14 @@ class Game extends HiveObject {
     Map<ResourceType, Resource>? resources,
     Map<BuildingType, Building>? buildings,
     Map<TechBranch, TechBranchState>? techBranches,
+    Map<UnitType, Unit>? units,
+    List<UnitType>? recruitedUnitTypes,
   })  : createdAt = createdAt ?? DateTime.now(),
         resources = resources ?? defaultResources(),
         buildings = buildings ?? defaultBuildings(),
-        techBranches = techBranches ?? defaultTechBranches();
+        techBranches = techBranches ?? defaultTechBranches(),
+        units = units ?? defaultUnits(),
+        recruitedUnitTypes = recruitedUnitTypes ?? [];
 
   static Map<ResourceType, Resource> defaultResources() {
     return {
@@ -88,6 +100,12 @@ class Game extends HiveObject {
       BuildingType.solarPanel: Building(type: BuildingType.solarPanel, level: 0),
       BuildingType.laboratory: Building(type: BuildingType.laboratory, level: 0),
       BuildingType.barracks: Building(type: BuildingType.barracks, level: 0),
+    };
+  }
+
+  static Map<UnitType, Unit> defaultUnits() {
+    return {
+      for (final type in UnitType.values) type: Unit(type: type),
     };
   }
 }

@@ -71,6 +71,8 @@ class Game extends HiveObject {
       BuildingType.coralMine: Building(type: BuildingType.coralMine, level: 0),
       BuildingType.oreExtractor: Building(type: BuildingType.oreExtractor, level: 0),
       BuildingType.solarPanel: Building(type: BuildingType.solarPanel, level: 0),
+      BuildingType.laboratory: Building(type: BuildingType.laboratory, level: 0),
+      BuildingType.barracks: Building(type: BuildingType.barracks, level: 0),
     };
   }
 }

@@ -93,14 +93,4 @@ class BuildingCostCalculator {
       missingPrerequisites: missingPrereqs,
     );
   }
-
-  static MapEntry<ResourceType, int>? productionPerLevel(BuildingType type) {
-    return switch (type) {
-      BuildingType.headquarters => null,
-      BuildingType.algaeFarm => MapEntry(ResourceType.algae, 5),
-      BuildingType.coralMine => MapEntry(ResourceType.coral, 4),
-      BuildingType.oreExtractor => MapEntry(ResourceType.ore, 3),
-      BuildingType.solarPanel => MapEntry(ResourceType.energy, 3),
-    };
-  }
 }

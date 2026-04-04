@@ -1,6 +1,6 @@
 import 'building.dart';
-import 'building_cost_calculator.dart';
 import 'building_type.dart';
+import 'production_formulas.dart';
 import 'resource_type.dart';
 
 class ProductionCalculator {
@@ -9,9 +9,11 @@ class ProductionCalculator {
   ) {
     final result = <ResourceType, int>{};
     for (final building in buildings.values) {
-      final prod = BuildingCostCalculator.productionPerLevel(building.type);
-      if (prod != null && building.level > 0) {
-        result[prod.key] = (result[prod.key] ?? 0) + building.level * prod.value;
+      final formula = productionFormulas[building.type];
+      if (formula != null && building.level > 0) {
+        final amount = formula.compute(building.level);
+        result[formula.resourceType] =
+            (result[formula.resourceType] ?? 0) + amount;
       }
     }
     return result;

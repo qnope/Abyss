@@ -142,5 +142,85 @@ void main() {
 
       expect(result.canUpgrade, isTrue);
     });
+
+    test('cannot upgrade laboratory when HQ prerequisite not met', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.laboratory,
+        currentLevel: 0,
+        resources: {
+          ResourceType.coral: _resource(ResourceType.coral, 100),
+          ResourceType.ore: _resource(ResourceType.ore, 100),
+        },
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 1),
+          BuildingType.laboratory:
+              Building(type: BuildingType.laboratory, level: 0),
+        },
+      );
+
+      expect(result.canUpgrade, isFalse);
+      expect(result.missingPrerequisites[BuildingType.headquarters], 2);
+    });
+
+    test('can upgrade laboratory when HQ and resources sufficient', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.laboratory,
+        currentLevel: 0,
+        resources: {
+          ResourceType.coral: _resource(ResourceType.coral, 100),
+          ResourceType.ore: _resource(ResourceType.ore, 100),
+        },
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 2),
+          BuildingType.laboratory:
+              Building(type: BuildingType.laboratory, level: 0),
+        },
+      );
+
+      expect(result.canUpgrade, isTrue);
+    });
+
+    test('cannot upgrade barracks when HQ prerequisite not met', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.barracks,
+        currentLevel: 0,
+        resources: {
+          ResourceType.coral: _resource(ResourceType.coral, 100),
+          ResourceType.ore: _resource(ResourceType.ore, 100),
+          ResourceType.energy: _resource(ResourceType.energy, 100),
+        },
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 2),
+          BuildingType.barracks:
+              Building(type: BuildingType.barracks, level: 0),
+        },
+      );
+
+      expect(result.canUpgrade, isFalse);
+      expect(result.missingPrerequisites[BuildingType.headquarters], 3);
+    });
+
+    test('can upgrade barracks when HQ and resources sufficient', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.barracks,
+        currentLevel: 0,
+        resources: {
+          ResourceType.coral: _resource(ResourceType.coral, 100),
+          ResourceType.ore: _resource(ResourceType.ore, 100),
+          ResourceType.energy: _resource(ResourceType.energy, 100),
+        },
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 3),
+          BuildingType.barracks:
+              Building(type: BuildingType.barracks, level: 0),
+        },
+      );
+
+      expect(result.canUpgrade, isTrue);
+    });
   });
 }

@@ -19,7 +19,6 @@ class ResourceAdapter extends TypeAdapter<Resource> {
     return Resource(
       type: fields[0] as ResourceType,
       amount: fields[1] as int,
-      productionPerTurn: fields[2] as int,
       maxStorage: fields[3] as int,
     );
   }
@@ -27,13 +26,11 @@ class ResourceAdapter extends TypeAdapter<Resource> {
   @override
   void write(BinaryWriter writer, Resource obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.type)
       ..writeByte(1)
       ..write(obj.amount)
-      ..writeByte(2)
-      ..write(obj.productionPerTurn)
       ..writeByte(3)
       ..write(obj.maxStorage);
   }

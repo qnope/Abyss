@@ -39,31 +39,26 @@ class Game extends HiveObject {
       ResourceType.algae: Resource(
         type: ResourceType.algae,
         amount: 100,
-        productionPerTurn: 10,
         maxStorage: 500,
       ),
       ResourceType.coral: Resource(
         type: ResourceType.coral,
         amount: 80,
-        productionPerTurn: 8,
         maxStorage: 500,
       ),
       ResourceType.ore: Resource(
         type: ResourceType.ore,
         amount: 50,
-        productionPerTurn: 5,
         maxStorage: 500,
       ),
       ResourceType.energy: Resource(
         type: ResourceType.energy,
         amount: 60,
-        productionPerTurn: 6,
         maxStorage: 500,
       ),
       ResourceType.pearl: Resource(
         type: ResourceType.pearl,
         amount: 5,
-        productionPerTurn: 0,
         maxStorage: 100,
       ),
     };

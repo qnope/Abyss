@@ -11,16 +11,12 @@ class Resource extends HiveObject {
   @HiveField(1)
   int amount;
 
-  @HiveField(2)
-  int productionPerTurn;
-
   @HiveField(3)
   final int maxStorage;
 
   Resource({
     required this.type,
     required this.amount,
-    this.productionPerTurn = 0,
     this.maxStorage = 500,
   });
 }

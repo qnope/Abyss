@@ -4,6 +4,7 @@ import '../../domain/building.dart';
 import '../../domain/action_executor.dart';
 import '../../domain/upgrade_building_action.dart';
 import '../../domain/game.dart';
+import '../../domain/production_calculator.dart';
 import '../widgets/building_detail_sheet.dart';
 import '../widgets/building_list_view.dart';
 import '../widgets/game_bottom_bar.dart';
@@ -30,10 +31,11 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final production = ProductionCalculator.fromBuildings(widget.game.buildings);
     return Scaffold(
       body: Column(
         children: [
-          ResourceBar(resources: widget.game.resources),
+          ResourceBar(resources: widget.game.resources, production: production),
           Expanded(child: _buildTabContent()),
         ],
       ),

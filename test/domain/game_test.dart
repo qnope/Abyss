@@ -4,6 +4,7 @@ import 'package:abyss/domain/building_type.dart';
 import 'package:abyss/domain/game.dart';
 import 'package:abyss/domain/player.dart';
 import 'package:abyss/domain/resource_type.dart';
+import 'package:abyss/domain/tech_branch.dart';
 
 void main() {
   group('Game', () {
@@ -102,6 +103,22 @@ void main() {
       final game = Game(player: player, buildings: buildings);
       expect(game.buildings.length, 1);
       expect(game.buildings[BuildingType.headquarters]!.level, 3);
+    });
+
+    test('creates with default 3 tech branches', () {
+      final game = Game(player: Player(name: 'Nemo'));
+      expect(game.techBranches.length, 3);
+      expect(game.techBranches.containsKey(TechBranch.military), isTrue);
+      expect(game.techBranches.containsKey(TechBranch.resources), isTrue);
+      expect(game.techBranches.containsKey(TechBranch.explorer), isTrue);
+    });
+
+    test('defaultTechBranches returns all branches locked at level 0', () {
+      final branches = Game.defaultTechBranches();
+      for (final branch in TechBranch.values) {
+        expect(branches[branch]!.unlocked, isFalse);
+        expect(branches[branch]!.researchLevel, 0);
+      }
     });
   });
 }

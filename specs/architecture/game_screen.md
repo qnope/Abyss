@@ -37,6 +37,10 @@ GameScreen (StatefulWidget)
               └── BottomNavigationBar (4 tabs)
 ```
 
+## Production
+
+Production per turn is computed dynamically via `ProductionCalculator.fromBuildings()` on every `build()`. The result is passed down as `Map<ResourceType, int>` through `ResourceBar` → `ResourceBarItem` / `ResourceDetailSheet`.
+
 ## State Management
 
 - `_currentTab` (int) — local state in `_GameScreenState`

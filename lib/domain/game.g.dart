@@ -22,13 +22,14 @@ class GameAdapter extends TypeAdapter<Game> {
       createdAt: fields[2] as DateTime?,
       resources: (fields[3] as Map?)?.cast<ResourceType, Resource>(),
       buildings: (fields[4] as Map?)?.cast<BuildingType, Building>(),
+      techBranches: (fields[5] as Map?)?.cast<TechBranch, TechBranchState>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Game obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.player)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class GameAdapter extends TypeAdapter<Game> {
       ..writeByte(3)
       ..write(obj.resources)
       ..writeByte(4)
-      ..write(obj.buildings);
+      ..write(obj.buildings)
+      ..writeByte(5)
+      ..write(obj.techBranches);
   }
 
   @override

@@ -5,7 +5,7 @@ import 'package:abyss/domain/production_calculator.dart';
 import 'package:abyss/domain/resource_type.dart';
 
 void main() {
-  Map<BuildingType, Building> _allBuildingsAtLevel(int level) {
+  Map<BuildingType, Building> allBuildingsAtLevel(int level) {
     return {
       for (final type in BuildingType.values)
         type: Building(type: type, level: level),
@@ -14,7 +14,7 @@ void main() {
 
   group('ProductionCalculator.fromBuildings', () {
     test('all buildings at level 0 returns empty map', () {
-      final buildings = _allBuildingsAtLevel(0);
+      final buildings = allBuildingsAtLevel(0);
       final production = ProductionCalculator.fromBuildings(buildings);
       expect(production, isEmpty);
     });
@@ -103,7 +103,7 @@ void main() {
     });
 
     test('pearl is never in the result', () {
-      final buildings = _allBuildingsAtLevel(3);
+      final buildings = allBuildingsAtLevel(3);
       final production = ProductionCalculator.fromBuildings(buildings);
       expect(production.containsKey(ResourceType.pearl), isFalse);
     });

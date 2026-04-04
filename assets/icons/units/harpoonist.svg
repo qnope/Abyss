@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="harpoonistSuit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#37474F"/>
+      <stop offset="100%" stop-color="#263238"/>
+    </linearGradient>
+    <linearGradient id="harpoonistWeapon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#BF360C"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="harpoonistTank" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#455A64"/>
+      <stop offset="100%" stop-color="#263238"/>
+    </linearGradient>
+    <linearGradient id="harpoonistOrange" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF6E40"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="harpoonistHarpoon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#78909C"/>
+      <stop offset="100%" stop-color="#B0BEC5"/>
+    </linearGradient>
+    <radialGradient id="harpoonistTarget" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FF1744" stop-opacity="1"/>
+      <stop offset="60%" stop-color="#FF1744" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF1744" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="harpoonistGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#harpoonistGlow)">
+    <!-- Feet / boots -->
+    <ellipse cx="26" cy="61" rx="4" ry="1.5" fill="#263238" stroke="#1B1F22" stroke-width="0.4"/>
+    <ellipse cx="36" cy="61" rx="4" ry="1.5" fill="#263238" stroke="#1B1F22" stroke-width="0.4"/>
+    <!-- Legs -->
+    <rect x="23" y="47" width="6" height="14" rx="1" fill="url(#harpoonistSuit)" stroke="#1B1F22" stroke-width="0.4"/>
+    <rect x="33" y="47" width="6" height="14" rx="1" fill="url(#harpoonistSuit)" stroke="#1B1F22" stroke-width="0.4"/>
+    <!-- Knee pads -->
+    <ellipse cx="26" cy="51" rx="3.5" ry="1.8" fill="#37474F" stroke="#455A64" stroke-width="0.4"/>
+    <ellipse cx="36" cy="51" rx="3.5" ry="1.8" fill="#37474F" stroke="#455A64" stroke-width="0.4"/>
+    <!-- Spare harpoons on left thigh -->
+    <line x1="21" y1="48" x2="21" y2="57" stroke="#B0BEC5" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="19.5" y1="48" x2="19.5" y2="56" stroke="#90A4AE" stroke-width="0.7" stroke-linecap="round"/>
+    <line x1="22.5" y1="49" x2="22.5" y2="57" stroke="#B0BEC5" stroke-width="0.7" stroke-linecap="round"/>
+    <!-- Harpoon tips on spares -->
+    <polygon points="20.5,47 21.5,47 21,45.5" fill="#CFD8DC"/>
+    <polygon points="19,47 20,47 19.5,45.8" fill="#CFD8DC"/>
+    <polygon points="22,48 23,48 22.5,46.8" fill="#CFD8DC"/>
+    <!-- Torso / chest armor -->
+    <polygon points="20,28 42,28 44,47 18,47" fill="url(#harpoonistSuit)" stroke="#1B1F22" stroke-width="0.5"/>
+    <!-- Chest plate center line -->
+    <line x1="31" y1="29" x2="31" y2="46" stroke="#455A64" stroke-width="0.5" opacity="0.6"/>
+    <!-- Chest plate horizontal segments -->
+    <line x1="22" y1="34" x2="40" y2="34" stroke="#455A64" stroke-width="0.4" opacity="0.5"/>
+    <line x1="21" y1="39" x2="41" y2="39" stroke="#455A64" stroke-width="0.4" opacity="0.5"/>
+    <!-- Belt -->
+    <rect x="18" y="44" width="26" height="3" rx="0.5" fill="#37474F" stroke="#455A64" stroke-width="0.4"/>
+    <rect x="29" y="44" width="4" height="3" rx="0.5" fill="#E65100" stroke="#BF360C" stroke-width="0.3"/>
+    <!-- Dorsal tank (visible behind torso) -->
+    <rect x="35" y="24" width="8" height="18" rx="3" fill="url(#harpoonistTank)" stroke="#37474F" stroke-width="0.5"/>
+    <!-- Tank bands -->
+    <rect x="35" y="28" width="8" height="1" fill="#546E7A" opacity="0.7"/>
+    <rect x="35" y="33" width="8" height="1" fill="#546E7A" opacity="0.7"/>
+    <rect x="35" y="38" width="8" height="1" fill="#546E7A" opacity="0.7"/>
+    <!-- Tank valve on top -->
+    <rect x="37.5" y="22" width="3" height="3" rx="0.5" fill="#546E7A" stroke="#37474F" stroke-width="0.3"/>
+    <circle cx="39" cy="23" r="0.8" fill="#78909C"/>
+    <!-- Tubes from tank to weapon -->
+    <path d="M43,30 Q48,30 50,26 Q52,22 50,18" fill="none" stroke="#546E7A" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M43,34 Q49,34 51,28 Q53,22 51,17" fill="none" stroke="#455A64" stroke-width="0.8" stroke-linecap="round"/>
+    <!-- Orange reinforcement - shoulders -->
+    <polygon points="16,26 22,24 22,30 16,32" fill="url(#harpoonistOrange)" stroke="#BF360C" stroke-width="0.4"/>
+    <polygon points="46,26 40,24 40,30 46,32" fill="url(#harpoonistOrange)" stroke="#BF360C" stroke-width="0.4"/>
+    <!-- Shoulder armor rivets -->
+    <circle cx="19" cy="28" r="0.5" fill="#FF6E40" opacity="0.8"/>
+    <circle cx="43" cy="28" r="0.5" fill="#FF6E40" opacity="0.8"/>
+    <!-- Left arm (holding weapon support) -->
+    <rect x="14" y="30" width="5" height="12" rx="1.5" fill="url(#harpoonistSuit)" stroke="#1B1F22" stroke-width="0.4"/>
+    <!-- Left forearm orange reinforcement -->
+    <rect x="13.5" y="34" width="6" height="4" rx="1" fill="url(#harpoonistOrange)" stroke="#BF360C" stroke-width="0.3"/>
+    <!-- Left hand gripping weapon -->
+    <ellipse cx="16" cy="43" rx="2.5" ry="2" fill="#37474F" stroke="#263238" stroke-width="0.3"/>
+    <!-- Right arm (main weapon arm) -->
+    <rect x="43" y="30" width="5" height="10" rx="1.5" fill="url(#harpoonistSuit)" stroke="#1B1F22" stroke-width="0.4"/>
+    <!-- Right forearm orange reinforcement -->
+    <rect x="42.5" y="33" width="6" height="4" rx="1" fill="url(#harpoonistOrange)" stroke="#BF360C" stroke-width="0.3"/>
+    <!-- Right hand / mechanized grip -->
+    <ellipse cx="46" cy="41" rx="2.5" ry="2" fill="#37474F" stroke="#263238" stroke-width="0.3"/>
+    <!-- Harpoon launcher - main barrel -->
+    <rect x="6" y="14" width="42" height="5" rx="1.5" fill="url(#harpoonistWeapon)" stroke="#BF360C" stroke-width="0.5"/>
+    <!-- Launcher barrel inner bore -->
+    <rect x="4" y="15.5" width="3" height="2" rx="0.5" fill="#1B1F22"/>
+    <!-- Launcher muzzle ring -->
+    <rect x="4" y="13.5" width="2.5" height="7" rx="0.8" fill="#E65100" stroke="#BF360C" stroke-width="0.4"/>
+    <!-- Launcher grip / trigger mechanism -->
+    <rect x="30" y="19" width="6" height="4" rx="0.5" fill="#455A64" stroke="#37474F" stroke-width="0.3"/>
+    <!-- Launcher rear housing -->
+    <polygon points="48,14 52,12 52,22 48,20" fill="#BF360C" stroke="#8B1A00" stroke-width="0.4"/>
+    <!-- Launcher mechanical details -->
+    <line x1="10" y1="16" x2="10" y2="18" stroke="#8B1A00" stroke-width="0.5"/>
+    <line x1="16" y1="16" x2="16" y2="18" stroke="#8B1A00" stroke-width="0.5"/>
+    <line x1="22" y1="16" x2="22" y2="18" stroke="#8B1A00" stroke-width="0.5"/>
+    <line x1="28" y1="16" x2="28" y2="18" stroke="#8B1A00" stroke-width="0.5"/>
+    <!-- Loaded harpoon projectile extending from muzzle -->
+    <line x1="2" y1="16.5" x2="6" y2="16.5" stroke="#CFD8DC" stroke-width="1" stroke-linecap="round"/>
+    <polygon points="0,16.5 2,15.5 2,17.5" fill="#B0BEC5"/>
+    <!-- Launcher top rail -->
+    <rect x="12" y="12.5" width="28" height="1.5" rx="0.3" fill="#455A64" stroke="#37474F" stroke-width="0.3"/>
+    <!-- Neck -->
+    <rect x="27" y="22" width="8" height="6" rx="1" fill="#546E7A" stroke="#37474F" stroke-width="0.3"/>
+    <!-- Head / helmet -->
+    <ellipse cx="31" cy="17" rx="7" ry="8" fill="#37474F" stroke="#263238" stroke-width="0.5"/>
+    <!-- Helmet top ridge -->
+    <path d="M25,13 Q31,8 37,13" fill="none" stroke="#455A64" stroke-width="0.8"/>
+    <!-- Helmet visor opening - face visible -->
+    <path d="M26,15 Q31,13 36,15 Q36,20 31,21 Q26,20 26,15" fill="#8D6E63" stroke="#37474F" stroke-width="0.4"/>
+    <!-- Face shadow -->
+    <path d="M27,17 Q31,15.5 35,17 Q35,20 31,20.5 Q27,20 27,17" fill="#6D4C41" opacity="0.4"/>
+    <!-- Eyes -->
+    <ellipse cx="28.5" cy="17" rx="1.2" ry="0.8" fill="#ECEFF1"/>
+    <circle cx="28.5" cy="17" r="0.5" fill="#263238"/>
+    <!-- Right eye - targeting optic -->
+    <ellipse cx="33.5" cy="17" rx="1.2" ry="0.8" fill="#ECEFF1"/>
+    <circle cx="33.5" cy="17" r="0.5" fill="#263238"/>
+    <!-- Optical targeting reticle over right eye -->
+    <circle cx="33.5" cy="17" r="3" fill="url(#harpoonistTarget)" opacity="0.8"/>
+    <circle cx="33.5" cy="17" r="2" fill="none" stroke="#FF1744" stroke-width="0.3" opacity="0.9"/>
+    <circle cx="33.5" cy="17" r="1" fill="none" stroke="#FF1744" stroke-width="0.2" opacity="0.7"/>
+    <!-- Reticle crosshairs -->
+    <line x1="33.5" y1="14.5" x2="33.5" y2="15.8" stroke="#FF1744" stroke-width="0.3" opacity="0.8"/>
+    <line x1="33.5" y1="18.2" x2="33.5" y2="19.5" stroke="#FF1744" stroke-width="0.3" opacity="0.8"/>
+    <line x1="31" y1="17" x2="32.3" y2="17" stroke="#FF1744" stroke-width="0.3" opacity="0.8"/>
+    <line x1="34.7" y1="17" x2="36" y2="17" stroke="#FF1744" stroke-width="0.3" opacity="0.8"/>
+    <!-- Reticle center dot -->
+    <circle cx="33.5" cy="17" r="0.4" fill="#FF1744" opacity="0.9"/>
+    <!-- Targeting monocle hardware -->
+    <circle cx="33.5" cy="17" r="3.5" fill="none" stroke="#455A64" stroke-width="0.6"/>
+    <line x1="37" y1="17" x2="38" y2="16" stroke="#455A64" stroke-width="0.5"/>
+    <!-- Mouth area -->
+    <line x1="29" y1="19.5" x2="33" y2="19.5" stroke="#4E342E" stroke-width="0.4" opacity="0.6"/>
+    <!-- Helmet chin guard -->
+    <path d="M26,20 Q31,23 36,20" fill="none" stroke="#37474F" stroke-width="0.8"/>
+    <!-- Helmet side detail -->
+    <line x1="24" y1="15" x2="24" y2="19" stroke="#455A64" stroke-width="0.5"/>
+    <circle cx="24" cy="17" r="0.6" fill="#546E7A"/>
+  </g>
+</svg>

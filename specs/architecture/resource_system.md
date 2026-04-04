@@ -39,6 +39,8 @@ Game.resources: Map<ResourceType, Resource>
    Formulas are generous to ensure fluid progression:
    `30*level²+20` (Algae), `20*level²+20` (Coral), `20*level²+10` (Ore), `4*level²+2` (Energy).
    This avoids sync issues when multiple systems affect production.
+   The Resources tech branch applies a `+20% × researchLevel` multiplier (floored) to all production.
+   See [tech_system.md](tech_system.md).
 4. **Pearl is special** — Zero production, lower max storage. Separated visually in the UI.
 
 ## Hive Adapter Registration Order

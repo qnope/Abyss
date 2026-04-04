@@ -23,10 +23,10 @@ Game.resources: Map<ResourceType, Resource>
 
 | Resource | Amount | Max storage |
 |----------|--------|-------------|
-| Algae    | 100    | 500         |
-| Coral    | 80     | 500         |
-| Ore      | 50     | 500         |
-| Energy   | 60     | 500         |
+| Algae    | 100    | 5 000       |
+| Coral    | 80     | 5 000       |
+| Ore      | 50     | 5 000       |
+| Energy   | 60     | 1 000       |
 | Pearl    | 5      | 100         |
 
 ## Design Decisions
@@ -36,7 +36,8 @@ Game.resources: Map<ResourceType, Resource>
 3. **Dynamic production** — Production per turn is calculated from building levels
    via `ProductionCalculator.fromBuildings()` using `ProductionFormula` and the
    `productionFormulas` registry instead of being stored on `Resource`.
-   Each building type has a non-linear formula (e.g., `3*level²+2` for Algae Farm).
+   Formulas are generous to ensure fluid progression:
+   `30*level²+20` (Algae), `20*level²+20` (Coral), `20*level²+10` (Ore), `4*level²+2` (Energy).
    This avoids sync issues when multiple systems affect production.
 4. **Pearl is special** — Zero production, lower max storage. Separated visually in the UI.
 

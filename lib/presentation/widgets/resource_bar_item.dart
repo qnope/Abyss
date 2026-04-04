@@ -6,11 +6,13 @@ import 'resource_icon.dart';
 
 class ResourceBarItem extends StatelessWidget {
   final Resource resource;
+  final int production;
   final VoidCallback? onTap;
 
   const ResourceBarItem({
     super.key,
     required this.resource,
+    this.production = 0,
     this.onTap,
   });
 
@@ -33,10 +35,10 @@ class ResourceBarItem extends StatelessWidget {
               fontSize: 14,
             ),
           ),
-          if (resource.productionPerTurn > 0) ...[
+          if (production > 0) ...[
             const SizedBox(width: 2),
             Text(
-              '+${resource.productionPerTurn}/t',
+              '+$production/t',
               style: TextStyle(
                 color: color.withValues(alpha: 0.7),
                 fontSize: 11,

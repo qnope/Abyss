@@ -11,11 +11,11 @@ void main() {
     setUp(() => mockSvgAssets());
     tearDown(() => clearSvgMocks());
 
-    Widget createApp(Resource resource, {VoidCallback? onTap}) {
+    Widget createApp(Resource resource, {VoidCallback? onTap, int production = 0}) {
       return MaterialApp(
         theme: AbyssTheme.create(),
         home: Scaffold(
-          body: ResourceBarItem(resource: resource, onTap: onTap),
+          body: ResourceBarItem(resource: resource, production: production, onTap: onTap),
         ),
       );
     }
@@ -24,7 +24,6 @@ void main() {
       final resource = Resource(
         type: ResourceType.algae,
         amount: 100,
-        productionPerTurn: 10,
       );
       await tester.pumpWidget(createApp(resource));
       await tester.pumpAndSettle();
@@ -36,9 +35,8 @@ void main() {
       final resource = Resource(
         type: ResourceType.coral,
         amount: 80,
-        productionPerTurn: 8,
       );
-      await tester.pumpWidget(createApp(resource));
+      await tester.pumpWidget(createApp(resource, production: 8));
       await tester.pumpAndSettle();
 
       expect(find.text('+8/t'), findsOneWidget);
@@ -48,7 +46,7 @@ void main() {
       final resource = Resource(
         type: ResourceType.pearl,
         amount: 5,
-        productionPerTurn: 0,
+        maxStorage: 100,
       );
       await tester.pumpWidget(createApp(resource));
       await tester.pumpAndSettle();
@@ -62,10 +60,9 @@ void main() {
       final resource = Resource(
         type: ResourceType.energy,
         amount: 60,
-        productionPerTurn: 6,
       );
       await tester.pumpWidget(
-        createApp(resource, onTap: () => tapped = true),
+        createApp(resource, production: 6, onTap: () => tapped = true),
       );
       await tester.pumpAndSettle();
 

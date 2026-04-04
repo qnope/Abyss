@@ -26,6 +26,7 @@ class TurnResolver {
       ));
     }
 
+    game.recruitedUnitTypes.clear();
     game.turn++;
     return TurnResult(changes: changes);
   }

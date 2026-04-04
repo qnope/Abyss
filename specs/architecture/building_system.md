@@ -100,7 +100,7 @@ Widgets
 
 ## Hive Adapter Registration Order
 
-BuildingType → Building → ResourceType → Resource → TechBranch → TechBranchState → Player → Game
+BuildingType → Building → ResourceType → Resource → TechBranch → TechBranchState → Player → UnitType → Unit → Game
 
 ## File Structure
 

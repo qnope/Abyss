@@ -3,7 +3,7 @@ import 'unit_type.dart';
 
 part 'unit.g.dart';
 
-@HiveType(typeId: 7)
+@HiveType(typeId: 9)
 class Unit extends HiveObject {
   @HiveField(0)
   final UnitType type;

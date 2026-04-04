@@ -9,6 +9,8 @@ extension BuildingTypeColor on BuildingType {
     BuildingType.coralMine => AbyssColors.coralPink,
     BuildingType.oreExtractor => AbyssColors.oreBlue,
     BuildingType.solarPanel => AbyssColors.energyYellow,
+    BuildingType.laboratory => AbyssColors.biolumTeal,
+    BuildingType.barracks => AbyssColors.biolumPink,
   };
 }
 
@@ -19,6 +21,8 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.coralMine => 'Mine de corail',
     BuildingType.oreExtractor => 'Extracteur de minerai',
     BuildingType.solarPanel => 'Panneau solaire',
+    BuildingType.laboratory => 'Laboratoire',
+    BuildingType.barracks => 'Caserne',
   };
 
   String get description => switch (this) {
@@ -33,6 +37,10 @@ extension BuildingTypeInfo on BuildingType {
       'Fore les profondeurs pour extraire du minerai océanique.',
     BuildingType.solarPanel =>
       'Capte l\'énergie solaire pour alimenter vos installations.',
+    BuildingType.laboratory =>
+      'Centre de recherche sous-marin pour développer de nouvelles technologies.',
+    BuildingType.barracks =>
+      'Forme et entraîne vos unités militaires sous-marines.',
   };
 
   String get iconPath => switch (this) {
@@ -41,5 +49,7 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.coralMine => 'assets/icons/buildings/coral_mine.svg',
     BuildingType.oreExtractor => 'assets/icons/buildings/ore_extractor.svg',
     BuildingType.solarPanel => 'assets/icons/buildings/solar_panel.svg',
+    BuildingType.laboratory => 'assets/icons/buildings/laboratory.svg',
+    BuildingType.barracks => 'assets/icons/buildings/barracks.svg',
   };
 }

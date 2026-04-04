@@ -5,6 +5,7 @@ import 'package:abyss/domain/game.dart';
 import 'package:abyss/domain/player.dart';
 import 'package:abyss/domain/resource_type.dart';
 import 'package:abyss/domain/tech_branch.dart';
+import 'package:abyss/domain/unit_type.dart';
 
 void main() {
   group('Game', () {
@@ -119,6 +120,27 @@ void main() {
         expect(branches[branch]!.unlocked, isFalse);
         expect(branches[branch]!.researchLevel, 0);
       }
+    });
+
+    test('creates with default 6 units all at count 0', () {
+      final game = Game(player: Player(name: 'Nemo'));
+      expect(game.units.length, 6);
+      for (final unit in game.units.values) {
+        expect(unit.count, 0);
+      }
+    });
+
+    test('creates with empty recruitedUnitTypes', () {
+      final game = Game(player: Player(name: 'Nemo'));
+      expect(game.recruitedUnitTypes, isEmpty);
+    });
+
+    test('creates with custom units', () {
+      final game = Game(
+        player: Player(name: 'Nemo'),
+        recruitedUnitTypes: [UnitType.scout],
+      );
+      expect(game.recruitedUnitTypes, [UnitType.scout]);
     });
   });
 }

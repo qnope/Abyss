@@ -8,7 +8,7 @@ part of 'unit.dart';
 
 class UnitAdapter extends TypeAdapter<Unit> {
   @override
-  final int typeId = 7;
+  final int typeId = 9;
 
   @override
   Unit read(BinaryReader reader) {

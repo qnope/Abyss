@@ -33,6 +33,7 @@ Player taps "Tour suivant"
   │     ├── ProductionCalculator.fromBuildings() → production map
   │     ├── For each resource: amount += produced, cap at maxStorage
   │     ├── Track wasCapped per resource
+  │     ├── game.recruitedUnitTypes.clear()  ← reset per-turn recruitment flags
   │     └── game.turn++
   │
   ├── GameRepository.save(game)   ← auto-save

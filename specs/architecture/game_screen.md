@@ -13,7 +13,7 @@ The main gameplay screen with three zones: resource bar (top), tab content (cent
 ├──────────────────────────────────┤
 │                                  │
 │         Tab Content              │  ← Expanded, switches by tab index
-│   (Base=BuildingListView, rest=placeholders) │
+│   (Base=BuildingListView, Army=ArmyListView) │
 │                                  │
 ├──────────────────────────────────┤
 │  ⚙️ Settings  │ Tour 5 │ ▶ Next │  ← Action row
@@ -31,7 +31,7 @@ GameScreen (StatefulWidget)
         │     │     ├── ResourceBarItem × 4 (production)
         │     │     ├── Divider
         │     │     └── ResourceBarItem (pearl)
-        │     └── Expanded → tab content (BuildingListView | TabPlaceholder)
+        │     └── Expanded → tab content (BuildingListView | ArmyListView | TabPlaceholder)
         └── bottomNavigationBar: GameBottomBar
               ├── Action row (settings, turn counter, next turn)
               └── BottomNavigationBar (4 tabs)
@@ -54,6 +54,8 @@ Production per turn is computed dynamically via `ProductionCalculator.fromBuildi
 | Tap resource | `showResourceDetailSheet()` | Opens modal bottom sheet |
 | Tap building | `_showBuildingDetail()` | Opens BuildingDetailSheet |
 | Upgrade building | `_upgradeBuilding()` | Via `ActionExecutor` + `UpgradeBuildingAction` |
+| Tap unit | `_showUnitDetail()` | Opens UnitDetailSheet |
+| Recruit unit | `_recruitUnit()` | Via `ActionExecutor` + `RecruitUnitAction` |
 | Tap tab | `onTabChanged` | Switches `_currentTab` |
 | Next Turn | `_nextTurn()` | Confirm → resolve → save → summary (see [turn_system.md](turn_system.md)) |
 | Settings | `_showSettings()` | Opens dialog → save & quit |
@@ -83,9 +85,15 @@ lib/presentation/
   │     ├── building_list_view.dart
   │     ├── building_detail_sheet.dart
   │     ├── upgrade_section.dart
+  │     ├── unit_icon.dart
+  │     ├── unit_card.dart
+  │     ├── army_list_view.dart
+  │     ├── unit_detail_sheet.dart
+  │     ├── recruitment_section.dart
   │     ├── turn_confirmation_dialog.dart
   │     └── turn_summary_dialog.dart
   └── extensions/
         ├── resource_type_extensions.dart
-        └── building_type_extensions.dart
+        ├── building_type_extensions.dart
+        └── unit_type_extensions.dart
 ```

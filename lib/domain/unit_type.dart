@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'unit_type.g.dart';
 
-@HiveType(typeId: 6)
+@HiveType(typeId: 8)
 enum UnitType {
   @HiveField(0) scout,
   @HiveField(1) harpoonist,

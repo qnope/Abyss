@@ -26,3 +26,4 @@ flutter:
   assets:
     - assets/icons/resources/
     - assets/icons/buildings/
+    - assets/icons/units/

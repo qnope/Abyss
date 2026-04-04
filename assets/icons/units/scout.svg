@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="scoutSuit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A1A2E"/>
+      <stop offset="100%" stop-color="#16213E"/>
+    </linearGradient>
+    <linearGradient id="scoutVisor" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#42A5F5"/>
+      <stop offset="100%" stop-color="#80D8FF"/>
+    </linearGradient>
+    <linearGradient id="scoutJet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#80D8FF"/>
+      <stop offset="50%" stop-color="#42A5F5"/>
+      <stop offset="100%" stop-color="#0D47A1"/>
+    </linearGradient>
+    <linearGradient id="scoutTrim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#42A5F5"/>
+      <stop offset="100%" stop-color="#0D47A1"/>
+    </linearGradient>
+    <radialGradient id="scoutBeacon" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#80D8FF"/>
+      <stop offset="100%" stop-color="#42A5F5"/>
+    </radialGradient>
+    <filter id="scoutGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#scoutGlow)">
+    <!-- Speed effect lines behind silhouette -->
+    <line x1="4" y1="24" x2="16" y2="24" stroke="#42A5F5" stroke-width="0.6" opacity="0.5" stroke-linecap="round"/>
+    <line x1="2" y1="28" x2="14" y2="28" stroke="#80D8FF" stroke-width="0.8" opacity="0.6" stroke-linecap="round"/>
+    <line x1="6" y1="32" x2="15" y2="32" stroke="#42A5F5" stroke-width="0.5" opacity="0.4" stroke-linecap="round"/>
+    <line x1="3" y1="36" x2="13" y2="36" stroke="#80D8FF" stroke-width="0.7" opacity="0.5" stroke-linecap="round"/>
+    <line x1="5" y1="40" x2="14" y2="40" stroke="#42A5F5" stroke-width="0.5" opacity="0.35" stroke-linecap="round"/>
+    <line x1="8" y1="20" x2="17" y2="20" stroke="#42A5F5" stroke-width="0.4" opacity="0.3" stroke-linecap="round"/>
+    <!-- Head - streamlined full-face mask -->
+    <ellipse cx="36" cy="13" rx="5.5" ry="6" fill="url(#scoutSuit)" stroke="#0D47A1" stroke-width="0.5"/>
+    <!-- Mask front panel -->
+    <path d="M32,10 Q36,8 40,10 L39,16 Q36,17.5 33,16 Z" fill="#16213E" stroke="#0D47A1" stroke-width="0.3"/>
+    <!-- Luminescent visor -->
+    <path d="M33,11.5 Q36,10 39,11.5 L38.5,14 Q36,15 33.5,14 Z" fill="url(#scoutVisor)" opacity="0.85" stroke="#80D8FF" stroke-width="0.3"/>
+    <!-- Visor glow highlight -->
+    <path d="M34,12 Q36,11 38,12 L37.8,13 Q36,13.6 34.2,13 Z" fill="#80D8FF" opacity="0.35"/>
+    <!-- Neck -->
+    <rect x="34" y="18" width="4" height="2.5" rx="0.5" fill="url(#scoutSuit)" stroke="#0D47A1" stroke-width="0.3"/>
+    <!-- Torso - leaning forward -->
+    <path d="M30,20 L40,20 L42,24 L43,34 L39,36 L33,36 L29,34 L28,24 Z" fill="url(#scoutSuit)" stroke="#0D47A1" stroke-width="0.5"/>
+    <!-- Torso blue trim - center line -->
+    <line x1="36" y1="20" x2="36" y2="36" stroke="#42A5F5" stroke-width="0.5" opacity="0.7"/>
+    <!-- Torso blue trim - shoulder lines -->
+    <line x1="30" y1="21" x2="42" y2="21" stroke="#42A5F5" stroke-width="0.4" opacity="0.6"/>
+    <!-- Chest panel detail -->
+    <path d="M33,23 L39,23 L38.5,28 L33.5,28 Z" fill="#16213E" stroke="#0D47A1" stroke-width="0.3" opacity="0.7"/>
+    <!-- Dorsal propulsor on back -->
+    <path d="M28,22 L26,21 L25,24 L24,30 L27,32 L29,30 Z" fill="#16213E" stroke="#0D47A1" stroke-width="0.5"/>
+    <!-- Propulsor detail panel -->
+    <rect x="25.5" y="23" width="2.5" height="5" rx="0.5" fill="#1A1A2E" stroke="#42A5F5" stroke-width="0.3"/>
+    <!-- Propulsor blue jet exhaust -->
+    <path d="M24,30 L22,35 L25,38 L28,35 L27,32 Z" fill="url(#scoutJet)" opacity="0.7"/>
+    <path d="M24.5,32 L23,36 L25.5,37 L27,34 Z" fill="#80D8FF" opacity="0.4"/>
+    <!-- Propulsor jet glow -->
+    <ellipse cx="25" cy="37" rx="2" ry="1.5" fill="#80D8FF" opacity="0.25"/>
+    <!-- Belt -->
+    <rect x="29" y="34" width="14" height="2" rx="0.5" fill="#1A1A2E" stroke="#0D47A1" stroke-width="0.4"/>
+    <!-- Belt beacons - 3 small luminous circles -->
+    <circle cx="33" cy="35" r="0.9" fill="url(#scoutBeacon)" opacity="0.9"/>
+    <circle cx="36" cy="35" r="0.9" fill="url(#scoutBeacon)" opacity="0.9"/>
+    <circle cx="39" cy="35" r="0.9" fill="url(#scoutBeacon)" opacity="0.9"/>
+    <!-- Belt beacon glow rings -->
+    <circle cx="33" cy="35" r="1.4" fill="none" stroke="#80D8FF" stroke-width="0.3" opacity="0.4"/>
+    <circle cx="36" cy="35" r="1.4" fill="none" stroke="#80D8FF" stroke-width="0.3" opacity="0.4"/>
+    <circle cx="39" cy="35" r="1.4" fill="none" stroke="#80D8FF" stroke-width="0.3" opacity="0.4"/>
+    <!-- Left arm - along the body, slightly back (speed pose) -->
+    <path d="M29,22 L26,24 L24,30 L25,31 L27,26 L30,23 Z" fill="url(#scoutSuit)" stroke="#0D47A1" stroke-width="0.4"/>
+    <!-- Left arm blue trim -->
+    <line x1="27" y1="23" x2="25" y2="29" stroke="#42A5F5" stroke-width="0.3" opacity="0.6"/>
+    <!-- Left hand -->
+    <ellipse cx="24.5" cy="31" rx="1.2" ry="0.8" fill="#16213E" stroke="#0D47A1" stroke-width="0.3"/>
+    <!-- Right arm - along body, forward -->
+    <path d="M42,22 L44,25 L45,32 L43.5,33 L43,26 L41,23 Z" fill="url(#scoutSuit)" stroke="#0D47A1" stroke-width="0.4"/>
+    <!-- Right arm blue trim -->
+    <line x1="43" y1="24" x2="44.5" y2="31" stroke="#42A5F5" stroke-width="0.3" opacity="0.6"/>
+    <!-- Right hand -->
+    <ellipse cx="44.5" cy="33" rx="1.2" ry="0.8" fill="#16213E" stroke="#0D47A1" stroke-width="0.3"/>
+    <!-- Left leg - bent back (running pose) -->
+    <path d="M31,36 L29,42 L27,48 L25,52 L28,53 L30,49 L32,43 L34,37 Z" fill="url(#scoutSuit)" stroke="#0D47A1" stroke-width="0.4"/>
+    <!-- Left leg blue trim -->
+    <line x1="30" y1="37" x2="27" y2="51" stroke="#42A5F5" stroke-width="0.3" opacity="0.5"/>
+    <!-- Left knee pad -->
+    <ellipse cx="28.5" cy="45" rx="1.5" ry="1" fill="#16213E" stroke="#42A5F5" stroke-width="0.3"/>
+    <!-- Left boot -->
+    <path d="M25,52 L23,54 L27,55 L28,53 Z" fill="#1A1A2E" stroke="#0D47A1" stroke-width="0.4"/>
+    <!-- Left boot trim -->
+    <line x1="24" y1="54" x2="27.5" y2="54.5" stroke="#42A5F5" stroke-width="0.3" opacity="0.6"/>
+    <!-- Right leg - extended forward (running pose) -->
+    <path d="M37,36 L39,40 L42,46 L44,52 L41,53 L39,47 L37,41 L35,37 Z" fill="url(#scoutSuit)" stroke="#0D47A1" stroke-width="0.4"/>
+    <!-- Right leg blue trim -->
+    <line x1="38" y1="37" x2="43" y2="51" stroke="#42A5F5" stroke-width="0.3" opacity="0.5"/>
+    <!-- Right knee pad -->
+    <ellipse cx="41" cy="44" rx="1.5" ry="1" fill="#16213E" stroke="#42A5F5" stroke-width="0.3"/>
+    <!-- Right boot -->
+    <path d="M44,52 L46,54 L42,55 L41,53 Z" fill="#1A1A2E" stroke="#0D47A1" stroke-width="0.4"/>
+    <!-- Right boot trim -->
+    <line x1="45" y1="54" x2="41.5" y2="54.5" stroke="#42A5F5" stroke-width="0.3" opacity="0.6"/>
+    <!-- Additional speed streaks - shorter, closer to body -->
+    <line x1="10" y1="26" x2="18" y2="26" stroke="#80D8FF" stroke-width="0.4" opacity="0.3" stroke-linecap="round"/>
+    <line x1="7" y1="34" x2="16" y2="34" stroke="#42A5F5" stroke-width="0.5" opacity="0.25" stroke-linecap="round"/>
+    <line x1="12" y1="44" x2="19" y2="44" stroke="#80D8FF" stroke-width="0.4" opacity="0.2" stroke-linecap="round"/>
+    <!-- Visor light reflection on suit -->
+    <ellipse cx="36" cy="18" rx="2" ry="0.5" fill="#80D8FF" opacity="0.15"/>
+  </g>
+</svg>

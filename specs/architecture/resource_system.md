@@ -13,7 +13,6 @@ ResourceType (enum, Hive typeId: 2)
 Resource (HiveObject, typeId: 3)
   ├── type: ResourceType
   ├── amount: int          (mutable — updated on turn)
-  ├── productionPerTurn: int
   └── maxStorage: int
 
 Game.resources: Map<ResourceType, Resource>
@@ -22,19 +21,21 @@ Game.resources: Map<ResourceType, Resource>
 
 ## Starting Values
 
-| Resource | Amount | Production/turn | Max storage |
-|----------|--------|----------------|-------------|
-| Algae    | 100    | 10             | 500         |
-| Coral    | 80     | 8              | 500         |
-| Ore      | 50     | 5              | 500         |
-| Energy   | 60     | 6              | 500         |
-| Pearl    | 5      | 0              | 100         |
+| Resource | Amount | Max storage |
+|----------|--------|-------------|
+| Algae    | 100    | 500         |
+| Coral    | 80     | 500         |
+| Ore      | 50     | 500         |
+| Energy   | 60     | 500         |
+| Pearl    | 5      | 100         |
 
 ## Design Decisions
 
 1. **ResourceType in domain layer** — Moved from presentation so it can be persisted and referenced across layers.
 2. **Map keyed by ResourceType** — O(1) lookup; enum guarantees exactly one entry per type.
-3. **Mutable `amount` and `productionPerTurn`** — `amount` updated each turn; `productionPerTurn` updated when production buildings are upgraded.
+3. **Dynamic production** — Production per turn is calculated from building levels
+   via `ProductionCalculator.fromBuildings()` instead of being stored on `Resource`.
+   This avoids sync issues when multiple systems affect production.
 4. **Pearl is special** — Zero production, lower max storage. Separated visually in the UI.
 
 ## Hive Adapter Registration Order
@@ -45,9 +46,10 @@ ResourceType → Resource → Player → Game (dependencies must be registered f
 
 ```
 lib/domain/
-  ├── resource_type.dart      # Enum + Hive annotations
-  ├── resource.dart           # Resource model
-  └── game.dart               # Game model (owns resources map)
+  ├── resource_type.dart            # Enum + Hive annotations
+  ├── resource.dart                 # Resource model
+  ├── production_calculator.dart    # Dynamic production from buildings
+  └── game.dart                     # Game model (owns resources map)
 lib/data/
   └── game_repository.dart    # Adapter registration
 ```

@@ -10,20 +10,17 @@ void main() {
       expect(r.amount, 100);
     });
 
-    test('defaults: productionPerTurn=0, maxStorage=500', () {
+    test('defaults: maxStorage=500', () {
       final r = Resource(type: ResourceType.algae, amount: 50);
-      expect(r.productionPerTurn, 0);
       expect(r.maxStorage, 500);
     });
 
-    test('accepts custom productionPerTurn and maxStorage', () {
+    test('accepts custom maxStorage', () {
       final r = Resource(
         type: ResourceType.coral,
         amount: 200,
-        productionPerTurn: 15,
         maxStorage: 1000,
       );
-      expect(r.productionPerTurn, 15);
       expect(r.maxStorage, 1000);
     });
 

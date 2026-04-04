@@ -5,6 +5,7 @@ import 'package:abyss/domain/game.dart';
 import 'package:abyss/domain/player.dart';
 import 'package:abyss/domain/resource.dart';
 import 'package:abyss/domain/resource_type.dart';
+import 'package:abyss/domain/production_calculator.dart';
 import 'package:abyss/domain/upgrade_building_action.dart';
 
 Game makeProductionGame({
@@ -21,22 +22,18 @@ Game makeProductionGame({
       ResourceType.algae: Resource(
         type: ResourceType.algae,
         amount: algae,
-        productionPerTurn: 10,
       ),
       ResourceType.coral: Resource(
         type: ResourceType.coral,
         amount: coral,
-        productionPerTurn: 8,
       ),
       ResourceType.ore: Resource(
         type: ResourceType.ore,
         amount: ore,
-        productionPerTurn: 5,
       ),
       ResourceType.energy: Resource(
         type: ResourceType.energy,
         amount: energy,
-        productionPerTurn: 6,
       ),
       ResourceType.pearl: Resource(
         type: ResourceType.pearl,
@@ -100,41 +97,30 @@ void main() {
       expect(game.buildings[BuildingType.algaeFarm]!.level, 1);
     });
 
-    test('execute algaeFarm updates productionPerTurn', () {
+    test('execute algaeFarm increases production via calculator', () {
       final game = makeProductionGame();
-      final action = UpgradeBuildingAction(
-        buildingType: BuildingType.algaeFarm,
-      );
+      final action = UpgradeBuildingAction(buildingType: BuildingType.algaeFarm);
       action.execute(game);
-      expect(
-        game.resources[ResourceType.algae]!.productionPerTurn,
-        15,
-      );
+      final production = ProductionCalculator.fromBuildings(game.buildings);
+      expect(production[ResourceType.algae], 5);
     });
 
-    test('execute algaeFarm twice updates productionPerTurn cumulatively', () {
+    test('execute algaeFarm twice cumulates production', () {
       final game = makeProductionGame(hqLevel: 2);
-      final action = UpgradeBuildingAction(
-        buildingType: BuildingType.algaeFarm,
-      );
+      final action = UpgradeBuildingAction(buildingType: BuildingType.algaeFarm);
       action.execute(game);
       action.execute(game);
-      expect(
-        game.resources[ResourceType.algae]!.productionPerTurn,
-        20,
-      );
+      final production = ProductionCalculator.fromBuildings(game.buildings);
+      expect(production[ResourceType.algae], 10);
     });
 
-    test('execute HQ does not change any productionPerTurn', () {
+    test('execute HQ does not affect production', () {
       final game = makeProductionGame();
-      final action = UpgradeBuildingAction(
-        buildingType: BuildingType.headquarters,
-      );
+      final before = ProductionCalculator.fromBuildings(game.buildings);
+      final action = UpgradeBuildingAction(buildingType: BuildingType.headquarters);
       action.execute(game);
-      expect(game.resources[ResourceType.algae]!.productionPerTurn, 10);
-      expect(game.resources[ResourceType.coral]!.productionPerTurn, 8);
-      expect(game.resources[ResourceType.ore]!.productionPerTurn, 5);
-      expect(game.resources[ResourceType.energy]!.productionPerTurn, 6);
+      final after = ProductionCalculator.fromBuildings(game.buildings);
+      expect(after, equals(before));
     });
 
     test('validate fails for algaeFarm at max level 5', () {

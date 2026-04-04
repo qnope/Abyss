@@ -7,6 +7,8 @@ import '../domain/resource.dart';
 import '../domain/resource_type.dart';
 import '../domain/tech_branch.dart';
 import '../domain/tech_branch_state.dart';
+import '../domain/unit.dart';
+import '../domain/unit_type.dart';
 
 class GameRepository {
   static const _boxName = 'games';
@@ -20,6 +22,8 @@ class GameRepository {
     Hive.registerAdapter(TechBranchAdapter());
     Hive.registerAdapter(TechBranchStateAdapter());
     Hive.registerAdapter(PlayerAdapter());
+    Hive.registerAdapter(UnitTypeAdapter());
+    Hive.registerAdapter(UnitAdapter());
     Hive.registerAdapter(GameAdapter());
     try {
       await Hive.openBox<Game>(_boxName);

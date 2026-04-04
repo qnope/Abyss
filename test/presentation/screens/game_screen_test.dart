@@ -77,6 +77,17 @@ void main() {
       expect(find.text('Tour 2'), findsOneWidget);
     });
 
+    testWidgets('Tech tab shows tech tree instead of placeholder',
+        (tester) async {
+      await tester.pumpWidget(createApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Tech'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Bientôt disponible'), findsNothing);
+    });
+
     testWidgets('Base tab shows building list', (tester) async {
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();

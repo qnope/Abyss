@@ -13,6 +13,8 @@ import '../widgets/building_list_view.dart';
 import '../widgets/game_bottom_bar.dart';
 import '../widgets/resource_bar.dart';
 import '../widgets/tab_placeholder.dart';
+import '../widgets/tech_tree_view.dart';
+import 'game_screen_tech_actions.dart';
 import 'main_menu_screen.dart';
 
 class GameScreen extends StatefulWidget {
@@ -64,7 +66,15 @@ class _GameScreenState extends State<GameScreen> {
       ),
       1 => const TabPlaceholder(icon: Icons.map, label: 'Carte'),
       2 => const TabPlaceholder(icon: Icons.shield, label: 'Armee'),
-      3 => const TabPlaceholder(icon: Icons.science, label: 'Tech'),
+      3 => TechTreeView(
+        techBranches: widget.game.techBranches,
+        buildings: widget.game.buildings,
+        resources: widget.game.resources,
+        onBranchTap: (branch) => showBranchDetail(
+          context, widget.game, branch, () => setState(() {})),
+        onNodeTap: (branch, level) => showNodeDetail(
+          context, widget.game, branch, level, () => setState(() {})),
+      ),
       _ => const SizedBox.shrink(),
     };
   }
@@ -95,9 +105,7 @@ class _GameScreenState extends State<GameScreen> {
     );
 
     final confirmed = await showTurnConfirmationDialog(
-      context,
-      production: production,
-    );
+      context, production: production);
     if (!confirmed || !mounted) return;
 
     final result = TurnResolver().resolve(widget.game);
@@ -119,15 +127,10 @@ class _GameScreenState extends State<GameScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Annuler'),
-          ),
+            child: const Text('Annuler')),
           ElevatedButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              _saveAndQuit();
-            },
-            child: const Text('Sauvegarder et quitter'),
-          ),
+            onPressed: () { Navigator.pop(ctx); _saveAndQuit(); },
+            child: const Text('Sauvegarder et quitter')),
         ],
       ),
     );

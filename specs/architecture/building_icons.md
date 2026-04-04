@@ -13,14 +13,18 @@ Five hand-coded SVG icons represent the game's buildings, stored in `assets/icon
 | Coral Mine | `coral_mine.svg` | `#C2185B` -> `#FF6E91` | Drilling rig with mechanical arm extracting coral |
 | Ore Extractor | `ore_extractor.svg` | `#1565C0` -> `#42A5F5` | Heavy platform with drill, conveyor, and crystals |
 | Solar Panel | `solar_panel.svg` | `#FF8F00` -> `#FFD740` | Angled panel arrays with energy sparks |
+| Barracks (Caserne) | `barracks.svg` | `#E65100` -> `#FFB74D` | Fortified bunker with crenellations and portholes |
+| Laboratory | `laboratory.svg` | `#00695C` -> `#64FFDA` | Glass research dome with scientific instruments |
 
 ## File structure
 
 ```
 assets/icons/buildings/
   ├── algae_farm.svg
+  ├── barracks.svg
   ├── coral_mine.svg
   ├── headquarters.svg
+  ├── laboratory.svg
   ├── ore_extractor.svg
   └── solar_panel.svg
 ```

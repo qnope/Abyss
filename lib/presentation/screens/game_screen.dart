@@ -5,7 +5,10 @@ import '../../domain/action_executor.dart';
 import '../../domain/upgrade_building_action.dart';
 import '../../domain/game.dart';
 import '../../domain/production_calculator.dart';
+import '../../domain/turn_resolver.dart';
 import '../widgets/building_detail_sheet.dart';
+import '../widgets/turn_confirmation_dialog.dart';
+import '../widgets/turn_summary_dialog.dart';
 import '../widgets/building_list_view.dart';
 import '../widgets/game_bottom_bar.dart';
 import '../widgets/resource_bar.dart';
@@ -82,10 +85,25 @@ class _GameScreenState extends State<GameScreen> {
     }
   }
 
-  void _nextTurn() {
-    setState(() {
-      widget.game.turn++;
-    });
+  Future<void> _nextTurn() async {
+    final production = ProductionCalculator.fromBuildings(
+      widget.game.buildings,
+    );
+
+    final confirmed = await showTurnConfirmationDialog(
+      context,
+      production: production,
+    );
+    if (!confirmed || !mounted) return;
+
+    final result = TurnResolver().resolve(widget.game);
+
+    await widget.repository.save(widget.game);
+
+    setState(() {});
+
+    if (!mounted) return;
+    await showTurnSummaryDialog(context, result: result);
   }
 
   void _showSettings() {

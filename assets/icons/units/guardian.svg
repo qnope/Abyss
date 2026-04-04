@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="guardianArmor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ECEFF1"/>
+      <stop offset="60%" stop-color="#B0BEC5"/>
+      <stop offset="100%" stop-color="#607D8B"/>
+    </linearGradient>
+    <linearGradient id="guardianShield" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ECEFF1"/>
+      <stop offset="50%" stop-color="#B0BEC5"/>
+      <stop offset="100%" stop-color="#607D8B"/>
+    </linearGradient>
+    <linearGradient id="guardianHelmet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FAFAFA"/>
+      <stop offset="100%" stop-color="#B0BEC5"/>
+    </linearGradient>
+    <linearGradient id="guardianBoot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#78909C"/>
+      <stop offset="100%" stop-color="#455A64"/>
+    </linearGradient>
+    <radialGradient id="guardianShieldHighlight" cx="0.3" cy="0.3" r="0.7">
+      <stop offset="0%" stop-color="#FAFAFA" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#B0BEC5" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="guardianGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#guardianGlow)">
+    <!-- Ground shadow -->
+    <ellipse cx="32" cy="60" rx="22" ry="2.5" fill="#455A64" opacity="0.4"/>
+
+    <!-- Left magnetic boot -->
+    <polygon points="17,54 28,54 29,58 27,60 18,60 16,58" fill="url(#guardianBoot)" stroke="#37474F" stroke-width="0.5"/>
+    <!-- Left boot magnetic pads -->
+    <rect x="18" y="58" width="3" height="1.5" rx="0.3" fill="#607D8B" stroke="#455A64" stroke-width="0.3"/>
+    <rect x="23" y="58" width="3" height="1.5" rx="0.3" fill="#607D8B" stroke="#455A64" stroke-width="0.3"/>
+    <!-- Left boot rivets -->
+    <circle cx="20" cy="56" r="0.5" fill="#90A4AE" opacity="0.7"/>
+    <circle cx="25" cy="56" r="0.5" fill="#90A4AE" opacity="0.7"/>
+
+    <!-- Right magnetic boot -->
+    <polygon points="36,54 47,54 48,58 46,60 37,60 35,58" fill="url(#guardianBoot)" stroke="#37474F" stroke-width="0.5"/>
+    <!-- Right boot magnetic pads -->
+    <rect x="37" y="58" width="3" height="1.5" rx="0.3" fill="#607D8B" stroke="#455A64" stroke-width="0.3"/>
+    <rect x="42" y="58" width="3" height="1.5" rx="0.3" fill="#607D8B" stroke="#455A64" stroke-width="0.3"/>
+    <!-- Right boot rivets -->
+    <circle cx="39" cy="56" r="0.5" fill="#90A4AE" opacity="0.7"/>
+    <circle cx="44" cy="56" r="0.5" fill="#90A4AE" opacity="0.7"/>
+
+    <!-- Left leg armor plate -->
+    <rect x="18" y="42" width="10" height="12" rx="1.5" fill="url(#guardianArmor)" stroke="#607D8B" stroke-width="0.5"/>
+    <!-- Left leg coral grooves -->
+    <line x1="19" y1="44" x2="27" y2="44" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <line x1="19" y1="47" x2="27" y2="47" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <line x1="19" y1="50" x2="27" y2="50" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+
+    <!-- Right leg armor plate -->
+    <rect x="36" y="42" width="10" height="12" rx="1.5" fill="url(#guardianArmor)" stroke="#607D8B" stroke-width="0.5"/>
+    <!-- Right leg coral grooves -->
+    <line x1="37" y1="44" x2="45" y2="44" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <line x1="37" y1="47" x2="45" y2="47" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <line x1="37" y1="50" x2="45" y2="50" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+
+    <!-- Torso / main body - very wide -->
+    <polygon points="14,22 50,22 52,42 12,42" fill="url(#guardianArmor)" stroke="#607D8B" stroke-width="0.6"/>
+    <!-- Torso center ridge -->
+    <line x1="32" y1="22" x2="32" y2="42" stroke="#90A4AE" stroke-width="0.4" opacity="0.6"/>
+    <!-- Torso horizontal coral plate lines -->
+    <line x1="15" y1="26" x2="49" y2="26" stroke="#90A4AE" stroke-width="0.3" opacity="0.4"/>
+    <line x1="14" y1="30" x2="50" y2="30" stroke="#90A4AE" stroke-width="0.3" opacity="0.4"/>
+    <line x1="13" y1="34" x2="51" y2="34" stroke="#90A4AE" stroke-width="0.3" opacity="0.4"/>
+    <line x1="13" y1="38" x2="51" y2="38" stroke="#90A4AE" stroke-width="0.3" opacity="0.4"/>
+    <!-- Torso coral texture - organic curves -->
+    <path d="M18,24 Q22,25 20,28" fill="none" stroke="#B0BEC5" stroke-width="0.4" opacity="0.5"/>
+    <path d="M42,24 Q46,26 44,29" fill="none" stroke="#B0BEC5" stroke-width="0.4" opacity="0.5"/>
+    <path d="M16,32 Q20,33 18,36" fill="none" stroke="#B0BEC5" stroke-width="0.4" opacity="0.5"/>
+    <path d="M44,32 Q48,34 46,37" fill="none" stroke="#B0BEC5" stroke-width="0.4" opacity="0.5"/>
+
+    <!-- Waist / belt plate -->
+    <rect x="13" y="40" width="38" height="3" rx="0.5" fill="#78909C" stroke="#546E7A" stroke-width="0.4"/>
+    <!-- Belt buckle -->
+    <rect x="29" y="40.5" width="6" height="2" rx="0.5" fill="#B0BEC5" stroke="#607D8B" stroke-width="0.3"/>
+
+    <!-- Shoulder pauldrons - left -->
+    <ellipse cx="16" cy="22" rx="6" ry="3.5" fill="url(#guardianArmor)" stroke="#607D8B" stroke-width="0.5"/>
+    <!-- Left pauldron coral striations -->
+    <line x1="11" y1="21" x2="15" y2="21" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <line x1="11" y1="23" x2="16" y2="23" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <!-- Left pauldron rivet -->
+    <circle cx="14" cy="22" r="0.6" fill="#FAFAFA" opacity="0.5"/>
+
+    <!-- Shoulder pauldrons - right -->
+    <ellipse cx="48" cy="22" rx="6" ry="3.5" fill="url(#guardianArmor)" stroke="#607D8B" stroke-width="0.5"/>
+    <!-- Right pauldron coral striations -->
+    <line x1="49" y1="21" x2="53" y2="21" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <line x1="48" y1="23" x2="53" y2="23" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <!-- Right pauldron rivet -->
+    <circle cx="50" cy="22" r="0.6" fill="#FAFAFA" opacity="0.5"/>
+
+    <!-- Right arm (behind shield) -->
+    <rect x="10" y="24" width="5" height="14" rx="1.5" fill="url(#guardianArmor)" stroke="#607D8B" stroke-width="0.4"/>
+
+    <!-- Left arm (visible behind body) -->
+    <rect x="49" y="24" width="5" height="14" rx="1.5" fill="url(#guardianArmor)" stroke="#607D8B" stroke-width="0.4"/>
+    <!-- Left arm coral grooves -->
+    <line x1="50" y1="27" x2="53" y2="27" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <line x1="50" y1="31" x2="53" y2="31" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <line x1="50" y1="35" x2="53" y2="35" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+
+    <!-- Convex shield - large domed shape held in front left -->
+    <ellipse cx="14" cy="34" rx="12" ry="14" fill="url(#guardianShield)" stroke="#546E7A" stroke-width="0.7"/>
+    <!-- Shield dome highlight -->
+    <ellipse cx="11" cy="30" rx="7" ry="9" fill="url(#guardianShieldHighlight)"/>
+    <!-- Shield rim -->
+    <ellipse cx="14" cy="34" rx="12" ry="14" fill="none" stroke="#78909C" stroke-width="0.3" opacity="0.6"/>
+    <!-- Shield inner convex ring -->
+    <ellipse cx="14" cy="34" rx="8" ry="10" fill="none" stroke="#90A4AE" stroke-width="0.3" opacity="0.5"/>
+    <!-- Shield center boss -->
+    <circle cx="14" cy="34" r="3" fill="#B0BEC5" stroke="#607D8B" stroke-width="0.4"/>
+    <circle cx="14" cy="34" r="1.2" fill="#ECEFF1" stroke="#90A4AE" stroke-width="0.3"/>
+    <!-- Shield impact marks / scratches -->
+    <line x1="7" y1="28" x2="10" y2="30" stroke="#546E7A" stroke-width="0.4" opacity="0.6"/>
+    <line x1="5" y1="36" x2="8" y2="35" stroke="#546E7A" stroke-width="0.3" opacity="0.5"/>
+    <line x1="18" y1="25" x2="16" y2="27" stroke="#546E7A" stroke-width="0.4" opacity="0.6"/>
+    <line x1="9" y1="42" x2="12" y2="40" stroke="#546E7A" stroke-width="0.3" opacity="0.5"/>
+    <line x1="19" y1="38" x2="21" y2="36" stroke="#546E7A" stroke-width="0.3" opacity="0.5"/>
+    <!-- Shield coral texture -->
+    <path d="M8,30 Q10,32 8,34" fill="none" stroke="#90A4AE" stroke-width="0.3" opacity="0.4"/>
+    <path d="M18,30 Q20,33 17,35" fill="none" stroke="#90A4AE" stroke-width="0.3" opacity="0.4"/>
+
+    <!-- Neck plate -->
+    <rect x="26" y="16" width="12" height="4" rx="1" fill="#B0BEC5" stroke="#607D8B" stroke-width="0.4"/>
+
+    <!-- Domed armored helmet -->
+    <ellipse cx="32" cy="12" rx="9" ry="8" fill="url(#guardianHelmet)" stroke="#607D8B" stroke-width="0.6"/>
+    <!-- Helmet dome top highlight -->
+    <ellipse cx="30" cy="9" rx="4" ry="3" fill="#FAFAFA" opacity="0.3"/>
+    <!-- Helmet horizontal band -->
+    <line x1="23" y1="13" x2="41" y2="13" stroke="#90A4AE" stroke-width="0.5" opacity="0.6"/>
+    <!-- Helmet vertical ridge -->
+    <line x1="32" y1="4" x2="32" y2="16" stroke="#90A4AE" stroke-width="0.4" opacity="0.5"/>
+    <!-- Helmet coral plate lines -->
+    <path d="M25,8 Q28,9 26,12" fill="none" stroke="#B0BEC5" stroke-width="0.3" opacity="0.4"/>
+    <path d="M38,8 Q36,9 38,12" fill="none" stroke="#B0BEC5" stroke-width="0.3" opacity="0.4"/>
+
+    <!-- Left lateral sensor -->
+    <rect x="22" y="11" width="2" height="1.5" rx="0.3" fill="#78909C" stroke="#546E7A" stroke-width="0.3"/>
+    <circle cx="22.5" cy="11.8" r="0.4" fill="#FAFAFA" opacity="0.7"/>
+    <!-- Right lateral sensor -->
+    <rect x="40" y="11" width="2" height="1.5" rx="0.3" fill="#78909C" stroke="#546E7A" stroke-width="0.3"/>
+    <circle cx="41.5" cy="11.8" r="0.4" fill="#FAFAFA" opacity="0.7"/>
+
+    <!-- Helmet forehead plate -->
+    <path d="M27,8 Q32,5 37,8" fill="none" stroke="#ECEFF1" stroke-width="0.5" opacity="0.5"/>
+
+    <!-- Coral reflection highlights on body -->
+    <circle cx="40" cy="28" r="0.8" fill="#FAFAFA" opacity="0.3"/>
+    <circle cx="44" cy="36" r="0.6" fill="#FAFAFA" opacity="0.25"/>
+    <circle cx="38" cy="44" r="0.5" fill="#FAFAFA" opacity="0.2"/>
+  </g>
+</svg>

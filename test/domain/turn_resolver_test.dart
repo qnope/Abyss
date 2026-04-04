@@ -6,6 +6,7 @@ import 'package:abyss/domain/player.dart';
 import 'package:abyss/domain/resource.dart';
 import 'package:abyss/domain/resource_type.dart';
 import 'package:abyss/domain/turn_resolver.dart';
+import 'package:abyss/domain/unit_type.dart';
 
 Game _game({
   Map<BuildingType, Building>? buildings,
@@ -176,6 +177,21 @@ void main() {
       final result = resolver.resolve(game);
       expect(result.changes.length, 1);
       expect(result.changes.first.type, ResourceType.algae);
+    });
+  });
+
+  group('Recruitment reset', () {
+    test('recruitedUnitTypes is cleared after resolve', () {
+      final game = _game();
+      game.recruitedUnitTypes.addAll([UnitType.scout, UnitType.harpoonist]);
+      resolver.resolve(game);
+      expect(game.recruitedUnitTypes, isEmpty);
+    });
+
+    test('empty recruitedUnitTypes stays empty after resolve', () {
+      final game = _game();
+      resolver.resolve(game);
+      expect(game.recruitedUnitTypes, isEmpty);
     });
   });
 }

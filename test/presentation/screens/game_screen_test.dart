@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/building.dart';
+import 'package:abyss/domain/building_type.dart';
 import 'package:abyss/domain/game.dart';
 import 'package:abyss/domain/player.dart';
+import 'package:abyss/domain/resource.dart';
+import 'package:abyss/domain/resource_type.dart';
 import 'package:abyss/presentation/screens/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import '../../helpers/fake_game_repository.dart';
@@ -20,10 +24,13 @@ void main() {
 
     tearDown(() => clearSvgMocks());
 
-    Widget createApp() {
+    Widget createApp([Game? customGame]) {
       return MaterialApp(
         theme: AbyssTheme.create(),
-        home: GameScreen(game: game, repository: repository),
+        home: GameScreen(
+          game: customGame ?? game,
+          repository: repository,
+        ),
       );
     }
 
@@ -40,14 +47,11 @@ void main() {
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();
 
-      // Initially on Base tab
       expect(find.text('Base'), findsWidgets);
 
-      // Tap Carte tab
       await tester.tap(find.text('Carte'));
       await tester.pumpAndSettle();
 
-      // Now Carte placeholder is visible
       expect(find.text('Carte'), findsWidgets);
     });
 
@@ -58,7 +62,17 @@ void main() {
       expect(find.text('Tour 1'), findsOneWidget);
 
       await tester.tap(find.text('Tour suivant'));
-      await tester.pump();
+      await tester.pumpAndSettle();
+
+      // Confirmation dialog appears
+      expect(find.text('Passer au tour suivant ?'), findsOneWidget);
+      await tester.tap(find.text('Confirmer'));
+      await tester.pumpAndSettle();
+
+      // Summary dialog appears — dismiss it
+      expect(find.text('Resume du tour'), findsOneWidget);
+      await tester.tap(find.text('OK'));
+      await tester.pumpAndSettle();
 
       expect(find.text('Tour 2'), findsOneWidget);
     });
@@ -97,16 +111,128 @@ void main() {
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();
 
-      // Open the detail sheet
       await tester.tap(find.text('Quartier Général'));
       await tester.pumpAndSettle();
 
-      // Tap Construire (level 0 → 1)
       await tester.tap(find.text('Construire'));
       await tester.pumpAndSettle();
 
-      // Sheet closed, verify level changed
       expect(find.text('Niveau 1'), findsOneWidget);
+    });
+
+    group('Turn flow', () {
+      testWidgets('tapping Tour suivant shows confirmation dialog',
+          (tester) async {
+        await tester.pumpWidget(createApp());
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Tour suivant'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Passer au tour suivant ?'), findsOneWidget);
+      });
+
+      testWidgets('cancel keeps same turn', (tester) async {
+        await tester.pumpWidget(createApp());
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Tour suivant'));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Annuler'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Tour 1'), findsOneWidget);
+      });
+
+      testWidgets('resources increase after turn', (tester) async {
+        final customGame = Game(
+          player: Player(name: 'Nemo'),
+          buildings: {
+            ...Game.defaultBuildings(),
+            BuildingType.algaeFarm: Building(
+              type: BuildingType.algaeFarm,
+              level: 1,
+            ),
+          },
+        );
+        await tester.pumpWidget(createApp(customGame));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Tour suivant'));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Confirmer'));
+        await tester.pumpAndSettle();
+
+        // Summary shows +5 algae
+        expect(find.text('+5'), findsOneWidget);
+
+        await tester.tap(find.text('OK'));
+        await tester.pumpAndSettle();
+
+        // Algae went from 100 to 105
+        expect(customGame.resources[ResourceType.algae]!.amount, 105);
+      });
+
+      testWidgets('resource capped at maxStorage', (tester) async {
+        final customGame = Game(
+          player: Player(name: 'Nemo'),
+          buildings: {
+            ...Game.defaultBuildings(),
+            BuildingType.algaeFarm: Building(
+              type: BuildingType.algaeFarm,
+              level: 1,
+            ),
+          },
+          resources: {
+            ...Game.defaultResources(),
+            ResourceType.algae: Resource(
+              type: ResourceType.algae,
+              amount: 498,
+              maxStorage: 500,
+            ),
+          },
+        );
+        await tester.pumpWidget(createApp(customGame));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Tour suivant'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Confirmer'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('OK'));
+        await tester.pumpAndSettle();
+
+        expect(customGame.resources[ResourceType.algae]!.amount, 500);
+      });
+
+      testWidgets('game is saved after turn', (tester) async {
+        await tester.pumpWidget(createApp());
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Tour suivant'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Confirmer'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('OK'));
+        await tester.pumpAndSettle();
+
+        expect(repository.saveCallCount, 1);
+      });
+
+      testWidgets('summary dialog appears after confirming',
+          (tester) async {
+        await tester.pumpWidget(createApp());
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Tour suivant'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Confirmer'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Resume du tour'), findsOneWidget);
+      });
     });
   });
 }

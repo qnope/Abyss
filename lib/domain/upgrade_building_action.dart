@@ -47,10 +47,6 @@ class UpgradeBuildingAction extends Action {
       game.resources[entry.key]!.amount -= entry.value;
     }
     game.buildings[buildingType]!.level++;
-    final production = BuildingCostCalculator.productionPerLevel(buildingType);
-    if (production != null) {
-      game.resources[production.key]!.productionPerTurn += production.value;
-    }
     return ActionResult.success();
   }
 }

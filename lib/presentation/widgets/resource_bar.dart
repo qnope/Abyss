@@ -7,12 +7,17 @@ import 'resource_detail_sheet.dart';
 
 class ResourceBar extends StatelessWidget {
   final Map<ResourceType, Resource> resources;
+  final Map<ResourceType, int> production;
 
-  const ResourceBar({super.key, required this.resources});
+  const ResourceBar({
+    super.key,
+    required this.resources,
+    this.production = const {},
+  });
 
   @override
   Widget build(BuildContext context) {
-    final production = resources.entries
+    final productionResources = resources.entries
         .where((e) => e.key != ResourceType.pearl)
         .map((e) => e.value)
         .toList();
@@ -26,10 +31,11 @@ class ResourceBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
           child: Row(
             children: [
-              ...production.map((r) => Expanded(
+              ...productionResources.map((r) => Expanded(
                 child: Center(
                   child: ResourceBarItem(
                     resource: r,
+                    production: production[r.type] ?? 0,
                     onTap: () => _showDetail(context, r),
                   ),
                 ),
@@ -42,6 +48,7 @@ class ResourceBar extends StatelessWidget {
               ),
               ResourceBarItem(
                 resource: pearl,
+                production: production[ResourceType.pearl] ?? 0,
                 onTap: () => _showDetail(context, pearl),
               ),
               const SizedBox(width: 8),
@@ -53,6 +60,10 @@ class ResourceBar extends StatelessWidget {
   }
 
   void _showDetail(BuildContext context, Resource resource) {
-    showResourceDetailSheet(context, resource);
+    showResourceDetailSheet(
+      context,
+      resource,
+      production: production[resource.type] ?? 0,
+    );
   }
 }

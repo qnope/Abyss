@@ -18,7 +18,6 @@ BuildingCostCalculator (stateless)
   ├── upgradeCost(type, level) → Map<ResourceType, int>
   ├── maxLevel(type) → int
   ├── prerequisites(type, targetLevel) → Map<BuildingType, int>
-  ├── productionPerLevel(type) → MapEntry<ResourceType, int>?
   └── checkUpgrade(...) → UpgradeCheck
 
 UpgradeCheck (immutable result)
@@ -46,14 +45,14 @@ Game.buildings: Map<BuildingType, Building>
 
 ### Production Buildings
 
-All production buildings share: max level 5, cost formula `base * (N² + 1)`, prerequisite `HQ ≥ 2*(targetLevel - 1)` (min 1). Each upgrade adds a flat `productionPerLevel` bonus to the associated resource.
+All production buildings share: max level 5, cost formula `base * (N² + 1)`, prerequisite `HQ ≥ 2*(targetLevel - 1)` (min 1). Production per turn is computed by `ProductionFormula` (see [resource_system.md](resource_system.md)).
 
-| Building | Costs | Produces | Per level |
-|----------|-------|----------|-----------|
-| Algae Farm | Coral: 20 | Algae | +5 |
-| Coral Mine | Ore: 15 | Coral | +4 |
-| Ore Extractor | Coral: 25, Energy: 15 | Ore | +3 |
-| Solar Panel | Coral: 20, Ore: 15 | Energy | +3 |
+| Building | Costs | Produces |
+|----------|-------|----------|
+| Algae Farm | Coral: 20 | Algae |
+| Coral Mine | Ore: 15 | Coral |
+| Ore Extractor | Coral: 25, Energy: 15 | Ore |
+| Solar Panel | Coral: 20, Ore: 15 | Energy |
 
 ## Upgrade Flow
 
@@ -101,6 +100,8 @@ lib/domain/
   ├── building_type.dart
   ├── building.dart
   ├── building_cost_calculator.dart
+  ├── production_formula.dart
+  ├── production_formulas.dart
   └── upgrade_check.dart
 lib/presentation/
   ├── extensions/building_type_extensions.dart

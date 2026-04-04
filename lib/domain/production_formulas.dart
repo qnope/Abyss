@@ -21,7 +21,7 @@ const Map<BuildingType, ProductionFormula> productionFormulas = {
   ),
 };
 
-int _algaeFarmProduction(int level) => 3 * level * level + 2;
-int _coralMineProduction(int level) => 2 * level * level + 2;
-int _oreExtractorProduction(int level) => 2 * level * level + 1;
-int _solarPanelProduction(int level) => 2 * level * level + 1;
+int _algaeFarmProduction(int level) => 30 * level * level + 20;
+int _coralMineProduction(int level) => 20 * level * level + 20;
+int _oreExtractorProduction(int level) => 20 * level * level + 10;
+int _solarPanelProduction(int level) => 4 * level * level + 2;

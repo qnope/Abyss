@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="domeBreakerSuit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#455A64"/>
+      <stop offset="100%" stop-color="#37474F"/>
+    </linearGradient>
+    <linearGradient id="domeBreakerSuitDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#37474F"/>
+      <stop offset="100%" stop-color="#263238"/>
+    </linearGradient>
+    <linearGradient id="domeBreakerOrange" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF9100"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="domeBreakerCable" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E65100"/>
+      <stop offset="50%" stop-color="#FF9100"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <radialGradient id="domeBreakerGenerator" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FFAB40"/>
+      <stop offset="40%" stop-color="#FF9100"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </radialGradient>
+    <radialGradient id="domeBreakerPulse" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FFD180"/>
+      <stop offset="100%" stop-color="#FF9100" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="domeBreakerGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#domeBreakerGlow)">
+    <!-- Ground shadow -->
+    <ellipse cx="32" cy="59" rx="14" ry="2" fill="#263238" opacity="0.5"/>
+    <!-- Left boot -->
+    <path d="M24,54 L22,57 L27,58 L28,55 Z" fill="#263238" stroke="#37474F" stroke-width="0.4"/>
+    <line x1="23" y1="57" x2="26.5" y2="57.5" stroke="#E65100" stroke-width="0.3" opacity="0.6"/>
+    <!-- Right boot -->
+    <path d="M36,54 L34,57 L39,58 L40,55 Z" fill="#263238" stroke="#37474F" stroke-width="0.4"/>
+    <line x1="35" y1="57" x2="38.5" y2="57.5" stroke="#E65100" stroke-width="0.3" opacity="0.6"/>
+    <!-- Left leg - stocky, wide stance -->
+    <path d="M26,38 L24,44 L23,50 L24,55 L28,55 L29,50 L30,44 L31,38 Z" fill="url(#domeBreakerSuit)" stroke="#263238" stroke-width="0.4"/>
+    <line x1="26.5" y1="39" x2="24.5" y2="53" stroke="#455A64" stroke-width="0.4" opacity="0.6"/>
+    <!-- Left knee pad -->
+    <ellipse cx="26" cy="46" rx="2" ry="1.2" fill="#263238" stroke="#E65100" stroke-width="0.3"/>
+    <!-- Right leg - stocky, wide stance -->
+    <path d="M33,38 L35,44 L36,50 L36,55 L40,55 L39,50 L38,44 L37,38 Z" fill="url(#domeBreakerSuit)" stroke="#263238" stroke-width="0.4"/>
+    <line x1="35.5" y1="39" x2="37" y2="53" stroke="#455A64" stroke-width="0.4" opacity="0.6"/>
+    <!-- Right knee pad -->
+    <ellipse cx="37" cy="46" rx="2" ry="1.2" fill="#263238" stroke="#E65100" stroke-width="0.3"/>
+    <!-- Torso - stocky, wide build -->
+    <path d="M24,20 L40,20 L42,26 L43,36 L41,39 L23,39 L21,36 L22,26 Z" fill="url(#domeBreakerSuit)" stroke="#263238" stroke-width="0.5"/>
+    <!-- Chest armor plate -->
+    <path d="M27,22 L37,22 L38,28 L36,32 L28,32 L26,28 Z" fill="#37474F" stroke="#455A64" stroke-width="0.3"/>
+    <!-- Chest orange indicator -->
+    <circle cx="32" cy="26" r="1.2" fill="#FF9100" opacity="0.8"/>
+    <circle cx="32" cy="26" r="0.6" fill="#FFAB40" opacity="0.9"/>
+    <!-- Suit pocket modules - left -->
+    <rect x="24" y="30" width="3" height="2" rx="0.3" fill="#263238" stroke="#455A64" stroke-width="0.3"/>
+    <rect x="24" y="33" width="2.5" height="1.5" rx="0.3" fill="#263238" stroke="#455A64" stroke-width="0.3"/>
+    <!-- Suit pocket modules - right -->
+    <rect x="37" y="30" width="3" height="2" rx="0.3" fill="#263238" stroke="#455A64" stroke-width="0.3"/>
+    <rect x="37.5" y="33" width="2.5" height="1.5" rx="0.3" fill="#263238" stroke="#455A64" stroke-width="0.3"/>
+    <!-- Belt -->
+    <rect x="23" y="37" width="18" height="2" rx="0.5" fill="#263238" stroke="#37474F" stroke-width="0.4"/>
+    <!-- Belt buckle -->
+    <rect x="30" y="37" width="4" height="2" rx="0.3" fill="#E65100" stroke="#FF9100" stroke-width="0.3"/>
+    <!-- Dorsal generator - massive cylinder on back -->
+    <ellipse cx="24" cy="22" rx="3" ry="1.5" fill="#37474F" stroke="#263238" stroke-width="0.4"/>
+    <rect x="20" y="22" width="8" height="12" rx="2" fill="#37474F" stroke="#263238" stroke-width="0.5"/>
+    <ellipse cx="24" cy="34" rx="3" ry="1.5" fill="#455A64" stroke="#263238" stroke-width="0.4"/>
+    <!-- Generator pulsing core -->
+    <ellipse cx="24" cy="28" rx="5" ry="5" fill="url(#domeBreakerPulse)" opacity="0.35"/>
+    <circle cx="24" cy="28" r="2.5" fill="url(#domeBreakerGenerator)" opacity="0.9"/>
+    <circle cx="24" cy="28" r="1.2" fill="#FFAB40" opacity="0.8"/>
+    <circle cx="24" cy="28" r="0.5" fill="#FFD180" opacity="0.95"/>
+    <!-- Generator ring details -->
+    <ellipse cx="24" cy="24" rx="3.5" ry="0.6" fill="none" stroke="#FF9100" stroke-width="0.4" opacity="0.6"/>
+    <ellipse cx="24" cy="28" rx="3.5" ry="0.6" fill="none" stroke="#FF9100" stroke-width="0.4" opacity="0.6"/>
+    <ellipse cx="24" cy="32" rx="3.5" ry="0.6" fill="none" stroke="#FF9100" stroke-width="0.4" opacity="0.6"/>
+    <!-- Generator outer glow -->
+    <ellipse cx="24" cy="28" rx="6" ry="7" fill="url(#domeBreakerPulse)" opacity="0.2"/>
+    <!-- Cable from generator to left arm -->
+    <path d="M21,26 L18,25 L16,28 L15,32" fill="none" stroke="url(#domeBreakerCable)" stroke-width="0.8" stroke-linecap="round"/>
+    <path d="M21,30 L18,31 L16,33 L15,35" fill="none" stroke="url(#domeBreakerCable)" stroke-width="0.6" stroke-linecap="round"/>
+    <!-- Cable from generator to right arm -->
+    <path d="M27,26 L36,23 L42,24 L46,28" fill="none" stroke="url(#domeBreakerCable)" stroke-width="0.8" stroke-linecap="round"/>
+    <path d="M27,30 L37,30 L43,31 L47,33" fill="none" stroke="url(#domeBreakerCable)" stroke-width="0.6" stroke-linecap="round"/>
+    <!-- Left arm - reaching forward -->
+    <path d="M24,21 L20,23 L17,28 L14,33 L15,36 L17,37 L19,33 L21,28 L23,24 Z" fill="url(#domeBreakerSuit)" stroke="#263238" stroke-width="0.4"/>
+    <line x1="20" y1="24" x2="16" y2="34" stroke="#455A64" stroke-width="0.3" opacity="0.5"/>
+    <!-- Left glove - amplifier gauntlet -->
+    <path d="M13,33 L11,35 L12,38 L16,39 L18,37 L17,34 Z" fill="#263238" stroke="#E65100" stroke-width="0.5"/>
+    <!-- Left glove electrode nodes -->
+    <circle cx="12" cy="36" r="0.7" fill="#FF9100" opacity="0.9"/>
+    <circle cx="14.5" cy="38" r="0.7" fill="#FF9100" opacity="0.9"/>
+    <circle cx="16.5" cy="37" r="0.6" fill="#FFAB40" opacity="0.8"/>
+    <!-- Left finger electrode tips -->
+    <line x1="11" y1="35" x2="9" y2="34" stroke="#FFAB40" stroke-width="0.5" stroke-linecap="round"/>
+    <line x1="12" y1="38" x2="10" y2="39" stroke="#FFAB40" stroke-width="0.5" stroke-linecap="round"/>
+    <line x1="14.5" y1="39" x2="13" y2="41" stroke="#FF9100" stroke-width="0.5" stroke-linecap="round"/>
+    <!-- Right arm - extended forward -->
+    <path d="M40,21 L43,23 L45,27 L47,32 L48,35 L46,36 L44,32 L42,27 L41,24 Z" fill="url(#domeBreakerSuit)" stroke="#263238" stroke-width="0.4"/>
+    <line x1="43" y1="24" x2="47" y2="34" stroke="#455A64" stroke-width="0.3" opacity="0.5"/>
+    <!-- Right glove - amplifier gauntlet -->
+    <path d="M46,33 L49,34 L51,37 L50,39 L46,39 L44,36 Z" fill="#263238" stroke="#E65100" stroke-width="0.5"/>
+    <!-- Right glove electrode nodes -->
+    <circle cx="49" cy="36" r="0.7" fill="#FF9100" opacity="0.9"/>
+    <circle cx="47" cy="38" r="0.7" fill="#FF9100" opacity="0.9"/>
+    <circle cx="45.5" cy="37" r="0.6" fill="#FFAB40" opacity="0.8"/>
+    <!-- Right finger electrode tips -->
+    <line x1="50" y1="34" x2="52" y2="33" stroke="#FFAB40" stroke-width="0.5" stroke-linecap="round"/>
+    <line x1="51" y1="37" x2="53" y2="37" stroke="#FFAB40" stroke-width="0.5" stroke-linecap="round"/>
+    <line x1="50" y1="39" x2="52" y2="41" stroke="#FF9100" stroke-width="0.5" stroke-linecap="round"/>
+    <!-- Energy arcs - left hand -->
+    <path d="M9,34 L7,32 L8,30" fill="none" stroke="#FFD180" stroke-width="0.5" opacity="0.7" stroke-linecap="round"/>
+    <path d="M10,39 L8,41 L9,43" fill="none" stroke="#FFAB40" stroke-width="0.4" opacity="0.6" stroke-linecap="round"/>
+    <line x1="9" y1="34" x2="10" y2="39" stroke="#FFD180" stroke-width="0.3" opacity="0.5"/>
+    <!-- Energy arcs - right hand -->
+    <path d="M52,33 L54,31 L55,33" fill="none" stroke="#FFD180" stroke-width="0.5" opacity="0.7" stroke-linecap="round"/>
+    <path d="M53,37 L55,38 L54,40" fill="none" stroke="#FFAB40" stroke-width="0.4" opacity="0.6" stroke-linecap="round"/>
+    <line x1="52" y1="33" x2="53" y2="37" stroke="#FFD180" stroke-width="0.3" opacity="0.5"/>
+    <!-- Energy arc between hands (big arc) -->
+    <path d="M13,41 Q20,48 32,46 Q44,44 52,41" fill="none" stroke="#FFD180" stroke-width="0.4" opacity="0.35" stroke-linecap="round"/>
+    <!-- Neck -->
+    <rect x="29" y="17" width="6" height="3" rx="0.5" fill="url(#domeBreakerSuit)" stroke="#263238" stroke-width="0.3"/>
+    <!-- Head - helmet with antenna array -->
+    <ellipse cx="32" cy="12" rx="6" ry="6.5" fill="url(#domeBreakerSuitDark)" stroke="#263238" stroke-width="0.5"/>
+    <!-- Helmet face plate -->
+    <path d="M28,9 Q32,7 36,9 L36,15 Q32,17 28,15 Z" fill="#263238" stroke="#37474F" stroke-width="0.3"/>
+    <!-- Visor - orange tinted -->
+    <path d="M29,10 Q32,8.5 35,10 L34.5,13 Q32,14.5 29.5,13 Z" fill="#E65100" opacity="0.7" stroke="#FF9100" stroke-width="0.3"/>
+    <!-- Visor glow -->
+    <path d="M30,10.5 Q32,9.5 34,10.5 L33.8,12 Q32,13 30.2,12 Z" fill="#FF9100" opacity="0.4"/>
+    <!-- Helmet chin guard -->
+    <path d="M28.5,14 Q32,16.5 35.5,14 L35,16 Q32,17.5 29,16 Z" fill="#37474F" stroke="#263238" stroke-width="0.3"/>
+    <!-- Antenna 1 - tall center -->
+    <line x1="32" y1="6" x2="32" y2="1" stroke="#455A64" stroke-width="0.7" stroke-linecap="round"/>
+    <circle cx="32" cy="1" r="0.8" fill="#FF9100" opacity="0.9"/>
+    <circle cx="32" cy="1" r="1.3" fill="#FFD180" opacity="0.3"/>
+    <!-- Antenna 2 - left angled -->
+    <line x1="29" y1="7" x2="26" y2="2" stroke="#455A64" stroke-width="0.6" stroke-linecap="round"/>
+    <circle cx="26" cy="2" r="0.6" fill="#FFAB40" opacity="0.8"/>
+    <circle cx="26" cy="2" r="1" fill="#FFD180" opacity="0.25"/>
+    <!-- Antenna 3 - right angled -->
+    <line x1="35" y1="7" x2="38" y2="2" stroke="#455A64" stroke-width="0.6" stroke-linecap="round"/>
+    <circle cx="38" cy="2" r="0.6" fill="#FFAB40" opacity="0.8"/>
+    <circle cx="38" cy="2" r="1" fill="#FFD180" opacity="0.25"/>
+    <!-- Small analyzer module on helmet side -->
+    <rect x="37" y="10" width="3" height="2" rx="0.3" fill="#37474F" stroke="#455A64" stroke-width="0.3"/>
+    <circle cx="39" cy="11" r="0.4" fill="#FF9100" opacity="0.8"/>
+    <!-- Analyzer module left side -->
+    <rect x="24" y="10" width="3" height="2" rx="0.3" fill="#37474F" stroke="#455A64" stroke-width="0.3"/>
+    <circle cx="25.5" cy="11" r="0.4" fill="#FF9100" opacity="0.8"/>
+    <!-- Helmet ear comm units -->
+    <ellipse cx="26" cy="12" rx="1" ry="1.5" fill="#37474F" stroke="#263238" stroke-width="0.3"/>
+    <ellipse cx="38" cy="12" rx="1" ry="1.5" fill="#37474F" stroke="#263238" stroke-width="0.3"/>
+    <!-- Small orange status lights on suit -->
+    <circle cx="28" cy="22" r="0.4" fill="#FF9100" opacity="0.7"/>
+    <circle cx="36" cy="22" r="0.4" fill="#FF9100" opacity="0.7"/>
+    <circle cx="25" cy="28" r="0.4" fill="#FFAB40" opacity="0.6"/>
+    <circle cx="39" cy="28" r="0.4" fill="#FFAB40" opacity="0.6"/>
+  </g>
+</svg>

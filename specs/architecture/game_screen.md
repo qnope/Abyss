@@ -44,7 +44,7 @@ Production per turn is computed dynamically via `ProductionCalculator.fromBuildi
 ## State Management
 
 - `_currentTab` (int) — local state in `_GameScreenState`
-- `game.turn` — mutated directly via `game.turn++`, triggers `setState`
+- `game` — mutated by `TurnResolver` and `ActionExecutor`, triggers `setState`
 - No state management library needed yet — all state is local
 
 ## Interactions
@@ -55,7 +55,7 @@ Production per turn is computed dynamically via `ProductionCalculator.fromBuildi
 | Tap building | `_showBuildingDetail()` | Opens BuildingDetailSheet |
 | Upgrade building | `_upgradeBuilding()` | Via `ActionExecutor` + `UpgradeBuildingAction` |
 | Tap tab | `onTabChanged` | Switches `_currentTab` |
-| Next Turn | `_nextTurn()` | Increments `game.turn` |
+| Next Turn | `_nextTurn()` | Confirm → resolve → save → summary (see [turn_system.md](turn_system.md)) |
 | Settings | `_showSettings()` | Opens dialog → save & quit |
 
 ## Design Decisions
@@ -82,7 +82,9 @@ lib/presentation/
   │     ├── building_card.dart
   │     ├── building_list_view.dart
   │     ├── building_detail_sheet.dart
-  │     └── upgrade_section.dart
+  │     ├── upgrade_section.dart
+  │     ├── turn_confirmation_dialog.dart
+  │     └── turn_summary_dialog.dart
   └── extensions/
         ├── resource_type_extensions.dart
         └── building_type_extensions.dart

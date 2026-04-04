@@ -17,6 +17,7 @@ void showBuildingDetailSheet(
 }) {
   showModalBottomSheet<void>(
     context: context,
+    isScrollControlled: true,
     builder: (_) => _BuildingDetailSheet(
       building: building,
       resources: resources,

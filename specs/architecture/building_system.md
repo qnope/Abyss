@@ -8,7 +8,7 @@ Buildings form the player's base. Each building has a type, a level (0 = not bui
 
 ```
 BuildingType (enum, Hive typeId: 4)
-  headquarters | algaeFarm | coralMine | oreExtractor | solarPanel
+  headquarters | algaeFarm | coralMine | oreExtractor | solarPanel | laboratory | barracks
 
 Building (HiveObject, typeId: 5)
   ├── type: BuildingType
@@ -53,6 +53,15 @@ All production buildings share: max level 5, cost formula `base * (N² + 1)`, pr
 | Coral Mine | Ore: 15 | Coral |
 | Ore Extractor | Coral: 25, Energy: 15 | Ore |
 | Solar Panel | Coral: 20, Ore: 15 | Energy |
+
+### Non-Production Buildings
+
+These buildings do not produce resources but unlock future gameplay systems (research, units). They share max level 5 and cost formula `base * (N² + 1)`.
+
+| Building | Costs | Prerequisite | Future role |
+|----------|-------|--------------|-------------|
+| Laboratory | Coral: 25, Ore: 20 | HQ ≥ 2 → 10 | Unlocks technology research |
+| Barracks | Coral: 20, Ore: 25, Energy: 10 | HQ ≥ 3 → 10 | Unlocks unit recruitment |
 
 ## Upgrade Flow
 

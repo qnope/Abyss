@@ -34,7 +34,10 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final production = ProductionCalculator.fromBuildings(widget.game.buildings);
+    final production = ProductionCalculator.fromBuildings(
+      widget.game.buildings,
+      techBranches: widget.game.techBranches,
+    );
     return Scaffold(
       body: Column(
         children: [
@@ -88,6 +91,7 @@ class _GameScreenState extends State<GameScreen> {
   Future<void> _nextTurn() async {
     final production = ProductionCalculator.fromBuildings(
       widget.game.buildings,
+      techBranches: widget.game.techBranches,
     );
 
     final confirmed = await showTurnConfirmationDialog(

@@ -4,7 +4,10 @@ import 'turn_result.dart';
 
 class TurnResolver {
   TurnResult resolve(Game game) {
-    final production = ProductionCalculator.fromBuildings(game.buildings);
+    final production = ProductionCalculator.fromBuildings(
+      game.buildings,
+      techBranches: game.techBranches,
+    );
     final changes = <TurnResourceChange>[];
 
     for (final entry in production.entries) {

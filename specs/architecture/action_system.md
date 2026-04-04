@@ -8,7 +8,7 @@ The action system encapsulates game actions (upgrade, build, research…) as fir
 
 ```
 ActionType (enum, not persisted)
-  upgradeBuilding
+  upgradeBuilding | unlockBranch | researchTech
 
 ActionResult (immutable)
   ├── isSuccess: bool
@@ -25,6 +25,16 @@ UpgradeBuildingAction extends Action
   ├── buildingType: BuildingType
   ├── validate → delegates to BuildingCostCalculator.checkUpgrade()
   └── execute → deducts resources, increments level
+
+UnlockBranchAction extends Action
+  ├── branch: TechBranch
+  ├── validate → checks lab built, branch locked, resources
+  └── execute → deducts resources, sets unlocked = true
+
+ResearchTechAction extends Action
+  ├── branch: TechBranch
+  ├── validate → checks branch unlocked, sequential, lab level, resources
+  └── execute → deducts resources, increments researchLevel
 
 ActionExecutor (stateless)
   └── execute(Action, Game) → ActionResult
@@ -66,9 +76,13 @@ lib/domain/
   ├── action_result.dart
   ├── action.dart
   ├── upgrade_building_action.dart
+  ├── unlock_branch_action.dart
+  ├── research_tech_action.dart
   └── action_executor.dart
 test/domain/
   ├── action_result_test.dart
   ├── upgrade_building_action_test.dart
+  ├── unlock_branch_action_test.dart
+  ├── research_tech_action_test.dart
   └── action_executor_test.dart
 ```

@@ -26,6 +26,15 @@ class BuildingCostCalculator {
         ResourceType.coral: 20 * (currentLevel * currentLevel + 1),
         ResourceType.ore: 15 * (currentLevel * currentLevel + 1),
       },
+      BuildingType.laboratory => {
+        ResourceType.coral: 25 * (currentLevel * currentLevel + 1),
+        ResourceType.ore: 20 * (currentLevel * currentLevel + 1),
+      },
+      BuildingType.barracks => {
+        ResourceType.coral: 20 * (currentLevel * currentLevel + 1),
+        ResourceType.ore: 25 * (currentLevel * currentLevel + 1),
+        ResourceType.energy: 10 * (currentLevel * currentLevel + 1),
+      },
     };
   }
 
@@ -34,12 +43,16 @@ class BuildingCostCalculator {
     BuildingType.algaeFarm ||
     BuildingType.coralMine ||
     BuildingType.oreExtractor ||
-    BuildingType.solarPanel => 5,
+    BuildingType.solarPanel ||
+    BuildingType.laboratory ||
+    BuildingType.barracks => 5,
   };
 
   Map<BuildingType, int> prerequisites(BuildingType type, int targetLevel) {
     return switch (type) {
       BuildingType.headquarters => {},
+      BuildingType.laboratory => _laboratoryPrereqs(targetLevel),
+      BuildingType.barracks => _barracksPrereqs(targetLevel),
       BuildingType.algaeFarm ||
       BuildingType.coralMine ||
       BuildingType.oreExtractor ||
@@ -53,6 +66,30 @@ class BuildingCostCalculator {
       2 => 2,
       3 => 4,
       4 => 6,
+      5 => 10,
+      _ => 0,
+    };
+    return hqLevel > 0 ? {BuildingType.headquarters: hqLevel} : {};
+  }
+
+  Map<BuildingType, int> _laboratoryPrereqs(int targetLevel) {
+    final hqLevel = switch (targetLevel) {
+      1 => 2,
+      2 => 3,
+      3 => 5,
+      4 => 7,
+      5 => 10,
+      _ => 0,
+    };
+    return hqLevel > 0 ? {BuildingType.headquarters: hqLevel} : {};
+  }
+
+  Map<BuildingType, int> _barracksPrereqs(int targetLevel) {
+    final hqLevel = switch (targetLevel) {
+      1 => 3,
+      2 => 4,
+      3 => 6,
+      4 => 8,
       5 => 10,
       _ => 0,
     };

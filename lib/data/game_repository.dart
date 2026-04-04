@@ -5,6 +5,8 @@ import '../domain/game.dart';
 import '../domain/player.dart';
 import '../domain/resource.dart';
 import '../domain/resource_type.dart';
+import '../domain/tech_branch.dart';
+import '../domain/tech_branch_state.dart';
 
 class GameRepository {
   static const _boxName = 'games';
@@ -15,6 +17,8 @@ class GameRepository {
     Hive.registerAdapter(BuildingAdapter());
     Hive.registerAdapter(ResourceTypeAdapter());
     Hive.registerAdapter(ResourceAdapter());
+    Hive.registerAdapter(TechBranchAdapter());
+    Hive.registerAdapter(TechBranchStateAdapter());
     Hive.registerAdapter(PlayerAdapter());
     Hive.registerAdapter(GameAdapter());
     try {

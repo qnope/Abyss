@@ -4,6 +4,8 @@ import 'building_type.dart';
 import 'player.dart';
 import 'resource.dart';
 import 'resource_type.dart';
+import 'tech_branch.dart';
+import 'tech_branch_state.dart';
 
 part 'game.g.dart';
 
@@ -24,15 +26,20 @@ class Game extends HiveObject {
   @HiveField(4)
   final Map<BuildingType, Building> buildings;
 
+  @HiveField(5)
+  final Map<TechBranch, TechBranchState> techBranches;
+
   Game({
     required this.player,
     this.turn = 1,
     DateTime? createdAt,
     Map<ResourceType, Resource>? resources,
     Map<BuildingType, Building>? buildings,
+    Map<TechBranch, TechBranchState>? techBranches,
   })  : createdAt = createdAt ?? DateTime.now(),
         resources = resources ?? defaultResources(),
-        buildings = buildings ?? defaultBuildings();
+        buildings = buildings ?? defaultBuildings(),
+        techBranches = techBranches ?? defaultTechBranches();
 
   static Map<ResourceType, Resource> defaultResources() {
     return {
@@ -61,6 +68,14 @@ class Game extends HiveObject {
         amount: 5,
         maxStorage: 100,
       ),
+    };
+  }
+
+  static Map<TechBranch, TechBranchState> defaultTechBranches() {
+    return {
+      TechBranch.military: TechBranchState(branch: TechBranch.military),
+      TechBranch.resources: TechBranchState(branch: TechBranch.resources),
+      TechBranch.explorer: TechBranchState(branch: TechBranch.explorer),
     };
   }
 

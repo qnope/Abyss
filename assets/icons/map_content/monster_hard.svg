@@ -1,0 +1,86 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="hardDenGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0A0E1A"/>
+      <stop offset="100%" stop-color="#1A1A2E"/>
+    </radialGradient>
+    <filter id="hardGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" in="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <!-- Red aura -->
+  <ellipse cx="24" cy="30" rx="20" ry="16" fill="#FF5252" opacity="0.3" filter="url(#hardGlow)"/>
+
+  <!-- Cave opening - jagged rock shape -->
+  <polygon points="9,44 10,38 8,36 11,33 10,28 13,26 12,23 16,22 18,24 20,22 22,25 24,22 26,24 28,22 30,24 32,22 34,23 36,26 37,28 38,33 40,36 39,38 39,44" fill="url(#hardDenGrad)"/>
+
+  <!-- Rock border highlights -->
+  <polygon points="9,44 10,38 8,36 11,33 10,28 13,26 12,23 16,22 18,24 20,22 22,25 24,22 26,24 28,22 30,24 32,22 34,23 36,26 37,28 38,33 40,36 39,38 39,44" fill="none" stroke="#4A5568" stroke-width="1.2"/>
+
+  <!-- Stalactites (top teeth) -->
+  <polygon points="13,26 15,31 11,28" fill="#4A5568"/>
+  <polygon points="18,23 19,28 16,25" fill="#4A5568"/>
+  <polygon points="23,22 24,27 21,24" fill="#4A5568"/>
+  <polygon points="28,22 29,28 26,24" fill="#4A5568"/>
+  <polygon points="33,23 34,28 31,25" fill="#4A5568"/>
+  <polygon points="37,27 36,32 39,29" fill="#4A5568"/>
+
+  <!-- Stalagmites (bottom teeth) -->
+  <polygon points="13,44 15,39 17,44" fill="#4A5568"/>
+  <polygon points="19,44 21,38 23,44" fill="#4A5568"/>
+  <polygon points="25,44 27,38 29,44" fill="#4A5568"/>
+  <polygon points="31,44 33,40 35,44" fill="#4A5568"/>
+
+  <!-- Creature body - massive, filling cave -->
+  <ellipse cx="24" cy="36" rx="12" ry="8" fill="#050810" opacity="0.9"/>
+
+  <!-- Tentacle 1 - upper left, reaching out -->
+  <path d="M14,32 Q8,28 4,24" fill="none" stroke="#1A1A2E" stroke-width="2.5" opacity="0.8" stroke-linecap="round"/>
+  <path d="M14,32 Q8,28 4,24" fill="none" stroke="#1A1A2E" stroke-width="1" opacity="0.8" stroke-linecap="round"/>
+
+  <!-- Tentacle 2 - upper right, reaching out -->
+  <path d="M34,32 Q40,27 44,22" fill="none" stroke="#1A1A2E" stroke-width="2.5" opacity="0.8" stroke-linecap="round"/>
+  <path d="M34,32 Q40,27 44,22" fill="none" stroke="#1A1A2E" stroke-width="1" opacity="0.8" stroke-linecap="round"/>
+
+  <!-- Tentacle 3 - left side, curling -->
+  <path d="M13,36 Q6,38 2,34" fill="none" stroke="#1A1A2E" stroke-width="2" opacity="0.8" stroke-linecap="round"/>
+  <path d="M13,36 Q6,38 2,34" fill="none" stroke="#1A1A2E" stroke-width="0.8" opacity="0.8" stroke-linecap="round"/>
+
+  <!-- Tentacle 4 - right side, curling -->
+  <path d="M35,37 Q42,40 46,36" fill="none" stroke="#1A1A2E" stroke-width="2" opacity="0.8" stroke-linecap="round"/>
+  <path d="M35,37 Q42,40 46,36" fill="none" stroke="#1A1A2E" stroke-width="0.8" opacity="0.8" stroke-linecap="round"/>
+
+  <!-- Left eye -->
+  <circle cx="20" cy="34" r="1.5" fill="#FF5252" opacity="0.9"/>
+  <circle cx="20" cy="34" r="0.6" fill="#0A0E1A"/>
+
+  <!-- Right eye -->
+  <circle cx="28" cy="34" r="1.5" fill="#FF5252" opacity="0.9"/>
+  <circle cx="28" cy="34" r="0.6" fill="#0A0E1A"/>
+
+  <!-- Claw marks on rocks -->
+  <line x1="10" y1="30" x2="14" y2="35" stroke="#2D3748" stroke-width="0.5"/>
+  <line x1="11" y1="29" x2="15" y2="34" stroke="#2D3748" stroke-width="0.5"/>
+  <line x1="36" y1="29" x2="38" y2="34" stroke="#2D3748" stroke-width="0.5"/>
+  <line x1="37" y1="28" x2="39" y2="33" stroke="#2D3748" stroke-width="0.5"/>
+
+  <!-- Danger particles - angular shards -->
+  <polygon points="7,26 8,25 7.5,27" fill="#FF5252" opacity="0.35"/>
+  <polygon points="40,25 41,24 40.5,26.5" fill="#FF5252" opacity="0.25"/>
+  <polygon points="18,20 19,19 18.5,21" fill="#FF5252" opacity="0.4"/>
+  <polygon points="30,19 31,18 30.5,20.5" fill="#FF5252" opacity="0.3"/>
+  <polygon points="5,32 6,31 5.5,33" fill="#FF5252" opacity="0.2"/>
+
+  <!-- 3-star badge -->
+  <circle cx="32" cy="9" r="7" fill="#FF5252" opacity="0.9"/>
+
+  <!-- Star 1 (left) -->
+  <path d="M27.6,7 L28.1,8.3 L29.5,8.3 L28.3,9.1 L28.8,10.4 L27.6,9.6 L26.4,10.4 L26.9,9.1 L25.7,8.3 L27.1,8.3 Z" fill="#0A0E1A"/>
+
+  <!-- Star 2 (center) -->
+  <path d="M32,5.5 L32.5,6.8 L33.9,6.8 L32.7,7.6 L33.2,8.9 L32,8.1 L30.8,8.9 L31.3,7.6 L30.1,6.8 L31.5,6.8 Z" fill="#0A0E1A"/>
+
+  <!-- Star 3 (right) -->
+  <path d="M36.4,7 L36.9,8.3 L38.3,8.3 L37.1,9.1 L37.6,10.4 L36.4,9.6 L35.2,10.4 L35.7,9.1 L34.5,8.3 L35.9,8.3 Z" fill="#0A0E1A"/>
+</svg>

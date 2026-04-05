@@ -15,6 +15,7 @@ Future<bool> showTurnConfirmationDialog(
   Map<ResourceType, int> consumption = const {},
   List<BuildingType> buildingsToDeactivate = const [],
   Map<UnitType, int> unitsToLose = const {},
+  int pendingExplorationCount = 0,
 }) async {
   final result = await showDialog<bool>(
     context: context,
@@ -24,6 +25,7 @@ Future<bool> showTurnConfirmationDialog(
       consumption: consumption,
       buildingsToDeactivate: buildingsToDeactivate,
       unitsToLose: unitsToLose,
+      pendingExplorationCount: pendingExplorationCount,
     ),
   );
   return result ?? false;
@@ -35,6 +37,7 @@ class _TurnConfirmationDialog extends StatelessWidget {
   final Map<ResourceType, int> consumption;
   final List<BuildingType> buildingsToDeactivate;
   final Map<UnitType, int> unitsToLose;
+  final int pendingExplorationCount;
 
   const _TurnConfirmationDialog({
     required this.currentTurn,
@@ -42,6 +45,7 @@ class _TurnConfirmationDialog extends StatelessWidget {
     required this.consumption,
     required this.buildingsToDeactivate,
     required this.unitsToLose,
+    required this.pendingExplorationCount,
   });
 
   @override
@@ -91,11 +95,25 @@ class _TurnConfirmationDialog extends StatelessWidget {
               ],
             ),
           ),
+        if (pendingExplorationCount > 0) ..._buildExplorationSection(),
         if (hasWarnings) ..._buildBuildingWarnings(),
         if (hasLosses) ..._buildUnitLosses(),
       ],
     );
   }
+
+  List<Widget> _buildExplorationSection() => [
+        const Divider(),
+        Row(children: [
+          Icon(Icons.explore, color: AbyssColors.biolumCyan),
+          const SizedBox(width: 8),
+          Text(
+            '$pendingExplorationCount exploration'
+            '${pendingExplorationCount > 1 ? 's' : ''} en attente',
+            style: TextStyle(color: AbyssColors.biolumCyan),
+          ),
+        ]),
+      ];
 
   List<Widget> _buildBuildingWarnings() => [
         const Divider(),

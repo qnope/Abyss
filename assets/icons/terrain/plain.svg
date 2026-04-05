@@ -1,0 +1,47 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="plainSandGrad" x1="0" y1="24" x2="0" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#42A5F5" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#2E7BC8" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="plainAlgae1" x1="0" y1="48" x2="0" y2="35" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#69F0AE" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#69F0AE" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="plainAlgae2" x1="0" y1="48" x2="0" y2="33" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#69F0AE" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#69F0AE" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="plainAlgae3" x1="0" y1="48" x2="0" y2="37" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#69F0AE" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#69F0AE" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <!-- Background layer -->
+  <rect width="48" height="48" fill="#42A5F5" opacity="0.4"/>
+  <!-- Sand layer -->
+  <rect x="0" y="24" width="48" height="24" fill="url(#plainSandGrad)"/>
+  <!-- Sand grain dots -->
+  <circle cx="5" cy="38" r="0.4" fill="#5BB8FF" opacity="0.2"/>
+  <circle cx="12" cy="42" r="0.3" fill="#5BB8FF" opacity="0.2"/>
+  <circle cx="20" cy="36" r="0.5" fill="#5BB8FF" opacity="0.2"/>
+  <circle cx="28" cy="44" r="0.3" fill="#5BB8FF" opacity="0.2"/>
+  <circle cx="35" cy="39" r="0.4" fill="#5BB8FF" opacity="0.2"/>
+  <circle cx="42" cy="41" r="0.3" fill="#5BB8FF" opacity="0.2"/>
+  <circle cx="16" cy="45" r="0.4" fill="#5BB8FF" opacity="0.2"/>
+  <circle cx="38" cy="35" r="0.3" fill="#5BB8FF" opacity="0.2"/>
+  <!-- Current ripples -->
+  <path d="M2 34 Q8 32.5 14 34 Q20 35.5 26 34 Q32 32.5 38 34 Q44 35.5 46 34" fill="none" stroke="#5BB8FF" stroke-width="0.4" opacity="0.15"/>
+  <path d="M4 40 Q10 38.5 16 40 Q22 41.5 28 40 Q34 38.5 40 40 Q44 41 46 40" fill="none" stroke="#5BB8FF" stroke-width="0.4" opacity="0.15"/>
+  <path d="M1 46 Q7 44.5 13 46 Q19 47.5 25 46 Q31 44.5 37 46 Q43 47.5 47 46" fill="none" stroke="#5BB8FF" stroke-width="0.4" opacity="0.15"/>
+  <!-- Floating algae -->
+  <path d="M10 48 C9 44 12 42 10 38 C8 36 11 35 10 33" fill="none" stroke="url(#plainAlgae1)" stroke-width="0.9" stroke-linecap="round"/>
+  <path d="M30 48 C31 43 28 41 30 37 C32 35 29 34 30 33" fill="none" stroke="url(#plainAlgae2)" stroke-width="1" stroke-linecap="round"/>
+  <path d="M22 48 C21 45 24 43 22 40 C20 39 23 38 22 37" fill="none" stroke="url(#plainAlgae3)" stroke-width="0.8" stroke-linecap="round"/>
+  <!-- Plankton particles -->
+  <circle cx="8" cy="8" r="0.6" fill="#1DE9B6" opacity="0.25"/>
+  <circle cx="25" cy="14" r="0.5" fill="#1DE9B6" opacity="0.2"/>
+  <circle cx="40" cy="6" r="0.7" fill="#1DE9B6" opacity="0.3"/>
+  <circle cx="18" cy="18" r="0.8" fill="#1DE9B6" opacity="0.2"/>
+  <circle cx="36" cy="20" r="0.5" fill="#1DE9B6" opacity="0.25"/>
+</svg>

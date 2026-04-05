@@ -1,0 +1,62 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="medDenGrad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#0A0E1A"/>
+      <stop offset="100%" stop-color="#2D3748"/>
+    </radialGradient>
+    <filter id="medGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3.5"/>
+    </filter>
+  </defs>
+
+  <!-- Orange aura behind cave -->
+  <ellipse cx="22" cy="34" rx="19" ry="14" fill="#FFD740" opacity="0.25" filter="url(#medGlow)"/>
+
+  <!-- Cave back wall -->
+  <ellipse cx="22" cy="36" rx="13" ry="9" fill="url(#medDenGrad)"/>
+
+  <!-- Left rock mass -->
+  <path d="M9 44 L7 32 L10 28 L14 26 L16 28 L13 30 L11 36 L12 44 Z" fill="#4A5568"/>
+  <!-- Right rock mass -->
+  <path d="M35 44 L37 32 L34 27 L30 25 L28 27 L31 30 L33 36 L32 44 Z" fill="#4A5568"/>
+  <!-- Top rock arch -->
+  <path d="M14 26 L16 22 L19 20 L22 19 L25 20 L28 22 L30 25 L28 27 L25 24 L22 23 L19 24 L16 28 Z" fill="#2D3748"/>
+
+  <!-- Stalactite left -->
+  <polygon points="16,24 17.5,23 16.5,30" fill="#3A4558"/>
+  <!-- Stalactite center -->
+  <polygon points="21,22 23,22 22,29" fill="#3A4558"/>
+  <!-- Stalactite right -->
+  <polygon points="27,23 28.5,24 28,30" fill="#3A4558"/>
+
+  <!-- Cave interior shadow -->
+  <path d="M13 30 Q14 26 22 24 Q30 26 31 30 L33 44 L11 44 Z" fill="#0A0E1A" opacity="0.85"/>
+
+  <!-- Creature body oval -->
+  <ellipse cx="22" cy="37" rx="3" ry="2" fill="#050810" opacity="0.8"/>
+  <!-- Tentacle/leg top-left spilling out -->
+  <path d="M19 36 Q17 34 15 32" stroke="#050810" stroke-width="1.2" opacity="0.7" fill="none" stroke-linecap="round"/>
+  <!-- Tentacle/leg top-right spilling out -->
+  <path d="M25 36 Q27 34 29 32" stroke="#050810" stroke-width="1.2" opacity="0.7" fill="none" stroke-linecap="round"/>
+  <!-- Tentacle/leg bottom-left -->
+  <path d="M20 38 Q17 40 14 42" stroke="#050810" stroke-width="1" opacity="0.6" fill="none" stroke-linecap="round"/>
+  <!-- Tentacle/leg bottom-right -->
+  <path d="M24 38 Q27 40 30 42" stroke="#050810" stroke-width="1" opacity="0.6" fill="none" stroke-linecap="round"/>
+
+  <!-- Eyes -->
+  <circle cx="21" cy="36.5" r="1" fill="#FFD740" opacity="0.9"/>
+  <circle cx="23" cy="36.5" r="1" fill="#FFD740" opacity="0.9"/>
+
+  <!-- Bone debris at cave entrance -->
+  <path d="M16 42 L18 41.5 L18.3 42.3 L16.3 42.8 Z" fill="#7B9CC0" opacity="0.3"/>
+  <ellipse cx="16.2" cy="41.8" rx="0.6" ry="0.6" fill="#7B9CC0" opacity="0.3"/>
+  <ellipse cx="18.2" cy="42.5" rx="0.5" ry="0.5" fill="#7B9CC0" opacity="0.3"/>
+  <path d="M26 43 L28 42.2 L28.2 43 L26.2 43.7 Z" fill="#7B9CC0" opacity="0.3"/>
+
+  <!-- 2-star difficulty badge -->
+  <circle cx="34" cy="9" r="6" fill="#FFD740" opacity="0.85"/>
+  <!-- Star left -->
+  <polygon points="31.5,9 32.2,7.5 32.9,9 34.5,9.2 33.3,10.2 33.6,11.8 32.2,10.9 30.8,11.8 31.1,10.2 29.9,9.2" fill="#0A0E1A"/>
+  <!-- Star right -->
+  <polygon points="35.8,9 36.5,7.5 37.2,9 38.8,9.2 37.6,10.2 37.9,11.8 36.5,10.9 35.1,11.8 35.4,10.2 34.2,9.2" fill="#0A0E1A"/>
+</svg>

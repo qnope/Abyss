@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <radialGradient id="hostileGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF5252" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#2A1015" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="hostileGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
+    </filter>
+  </defs>
+  <!-- Red halo -->
+  <circle cx="24" cy="25" r="13" fill="#FF5252" fill-opacity="0.15" filter="url(#hostileGlow)"/>
+  <!-- Defensive spikes radiating from dome base -->
+  <polygon points="11,33 12.5,29 14,33" fill="#4A2020"/>
+  <polygon points="11,33 12.5,29 14,33" fill="#FF5252" fill-opacity="0.3"/>
+  <polygon points="15,33 16,29.5 17,33" fill="#4A2020"/>
+  <polygon points="15,33 16,29.5 17,33" fill="#FF5252" fill-opacity="0.3"/>
+  <polygon points="31,33 32,29.5 33,33" fill="#4A2020"/>
+  <polygon points="31,33 32,29.5 33,33" fill="#FF5252" fill-opacity="0.3"/>
+  <polygon points="34,33 35.5,29 37,33" fill="#4A2020"/>
+  <polygon points="34,33 35.5,29 37,33" fill="#FF5252" fill-opacity="0.3"/>
+  <polygon points="9,33 10,30 11,33" fill="#4A2020"/>
+  <polygon points="9,33 10,30 11,33" fill="#FF5252" fill-opacity="0.3"/>
+  <polygon points="37,33 38,30 39,33" fill="#4A2020"/>
+  <polygon points="37,33 38,30 39,33" fill="#FF5252" fill-opacity="0.3"/>
+  <!-- Dome (same size as neutral/player base) -->
+  <path d="M13 33 Q13 17 24 17 Q35 17 35 33 Z" fill="url(#hostileGrad)"/>
+  <!-- Dome meridian arcs -->
+  <path d="M17 33 Q17 21 24 21 Q31 21 31 33" fill="none" stroke="#FF5252" stroke-opacity="0.35" stroke-width="0.5"/>
+  <path d="M20 33 Q20 23 24 23 Q28 23 28 33" fill="none" stroke="#FF5252" stroke-opacity="0.35" stroke-width="0.5"/>
+  <path d="M22.5 33 Q22.5 25 24 25 Q25.5 25 25.5 33" fill="none" stroke="#FF5252" stroke-opacity="0.35" stroke-width="0.5"/>
+  <!-- Red sentinel lights (surveillance eyes) -->
+  <circle cx="19" cy="24" r="1" fill="#FF5252" fill-opacity="0.8"/>
+  <circle cx="29" cy="24" r="1" fill="#FF5252" fill-opacity="0.8"/>
+  <circle cx="24" cy="21" r="1" fill="#FF5252" fill-opacity="0.8"/>
+  <!-- Hostility indicator: crossed swords at dome top -->
+  <line x1="22.5" y1="16" x2="25.5" y2="19" stroke="#FF5252" stroke-opacity="0.7" stroke-width="0.7" stroke-linecap="round"/>
+  <line x1="25.5" y1="16" x2="22.5" y2="19" stroke="#FF5252" stroke-opacity="0.7" stroke-width="0.7" stroke-linecap="round"/>
+  <line x1="22.5" y1="16" x2="22" y2="15.5" stroke="#FF5252" stroke-opacity="0.7" stroke-width="0.7" stroke-linecap="round"/>
+  <line x1="25.5" y1="16" x2="26" y2="15.5" stroke="#FF5252" stroke-opacity="0.7" stroke-width="0.7" stroke-linecap="round"/>
+  <!-- Base/pedestal -->
+  <rect x="12" y="33" width="24" height="5" rx="2" ry="2" fill="#1A1015"/>
+  <rect x="12" y="33" width="24" height="5" rx="2" ry="2" fill="none" stroke="#FF5252" stroke-opacity="0.4" stroke-width="0.5"/>
+</svg>

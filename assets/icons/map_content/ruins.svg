@@ -1,0 +1,48 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ruinsStoneGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#5A6678"/>
+      <stop offset="100%" stop-color="#7B8C9F"/>
+    </linearGradient>
+    <linearGradient id="ruinsColumnGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6B7C8F"/>
+      <stop offset="100%" stop-color="#4A5568"/>
+    </linearGradient>
+    <filter id="ruinsGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
+    </filter>
+  </defs>
+
+  <!-- Nacre glow behind arch -->
+  <ellipse cx="20" cy="24" rx="12" ry="14" fill="#B388FF" opacity="0.25" filter="url(#ruinsGlow)"/>
+
+  <!-- Broken arch: left half intact, right half jagged stump -->
+  <path d="M12 40 L12 22 Q12 12 20 10 Q24 8.5 26 10 L26 14 L28 12 L27 16 L26 15 L26 18 L28 17 L27 20 L25 19 L25 40 Z" fill="url(#ruinsStoneGrad)"/>
+
+  <!-- Inner arch opening -->
+  <path d="M15 40 L15 24 Q15 16 20 14 Q22 13 23 14 L23 22 L22 40 Z" fill="#4A5568" opacity="0.5"/>
+
+  <!-- Fallen column diagonal at arch base -->
+  <rect x="16" y="34" width="16" height="3" rx="1.5" ry="1.5" transform="rotate(-20 24 35.5)" fill="url(#ruinsColumnGrad)"/>
+  <!-- Broken cross-section circles at column ends -->
+  <circle cx="16.5" cy="33" r="1.5" fill="#6B7C8F" opacity="0.8"/>
+  <circle cx="31.5" cy="37.5" r="1.5" fill="#4A5568" opacity="0.8"/>
+
+  <!-- Inscriptions: fine geometric lines on intact arch surface -->
+  <path d="M13.5 28 L13.5 32" stroke="#B388FF" stroke-width="0.3" opacity="0.3" fill="none"/>
+  <path d="M14.5 27 L14.5 33" stroke="#B388FF" stroke-width="0.3" opacity="0.3" fill="none"/>
+  <path d="M13.2 25 Q14 23.5 14.8 25 Q14 26.5 13.2 25 Z" stroke="#B388FF" stroke-width="0.3" opacity="0.3" fill="none"/>
+
+  <!-- Floor debris: small angular polygons -->
+  <polygon points="10,41 12,40.5 11.5,42" fill="#4A5568" opacity="0.7"/>
+  <polygon points="24,41 26,40 25.5,42.5" fill="#4A5568" opacity="0.7"/>
+  <polygon points="29,40 31,39.5 30,41" fill="#4A5568" opacity="0.7"/>
+  <polygon points="14,42 15.5,41 15,43" fill="#4A5568" opacity="0.7"/>
+  <polygon points="21,43 22,41.5 23,43" fill="#4A5568" opacity="0.7"/>
+
+  <!-- Pearl particles floating around ruins -->
+  <circle cx="8" cy="16" r="0.8" fill="#E0F7FA" opacity="0.4"/>
+  <circle cx="32" cy="10" r="1" fill="#E0F7FA" opacity="0.3"/>
+  <circle cx="34" cy="28" r="0.6" fill="#E0F7FA" opacity="0.5"/>
+  <circle cx="10" cy="36" r="0.5" fill="#E0F7FA" opacity="0.35"/>
+</svg>

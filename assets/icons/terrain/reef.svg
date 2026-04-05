@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <radialGradient id="reefCoralGrad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FF6E91"/>
+      <stop offset="100%" stop-color="#CC5577"/>
+    </radialGradient>
+    <filter id="reefGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Background layer -->
+  <rect x="0" y="0" width="48" height="48" fill="#FF6E91" opacity="0.4"/>
+  <!-- Main coral formation 1 (large, left-center) -->
+  <path d="M12,48 Q10,38 14,32 Q16,28 13,22 Q11,18 15,14 Q18,11 17,16 Q16,20 19,24 Q22,28 20,34 Q18,40 22,48 Z" fill="url(#reefCoralGrad)"/>
+  <!-- Main coral formation 2 (right side) -->
+  <path d="M30,48 Q28,40 32,34 Q34,30 31,24 Q29,20 33,17 Q36,14 35,20 Q34,24 37,28 Q40,32 38,38 Q36,44 40,48 Z" fill="url(#reefCoralGrad)"/>
+  <!-- Main coral formation 3 (small, far right) -->
+  <path d="M40,48 Q39,42 42,38 Q44,35 43,30 Q42,27 44,25 Q46,28 45,33 Q44,38 46,48 Z" fill="url(#reefCoralGrad)"/>
+  <!-- Secondary coral (small rounded shapes at bottom) -->
+  <ellipse cx="8" cy="46" rx="4" ry="3" fill="#D45A7A"/>
+  <ellipse cx="25" cy="47" rx="3" ry="2.5" fill="#D45A7A"/>
+  <ellipse cx="35" cy="46.5" rx="2.5" ry="2" fill="#D45A7A"/>
+  <!-- Particles (upper half) -->
+  <circle cx="6" cy="8" r="1" fill="#FF80AB" opacity="0.4"/>
+  <circle cx="22" cy="5" r="1.2" fill="#FF80AB" opacity="0.35"/>
+  <circle cx="38" cy="10" r="1" fill="#FF80AB" opacity="0.5"/>
+  <circle cx="14" cy="14" r="1.5" fill="#FF80AB" opacity="0.3"/>
+  <circle cx="42" cy="6" r="1.2" fill="#FF80AB" opacity="0.45"/>
+  <circle cx="28" cy="16" r="1" fill="#FF80AB" opacity="0.3"/>
+  <!-- Bioluminescent glow on largest coral -->
+  <circle cx="16" cy="22" r="8" fill="#FF80AB" opacity="0.2" filter="url(#reefGlow)"/>
+  <!-- Sand texture (fine wavy lines at bottom) -->
+  <path d="M0,46 Q6,45 12,46 Q18,47 24,46 Q30,45 36,46 Q42,47 48,46" fill="none" stroke="#CC5577" stroke-width="0.4" opacity="0.2"/>
+  <path d="M0,47.5 Q8,46.5 16,47.5 Q24,48.5 32,47.5 Q40,46.5 48,47.5" fill="none" stroke="#CC5577" stroke-width="0.3" opacity="0.2"/>
+  <path d="M0,44.5 Q7,43.5 14,44.5 Q21,45.5 28,44.5 Q35,43.5 42,44.5 Q46,45 48,44.8" fill="none" stroke="#CC5577" stroke-width="0.5" opacity="0.2"/>
+</svg>

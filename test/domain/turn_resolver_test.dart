@@ -35,12 +35,16 @@ void main() {
       final game = _game(buildings: {
         BuildingType.algaeFarm: Building(type: BuildingType.algaeFarm, level: 2),
       });
+      final algaeBefore = game.resources[ResourceType.algae]!.amount;
       final result = resolver.resolve(game);
-      final c = result.changes.first;
-      expect(c.beforeAmount, 100);
-      expect(c.produced, 140);
-      expect(c.afterAmount, 240);
-      expect(game.resources[ResourceType.algae]!.amount, 240);
+
+      expect(game.resources[ResourceType.algae]!.amount, algaeBefore + 140);
+      // algaeFarm lvl 2 consumes 4 energy, so energy change also appears
+      expect(result.changes.length, 2);
+      final algaeChange = result.changes.firstWhere(
+        (c) => c.type == ResourceType.algae,
+      );
+      expect(algaeChange.produced, 140);
     });
     test('multiple buildings produce correctly', () {
       final game = _game(buildings: {
@@ -50,6 +54,8 @@ void main() {
       resolver.resolve(game);
       expect(game.resources[ResourceType.algae]!.amount, 150);
       expect(game.resources[ResourceType.coral]!.amount, 180);
+      // 2 + 4 = 6 energy consumed from stock (60 -> 54)
+      expect(game.resources[ResourceType.energy]!.amount, 54);
     });
     test('turn counter increments', () {
       final game = _game();
@@ -144,6 +150,321 @@ void main() {
       final result = resolver.resolve(game);
       expect(result.changes, isEmpty);
       expect(game.turn, 2);
+    });
+
+    test('pearl untouched after resolve', () {
+      final game = _game(buildings: {
+        BuildingType.algaeFarm: Building(
+          type: BuildingType.algaeFarm,
+          level: 3,
+        ),
+      });
+      final pearlBefore = game.resources[ResourceType.pearl]!.amount;
+      resolver.resolve(game);
+      expect(game.resources[ResourceType.pearl]!.amount, pearlBefore);
+    });
+
+    test('changes contains resources with production or consumption', () {
+      final game = _game(buildings: {
+        BuildingType.algaeFarm: Building(
+          type: BuildingType.algaeFarm,
+          level: 1,
+        ),
+      });
+      final result = resolver.resolve(game);
+      // algae (produced) + energy (consumed by building)
+      expect(result.changes.length, 2);
+      final types = result.changes.map((c) => c.type).toSet();
+      expect(types, contains(ResourceType.algae));
+      expect(types, contains(ResourceType.energy));
+    });
+  });
+
+  group('Recruitment reset', () {
+    test('recruitedUnitTypes is cleared after resolve', () {
+      final game = _game();
+      game.recruitedUnitTypes.addAll([UnitType.scout, UnitType.harpoonist]);
+      resolver.resolve(game);
+      expect(game.recruitedUnitTypes, isEmpty);
+    });
+
+    test('empty recruitedUnitTypes stays empty after resolve', () {
+      final game = _game();
+      resolver.resolve(game);
+      expect(game.recruitedUnitTypes, isEmpty);
+    });
+  });
+
+  group('Energy consumption', () {
+    test('buildings consume energy from production', () {
+      // solarPanel lvl 2: produces 18 energy, consumes 2
+      // algaeFarm lvl 1: consumes 2 energy
+      // total consumption = 4, net energy = 18 - 4 = 14
+      final game = _game(buildings: {
+        BuildingType.solarPanel: Building(
+          type: BuildingType.solarPanel,
+          level: 2,
+        ),
+        BuildingType.algaeFarm: Building(
+          type: BuildingType.algaeFarm,
+          level: 1,
+        ),
+      });
+      final energyBefore = game.resources[ResourceType.energy]!.amount;
+      final result = resolver.resolve(game);
+
+      expect(
+        game.resources[ResourceType.energy]!.amount,
+        energyBefore + 14,
+      );
+      final energyChange = result.changes.firstWhere(
+        (c) => c.type == ResourceType.energy,
+      );
+      expect(energyChange.produced, 18);
+      expect(energyChange.consumed, 4);
+    });
+
+    test('energy deducted from stock when production insufficient', () {
+      // HQ lvl 1: consumes 3, no solar panel
+      final game = _game(buildings: {
+        BuildingType.headquarters: Building(
+          type: BuildingType.headquarters,
+          level: 1,
+        ),
+      });
+      final result = resolver.resolve(game);
+
+      expect(game.resources[ResourceType.energy]!.amount, 57);
+      final energyChange = result.changes.firstWhere(
+        (c) => c.type == ResourceType.energy,
+      );
+      expect(energyChange.consumed, 3);
+      expect(energyChange.produced, 0);
+    });
+
+    test('building deactivation when energy insufficient', () {
+      // Many buildings, no solar panel, low energy stock
+      final game = _game(
+        buildings: {
+          BuildingType.headquarters: Building(
+            type: BuildingType.headquarters,
+            level: 1,
+          ),
+          BuildingType.algaeFarm: Building(
+            type: BuildingType.algaeFarm,
+            level: 1,
+          ),
+          BuildingType.oreExtractor: Building(
+            type: BuildingType.oreExtractor,
+            level: 3,
+          ),
+        },
+        resources: {
+          ...Game.defaultResources(),
+          ResourceType.energy: Resource(
+            type: ResourceType.energy,
+            amount: 5,
+            maxStorage: 1000,
+          ),
+        },
+      );
+      // HQ=3, algaeFarm=2, oreExtractor=9 => total=14, available=5
+      final result = resolver.resolve(game);
+      expect(result.deactivatedBuildings, isNotEmpty);
+    });
+
+    test('deactivated buildings produce nothing', () {
+      // oreExtractor lvl 3 should get deactivated => no ore production
+      final game = _game(
+        buildings: {
+          BuildingType.headquarters: Building(
+            type: BuildingType.headquarters,
+            level: 1,
+          ),
+          BuildingType.oreExtractor: Building(
+            type: BuildingType.oreExtractor,
+            level: 3,
+          ),
+        },
+        resources: {
+          ...Game.defaultResources(),
+          ResourceType.energy: Resource(
+            type: ResourceType.energy,
+            amount: 3,
+            maxStorage: 1000,
+          ),
+        },
+      );
+      // HQ=3, oreExtractor=9 => total=12, available=3
+      // oreExtractor deactivated first
+      final oreBefore = game.resources[ResourceType.ore]!.amount;
+      final result = resolver.resolve(game);
+
+      expect(
+        result.deactivatedBuildings,
+        contains(BuildingType.oreExtractor),
+      );
+      expect(game.resources[ResourceType.ore]!.amount, oreBefore);
+    });
+  });
+
+  group('Algae consumption', () {
+    test('units consume algae from production', () {
+      // algaeFarm lvl 1: 50 algae, 10 scouts: 10 algae
+      // net = 50 - 10 = 40
+      final game = _game(
+        buildings: {
+          BuildingType.algaeFarm: Building(
+            type: BuildingType.algaeFarm,
+            level: 1,
+          ),
+        },
+        units: {
+          ...Game.defaultUnits(),
+          UnitType.scout: Unit(type: UnitType.scout, count: 10),
+        },
+      );
+      final algaeBefore = game.resources[ResourceType.algae]!.amount;
+      resolver.resolve(game);
+      expect(game.resources[ResourceType.algae]!.amount, algaeBefore + 40);
+    });
+
+    test('algae deducted from stock when production insufficient', () {
+      // No farm, 5 scouts: 5 algae consumption
+      final game = _game(
+        units: {
+          ...Game.defaultUnits(),
+          UnitType.scout: Unit(type: UnitType.scout, count: 5),
+        },
+      );
+      // algae stock=100, consumption=5, net=-5 => 95
+      resolver.resolve(game);
+      expect(game.resources[ResourceType.algae]!.amount, 95);
+    });
+
+    test('unit losses when algae insufficient', () {
+      // Large army, no farm, low algae stock
+      final game = _game(
+        resources: {
+          ...Game.defaultResources(),
+          ResourceType.algae: Resource(
+            type: ResourceType.algae,
+            amount: 5,
+            maxStorage: 5000,
+          ),
+        },
+        units: {
+          ...Game.defaultUnits(),
+          UnitType.scout: Unit(type: UnitType.scout, count: 100),
+        },
+      );
+      // 100 scouts = 100 algae consumption, available=5
+      final result = resolver.resolve(game);
+      expect(result.lostUnits, isNotEmpty);
+      expect(result.lostUnits[UnitType.scout], greaterThan(0));
+    });
+
+    test('unit losses applied to game state', () {
+      final game = _game(
+        resources: {
+          ...Game.defaultResources(),
+          ResourceType.algae: Resource(
+            type: ResourceType.algae,
+            amount: 5,
+            maxStorage: 5000,
+          ),
+        },
+        units: {
+          ...Game.defaultUnits(),
+          UnitType.scout: Unit(type: UnitType.scout, count: 100),
+        },
+      );
+      resolver.resolve(game);
+      expect(game.units[UnitType.scout]!.count, lessThan(100));
+    });
+
+    test('proportional losses across types', () {
+      final game = _game(
+        resources: {
+          ...Game.defaultResources(),
+          ResourceType.algae: Resource(
+            type: ResourceType.algae,
+            amount: 0,
+            maxStorage: 5000,
+          ),
+        },
+        units: {
+          ...Game.defaultUnits(),
+          UnitType.scout: Unit(type: UnitType.scout, count: 50),
+          UnitType.harpoonist: Unit(type: UnitType.harpoonist, count: 50),
+        },
+      );
+      // total consumption: 50*1 + 50*2 = 150, available=0
+      // loss ratio = 1.0, all units lost
+      final result = resolver.resolve(game);
+      expect(result.lostUnits[UnitType.scout], 50);
+      expect(result.lostUnits[UnitType.harpoonist], 50);
+    });
+  });
+
+  group('Combined consumption', () {
+    test('full scenario: production, consumption, deactivation, loss', () {
+      final game = _game(
+        buildings: {
+          BuildingType.solarPanel: Building(
+            type: BuildingType.solarPanel,
+            level: 1,
+          ),
+          BuildingType.algaeFarm: Building(
+            type: BuildingType.algaeFarm,
+            level: 1,
+          ),
+          BuildingType.headquarters: Building(
+            type: BuildingType.headquarters,
+            level: 1,
+          ),
+        },
+        resources: {
+          ...Game.defaultResources(),
+          ResourceType.energy: Resource(
+            type: ResourceType.energy,
+            amount: 20,
+            maxStorage: 1000,
+          ),
+          ResourceType.algae: Resource(
+            type: ResourceType.algae,
+            amount: 10,
+            maxStorage: 5000,
+          ),
+        },
+        units: {
+          ...Game.defaultUnits(),
+          UnitType.scout: Unit(type: UnitType.scout, count: 5),
+        },
+      );
+      // solarPanel lvl 1: produces 6 energy, consumes 1
+      // algaeFarm lvl 1: consumes 2 energy
+      // HQ lvl 1: consumes 3 energy
+      // total energy consumption=6, production=6, stock=20 => available=26
+      // No deactivation needed
+      // algae production=50, scouts consume 5 algae
+      // net algae = 50-5 = 45 => stock: 10+45=55
+      final result = resolver.resolve(game);
+
+      expect(result.deactivatedBuildings, isEmpty);
+      expect(result.lostUnits, isEmpty);
+      expect(game.resources[ResourceType.algae]!.amount, 55);
+      // energy: 20 + 6 - 6 = 20
+      expect(game.resources[ResourceType.energy]!.amount, 20);
+    });
+
+    test('no consumption when no buildings and no units', () {
+      final game = _game();
+      final result = resolver.resolve(game);
+
+      expect(result.changes, isEmpty);
+      expect(result.deactivatedBuildings, isEmpty);
+      expect(result.lostUnits, isEmpty);
     });
   });
 }

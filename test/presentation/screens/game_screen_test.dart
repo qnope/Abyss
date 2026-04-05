@@ -6,6 +6,7 @@ import 'package:abyss/domain/game.dart';
 import 'package:abyss/domain/player.dart';
 import 'package:abyss/domain/resource.dart';
 import 'package:abyss/domain/resource_type.dart';
+import 'package:abyss/domain/unit.dart';
 import 'package:abyss/domain/unit_type.dart';
 import 'package:abyss/presentation/screens/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
@@ -177,13 +178,14 @@ void main() {
         await tester.tap(find.text('Confirmer'));
         await tester.pumpAndSettle();
 
-        // Summary shows algae production line
-        expect(find.textContaining('(+50)'), findsOneWidget);
+        // Summary shows algae production
+        expect(find.text('+50'), findsOneWidget);
 
         await tester.tap(find.text('OK'));
         await tester.pumpAndSettle();
 
-        // Algae went from 100 to 150
+        // Algae: 100 + 50 (production) - 0 (no unit consumption) = 150
+        // Energy: 60 - 2 (algaeFarm consumption) = 58
         expect(customGame.resources[ResourceType.algae]!.amount, 150);
       });
 
@@ -244,6 +246,96 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('Tour 1 \u2192 Tour 2'), findsOneWidget);
+      });
+    });
+
+    group('consumption display', () {
+      testWidgets('resource bar shows energy consumption', (tester) async {
+        final customGame = Game(
+          player: Player(name: 'Nemo'),
+          buildings: {
+            ...Game.defaultBuildings(),
+            BuildingType.headquarters: Building(
+              type: BuildingType.headquarters, level: 1),
+            BuildingType.solarPanel: Building(
+              type: BuildingType.solarPanel, level: 1),
+          },
+        );
+        await tester.pumpWidget(createApp(customGame));
+        await tester.pumpAndSettle();
+
+        // Solar panel lvl1: +6, HQ+solar consumption: 3+1=4
+        expect(find.textContaining('/-4/t'), findsOneWidget);
+      });
+
+      testWidgets('resource bar shows algae consumption', (tester) async {
+        final customGame = Game(
+          player: Player(name: 'Nemo'),
+          units: {
+            ...Game.defaultUnits(),
+            UnitType.scout: Unit(type: UnitType.scout, count: 10),
+          },
+        );
+        await tester.pumpWidget(createApp(customGame));
+        await tester.pumpAndSettle();
+
+        // 10 scouts * 1 algae = 10 consumption
+        expect(find.textContaining('/-10/t'), findsOneWidget);
+      });
+    });
+
+    group('turn with consumption', () {
+      testWidgets('turn confirmation shows deactivation warning',
+          (tester) async {
+        final customGame = Game(
+          player: Player(name: 'Nemo'),
+          buildings: {
+            ...Game.defaultBuildings(),
+            BuildingType.headquarters: Building(
+              type: BuildingType.headquarters, level: 1),
+            BuildingType.algaeFarm: Building(
+              type: BuildingType.algaeFarm, level: 1),
+            BuildingType.coralMine: Building(
+              type: BuildingType.coralMine, level: 1),
+            BuildingType.oreExtractor: Building(
+              type: BuildingType.oreExtractor, level: 1),
+          },
+          resources: {
+            ...Game.defaultResources(),
+            ResourceType.energy: Resource(
+              type: ResourceType.energy, amount: 5, maxStorage: 1000),
+          },
+        );
+        await tester.pumpWidget(createApp(customGame));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Tour suivant'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Batiments desactives'), findsOneWidget);
+      });
+
+      testWidgets('turn summary shows consumption results', (tester) async {
+        final customGame = Game(
+          player: Player(name: 'Nemo'),
+          buildings: {
+            ...Game.defaultBuildings(),
+            BuildingType.algaeFarm: Building(
+              type: BuildingType.algaeFarm, level: 1),
+            BuildingType.solarPanel: Building(
+              type: BuildingType.solarPanel, level: 1),
+          },
+        );
+        await tester.pumpWidget(createApp(customGame));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Tour suivant'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Confirmer'));
+        await tester.pumpAndSettle();
+
+        // Summary shows energy with consumption format
+        expect(find.textContaining('/-'), findsWidgets);
       });
     });
 

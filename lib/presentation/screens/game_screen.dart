@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../data/game_repository.dart';
-import '../../domain/building.dart';
 import '../../domain/building_type.dart';
-import '../../domain/action_executor.dart';
-import '../../domain/recruit_unit_action.dart';
-import '../../domain/unit_cost_calculator.dart';
-import '../../domain/unit_type.dart';
-import '../../domain/upgrade_building_action.dart';
 import '../../domain/game.dart';
-import '../../domain/maintenance_calculator.dart';
 import '../../domain/production_calculator.dart';
-import '../../domain/resource_type.dart';
 import '../../domain/turn_resolver.dart';
 import '../widgets/army_list_view.dart';
-import '../widgets/building_detail_sheet.dart';
 import '../widgets/turn_confirmation_dialog.dart';
 import '../widgets/turn_summary_dialog.dart';
 import '../widgets/building_list_view.dart';
@@ -22,8 +13,9 @@ import '../widgets/resource_bar.dart';
 import '../widgets/settings_dialog.dart';
 import '../widgets/tab_placeholder.dart';
 import '../widgets/tech_tree_view.dart';
-import '../widgets/unit_detail_sheet.dart';
+import 'game_screen_actions.dart';
 import 'game_screen_tech_actions.dart';
+import 'game_screen_turn_helpers.dart';
 import 'main_menu_screen.dart';
 
 class GameScreen extends StatefulWidget {
@@ -42,16 +34,22 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   int _currentTab = 0;
+
   @override
   Widget build(BuildContext context) {
     final production = ProductionCalculator.fromBuildings(
       widget.game.buildings,
       techBranches: widget.game.techBranches,
     );
+    final consumption = computeConsumption(widget.game);
     return Scaffold(
       body: Column(
         children: [
-          ResourceBar(resources: widget.game.resources, production: production),
+          ResourceBar(
+            resources: widget.game.resources,
+            production: production,
+            consumption: consumption,
+          ),
           Expanded(child: _buildTabContent()),
         ],
       ),
@@ -66,76 +64,32 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget _buildTabContent() {
+    final g = widget.game;
     return switch (_currentTab) {
       0 => BuildingListView(
-        buildings: widget.game.buildings,
-        resources: widget.game.resources,
-        onBuildingTap: _showBuildingDetail,
+        buildings: g.buildings,
+        resources: g.resources,
+        onBuildingTap: (b) => showBuildingDetailAction(
+          context, g, b, () => setState(() {})),
       ),
       1 => const TabPlaceholder(icon: Icons.map, label: 'Carte'),
       2 => ArmyListView(
-        units: widget.game.units,
-        barracksLevel: widget.game.buildings[BuildingType.barracks]!.level,
-        onUnitTap: _showUnitDetail,
+        units: g.units,
+        barracksLevel: g.buildings[BuildingType.barracks]!.level,
+        onUnitTap: (t) => showUnitDetailAction(
+          context, g, t, () => setState(() {})),
       ),
       3 => TechTreeView(
-        techBranches: widget.game.techBranches,
-        buildings: widget.game.buildings,
-        resources: widget.game.resources,
+        techBranches: g.techBranches,
+        buildings: g.buildings,
+        resources: g.resources,
         onBranchTap: (branch) => showBranchDetail(
-          context, widget.game, branch, () => setState(() {})),
+          context, g, branch, () => setState(() {})),
         onNodeTap: (branch, level) => showNodeDetail(
-          context, widget.game, branch, level, () => setState(() {})),
+          context, g, branch, level, () => setState(() {})),
       ),
       _ => const SizedBox.shrink(),
     };
-  }
-
-  void _showBuildingDetail(Building building) {
-    showBuildingDetailSheet(
-      context,
-      building: building,
-      resources: widget.game.resources,
-      allBuildings: widget.game.buildings,
-      onUpgrade: () => _upgradeBuilding(building),
-    );
-  }
-
-  void _upgradeBuilding(Building building) {
-    final action = UpgradeBuildingAction(buildingType: building.type);
-    final result = ActionExecutor().execute(action, widget.game);
-    if (result.isSuccess) {
-      setState(() {});
-      Navigator.pop(context);
-    }
-  }
-
-  void _showUnitDetail(UnitType unitType) {
-    final calculator = UnitCostCalculator();
-    final barracksLevel = widget.game.buildings[BuildingType.barracks]!.level;
-    final isUnlocked = calculator.isUnlocked(unitType, barracksLevel);
-    final count = widget.game.units[unitType]?.count ?? 0;
-    final hasRecruitedThisType =
-        widget.game.recruitedUnitTypes.contains(unitType);
-    showUnitDetailSheet(
-      context,
-      unitType: unitType,
-      count: count,
-      isUnlocked: isUnlocked,
-      barracksLevel: barracksLevel,
-      resources: widget.game.resources,
-      hasRecruitedThisType: hasRecruitedThisType,
-      onRecruit: (quantity) => _recruitUnit(unitType, quantity),
-    );
-  }
-
-  void _recruitUnit(UnitType unitType, int quantity) {
-    final action = RecruitUnitAction(unitType: unitType, quantity: quantity);
-    final result = ActionExecutor().execute(action, widget.game);
-    if (result.isSuccess) {
-      setState(() {});
-      Navigator.pop(context);
-    }
   }
 
   Future<void> _nextTurn() async {
@@ -143,16 +97,17 @@ class _GameScreenState extends State<GameScreen> {
       widget.game.buildings,
       techBranches: widget.game.techBranches,
     );
-    final maintenance = MaintenanceCalculator.fromUnits(widget.game.units);
-    final netProduction = <ResourceType, int>{};
-    for (final type in {...production.keys, ...maintenance.keys}) {
-      netProduction[type] = (production[type] ?? 0) - (maintenance[type] ?? 0);
-    }
+    final consumption = computeConsumption(widget.game);
+    final deactivated = computeBuildingsToDeactivate(
+      widget.game, production);
+    final unitsToLose = computeUnitsToLose(widget.game, deactivated);
     final confirmed = await showTurnConfirmationDialog(
       context,
       currentTurn: widget.game.turn,
-      resources: widget.game.resources,
-      netProduction: netProduction,
+      production: production,
+      consumption: consumption,
+      buildingsToDeactivate: deactivated,
+      unitsToLose: unitsToLose,
     );
     if (!confirmed || !mounted) return;
     final result = TurnResolver().resolve(widget.game);

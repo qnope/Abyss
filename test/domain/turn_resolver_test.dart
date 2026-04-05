@@ -100,30 +100,33 @@ void main() {
   });
 
   group('Maintenance deduction', () {
-    test('maintenance reduces net production', () {
+    test('units consume algae separately from production', () {
       final game = _game(
         buildings: {BuildingType.algaeFarm: Building(type: BuildingType.algaeFarm, level: 1)},
         units: {UnitType.scout: Unit(type: UnitType.scout, count: 10)},
       );
       final c = resolver.resolve(game).changes.firstWhere((c) => c.type == ResourceType.algae);
-      expect(c.produced, 40); // 50 prod - 10 maintenance
+      expect(c.produced, 50);
+      expect(c.consumed, 10);
       expect(c.afterAmount, 140);
     });
-    test('maintenance exceeding production floors at zero', () {
+    test('consumption exceeding production floors at zero', () {
       final game = _game(
         units: {UnitType.scout: Unit(type: UnitType.scout, count: 100)},
       );
       final c = resolver.resolve(game).changes.firstWhere((c) => c.type == ResourceType.algae);
-      expect(c.produced, -100);
+      expect(c.produced, 0);
+      expect(c.consumed, 100);
       expect(c.afterAmount, 0);
     });
-    test('net production shown in changes', () {
+    test('production and consumption shown separately', () {
       final game = _game(
         buildings: {BuildingType.algaeFarm: Building(type: BuildingType.algaeFarm, level: 1)},
         units: {UnitType.scout: Unit(type: UnitType.scout, count: 5)},
       );
       final c = resolver.resolve(game).changes.firstWhere((c) => c.type == ResourceType.algae);
-      expect(c.produced, 45); // 50 - 5
+      expect(c.produced, 50);
+      expect(c.consumed, 5);
     });
   });
 
@@ -197,9 +200,9 @@ void main() {
 
   group('Energy consumption', () {
     test('buildings consume energy from production', () {
-      // solarPanel lvl 2: produces 18 energy, consumes 2
+      // solarPanel lvl 2: produces 54 energy, consumes 2
       // algaeFarm lvl 1: consumes 2 energy
-      // total consumption = 4, net energy = 18 - 4 = 14
+      // total consumption = 4, net energy = 54 - 4 = 50
       final game = _game(buildings: {
         BuildingType.solarPanel: Building(
           type: BuildingType.solarPanel,
@@ -215,12 +218,12 @@ void main() {
 
       expect(
         game.resources[ResourceType.energy]!.amount,
-        energyBefore + 14,
+        energyBefore + 50,
       );
       final energyChange = result.changes.firstWhere(
         (c) => c.type == ResourceType.energy,
       );
-      expect(energyChange.produced, 18);
+      expect(energyChange.produced, 54);
       expect(energyChange.consumed, 4);
     });
 
@@ -442,10 +445,10 @@ void main() {
           UnitType.scout: Unit(type: UnitType.scout, count: 5),
         },
       );
-      // solarPanel lvl 1: produces 6 energy, consumes 1
+      // solarPanel lvl 1: produces 18 energy, consumes 1
       // algaeFarm lvl 1: consumes 2 energy
       // HQ lvl 1: consumes 3 energy
-      // total energy consumption=6, production=6, stock=20 => available=26
+      // total energy consumption=6, production=18, stock=20 => available=38
       // No deactivation needed
       // algae production=50, scouts consume 5 algae
       // net algae = 50-5 = 45 => stock: 10+45=55
@@ -454,8 +457,8 @@ void main() {
       expect(result.deactivatedBuildings, isEmpty);
       expect(result.lostUnits, isEmpty);
       expect(game.resources[ResourceType.algae]!.amount, 55);
-      // energy: 20 + 6 - 6 = 20
-      expect(game.resources[ResourceType.energy]!.amount, 20);
+      // energy: 20 + 18 - 6 = 32
+      expect(game.resources[ResourceType.energy]!.amount, 32);
     });
 
     test('no consumption when no buildings and no units', () {

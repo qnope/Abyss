@@ -29,14 +29,14 @@ void main() {
   setUp(() => resolver = TurnResolver());
 
   test('full consumption scenario over multiple turns', () {
-    // Energy: prod=6, cons=9 => net -3/turn
+    // Energy: prod=18, cons=21 => net -3/turn
     // Algae: prod=50, cons=10 (scouts) => net +40/turn
     final game = _game(
       buildings: {
         BuildingType.headquarters: _b(BuildingType.headquarters, 1),
         BuildingType.algaeFarm: _b(BuildingType.algaeFarm, 1),
         BuildingType.solarPanel: _b(BuildingType.solarPanel, 1),
-        BuildingType.barracks: _b(BuildingType.barracks, 1),
+        BuildingType.barracks: _b(BuildingType.barracks, 5),
       },
       units: {
         ...Game.defaultUnits(),
@@ -58,7 +58,7 @@ void main() {
     expect(game.resources[ResourceType.energy]!.amount, 0);
     expect(game.resources[ResourceType.algae]!.amount, 900);
 
-    // Turn 21: stock=0, available=6 < consumption=9 => deactivation
+    // Turn 21: stock=0, available=18 < consumption=21 => deactivation
     result = resolver.resolve(game);
     expect(result.deactivatedBuildings, isNotEmpty);
     expect(
@@ -66,7 +66,7 @@ void main() {
       contains(BuildingType.algaeFarm),
     );
     // Deactivated buildings produce nothing
-    expect(game.resources[ResourceType.energy]!.amount, 2);
+    expect(game.resources[ResourceType.energy]!.amount, 14);
     expect(game.resources[ResourceType.algae]!.amount, 890);
   });
 
@@ -85,15 +85,15 @@ void main() {
   });
 
   test('consumption exactly equals production', () {
-    // SolarPanel lvl 2 produces 18, total consumption = 18
-    // HQ(9)+SolarPanel(2)+AlgaeFarm(2)+OreExtractor(3)+CoralMine(2)
+    // SolarPanel lvl 2 produces 54, total consumption = 54
+    // HQ(18)+SolarPanel(2)+Barracks(18)+AlgaeFarm(10)+OreExtractor(6)
     final game = _game(
       buildings: {
         BuildingType.solarPanel: _b(BuildingType.solarPanel, 2),
-        BuildingType.headquarters: _b(BuildingType.headquarters, 3),
-        BuildingType.algaeFarm: _b(BuildingType.algaeFarm, 1),
-        BuildingType.oreExtractor: _b(BuildingType.oreExtractor, 1),
-        BuildingType.coralMine: _b(BuildingType.coralMine, 1),
+        BuildingType.headquarters: _b(BuildingType.headquarters, 6),
+        BuildingType.barracks: _b(BuildingType.barracks, 6),
+        BuildingType.algaeFarm: _b(BuildingType.algaeFarm, 5),
+        BuildingType.oreExtractor: _b(BuildingType.oreExtractor, 2),
       },
     );
     final energyBefore = game.resources[ResourceType.energy]!.amount;
@@ -106,9 +106,10 @@ void main() {
   test('deactivation restores next turn when conditions improve', () {
     final game = _game(
       buildings: {
-        BuildingType.headquarters: _b(BuildingType.headquarters, 1),
+        BuildingType.headquarters: _b(BuildingType.headquarters, 3),
         BuildingType.algaeFarm: _b(BuildingType.algaeFarm, 1),
         BuildingType.solarPanel: _b(BuildingType.solarPanel, 1),
+        BuildingType.oreExtractor: _b(BuildingType.oreExtractor, 2),
       },
       resources: {
         ...Game.defaultResources(),
@@ -120,17 +121,17 @@ void main() {
       },
     );
 
-    // Consumption=6 equals production+stock=6 => no deactivation
+    // Consumption=18 equals production+stock=18 => no deactivation
     var result = resolver.resolve(game);
     expect(result.deactivatedBuildings, isEmpty);
 
-    // Add barracks: consumption=9 > available=6 => deactivation
+    // Add barracks: consumption=21 > available=18 => deactivation
     game.buildings[BuildingType.barracks] =
         _b(BuildingType.barracks, 1);
     result = resolver.resolve(game);
     expect(result.deactivatedBuildings, isNotEmpty);
 
-    // Upgrade solar panel lvl 3: prod=38 >> consumption=11
+    // Upgrade solar panel lvl 3: prod=114 >> consumption=23
     game.buildings[BuildingType.solarPanel] =
         _b(BuildingType.solarPanel, 3);
     result = resolver.resolve(game);

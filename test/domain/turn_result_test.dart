@@ -11,6 +11,8 @@ void main() {
         type: ResourceType.algae,
         produced: 50,
         wasCapped: false,
+        beforeAmount: 100,
+        afterAmount: 150,
       );
       expect(change.consumed, 0);
     });
@@ -21,6 +23,8 @@ void main() {
         produced: 50,
         consumed: 12,
         wasCapped: false,
+        beforeAmount: 100,
+        afterAmount: 138,
       );
       expect(change.consumed, 12);
     });
@@ -28,18 +32,31 @@ void main() {
 
   group('TurnResult', () {
     test('deactivatedBuildings defaults to empty', () {
-      final result = TurnResult(changes: []);
+      final result = TurnResult(
+        changes: [],
+        previousTurn: 1,
+        newTurn: 2,
+        hadRecruitedUnits: false,
+      );
       expect(result.deactivatedBuildings, isEmpty);
     });
 
     test('lostUnits defaults to empty', () {
-      final result = TurnResult(changes: []);
+      final result = TurnResult(
+        changes: [],
+        previousTurn: 1,
+        newTurn: 2,
+        hadRecruitedUnits: false,
+      );
       expect(result.lostUnits, isEmpty);
     });
 
     test('stores deactivatedBuildings', () {
       final result = TurnResult(
         changes: [],
+        previousTurn: 1,
+        newTurn: 2,
+        hadRecruitedUnits: false,
         deactivatedBuildings: [BuildingType.oreExtractor],
       );
       expect(result.deactivatedBuildings.length, 1);
@@ -48,6 +65,9 @@ void main() {
     test('stores lostUnits', () {
       final result = TurnResult(
         changes: [],
+        previousTurn: 1,
+        newTurn: 2,
+        hadRecruitedUnits: false,
         lostUnits: {UnitType.scout: 5},
       );
       expect(result.lostUnits[UnitType.scout], 5);

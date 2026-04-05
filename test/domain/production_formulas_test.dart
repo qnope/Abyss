@@ -34,11 +34,11 @@ void main() {
 
     test('solarPanel returns expected values for levels 1-5', () {
       final formula = productionFormulas[BuildingType.solarPanel]!;
-      expect(formula.compute(1), 6);
-      expect(formula.compute(2), 18);
-      expect(formula.compute(3), 38);
-      expect(formula.compute(4), 66);
-      expect(formula.compute(5), 102);
+      expect(formula.compute(1), 18);
+      expect(formula.compute(2), 54);
+      expect(formula.compute(3), 114);
+      expect(formula.compute(4), 198);
+      expect(formula.compute(5), 306);
     });
 
     test('headquarters is not in the map', () {

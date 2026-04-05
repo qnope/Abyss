@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../domain/map/game_map.dart';
+import '../../../domain/map/map_cell.dart';
 import '../../theme/abyss_colors.dart';
 import 'map_cell_widget.dart';
 
@@ -85,15 +86,45 @@ class _GameMapViewState extends State<GameMapView> {
         final cell = widget.gameMap.cellAt(x, y);
         final isBase = x == widget.gameMap.playerBaseX &&
             y == widget.gameMap.playerBaseY;
-        return MapCellWidget(
+        return _CachedMapCellWrapper(
+          key: ValueKey('$x:$y'),
           cell: cell,
           isBase: isBase,
           hasPendingExploration: widget.pendingTargets.contains((x, y)),
-          onTap: widget.onCellTap != null
-              ? () => widget.onCellTap!(x, y)
-              : null,
+          x: x,
+          y: y,
+          onCellTap: widget.onCellTap,
         );
       }),
+    );
+  }
+}
+
+class _CachedMapCellWrapper extends StatelessWidget {
+  final MapCell cell;
+  final bool isBase;
+  final bool hasPendingExploration;
+  final int x;
+  final int y;
+  final void Function(int, int)? onCellTap;
+
+  const _CachedMapCellWrapper({
+    super.key,
+    required this.cell,
+    required this.isBase,
+    required this.hasPendingExploration,
+    required this.x,
+    required this.y,
+    this.onCellTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MapCellWidget(
+      cell: cell,
+      isBase: isBase,
+      hasPendingExploration: hasPendingExploration,
+      onTap: onCellTap != null ? () => onCellTap!(x, y) : null,
     );
   }
 }

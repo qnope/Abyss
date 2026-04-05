@@ -30,29 +30,38 @@ class MapCellWidget extends StatelessWidget {
       child: SizedBox(
         width: cellSize,
         height: cellSize,
-        child: Stack(
-          children: [
-            _background(),
-            _terrainLayer(),
-            if (cell.isRevealed) _contentLayer(),
-            if (hasPendingExploration) _explorationMarker(),
-            if (!cell.isRevealed) _fogOverlay(),
-          ],
+        child: RepaintBoundary(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              _background(),
+              _terrainAndContentLayer(),
+              if (hasPendingExploration) _explorationMarker(),
+              if (!cell.isRevealed) _fogOverlay(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _background() {
-    return Container(color: AbyssColors.abyssBlack);
+  Widget _terrainAndContentLayer() {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        SvgPicture.asset(
+          cell.terrain.svgPath,
+          width: cellSize,
+          height: cellSize,
+          cacheColorFilter: true,
+        ),
+        if (cell.isRevealed) _contentLayer(),
+      ],
+    );
   }
 
-  Widget _terrainLayer() {
-    return SvgPicture.asset(
-      cell.terrain.svgPath,
-      width: cellSize,
-      height: cellSize,
-    );
+  Widget _background() {
+    return Container(color: AbyssColors.abyssBlack);
   }
 
   Widget _contentLayer() {
@@ -63,6 +72,7 @@ class MapCellWidget extends StatelessWidget {
         path,
         width: _contentSize,
         height: _contentSize,
+        cacheColorFilter: true,
       ),
     );
   }

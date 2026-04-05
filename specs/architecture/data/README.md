@@ -22,7 +22,7 @@ This layer contains a single class: `GameRepository`. It is responsible for all 
 Hive requires a registered adapter for every type it persists. `GameRepository.initialize()` registers adapters for all domain models in dependency order (leaf types first, composite types last):
 
 1. **Enums** -- `BuildingType`, `ResourceType`, `TechBranch`, `UnitType`, `TerrainType`, `CellContentType`, `MonsterDifficulty`
-2. **Value objects** -- `Building`, `Resource`, `TechBranchState`, `Unit`, `MapCell`, `GridPosition`
+2. **Value objects** -- `Building`, `Resource`, `TechBranchState`, `Unit`, `MapCell`, `GridPosition`, `ExplorationOrder`
 3. **Aggregates** -- `Player`, `GameMap`
 4. **Root** -- `Game`
 

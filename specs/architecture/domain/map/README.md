@@ -61,6 +61,26 @@ GameMap returned
 
 Every cell starts with `isRevealed = false`. During generation, cells within a Chebyshev distance of 2 from the player base are revealed. The `isRevealed` flag on `MapCell` controls whether the cell is visible to the player.
 
+## Exploration
+
+Players can send **scouts** to explore map cells. Each exploration consumes 1 scout and queues an `ExplorationOrder` for turn resolution.
+
+- **`ExplorationOrder`** -- Hive-persisted model (typeId 16) storing the target `GridPosition`. Queued orders live in `Game.pendingExplorations` until the next turn.
+- **`CellEligibilityChecker`** -- Determines if a cell can be explored: revealed cells and unrevealed cells adjacent (Chebyshev distance 1) to a revealed cell are eligible. The base cell is always excluded.
+- **`RevealAreaCalculator`** -- Computes which cells are revealed based on Explorer tech level. Even-sized squares anchor the target at bottom-left; odd-sized squares center on the target.
+
+| Explorer Level | Square Side | Cells Revealed |
+|----------------|-------------|----------------|
+| 0              | 2           | 4              |
+| 1              | 3           | 9              |
+| 2              | 4           | 16             |
+| 3              | 5           | 25             |
+| 4              | 7           | 49             |
+| 5              | 9           | 81             |
+
+- **`ExplorationResolver`** -- Called during turn resolution. Iterates pending orders, reveals cells, collects notable content (ruins, monster lairs, resource bonuses), then clears the pending list.
+- **`ExplorationResult`** -- Non-persisted result object returned per exploration: target position, count of newly revealed cells, and list of notable `CellContentType` found.
+
 ## Files
 
 | File                    | Role                              |
@@ -75,3 +95,8 @@ Every cell starts with `isRevealed = false`. During generation, cells within a C
 | `terrain_generator.dart`| Terrain assignment logic          |
 | `content_placer.dart`   | Content placement logic           |
 | `connectivity_checker.dart` | BFS reachability + path carving |
+| `exploration_order.dart` | Pending exploration order (Hive) |
+| `cell_eligibility_checker.dart` | Cell exploration eligibility |
+| `reveal_area_calculator.dart` | Reveal area computation |
+| `exploration_resolver.dart` | Turn-time exploration resolution |
+| `exploration_result.dart` | Per-exploration result data |

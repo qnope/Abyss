@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import 'building.dart';
 import 'building_type.dart';
+import 'game_map.dart';
 import 'player.dart';
 import 'resource.dart';
 import 'resource_type.dart';
@@ -37,6 +38,9 @@ class Game extends HiveObject {
   @HiveField(7)
   final List<UnitType> recruitedUnitTypes;
 
+  @HiveField(8)
+  GameMap? gameMap;
+
   Game({
     required this.player,
     this.turn = 1,
@@ -46,6 +50,7 @@ class Game extends HiveObject {
     Map<TechBranch, TechBranchState>? techBranches,
     Map<UnitType, Unit>? units,
     List<UnitType>? recruitedUnitTypes,
+    this.gameMap,
   })  : createdAt = createdAt ?? DateTime.now(),
         resources = resources ?? defaultResources(),
         buildings = buildings ?? defaultBuildings(),

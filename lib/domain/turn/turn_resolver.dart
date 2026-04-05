@@ -1,5 +1,6 @@
 import '../building/building.dart';
 import '../building/building_deactivator.dart';
+import '../map/exploration_resolver.dart';
 import '../resource/consumption_calculator.dart';
 import '../game/game.dart';
 import '../resource/production_calculator.dart';
@@ -71,7 +72,10 @@ class TurnResolver {
       algaeConsumption: algaeConsumption,
     );
 
-    // Steps 12-14
+    // Step 12: Resolve explorations
+    final explorations = ExplorationResolver.resolve(game);
+
+    // Steps 13-15
     game.recruitedUnitTypes.clear();
     game.turn++;
     return TurnResult(
@@ -81,6 +85,7 @@ class TurnResolver {
       hadRecruitedUnits: hadRecruitedUnits,
       deactivatedBuildings: deactivated,
       lostUnits: lostUnits,
+      explorations: explorations,
     );
   }
 

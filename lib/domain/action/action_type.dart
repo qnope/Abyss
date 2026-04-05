@@ -3,4 +3,5 @@ enum ActionType {
   unlockBranch,
   researchTech,
   recruitUnit,
+  explore,
 }

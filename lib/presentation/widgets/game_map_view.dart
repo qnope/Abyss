@@ -36,9 +36,12 @@ class _GameMapViewState extends State<GameMapView> {
     final basePixelY = widget.gameMap.playerBaseY * cellSize;
     final dx = size.width / 2 - (basePixelX + cellSize / 2) * scale;
     final dy = size.height / 2 - (basePixelY + cellSize / 2) * scale;
-    _controller.value = Matrix4.identity()
-      ..translate(dx, dy)
-      ..scale(scale);
+    _controller.value = Matrix4(
+      scale, 0, 0, 0,
+      0, scale, 0, 0,
+      0, 0, 1, 0,
+      dx, dy, 0, 1,
+    );
   }
 
   @override

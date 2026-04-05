@@ -1,4 +1,5 @@
 import '../building/building_type.dart';
+import '../map/exploration_result.dart';
 import '../resource/resource_type.dart';
 import '../unit/unit_type.dart';
 
@@ -27,6 +28,7 @@ class TurnResult {
   final bool hadRecruitedUnits;
   final List<BuildingType> deactivatedBuildings;
   final Map<UnitType, int> lostUnits;
+  final List<ExplorationResult> explorations;
 
   const TurnResult({
     required this.changes,
@@ -35,5 +37,6 @@ class TurnResult {
     required this.hadRecruitedUnits,
     this.deactivatedBuildings = const [],
     this.lostUnits = const {},
+    this.explorations = const [],
   });
 }

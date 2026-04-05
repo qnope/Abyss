@@ -21,10 +21,11 @@ Unit (HiveObject, typeId: 9)
   └── count: int            (mutable)
 
 UnitCostCalculator (stateless)
-  ├── cost(UnitType) → Map<ResourceType, int>
+  ├── recruitmentCost(UnitType) → Map<ResourceType, int>
+  ├── maintenanceCost(UnitType) → Map<ResourceType, int>
   ├── unlockLevel(UnitType) → int
   ├── isUnlocked(UnitType, barracksLevel) → bool
-  └── maxRecruitableCount(UnitType, Game) → int
+  └── maxRecruitableCount(UnitType, barracksLevel, resources) → int
 
 Game
   ├── units: Map<UnitType, Unit>
@@ -33,14 +34,14 @@ Game
 
 ## Units
 
-| Unit | HP | ATK | DEF | Unlock | Cost |
-|------|---:|----:|----:|--------|------|
-| Scout | 10 | 2 | 1 | Barracks 1 | 10 algae, 5 coral |
-| Harpoonist | 15 | 5 | 2 | Barracks 1 | 15 algae, 10 coral, 5 ore |
-| Guardian | 25 | 2 | 6 | Barracks 3 | 20 coral, 15 ore |
-| Dome Breaker | 20 | 8 | 3 | Barracks 3 | 25 ore, 15 energy |
-| Siphoner | 12 | 3 | 2 | Barracks 5 | 20 algae, 10 energy, 2 pearls |
-| Saboteur | 8 | 10 | 1 | Barracks 5 | 15 coral, 20 energy, 3 pearls |
+| Unit | HP | ATK | DEF | Unlock | Cost | Maintenance |
+|------|---:|----:|----:|--------|------|-------------|
+| Scout | 10 | 2 | 1 | Barracks 1 | 10 algae, 5 coral | 1 algae/turn |
+| Harpoonist | 15 | 5 | 2 | Barracks 1 | 15 algae, 10 coral, 5 ore | 2 algae/turn |
+| Guardian | 25 | 2 | 6 | Barracks 3 | 20 coral, 15 ore | 3 algae/turn |
+| Dome Breaker | 20 | 8 | 3 | Barracks 3 | 25 ore, 15 energy | 2 algae/turn |
+| Siphoner | 12 | 3 | 2 | Barracks 5 | 20 algae, 10 energy, 2 pearls | 3 algae/turn |
+| Saboteur | 8 | 10 | 1 | Barracks 5 | 15 coral, 20 energy, 3 pearls | 2 algae/turn |
 
 ## Recruitment Flow
 

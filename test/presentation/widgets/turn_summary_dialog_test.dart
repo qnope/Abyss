@@ -36,8 +36,10 @@ void main() {
           type: ResourceType.algae,
           produced: 5,
           wasCapped: false,
+          beforeAmount: 0,
+          afterAmount: 0,
         ),
-      ]);
+      ], previousTurn: 0, newTurn: 0, hadRecruitedUnits: false);
       await t.pumpWidget(createApp(result));
       await openDialog(t);
       expect(find.text('Resume du tour'), findsOneWidget);
@@ -49,13 +51,17 @@ void main() {
           type: ResourceType.algae,
           produced: 5,
           wasCapped: false,
+          beforeAmount: 0,
+          afterAmount: 0,
         ),
         TurnResourceChange(
           type: ResourceType.coral,
           produced: 8,
           wasCapped: false,
+          beforeAmount: 0,
+          afterAmount: 0,
         ),
-      ]);
+      ], previousTurn: 0, newTurn: 0, hadRecruitedUnits: false);
       await t.pumpWidget(createApp(result));
       await openDialog(t);
       expect(find.text('+5'), findsOneWidget);
@@ -70,8 +76,10 @@ void main() {
           type: ResourceType.algae,
           produced: 5,
           wasCapped: true,
+          beforeAmount: 0,
+          afterAmount: 0,
         ),
-      ]);
+      ], previousTurn: 0, newTurn: 0, hadRecruitedUnits: false);
       await t.pumpWidget(createApp(result));
       await openDialog(t);
       expect(find.text('(max atteint)'), findsOneWidget);
@@ -83,15 +91,22 @@ void main() {
           type: ResourceType.algae,
           produced: 5,
           wasCapped: false,
+          beforeAmount: 0,
+          afterAmount: 0,
         ),
-      ]);
+      ], previousTurn: 0, newTurn: 0, hadRecruitedUnits: false);
       await t.pumpWidget(createApp(result));
       await openDialog(t);
       expect(find.text('(max atteint)'), findsNothing);
     });
 
     testWidgets('empty changes shows message', (t) async {
-      final result = TurnResult(changes: []);
+      final result = TurnResult(
+        changes: [],
+        previousTurn: 0,
+        newTurn: 0,
+        hadRecruitedUnits: false,
+      );
       await t.pumpWidget(createApp(result));
       await openDialog(t);
       expect(find.text('Aucun changement ce tour.'), findsOneWidget);
@@ -103,8 +118,10 @@ void main() {
           type: ResourceType.algae,
           produced: 5,
           wasCapped: false,
+          beforeAmount: 0,
+          afterAmount: 0,
         ),
-      ]);
+      ], previousTurn: 0, newTurn: 0, hadRecruitedUnits: false);
       await t.pumpWidget(createApp(result));
       await openDialog(t);
       await t.tap(find.text('OK'));

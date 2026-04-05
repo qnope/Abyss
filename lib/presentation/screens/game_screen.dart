@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../data/game_repository.dart';
 import '../../domain/building_type.dart';
 import '../../domain/game.dart';
+import '../../domain/map_generator.dart';
 import '../../domain/production_calculator.dart';
 import '../../domain/turn_resolver.dart';
 import '../widgets/army_list_view.dart';
@@ -9,9 +10,9 @@ import '../widgets/turn_confirmation_dialog.dart';
 import '../widgets/turn_summary_dialog.dart';
 import '../widgets/building_list_view.dart';
 import '../widgets/game_bottom_bar.dart';
+import '../widgets/game_map_view.dart';
 import '../widgets/resource_bar.dart';
 import '../widgets/settings_dialog.dart';
-import '../widgets/tab_placeholder.dart';
 import '../widgets/tech_tree_view.dart';
 import 'game_screen_actions.dart';
 import 'game_screen_tech_actions.dart';
@@ -72,7 +73,7 @@ class _GameScreenState extends State<GameScreen> {
         onBuildingTap: (b) => showBuildingDetailAction(
           context, g, b, () => setState(() {})),
       ),
-      1 => const TabPlaceholder(icon: Icons.map, label: 'Carte'),
+      1 => _buildMapTab(),
       2 => ArmyListView(
         units: g.units,
         barracksLevel: g.buildings[BuildingType.barracks]!.level,
@@ -90,6 +91,18 @@ class _GameScreenState extends State<GameScreen> {
       ),
       _ => const SizedBox.shrink(),
     };
+  }
+
+  Widget _buildMapTab() {
+    if (widget.game.gameMap == null) {
+      _generateMap();
+    }
+    return GameMapView(gameMap: widget.game.gameMap!);
+  }
+
+  void _generateMap() {
+    widget.game.gameMap = MapGenerator.generate();
+    widget.repository.save(widget.game);
   }
 
   Future<void> _nextTurn() async {

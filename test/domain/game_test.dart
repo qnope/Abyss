@@ -142,5 +142,10 @@ void main() {
       );
       expect(game.recruitedUnitTypes, [UnitType.scout]);
     });
+
+    test('new game has null gameMap by default', () {
+      final game = Game(player: Player(name: 'Nemo'));
+      expect(game.gameMap, isNull);
+    });
   });
 }

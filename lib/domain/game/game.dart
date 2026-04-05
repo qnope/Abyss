@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import '../building/building.dart';
 import '../building/building_type.dart';
+import '../map/exploration_order.dart';
 import '../map/game_map.dart';
 import 'player.dart';
 import '../resource/resource.dart';
@@ -41,6 +42,9 @@ class Game extends HiveObject {
   @HiveField(8)
   GameMap? gameMap;
 
+  @HiveField(9)
+  final List<ExplorationOrder> pendingExplorations;
+
   Game({
     required this.player,
     this.turn = 1,
@@ -51,12 +55,14 @@ class Game extends HiveObject {
     Map<UnitType, Unit>? units,
     List<UnitType>? recruitedUnitTypes,
     this.gameMap,
+    List<ExplorationOrder>? pendingExplorations,
   })  : createdAt = createdAt ?? DateTime.now(),
         resources = resources ?? defaultResources(),
         buildings = buildings ?? defaultBuildings(),
         techBranches = techBranches ?? defaultTechBranches(),
         units = units ?? defaultUnits(),
-        recruitedUnitTypes = recruitedUnitTypes ?? [];
+        recruitedUnitTypes = recruitedUnitTypes ?? [],
+        pendingExplorations = pendingExplorations ?? [];
 
   static Map<ResourceType, Resource> defaultResources() {
     return {

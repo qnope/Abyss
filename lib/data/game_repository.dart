@@ -2,6 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../domain/building/building.dart';
 import '../domain/building/building_type.dart';
 import '../domain/map/cell_content_type.dart';
+import '../domain/map/exploration_order.dart';
 import '../domain/game/game.dart';
 import '../domain/map/game_map.dart';
 import '../domain/map/grid_position.dart';
@@ -36,6 +37,7 @@ class GameRepository {
     Hive.registerAdapter(MapCellAdapter());
     Hive.registerAdapter(GameMapAdapter());
     Hive.registerAdapter(GridPositionAdapter());
+    Hive.registerAdapter(ExplorationOrderAdapter());
     Hive.registerAdapter(GameAdapter());
     try {
       await Hive.openBox<Game>(_boxName);

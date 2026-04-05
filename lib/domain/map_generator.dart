@@ -11,7 +11,7 @@ class MapGenerator {
   static const _revealRadius = 2;
 
   static GameMap generate({int? seed}) {
-    final actualSeed = seed ?? Random().nextInt(1 << 32);
+    final actualSeed = seed ?? Random().nextInt(0x7FFFFFFF);
     final random = Random(actualSeed);
 
     final baseX = _center + random.nextInt(_offset * 2 + 1) - _offset;

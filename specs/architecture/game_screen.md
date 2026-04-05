@@ -13,7 +13,7 @@ The main gameplay screen with three zones: resource bar (top), tab content (cent
 ├──────────────────────────────────┤
 │                                  │
 │         Tab Content              │  ← Expanded, switches by tab index
-│   (Base=BuildingListView, Army=ArmyListView) │
+│   (Base | Carte | Armée | Tech)  │
 │                                  │
 ├──────────────────────────────────┤
 │  ⚙️ Settings  │ Tour 5 │ ▶ Next │  ← Action row
@@ -31,7 +31,7 @@ GameScreen (StatefulWidget)
         │     │     ├── ResourceBarItem × 4 (production)
         │     │     ├── Divider
         │     │     └── ResourceBarItem (pearl)
-        │     └── Expanded → tab content (BuildingListView | ArmyListView | TabPlaceholder)
+        │     └── Expanded → tab content (BuildingListView | GameMapView | ArmyListView | TabPlaceholder)
         └── bottomNavigationBar: GameBottomBar
               ├── Action row (settings, turn counter, next turn)
               └── BottomNavigationBar (4 tabs)
@@ -91,9 +91,13 @@ lib/presentation/
   │     ├── unit_detail_sheet.dart
   │     ├── recruitment_section.dart
   │     ├── turn_confirmation_dialog.dart
-  │     └── turn_summary_dialog.dart
+  │     ├── turn_summary_dialog.dart
+  │     ├── game_map_view.dart
+  │     └── map_cell_widget.dart
   └── extensions/
         ├── resource_type_extensions.dart
         ├── building_type_extensions.dart
-        └── unit_type_extensions.dart
+        ├── unit_type_extensions.dart
+        ├── terrain_type_extensions.dart
+        └── cell_content_type_extensions.dart
 ```

@@ -1,12 +1,18 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import '../domain/building.dart';
 import '../domain/building_type.dart';
+import '../domain/cell_content_type.dart';
 import '../domain/game.dart';
+import '../domain/game_map.dart';
+import '../domain/grid_position.dart';
+import '../domain/map_cell.dart';
+import '../domain/monster_difficulty.dart';
 import '../domain/player.dart';
 import '../domain/resource.dart';
 import '../domain/resource_type.dart';
 import '../domain/tech_branch.dart';
 import '../domain/tech_branch_state.dart';
+import '../domain/terrain_type.dart';
 import '../domain/unit.dart';
 import '../domain/unit_type.dart';
 
@@ -24,6 +30,12 @@ class GameRepository {
     Hive.registerAdapter(PlayerAdapter());
     Hive.registerAdapter(UnitTypeAdapter());
     Hive.registerAdapter(UnitAdapter());
+    Hive.registerAdapter(TerrainTypeAdapter());
+    Hive.registerAdapter(CellContentTypeAdapter());
+    Hive.registerAdapter(MonsterDifficultyAdapter());
+    Hive.registerAdapter(MapCellAdapter());
+    Hive.registerAdapter(GameMapAdapter());
+    Hive.registerAdapter(GridPositionAdapter());
     Hive.registerAdapter(GameAdapter());
     try {
       await Hive.openBox<Game>(_boxName);

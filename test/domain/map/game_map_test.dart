@@ -7,7 +7,7 @@ void main() {
   GameMap makeMap() {
     final cells = List.generate(
       400,
-      (i) => MapCell(terrain: TerrainType.reef),
+      (i) => MapCell(terrain: TerrainType.plain),
     );
     return GameMap(
       width: 20,
@@ -32,24 +32,24 @@ void main() {
 
     test('cellAt returns correct cell', () {
       final map = makeMap();
-      final cell = MapCell(terrain: TerrainType.plain);
+      final cell = MapCell(terrain: TerrainType.plain, isRevealed: true);
       map.cells[5 * 20 + 3] = cell;
-      expect(map.cellAt(3, 5).terrain, TerrainType.plain);
+      expect(map.cellAt(3, 5).isRevealed, true);
     });
 
     test('setCell overwrites correct cell', () {
       final map = makeMap();
-      final cell = MapCell(terrain: TerrainType.rock);
+      final cell = MapCell(terrain: TerrainType.plain, isRevealed: true);
       map.setCell(7, 12, cell);
-      expect(map.cellAt(7, 12).terrain, TerrainType.rock);
+      expect(map.cellAt(7, 12).isRevealed, true);
     });
 
     test('cellAt handles corners', () {
       final map = makeMap();
-      map.setCell(0, 0, MapCell(terrain: TerrainType.fault));
+      map.setCell(0, 0, MapCell(terrain: TerrainType.plain, isRevealed: true));
       map.setCell(19, 19, MapCell(terrain: TerrainType.plain));
-      expect(map.cellAt(0, 0).terrain, TerrainType.fault);
-      expect(map.cellAt(19, 19).terrain, TerrainType.plain);
+      expect(map.cellAt(0, 0).isRevealed, true);
+      expect(map.cellAt(19, 19).isRevealed, false);
     });
   });
 }

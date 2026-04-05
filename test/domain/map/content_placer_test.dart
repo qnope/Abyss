@@ -4,7 +4,6 @@ import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/content_placer.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_generator.dart';
-import 'package:abyss/domain/map/terrain_type.dart';
 
 void main() {
   const width = 20, height = 20, baseX = 10, baseY = 10;
@@ -34,15 +33,6 @@ void main() {
             CellContentType.empty,
             reason: 'Base zone cell ($x,$y) should be empty',
           );
-        }
-      }
-    });
-
-    test('rock cells have empty content', () {
-      final cells = generate(42);
-      for (final cell in cells) {
-        if (cell.terrain == TerrainType.rock) {
-          expect(cell.content, CellContentType.empty);
         }
       }
     });

@@ -26,17 +26,9 @@ void main() {
         expect((map.playerBaseX - 10).abs(), lessThanOrEqualTo(2));
         expect((map.playerBaseY - 10).abs(), lessThanOrEqualTo(2));
 
-        // Base neighbors are reef or plain
-        for (var dy = -1; dy <= 1; dy++) {
-          for (var dx = -1; dx <= 1; dx++) {
-            if (dx == 0 && dy == 0) continue;
-            final cell = map.cellAt(map.playerBaseX + dx, map.playerBaseY + dy);
-            expect(
-              cell.terrain == TerrainType.reef ||
-              cell.terrain == TerrainType.plain,
-              isTrue,
-            );
-          }
+        // All cells are plain
+        for (final cell in map.cells) {
+          expect(cell.terrain, TerrainType.plain);
         }
 
         // 25 revealed cells
@@ -59,46 +51,7 @@ void main() {
             expect(map.cellAt(x, y).content, CellContentType.empty);
           }
         }
-
-        // Rock cells have no content
-        for (final cell in map.cells) {
-          if (cell.terrain == TerrainType.rock) {
-            expect(cell.content, CellContentType.empty);
-          }
-        }
-
-        // Connectivity: all 4 edges reachable
-        _verifyConnectivity(map);
       });
     }
   });
-}
-
-void _verifyConnectivity(dynamic map) {
-  final visited = List.filled(400, false);
-  final queue = [(map.playerBaseX as int, map.playerBaseY as int)];
-  visited[map.playerBaseY * 20 + map.playerBaseX] = true;
-  while (queue.isNotEmpty) {
-    final (cx, cy) = queue.removeAt(0);
-    for (final (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]) {
-      final nx = cx + dx, ny = cy + dy;
-      if (nx < 0 || nx >= 20 || ny < 0 || ny >= 20) continue;
-      final idx = ny * 20 + nx;
-      if (visited[idx]) continue;
-      if (map.cellAt(nx, ny).terrain == TerrainType.rock) continue;
-      visited[idx] = true;
-      queue.add((nx, ny));
-    }
-  }
-  final topReachable = List.generate(20, (x) => visited[x]).any((v) => v);
-  final bottomReachable =
-      List.generate(20, (x) => visited[19 * 20 + x]).any((v) => v);
-  final leftReachable =
-      List.generate(20, (y) => visited[y * 20]).any((v) => v);
-  final rightReachable =
-      List.generate(20, (y) => visited[y * 20 + 19]).any((v) => v);
-  expect(topReachable, isTrue, reason: 'Top edge unreachable');
-  expect(bottomReachable, isTrue, reason: 'Bottom edge unreachable');
-  expect(leftReachable, isTrue, reason: 'Left edge unreachable');
-  expect(rightReachable, isTrue, reason: 'Right edge unreachable');
 }

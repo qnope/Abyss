@@ -3,7 +3,6 @@ import 'cell_content_type.dart';
 import 'map_cell.dart';
 import 'monster_difficulty.dart';
 import '../resource/resource_type.dart';
-import 'terrain_type.dart';
 
 class ContentPlacer {
   static void place({
@@ -53,9 +52,7 @@ class ContentPlacer {
       for (var x = 0; x < width; x++) {
         final dist = max((x - baseX).abs(), (y - baseY).abs());
         if (dist <= 2) continue;
-        final i = y * width + x;
-        if (cells[i].terrain == TerrainType.rock) continue;
-        result.add(i);
+        result.add(y * width + x);
       }
     }
     return result;

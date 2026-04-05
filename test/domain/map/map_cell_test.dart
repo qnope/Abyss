@@ -8,8 +8,8 @@ import 'package:abyss/domain/map/terrain_type.dart';
 void main() {
   group('MapCell', () {
     test('default construction has expected defaults', () {
-      final cell = MapCell(terrain: TerrainType.reef);
-      expect(cell.terrain, TerrainType.reef);
+      final cell = MapCell(terrain: TerrainType.plain);
+      expect(cell.terrain, TerrainType.plain);
       expect(cell.content, CellContentType.empty);
       expect(cell.isRevealed, false);
       expect(cell.monsterDifficulty, isNull);
@@ -36,18 +36,18 @@ void main() {
 
     test('copyWith preserves unchanged fields', () {
       final cell = MapCell(
-        terrain: TerrainType.rock,
+        terrain: TerrainType.plain,
         content: CellContentType.ruins,
         isRevealed: true,
       );
       final copy = cell.copyWith(isRevealed: false);
-      expect(copy.terrain, TerrainType.rock);
+      expect(copy.terrain, TerrainType.plain);
       expect(copy.content, CellContentType.ruins);
       expect(copy.isRevealed, false);
     });
 
     test('copyWith overrides specified fields', () {
-      final cell = MapCell(terrain: TerrainType.fault);
+      final cell = MapCell(terrain: TerrainType.plain);
       final revealed = cell.copyWith(
         isRevealed: true,
         content: CellContentType.monsterLair,
@@ -56,7 +56,7 @@ void main() {
       expect(revealed.isRevealed, true);
       expect(revealed.content, CellContentType.monsterLair);
       expect(revealed.monsterDifficulty, MonsterDifficulty.easy);
-      expect(revealed.terrain, TerrainType.fault);
+      expect(revealed.terrain, TerrainType.plain);
     });
   });
 }

@@ -27,10 +27,7 @@ abstract final class AbyssColors {
   static const Color surfaceBright = Color(0xFF24405E);
 
   // Terrain
-  static const Color reefPink = Color(0x66FF6E91);
   static const Color plainBlue = Color(0x6642A5F5);
-  static const Color rockGray = Color(0xFF4A5568);
-  static const Color faultBlack = Color(0xFF1A1A2E);
 
   // Functional
   static const Color success = Color(0xFF69F0AE);

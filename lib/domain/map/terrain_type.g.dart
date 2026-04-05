@@ -13,33 +13,18 @@ class TerrainTypeAdapter extends TypeAdapter<TerrainType> {
   @override
   TerrainType read(BinaryReader reader) {
     switch (reader.readByte()) {
-      case 0:
-        return TerrainType.reef;
       case 1:
         return TerrainType.plain;
-      case 2:
-        return TerrainType.rock;
-      case 3:
-        return TerrainType.fault;
       default:
-        return TerrainType.reef;
+        return TerrainType.plain;
     }
   }
 
   @override
   void write(BinaryWriter writer, TerrainType obj) {
     switch (obj) {
-      case TerrainType.reef:
-        writer.writeByte(0);
-        break;
       case TerrainType.plain:
         writer.writeByte(1);
-        break;
-      case TerrainType.rock:
-        writer.writeByte(2);
-        break;
-      case TerrainType.fault:
-        writer.writeByte(3);
         break;
     }
   }

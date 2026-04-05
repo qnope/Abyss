@@ -13,7 +13,7 @@ void main() {
     ..sort((a, b) => a.path.compareTo(b.path));
 
   test('asset directory contains SVG files', () {
-    expect(svgFiles.length, greaterThanOrEqualTo(30));
+    expect(svgFiles.length, greaterThanOrEqualTo(27));
   });
 
   group('pubspec declares all SVG directories', () {

@@ -16,7 +16,7 @@ void main() {
   group('MapCellWidget', () {
     testWidgets('revealed cell has no fog overlay', (tester) async {
       final cell = MapCell(
-        terrain: TerrainType.reef,
+        terrain: TerrainType.plain,
         isRevealed: true,
       );
       await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
@@ -25,7 +25,7 @@ void main() {
     });
 
     testWidgets('unrevealed cell has fog overlay', (tester) async {
-      final cell = MapCell(terrain: TerrainType.reef);
+      final cell = MapCell(terrain: TerrainType.plain);
       await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
       final containers = tester.widgetList<Container>(
         find.byType(Container),

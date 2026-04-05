@@ -2,11 +2,15 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../domain/building.dart';
 import '../domain/building_type.dart';
 import '../domain/game.dart';
+import '../domain/game_map.dart';
+import '../domain/map_tile.dart';
 import '../domain/player.dart';
 import '../domain/resource.dart';
 import '../domain/resource_type.dart';
 import '../domain/tech_branch.dart';
 import '../domain/tech_branch_state.dart';
+import '../domain/terrain_type.dart';
+import '../domain/tile_content.dart';
 import '../domain/unit.dart';
 import '../domain/unit_type.dart';
 
@@ -24,6 +28,10 @@ class GameRepository {
     Hive.registerAdapter(PlayerAdapter());
     Hive.registerAdapter(UnitTypeAdapter());
     Hive.registerAdapter(UnitAdapter());
+    Hive.registerAdapter(TerrainTypeAdapter());
+    Hive.registerAdapter(TileContentAdapter());
+    Hive.registerAdapter(MapTileAdapter());
+    Hive.registerAdapter(GameMapAdapter());
     Hive.registerAdapter(GameAdapter());
     try {
       await Hive.openBox<Game>(_boxName);

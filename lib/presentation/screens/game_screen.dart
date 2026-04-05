@@ -12,15 +12,16 @@ import '../../domain/production_calculator.dart';
 import '../../domain/turn_resolver.dart';
 import '../widgets/army_list_view.dart';
 import '../widgets/building_detail_sheet.dart';
+import '../widgets/game_map_view.dart';
 import '../widgets/turn_confirmation_dialog.dart';
 import '../widgets/turn_summary_dialog.dart';
 import '../widgets/building_list_view.dart';
 import '../widgets/game_bottom_bar.dart';
 import '../widgets/resource_bar.dart';
 import '../widgets/settings_dialog.dart';
-import '../widgets/tab_placeholder.dart';
 import '../widgets/tech_tree_view.dart';
 import '../widgets/unit_detail_sheet.dart';
+import 'game_screen_map_actions.dart';
 import 'game_screen_tech_actions.dart';
 import 'main_menu_screen.dart';
 
@@ -70,7 +71,10 @@ class _GameScreenState extends State<GameScreen> {
         resources: widget.game.resources,
         onBuildingTap: _showBuildingDetail,
       ),
-      1 => const TabPlaceholder(icon: Icons.map, label: 'Carte'),
+      1 => GameMapView(
+        gameMap: widget.game.gameMap,
+        onTileTap: _showTileDetail,
+      ),
       2 => ArmyListView(
         units: widget.game.units,
         barracksLevel: widget.game.buildings[BuildingType.barracks]!.level,
@@ -88,6 +92,8 @@ class _GameScreenState extends State<GameScreen> {
       _ => const SizedBox.shrink(),
     };
   }
+
+  void _showTileDetail(tile) => showMapTileDetail(context, tile);
 
   void _showBuildingDetail(Building building) {
     showBuildingDetailSheet(

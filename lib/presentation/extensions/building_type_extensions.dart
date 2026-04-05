@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/building_type.dart';
+import '../../domain/building/building_type.dart';
 import '../theme/abyss_colors.dart';
 
 extension BuildingTypeColor on BuildingType {

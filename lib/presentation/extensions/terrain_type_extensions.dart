@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/terrain_type.dart';
+import '../../domain/map/terrain_type.dart';
 import '../theme/abyss_colors.dart';
 
 extension TerrainTypeExtensions on TerrainType {

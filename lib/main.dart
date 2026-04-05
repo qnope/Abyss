@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'data/game_repository.dart';
-import 'presentation/screens/main_menu_screen.dart';
+import 'presentation/screens/menu/main_menu_screen.dart';
 import 'presentation/theme/abyss_theme.dart';
 
 Future<void> main() async {

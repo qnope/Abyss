@@ -1,5 +1,5 @@
-import '../../domain/cell_content_type.dart';
-import '../../domain/monster_difficulty.dart';
+import '../../domain/map/cell_content_type.dart';
+import '../../domain/map/monster_difficulty.dart';
 
 extension CellContentTypeExtensions on CellContentType {
   String get label => switch (this) {

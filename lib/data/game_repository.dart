@@ -1,20 +1,20 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import '../domain/building.dart';
-import '../domain/building_type.dart';
-import '../domain/cell_content_type.dart';
-import '../domain/game.dart';
-import '../domain/game_map.dart';
-import '../domain/grid_position.dart';
-import '../domain/map_cell.dart';
-import '../domain/monster_difficulty.dart';
-import '../domain/player.dart';
-import '../domain/resource.dart';
-import '../domain/resource_type.dart';
-import '../domain/tech_branch.dart';
-import '../domain/tech_branch_state.dart';
-import '../domain/terrain_type.dart';
-import '../domain/unit.dart';
-import '../domain/unit_type.dart';
+import '../domain/building/building.dart';
+import '../domain/building/building_type.dart';
+import '../domain/map/cell_content_type.dart';
+import '../domain/game/game.dart';
+import '../domain/map/game_map.dart';
+import '../domain/map/grid_position.dart';
+import '../domain/map/map_cell.dart';
+import '../domain/map/monster_difficulty.dart';
+import '../domain/game/player.dart';
+import '../domain/resource/resource.dart';
+import '../domain/resource/resource_type.dart';
+import '../domain/tech/tech_branch.dart';
+import '../domain/tech/tech_branch_state.dart';
+import '../domain/map/terrain_type.dart';
+import '../domain/unit/unit.dart';
+import '../domain/unit/unit_type.dart';
 
 class GameRepository {
   static const _boxName = 'games';

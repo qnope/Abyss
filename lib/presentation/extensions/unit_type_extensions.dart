@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/unit_type.dart';
+import '../../domain/unit/unit_type.dart';
 
 extension UnitTypeExtensions on UnitType {
   String get displayName => switch (this) {

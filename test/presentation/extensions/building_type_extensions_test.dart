@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:abyss/domain/building_type.dart';
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/presentation/extensions/building_type_extensions.dart';
 
 void main() {

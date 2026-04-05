@@ -8,11 +8,13 @@ import 'resource_detail_sheet.dart';
 class ResourceBar extends StatelessWidget {
   final Map<ResourceType, Resource> resources;
   final Map<ResourceType, int> production;
+  final Map<ResourceType, int> consumption;
 
   const ResourceBar({
     super.key,
     required this.resources,
     this.production = const {},
+    this.consumption = const {},
   });
 
   @override
@@ -36,6 +38,7 @@ class ResourceBar extends StatelessWidget {
                   child: ResourceBarItem(
                     resource: r,
                     production: production[r.type] ?? 0,
+                    consumption: consumption[r.type] ?? 0,
                     onTap: () => _showDetail(context, r),
                   ),
                 ),
@@ -49,6 +52,7 @@ class ResourceBar extends StatelessWidget {
               ResourceBarItem(
                 resource: pearl,
                 production: production[ResourceType.pearl] ?? 0,
+                consumption: consumption[ResourceType.pearl] ?? 0,
                 onTap: () => _showDetail(context, pearl),
               ),
               const SizedBox(width: 8),

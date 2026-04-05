@@ -8,7 +8,9 @@ import '../../domain/unit_cost_calculator.dart';
 import '../../domain/unit_type.dart';
 import '../../domain/upgrade_building_action.dart';
 import '../../domain/game.dart';
+import '../../domain/maintenance_calculator.dart';
 import '../../domain/production_calculator.dart';
+import '../../domain/resource_type.dart';
 import '../../domain/turn_resolver.dart';
 import '../widgets/army_list_view.dart';
 import '../widgets/building_detail_sheet.dart';
@@ -141,8 +143,17 @@ class _GameScreenState extends State<GameScreen> {
       widget.game.buildings,
       techBranches: widget.game.techBranches,
     );
+    final maintenance = MaintenanceCalculator.fromUnits(widget.game.units);
+    final netProduction = <ResourceType, int>{};
+    for (final type in {...production.keys, ...maintenance.keys}) {
+      netProduction[type] = (production[type] ?? 0) - (maintenance[type] ?? 0);
+    }
     final confirmed = await showTurnConfirmationDialog(
-      context, production: production);
+      context,
+      currentTurn: widget.game.turn,
+      resources: widget.game.resources,
+      netProduction: netProduction,
+    );
     if (!confirmed || !mounted) return;
     final result = TurnResolver().resolve(widget.game);
     await widget.repository.save(widget.game);

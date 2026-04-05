@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/resource_type.dart';
+import '../../domain/resource/resource_type.dart';
 import '../theme/abyss_colors.dart';
 
 extension ResourceTypeColor on ResourceType {

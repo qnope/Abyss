@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:abyss/domain/tech_branch.dart';
+import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/presentation/extensions/tech_branch_extensions.dart';
 
 void main() {

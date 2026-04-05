@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/tech_branch.dart';
+import '../../domain/tech/tech_branch.dart';
 import '../theme/abyss_colors.dart';
 
 extension TechBranchColor on TechBranch {

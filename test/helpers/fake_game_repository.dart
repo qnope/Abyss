@@ -1,5 +1,5 @@
 import 'package:abyss/data/game_repository.dart';
-import 'package:abyss/domain/game.dart';
+import 'package:abyss/domain/game/game.dart';
 
 class FakeGameRepository extends GameRepository {
   final List<Game> _games = [];

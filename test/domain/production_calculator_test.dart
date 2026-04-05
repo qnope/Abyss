@@ -54,7 +54,7 @@ void main() {
       expect(production, {ResourceType.ore: 30});
     });
 
-    test('solarPanel at level 4 produces 66 energy', () {
+    test('solarPanel at level 4 produces 198 energy', () {
       final buildings = {
         BuildingType.solarPanel: Building(
           type: BuildingType.solarPanel,
@@ -62,7 +62,7 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.energy: 66});
+      expect(production, {ResourceType.energy: 198});
     });
 
     test('multiple buildings cumulate correctly', () {
@@ -89,7 +89,7 @@ void main() {
         ResourceType.algae: 140,
         ResourceType.coral: 200,
         ResourceType.ore: 30,
-        ResourceType.energy: 18,
+        ResourceType.energy: 54,
       });
     });
 

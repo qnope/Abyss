@@ -7,8 +7,8 @@ import 'package:abyss/domain/resource.dart';
 import 'package:abyss/domain/resource_type.dart';
 import 'package:abyss/domain/unit.dart';
 import 'package:abyss/domain/unit_type.dart';
+import 'package:abyss/domain/consumption_calculator.dart';
 import 'package:abyss/domain/production_calculator.dart';
-import 'package:abyss/domain/maintenance_calculator.dart';
 import 'package:abyss/domain/turn_resolver.dart';
 
 Game _game({
@@ -30,11 +30,17 @@ Map<ResourceType, int> _netProduction(Game game) {
   final prod = ProductionCalculator.fromBuildings(
     game.buildings, techBranches: game.techBranches,
   );
-  final maint = MaintenanceCalculator.fromUnits(game.units);
-  final net = <ResourceType, int>{};
-  for (final type in {...prod.keys, ...maint.keys}) {
-    net[type] = (prod[type] ?? 0) - (maint[type] ?? 0);
-  }
+  final energyConsumption = ConsumptionCalculator.totalBuildingConsumption(
+    game.buildings,
+  );
+  final algaeConsumption = ConsumptionCalculator.totalUnitConsumption(
+    game.units,
+  );
+  final net = <ResourceType, int>{...prod};
+  net[ResourceType.energy] =
+      (net[ResourceType.energy] ?? 0) - energyConsumption;
+  net[ResourceType.algae] =
+      (net[ResourceType.algae] ?? 0) - algaeConsumption;
   return net;
 }
 
@@ -81,7 +87,7 @@ void main() {
       expect(change.afterAmount, algae.maxStorage);
     });
 
-    test('maintenance deducted correctly through full flow', () {
+    test('consumption deducted correctly through full flow', () {
       final game = _game(
         units: {
           UnitType.scout: Unit(type: UnitType.scout, count: 20),
@@ -92,7 +98,8 @@ void main() {
       final change = result.changes.firstWhere((c) => c.type == ResourceType.algae);
       expect(change.beforeAmount, before);
       expect(change.afterAmount, before - 20);
-      expect(change.produced, -20);
+      expect(change.produced, 0);
+      expect(change.consumed, 20);
     });
 
     test('negative net production floors at zero', () {
@@ -128,7 +135,7 @@ void main() {
       expect(result.newTurn, 6);
     });
 
-    test('multiple resources with mixed production and maintenance', () {
+    test('multiple resources with mixed production and consumption', () {
       final game = _game(
         buildings: {
           BuildingType.algaeFarm: Building(type: BuildingType.algaeFarm, level: 1),
@@ -141,8 +148,9 @@ void main() {
       final result = TurnResolver().resolve(game);
       final algae = result.changes.firstWhere((c) => c.type == ResourceType.algae);
       final coral = result.changes.firstWhere((c) => c.type == ResourceType.coral);
-      expect(algae.produced, 40); // 50 production - 10 maintenance
-      expect(coral.produced, 40); // 40 production - 0 maintenance
+      expect(algae.produced, 50);
+      expect(algae.consumed, 10);
+      expect(coral.produced, 40);
     });
   });
 }

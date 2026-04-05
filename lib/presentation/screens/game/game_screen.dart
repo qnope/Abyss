@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
-import '../../../domain/map/map_generator.dart';
 import '../../../domain/resource/production_calculator.dart';
 import '../../../domain/turn/turn_resolver.dart';
 import '../../widgets/unit/army_list_view.dart';
@@ -10,11 +9,11 @@ import '../../widgets/turn/turn_confirmation_dialog.dart';
 import '../../widgets/turn/turn_summary_dialog.dart';
 import '../../widgets/building/building_list_view.dart';
 import '../../widgets/common/game_bottom_bar.dart';
-import '../../widgets/map/game_map_view.dart';
 import '../../widgets/resource/resource_bar.dart';
 import '../../widgets/common/settings_dialog.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import 'game_screen_actions.dart';
+import 'game_screen_exploration.dart';
 import 'game_screen_tech_actions.dart';
 import 'game_screen_turn_helpers.dart';
 import '../menu/main_menu_screen.dart';
@@ -73,7 +72,8 @@ class _GameScreenState extends State<GameScreen> {
         onBuildingTap: (b) => showBuildingDetailAction(
           context, g, b, () => setState(() {})),
       ),
-      1 => _buildMapTab(),
+      1 => buildMapTab(
+        context, g, widget.repository, () => setState(() {})),
       2 => ArmyListView(
         units: g.units,
         barracksLevel: g.buildings[BuildingType.barracks]!.level,
@@ -93,18 +93,6 @@ class _GameScreenState extends State<GameScreen> {
     };
   }
 
-  Widget _buildMapTab() {
-    if (widget.game.gameMap == null) {
-      _generateMap();
-    }
-    return GameMapView(gameMap: widget.game.gameMap!);
-  }
-
-  void _generateMap() {
-    widget.game.gameMap = MapGenerator.generate();
-    widget.repository.save(widget.game);
-  }
-
   Future<void> _nextTurn() async {
     final production = ProductionCalculator.fromBuildings(
       widget.game.buildings,
@@ -121,6 +109,7 @@ class _GameScreenState extends State<GameScreen> {
       consumption: consumption,
       buildingsToDeactivate: deactivated,
       unitsToLose: unitsToLose,
+      pendingExplorationCount: widget.game.pendingExplorations.length,
     );
     if (!confirmed || !mounted) return;
     final result = TurnResolver().resolve(widget.game);

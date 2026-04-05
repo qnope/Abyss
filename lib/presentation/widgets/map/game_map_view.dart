@@ -5,8 +5,15 @@ import 'map_cell_widget.dart';
 
 class GameMapView extends StatefulWidget {
   final GameMap gameMap;
+  final void Function(int x, int y)? onCellTap;
+  final Set<(int, int)> pendingTargets;
 
-  const GameMapView({super.key, required this.gameMap});
+  const GameMapView({
+    super.key,
+    required this.gameMap,
+    this.onCellTap,
+    this.pendingTargets = const {},
+  });
 
   @override
   State<GameMapView> createState() => _GameMapViewState();
@@ -78,7 +85,14 @@ class _GameMapViewState extends State<GameMapView> {
         final cell = widget.gameMap.cellAt(x, y);
         final isBase = x == widget.gameMap.playerBaseX &&
             y == widget.gameMap.playerBaseY;
-        return MapCellWidget(cell: cell, isBase: isBase);
+        return MapCellWidget(
+          cell: cell,
+          isBase: isBase,
+          hasPendingExploration: widget.pendingTargets.contains((x, y)),
+          onTap: widget.onCellTap != null
+              ? () => widget.onCellTap!(x, y)
+              : null,
+        );
       }),
     );
   }

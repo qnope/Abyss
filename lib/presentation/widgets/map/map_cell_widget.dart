@@ -12,25 +12,33 @@ const _contentSize = 28.0;
 class MapCellWidget extends StatelessWidget {
   final MapCell cell;
   final bool isBase;
+  final bool hasPendingExploration;
+  final VoidCallback? onTap;
 
   const MapCellWidget({
     super.key,
     required this.cell,
     this.isBase = false,
+    this.hasPendingExploration = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: cellSize,
-      height: cellSize,
-      child: Stack(
-        children: [
-          _background(),
-          _terrainLayer(),
-          if (cell.isRevealed) _contentLayer(),
-          if (!cell.isRevealed) _fogOverlay(),
-        ],
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        width: cellSize,
+        height: cellSize,
+        child: Stack(
+          children: [
+            _background(),
+            _terrainLayer(),
+            if (cell.isRevealed) _contentLayer(),
+            if (hasPendingExploration) _explorationMarker(),
+            if (!cell.isRevealed) _fogOverlay(),
+          ],
+        ),
       ),
     );
   }
@@ -65,6 +73,17 @@ class MapCellWidget extends StatelessWidget {
       return cell.monsterDifficulty?.svgPath;
     }
     return cell.content.svgPath;
+  }
+
+  Widget _explorationMarker() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AbyssColors.biolumCyan,
+          width: 2,
+        ),
+      ),
+    );
   }
 
   Widget _fogOverlay() {

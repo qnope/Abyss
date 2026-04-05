@@ -66,12 +66,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Confirmation dialog appears
-      expect(find.text('Passer au tour suivant ?'), findsOneWidget);
+      expect(find.text('Tour 1 \u2192 Tour 2'), findsOneWidget);
       await tester.tap(find.text('Confirmer'));
       await tester.pumpAndSettle();
 
       // Summary dialog appears — dismiss it
-      expect(find.text('Resume du tour'), findsOneWidget);
+      expect(find.text('Tour 1 \u2192 Tour 2'), findsOneWidget);
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
 
@@ -141,7 +141,7 @@ void main() {
         await tester.tap(find.text('Tour suivant'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Passer au tour suivant ?'), findsOneWidget);
+        expect(find.text('Tour 1 \u2192 Tour 2'), findsOneWidget);
       });
 
       testWidgets('cancel keeps same turn', (tester) async {
@@ -177,8 +177,8 @@ void main() {
         await tester.tap(find.text('Confirmer'));
         await tester.pumpAndSettle();
 
-        // Summary shows +50 algae
-        expect(find.text('+50'), findsOneWidget);
+        // Summary shows algae production line
+        expect(find.textContaining('(+50)'), findsOneWidget);
 
         await tester.tap(find.text('OK'));
         await tester.pumpAndSettle();
@@ -243,7 +243,7 @@ void main() {
         await tester.tap(find.text('Confirmer'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Resume du tour'), findsOneWidget);
+        expect(find.text('Tour 1 \u2192 Tour 2'), findsOneWidget);
       });
     });
 

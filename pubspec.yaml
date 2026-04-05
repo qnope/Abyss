@@ -27,3 +27,5 @@ flutter:
     - assets/icons/resources/
     - assets/icons/buildings/
     - assets/icons/units/
+    - assets/icons/terrain/
+    - assets/icons/map_content/

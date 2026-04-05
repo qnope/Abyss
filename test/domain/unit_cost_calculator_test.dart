@@ -138,4 +138,48 @@ void main() {
       expect(calculator.maxRecruitableCount(UnitType.scout, 1, res), 100);
     });
   });
+
+  group('maintenanceCost', () {
+    test('scout costs 1 algae', () {
+      expect(calculator.maintenanceCost(UnitType.scout), {
+        ResourceType.algae: 1,
+      });
+    });
+
+    test('harpoonist costs 2 algae', () {
+      expect(calculator.maintenanceCost(UnitType.harpoonist), {
+        ResourceType.algae: 2,
+      });
+    });
+
+    test('guardian costs 3 algae', () {
+      expect(calculator.maintenanceCost(UnitType.guardian), {
+        ResourceType.algae: 3,
+      });
+    });
+
+    test('domeBreaker costs 2 algae', () {
+      expect(calculator.maintenanceCost(UnitType.domeBreaker), {
+        ResourceType.algae: 2,
+      });
+    });
+
+    test('siphoner costs 3 algae', () {
+      expect(calculator.maintenanceCost(UnitType.siphoner), {
+        ResourceType.algae: 3,
+      });
+    });
+
+    test('saboteur costs 2 algae', () {
+      expect(calculator.maintenanceCost(UnitType.saboteur), {
+        ResourceType.algae: 2,
+      });
+    });
+
+    test('all unit types have maintenance', () {
+      for (final type in UnitType.values) {
+        expect(calculator.maintenanceCost(type), isNotEmpty);
+      }
+    });
+  });
 }

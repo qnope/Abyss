@@ -35,6 +35,15 @@ class UnitCostCalculator {
     },
   };
 
+  Map<ResourceType, int> maintenanceCost(UnitType type) => switch (type) {
+    UnitType.scout => {ResourceType.algae: 1},
+    UnitType.harpoonist => {ResourceType.algae: 2},
+    UnitType.guardian => {ResourceType.algae: 3},
+    UnitType.domeBreaker => {ResourceType.algae: 2},
+    UnitType.siphoner => {ResourceType.algae: 3},
+    UnitType.saboteur => {ResourceType.algae: 2},
+  };
+
   int unlockLevel(UnitType type) => switch (type) {
     UnitType.scout || UnitType.harpoonist => 1,
     UnitType.guardian || UnitType.domeBreaker => 3,

@@ -1,40 +1,55 @@
 import 'game.dart';
+import 'maintenance_calculator.dart';
 import 'production_calculator.dart';
+import 'resource_type.dart';
 import 'turn_result.dart';
 
 class TurnResolver {
   TurnResult resolve(Game game) {
+    final previousTurn = game.turn;
+    final hadRecruitedUnits = game.recruitedUnitTypes.isNotEmpty;
+
     final production = ProductionCalculator.fromBuildings(
       game.buildings,
       techBranches: game.techBranches,
     );
+    final maintenance = MaintenanceCalculator.fromUnits(game.units);
+
+    final allTypes = <ResourceType>{...production.keys, ...maintenance.keys};
     final changes = <TurnResourceChange>[];
 
-    for (final entry in production.entries) {
-      final resource = game.resources[entry.key];
+    for (final type in allTypes) {
+      final resource = game.resources[type];
       if (resource == null) continue;
 
-      final produced = entry.value;
-      final newAmount = resource.amount + produced;
+      final prod = production[type] ?? 0;
+      final maint = maintenance[type] ?? 0;
+      final net = prod - maint;
+
+      final beforeAmount = resource.amount;
+      final newAmount = resource.amount + net;
       final capped = newAmount > resource.maxStorage;
-      resource.amount = capped ? resource.maxStorage : newAmount;
+      resource.amount = capped
+          ? resource.maxStorage
+          : (newAmount < 0 ? 0 : newAmount);
 
       changes.add(TurnResourceChange(
-        type: entry.key,
-        produced: produced,
+        type: type,
+        produced: net,
         wasCapped: capped,
-        beforeAmount: 0,
-        afterAmount: 0,
+        beforeAmount: beforeAmount,
+        afterAmount: resource.amount,
       ));
     }
 
     game.recruitedUnitTypes.clear();
     game.turn++;
+
     return TurnResult(
       changes: changes,
-      previousTurn: 0,
-      newTurn: 0,
-      hadRecruitedUnits: false,
+      previousTurn: previousTurn,
+      newTurn: game.turn,
+      hadRecruitedUnits: hadRecruitedUnits,
     );
   }
 }

@@ -26,13 +26,14 @@ class GameAdapter extends TypeAdapter<Game> {
       units: (fields[6] as Map?)?.cast<UnitType, Unit>(),
       recruitedUnitTypes: (fields[7] as List?)?.cast<UnitType>(),
       gameMap: fields[8] as GameMap?,
+      pendingExplorations: (fields[9] as List?)?.cast<ExplorationOrder>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Game obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.player)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class GameAdapter extends TypeAdapter<Game> {
       ..writeByte(7)
       ..write(obj.recruitedUnitTypes)
       ..writeByte(8)
-      ..write(obj.gameMap);
+      ..write(obj.gameMap)
+      ..writeByte(9)
+      ..write(obj.pendingExplorations);
   }
 
   @override

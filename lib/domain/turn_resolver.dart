@@ -23,11 +23,18 @@ class TurnResolver {
         type: entry.key,
         produced: produced,
         wasCapped: capped,
+        beforeAmount: 0,
+        afterAmount: 0,
       ));
     }
 
     game.recruitedUnitTypes.clear();
     game.turn++;
-    return TurnResult(changes: changes);
+    return TurnResult(
+      changes: changes,
+      previousTurn: 0,
+      newTurn: 0,
+      hadRecruitedUnits: false,
+    );
   }
 }

@@ -1,6 +1,6 @@
 # Widgets
 
-`lib/presentation/widgets/` — Reusable UI components organized by domain module. 28 widget files across 7 categories.
+`lib/presentation/widgets/` — Reusable UI components organized by domain module. 31 widget files across 7 categories.
 
 ## Building Widgets (`building/`)
 
@@ -45,15 +45,17 @@
 
 | Widget | Purpose |
 |--------|---------|
-| `GameMapView` | Renders the 20x20 grid with fog of war |
-| `MapCellWidget` | Single cell with terrain and content rendering |
+| `GameMapView` | Renders the 20x20 grid with fog of war, tap callbacks, and pending markers |
+| `MapCellWidget` | Single cell with terrain, content rendering, tap handler, and exploration marker |
+| `ExplorationSheet` | Bottom sheet for confirming scout exploration (cost, reveal area, eligibility) |
 
 ## Turn Widgets (`turn/`)
 
 | Widget | Purpose |
 |--------|---------|
-| `TurnConfirmationDialog` | Preview of turn effects before confirming |
-| `TurnSummaryDialog` | Results after turn resolution |
+| `TurnConfirmationDialog` | Preview of turn effects before confirming (includes pending explorations) |
+| `TurnSummaryDialog` | Results after turn resolution (includes exploration results) |
+| `ExplorationSummarySection` | Exploration results section extracted from turn summary |
 
 ## Common Widgets (`common/`)
 

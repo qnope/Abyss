@@ -15,7 +15,7 @@ The action module implements the **Command pattern**. Each player action (upgrad
 
 ## ActionType
 
-An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`, `researchTech`, `recruitUnit`.
+An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`, `researchTech`, `recruitUnit`, `explore`.
 
 ## ActionResult
 
@@ -52,6 +52,10 @@ Takes a `TechBranch`. Validates that the branch exists, is unlocked, the target 
 
 Takes a `TechBranch`. Validates that the branch exists, is not already unlocked, a laboratory is present (level >= 1), and resources are sufficient. On execute, deducts costs and sets the branch to unlocked.
 
+### ExploreAction
+
+Takes a `targetX` and `targetY`. Validates that the map exists, at least one scout is available, and the target cell is eligible (via `CellEligibilityChecker`). On execute, decrements the scout count and appends an `ExplorationOrder` to `game.pendingExplorations`. Scout consumption is immediate; revelation happens at turn resolution.
+
 ## File Map
 
 | File | Role |
@@ -64,3 +68,4 @@ Takes a `TechBranch`. Validates that the branch exists, is not already unlocked,
 | `recruit_unit_action.dart` | `RecruitUnitAction` |
 | `research_tech_action.dart` | `ResearchTechAction` |
 | `unlock_branch_action.dart` | `UnlockBranchAction` |
+| `explore_action.dart` | `ExploreAction` |

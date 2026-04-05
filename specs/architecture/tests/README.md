@@ -40,14 +40,14 @@ across the entire generated output.
 
 | Module | Files | What is tested |
 |---|---|---|
-| `domain/map` | 10 | Map generation, terrain, cell content, grid positions, monsters |
-| `domain/action` | 7 | All action types (recruit, research, upgrade, unlock) and executor |
+| `domain/map` | 17 | Map generation, terrain, cell content, grid positions, monsters, exploration (eligibility, reveal area, resolver) |
+| `domain/action` | 10 | All action types (recruit, research, upgrade, unlock, explore) and executor |
 | `domain/resource` | 7 | Production, consumption, maintenance formulas and calculators |
 | `domain/building` | 6 | Building model, cost calculator, prerequisites, deactivation |
 | `domain/unit` | 5 | Unit model, stats, types, cost and loss calculators |
 | `domain/tech` | 3 | Tech cost calculator, prerequisite checks, branch state |
 | `domain/game` | 2 | Game model and Player model |
-| `domain/turn` | 2 | Turn resolver (production, consumption, recruitment) and result |
+| `domain/turn` | 3 | Turn resolver (production, consumption, recruitment, exploration) and result |
 | `presentation/widgets` | 23 | Widget trees for building, unit, resource, tech, map, turn, common |
 | `presentation/screens` | 6 | Game screen and menu screen rendering |
 | `presentation/extensions` | 4 | Display-formatting extensions |

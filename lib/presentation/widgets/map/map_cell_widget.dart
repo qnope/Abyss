@@ -69,7 +69,7 @@ class MapCellWidget extends StatelessWidget {
 
   Widget _fogOverlay() {
     return Container(
-      color: AbyssColors.abyssBlack.withValues(alpha: 0.95),
+      color: AbyssColors.abyssBlack.withValues(alpha: 0.7),
     );
   }
 }

@@ -31,7 +31,7 @@ void main() {
         find.byType(Container),
       );
       final hasFog = containers.any(
-        (c) => c.color == AbyssColors.abyssBlack.withValues(alpha: 0.95),
+        (c) => c.color == AbyssColors.abyssBlack.withValues(alpha: 0.7),
       );
       expect(hasFog, isTrue);
     });

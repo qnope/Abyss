@@ -5,6 +5,7 @@ import '../../extensions/resource_type_extensions.dart';
 import '../../extensions/unit_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../resource/resource_icon.dart';
+import 'exploration_summary_section.dart';
 
 Future<void> showTurnSummaryDialog(
   BuildContext context, {
@@ -42,8 +43,10 @@ class _TurnSummaryDialog extends StatelessWidget {
     final hasWarnings = result.deactivatedBuildings.isNotEmpty;
     final hasLosses = result.lostUnits.isNotEmpty;
     final showArmy = result.hadRecruitedUnits;
+    final hasExplorations = result.explorations.isNotEmpty;
 
-    if (!hasChanges && !hasWarnings && !hasLosses && !showArmy) {
+    if (!hasChanges && !hasWarnings && !hasLosses && !showArmy &&
+        !hasExplorations) {
       return const Text('Aucun changement ce tour.');
     }
 
@@ -55,8 +58,11 @@ class _TurnSummaryDialog extends StatelessWidget {
           _buildResourceLine(change),
         if (hasWarnings) ..._buildBuildingWarnings(),
         if (hasLosses) ..._buildUnitLosses(),
+        if (hasExplorations)
+          ExplorationSummarySection(explorations: result.explorations),
         if (showArmy) ...[
-          if (hasChanges || hasWarnings || hasLosses) const Divider(),
+          if (hasChanges || hasWarnings || hasLosses || hasExplorations)
+            const Divider(),
           _buildArmySection(),
         ],
       ],

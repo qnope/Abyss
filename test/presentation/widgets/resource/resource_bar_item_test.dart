@@ -45,6 +45,33 @@ void main() {
       expect(find.text('+8/t'), findsOneWidget);
     });
 
+    testWidgets('rate text appears below the amount', (tester) async {
+      final resource = Resource(type: ResourceType.coral, amount: 80);
+      await tester.pumpWidget(createApp(resource, production: 8));
+      await tester.pumpAndSettle();
+      final amountDy = tester.getTopLeft(find.text('80')).dy;
+      final rateDy = tester.getTopLeft(find.text('+8/t')).dy;
+      expect(rateDy, greaterThan(amountDy));
+    });
+
+    testWidgets('uniform height when no rate', (tester) async {
+      final withRate = Resource(type: ResourceType.coral, amount: 80);
+      await tester.pumpWidget(createApp(withRate, production: 8));
+      await tester.pumpAndSettle();
+      final heightWithRate = tester.getSize(
+        find.byType(ResourceBarItem),
+      ).height;
+
+      final noRate = Resource(type: ResourceType.pearl, amount: 5);
+      await tester.pumpWidget(createApp(noRate));
+      await tester.pumpAndSettle();
+      final heightNoRate = tester.getSize(
+        find.byType(ResourceBarItem),
+      ).height;
+
+      expect(heightNoRate, closeTo(heightWithRate, 2));
+    });
+
     testWidgets('hides production for pearl (rate = 0)', (tester) async {
       final resource = Resource(
         type: ResourceType.pearl, amount: 5, maxStorage: 100,

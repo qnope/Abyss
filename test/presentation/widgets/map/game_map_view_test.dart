@@ -32,5 +32,43 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(MapCellWidget), findsNWidgets(400));
     });
+
+    testWidgets('maxScale allows zoom to 1 visible cell', (tester) async {
+      final map = MapGenerator.generate(seed: 42);
+      await tester.pumpWidget(
+        MaterialApp(home: Scaffold(body: GameMapView(gameMap: map))),
+      );
+      await tester.pumpAndSettle();
+      final viewer = tester.widget<InteractiveViewer>(
+        find.byType(InteractiveViewer),
+      );
+      expect(viewer.maxScale, closeTo(800.0 / (1.0 * 48.0), 0.01));
+    });
+
+    testWidgets('minScale allows full map to be visible', (tester) async {
+      final map = MapGenerator.generate(seed: 42);
+      await tester.pumpWidget(
+        MaterialApp(home: Scaffold(body: GameMapView(gameMap: map))),
+      );
+      await tester.pumpAndSettle();
+      final viewer = tester.widget<InteractiveViewer>(
+        find.byType(InteractiveViewer),
+      );
+      expect(viewer.minScale, closeTo(800.0 / (20 * 48.0), 0.01));
+    });
+
+    testWidgets('initial scale shows 8 visible cells', (tester) async {
+      final map = MapGenerator.generate(seed: 42);
+      await tester.pumpWidget(
+        MaterialApp(home: Scaffold(body: GameMapView(gameMap: map))),
+      );
+      await tester.pumpAndSettle();
+      final viewer = tester.widget<InteractiveViewer>(
+        find.byType(InteractiveViewer),
+      );
+      final matrix = viewer.transformationController!.value;
+      final scale = matrix.getMaxScaleOnAxis();
+      expect(scale, closeTo(800.0 / (8.0 * 48.0), 0.01));
+    });
   });
 }

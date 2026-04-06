@@ -13,7 +13,7 @@ import '../../widgets/resource/resource_bar.dart';
 import '../../widgets/common/settings_dialog.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import 'game_screen_actions.dart';
-import 'game_screen_exploration.dart';
+import 'game_screen_map_actions.dart';
 import 'game_screen_tech_actions.dart';
 import 'game_screen_turn_helpers.dart';
 import '../menu/main_menu_screen.dart';

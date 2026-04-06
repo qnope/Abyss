@@ -25,26 +25,31 @@ class ResourceBarItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Row(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ResourceIcon(type: resource.type, size: 20),
-          const SizedBox(width: 4),
-          AnimatedResourceAmount(
-            amount: resource.amount,
-            baseColor: color,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ResourceIcon(type: resource.type, size: 20),
+              const SizedBox(width: 4),
+              AnimatedResourceAmount(
+                amount: resource.amount,
+                baseColor: color,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ),
-          if (production > 0 || consumption > 0) ...[
-            const SizedBox(width: 2),
+          if (production > 0 || consumption > 0)
             Text(
               _rateText,
               style: TextStyle(color: _rateColor(color), fontSize: 11),
-            ),
-          ],
+            )
+          else
+            const SizedBox(height: 16),
         ],
       ),
     );

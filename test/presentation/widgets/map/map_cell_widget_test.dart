@@ -67,5 +67,30 @@ void main() {
       await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
       expect(find.byType(SvgPicture), findsWidgets);
     });
+
+    testWidgets('collected cell shows content with reduced opacity',
+        (tester) async {
+      final cell = MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.resourceBonus,
+        isRevealed: true,
+        isCollected: true,
+      );
+      await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
+      final opacity = tester.widget<Opacity>(find.byType(Opacity));
+      expect(opacity.opacity, 0.3);
+    });
+
+    testWidgets('non-collected cell shows content without opacity wrapper',
+        (tester) async {
+      final cell = MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.resourceBonus,
+        isRevealed: true,
+        isCollected: false,
+      );
+      await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
+      expect(find.byType(Opacity), findsNothing);
+    });
   });
 }

@@ -27,7 +27,7 @@
 | Widget | Purpose |
 |--------|---------|
 | `ResourceBar` | Top bar showing all 5 resources with net production |
-| `ResourceBarItem` | Single resource amount + production delta |
+| `ResourceBarItem` | Two-line layout: icon + amount on line 1, rate text on line 2 |
 | `ResourceDetailSheet` | Bottom sheet with resource breakdown |
 | `ResourceIcon` | SVG icon for a resource type |
 | `AnimatedResourceAmount` | Smooth number transition on value change |

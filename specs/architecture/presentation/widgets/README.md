@@ -45,7 +45,7 @@
 
 | Widget | Purpose |
 |--------|---------|
-| `GameMapView` | Renders the 20x20 grid with fog of war, tap callbacks, and pending markers |
+| `GameMapView` | Renders the 20x20 grid with fog of war, tap callbacks, pending markers. Zoom: 1 cell (max) → 8 cells (default) → full map (min) |
 | `MapCellWidget` | Single cell with terrain, content rendering, tap handler, and exploration marker |
 | `ExplorationSheet` | Bottom sheet for confirming scout exploration (cost, reveal area, eligibility) |
 

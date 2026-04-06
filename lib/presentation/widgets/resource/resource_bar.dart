@@ -45,7 +45,7 @@ class ResourceBar extends StatelessWidget {
               )),
               Container(
                 width: 1,
-                height: 24,
+                height: 36,
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 color: AbyssColors.onSurfaceDim.withValues(alpha: 0.3),
               ),

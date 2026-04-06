@@ -58,13 +58,13 @@ class MapCellWidget extends StatelessWidget {
   Widget _contentLayer() {
     final path = _contentSvgPath;
     if (path == null) return const SizedBox.shrink();
-    return Center(
-      child: SvgPicture.asset(
-        path,
-        width: _contentSize,
-        height: _contentSize,
-      ),
+    final icon = Center(
+      child: SvgPicture.asset(path, width: _contentSize, height: _contentSize),
     );
+    if (cell.isCollected) {
+      return Opacity(opacity: 0.3, child: icon);
+    }
+    return icon;
   }
 
   String? get _contentSvgPath {

@@ -25,7 +25,7 @@ class _GameMapViewState extends State<GameMapView> {
   static const _mapSize = 20;
   static const _gridSize = _mapSize * cellSize;
   static const _defaultVisibleCells = 8.0;
-  static const _maxVisibleCells = 4.0;
+  static const _maxVisibleCells = 1.0;
 
   @override
   void initState() {

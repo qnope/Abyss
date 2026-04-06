@@ -53,7 +53,7 @@ void main() {
       final divider = containers.where(
         (c) =>
             c.constraints?.maxWidth == 1 &&
-            c.constraints?.maxHeight == 24,
+            c.constraints?.maxHeight == 36,
       );
       expect(divider.isNotEmpty, isTrue);
     });

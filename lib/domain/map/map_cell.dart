@@ -26,6 +26,9 @@ class MapCell {
   @HiveField(5)
   final int? bonusAmount;
 
+  @HiveField(6)
+  final bool isCollected;
+
   MapCell({
     required this.terrain,
     this.content = CellContentType.empty,
@@ -33,6 +36,7 @@ class MapCell {
     this.isRevealed = false,
     this.bonusResourceType,
     this.bonusAmount,
+    this.isCollected = false,
   });
 
   MapCell copyWith({
@@ -42,6 +46,7 @@ class MapCell {
     bool? isRevealed,
     ResourceType? bonusResourceType,
     int? bonusAmount,
+    bool? isCollected,
   }) {
     return MapCell(
       terrain: terrain ?? this.terrain,
@@ -50,6 +55,7 @@ class MapCell {
       isRevealed: isRevealed ?? this.isRevealed,
       bonusResourceType: bonusResourceType ?? this.bonusResourceType,
       bonusAmount: bonusAmount ?? this.bonusAmount,
+      isCollected: isCollected ?? this.isCollected,
     );
   }
 }

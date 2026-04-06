@@ -23,13 +23,14 @@ class MapCellAdapter extends TypeAdapter<MapCell> {
       isRevealed: fields[3] as bool,
       bonusResourceType: fields[4] as ResourceType?,
       bonusAmount: fields[5] as int?,
+      isCollected: fields[6] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, MapCell obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.terrain)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class MapCellAdapter extends TypeAdapter<MapCell> {
       ..writeByte(4)
       ..write(obj.bonusResourceType)
       ..writeByte(5)
-      ..write(obj.bonusAmount);
+      ..write(obj.bonusAmount)
+      ..writeByte(6)
+      ..write(obj.isCollected);
   }
 
   @override

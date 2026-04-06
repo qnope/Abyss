@@ -58,5 +58,25 @@ void main() {
       expect(revealed.monsterDifficulty, MonsterDifficulty.easy);
       expect(revealed.terrain, TerrainType.plain);
     });
+
+    test('default isCollected is false', () {
+      final cell = MapCell(terrain: TerrainType.plain);
+      expect(cell.isCollected, false);
+    });
+
+    test('copyWith isCollected true returns collected cell', () {
+      final cell = MapCell(terrain: TerrainType.plain);
+      final collected = cell.copyWith(isCollected: true);
+      expect(collected.isCollected, true);
+    });
+
+    test('copyWith without isCollected preserves original value', () {
+      final cell = MapCell(
+        terrain: TerrainType.plain,
+        isCollected: true,
+      );
+      final copy = cell.copyWith(isRevealed: true);
+      expect(copy.isCollected, true);
+    });
   });
 }

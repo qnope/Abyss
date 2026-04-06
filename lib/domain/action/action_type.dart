@@ -4,4 +4,5 @@ enum ActionType {
   researchTech,
   recruitUnit,
   explore,
+  collectTreasure,
 }

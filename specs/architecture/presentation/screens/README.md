@@ -44,17 +44,17 @@ GameScreen logic is split into helper files to stay under 150 lines:
 | File | Responsibility |
 |------|---------------|
 | `game_screen_actions.dart` | `showBuildingDetailAction`, `showUnitDetailAction` — wire domain actions to bottom sheets |
-| `game_screen_exploration.dart` | `buildMapTab`, `_showExplorationAction` — map tap → bottom sheet → ExploreAction flow |
+| `game_screen_map_actions.dart` | `buildMapTab` and contextual map-tap routing: exploration sheet for hidden cells, treasure/ruins/lair/info sheets for revealed ones, plus the collect → `ResourceGainDialog` orchestration |
+| `game_screen_collect_messages.dart` | `titleFor` / `emptyMessageFor` — content-aware strings for the collect dialog |
 | `game_screen_tech_actions.dart` | `showBranchDetail`, `showNodeDetail` — tech tree interactions |
 | `game_screen_turn_helpers.dart` | `computeConsumption`, `computeBuildingsToDeactivate`, `computeUnitsToLose` — pre-turn calculations |
 
-### Exploration Flow
+### Map Tap Flow
 
 1. Player taps a map cell
-2. `showExplorationAction` checks eligibility and scout count
-3. `ExplorationSheet` shows target info, cost, and reveal area
-4. On confirm: `ExploreAction` consumes 1 scout, queues `ExplorationOrder`
-5. Pending cells show a cyan border marker on the map
+2. `_showCellAction` routes by state: hidden → exploration sheet, base → info sheet, treasure/ruins → treasure sheet, monster → lair sheet, empty → info sheet
+3. **Exploration**: `ExplorationSheet` shows cost and area; on confirm, `ExploreAction` consumes 1 scout and queues an `ExplorationOrder` (resolved at turn end). Pending cells show a cyan border on the map
+4. **Collect**: `TreasureSheet` confirms; on collect, `CollectTreasureAction` runs, the sheet closes, and a `ResourceGainDialog` opens with the per-resource deltas from the returned `CollectTreasureResult`
 
 ### Turn Flow
 

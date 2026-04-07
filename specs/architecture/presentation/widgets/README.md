@@ -31,6 +31,7 @@
 | `ResourceDetailSheet` | Bottom sheet with resource breakdown |
 | `ResourceIcon` | SVG icon for a resource type |
 | `AnimatedResourceAmount` | Smooth number transition on value change |
+| `ResourceGainDialog` | Modal dialog showing a list of resources gained (icon + `+amount`) after collecting a treasure or ruins. Shows an empty message when all deltas are zero |
 
 ## Tech Widgets (`tech/`)
 
@@ -48,7 +49,7 @@
 | `GameMapView` | Renders the 20x20 grid with fog of war, tap callbacks, pending markers. Zoom: 1 cell (max) → 8 cells (default) → full map (min) |
 | `MapCellWidget` | Single cell with terrain, content rendering, tap handler, and exploration marker. Greys out collected treasures and ruins |
 | `ExplorationSheet` | Bottom sheet for confirming scout exploration (cost, reveal area, eligibility) |
-| `TreasureSheet` | Bottom sheet for collecting a `resourceBonus` or `ruins` cell (free, immediate). Triggers `CollectTreasureAction` |
+| `TreasureSheet` | Bottom sheet for collecting a `resourceBonus` or `ruins` cell (free, immediate). Triggers `CollectTreasureAction`; on success, `game_screen_map_actions.dart` closes the sheet and opens a `ResourceGainDialog` with the per-resource deltas from the returned `CollectTreasureResult` |
 | `MonsterLairSheet` | Bottom sheet showing monster difficulty and "combat unavailable" notice |
 | `CellInfoSheet` | Generic info bottom sheet for empty plains, the player base, and already-collected cells |
 

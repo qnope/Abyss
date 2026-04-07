@@ -24,6 +24,10 @@ A simple result object with two named constructors:
 - `ActionResult.success()` -- `isSuccess = true`, `reason = null`.
 - `ActionResult.failure(String reason)` -- `isSuccess = false`, carries an explanation string.
 
+### CollectTreasureResult
+
+Sub-class of `ActionResult` returned by `CollectTreasureAction`. Carries `Map<ResourceType, int> deltas` so the presentation layer can show what was actually gained (post-clamp at `maxStorage`).
+
 ## ActionExecutor
 
 A thin orchestrator that enforces the validate-then-execute sequence:
@@ -58,12 +62,12 @@ Takes a `targetX` and `targetY`. Validates that the map exists, at least one sco
 
 ### CollectTreasureAction
 
-Takes a `targetX`, `targetY`, and an optional `Random` source (for deterministic tests). Validates that the map exists, the target cell is revealed, not yet collected, and contains either `resourceBonus` or `ruins`. On execute, rolls the rewards, adds them to the player stock (clamped to `maxStorage`), and flags the cell as collected.
+Takes a `targetX`, `targetY`, and an optional `Random` source (for deterministic tests). Validates that the map exists, the target cell is revealed, not yet collected, and contains either `resourceBonus` or `ruins`. On execute, rolls the rewards, adds them to the player stock (clamped to `maxStorage`), flags the cell as collected, and returns a `CollectTreasureResult` carrying the per-resource delta actually applied.
 
 | Content type     | Reward roll                                                  |
 |------------------|--------------------------------------------------------------|
 | `resourceBonus`  | algae 50-100, coral 30-50, ore 30-50 (no pearl)              |
-| `ruins`          | coral 0-2, ore 0-2, pearl 0-2                                |
+| `ruins`          | algae 0-100, coral 0-25, ore 0-25, pearl 0-2                 |
 
 Collection is free and immediate (no scout, no turn delay).
 
@@ -74,6 +78,7 @@ Collection is free and immediate (no scout, no turn delay).
 | `action.dart` | Abstract `Action` base class |
 | `action_type.dart` | `ActionType` enum |
 | `action_result.dart` | `ActionResult` value object |
+| `collect_treasure_result.dart` | `CollectTreasureResult` sub-class of `ActionResult` carrying per-resource deltas |
 | `action_executor.dart` | `ActionExecutor` orchestrator |
 | `upgrade_building_action.dart` | `UpgradeBuildingAction` |
 | `recruit_unit_action.dart` | `RecruitUnitAction` |

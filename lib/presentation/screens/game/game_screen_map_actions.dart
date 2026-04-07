@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/action/action_executor.dart';
 import '../../../domain/action/collect_treasure_action.dart';
+import '../../../domain/action/collect_treasure_result.dart';
 import '../../../domain/action/explore_action.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/map/cell_content_type.dart';
@@ -14,6 +15,8 @@ import '../../widgets/map/exploration_sheet.dart';
 import '../../widgets/map/game_map_view.dart';
 import '../../widgets/map/monster_lair_sheet.dart';
 import '../../widgets/map/treasure_sheet.dart';
+import '../../widgets/resource/resource_gain_dialog.dart';
+import 'game_screen_collect_messages.dart';
 
 Widget buildMapTab(
   BuildContext context,
@@ -82,7 +85,8 @@ void _showCellAction(
         targetX: x,
         targetY: y,
         contentType: cell.content,
-        onCollect: () => _collectTreasure(game, x, y, onChanged),
+        onCollect: () =>
+            _collectTreasure(context, game, x, y, cell.content, onChanged),
       );
     case CellContentType.monsterLair:
       showMonsterLairSheet(
@@ -127,8 +131,15 @@ void _showExplorationFlow(
   );
 }
 
-void _collectTreasure(Game game, int x, int y, VoidCallback onChanged) {
+void _collectTreasure(BuildContext context, Game game, int x, int y,
+    CellContentType content, VoidCallback onChanged) {
   final action = CollectTreasureAction(targetX: x, targetY: y);
   final result = ActionExecutor().execute(action, game);
-  if (result.isSuccess) onChanged();
+  if (!result.isSuccess) return;
+  onChanged();
+  if (result is! CollectTreasureResult) return;
+  showResourceGainDialog(context,
+      title: titleFor(content),
+      deltas: result.deltas,
+      emptyMessage: emptyMessageFor(content));
 }

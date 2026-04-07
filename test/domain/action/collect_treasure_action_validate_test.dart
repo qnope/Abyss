@@ -6,7 +6,6 @@ import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
-import 'package:abyss/domain/resource/resource_type.dart';
 
 import 'collect_treasure_action_helper.dart';
 
@@ -51,8 +50,6 @@ void main() {
     test('fails when cell is already collected', () {
       final game = createCollectGame(
         content: CellContentType.resourceBonus,
-        bonusResourceType: ResourceType.coral,
-        bonusAmount: 30,
         isCollected: true,
       );
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
@@ -78,11 +75,7 @@ void main() {
     });
 
     test('succeeds for resourceBonus', () {
-      final game = createCollectGame(
-        content: CellContentType.resourceBonus,
-        bonusResourceType: ResourceType.coral,
-        bonusAmount: 30,
-      );
+      final game = createCollectGame(content: CellContentType.resourceBonus);
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
       final result = action.validate(game);
       expect(result.isSuccess, isTrue);

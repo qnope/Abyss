@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
-import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/presentation/widgets/map/treasure_sheet.dart';
 
 void main() {
   Widget buildOpener({
     required CellContentType contentType,
-    ResourceType? bonusResourceType,
-    int? bonusAmount,
     VoidCallback? onCollect,
   }) {
     return MaterialApp(
@@ -20,8 +17,6 @@ void main() {
               targetX: 3,
               targetY: 5,
               contentType: contentType,
-              bonusResourceType: bonusResourceType,
-              bonusAmount: bonusAmount,
               onCollect: onCollect ?? () {},
             ),
             child: const Text('Open'),
@@ -32,29 +27,23 @@ void main() {
   }
 
   group('TreasureSheet', () {
-    testWidgets('resourceBonus shows resource type and amount',
+    testWidgets('resourceBonus shows algae/coral/ore description',
         (tester) async {
       await tester.pumpWidget(buildOpener(
         contentType: CellContentType.resourceBonus,
-        bonusResourceType: ResourceType.coral,
-        bonusAmount: 30,
       ));
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
-      expect(find.text('Corail'), findsOneWidget);
-      expect(find.text('30'), findsOneWidget);
+      expect(find.text('Algues, corail et minerai'), findsOneWidget);
     });
 
-    testWidgets('ruins shows random reward description', (tester) async {
+    testWidgets('ruins shows coral/ore/pearl description', (tester) async {
       await tester.pumpWidget(buildOpener(
         contentType: CellContentType.ruins,
       ));
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
-      expect(
-        find.text('Ressources aléatoires et perles'),
-        findsOneWidget,
-      );
+      expect(find.text('Corail, minerai et perles'), findsOneWidget);
     });
 
     testWidgets('displays collect button', (tester) async {

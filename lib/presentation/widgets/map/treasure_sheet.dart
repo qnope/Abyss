@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../domain/map/cell_content_type.dart';
-import '../../../domain/resource/resource_type.dart';
 import '../../extensions/cell_content_type_extensions.dart';
-import '../../extensions/resource_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
 
 void showTreasureSheet(
@@ -11,8 +9,6 @@ void showTreasureSheet(
   required int targetX,
   required int targetY,
   required CellContentType contentType,
-  ResourceType? bonusResourceType,
-  int? bonusAmount,
   required VoidCallback onCollect,
 }) {
   showModalBottomSheet<void>(
@@ -22,8 +18,6 @@ void showTreasureSheet(
       targetX: targetX,
       targetY: targetY,
       contentType: contentType,
-      bonusResourceType: bonusResourceType,
-      bonusAmount: bonusAmount,
       onCollect: onCollect,
     ),
   );
@@ -33,16 +27,12 @@ class _TreasureSheet extends StatelessWidget {
   final int targetX;
   final int targetY;
   final CellContentType contentType;
-  final ResourceType? bonusResourceType;
-  final int? bonusAmount;
   final VoidCallback onCollect;
 
   const _TreasureSheet({
     required this.targetX,
     required this.targetY,
     required this.contentType,
-    this.bonusResourceType,
-    this.bonusAmount,
     required this.onCollect,
   });
 
@@ -65,18 +55,13 @@ class _TreasureSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          if (contentType == CellContentType.resourceBonus) ...[
-            _infoRow(textTheme, 'Type', bonusResourceType?.displayName ?? ''),
-            const SizedBox(height: 8),
-            _infoRow(textTheme, 'Montant', '${bonusAmount ?? 0}'),
-          ],
-          if (contentType == CellContentType.ruins)
-            Text(
-              'Ressources aléatoires et perles',
-              style: textTheme.bodyMedium?.copyWith(
-                color: AbyssColors.onSurfaceDim,
-              ),
+          Text(
+            _description,
+            textAlign: TextAlign.center,
+            style: textTheme.bodyMedium?.copyWith(
+              color: AbyssColors.onSurfaceDim,
             ),
+          ),
           const Divider(height: 24),
           FilledButton(
             onPressed: () {
@@ -90,25 +75,15 @@ class _TreasureSheet extends StatelessWidget {
     );
   }
 
-  Widget _infoRow(TextTheme textTheme, String label, String value) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            label,
-            style: textTheme.bodyMedium?.copyWith(
-              color: AbyssColors.onSurfaceDim,
-            ),
-          ),
-        ),
-        Text(
-          value,
-          style: textTheme.bodyMedium?.copyWith(
-            color: AbyssColors.onSurface,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
+  String get _description {
+    switch (contentType) {
+      case CellContentType.resourceBonus:
+        return 'Algues, corail et minerai';
+      case CellContentType.ruins:
+        return 'Corail, minerai et perles';
+      case CellContentType.empty:
+      case CellContentType.monsterLair:
+        return '';
+    }
   }
 }

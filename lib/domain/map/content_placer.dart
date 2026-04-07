@@ -2,7 +2,6 @@ import 'dart:math';
 import 'cell_content_type.dart';
 import 'map_cell.dart';
 import 'monster_difficulty.dart';
-import '../resource/resource_type.dart';
 
 class ContentPlacer {
   static void place({
@@ -26,7 +25,7 @@ class ContentPlacer {
       if (roll < 0.60) continue;
       final x = i % width, y = i ~/ width;
       if (roll < 0.80) {
-        _placeResource(cells, i, random);
+        _placeResource(cells, i);
       } else if (roll < 0.90) {
         cells[i] = cells[i].copyWith(content: CellContentType.ruins);
       } else {
@@ -58,14 +57,9 @@ class ContentPlacer {
     return result;
   }
 
-  static void _placeResource(
-    List<MapCell> cells, int i, Random random,
-  ) {
-    final types = ResourceType.values;
+  static void _placeResource(List<MapCell> cells, int i) {
     cells[i] = cells[i].copyWith(
       content: CellContentType.resourceBonus,
-      bonusResourceType: types[random.nextInt(types.length)],
-      bonusAmount: 10 + random.nextInt(41),
     );
   }
 

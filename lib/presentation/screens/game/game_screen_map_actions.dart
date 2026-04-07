@@ -76,15 +76,6 @@ void _showCellAction(
 
   switch (cell.content) {
     case CellContentType.resourceBonus:
-      showTreasureSheet(
-        context,
-        targetX: x,
-        targetY: y,
-        contentType: cell.content,
-        bonusResourceType: cell.bonusResourceType,
-        bonusAmount: cell.bonusAmount,
-        onCollect: () => _collectTreasure(game, x, y, onChanged),
-      );
     case CellContentType.ruins:
       showTreasureSheet(
         context,

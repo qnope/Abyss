@@ -5,15 +5,12 @@ import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
-import 'package:abyss/domain/resource/resource_type.dart';
 
 /// Builds a 5×5 map with base at (2,2).
 /// All cells revealed, plain terrain, empty content.
 /// Cell at (1,1) set with the specified content type and optional fields.
 GameMap buildCollectTestMap({
   CellContentType content = CellContentType.resourceBonus,
-  ResourceType? bonusResourceType,
-  int? bonusAmount,
   MonsterDifficulty? monsterDifficulty,
   bool isCollected = false,
 }) {
@@ -25,8 +22,6 @@ GameMap buildCollectTestMap({
           terrain: TerrainType.plain,
           isRevealed: true,
           content: content,
-          bonusResourceType: bonusResourceType,
-          bonusAmount: bonusAmount,
           monsterDifficulty: monsterDifficulty,
           isCollected: isCollected,
         ));
@@ -50,8 +45,6 @@ GameMap buildCollectTestMap({
 
 Game createCollectGame({
   CellContentType content = CellContentType.resourceBonus,
-  ResourceType? bonusResourceType,
-  int? bonusAmount,
   MonsterDifficulty? monsterDifficulty,
   bool isCollected = false,
 }) {
@@ -59,8 +52,6 @@ Game createCollectGame({
     player: Player(name: 'Test'),
     gameMap: buildCollectTestMap(
       content: content,
-      bonusResourceType: bonusResourceType,
-      bonusAmount: bonusAmount,
       monsterDifficulty: monsterDifficulty,
       isCollected: isCollected,
     ),

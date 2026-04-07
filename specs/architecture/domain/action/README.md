@@ -15,7 +15,7 @@ The action module implements the **Command pattern**. Each player action (upgrad
 
 ## ActionType
 
-An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`, `researchTech`, `recruitUnit`, `explore`.
+An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`, `researchTech`, `recruitUnit`, `explore`, `collectTreasure`.
 
 ## ActionResult
 
@@ -56,6 +56,17 @@ Takes a `TechBranch`. Validates that the branch exists, is not already unlocked,
 
 Takes a `targetX` and `targetY`. Validates that the map exists, at least one scout is available, and the target cell is eligible (via `CellEligibilityChecker`). On execute, decrements the scout count and appends an `ExplorationOrder` to `game.pendingExplorations`. Scout consumption is immediate; revelation happens at turn resolution.
 
+### CollectTreasureAction
+
+Takes a `targetX`, `targetY`, and an optional `Random` source (for deterministic tests). Validates that the map exists, the target cell is revealed, not yet collected, and contains either `resourceBonus` or `ruins`. On execute, rolls the rewards, adds them to the player stock (clamped to `maxStorage`), and flags the cell as collected.
+
+| Content type     | Reward roll                                                  |
+|------------------|--------------------------------------------------------------|
+| `resourceBonus`  | algae 50-100, coral 30-50, ore 30-50 (no pearl)              |
+| `ruins`          | coral 0-2, ore 0-2, pearl 0-2                                |
+
+Collection is free and immediate (no scout, no turn delay).
+
 ## File Map
 
 | File | Role |
@@ -69,3 +80,4 @@ Takes a `targetX` and `targetY`. Validates that the map exists, at least one sco
 | `research_tech_action.dart` | `ResearchTechAction` |
 | `unlock_branch_action.dart` | `UnlockBranchAction` |
 | `explore_action.dart` | `ExploreAction` |
+| `collect_treasure_action.dart` | `CollectTreasureAction` |

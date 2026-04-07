@@ -48,17 +48,6 @@ void main() {
       }
     });
 
-    test('resource bonus cells have valid data', () {
-      final cells = generate(42);
-      for (final cell in cells) {
-        if (cell.content == CellContentType.resourceBonus) {
-          expect(cell.bonusResourceType, isNotNull);
-          expect(cell.bonusAmount, greaterThanOrEqualTo(10));
-          expect(cell.bonusAmount, lessThanOrEqualTo(50));
-        }
-      }
-    });
-
     test('same seed produces same content', () {
       expect(
         generate(99).map((c) => c.content).toList(),

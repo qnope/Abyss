@@ -5,7 +5,7 @@
 The map is represented by three core classes, all persisted with Hive:
 
 - **`GameMap`** -- A 20x20 grid stored as a flat `List<MapCell>`. Holds the grid dimensions, the player base coordinates (`playerBaseX`, `playerBaseY`), and the generation `seed`. Provides `cellAt(x, y)` and `setCell(x, y, cell)` for indexed access.
-- **`MapCell`** -- A single cell containing a `TerrainType`, a `CellContentType`, an optional `MonsterDifficulty`, an optional bonus resource (`ResourceType` + amount), and an `isRevealed` flag for fog of war.
+- **`MapCell`** -- A single cell containing a `TerrainType`, a `CellContentType`, an optional `MonsterDifficulty`, an `isRevealed` flag for fog of war, and an `isCollected` flag marking treasures and ruins already looted.
 - **`GridPosition`** -- A value object pairing an `x` and `y` coordinate with equality and hash support.
 
 ## Terrain Types
@@ -19,12 +19,12 @@ The map is represented by three core classes, all persisted with Hive:
 
 ## Cell Content Types
 
-| Value           | Description                                        |
-|-----------------|----------------------------------------------------|
-| `empty`         | Nothing special                                    |
-| `resourceBonus` | Grants a random `ResourceType` with 10-50 amount   |
-| `ruins`         | Explorable ruins                                   |
-| `monsterLair`   | Guarded by a monster (easy, medium, or hard)        |
+| Value           | Description                                                              |
+|-----------------|--------------------------------------------------------------------------|
+| `empty`         | Nothing special                                                          |
+| `resourceBonus` | Treasure: collectable bundle of algae, coral and ore                     |
+| `ruins`         | Collectable ruins yielding small amounts of coral, ore and pearl         |
+| `monsterLair`   | Guarded by a monster (easy, medium, or hard)                             |
 
 Monster difficulty scales with distance from the player base: cells farther than 7 tiles favor medium/hard monsters, while closer cells favor easy/medium.
 
@@ -60,6 +60,10 @@ GameMap returned
 ## Fog of War
 
 Every cell starts with `isRevealed = false`. During generation, cells within a Chebyshev distance of 2 from the player base are revealed. The `isRevealed` flag on `MapCell` controls whether the cell is visible to the player.
+
+## Collected State
+
+`MapCell.isCollected` marks treasures and ruins already looted. Once set, the cell content icon stays visible but is rendered greyed out, and the `CollectTreasureAction` refuses to collect it again. Reward generation lives in the action itself, not on the cell, so the underlying random rolls are decided at collect time.
 
 ## Exploration
 

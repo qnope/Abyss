@@ -1,7 +1,6 @@
 import 'dart:math';
 import '../game/game.dart';
 import '../map/cell_content_type.dart';
-import '../map/map_cell.dart';
 import '../resource/resource_type.dart';
 import 'action.dart';
 import 'action_result.dart';
@@ -51,7 +50,7 @@ class CollectTreasureAction extends Action {
     final cell = game.gameMap!.cellAt(targetX, targetY);
 
     if (cell.content == CellContentType.resourceBonus) {
-      _collectResourceBonus(game, cell);
+      _collectResourceBonus(game);
     } else if (cell.content == CellContentType.ruins) {
       _collectRuins(game);
     }
@@ -64,31 +63,21 @@ class CollectTreasureAction extends Action {
     return const ActionResult.success();
   }
 
-  void _collectResourceBonus(Game game, MapCell cell) {
-    final resType = cell.bonusResourceType!;
-    final amount = cell.bonusAmount!;
-    final resource = game.resources[resType]!;
-    resource.amount =
-        (resource.amount + amount).clamp(0, resource.maxStorage);
+  void _collectResourceBonus(Game game) {
+    _addResource(game, ResourceType.algae, 50 + _random.nextInt(51));
+    _addResource(game, ResourceType.coral, 30 + _random.nextInt(21));
+    _addResource(game, ResourceType.ore, 30 + _random.nextInt(21));
   }
 
   void _collectRuins(Game game) {
-    final resourceTypes = [
-      ResourceType.algae,
-      ResourceType.coral,
-      ResourceType.ore,
-      ResourceType.energy,
-    ];
-    final randomType = resourceTypes[_random.nextInt(4)];
-    final randomAmount = 20 + _random.nextInt(61);
-    final randomPearls = 1 + _random.nextInt(5);
+    _addResource(game, ResourceType.coral, _random.nextInt(3));
+    _addResource(game, ResourceType.ore, _random.nextInt(3));
+    _addResource(game, ResourceType.pearl, _random.nextInt(3));
+  }
 
-    final resource = game.resources[randomType]!;
+  void _addResource(Game game, ResourceType type, int amount) {
+    final resource = game.resources[type]!;
     resource.amount =
-        (resource.amount + randomAmount).clamp(0, resource.maxStorage);
-
-    final pearlResource = game.resources[ResourceType.pearl]!;
-    pearlResource.amount =
-        (pearlResource.amount + randomPearls).clamp(0, pearlResource.maxStorage);
+        (resource.amount + amount).clamp(0, resource.maxStorage);
   }
 }

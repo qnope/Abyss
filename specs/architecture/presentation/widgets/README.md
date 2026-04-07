@@ -46,8 +46,11 @@
 | Widget | Purpose |
 |--------|---------|
 | `GameMapView` | Renders the 20x20 grid with fog of war, tap callbacks, pending markers. Zoom: 1 cell (max) → 8 cells (default) → full map (min) |
-| `MapCellWidget` | Single cell with terrain, content rendering, tap handler, and exploration marker |
+| `MapCellWidget` | Single cell with terrain, content rendering, tap handler, and exploration marker. Greys out collected treasures and ruins |
 | `ExplorationSheet` | Bottom sheet for confirming scout exploration (cost, reveal area, eligibility) |
+| `TreasureSheet` | Bottom sheet for collecting a `resourceBonus` or `ruins` cell (free, immediate). Triggers `CollectTreasureAction` |
+| `MonsterLairSheet` | Bottom sheet showing monster difficulty and "combat unavailable" notice |
+| `CellInfoSheet` | Generic info bottom sheet for empty plains, the player base, and already-collected cells |
 
 ## Turn Widgets (`turn/`)
 

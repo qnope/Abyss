@@ -1,7 +1,6 @@
 import 'package:hive/hive.dart';
 import 'cell_content_type.dart';
 import 'monster_difficulty.dart';
-import '../resource/resource_type.dart';
 import 'terrain_type.dart';
 
 part 'map_cell.g.dart';
@@ -20,12 +19,6 @@ class MapCell {
   @HiveField(3)
   final bool isRevealed;
 
-  @HiveField(4)
-  final ResourceType? bonusResourceType;
-
-  @HiveField(5)
-  final int? bonusAmount;
-
   @HiveField(6)
   final bool isCollected;
 
@@ -34,8 +27,6 @@ class MapCell {
     this.content = CellContentType.empty,
     this.monsterDifficulty,
     this.isRevealed = false,
-    this.bonusResourceType,
-    this.bonusAmount,
     this.isCollected = false,
   });
 
@@ -44,8 +35,6 @@ class MapCell {
     CellContentType? content,
     MonsterDifficulty? monsterDifficulty,
     bool? isRevealed,
-    ResourceType? bonusResourceType,
-    int? bonusAmount,
     bool? isCollected,
   }) {
     return MapCell(
@@ -53,8 +42,6 @@ class MapCell {
       content: content ?? this.content,
       monsterDifficulty: monsterDifficulty ?? this.monsterDifficulty,
       isRevealed: isRevealed ?? this.isRevealed,
-      bonusResourceType: bonusResourceType ?? this.bonusResourceType,
-      bonusAmount: bonusAmount ?? this.bonusAmount,
       isCollected: isCollected ?? this.isCollected,
     );
   }

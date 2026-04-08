@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
+import '../../../domain/game/player.dart';
 import '../../../domain/resource/production_calculator.dart';
 import '../../../domain/turn/turn_resolver.dart';
 import '../../widgets/unit/army_list_view.dart';
@@ -35,18 +36,20 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   int _currentTab = 0;
 
+  Player get _human => widget.game.humanPlayer;
+
   @override
   Widget build(BuildContext context) {
     final production = ProductionCalculator.fromBuildings(
-      widget.game.buildings,
-      techBranches: widget.game.techBranches,
+      _human.buildings,
+      techBranches: _human.techBranches,
     );
-    final consumption = computeConsumption(widget.game);
+    final consumption = computeConsumption(_human);
     return Scaffold(
       body: Column(
         children: [
           ResourceBar(
-            resources: widget.game.resources,
+            resources: _human.resources,
             production: production,
             consumption: consumption,
           ),
@@ -65,25 +68,26 @@ class _GameScreenState extends State<GameScreen> {
 
   Widget _buildTabContent() {
     final g = widget.game;
+    final human = _human;
     return switch (_currentTab) {
       0 => BuildingListView(
-        buildings: g.buildings,
-        resources: g.resources,
+        buildings: human.buildings,
+        resources: human.resources,
         onBuildingTap: (b) => showBuildingDetailAction(
           context, g, b, () => setState(() {})),
       ),
       1 => buildMapTab(
         context, g, widget.repository, () => setState(() {})),
       2 => ArmyListView(
-        units: g.units,
-        barracksLevel: g.buildings[BuildingType.barracks]!.level,
+        units: human.units,
+        barracksLevel: human.buildings[BuildingType.barracks]!.level,
         onUnitTap: (t) => showUnitDetailAction(
           context, g, t, () => setState(() {})),
       ),
       3 => TechTreeView(
-        techBranches: g.techBranches,
-        buildings: g.buildings,
-        resources: g.resources,
+        techBranches: human.techBranches,
+        buildings: human.buildings,
+        resources: human.resources,
         onBranchTap: (branch) => showBranchDetail(
           context, g, branch, () => setState(() {})),
         onNodeTap: (branch, level) => showNodeDetail(
@@ -94,14 +98,14 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Future<void> _nextTurn() async {
+    final human = _human;
     final production = ProductionCalculator.fromBuildings(
-      widget.game.buildings,
-      techBranches: widget.game.techBranches,
+      human.buildings,
+      techBranches: human.techBranches,
     );
-    final consumption = computeConsumption(widget.game);
-    final deactivated = computeBuildingsToDeactivate(
-      widget.game, production);
-    final unitsToLose = computeUnitsToLose(widget.game, deactivated);
+    final consumption = computeConsumption(human);
+    final deactivated = computeBuildingsToDeactivate(human, production);
+    final unitsToLose = computeUnitsToLose(human, deactivated);
     final confirmed = await showTurnConfirmationDialog(
       context,
       currentTurn: widget.game.turn,
@@ -109,7 +113,7 @@ class _GameScreenState extends State<GameScreen> {
       consumption: consumption,
       buildingsToDeactivate: deactivated,
       unitsToLose: unitsToLose,
-      pendingExplorationCount: widget.game.pendingExplorations.length,
+      pendingExplorationCount: human.pendingExplorations.length,
     );
     if (!confirmed || !mounted) return;
     final result = TurnResolver().resolve(widget.game);

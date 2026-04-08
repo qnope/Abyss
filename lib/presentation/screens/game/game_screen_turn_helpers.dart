@@ -2,50 +2,51 @@ import '../../../domain/building/building.dart';
 import '../../../domain/building/building_deactivator.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/consumption_calculator.dart';
-import '../../../domain/game/game.dart';
+import '../../../domain/game/player.dart';
 import '../../../domain/resource/production_calculator.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/unit/unit_loss_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
 
-Map<ResourceType, int> computeConsumption(Game game) {
+Map<ResourceType, int> computeConsumption(Player player) {
   final consumption = <ResourceType, int>{};
-  final energy = ConsumptionCalculator.totalBuildingConsumption(game.buildings);
+  final energy =
+      ConsumptionCalculator.totalBuildingConsumption(player.buildings);
   if (energy > 0) consumption[ResourceType.energy] = energy;
-  final algae = ConsumptionCalculator.totalUnitConsumption(game.units);
+  final algae = ConsumptionCalculator.totalUnitConsumption(player.units);
   if (algae > 0) consumption[ResourceType.algae] = algae;
   return consumption;
 }
 
 List<BuildingType> computeBuildingsToDeactivate(
-  Game game,
+  Player player,
   Map<ResourceType, int> production,
 ) {
   final energyProd = production[ResourceType.energy] ?? 0;
-  final energyStock = game.resources[ResourceType.energy]?.amount ?? 0;
+  final energyStock = player.resources[ResourceType.energy]?.amount ?? 0;
   return BuildingDeactivator.deactivate(
-    buildings: game.buildings,
+    buildings: player.buildings,
     energyProduction: energyProd,
     energyStock: energyStock,
   );
 }
 
 Map<UnitType, int> computeUnitsToLose(
-  Game game,
+  Player player,
   List<BuildingType> deactivated,
 ) {
-  final activeBuildings = Map.of(game.buildings);
+  final activeBuildings = Map.of(player.buildings);
   for (final type in deactivated) {
     activeBuildings[type] = Building(type: type, level: 0);
   }
   final prod = ProductionCalculator.fromBuildings(
     activeBuildings,
-    techBranches: game.techBranches,
+    techBranches: player.techBranches,
   );
   final algaeProd = prod[ResourceType.algae] ?? 0;
-  final algaeStock = game.resources[ResourceType.algae]?.amount ?? 0;
+  final algaeStock = player.resources[ResourceType.algae]?.amount ?? 0;
   return UnitLossCalculator.calculateLosses(
-    units: game.units,
+    units: player.units,
     algaeProduction: algaeProd,
     algaeStock: algaeStock,
   );

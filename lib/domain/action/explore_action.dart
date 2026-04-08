@@ -1,4 +1,5 @@
 import '../game/game.dart';
+import '../game/player.dart';
 import '../map/cell_eligibility_checker.dart';
 import '../map/exploration_order.dart';
 import '../map/grid_position.dart';
@@ -20,12 +21,12 @@ class ExploreAction extends Action {
   String get description => 'Explorer ($targetX, $targetY)';
 
   @override
-  ActionResult validate(Game game) {
+  ActionResult validate(Game game, Player player) {
     if (game.gameMap == null) {
       return const ActionResult.failure('Carte non générée');
     }
 
-    final scoutCount = game.units[UnitType.scout]?.count ?? 0;
+    final scoutCount = player.units[UnitType.scout]?.count ?? 0;
     if (scoutCount <= 0) {
       return const ActionResult.failure('Aucun éclaireur disponible');
     }
@@ -42,13 +43,13 @@ class ExploreAction extends Action {
   }
 
   @override
-  ActionResult execute(Game game) {
-    final validation = validate(game);
+  ActionResult execute(Game game, Player player) {
+    final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
-    game.units[UnitType.scout]!.count -= 1;
+    player.units[UnitType.scout]!.count -= 1;
 
-    game.pendingExplorations.add(
+    player.pendingExplorations.add(
       ExplorationOrder(target: GridPosition(x: targetX, y: targetY)),
     );
 

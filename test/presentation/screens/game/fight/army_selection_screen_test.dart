@@ -5,6 +5,7 @@ import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/fight/army_selection_screen.dart';
 import 'package:abyss/presentation/screens/game/fight/fight_summary_screen.dart';
+import 'package:abyss/presentation/widgets/fight/selection_summary_card.dart';
 
 import '../../../../domain/action/fight_monster_action_helper.dart';
 import '../../../../helpers/fake_game_repository.dart';
@@ -23,8 +24,12 @@ void main() {
     required FakeGameRepository repository,
     required VoidCallback onChanged,
     Map<UnitType, int> stock = const {UnitType.scout: 3, UnitType.harpoonist: 2},
+    int militaryResearchLevel = 0,
   }) {
-    final scenario = createFightScenario(stock: stock);
+    final scenario = createFightScenario(
+      stock: stock,
+      militaryResearchLevel: militaryResearchLevel,
+    );
     return MaterialApp(
       home: ArmySelectionScreen(
         game: scenario.game,
@@ -34,6 +39,12 @@ void main() {
         lair: lair,
         onChanged: onChanged,
       ),
+    );
+  }
+
+  SelectionSummaryCard findSummaryCard(WidgetTester tester) {
+    return tester.widget<SelectionSummaryCard>(
+      find.byType(SelectionSummaryCard),
     );
   }
 
@@ -105,7 +116,11 @@ void main() {
 
       await tester.tap(find.byIcon(Icons.add).first);
       await tester.pump();
-      await tester.tap(find.widgetWithText(ElevatedButton, 'Lancer le combat'));
+      final Finder launchButton =
+          find.widgetWithText(ElevatedButton, 'Lancer le combat');
+      await tester.ensureVisible(launchButton);
+      await tester.pumpAndSettle();
+      await tester.tap(launchButton);
       await tester.pumpAndSettle();
 
       expect(repository.saveCallCount, 1);
@@ -153,6 +168,80 @@ void main() {
 
       expect(find.text('Préparer le combat'), findsNothing);
       expect(repository.saveCallCount, 0);
+    });
+
+    testWidgets('shows summary card with zero totals at start',
+        (tester) async {
+      await tester.pumpWidget(buildApp(
+        repository: FakeGameRepository(),
+        onChanged: () {},
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SelectionSummaryCard), findsOneWidget);
+      final SelectionSummaryCard card = findSummaryCard(tester);
+      expect(card.totalAtk, 0);
+      expect(card.totalDef, 0);
+      expect(card.militaryLevel, 0);
+    });
+
+    testWidgets('incrementing scout updates ATK total', (tester) async {
+      await tester.pumpWidget(buildApp(
+        repository: FakeGameRepository(),
+        onChanged: () {},
+        stock: const {UnitType.scout: 3},
+      ));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.add).first);
+      await tester.pump();
+      expect(findSummaryCard(tester).totalAtk, 2);
+
+      await tester.tap(find.byIcon(Icons.add).first);
+      await tester.pump();
+      expect(findSummaryCard(tester).totalAtk, 4);
+    });
+
+    testWidgets('includes military bonus in ATK total', (tester) async {
+      await tester.pumpWidget(buildApp(
+        repository: FakeGameRepository(),
+        onChanged: () {},
+        stock: const {UnitType.harpoonist: 2},
+        militaryResearchLevel: 5,
+      ));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.add).first);
+      await tester.pump();
+
+      expect(findSummaryCard(tester).totalAtk, 10);
+      expect(findSummaryCard(tester).militaryLevel, 5);
+    });
+
+    testWidgets('shows "Bonus militaire : aucun" with no military tech',
+        (tester) async {
+      await tester.pumpWidget(buildApp(
+        repository: FakeGameRepository(),
+        onChanged: () {},
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Bonus militaire : aucun'), findsOneWidget);
+    });
+
+    testWidgets('shows formatted bonus label when level > 0',
+        (tester) async {
+      await tester.pumpWidget(buildApp(
+        repository: FakeGameRepository(),
+        onChanged: () {},
+        militaryResearchLevel: 3,
+      ));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text('Bonus militaire : +60% ATK (niveau 3)'),
+        findsOneWidget,
+      );
     });
   });
 }

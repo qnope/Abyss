@@ -49,11 +49,10 @@ void main() {
             reason: 'Resource ${entry.key} delta should match loot');
       }
 
-      final int sent = result.sent[UnitType.harpoonist] ?? 0;
-      final int wounded = result.wounded[UnitType.harpoonist] ?? 0;
+      final int dead = result.dead[UnitType.harpoonist] ?? 0;
       final int finalStock =
           scenario.player.units[UnitType.harpoonist]!.count;
-      expect(finalStock, initialHarpoonists - sent + wounded);
+      expect(finalStock, initialHarpoonists - dead);
     });
 
     test('defeat full flow: cell untouched, resources intact, unit consumed',
@@ -91,16 +90,16 @@ void main() {
         );
       }
 
-      // Sent saboteur not in stock anymore (neither survived nor wounded).
+      // Final stock = initial - dead (US-04: survivors + wounded return).
       final int finalStock =
           scenario.player.units[UnitType.saboteur]!.count;
-      final int wounded = result.wounded[UnitType.saboteur] ?? 0;
-      expect(finalStock, wounded,
-          reason: 'Only wounded saboteurs should remain in stock');
+      final int dead = result.dead[UnitType.saboteur] ?? 0;
+      expect(finalStock, 1 - dead,
+          reason: 'Only dead saboteurs should be removed from stock');
       expect(result.sent[UnitType.saboteur], 1);
     });
 
-    test('casualty restoration: wounded units are returned to stock', () {
+    test('casualty restoration: survivors and wounded return to stock', () {
       final scenario = createFightScenario(
         difficulty: MonsterDifficulty.medium,
         unitCount: 6,
@@ -131,9 +130,10 @@ void main() {
       expect(totalWounded, greaterThan(0),
           reason: 'Balanced fight should produce at least one wounded unit');
 
+      // US-04 invariant: final stock == initial - dead.
       final int finalStock =
           scenario.player.units[UnitType.harpoonist]!.count;
-      expect(finalStock, initialStock - sent + wounded);
+      expect(finalStock, initialStock - dead);
     });
   });
 }

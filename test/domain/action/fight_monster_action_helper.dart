@@ -6,6 +6,8 @@ import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
+import 'package:abyss/domain/tech/tech_branch.dart';
+import 'package:abyss/domain/tech/tech_branch_state.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 
 /// Builds a 5x5 map with the (1,1) cell holding a monster lair.
@@ -40,6 +42,7 @@ GameMap buildFightTestMap({
 Player buildFightTestPlayer({
   String id = 'test-uuid',
   Map<UnitType, int> stock = const {},
+  int militaryResearchLevel = 0,
 }) {
   final Player player = Player(
     id: id,
@@ -49,6 +52,11 @@ Player buildFightTestPlayer({
   );
   for (final MapEntry<UnitType, int> entry in stock.entries) {
     player.units[entry.key]!.count = entry.value;
+  }
+  if (militaryResearchLevel > 0) {
+    final TechBranchState mil = player.techBranches[TechBranch.military]!;
+    mil.unlocked = true;
+    mil.researchLevel = militaryResearchLevel;
   }
   return player;
 }
@@ -61,8 +69,13 @@ Player buildFightTestPlayer({
   CellContentType content = CellContentType.monsterLair,
   Map<UnitType, int> stock = const {},
   String playerId = 'test-uuid',
+  int militaryResearchLevel = 0,
 }) {
-  final Player player = buildFightTestPlayer(id: playerId, stock: stock);
+  final Player player = buildFightTestPlayer(
+    id: playerId,
+    stock: stock,
+    militaryResearchLevel: militaryResearchLevel,
+  );
   final Game game = Game(
     humanPlayerId: player.id,
     players: {player.id: player},

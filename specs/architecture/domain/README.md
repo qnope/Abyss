@@ -10,9 +10,9 @@ The layer is split into eight submodules, each in its own subfolder.
 
 | Submodule | Path | Role |
 |-----------|------|------|
-| [action](action/README.md) | `lib/domain/action/` | Defines the `Action` interface and `ActionExecutor`. Each player action (upgrade building, research tech, recruit unit, unlock branch) is a concrete `Action` that validates preconditions then mutates the `Game`. |
+| [action](action/README.md) | `lib/domain/action/` | Defines the `Action` interface and `ActionExecutor`. Each player action (upgrade building, research tech, recruit unit, unlock branch, explore, collect treasure) is a concrete `Action` that validates `(Game, Player)` then mutates the target `Player`. |
 | [building](building/README.md) | `lib/domain/building/` | `Building` model (type + level), cost calculator, upgrade eligibility check, and the `BuildingDeactivator` used during turn resolution when energy is insufficient. |
-| [game](game/README.md) | `lib/domain/game/` | `Game` -- the root aggregate that holds all game state (resources, buildings, units, tech branches, map, turn counter). `Player` stores the player profile. Both are Hive-serializable. |
+| [game](game/README.md) | `lib/domain/game/` | `Game` -- the multi-player container (players map, human id, turn, shared `gameMap`). `Player` is the per-player state aggregate (resources, buildings, tech, units, pending explorations, revealed cells, base coords). Both are Hive-serializable. |
 | [map](map/README.md) | `lib/domain/map/` | `GameMap` grid, `MapCell`, terrain types, cell content (monsters, resources), procedural generation (`MapGenerator`, `TerrainGenerator`, `ContentPlacer`), and `ConnectivityChecker`. |
 | [resource](resource/README.md) | `lib/domain/resource/` | `Resource` model (type, amount, max storage), `ProductionCalculator`, `ConsumptionCalculator`, `MaintenanceCalculator`, and production formulas. |
 | [tech](tech/README.md) | `lib/domain/tech/` | Technology tree with three branches (military, resources, explorer). `TechBranchState` tracks unlock status and research level. Includes cost calculator and eligibility check. |
@@ -29,10 +29,12 @@ The layer is split into eight submodules, each in its own subfolder.
 ## Dependency flow
 
 ```
-action --> game, building, resource, tech, unit
-turn   --> game, building, resource, unit
+action --> game, building, resource, tech, unit, map
+turn   --> game, building, resource, unit, map
 game   --> building, resource, tech, unit, map
 ```
 
-Actions and turn resolution sit at the top; they read and mutate the `Game` aggregate.
-The remaining submodules (building, resource, tech, unit, map) are standalone data and logic modules.
+Actions and turn resolution sit at the top; they iterate per player
+and mutate the target `Player` (and, where unavoidable, the shared
+`GameMap`). The remaining submodules (building, resource, tech, unit,
+map) are standalone data and logic modules.

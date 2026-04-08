@@ -2,67 +2,110 @@
 
 ## Overview
 
-The action module implements the **Command pattern**. Each player action (upgrading a building, recruiting units, etc.) is encapsulated as an `Action` object that can be validated against the current game state and then executed to mutate it.
+The action module implements the **Command pattern**. Each player
+action (upgrading a building, recruiting units, etc.) is encapsulated
+as an `Action` object that can be validated against the current game
+state and then executed to mutate it.
+
+Every action receives **both** the `Game` container and the `Player`
+it is acting on. Per-player state (resources, buildings, tech, units,
+revealed cells, pending explorations) is always read from the
+`Player` argument -- actions never dig into `Game` for those fields.
+`Game` is only consulted for shared world state such as `gameMap`.
 
 ## Action (abstract base class)
 
 `Action` defines the contract every concrete action must follow:
 
-- `ActionType get type` -- identifies the action kind via the `ActionType` enum.
-- `String get description` -- human-readable label for the action.
-- `ActionResult validate(Game game)` -- checks whether the action is legal given the current `Game` state (sufficient resources, correct building level, etc.). Returns `ActionResult.success()` or `ActionResult.failure(reason)`. Must not mutate the game.
-- `ActionResult execute(Game game)` -- performs the action by mutating the `Game`. Every concrete implementation re-validates internally before applying changes.
+- `ActionType get type` -- identifies the action kind via the
+  `ActionType` enum.
+- `String get description` -- human-readable label.
+- `ActionResult validate(Game game, Player player)` -- checks whether
+  the action is legal for `player` given `game`. Returns
+  `ActionResult.success()` or `ActionResult.failure(reason)`. Must not
+  mutate anything.
+- `ActionResult execute(Game game, Player player)` -- performs the
+  action by mutating `player` (and, where unavoidable, shared state
+  such as `gameMap` cells for collection). Implementations re-validate
+  internally before applying changes.
 
 ## ActionType
 
-An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`, `researchTech`, `recruitUnit`, `explore`, `collectTreasure`.
+An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`,
+`researchTech`, `recruitUnit`, `explore`, `collectTreasure`.
 
 ## ActionResult
 
 A simple result object with two named constructors:
 
 - `ActionResult.success()` -- `isSuccess = true`, `reason = null`.
-- `ActionResult.failure(String reason)` -- `isSuccess = false`, carries an explanation string.
+- `ActionResult.failure(String reason)` -- `isSuccess = false`, carries
+  an explanation.
 
 ### CollectTreasureResult
 
-Sub-class of `ActionResult` returned by `CollectTreasureAction`. Carries `Map<ResourceType, int> deltas` so the presentation layer can show what was actually gained (post-clamp at `maxStorage`).
+Sub-class of `ActionResult` returned by `CollectTreasureAction`.
+Carries `Map<ResourceType, int> deltas` so the presentation layer can
+show what was actually gained (post-clamp at `maxStorage`).
 
 ## ActionExecutor
 
-A thin orchestrator that enforces the validate-then-execute sequence:
+A thin orchestrator enforcing the validate-then-execute sequence:
 
-1. Calls `action.validate(game)`.
-2. If validation fails, returns the failure result immediately.
-3. Otherwise calls `action.execute(game)` and returns its result.
+1. `action.validate(game, player)`.
+2. If validation fails, return the failure result immediately.
+3. Otherwise `action.execute(game, player)` and return its result.
 
-This guarantees no action reaches `execute` without passing validation first.
+This guarantees no action reaches `execute` without passing validation
+first.
 
 ## Concrete Actions
 
 ### UpgradeBuildingAction
 
-Takes a `BuildingType`. Validates that the building exists, is not at max level, and the player has enough resources. On execute, deducts the upgrade cost from resources and increments the building level.
+Takes a `BuildingType`. Validates against `player.buildings` and
+`player.resources`. On execute, deducts the upgrade cost and
+increments the building level on the player.
 
 ### RecruitUnitAction
 
-Takes a `UnitType` and a `quantity`. Validates that the unit is unlocked (based on barracks level), the unit type has not already been recruited this turn, the quantity is positive, and resources are sufficient. On execute, deducts costs, increases the unit count, and marks the unit type as recruited for the current turn.
+Takes a `UnitType` and a `quantity`. Validates against the player's
+barracks level, `player.recruitedUnitTypes`, quantity, and
+`player.resources`. On execute, deducts costs on the player, bumps
+`player.units`, and marks the unit type as recruited this turn.
 
 ### ResearchTechAction
 
-Takes a `TechBranch`. Validates that the branch exists, is unlocked, the target research level does not exceed the maximum, the laboratory level is high enough, and resources are sufficient. On execute, deducts costs and increments the branch research level.
+Takes a `TechBranch`. Validates against `player.techBranches` (must be
+unlocked, not at max), `player.buildings[BuildingType.laboratory]`,
+and `player.resources`. On execute, deducts costs and increments the
+branch research level on the player.
 
 ### UnlockBranchAction
 
-Takes a `TechBranch`. Validates that the branch exists, is not already unlocked, a laboratory is present (level >= 1), and resources are sufficient. On execute, deducts costs and sets the branch to unlocked.
+Takes a `TechBranch`. Validates that the branch exists on the player,
+is not already unlocked, a laboratory is present (level >= 1), and
+resources are sufficient. On execute, deducts costs and unlocks the
+branch on the player.
 
 ### ExploreAction
 
-Takes a `targetX` and `targetY`. Validates that the map exists, at least one scout is available, and the target cell is eligible (via `CellEligibilityChecker`). On execute, decrements the scout count and appends an `ExplorationOrder` to `game.pendingExplorations`. Scout consumption is immediate; revelation happens at turn resolution.
+Takes a `targetX` and `targetY`. Validates that `game.gameMap` exists,
+the player has at least one scout, and the target cell is eligible
+for that player (via `CellEligibilityChecker` using
+`player.revealedCells` and the player's base). On execute, decrements
+the scout count and appends an `ExplorationOrder` to
+`player.pendingExplorations`. Scout consumption is immediate;
+revelation happens at turn resolution.
 
 ### CollectTreasureAction
 
-Takes a `targetX`, `targetY`, and an optional `Random` source (for deterministic tests). Validates that the map exists, the target cell is revealed, not yet collected, and contains either `resourceBonus` or `ruins`. On execute, rolls the rewards, adds them to the player stock (clamped to `maxStorage`), flags the cell as collected, and returns a `CollectTreasureResult` carrying the per-resource delta actually applied.
+Takes `targetX`, `targetY`, and an optional `Random` (for tests).
+Validates that `game.gameMap` exists, the cell is revealed for the
+player, not yet collected, and contains `resourceBonus` or `ruins`.
+On execute, rolls rewards, adds them to `player.resources` (clamped
+to `maxStorage`), flags the cell with `collectedBy = player.id` on
+the shared map, and returns a `CollectTreasureResult`.
 
 | Content type     | Reward roll                                                  |
 |------------------|--------------------------------------------------------------|
@@ -78,7 +121,7 @@ Collection is free and immediate (no scout, no turn delay).
 | `action.dart` | Abstract `Action` base class |
 | `action_type.dart` | `ActionType` enum |
 | `action_result.dart` | `ActionResult` value object |
-| `collect_treasure_result.dart` | `CollectTreasureResult` sub-class of `ActionResult` carrying per-resource deltas |
+| `collect_treasure_result.dart` | `CollectTreasureResult` sub-class |
 | `action_executor.dart` | `ActionExecutor` orchestrator |
 | `upgrade_building_action.dart` | `UpgradeBuildingAction` |
 | `recruit_unit_action.dart` | `RecruitUnitAction` |

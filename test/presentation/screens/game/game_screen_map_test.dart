@@ -24,22 +24,21 @@ void main() {
       );
     }
 
-    testWidgets('generates map when gameMap is null', (tester) async {
-      final game = Game(player: Player(name: 'Nemo'));
-      await tester.pumpWidget(createApp(game));
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('Carte'));
-      await tester.pumpAndSettle();
-
-      expect(game.gameMap, isNotNull);
-      expect(find.byType(GameMapView), findsOneWidget);
-    });
+    Game newGameWithMap({int seed = 42}) {
+      final mapResult = MapGenerator.generate(seed: seed);
+      final player = Player.withBase(
+        name: 'Nemo',
+        baseX: mapResult.baseX,
+        baseY: mapResult.baseY,
+        mapWidth: mapResult.map.width,
+        mapHeight: mapResult.map.height,
+      );
+      return Game.singlePlayer(player)..gameMap = mapResult.map;
+    }
 
     testWidgets('displays existing map without regeneration',
         (tester) async {
-      final map = MapGenerator.generate(seed: 42);
-      final game = Game(player: Player(name: 'Nemo'), gameMap: map);
+      final game = newGameWithMap(seed: 42);
       await tester.pumpWidget(createApp(game));
       await tester.pumpAndSettle();
 
@@ -51,15 +50,15 @@ void main() {
       expect(repository.saveCallCount, 0);
     });
 
-    testWidgets('saves game after generating map', (tester) async {
-      final game = Game(player: Player(name: 'Nemo'));
+    testWidgets('map tab renders GameMapView', (tester) async {
+      final game = newGameWithMap();
       await tester.pumpWidget(createApp(game));
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('Carte'));
       await tester.pumpAndSettle();
 
-      expect(repository.saveCallCount, 1);
+      expect(find.byType(GameMapView), findsOneWidget);
     });
   });
 }

@@ -3,6 +3,7 @@ import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/game/player_defaults.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/unit/unit.dart';
@@ -17,30 +18,28 @@ Game _game({
   Map<UnitType, Unit>? units,
   List<UnitType>? recruitedUnitTypes,
   int turn = 1,
-}) => Game(
-  player: Player(name: 'Test'),
-  turn: turn,
-  buildings: buildings ?? Game.defaultBuildings(),
-  resources: resources ?? Game.defaultResources(),
-  units: units,
-  recruitedUnitTypes: recruitedUnitTypes,
-);
+}) {
+  final r = PlayerDefaults.resources();
+  if (resources != null) r.addAll(resources);
+  return Game.singlePlayer(Player(
+    name: 'Test',
+    buildings: buildings,
+    resources: r,
+    units: units,
+    recruitedUnitTypes: recruitedUnitTypes,
+  ))..turn = turn;
+}
 
 Map<ResourceType, int> _netProduction(Game game) {
+  final h = game.humanPlayer;
   final prod = ProductionCalculator.fromBuildings(
-    game.buildings, techBranches: game.techBranches,
+    h.buildings, techBranches: h.techBranches,
   );
-  final energyConsumption = ConsumptionCalculator.totalBuildingConsumption(
-    game.buildings,
-  );
-  final algaeConsumption = ConsumptionCalculator.totalUnitConsumption(
-    game.units,
-  );
+  final eCons = ConsumptionCalculator.totalBuildingConsumption(h.buildings);
+  final aCons = ConsumptionCalculator.totalUnitConsumption(h.units);
   final net = <ResourceType, int>{...prod};
-  net[ResourceType.energy] =
-      (net[ResourceType.energy] ?? 0) - energyConsumption;
-  net[ResourceType.algae] =
-      (net[ResourceType.algae] ?? 0) - algaeConsumption;
+  net[ResourceType.energy] = (net[ResourceType.energy] ?? 0) - eCons;
+  net[ResourceType.algae] = (net[ResourceType.algae] ?? 0) - aCons;
   return net;
 }
 
@@ -51,15 +50,12 @@ void main() {
         buildings: {
           BuildingType.algaeFarm: Building(type: BuildingType.algaeFarm, level: 2),
         },
-        units: {
-          UnitType.scout: Unit(type: UnitType.scout, count: 10),
-        },
+        units: {UnitType.scout: Unit(type: UnitType.scout, count: 10)},
       );
       final net = _netProduction(game);
-      final algaeResource = game.resources[ResourceType.algae]!;
-      final predicted = (algaeResource.amount + (net[ResourceType.algae] ?? 0))
-          .clamp(0, algaeResource.maxStorage);
-
+      final algae = game.humanPlayer.resources[ResourceType.algae]!;
+      final predicted = (algae.amount + (net[ResourceType.algae] ?? 0))
+          .clamp(0, algae.maxStorage);
       final result = TurnResolver().resolve(game);
       final change = result.changes.firstWhere((c) => c.type == ResourceType.algae);
       expect(change.afterAmount, predicted);
@@ -71,29 +67,25 @@ void main() {
           BuildingType.algaeFarm: Building(type: BuildingType.algaeFarm, level: 2),
         },
         resources: {
-          ...Game.defaultResources(),
           ResourceType.algae: Resource(
             type: ResourceType.algae, amount: 4900, maxStorage: 5000,
           ),
         },
       );
       final net = _netProduction(game);
-      final algae = game.resources[ResourceType.algae]!;
-      final predictedCapped = algae.amount + (net[ResourceType.algae] ?? 0) > algae.maxStorage;
-
+      final algae = game.humanPlayer.resources[ResourceType.algae]!;
+      final cap = algae.amount + (net[ResourceType.algae] ?? 0) > algae.maxStorage;
       final result = TurnResolver().resolve(game);
       final change = result.changes.firstWhere((c) => c.type == ResourceType.algae);
-      expect(change.wasCapped, predictedCapped);
+      expect(change.wasCapped, cap);
       expect(change.afterAmount, algae.maxStorage);
     });
 
     test('consumption deducted correctly through full flow', () {
       final game = _game(
-        units: {
-          UnitType.scout: Unit(type: UnitType.scout, count: 20),
-        },
+        units: {UnitType.scout: Unit(type: UnitType.scout, count: 20)},
       );
-      final before = game.resources[ResourceType.algae]!.amount;
+      final before = game.humanPlayer.resources[ResourceType.algae]!.amount;
       final result = TurnResolver().resolve(game);
       final change = result.changes.firstWhere((c) => c.type == ResourceType.algae);
       expect(change.beforeAmount, before);
@@ -105,14 +97,11 @@ void main() {
     test('negative net production floors at zero', () {
       final game = _game(
         resources: {
-          ...Game.defaultResources(),
           ResourceType.algae: Resource(
             type: ResourceType.algae, amount: 10, maxStorage: 5000,
           ),
         },
-        units: {
-          UnitType.scout: Unit(type: UnitType.scout, count: 20),
-        },
+        units: {UnitType.scout: Unit(type: UnitType.scout, count: 20)},
       );
       final result = TurnResolver().resolve(game);
       final change = result.changes.firstWhere((c) => c.type == ResourceType.algae);
@@ -125,7 +114,7 @@ void main() {
       );
       final result = TurnResolver().resolve(game);
       expect(result.hadRecruitedUnits, isTrue);
-      expect(game.recruitedUnitTypes, isEmpty);
+      expect(game.humanPlayer.recruitedUnitTypes, isEmpty);
     });
 
     test('turn numbers track correctly', () {
@@ -141,9 +130,7 @@ void main() {
           BuildingType.algaeFarm: Building(type: BuildingType.algaeFarm, level: 1),
           BuildingType.coralMine: Building(type: BuildingType.coralMine, level: 1),
         },
-        units: {
-          UnitType.scout: Unit(type: UnitType.scout, count: 10),
-        },
+        units: {UnitType.scout: Unit(type: UnitType.scout, count: 10)},
       );
       final result = TurnResolver().resolve(game);
       final algae = result.changes.firstWhere((c) => c.type == ResourceType.algae);

@@ -29,13 +29,17 @@ void main() {
     });
 
     testWidgets('shows saved games with info', (tester) async {
+      final alice = Player(name: 'Alice');
       repository.addGame(Game(
-        player: Player(name: 'Alice'),
+        humanPlayerId: alice.id,
+        players: {alice.id: alice},
         turn: 5,
         createdAt: DateTime(2026, 3, 15, 14, 30),
       ));
+      final bob = Player(name: 'Bob');
       repository.addGame(Game(
-        player: Player(name: 'Bob'),
+        humanPlayerId: bob.id,
+        players: {bob.id: bob},
         turn: 12,
         createdAt: DateTime(2026, 3, 20, 9, 0),
       ));
@@ -51,7 +55,7 @@ void main() {
     });
 
     testWidgets('shows delete confirmation dialog', (tester) async {
-      repository.addGame(Game(player: Player(name: 'Alice')));
+      repository.addGame(Game.singlePlayer(Player(name: 'Alice')));
 
       await tester.pumpWidget(createApp());
       await tester.tap(find.byIcon(Icons.delete_outline));
@@ -63,7 +67,7 @@ void main() {
     });
 
     testWidgets('deletes game after confirmation', (tester) async {
-      repository.addGame(Game(player: Player(name: 'Alice')));
+      repository.addGame(Game.singlePlayer(Player(name: 'Alice')));
 
       await tester.pumpWidget(createApp());
       expect(find.text('Alice'), findsOneWidget);
@@ -79,7 +83,7 @@ void main() {
     });
 
     testWidgets('cancel delete keeps game', (tester) async {
-      repository.addGame(Game(player: Player(name: 'Alice')));
+      repository.addGame(Game.singlePlayer(Player(name: 'Alice')));
 
       await tester.pumpWidget(createApp());
 

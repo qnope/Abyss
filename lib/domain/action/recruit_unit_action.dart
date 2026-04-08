@@ -3,6 +3,7 @@ import 'action_result.dart';
 import 'action_type.dart';
 import '../building/building_type.dart';
 import '../game/game.dart';
+import '../game/player.dart';
 import '../unit/unit_cost_calculator.dart';
 import '../unit/unit_type.dart';
 
@@ -19,14 +20,14 @@ class RecruitUnitAction extends Action {
   String get description => 'Recruter $quantity $unitType';
 
   @override
-  ActionResult validate(Game game) {
+  ActionResult validate(Game game, Player player) {
     final barracksLevel =
-        game.buildings[BuildingType.barracks]?.level ?? 0;
+        player.buildings[BuildingType.barracks]?.level ?? 0;
 
     if (!UnitCostCalculator().isUnlocked(unitType, barracksLevel)) {
       return ActionResult.failure('Unite verrouilee');
     }
-    if (game.recruitedUnitTypes.contains(unitType)) {
+    if (player.recruitedUnitTypes.contains(unitType)) {
       return ActionResult.failure('Recrutement deja effectue ce tour');
     }
     if (quantity <= 0) {
@@ -36,7 +37,7 @@ class RecruitUnitAction extends Action {
     final costs = UnitCostCalculator().recruitmentCost(unitType);
     for (final entry in costs.entries) {
       final totalCost = entry.value * quantity;
-      if (game.resources[entry.key]!.amount < totalCost) {
+      if (player.resources[entry.key]!.amount < totalCost) {
         return ActionResult.failure('Ressources insuffisantes');
       }
     }
@@ -45,16 +46,16 @@ class RecruitUnitAction extends Action {
   }
 
   @override
-  ActionResult execute(Game game) {
-    final validation = validate(game);
+  ActionResult execute(Game game, Player player) {
+    final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
     final costs = UnitCostCalculator().recruitmentCost(unitType);
     for (final entry in costs.entries) {
-      game.resources[entry.key]!.amount -= entry.value * quantity;
+      player.resources[entry.key]!.amount -= entry.value * quantity;
     }
-    game.units[unitType]!.count += quantity;
-    game.recruitedUnitTypes.add(unitType);
+    player.units[unitType]!.count += quantity;
+    player.recruitedUnitTypes.add(unitType);
 
     return ActionResult.success();
   }

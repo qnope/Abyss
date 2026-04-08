@@ -17,6 +17,7 @@ import '../../widgets/map/monster_lair_sheet.dart';
 import '../../widgets/map/treasure_sheet.dart';
 import '../../widgets/resource/resource_gain_dialog.dart';
 import 'game_screen_collect_messages.dart';
+import 'game_screen_fight_actions.dart';
 
 Widget buildMapTab(
   BuildContext context,
@@ -34,7 +35,7 @@ Widget buildMapTab(
     baseY: game.humanPlayer.baseY,
     humanPlayerId: game.humanPlayer.id,
     onCellTap: (x, y) => _showCellAction(
-      context, game, x, y, () {
+      context, game, repository, x, y, () {
         repository.save(game);
         onChanged();
       },
@@ -46,6 +47,7 @@ Widget buildMapTab(
 void _showCellAction(
   BuildContext context,
   Game game,
+  GameRepository repository,
   int x,
   int y,
   VoidCallback onChanged,
@@ -90,19 +92,16 @@ void _showCellAction(
             _collectTreasure(context, game, x, y, cell.content, onChanged),
       );
     case CellContentType.monsterLair:
-      showMonsterLairSheet(
-        context,
-        targetX: x,
-        targetY: y,
-        lair: cell.lair!,
-        onPrepareFight: () {},
-      );
+      showMonsterLairSheet(context,
+          targetX: x,
+          targetY: y,
+          lair: cell.lair!,
+          onPrepareFight: () => openArmySelection(
+              context, game, repository, x, y, cell.lair!, onChanged));
     case CellContentType.empty:
-      showCellInfoSheet(
-        context,
-        title: 'Plaine ($x, $y)',
-        message: "Il n'y a rien à voir ici",
-      );
+      showCellInfoSheet(context,
+          title: 'Plaine ($x, $y)',
+          message: "Il n'y a rien à voir ici");
   }
 }
 

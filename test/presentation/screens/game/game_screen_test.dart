@@ -2,9 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/map/cell_content_type.dart';
+import 'package:abyss/domain/map/game_map.dart';
+import 'package:abyss/domain/map/grid_position.dart';
+import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/map_generator.dart';
+import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_lair.dart';
+import 'package:abyss/domain/map/terrain_type.dart';
+import 'package:abyss/domain/unit/unit_type.dart';
+import 'package:abyss/presentation/screens/game/fight/army_selection_screen.dart';
 import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import '../../../helpers/fake_game_repository.dart';
 import '../../../helpers/test_svg_helper.dart';
 
@@ -118,6 +128,64 @@ void main() {
         find.textContaining('Centre de commandement'),
         findsOneWidget,
       );
+    });
+
+    testWidgets('tapping monster lair opens sheet then ArmySelectionScreen',
+        (tester) async {
+      tester.view.physicalSize = const Size(1200, 1600);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() => tester.view.resetPhysicalSize());
+      addTearDown(() => tester.view.resetDevicePixelRatio());
+
+      const int lairX = 11;
+      const int lairY = 10;
+      const int mapSize = 20;
+      final cells = List.generate(
+        mapSize * mapSize,
+        (_) => MapCell(terrain: TerrainType.plain),
+      );
+      cells[lairY * mapSize + lairX] = MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.monsterLair,
+        lair: const MonsterLair(
+          difficulty: MonsterDifficulty.easy,
+          unitCount: 2,
+        ),
+      );
+      final lairMap = GameMap(
+        width: mapSize,
+        height: mapSize,
+        cells: cells,
+        seed: 1,
+      );
+      final lairGame = Game.singlePlayer(Player(
+        name: 'Nemo',
+        baseX: 10,
+        baseY: 10,
+        revealedCellsList: [
+          for (var y = 0; y < mapSize; y++)
+            for (var x = 0; x < mapSize; x++) GridPosition(x: x, y: y),
+        ],
+      ))
+        ..gameMap = lairMap;
+      lairGame.humanPlayer.units[UnitType.scout]!.count = 3;
+
+      await tester.pumpWidget(createApp(lairGame));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Carte'));
+      await tester.pumpAndSettle();
+
+      final view = tester.widget<GameMapView>(find.byType(GameMapView));
+      view.onCellTap!(lairX, lairY);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Préparer le combat'), findsOneWidget);
+
+      await tester.tap(find.text('Préparer le combat'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ArmySelectionScreen), findsOneWidget);
     });
 
     testWidgets('upgrade increases building level', (tester) async {

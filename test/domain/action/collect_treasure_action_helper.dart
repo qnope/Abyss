@@ -4,14 +4,14 @@ import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/map_cell.dart';
-import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 
 /// Builds a 5x5 map with base at (2,2).
 /// Cell at (1,1) set with the specified content type and optional fields.
 GameMap buildCollectTestMap({
   CellContentType content = CellContentType.resourceBonus,
-  MonsterDifficulty? monsterDifficulty,
+  MonsterLair? lair,
   String? collectedBy,
 }) {
   final cells = <MapCell>[];
@@ -21,7 +21,7 @@ GameMap buildCollectTestMap({
         cells.add(MapCell(
           terrain: TerrainType.plain,
           content: content,
-          monsterDifficulty: monsterDifficulty,
+          lair: lair,
           collectedBy: collectedBy,
         ));
       } else {
@@ -49,7 +49,7 @@ Player buildCollectTestPlayer({String id = 'test-uuid'}) {
 
 ({Game game, Player player}) createCollectScenario({
   CellContentType content = CellContentType.resourceBonus,
-  MonsterDifficulty? monsterDifficulty,
+  MonsterLair? lair,
   String? collectedBy,
   String playerId = 'test-uuid',
 }) {
@@ -59,7 +59,7 @@ Player buildCollectTestPlayer({String id = 'test-uuid'}) {
     players: {player.id: player},
     gameMap: buildCollectTestMap(
       content: content,
-      monsterDifficulty: monsterDifficulty,
+      lair: lair,
       collectedBy: collectedBy,
     ),
   );

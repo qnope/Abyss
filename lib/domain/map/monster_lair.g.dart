@@ -1,41 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'map_cell.dart';
+part of 'monster_lair.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MapCellAdapter extends TypeAdapter<MapCell> {
+class MonsterLairAdapter extends TypeAdapter<MonsterLair> {
   @override
-  final int typeId = 13;
+  final int typeId = 17;
 
   @override
-  MapCell read(BinaryReader reader) {
+  MonsterLair read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MapCell(
-      terrain: fields[0] as TerrainType,
-      content: fields[1] as CellContentType,
-      lair: fields[2] as MonsterLair?,
-      collectedBy: fields[3] as String?,
+    return MonsterLair(
+      difficulty: fields[0] as MonsterDifficulty,
+      unitCount: fields[1] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, MapCell obj) {
+  void write(BinaryWriter writer, MonsterLair obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.terrain)
-      ..writeByte(1)
-      ..write(obj.content)
       ..writeByte(2)
-      ..write(obj.lair)
-      ..writeByte(3)
-      ..write(obj.collectedBy);
+      ..writeByte(0)
+      ..write(obj.difficulty)
+      ..writeByte(1)
+      ..write(obj.unitCount);
   }
 
   @override
@@ -44,7 +38,7 @@ class MapCellAdapter extends TypeAdapter<MapCell> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MapCellAdapter &&
+      other is MonsterLairAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

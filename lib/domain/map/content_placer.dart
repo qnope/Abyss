@@ -2,6 +2,7 @@ import 'dart:math';
 import 'cell_content_type.dart';
 import 'map_cell.dart';
 import 'monster_difficulty.dart';
+import 'monster_lair.dart';
 
 class ContentPlacer {
   static void place({
@@ -91,7 +92,7 @@ class ContentPlacer {
     }
     cells[i] = cells[i].copyWith(
       content: CellContentType.monsterLair,
-      monsterDifficulty: difficulty,
+      lair: MonsterLair(difficulty: difficulty, unitCount: 0),
     );
   }
 

@@ -74,7 +74,7 @@ class MapCellWidget extends StatelessWidget {
   String? get _contentSvgPath {
     if (isBase) return 'assets/icons/map_content/player_base.svg';
     if (cell.content == CellContentType.monsterLair) {
-      return cell.monsterDifficulty?.svgPath;
+      return cell.lair?.difficulty.svgPath;
     }
     return cell.content.svgPath;
   }

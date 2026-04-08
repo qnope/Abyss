@@ -5,4 +5,5 @@ enum ActionType {
   recruitUnit,
   explore,
   collectTreasure,
+  fightMonster,
 }

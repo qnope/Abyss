@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
@@ -13,43 +14,55 @@ void main() {
       width: 20,
       height: 20,
       cells: cells,
-      playerBaseX: 10,
-      playerBaseY: 10,
       seed: 42,
     );
   }
 
-  group('GameMap', () {
-    test('construction with 20x20 grid', () {
+  group('GameMap construction', () {
+    test('constructs without base coordinates', () {
       final map = makeMap();
       expect(map.width, 20);
       expect(map.height, 20);
       expect(map.cells.length, 400);
-      expect(map.playerBaseX, 10);
-      expect(map.playerBaseY, 10);
       expect(map.seed, 42);
     });
+  });
 
-    test('cellAt returns correct cell', () {
+  group('GameMap cellAt / setCell', () {
+    test('cellAt retrieves the correct cell', () {
       final map = makeMap();
-      final cell = MapCell(terrain: TerrainType.plain, isRevealed: true);
-      map.cells[5 * 20 + 3] = cell;
-      expect(map.cellAt(3, 5).isRevealed, true);
+      final marker = MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.ruins,
+      );
+      map.cells[5 * 20 + 3] = marker;
+      expect(map.cellAt(3, 5).content, CellContentType.ruins);
     });
 
-    test('setCell overwrites correct cell', () {
+    test('setCell overwrites the correct cell', () {
       final map = makeMap();
-      final cell = MapCell(terrain: TerrainType.plain, isRevealed: true);
-      map.setCell(7, 12, cell);
-      expect(map.cellAt(7, 12).isRevealed, true);
+      final marker = MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.monsterLair,
+      );
+      map.setCell(7, 12, marker);
+      expect(map.cellAt(7, 12).content, CellContentType.monsterLair);
     });
 
     test('cellAt handles corners', () {
       final map = makeMap();
-      map.setCell(0, 0, MapCell(terrain: TerrainType.plain, isRevealed: true));
-      map.setCell(19, 19, MapCell(terrain: TerrainType.plain));
-      expect(map.cellAt(0, 0).isRevealed, true);
-      expect(map.cellAt(19, 19).isRevealed, false);
+      map.setCell(
+        0,
+        0,
+        MapCell(terrain: TerrainType.plain, content: CellContentType.ruins),
+      );
+      map.setCell(
+        19,
+        19,
+        MapCell(terrain: TerrainType.plain, content: CellContentType.empty),
+      );
+      expect(map.cellAt(0, 0).content, CellContentType.ruins);
+      expect(map.cellAt(19, 19).content, CellContentType.empty);
     });
   });
 }

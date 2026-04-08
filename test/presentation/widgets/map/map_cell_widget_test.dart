@@ -13,84 +13,88 @@ void main() {
     return MaterialApp(home: Scaffold(body: child));
   }
 
+  bool hasFogOverlay(WidgetTester tester) {
+    final containers = tester.widgetList<Container>(find.byType(Container));
+    return containers.any(
+      (c) => c.color == AbyssColors.abyssBlack.withValues(alpha: 0.7),
+    );
+  }
+
+  MapCell plainBonus({String? collectedBy}) => MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.resourceBonus,
+        collectedBy: collectedBy,
+      );
+
   group('MapCellWidget', () {
-    testWidgets('revealed cell has no fog overlay', (tester) async {
-      final cell = MapCell(
-        terrain: TerrainType.plain,
-        isRevealed: true,
-      );
-      await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
-      final svgs = find.byType(SvgPicture);
-      expect(svgs, findsWidgets);
-    });
-
     testWidgets('unrevealed cell has fog overlay', (tester) async {
-      final cell = MapCell(terrain: TerrainType.plain);
-      await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
-      final containers = tester.widgetList<Container>(
-        find.byType(Container),
-      );
-      final hasFog = containers.any(
-        (c) => c.color == AbyssColors.abyssBlack.withValues(alpha: 0.7),
-      );
-      expect(hasFog, isTrue);
+      await tester.pumpWidget(wrap(
+        MapCellWidget(cell: plainBonus(), isRevealed: false),
+      ));
+      expect(hasFogOverlay(tester), isTrue);
     });
 
-    testWidgets('base cell shows player_base SVG', (tester) async {
-      final cell = MapCell(
-        terrain: TerrainType.plain,
-        isRevealed: true,
-      );
-      await tester.pumpWidget(
-        wrap(MapCellWidget(cell: cell, isBase: true)),
-      );
+    testWidgets('revealed cell has no fog overlay', (tester) async {
+      await tester.pumpWidget(wrap(
+        MapCellWidget(cell: plainBonus(), isRevealed: true),
+      ));
+      expect(hasFogOverlay(tester), isFalse);
       expect(find.byType(SvgPicture), findsWidgets);
     });
 
-    testWidgets('monster lair shows monster SVG', (tester) async {
-      final cell = MapCell(
-        terrain: TerrainType.plain,
-        content: CellContentType.monsterLair,
-        monsterDifficulty: MonsterDifficulty.hard,
-        isRevealed: true,
-      );
-      await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
-      expect(find.byType(SvgPicture), findsWidgets);
-    });
-
-    testWidgets('resource bonus shows resource SVG', (tester) async {
-      final cell = MapCell(
-        terrain: TerrainType.plain,
-        content: CellContentType.resourceBonus,
-        isRevealed: true,
-      );
-      await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
-      expect(find.byType(SvgPicture), findsWidgets);
-    });
-
-    testWidgets('collected cell shows content with reduced opacity',
+    testWidgets('revealed + not collected → no opacity wrapper',
         (tester) async {
-      final cell = MapCell(
-        terrain: TerrainType.plain,
-        content: CellContentType.resourceBonus,
-        isRevealed: true,
-        isCollected: true,
-      );
-      await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
+      await tester.pumpWidget(wrap(
+        MapCellWidget(cell: plainBonus(), isRevealed: true),
+      ));
+      expect(find.byType(Opacity), findsNothing);
+    });
+
+    testWidgets('revealed + collected by human → opacity 0.3', (tester) async {
+      await tester.pumpWidget(wrap(
+        MapCellWidget(
+          cell: plainBonus(collectedBy: 'human-uuid'),
+          isRevealed: true,
+        ),
+      ));
       final opacity = tester.widget<Opacity>(find.byType(Opacity));
       expect(opacity.opacity, 0.3);
     });
 
-    testWidgets('non-collected cell shows content without opacity wrapper',
+    testWidgets('revealed + collected by other → opacity 0.3', (tester) async {
+      await tester.pumpWidget(wrap(
+        MapCellWidget(
+          cell: plainBonus(collectedBy: 'other-uuid'),
+          isRevealed: true,
+          isCollectedByOther: true,
+        ),
+      ));
+      final opacity = tester.widget<Opacity>(find.byType(Opacity));
+      expect(opacity.opacity, 0.3);
+    });
+
+    testWidgets('isBase=true renders player base SVG', (tester) async {
+      await tester.pumpWidget(wrap(
+        MapCellWidget(
+          cell: MapCell(terrain: TerrainType.plain),
+          isRevealed: true,
+          isBase: true,
+        ),
+      ));
+      expect(find.byType(SvgPicture), findsWidgets);
+    });
+
+    testWidgets('monster lair shows monster SVG when revealed',
         (tester) async {
       final cell = MapCell(
         terrain: TerrainType.plain,
-        content: CellContentType.resourceBonus,
-        isRevealed: true,
-        isCollected: false,
+        content: CellContentType.monsterLair,
+        monsterDifficulty: MonsterDifficulty.hard,
       );
-      await tester.pumpWidget(wrap(MapCellWidget(cell: cell)));
-      expect(find.byType(Opacity), findsNothing);
+      await tester.pumpWidget(wrap(
+        MapCellWidget(cell: cell, isRevealed: true),
+      ));
+      expect(find.byType(SvgPicture), findsWidgets);
     });
   });
 }

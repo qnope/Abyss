@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/resource/resource_bar.dart';
@@ -16,11 +16,12 @@ void main() {
       Map<ResourceType, int> consumption = const {},
       Map<ResourceType, int> production = const {},
     }) {
+      final player = Player(name: 'Nemo');
       return MaterialApp(
         theme: AbyssTheme.create(),
         home: Scaffold(
           body: ResourceBar(
-            resources: Game.defaultResources(),
+            resources: player.resources,
             production: production,
             consumption: consumption,
           ),

@@ -29,6 +29,10 @@ Widget buildMapTab(
       .toSet();
   return GameMapView(
     gameMap: game.gameMap!,
+    revealedCells: game.humanPlayer.revealedCells,
+    baseX: game.humanPlayer.baseX,
+    baseY: game.humanPlayer.baseY,
+    humanPlayerId: game.humanPlayer.id,
     onCellTap: (x, y) => _showCellAction(
       context, game, x, y, () {
         repository.save(game);

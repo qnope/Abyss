@@ -11,6 +11,8 @@ const _contentSize = 28.0;
 
 class MapCellWidget extends StatelessWidget {
   final MapCell cell;
+  final bool isRevealed;
+  final bool isCollectedByOther;
   final bool isBase;
   final bool hasPendingExploration;
   final VoidCallback? onTap;
@@ -18,6 +20,8 @@ class MapCellWidget extends StatelessWidget {
   const MapCellWidget({
     super.key,
     required this.cell,
+    required this.isRevealed,
+    this.isCollectedByOther = false,
     this.isBase = false,
     this.hasPendingExploration = false,
     this.onTap,
@@ -34,9 +38,9 @@ class MapCellWidget extends StatelessWidget {
           children: [
             _background(),
             _terrainLayer(),
-            if (cell.isRevealed) _contentLayer(),
+            if (isRevealed) _contentLayer(),
             if (hasPendingExploration) _explorationMarker(),
-            if (!cell.isRevealed) _fogOverlay(),
+            if (!isRevealed) _fogOverlay(),
           ],
         ),
       ),
@@ -61,7 +65,7 @@ class MapCellWidget extends StatelessWidget {
     final icon = Center(
       child: SvgPicture.asset(path, width: _contentSize, height: _contentSize),
     );
-    if (cell.isCollected) {
+    if (cell.collectedBy != null) {
       return Opacity(opacity: 0.3, child: icon);
     }
     return icon;

@@ -17,9 +17,14 @@ void main() {
     );
   });
 
-  Game makeGame({int coral = 80, int ore = 50, int level = 0}) {
-    return Game(
-      player: Player(name: 'Test'),
+  ({Game game, Player player}) makeScenario({
+    int coral = 80,
+    int ore = 50,
+    int level = 0,
+  }) {
+    final player = Player(
+      id: 'test',
+      name: 'Test',
       resources: {
         ResourceType.algae: Resource(type: ResourceType.algae, amount: 100),
         ResourceType.coral: Resource(type: ResourceType.coral, amount: coral),
@@ -34,6 +39,11 @@ void main() {
         ),
       },
     );
+    final game = Game(
+      humanPlayerId: player.id,
+      players: {player.id: player},
+    );
+    return (game: game, player: player);
   }
 
   group('properties', () {
@@ -52,21 +62,21 @@ void main() {
 
   group('validate', () {
     test('returns success when resources sufficient', () {
-      final game = makeGame();
-      final result = action.validate(game);
+      final s = makeScenario();
+      final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isTrue);
     });
 
     test('returns failure when resources insufficient', () {
-      final game = makeGame(coral: 10, ore: 5);
-      final result = action.validate(game);
+      final s = makeScenario(coral: 10, ore: 5);
+      final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
       expect(result.reason, isNotNull);
     });
 
     test('returns failure when building at max level', () {
-      final game = makeGame(level: 10);
-      final result = action.validate(game);
+      final s = makeScenario(level: 10);
+      final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
       expect(result.reason, isNotNull);
     });
@@ -74,28 +84,28 @@ void main() {
 
   group('execute', () {
     test('deducts resources and increments level', () {
-      final game = makeGame();
-      final result = action.execute(game);
+      final s = makeScenario();
+      final result = action.execute(s.game, s.player);
       expect(result.isSuccess, isTrue);
-      expect(game.resources[ResourceType.coral]!.amount, 50);
-      expect(game.resources[ResourceType.ore]!.amount, 30);
-      expect(game.buildings[BuildingType.headquarters]!.level, 1);
+      expect(s.player.resources[ResourceType.coral]!.amount, 50);
+      expect(s.player.resources[ResourceType.ore]!.amount, 30);
+      expect(s.player.buildings[BuildingType.headquarters]!.level, 1);
     });
 
     test('returns failure without modifying when resources insufficient', () {
-      final game = makeGame(coral: 10, ore: 5);
-      final result = action.execute(game);
+      final s = makeScenario(coral: 10, ore: 5);
+      final result = action.execute(s.game, s.player);
       expect(result.isSuccess, isFalse);
-      expect(game.resources[ResourceType.coral]!.amount, 10);
-      expect(game.resources[ResourceType.ore]!.amount, 5);
-      expect(game.buildings[BuildingType.headquarters]!.level, 0);
+      expect(s.player.resources[ResourceType.coral]!.amount, 10);
+      expect(s.player.resources[ResourceType.ore]!.amount, 5);
+      expect(s.player.buildings[BuildingType.headquarters]!.level, 0);
     });
 
     test('returns failure without modifying when at max level', () {
-      final game = makeGame(level: 10);
-      final result = action.execute(game);
+      final s = makeScenario(level: 10);
+      final result = action.execute(s.game, s.player);
       expect(result.isSuccess, isFalse);
-      expect(game.buildings[BuildingType.headquarters]!.level, 10);
+      expect(s.player.buildings[BuildingType.headquarters]!.level, 10);
     });
   });
 }

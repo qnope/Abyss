@@ -101,6 +101,62 @@ void main() {
     });
   });
 
+  group('military bonus', () {
+    test('level 0 keeps base atk', () {
+      final List<Combatant> combatants = CombatantBuilder.playerCombatantsFrom(
+        <UnitType, int>{UnitType.harpoonist: 1},
+      );
+      expect(
+        combatants.first.atk,
+        UnitStats.forType(UnitType.harpoonist).atk,
+      );
+    });
+
+    test('level 3 multiplies by 1.6', () {
+      final List<Combatant> combatants = CombatantBuilder.playerCombatantsFrom(
+        <UnitType, int>{UnitType.harpoonist: 1},
+        militaryResearchLevel: 3,
+      );
+      expect(
+        combatants.first.atk,
+        (UnitStats.forType(UnitType.harpoonist).atk * 1.6).round(),
+      );
+    });
+
+    test('level 5 multiplies by 2.0', () {
+      final List<Combatant> combatants = CombatantBuilder.playerCombatantsFrom(
+        <UnitType, int>{UnitType.harpoonist: 1},
+        militaryResearchLevel: 5,
+      );
+      expect(
+        combatants.first.atk,
+        UnitStats.forType(UnitType.harpoonist).atk * 2,
+      );
+    });
+
+    test('bonus does not affect hp or def', () {
+      final List<Combatant> combatants = CombatantBuilder.playerCombatantsFrom(
+        <UnitType, int>{UnitType.guardian: 1},
+        militaryResearchLevel: 3,
+      );
+      expect(combatants.first.def, 6);
+      expect(combatants.first.maxHp, 25);
+    });
+
+    test('bonus does not affect monster combatants', () {
+      final MonsterLair lair = const MonsterLair(
+        difficulty: MonsterDifficulty.easy,
+        unitCount: 2,
+      );
+      final List<Combatant> combatants =
+          CombatantBuilder.monsterCombatantsFrom(lair);
+      final MonsterUnitStats level1 = MonsterUnitStats.forLevel(1);
+      for (final Combatant c in combatants) {
+        expect(c.atk, level1.atk);
+      }
+    });
+  });
+
   group('CombatantBuilder.unitTypeFromKey', () {
     test('returns matching UnitType for known key', () {
       expect(CombatantBuilder.unitTypeFromKey('scout'), UnitType.scout);

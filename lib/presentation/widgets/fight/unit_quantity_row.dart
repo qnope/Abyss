@@ -23,51 +23,70 @@ class UnitQuantityRow extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final canDecrement = value > 0;
     final canIncrement = value < stock;
+    final sliderMax = stock.toDouble();
+    final sliderValue = value.toDouble().clamp(0.0, sliderMax);
 
-    return SizedBox(
-      height: 64,
-      child: Row(
-        children: [
-          UnitIcon(type: type, size: 40),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  type.displayName,
-                  style: textTheme.titleMedium?.copyWith(color: type.color),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 64,
+          child: Row(
+            children: [
+              UnitIcon(type: type, size: 40),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      type.displayName,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: type.color,
+                      ),
+                    ),
+                    Text(
+                      'Stock: $stock',
+                      style: textTheme.bodySmall?.copyWith(
+                        color: AbyssColors.onSurfaceDim,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  'Stock: $stock',
-                  style: textTheme.bodySmall?.copyWith(
-                    color: AbyssColors.onSurfaceDim,
+              ),
+              IconButton(
+                icon: const Icon(Icons.remove),
+                onPressed: canDecrement ? () => onChanged(value - 1) : null,
+              ),
+              SizedBox(
+                width: 28,
+                child: Text(
+                  '$value',
+                  textAlign: TextAlign.center,
+                  style: textTheme.titleMedium?.copyWith(
+                    color: AbyssColors.onSurface,
                   ),
                 ),
-              ],
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.remove),
-            onPressed: canDecrement ? () => onChanged(value - 1) : null,
-          ),
-          SizedBox(
-            width: 28,
-            child: Text(
-              '$value',
-              textAlign: TextAlign.center,
-              style: textTheme.titleMedium?.copyWith(
-                color: AbyssColors.onSurface,
               ),
-            ),
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: canIncrement ? () => onChanged(value + 1) : null,
+              ),
+            ],
           ),
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: canIncrement ? () => onChanged(value + 1) : null,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Slider(
+            min: 0,
+            max: sliderMax,
+            divisions: stock,
+            value: sliderValue,
+            onChanged: (double v) => onChanged(v.round()),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

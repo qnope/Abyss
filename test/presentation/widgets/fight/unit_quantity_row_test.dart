@@ -89,5 +89,41 @@ void main() {
       await tester.tap(find.byIcon(Icons.add));
       expect(called, isFalse);
     });
+
+    testWidgets('renders Slider with correct max', (tester) async {
+      await tester.pumpWidget(createApp(stock: 5));
+      await tester.pumpAndSettle();
+      final slider = tester.widget<Slider>(find.byType(Slider));
+      expect(slider.max, 5.0);
+      expect(slider.divisions, 5);
+    });
+
+    testWidgets('slider value reflects current value', (tester) async {
+      await tester.pumpWidget(createApp(value: 3, stock: 5));
+      await tester.pumpAndSettle();
+      final slider = tester.widget<Slider>(find.byType(Slider));
+      expect(slider.value, 3.0);
+    });
+
+    testWidgets('dragging slider calls onChanged with rounded int', (
+      tester,
+    ) async {
+      int? received;
+      await tester.pumpWidget(
+        createApp(value: 0, stock: 5, onChanged: (v) => received = v),
+      );
+      await tester.pumpAndSettle();
+      final slider = tester.widget<Slider>(find.byType(Slider));
+      slider.onChanged?.call(2.7);
+      expect(received, 3);
+    });
+
+    testWidgets('stock == 1 still renders slider with max 1', (tester) async {
+      await tester.pumpWidget(createApp(stock: 1, value: 0));
+      await tester.pumpAndSettle();
+      final slider = tester.widget<Slider>(find.byType(Slider));
+      expect(slider.max, 1.0);
+      expect(slider.divisions, 1);
+    });
   });
 }

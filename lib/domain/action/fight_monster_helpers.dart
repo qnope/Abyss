@@ -3,10 +3,20 @@ import '../fight/combatant_builder.dart';
 import '../game/player.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
+import '../tech/tech_branch.dart';
+import '../tech/tech_branch_state.dart';
 import '../unit/unit_type.dart';
 
 class FightMonsterHelpers {
   const FightMonsterHelpers._();
+
+  /// Returns the player's military research level, or `0` if the branch is
+  /// missing or still locked.
+  static int militaryResearchLevelOf(Player player) {
+    final TechBranchState? state = player.techBranches[TechBranch.military];
+    if (state == null || !state.unlocked) return 0;
+    return state.researchLevel;
+  }
 
   /// Guarded pct lost calculator.
   static double computePctLost(List<Combatant> initial, List<Combatant> finalC) {
@@ -20,9 +30,10 @@ class FightMonsterHelpers {
     return (initialHp - finalHp) / initialHp;
   }
 
-  /// Restores the given wounded combatants to `player.units`.
-  static void restoreWounded(Player player, List<Combatant> wounded) {
-    for (final Combatant combatant in wounded) {
+  /// Restores the given combatants to `player.units` (one stock increment
+  /// per combatant).
+  static void restoreToStock(Player player, List<Combatant> combatants) {
+    for (final Combatant combatant in combatants) {
       final UnitType? type =
           CombatantBuilder.unitTypeFromKey(combatant.typeKey);
       if (type == null) {

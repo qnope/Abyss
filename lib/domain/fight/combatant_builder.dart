@@ -9,8 +9,9 @@ class CombatantBuilder {
   const CombatantBuilder._();
 
   static List<Combatant> playerCombatantsFrom(
-    Map<UnitType, int> selectedUnits,
-  ) {
+    Map<UnitType, int> selectedUnits, {
+    int militaryResearchLevel = 0,
+  }) {
     final List<Combatant> combatants = <Combatant>[];
     for (final MapEntry<UnitType, int> entry in selectedUnits.entries) {
       final int count = entry.value;
@@ -18,13 +19,15 @@ class CombatantBuilder {
         continue;
       }
       final UnitStats stats = UnitStats.forType(entry.key);
+      final int boostedAtk =
+          (stats.atk * (1 + 0.20 * militaryResearchLevel)).round();
       for (int i = 0; i < count; i++) {
         combatants.add(
           Combatant(
             side: CombatSide.player,
             typeKey: entry.key.name,
             maxHp: stats.hp,
-            atk: stats.atk,
+            atk: boostedAtk,
             def: stats.def,
           ),
         );

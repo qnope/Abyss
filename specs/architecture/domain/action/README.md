@@ -154,9 +154,12 @@ message so the UI can show it directly.
 
 **Execution flow**:
 
-1. Build both combatant lists via `CombatantBuilder`
-   (`playerCombatantsFrom(selectedUnits)` and
-   `monsterCombatantsFrom(lair)`).
+1. Build both combatant lists via `CombatantBuilder`. The player side
+   is built with `playerCombatantsFrom(selectedUnits,
+   militaryResearchLevel: FightMonsterHelpers.militaryResearchLevelOf(player))`,
+   which reads `player.techBranches[TechBranch.military].researchLevel`
+   (or `0` if the branch is missing or locked). The monster side uses
+   `monsterCombatantsFrom(lair)`.
 2. Decrement the player stocks by the committed amounts **before**
    resolving the fight.
 3. Run `FightEngine(random: random).resolve(...)`.
@@ -165,8 +168,10 @@ message so the UI can show it directly.
 5. Group final player combatants into `alive` (intact survivors) and
    `fallen` (hp == 0, mapped back to their initial entries).
 6. Partition `fallen` into `wounded` / `dead` via
-   `CasualtyCalculator.partition`. Wounded units are restored to the
-   player stocks through `FightMonsterHelpers.restoreWounded`.
+   `CasualtyCalculator.partition`. Restore both `alive` (intact
+   survivors) and `split.wounded` to player stocks via
+   `FightMonsterHelpers.restoreToStock`. The invariant
+   `stock_final == stock_initial - dead` holds.
 7. On victory: roll loot via `LootCalculator`, apply it via
    `FightMonsterHelpers.applyLoot` (clamped at `maxStorage`), and mark
    the cell as collected by the player (`copyWith(collectedBy:
@@ -195,4 +200,4 @@ later with a fresh army.
 | `explore_action.dart` | `ExploreAction` |
 | `collect_treasure_action.dart` | `CollectTreasureAction` |
 | `fight_monster_action.dart` | `FightMonsterAction` |
-| `fight_monster_helpers.dart` | Pct-lost, wounded restore, loot apply, combatants-by-type helpers |
+| `fight_monster_helpers.dart` | Pct-lost, generic `restoreToStock`, loot apply, military level lookup, combatants-by-type helpers |

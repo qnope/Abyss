@@ -79,8 +79,10 @@ class FightMonsterAction extends Action {
     final MapCell cell = game.gameMap!.cellAt(targetX, targetY);
     final MonsterLair lair = cell.lair!;
 
-    final List<Combatant> playerCombatants =
-        CombatantBuilder.playerCombatantsFrom(selectedUnits);
+    final int militaryLevel =
+        FightMonsterHelpers.militaryResearchLevelOf(player);
+    final List<Combatant> playerCombatants = CombatantBuilder
+        .playerCombatantsFrom(selectedUnits, militaryResearchLevel: militaryLevel);
     final List<Combatant> monsterCombatants =
         CombatantBuilder.monsterCombatantsFrom(lair);
 
@@ -102,18 +104,16 @@ class FightMonsterAction extends Action {
     final List<Combatant> fallen = <Combatant>[];
     final List<Combatant> alive = <Combatant>[];
     for (int i = 0; i < fightResult.finalPlayerCombatants.length; i++) {
-      final Combatant f = fightResult.finalPlayerCombatants[i];
-      if (f.currentHp <= 0) {
-        fallen.add(fightResult.initialPlayerCombatants[i]);
-      } else {
-        alive.add(fightResult.initialPlayerCombatants[i]);
-      }
+      final Combatant initial = fightResult.initialPlayerCombatants[i];
+      final bool down = fightResult.finalPlayerCombatants[i].currentHp <= 0;
+      (down ? fallen : alive).add(initial);
     }
 
     final CasualtySplit split =
         CasualtyCalculator(random: random).partition(fallen, pctLost);
 
-    FightMonsterHelpers.restoreWounded(player, split.wounded);
+    FightMonsterHelpers.restoreToStock(player, alive);
+    FightMonsterHelpers.restoreToStock(player, split.wounded);
 
     final Map<UnitType, int> sent = Map<UnitType, int>.from(selectedUnits)
       ..removeWhere((_, int v) => v <= 0);

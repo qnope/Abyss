@@ -10,7 +10,8 @@ import 'fight_monster_action_helper.dart';
 
 void main() {
   group('FightMonsterAction casualty accounting', () {
-    test('wounded units are restored to player stock', () {
+    test('survivors and wounded are restored — final stock == initial - dead',
+        () {
       final scenario = createFightScenario(
         difficulty: MonsterDifficulty.medium,
         unitCount: 4,
@@ -41,11 +42,11 @@ void main() {
       // All sent units must be accounted for.
       expect(survivors + wounded + dead, sent);
 
-      // Final stock == initial - sent + wounded (only wounded are restored
-      // per the action spec).
+      // US-04 invariant: only dead units are permanently removed from stock.
+      // Intact survivors and wounded both rejoin the stock at end of fight.
       final int finalStock =
           scenario.player.units[UnitType.harpoonist]!.count;
-      expect(finalStock, initialStock - sent + wounded);
+      expect(finalStock, initialStock - dead);
     });
 
     test('seeded run is reproducible', () {

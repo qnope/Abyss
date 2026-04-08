@@ -7,7 +7,9 @@ import '../../../../domain/game/game.dart';
 import '../../../../domain/map/monster_lair.dart';
 import '../../../../domain/unit/unit_type.dart';
 import '../../../widgets/fight/monster_preview.dart';
+import '../../../widgets/fight/selection_summary_card.dart';
 import '../../../widgets/fight/unit_quantity_row.dart';
+import 'army_selection_summary.dart';
 import 'fight_summary_screen.dart';
 
 class ArmySelectionScreen extends StatefulWidget {
@@ -33,6 +35,7 @@ class ArmySelectionScreen extends StatefulWidget {
 }
 
 class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
+  static const ArmySelectionSummary _summary = ArmySelectionSummary();
   final Map<UnitType, int> _selected = <UnitType, int>{};
 
   @override
@@ -45,6 +48,13 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
 
   int get _totalSelected =>
       _selected.values.fold<int>(0, (int sum, int v) => sum + v);
+
+  int get _militaryLevel =>
+      _summary.militaryLevelOf(widget.game.humanPlayer);
+
+  int get _totalAtk => _summary.totalAtk(_selected, _militaryLevel);
+
+  int get _totalDef => _summary.totalDef(_selected);
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +85,12 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
         MonsterPreview(lair: widget.lair),
         const SizedBox(height: 12),
         ...rows,
+        const SizedBox(height: 12),
+        SelectionSummaryCard(
+          totalAtk: _totalAtk,
+          totalDef: _totalDef,
+          militaryLevel: _militaryLevel,
+        ),
         const SizedBox(height: 16),
         Row(
           children: [

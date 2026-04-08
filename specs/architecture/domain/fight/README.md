@@ -64,9 +64,12 @@ is not cloned because the action only needs its initial/final count.
 - **`MonsterUnitStats`** -- Maps a monster `level` (1/2/3) to
   `{ hp, atk, def }` and a `MonsterDifficulty` to a level.
 - **`CombatantBuilder`** -- Converts game data into combatants:
-  `playerCombatantsFrom(Map<UnitType, int>)` reads `UnitStats`,
-  `monsterCombatantsFrom(MonsterLair)` reads `MonsterUnitStats`.
-  Also resolves a `typeKey` back to a `UnitType`.
+  `playerCombatantsFrom(Map<UnitType, int>, {int militaryResearchLevel = 0})`
+  reads `UnitStats` and applies a `+20% / level` multiplier on `atk`
+  (formula `(atk * (1 + 0.20 * level)).round()`).
+  `monsterCombatantsFrom(MonsterLair)` reads `MonsterUnitStats` and is
+  unaffected by the military bonus. Also resolves a `typeKey` back to
+  a `UnitType`.
 
 ## Result types
 

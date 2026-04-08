@@ -57,7 +57,8 @@ stays tab-focused.
 
 | File | Responsibility |
 |------|---------------|
-| `army_selection_screen.dart` | `ArmySelectionScreen` — lists the player's stocks, lets the user dial in how many of each `UnitType` to commit via `UnitQuantityRow`, shows a `MonsterPreview`, and on "Lancer le combat" runs `FightMonsterAction` through the `ActionExecutor`, saves the game, then `pushReplacement`s to `FightSummaryScreen` |
+| `army_selection_screen.dart` | `ArmySelectionScreen` — body stacks `MonsterPreview` → per-unit `UnitQuantityRow`s (slider + buttons) → `SelectionSummaryCard` → "Lancer le combat" launch row. Runs `FightMonsterAction` through the `ActionExecutor`, saves the game, then `pushReplacement`s to `FightSummaryScreen` |
+| `army_selection_summary.dart` | `ArmySelectionSummary` helper — `militaryLevelOf`, `totalAtk`, `totalDef` used by the screen body and the `SelectionSummaryCard` |
 | `fight_summary_screen.dart` | `FightSummaryScreen` — victory/defeat banner, `MonsterPreview`, player accounting (sent / intact / wounded / dead), monster section, loot list (on victory), and a `FightTurnList` of the per-turn summaries |
 | `fight_summary_screen_sections.dart` | `buildResultBanner`, `buildPlayerAccounting`, `buildMonsterSection`, `buildLoot` — section builders extracted from the summary screen to stay under 150 lines |
 

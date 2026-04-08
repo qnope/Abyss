@@ -57,7 +57,8 @@
 
 | Widget | Purpose |
 |--------|---------|
-| `UnitQuantityRow` | One row of the army-selection list: unit icon, name + current stock, minus/value/plus controls to pick how many to commit to the fight |
+| `UnitQuantityRow` | One row of the army-selection list: unit icon, name + current stock, minus/value/plus controls, and an embedded `Slider` synchronized with the `+/-` buttons to pick how many to commit to the fight |
+| `SelectionSummaryCard` | Reusable card showing the total ATK/DEF of a selection plus the active military bonus label |
 | `MonsterPreview` | Card showing the lair's SVG, difficulty label, level, unit count, and per-monster HP/ATK/DEF chips. Reused by the army-selection and fight-summary screens |
 | `FightTurnList` | Vertical list of per-turn summary tiles (alive counts, HP, damage dealt/received, crit badge). Feeds from `FightResult.turnSummaries` |
 

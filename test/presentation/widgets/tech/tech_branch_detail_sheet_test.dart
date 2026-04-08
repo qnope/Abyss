@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
-import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/domain/tech/tech_branch_state.dart';
 import 'package:abyss/domain/resource/resource.dart';
@@ -10,6 +10,8 @@ import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/tech/tech_branch_detail_sheet.dart';
 import '../../../helpers/test_svg_helper.dart';
+
+Player _player() => Player(name: 'Tester');
 
 void _useTallSurface(WidgetTester t) {
   t.view.physicalSize = const Size(800, 1200);
@@ -24,6 +26,7 @@ Widget _app({
   Map<BuildingType, Building>? buildings,
   VoidCallback? onUnlock,
 }) {
+  final fallback = _player();
   return MaterialApp(
     theme: AbyssTheme.create(),
     home: Scaffold(
@@ -33,8 +36,8 @@ Widget _app({
             ctx,
             branch: state.branch,
             state: state,
-            resources: resources ?? Game.defaultResources(),
-            buildings: buildings ?? Game.defaultBuildings(),
+            resources: resources ?? fallback.resources,
+            buildings: buildings ?? fallback.buildings,
             onUnlock: onUnlock ?? () {},
           ),
           child: const Text('Open'),
@@ -58,7 +61,7 @@ void main() {
       _useTallSurface(t);
       final state = TechBranchState(branch: TechBranch.military);
       final buildings = {
-        ...Game.defaultBuildings(),
+        ..._player().buildings,
         BuildingType.laboratory:
             Building(type: BuildingType.laboratory, level: 1),
       };
@@ -87,7 +90,7 @@ void main() {
       final state = TechBranchState(
         branch: TechBranch.military, unlocked: true);
       final buildings = {
-        ...Game.defaultBuildings(),
+        ..._player().buildings,
         BuildingType.laboratory:
             Building(type: BuildingType.laboratory, level: 1),
       };

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/unit/unit_detail_sheet.dart';
 import '../../../helpers/test_svg_helper.dart';
+
+final _defaultPlayer = Player(name: 'Tester');
 
 Widget _app({
   UnitType unitType = UnitType.scout,
@@ -25,7 +27,7 @@ Widget _app({
             count: count,
             isUnlocked: isUnlocked,
             barracksLevel: barracksLevel,
-            resources: Game.defaultResources(),
+            resources: _defaultPlayer.resources,
             hasRecruitedThisType: hasRecruitedThisType,
             onRecruit: onRecruit ?? (_) {},
           ),

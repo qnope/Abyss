@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
-import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/building/building_list_view.dart';
 import '../../../helpers/test_svg_helper.dart';
@@ -11,6 +11,8 @@ void main() {
   group('BuildingListView', () {
     setUp(mockSvgAssets);
     tearDown(clearSvgMocks);
+
+    final defaultPlayer = Player(name: 'Tester');
 
     Widget createApp({
       required Map<BuildingType, Building> buildings,
@@ -21,7 +23,7 @@ void main() {
         home: Scaffold(
           body: BuildingListView(
             buildings: buildings,
-            resources: Game.defaultResources(),
+            resources: defaultPlayer.resources,
             onBuildingTap: onBuildingTap ?? (_) {},
           ),
         ),
@@ -41,7 +43,7 @@ void main() {
 
     testWidgets('displays all 5 buildings including production buildings',
         (tester) async {
-      final buildings = Game.defaultBuildings();
+      final buildings = Player(name: 'Tester').buildings;
       await tester.pumpWidget(createApp(buildings: buildings));
       await tester.pumpAndSettle();
 

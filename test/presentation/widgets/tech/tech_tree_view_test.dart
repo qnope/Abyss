@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
-import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/domain/tech/tech_branch_state.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
@@ -25,13 +25,14 @@ void main() {
       tappedBranch = null;
       tappedNodeBranch = null;
       tappedNodeLevel = null;
+      final player = Player(name: 'Tester');
       return MaterialApp(
         theme: AbyssTheme.create(),
         home: Scaffold(
           body: TechTreeView(
-            techBranches: branches ?? Game.defaultTechBranches(),
-            buildings: buildings ?? Game.defaultBuildings(),
-            resources: Game.defaultResources(),
+            techBranches: branches ?? player.techBranches,
+            buildings: buildings ?? player.buildings,
+            resources: player.resources,
             onBranchTap: (b) => tappedBranch = b,
             onNodeTap: (b, l) {
               tappedNodeBranch = b;
@@ -59,7 +60,7 @@ void main() {
         TechBranch.explorer: TechBranchState(branch: TechBranch.explorer),
       };
       final buildings = {
-        ...Game.defaultBuildings(),
+        ...Player(name: 'Tester').buildings,
         BuildingType.laboratory:
             Building(type: BuildingType.laboratory, level: 3),
       };

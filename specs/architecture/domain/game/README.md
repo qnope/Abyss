@@ -68,7 +68,8 @@ that can differ from one participant to another lives here.
   if absent, returns `true` when the cell is newly revealed.
 - `Player.withBase({name, baseX, baseY, mapWidth, mapHeight, id?})` --
   convenience constructor that seeds the initial fog-of-war around the
-  base (Explorer level 0 reveal window).
+  base (Explorer level 2 reveal window: a 5x5 square centered on the
+  base).
 - Default collections come from `PlayerDefaults`:
   - `resources()` -- algae 100, coral 80, ore 50, energy 60, pearl 5.
   - `buildings()` -- all 7 building types at level 0.

@@ -57,7 +57,7 @@ class SavedGameCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          game.player.name,
+          game.humanPlayer.name,
           style: textTheme.titleMedium?.copyWith(
             color: AbyssColors.biolumCyan,
           ),

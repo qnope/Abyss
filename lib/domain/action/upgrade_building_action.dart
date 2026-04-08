@@ -4,6 +4,7 @@ import 'action_type.dart';
 import '../building/building_cost_calculator.dart';
 import '../building/building_type.dart';
 import '../game/game.dart';
+import '../game/player.dart';
 
 class UpgradeBuildingAction extends Action {
   final BuildingType buildingType;
@@ -17,16 +18,16 @@ class UpgradeBuildingAction extends Action {
   String get description => 'Ameliorer $buildingType';
 
   @override
-  ActionResult validate(Game game) {
-    final building = game.buildings[buildingType];
+  ActionResult validate(Game game, Player player) {
+    final building = player.buildings[buildingType];
     if (building == null) {
       return ActionResult.failure('Batiment introuvable');
     }
     final check = BuildingCostCalculator().checkUpgrade(
       type: buildingType,
       currentLevel: building.level,
-      resources: game.resources,
-      allBuildings: game.buildings,
+      resources: player.resources,
+      allBuildings: player.buildings,
     );
     if (check.isMaxLevel) {
       return ActionResult.failure('Niveau maximum atteint');
@@ -38,15 +39,15 @@ class UpgradeBuildingAction extends Action {
   }
 
   @override
-  ActionResult execute(Game game) {
-    final validation = validate(game);
+  ActionResult execute(Game game, Player player) {
+    final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
     final costs = BuildingCostCalculator()
-        .upgradeCost(buildingType, game.buildings[buildingType]!.level);
+        .upgradeCost(buildingType, player.buildings[buildingType]!.level);
     for (final entry in costs.entries) {
-      game.resources[entry.key]!.amount -= entry.value;
+      player.resources[entry.key]!.amount -= entry.value;
     }
-    game.buildings[buildingType]!.level++;
+    player.buildings[buildingType]!.level++;
     return ActionResult.success();
   }
 }

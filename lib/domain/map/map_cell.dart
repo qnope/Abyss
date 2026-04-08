@@ -5,6 +5,8 @@ import 'terrain_type.dart';
 
 part 'map_cell.g.dart';
 
+const Object _sentinel = Object();
+
 @HiveType(typeId: 13)
 class MapCell {
   @HiveField(0)
@@ -17,32 +19,30 @@ class MapCell {
   final MonsterDifficulty? monsterDifficulty;
 
   @HiveField(3)
-  final bool isRevealed;
-
-  @HiveField(6)
-  final bool isCollected;
+  final String? collectedBy;
 
   MapCell({
     required this.terrain,
     this.content = CellContentType.empty,
     this.monsterDifficulty,
-    this.isRevealed = false,
-    this.isCollected = false,
+    this.collectedBy,
   });
+
+  bool get isCollected => collectedBy != null;
 
   MapCell copyWith({
     TerrainType? terrain,
     CellContentType? content,
     MonsterDifficulty? monsterDifficulty,
-    bool? isRevealed,
-    bool? isCollected,
+    Object? collectedBy = _sentinel,
   }) {
     return MapCell(
       terrain: terrain ?? this.terrain,
       content: content ?? this.content,
       monsterDifficulty: monsterDifficulty ?? this.monsterDifficulty,
-      isRevealed: isRevealed ?? this.isRevealed,
-      isCollected: isCollected ?? this.isCollected,
+      collectedBy: identical(collectedBy, _sentinel)
+          ? this.collectedBy
+          : collectedBy as String?,
     );
   }
 }

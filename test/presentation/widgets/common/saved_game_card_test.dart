@@ -10,8 +10,10 @@ void main() {
     late Game game;
 
     setUp(() {
+      final player = Player(name: 'Alice');
       game = Game(
-        player: Player(name: 'Alice'),
+        humanPlayerId: player.id,
+        players: {player.id: player},
         turn: 7,
         createdAt: DateTime(2026, 1, 15, 10, 30),
       );

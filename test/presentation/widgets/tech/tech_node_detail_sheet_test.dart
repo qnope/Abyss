@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
-import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
@@ -10,6 +10,8 @@ import 'package:abyss/domain/tech/tech_branch_state.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/tech/tech_node_detail_sheet.dart';
 import '../../../helpers/test_svg_helper.dart';
+
+Player _player() => Player(name: 'Tester');
 
 void _useTallSurface(WidgetTester t) {
   t.view.physicalSize = const Size(800, 1200);
@@ -26,6 +28,7 @@ Widget _app({
   Map<BuildingType, Building>? buildings,
   VoidCallback? onResearch,
 }) {
+  final fallback = _player();
   return MaterialApp(
     theme: AbyssTheme.create(),
     home: Scaffold(
@@ -36,8 +39,8 @@ Widget _app({
             branch: branch,
             level: level,
             state: state,
-            resources: resources ?? Game.defaultResources(),
-            buildings: buildings ?? Game.defaultBuildings(),
+            resources: resources ?? fallback.resources,
+            buildings: buildings ?? fallback.buildings,
             onResearch: onResearch ?? () {},
           ),
           child: const Text('Open'),
@@ -67,7 +70,7 @@ void main() {
           r: Resource(type: r, amount: 500, maxStorage: 5000),
       };
       final buildings = {
-        ...Game.defaultBuildings(),
+        ..._player().buildings,
         BuildingType.laboratory:
             Building(type: BuildingType.laboratory, level: 1),
       };

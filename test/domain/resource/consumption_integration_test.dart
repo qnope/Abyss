@@ -3,6 +3,7 @@ import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/game/player_defaults.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/turn/turn_resolver.dart';
@@ -14,12 +15,13 @@ Game _game({
   Map<ResourceType, Resource>? resources,
   Map<UnitType, Unit>? units,
 }) {
-  return Game(
-    player: Player(name: 'Test'),
-    buildings: buildings ?? Game.defaultBuildings(),
-    resources: resources ?? Game.defaultResources(),
+  final player = Player(
+    name: 'Test',
+    buildings: buildings,
+    resources: resources,
     units: units,
   );
+  return Game.singlePlayer(player);
 }
 
 Building _b(BuildingType t, int lvl) => Building(type: t, level: lvl);
@@ -39,15 +41,16 @@ void main() {
         BuildingType.barracks: _b(BuildingType.barracks, 5),
       },
       units: {
-        ...Game.defaultUnits(),
+        ...PlayerDefaults.units(),
         UnitType.scout: Unit(type: UnitType.scout, count: 10),
       },
     );
+    final player = game.humanPlayer;
 
     // Turn 1: energy 60->57, algae 100->140
     var result = resolver.resolve(game);
-    expect(game.resources[ResourceType.energy]!.amount, 57);
-    expect(game.resources[ResourceType.algae]!.amount, 140);
+    expect(player.resources[ResourceType.energy]!.amount, 57);
+    expect(player.resources[ResourceType.algae]!.amount, 140);
     expect(result.deactivatedBuildings, isEmpty);
 
     // Turns 2-20: energy drains by 3 each turn
@@ -55,33 +58,31 @@ void main() {
       result = resolver.resolve(game);
       expect(result.deactivatedBuildings, isEmpty);
     }
-    expect(game.resources[ResourceType.energy]!.amount, 0);
-    expect(game.resources[ResourceType.algae]!.amount, 900);
+    expect(player.resources[ResourceType.energy]!.amount, 0);
+    expect(player.resources[ResourceType.algae]!.amount, 900);
 
     // Turn 21: stock=0, available=18 < consumption=21 => deactivation
     result = resolver.resolve(game);
     expect(result.deactivatedBuildings, isNotEmpty);
-    expect(
-      result.deactivatedBuildings,
-      contains(BuildingType.algaeFarm),
-    );
+    expect(result.deactivatedBuildings, contains(BuildingType.algaeFarm));
     // Deactivated buildings produce nothing
-    expect(game.resources[ResourceType.energy]!.amount, 14);
-    expect(game.resources[ResourceType.algae]!.amount, 890);
+    expect(player.resources[ResourceType.energy]!.amount, 14);
+    expect(player.resources[ResourceType.algae]!.amount, 890);
   });
 
   test('no consumption with empty game', () {
     final game = _game();
-    final energyBefore = game.resources[ResourceType.energy]!.amount;
-    final algaeBefore = game.resources[ResourceType.algae]!.amount;
+    final player = game.humanPlayer;
+    final energyBefore = player.resources[ResourceType.energy]!.amount;
+    final algaeBefore = player.resources[ResourceType.algae]!.amount;
 
     final result = resolver.resolve(game);
 
     expect(result.deactivatedBuildings, isEmpty);
     expect(result.lostUnits, isEmpty);
     expect(result.changes, isEmpty);
-    expect(game.resources[ResourceType.energy]!.amount, energyBefore);
-    expect(game.resources[ResourceType.algae]!.amount, algaeBefore);
+    expect(player.resources[ResourceType.energy]!.amount, energyBefore);
+    expect(player.resources[ResourceType.algae]!.amount, algaeBefore);
   });
 
   test('consumption exactly equals production', () {
@@ -96,11 +97,12 @@ void main() {
         BuildingType.oreExtractor: _b(BuildingType.oreExtractor, 2),
       },
     );
-    final energyBefore = game.resources[ResourceType.energy]!.amount;
+    final player = game.humanPlayer;
+    final energyBefore = player.resources[ResourceType.energy]!.amount;
     final result = resolver.resolve(game);
 
     expect(result.deactivatedBuildings, isEmpty);
-    expect(game.resources[ResourceType.energy]!.amount, energyBefore);
+    expect(player.resources[ResourceType.energy]!.amount, energyBefore);
   });
 
   test('deactivation restores next turn when conditions improve', () {
@@ -112,7 +114,7 @@ void main() {
         BuildingType.oreExtractor: _b(BuildingType.oreExtractor, 2),
       },
       resources: {
-        ...Game.defaultResources(),
+        ...PlayerDefaults.resources(),
         ResourceType.energy: Resource(
           type: ResourceType.energy,
           amount: 0,
@@ -120,20 +122,19 @@ void main() {
         ),
       },
     );
+    final player = game.humanPlayer;
 
     // Consumption=18 equals production+stock=18 => no deactivation
     var result = resolver.resolve(game);
     expect(result.deactivatedBuildings, isEmpty);
 
     // Add barracks: consumption=21 > available=18 => deactivation
-    game.buildings[BuildingType.barracks] =
-        _b(BuildingType.barracks, 1);
+    player.buildings[BuildingType.barracks] = _b(BuildingType.barracks, 1);
     result = resolver.resolve(game);
     expect(result.deactivatedBuildings, isNotEmpty);
 
     // Upgrade solar panel lvl 3: prod=114 >> consumption=23
-    game.buildings[BuildingType.solarPanel] =
-        _b(BuildingType.solarPanel, 3);
+    player.buildings[BuildingType.solarPanel] = _b(BuildingType.solarPanel, 3);
     result = resolver.resolve(game);
     expect(result.deactivatedBuildings, isEmpty);
   });

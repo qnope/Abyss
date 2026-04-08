@@ -15,14 +15,7 @@ GameMap _buildMap({int width = 10, int height = 10}) {
     width * height,
     (_) => MapCell(terrain: TerrainType.plain),
   );
-  return GameMap(
-    width: width,
-    height: height,
-    cells: cells,
-    playerBaseX: 5,
-    playerBaseY: 5,
-    seed: 42,
-  );
+  return GameMap(width: width, height: height, cells: cells, seed: 42);
 }
 
 Game _game({
@@ -30,18 +23,17 @@ Game _game({
   int explorerLevel = 0,
   List<ExplorationOrder>? pendingExplorations,
 }) {
-  return Game(
-    player: Player(name: 'Test'),
-    gameMap: gameMap,
-    techBranches: {
-      ...Game.defaultTechBranches(),
-      TechBranch.explorer: TechBranchState(
-        branch: TechBranch.explorer,
-        researchLevel: explorerLevel,
-      ),
-    },
+  final player = Player(
+    name: 'Test',
+    baseX: 5,
+    baseY: 5,
     pendingExplorations: pendingExplorations,
   );
+  player.techBranches[TechBranch.explorer] = TechBranchState(
+    branch: TechBranch.explorer,
+    researchLevel: explorerLevel,
+  );
+  return Game.singlePlayer(player)..gameMap = gameMap;
 }
 
 void main() {
@@ -75,7 +67,7 @@ void main() {
 
       resolver.resolve(game);
 
-      expect(game.pendingExplorations, isEmpty);
+      expect(game.humanPlayer.pendingExplorations, isEmpty);
     });
 
     test('no explorations when list is empty', () {

@@ -14,7 +14,6 @@ import 'package:abyss/domain/tech/tech_branch_state.dart';
 GameMap _buildMap({
   int width = 10,
   int height = 10,
-  Set<GridPosition> revealed = const {},
   Map<GridPosition, CellContentType> contents = const {},
 }) {
   final cells = List.generate(width * height, (i) {
@@ -23,37 +22,30 @@ GameMap _buildMap({
     final pos = GridPosition(x: x, y: y);
     return MapCell(
       terrain: TerrainType.plain,
-      isRevealed: revealed.contains(pos),
       content: contents[pos] ?? CellContentType.empty,
     );
   });
-  return GameMap(
-    width: width,
-    height: height,
-    cells: cells,
-    playerBaseX: 5,
-    playerBaseY: 5,
-    seed: 42,
-  );
+  return GameMap(width: width, height: height, cells: cells, seed: 42);
 }
 
 Game _game({
   required GameMap gameMap,
   int explorerLevel = 0,
   required List<ExplorationOrder> pendingExplorations,
+  Set<GridPosition> revealed = const {},
 }) {
-  return Game(
-    player: Player(name: 'Test'),
-    gameMap: gameMap,
-    techBranches: {
-      ...Game.defaultTechBranches(),
-      TechBranch.explorer: TechBranchState(
-        branch: TechBranch.explorer,
-        researchLevel: explorerLevel,
-      ),
-    },
+  final player = Player(
+    name: 'Test',
+    baseX: 5,
+    baseY: 5,
     pendingExplorations: pendingExplorations,
+    revealedCellsList: revealed.toList(),
   );
+  player.techBranches[TechBranch.explorer] = TechBranchState(
+    branch: TechBranch.explorer,
+    researchLevel: explorerLevel,
+  );
+  return Game.singlePlayer(player)..gameMap = gameMap;
 }
 
 void main() {
@@ -86,13 +78,14 @@ void main() {
         GridPosition(x: 3, y: 3),
         GridPosition(x: 4, y: 3),
       };
-      final map = _buildMap(revealed: revealed);
+      final map = _buildMap();
       final game = _game(
         gameMap: map,
         explorerLevel: 0,
         pendingExplorations: [
           ExplorationOrder(target: GridPosition(x: 3, y: 3)),
         ],
+        revealed: revealed,
       );
 
       final results = ExplorationResolver.resolve(game);

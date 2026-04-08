@@ -1,6 +1,8 @@
 import 'dart:math';
 import '../game/game.dart';
+import '../game/player.dart';
 import '../map/cell_content_type.dart';
+import '../map/grid_position.dart';
 import '../resource/resource_type.dart';
 import 'action.dart';
 import 'action_result.dart';
@@ -25,15 +27,17 @@ class CollectTreasureAction extends Action {
   String get description => 'Collecter ($targetX, $targetY)';
 
   @override
-  ActionResult validate(Game game) {
+  ActionResult validate(Game game, Player player) {
     if (game.gameMap == null) {
       return const CollectTreasureResult.failure('Carte non générée');
     }
     final cell = game.gameMap!.cellAt(targetX, targetY);
-    if (!cell.isRevealed) {
+    if (!player.revealedCells.contains(
+      GridPosition(x: targetX, y: targetY),
+    )) {
       return const CollectTreasureResult.failure('Case non révélée');
     }
-    if (cell.isCollected) {
+    if (cell.collectedBy != null) {
       return const CollectTreasureResult.failure('Déjà collecté');
     }
     if (cell.content != CellContentType.resourceBonus &&
@@ -44,8 +48,8 @@ class CollectTreasureAction extends Action {
   }
 
   @override
-  ActionResult execute(Game game) {
-    final validation = validate(game);
+  ActionResult execute(Game game, Player player) {
+    final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
     final cell = game.gameMap!.cellAt(targetX, targetY);
@@ -53,32 +57,32 @@ class CollectTreasureAction extends Action {
 
     if (cell.content == CellContentType.resourceBonus) {
       deltas[ResourceType.algae] =
-          _addResource(game, ResourceType.algae, 50 + _random.nextInt(51));
+          _addResource(player, ResourceType.algae, 50 + _random.nextInt(51));
       deltas[ResourceType.coral] =
-          _addResource(game, ResourceType.coral, 30 + _random.nextInt(21));
+          _addResource(player, ResourceType.coral, 30 + _random.nextInt(21));
       deltas[ResourceType.ore] =
-          _addResource(game, ResourceType.ore, 30 + _random.nextInt(21));
+          _addResource(player, ResourceType.ore, 30 + _random.nextInt(21));
     } else if (cell.content == CellContentType.ruins) {
       deltas[ResourceType.algae] =
-          _addResource(game, ResourceType.algae, _random.nextInt(101));
+          _addResource(player, ResourceType.algae, _random.nextInt(101));
       deltas[ResourceType.coral] =
-          _addResource(game, ResourceType.coral, _random.nextInt(26));
+          _addResource(player, ResourceType.coral, _random.nextInt(26));
       deltas[ResourceType.ore] =
-          _addResource(game, ResourceType.ore, _random.nextInt(26));
+          _addResource(player, ResourceType.ore, _random.nextInt(26));
       deltas[ResourceType.pearl] =
-          _addResource(game, ResourceType.pearl, _random.nextInt(3));
+          _addResource(player, ResourceType.pearl, _random.nextInt(3));
     }
 
     game.gameMap!.setCell(
       targetX,
       targetY,
-      cell.copyWith(isCollected: true),
+      cell.copyWith(collectedBy: player.id),
     );
     return CollectTreasureResult.success(deltas);
   }
 
-  int _addResource(Game game, ResourceType type, int amount) {
-    final resource = game.resources[type]!;
+  int _addResource(Player player, ResourceType type, int amount) {
+    final resource = player.resources[type]!;
     final before = resource.amount;
     resource.amount =
         (resource.amount + amount).clamp(0, resource.maxStorage);

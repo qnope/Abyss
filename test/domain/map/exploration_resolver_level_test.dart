@@ -38,7 +38,7 @@ Game _game({
 
 void main() {
   group('explorer level impact', () {
-    test('level 0 reveals 2x2 area (4 cells)', () {
+    test('level 0 reveals 3x3 area (9 cells)', () {
       final map = _buildMap();
       final game = _game(
         gameMap: map,
@@ -50,7 +50,8 @@ void main() {
 
       final results = ExplorationResolver.resolve(game);
 
-      expect(results.first.newCellsRevealed, 4);
+      // Level 0 now resolves to a 3x3 square centered on the target.
+      expect(results.first.newCellsRevealed, 9);
     });
 
     test('level 1 reveals 3x3 area (9 cells)', () {
@@ -65,7 +66,23 @@ void main() {
 
       final results = ExplorationResolver.resolve(game);
 
+      // Level 1 still resolves to a 3x3 square in the new progression table.
       expect(results.first.newCellsRevealed, 9);
+    });
+
+    test('level 4 reveals 7x7 area (49 cells)', () {
+      final map = _buildMap(width: 20, height: 20);
+      final game = _game(
+        gameMap: map,
+        explorerLevel: 4,
+        pendingExplorations: [
+          ExplorationOrder(target: GridPosition(x: 10, y: 10)),
+        ],
+      );
+
+      final results = ExplorationResolver.resolve(game);
+
+      expect(results.first.newCellsRevealed, 49);
     });
   });
 }

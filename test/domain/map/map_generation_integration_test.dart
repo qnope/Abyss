@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/map_generator.dart';
+import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 
 void main() {
@@ -16,6 +17,10 @@ void main() {
         expect(
           a.map.cells[i].lair?.difficulty,
           b.map.cells[i].lair?.difficulty,
+        );
+        expect(
+          a.map.cells[i].lair?.unitCount,
+          b.map.cells[i].lair?.unitCount,
         );
       }
     });
@@ -37,9 +42,23 @@ void main() {
         // 5-10 monster lairs
         final lairs = map.cells
             .where((c) => c.content == CellContentType.monsterLair)
-            .length;
-        expect(lairs, greaterThanOrEqualTo(5));
-        expect(lairs, lessThanOrEqualTo(10));
+            .toList();
+        expect(lairs.length, greaterThanOrEqualTo(5));
+        expect(lairs.length, lessThanOrEqualTo(10));
+
+        // Every lair has a stable, in-range unit count
+        for (final cell in lairs) {
+          expect(cell.lair, isNotNull);
+          final lair = cell.lair!;
+          switch (lair.difficulty) {
+            case MonsterDifficulty.easy:
+              expect(lair.unitCount, inInclusiveRange(20, 50));
+            case MonsterDifficulty.medium:
+              expect(lair.unitCount, inInclusiveRange(60, 100));
+            case MonsterDifficulty.hard:
+              expect(lair.unitCount, inInclusiveRange(120, 200));
+          }
+        }
 
         // Base zone empty of content
         for (var dy = -2; dy <= 2; dy++) {

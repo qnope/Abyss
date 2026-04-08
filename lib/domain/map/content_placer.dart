@@ -90,10 +90,22 @@ class ContentPlacer {
         difficulty = MonsterDifficulty.hard;
       }
     }
+    final unitCount = _rollUnitCount(difficulty, random);
     cells[i] = cells[i].copyWith(
       content: CellContentType.monsterLair,
-      lair: MonsterLair(difficulty: difficulty, unitCount: 0),
+      lair: MonsterLair(difficulty: difficulty, unitCount: unitCount),
     );
+  }
+
+  static int _rollUnitCount(
+    MonsterDifficulty difficulty,
+    Random random,
+  ) {
+    return switch (difficulty) {
+      MonsterDifficulty.easy => 20 + random.nextInt(31),
+      MonsterDifficulty.medium => 60 + random.nextInt(41),
+      MonsterDifficulty.hard => 120 + random.nextInt(81),
+    };
   }
 
   static void _adjustMonsterCount(

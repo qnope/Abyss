@@ -106,10 +106,11 @@ class Player extends HiveObject {
     required int mapWidth,
     required int mapHeight,
   }) {
+    // Level 2 yields a 5x5 square centered on the base for the initial vision.
     return RevealAreaCalculator.cellsToReveal(
       targetX: baseX,
       targetY: baseY,
-      explorerLevel: 0,
+      explorerLevel: 2,
       mapWidth: mapWidth,
       mapHeight: mapHeight,
     );

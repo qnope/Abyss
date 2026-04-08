@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/reveal_area_calculator.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
@@ -81,7 +82,7 @@ void main() {
   });
 
   group('Player.withBase reveal seeding', () {
-    test('revealedCells match RevealAreaCalculator output', () {
+    test('revealedCells match RevealAreaCalculator output (5x5)', () {
       final p = Player.withBase(
         name: 'A',
         baseX: 10,
@@ -92,13 +93,37 @@ void main() {
       final expected = RevealAreaCalculator.cellsToReveal(
         targetX: 10,
         targetY: 10,
-        explorerLevel: 0,
+        explorerLevel: 2,
         mapWidth: 20,
         mapHeight: 20,
       ).toSet();
       expect(p.revealedCells, expected);
+      expect(p.revealedCells.length, 25);
       expect(p.baseX, 10);
       expect(p.baseY, 10);
+      // Strict centering: 2 cells in each cardinal direction from the base.
+      for (var d = 1; d <= 2; d++) {
+        expect(p.revealedCells.contains(GridPosition(x: 10 - d, y: 10)), isTrue);
+        expect(p.revealedCells.contains(GridPosition(x: 10 + d, y: 10)), isTrue);
+        expect(p.revealedCells.contains(GridPosition(x: 10, y: 10 - d)), isTrue);
+        expect(p.revealedCells.contains(GridPosition(x: 10, y: 10 + d)), isTrue);
+      }
+    });
+
+    test('base near edge truncates naturally without shifting', () {
+      final p = Player.withBase(
+        name: 'A',
+        baseX: 1,
+        baseY: 1,
+        mapWidth: 20,
+        mapHeight: 20,
+      );
+      final expected = <GridPosition>{
+        for (var y = 0; y <= 3; y++)
+          for (var x = 0; x <= 3; x++) GridPosition(x: x, y: y),
+      };
+      expect(p.revealedCells, expected);
+      expect(p.revealedCells.length, 16);
     });
   });
 

@@ -64,19 +64,24 @@ void main() {
       final results = ExplorationResolver.resolve(game);
 
       expect(results.length, 2);
-      expect(results[0].newCellsRevealed, 4);
-      expect(results[1].newCellsRevealed, 4);
+      expect(results[0].newCellsRevealed, 9);
+      expect(results[1].newCellsRevealed, 9);
     });
   });
 
   group('idempotency', () {
     test('re-revealing already revealed cells yields zero new', () {
-      // Pre-reveal the 2x2 area at target (3,3): (3,2),(4,2),(3,3),(4,3)
+      // Pre-reveal the full 3x3 square centered on target (3,3).
       final revealed = {
+        GridPosition(x: 2, y: 2),
         GridPosition(x: 3, y: 2),
         GridPosition(x: 4, y: 2),
+        GridPosition(x: 2, y: 3),
         GridPosition(x: 3, y: 3),
         GridPosition(x: 4, y: 3),
+        GridPosition(x: 2, y: 4),
+        GridPosition(x: 3, y: 4),
+        GridPosition(x: 4, y: 4),
       };
       final map = _buildMap();
       final game = _game(

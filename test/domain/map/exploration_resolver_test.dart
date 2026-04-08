@@ -10,9 +10,10 @@ import 'package:abyss/domain/map/reveal_area_calculator.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 
 GameMap _buildMap({int width = 10, int height = 10}) {
-  final cells = List.generate(width * height, (_) {
-    return MapCell(terrain: TerrainType.plain);
-  });
+  final cells = List.generate(
+    width * height,
+    (_) => MapCell(terrain: TerrainType.plain),
+  );
   return GameMap(width: width, height: height, cells: cells, seed: 42);
 }
 
@@ -59,20 +60,19 @@ void main() {
 
     test('already revealed cells are not recounted', () {
       final map = _buildMap();
-      final alreadyRevealed = GridPosition(x: 3, y: 3);
       final player = _player(
         id: 'solo',
         pendingExplorations: [
           ExplorationOrder(target: GridPosition(x: 3, y: 3)),
         ],
-        revealedCellsList: [alreadyRevealed],
+        revealedCellsList: [GridPosition(x: 3, y: 3)],
       );
       final game = Game.singlePlayer(player)..gameMap = map;
 
       final results = ExplorationResolver.resolve(game);
 
-      // Level 0 reveals a 2x2 area, one of which is pre-seeded.
-      expect(results.single.newCellsRevealed, 3);
+      // Level 0 reveals a 3x3 area (9 cells), one of which is pre-seeded.
+      expect(results.single.newCellsRevealed, 8);
     });
 
     test('boundary exploration near edge counts only in-bounds cells', () {
@@ -87,8 +87,13 @@ void main() {
 
       final results = ExplorationResolver.resolve(game);
 
-      expect(results.single.newCellsRevealed, 1);
-      expect(player.revealedCells.contains(GridPosition(x: 9, y: 0)), isTrue);
+      // Target (9,0) level 0 (3x3) keeps only the in-bounds quadrant
+      // (8,0),(9,0),(8,1),(9,1); x=10 and y=-1 are out of bounds.
+      expect(results.single.newCellsRevealed, 4);
+      expect(player.revealedCells, {
+        GridPosition(x: 8, y: 0), GridPosition(x: 9, y: 0),
+        GridPosition(x: 8, y: 1), GridPosition(x: 9, y: 1),
+      });
     });
   });
 

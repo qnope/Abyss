@@ -53,7 +53,8 @@ void main() {
       final result = resolver.resolve(game);
 
       expect(result.explorations.length, 1);
-      expect(result.explorations.first.newCellsRevealed, 4);
+      // Level 0 reveals a 3x3 square (9 cells) centered on the target.
+      expect(result.explorations.first.newCellsRevealed, 9);
     });
 
     test('pending explorations cleared after turn', () {

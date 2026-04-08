@@ -77,8 +77,11 @@ MapGenerationResult { map, baseX, baseY }
 Fog of war is a property of each `Player`, not of the map. Every
 player carries its own `revealedCellsList: List<GridPosition>`. When a
 new player is built via `Player.withBase`, the initial reveal window
-is seeded via `RevealAreaCalculator` at Explorer level 0 centered on
-the base. Subsequent reveals come from exploration resolution.
+is seeded via `RevealAreaCalculator` at Explorer level 2 (a 5x5
+square) centered on the base. This is a deliberate choice so the
+player can orient themselves in every direction from the very first
+turn; it is independent of the explorer tech level the player actually
+owns. Subsequent reveals come from exploration resolution.
 
 ## Collected State
 
@@ -100,14 +103,16 @@ Players queue **scout** orders which are resolved at end of turn.
   (Chebyshev distance 1) to a revealed cell are eligible. The player's
   own base cell is always excluded.
 - **`RevealAreaCalculator`** -- Computes which cells are revealed based
-  on Explorer tech level. Even-sized squares anchor the target at
-  bottom-left; odd-sized squares center on the target.
+  on Explorer tech level. **All sides are odd**, so the target cell is
+  always exactly at the center of the revealed square. When the square
+  overflows the grid, out-of-bounds cells are simply skipped (no
+  shifting).
 
 | Explorer Level | Square Side | Cells Revealed |
 |----------------|-------------|----------------|
-| 0              | 2           | 4              |
+| 0              | 3           | 9              |
 | 1              | 3           | 9              |
-| 2              | 4           | 16             |
+| 2              | 5           | 25             |
 | 3              | 5           | 25             |
 | 4              | 7           | 49             |
 | 5              | 9           | 81             |

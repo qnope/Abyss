@@ -1,32 +1,21 @@
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/map/game_map.dart';
+import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/domain/unit/unit.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 
-/// Builds a 7×7 map with base at (3,3).
-/// Cells at Chebyshev distance ≤ 1 from base are revealed.
-GameMap buildTestMap() {
+/// Builds a 7x7 map, plain terrain everywhere.
+GameMap buildExploreTestMap() {
   final cells = <MapCell>[];
   for (var y = 0; y < 7; y++) {
     for (var x = 0; x < 7; x++) {
-      final dist = _chebyshev(x, y, 3, 3);
-      cells.add(MapCell(
-        terrain: TerrainType.plain,
-        isRevealed: dist <= 1,
-      ));
+      cells.add(MapCell(terrain: TerrainType.plain));
     }
   }
-  return GameMap(
-    width: 7,
-    height: 7,
-    cells: cells,
-    playerBaseX: 3,
-    playerBaseY: 3,
-    seed: 42,
-  );
+  return GameMap(width: 7, height: 7, cells: cells, seed: 42);
 }
 
 int _chebyshev(int x1, int y1, int x2, int y2) {
@@ -35,9 +24,29 @@ int _chebyshev(int x1, int y1, int x2, int y2) {
   return dx > dy ? dx : dy;
 }
 
-Game createExploreGame({int scoutCount = 3, GameMap? gameMap}) {
-  return Game(
-    player: Player(name: 'Test'),
+/// Pre-reveal for the player all cells at Chebyshev distance <= 1 from base.
+List<GridPosition> _initialRevealedCells(int baseX, int baseY) {
+  final cells = <GridPosition>[];
+  for (var y = 0; y < 7; y++) {
+    for (var x = 0; x < 7; x++) {
+      if (_chebyshev(x, y, baseX, baseY) <= 1) {
+        cells.add(GridPosition(x: x, y: y));
+      }
+    }
+  }
+  return cells;
+}
+
+({Game game, Player player}) createExploreScenario({
+  int scoutCount = 3,
+  GameMap? gameMap,
+  String playerId = 'test-uuid',
+}) {
+  final player = Player(
+    id: playerId,
+    name: 'Test',
+    baseX: 3,
+    baseY: 3,
     units: {
       for (final type in UnitType.values)
         type: Unit(
@@ -45,6 +54,12 @@ Game createExploreGame({int scoutCount = 3, GameMap? gameMap}) {
           count: type == UnitType.scout ? scoutCount : 0,
         ),
     },
-    gameMap: gameMap ?? buildTestMap(),
+    revealedCellsList: _initialRevealedCells(3, 3),
   );
+  final game = Game(
+    humanPlayerId: player.id,
+    players: {player.id: player},
+    gameMap: gameMap ?? buildExploreTestMap(),
+  );
+  return (game: game, player: player);
 }

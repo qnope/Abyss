@@ -11,25 +11,28 @@ import 'collect_treasure_action_helper.dart';
 void main() {
   group('CollectTreasureAction execute clamping', () {
     test('resourceBonus delta is clamped at maxStorage', () {
-      final game = createCollectGame(content: CellContentType.resourceBonus);
-      game.resources[ResourceType.algae]!.amount = 4990;
+      final scenario =
+          createCollectScenario(content: CellContentType.resourceBonus);
+      scenario.player.resources[ResourceType.algae]!.amount = 4990;
       final result = CollectTreasureAction(targetX: 1, targetY: 1)
-          .execute(game) as CollectTreasureResult;
+              .execute(scenario.game, scenario.player)
+          as CollectTreasureResult;
       expect(result.deltas[ResourceType.algae], lessThanOrEqualTo(10));
       expect(result.deltas[ResourceType.algae], 5000 - 4990);
-      expect(game.resources[ResourceType.algae]!.amount, 5000);
+      expect(scenario.player.resources[ResourceType.algae]!.amount, 5000);
     });
 
     test('ruins delta is clamped at maxStorage when resource full', () {
-      final game = createCollectGame(content: CellContentType.ruins);
+      final scenario = createCollectScenario(content: CellContentType.ruins);
       for (final type in ResourceType.values) {
-        game.resources[type]!.amount = game.resources[type]!.maxStorage;
+        scenario.player.resources[type]!.amount =
+            scenario.player.resources[type]!.maxStorage;
       }
       final result = CollectTreasureAction(
         targetX: 1,
         targetY: 1,
         random: Random(42),
-      ).execute(game) as CollectTreasureResult;
+      ).execute(scenario.game, scenario.player) as CollectTreasureResult;
       expect(result.deltas[ResourceType.algae], 0);
       expect(result.deltas[ResourceType.coral], 0);
       expect(result.deltas[ResourceType.ore], 0);

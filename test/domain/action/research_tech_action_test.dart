@@ -9,15 +9,16 @@ import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/domain/tech/tech_branch_state.dart';
 import 'package:abyss/domain/action/research_tech_action.dart';
 
-Game makeGame({
+({Game game, Player player}) makeScenario({
   int labLevel = 1,
   int ore = 500,
   int energy = 500,
   bool unlocked = true,
   int researchLevel = 0,
 }) {
-  return Game(
-    player: Player(name: 'Test'),
+  final player = Player(
+    id: 'test',
+    name: 'Test',
     resources: {
       ResourceType.ore: Resource(type: ResourceType.ore, amount: ore),
       ResourceType.energy: Resource(type: ResourceType.energy, amount: energy),
@@ -41,6 +42,9 @@ Game makeGame({
       TechBranch.explorer: TechBranchState(branch: TechBranch.explorer),
     },
   );
+  final game =
+      Game(humanPlayerId: player.id, players: {player.id: player});
+  return (game: game, player: player);
 }
 
 void main() {
@@ -52,53 +56,53 @@ void main() {
 
   group('validate', () {
     test('success: branch unlocked, lab level OK, resources OK', () {
-      final game = makeGame();
-      expect(action.validate(game).isSuccess, isTrue);
+      final s = makeScenario();
+      expect(action.validate(s.game, s.player).isSuccess, isTrue);
     });
 
     test('branch locked returns failure', () {
-      final game = makeGame(unlocked: false);
-      final result = action.validate(game);
+      final s = makeScenario(unlocked: false);
+      final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
     });
 
     test('max level reached returns failure', () {
-      final game = makeGame(researchLevel: 5, labLevel: 5);
-      final result = action.validate(game);
+      final s = makeScenario(researchLevel: 5, labLevel: 5);
+      final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
     });
 
     test('lab level too low returns failure', () {
-      final game = makeGame(researchLevel: 1, labLevel: 1);
-      final result = action.validate(game);
+      final s = makeScenario(researchLevel: 1, labLevel: 1);
+      final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
     });
 
     test('insufficient resources returns failure', () {
-      final game = makeGame(ore: 0, energy: 0);
-      final result = action.validate(game);
+      final s = makeScenario(ore: 0, energy: 0);
+      final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
     });
   });
 
   group('execute', () {
     test('success: resources deducted, researchLevel incremented', () {
-      final game = makeGame();
-      final result = action.execute(game);
+      final s = makeScenario();
+      final result = action.execute(s.game, s.player);
       expect(result.isSuccess, isTrue);
       // military level 1 costs ore: 40, energy: 25
-      expect(game.resources[ResourceType.ore]!.amount, 460);
-      expect(game.resources[ResourceType.energy]!.amount, 475);
-      expect(game.techBranches[TechBranch.military]!.researchLevel, 1);
+      expect(s.player.resources[ResourceType.ore]!.amount, 460);
+      expect(s.player.resources[ResourceType.energy]!.amount, 475);
+      expect(s.player.techBranches[TechBranch.military]!.researchLevel, 1);
     });
 
     test('failure: game state unchanged', () {
-      final game = makeGame(ore: 0, energy: 0);
-      final result = action.execute(game);
+      final s = makeScenario(ore: 0, energy: 0);
+      final result = action.execute(s.game, s.player);
       expect(result.isSuccess, isFalse);
-      expect(game.resources[ResourceType.ore]!.amount, 0);
-      expect(game.resources[ResourceType.energy]!.amount, 0);
-      expect(game.techBranches[TechBranch.military]!.researchLevel, 0);
+      expect(s.player.resources[ResourceType.ore]!.amount, 0);
+      expect(s.player.resources[ResourceType.energy]!.amount, 0);
+      expect(s.player.techBranches[TechBranch.military]!.researchLevel, 0);
     });
   });
 }

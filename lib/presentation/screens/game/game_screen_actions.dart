@@ -16,14 +16,15 @@ void showBuildingDetailAction(
   Building building,
   VoidCallback onChanged,
 ) {
+  final human = game.humanPlayer;
   showBuildingDetailSheet(
     context,
     building: building,
-    resources: game.resources,
-    allBuildings: game.buildings,
+    resources: human.resources,
+    allBuildings: human.buildings,
     onUpgrade: () {
       final action = UpgradeBuildingAction(buildingType: building.type);
-      final result = ActionExecutor().execute(action, game);
+      final result = ActionExecutor().execute(action, game, human);
       if (result.isSuccess) {
         onChanged();
         Navigator.pop(context);
@@ -38,22 +39,23 @@ void showUnitDetailAction(
   UnitType unitType,
   VoidCallback onChanged,
 ) {
+  final human = game.humanPlayer;
   final calculator = UnitCostCalculator();
-  final barracksLevel = game.buildings[BuildingType.barracks]!.level;
+  final barracksLevel = human.buildings[BuildingType.barracks]!.level;
   final isUnlocked = calculator.isUnlocked(unitType, barracksLevel);
-  final count = game.units[unitType]?.count ?? 0;
-  final hasRecruitedThisType = game.recruitedUnitTypes.contains(unitType);
+  final count = human.units[unitType]?.count ?? 0;
+  final hasRecruitedThisType = human.recruitedUnitTypes.contains(unitType);
   showUnitDetailSheet(
     context,
     unitType: unitType,
     count: count,
     isUnlocked: isUnlocked,
     barracksLevel: barracksLevel,
-    resources: game.resources,
+    resources: human.resources,
     hasRecruitedThisType: hasRecruitedThisType,
     onRecruit: (quantity) {
       final action = RecruitUnitAction(unitType: unitType, quantity: quantity);
-      final result = ActionExecutor().execute(action, game);
+      final result = ActionExecutor().execute(action, game, human);
       if (result.isSuccess) {
         onChanged();
         Navigator.pop(context);

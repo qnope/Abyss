@@ -7,7 +7,7 @@ import '../../../domain/action/explore_action.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/cell_eligibility_checker.dart';
-import '../../../domain/map/map_generator.dart';
+import '../../../domain/map/grid_position.dart';
 import '../../../domain/tech/tech_branch.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../widgets/map/cell_info_sheet.dart';
@@ -24,7 +24,7 @@ Widget buildMapTab(
   GameRepository repository,
   VoidCallback onChanged,
 ) {
-  final pendingTargets = game.pendingExplorations
+  final pendingTargets = game.humanPlayer.pendingExplorations
       .map((e) => (e.target.x, e.target.y))
       .toSet();
   return GameMapView(
@@ -47,8 +47,9 @@ void _showCellAction(
   VoidCallback onChanged,
 ) {
   final cell = game.gameMap!.cellAt(x, y);
+  final human = game.humanPlayer;
 
-  if (!cell.isRevealed) {
+  if (!human.revealedCells.contains(GridPosition(x: x, y: y))) {
     _showExplorationFlow(context, game, x, y, onChanged);
     return;
   }
@@ -63,7 +64,7 @@ void _showCellAction(
     return;
   }
 
-  if (x == game.gameMap!.playerBaseX && y == game.gameMap!.playerBaseY) {
+  if (x == human.baseX && y == human.baseY) {
     showCellInfoSheet(
       context,
       title: 'Votre base',
@@ -107,10 +108,12 @@ void _showExplorationFlow(
   int y,
   VoidCallback onChanged,
 ) {
-  final scoutCount = game.units[UnitType.scout]?.count ?? 0;
+  final human = game.humanPlayer;
+  final scoutCount = human.units[UnitType.scout]?.count ?? 0;
   final explorerLevel =
-      game.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
-  final isEligible = CellEligibilityChecker.isEligible(game.gameMap!, x, y);
+      human.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
+  final isEligible =
+      CellEligibilityChecker.isEligible(game.gameMap!, human, x, y);
 
   showExplorationSheet(
     context,
@@ -121,7 +124,7 @@ void _showExplorationFlow(
     isEligible: isEligible,
     onConfirm: () {
       final action = ExploreAction(targetX: x, targetY: y);
-      final result = ActionExecutor().execute(action, game);
+      final result = ActionExecutor().execute(action, game, human);
       if (result.isSuccess) onChanged();
     },
   );
@@ -130,7 +133,7 @@ void _showExplorationFlow(
 void _collectTreasure(BuildContext context, Game game, int x, int y,
     CellContentType content, VoidCallback onChanged) {
   final action = CollectTreasureAction(targetX: x, targetY: y);
-  final result = ActionExecutor().execute(action, game);
+  final result = ActionExecutor().execute(action, game, game.humanPlayer);
   if (!result.isSuccess) return;
   onChanged();
   if (result is! CollectTreasureResult) return;

@@ -9,12 +9,13 @@ import '../../widgets/tech/tech_node_detail_sheet.dart';
 
 void showBranchDetail(BuildContext context, Game game, TechBranch branch,
     VoidCallback onChanged) {
+  final human = game.humanPlayer;
   showTechBranchDetailSheet(
     context,
     branch: branch,
-    state: game.techBranches[branch]!,
-    resources: game.resources,
-    buildings: game.buildings,
+    state: human.techBranches[branch]!,
+    resources: human.resources,
+    buildings: human.buildings,
     onUnlock: () => _unlockBranch(context, game, branch, onChanged),
   );
 }
@@ -22,7 +23,7 @@ void showBranchDetail(BuildContext context, Game game, TechBranch branch,
 void _unlockBranch(BuildContext context, Game game, TechBranch branch,
     VoidCallback onChanged) {
   final action = UnlockBranchAction(branch: branch);
-  final result = ActionExecutor().execute(action, game);
+  final result = ActionExecutor().execute(action, game, game.humanPlayer);
   if (result.isSuccess) {
     onChanged();
     Navigator.pop(context);
@@ -31,13 +32,14 @@ void _unlockBranch(BuildContext context, Game game, TechBranch branch,
 
 void showNodeDetail(BuildContext context, Game game, TechBranch branch,
     int level, VoidCallback onChanged) {
+  final human = game.humanPlayer;
   showTechNodeDetailSheet(
     context,
     branch: branch,
     level: level,
-    state: game.techBranches[branch]!,
-    resources: game.resources,
-    buildings: game.buildings,
+    state: human.techBranches[branch]!,
+    resources: human.resources,
+    buildings: human.buildings,
     onResearch: () => _researchTech(context, game, branch, onChanged),
   );
 }
@@ -45,7 +47,7 @@ void showNodeDetail(BuildContext context, Game game, TechBranch branch,
 void _researchTech(BuildContext context, Game game, TechBranch branch,
     VoidCallback onChanged) {
   final action = ResearchTechAction(branch: branch);
-  final result = ActionExecutor().execute(action, game);
+  final result = ActionExecutor().execute(action, game, game.humanPlayer);
   if (result.isSuccess) {
     onChanged();
     Navigator.pop(context);

@@ -88,7 +88,7 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Supprimer la partie ?'),
         content: Text(
-          'La partie de ${_games[index].player.name} '
+          'La partie de ${_games[index].humanPlayer.name} '
           'sera définitivement supprimée.',
         ),
         actions: [

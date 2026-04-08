@@ -1,132 +1,145 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
-import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/exploration_order.dart';
 import 'package:abyss/domain/map/exploration_resolver.dart';
 import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/map_cell.dart';
+import 'package:abyss/domain/map/reveal_area_calculator.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
-import 'package:abyss/domain/tech/tech_branch.dart';
-import 'package:abyss/domain/tech/tech_branch_state.dart';
 
-GameMap _buildMap({
-  int width = 10,
-  int height = 10,
-  Set<GridPosition> revealed = const {},
-  Map<GridPosition, CellContentType> contents = const {},
-}) {
-  final cells = List.generate(width * height, (i) {
-    final x = i % width;
-    final y = i ~/ width;
-    final pos = GridPosition(x: x, y: y);
-    return MapCell(
-      terrain: TerrainType.plain,
-      isRevealed: revealed.contains(pos),
-      content: contents[pos] ?? CellContentType.empty,
-    );
+GameMap _buildMap({int width = 10, int height = 10}) {
+  final cells = List.generate(width * height, (_) {
+    return MapCell(terrain: TerrainType.plain);
   });
-  return GameMap(
-    width: width,
-    height: height,
-    cells: cells,
-    playerBaseX: 5,
-    playerBaseY: 5,
-    seed: 42,
-  );
+  return GameMap(width: width, height: height, cells: cells, seed: 42);
 }
 
-Game _game({
-  GameMap? gameMap,
-  int explorerLevel = 0,
+Player _player({
+  required String id,
   List<ExplorationOrder>? pendingExplorations,
+  List<GridPosition>? revealedCellsList,
 }) {
-  return Game(
-    player: Player(name: 'Test'),
-    gameMap: gameMap,
-    techBranches: {
-      ...Game.defaultTechBranches(),
-      TechBranch.explorer: TechBranchState(
-        branch: TechBranch.explorer,
-        researchLevel: explorerLevel,
-      ),
-    },
+  return Player(
+    id: id,
+    name: id,
+    baseX: 5,
+    baseY: 5,
     pendingExplorations: pendingExplorations,
+    revealedCellsList: revealedCellsList,
   );
 }
 
 void main() {
-  group('single exploration', () {
-    test('reveals cells correctly', () {
-      final map = _buildMap();
-      final game = _game(
-        gameMap: map,
-        explorerLevel: 0,
-        pendingExplorations: [
-          ExplorationOrder(target: GridPosition(x: 3, y: 3)),
-        ],
-      );
-
-      ExplorationResolver.resolve(game);
-
-      // Level 0 => 2x2, target at bottom-left
-      // Reveals (3,2), (4,2), (3,3), (4,3)
-      expect(map.cellAt(3, 2).isRevealed, isTrue);
-      expect(map.cellAt(4, 2).isRevealed, isTrue);
-      expect(map.cellAt(3, 3).isRevealed, isTrue);
-      expect(map.cellAt(4, 3).isRevealed, isTrue);
-    });
-
-    test('returns correct result', () {
+  group('single player exploration', () {
+    test('reveals expected cells on the player', () {
       final map = _buildMap();
       final target = GridPosition(x: 3, y: 3);
-      final game = _game(
-        gameMap: map,
-        explorerLevel: 0,
+      final player = _player(
+        id: 'solo',
         pendingExplorations: [ExplorationOrder(target: target)],
       );
+      final game = Game.singlePlayer(player)..gameMap = map;
 
       final results = ExplorationResolver.resolve(game);
 
-      expect(results.length, 1);
-      expect(results.first.target, target);
-      expect(results.first.newCellsRevealed, 4);
+      final expected = RevealAreaCalculator.cellsToReveal(
+        targetX: 3,
+        targetY: 3,
+        explorerLevel: 0,
+        mapWidth: map.width,
+        mapHeight: map.height,
+      ).toSet();
+      expect(player.revealedCells.containsAll(expected), isTrue);
+      expect(player.pendingExplorations, isEmpty);
+      expect(results.single.target, target);
+      expect(results.single.newCellsRevealed, expected.length);
     });
 
-    test('clears pending list', () {
+    test('already revealed cells are not recounted', () {
       final map = _buildMap();
-      final game = _game(
-        gameMap: map,
+      final alreadyRevealed = GridPosition(x: 3, y: 3);
+      final player = _player(
+        id: 'solo',
         pendingExplorations: [
           ExplorationOrder(target: GridPosition(x: 3, y: 3)),
         ],
+        revealedCellsList: [alreadyRevealed],
       );
+      final game = Game.singlePlayer(player)..gameMap = map;
 
-      ExplorationResolver.resolve(game);
+      final results = ExplorationResolver.resolve(game);
 
-      expect(game.pendingExplorations, isEmpty);
+      // Level 0 reveals a 2x2 area, one of which is pre-seeded.
+      expect(results.single.newCellsRevealed, 3);
     });
-  });
 
-  group('boundary handling', () {
-    test('exploration near map edge does not crash', () {
-      final map = _buildMap(width: 10, height: 10);
-      final game = _game(
-        gameMap: map,
-        explorerLevel: 0,
+    test('boundary exploration near edge counts only in-bounds cells', () {
+      final map = _buildMap();
+      final player = _player(
+        id: 'solo',
         pendingExplorations: [
           ExplorationOrder(target: GridPosition(x: 9, y: 0)),
         ],
       );
+      final game = Game.singlePlayer(player)..gameMap = map;
 
       final results = ExplorationResolver.resolve(game);
 
-      expect(results.length, 1);
-      // (9,0) bottom-left of 2x2: (9,-1),(10,-1),(9,0),(10,0)
-      // Only (9,0) is in bounds
-      expect(results.first.newCellsRevealed, 1);
-      expect(map.cellAt(9, 0).isRevealed, isTrue);
+      expect(results.single.newCellsRevealed, 1);
+      expect(player.revealedCells.contains(GridPosition(x: 9, y: 0)), isTrue);
+    });
+  });
+
+  group('multi-player exploration', () {
+    test('players only reveal their own cells', () {
+      final map = _buildMap();
+      final alice = _player(
+        id: 'alice',
+        pendingExplorations: [
+          ExplorationOrder(target: GridPosition(x: 2, y: 2)),
+        ],
+      );
+      final bob = _player(
+        id: 'bob',
+        pendingExplorations: [
+          ExplorationOrder(target: GridPosition(x: 7, y: 7)),
+        ],
+      );
+      final game = Game(
+        humanPlayerId: alice.id,
+        players: {alice.id: alice, bob.id: bob},
+      )..gameMap = map;
+
+      ExplorationResolver.resolve(game);
+
+      expect(alice.revealedCells.contains(GridPosition(x: 2, y: 2)), isTrue);
+      expect(alice.revealedCells.contains(GridPosition(x: 7, y: 7)), isFalse);
+      expect(bob.revealedCells.contains(GridPosition(x: 7, y: 7)), isTrue);
+      expect(bob.revealedCells.contains(GridPosition(x: 2, y: 2)), isFalse);
+      expect(alice.pendingExplorations, isEmpty);
+      expect(bob.pendingExplorations, isEmpty);
+    });
+
+    test('player without pending orders is untouched', () {
+      final map = _buildMap();
+      final alice = _player(
+        id: 'alice',
+        pendingExplorations: [
+          ExplorationOrder(target: GridPosition(x: 2, y: 2)),
+        ],
+      );
+      final bob = _player(id: 'bob');
+      final game = Game(
+        humanPlayerId: alice.id,
+        players: {alice.id: alice, bob.id: bob},
+      )..gameMap = map;
+
+      ExplorationResolver.resolve(game);
+
+      expect(bob.revealedCells, isEmpty);
+      expect(bob.pendingExplorations, isEmpty);
     });
   });
 }

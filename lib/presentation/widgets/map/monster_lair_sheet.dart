@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../domain/map/monster_difficulty.dart';
+import '../../../domain/fight/monster_unit_stats.dart';
+import '../../../domain/map/monster_lair.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
 
@@ -8,7 +9,8 @@ void showMonsterLairSheet(
   BuildContext context, {
   required int targetX,
   required int targetY,
-  required MonsterDifficulty difficulty,
+  required MonsterLair lair,
+  required VoidCallback onPrepareFight,
 }) {
   showModalBottomSheet<void>(
     context: context,
@@ -16,7 +18,8 @@ void showMonsterLairSheet(
     builder: (_) => _MonsterLairSheet(
       targetX: targetX,
       targetY: targetY,
-      difficulty: difficulty,
+      lair: lair,
+      onPrepareFight: onPrepareFight,
     ),
   );
 }
@@ -24,12 +27,14 @@ void showMonsterLairSheet(
 class _MonsterLairSheet extends StatelessWidget {
   final int targetX;
   final int targetY;
-  final MonsterDifficulty difficulty;
+  final MonsterLair lair;
+  final VoidCallback onPrepareFight;
 
   const _MonsterLairSheet({
     required this.targetX,
     required this.targetY,
-    required this.difficulty,
+    required this.lair,
+    required this.onPrepareFight,
   });
 
   @override
@@ -40,7 +45,7 @@ class _MonsterLairSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(difficulty.svgPath, width: 64, height: 64),
+          SvgPicture.asset(lair.difficulty.svgPath, width: 64, height: 64),
           const SizedBox(height: 12),
           Text(
             'Monstre ($targetX, $targetY)',
@@ -49,16 +54,58 @@ class _MonsterLairSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          _infoRow(textTheme, 'Difficulté', difficulty.label),
+          _LairInfoSection(lair: lair),
           const Divider(height: 24),
-          Text(
-            'Combat non disponible',
-            style: textTheme.bodyMedium?.copyWith(
-              color: AbyssColors.warning,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Annuler'),
+              ),
+              const SizedBox(width: 12),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AbyssColors.biolumCyan,
+                  foregroundColor: AbyssColors.abyssBlack,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  onPrepareFight();
+                },
+                child: const Text('Préparer le combat'),
+              ),
+            ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class _LairInfoSection extends StatelessWidget {
+  final MonsterLair lair;
+
+  const _LairInfoSection({required this.lair});
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final stats = MonsterUnitStats.forLevel(lair.level);
+    return Column(
+      children: [
+        _infoRow(textTheme, 'Difficulté', lair.difficulty.label),
+        const SizedBox(height: 6),
+        _infoRow(textTheme, 'Niveau', '${lair.level}'),
+        const SizedBox(height: 6),
+        _infoRow(textTheme, 'Unités', '${lair.unitCount}'),
+        const SizedBox(height: 6),
+        _infoRow(
+          textTheme,
+          'PV / ATK / DEF',
+          '${stats.hp} / ${stats.atk} / ${stats.def}',
+        ),
+      ],
     );
   }
 

@@ -94,7 +94,8 @@ void _showCellAction(
         context,
         targetX: x,
         targetY: y,
-        difficulty: cell.lair!.difficulty,
+        lair: cell.lair!,
+        onPrepareFight: () {},
       );
     case CellContentType.empty:
       showCellInfoSheet(

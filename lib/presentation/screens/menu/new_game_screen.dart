@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
+import '../../../domain/map/map_generator.dart';
 import '../game/game_screen.dart';
 
 class NewGameScreen extends StatefulWidget {
@@ -82,8 +83,15 @@ class _NewGameScreenState extends State<NewGameScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final player = Player(name: _controller.text.trim());
-    final game = Game(player: player);
+    final generation = MapGenerator.generate();
+    final player = Player.withBase(
+      name: _controller.text.trim(),
+      baseX: generation.baseX,
+      baseY: generation.baseY,
+      mapWidth: generation.map.width,
+      mapHeight: generation.map.height,
+    );
+    final game = Game.singlePlayer(player)..gameMap = generation.map;
     await widget.repository.save(game);
 
     if (!mounted) return;

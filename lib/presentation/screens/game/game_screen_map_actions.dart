@@ -24,10 +24,6 @@ Widget buildMapTab(
   GameRepository repository,
   VoidCallback onChanged,
 ) {
-  if (game.gameMap == null) {
-    game.gameMap = MapGenerator.generate();
-    repository.save(game);
-  }
   final pendingTargets = game.pendingExplorations
       .map((e) => (e.target.x, e.target.y))
       .toSet();

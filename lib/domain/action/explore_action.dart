@@ -33,6 +33,7 @@ class ExploreAction extends Action {
 
     if (!CellEligibilityChecker.isEligible(
       game.gameMap!,
+      player,
       targetX,
       targetY,
     )) {

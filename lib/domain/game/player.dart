@@ -49,7 +49,7 @@ class Player extends HiveObject {
   final List<ExplorationOrder> pendingExplorations;
 
   @HiveField(10)
-  final Set<GridPosition> revealedCells;
+  final List<GridPosition> revealedCellsList;
 
   Player({
     required this.name,
@@ -62,7 +62,7 @@ class Player extends HiveObject {
     Map<UnitType, Unit>? units,
     List<UnitType>? recruitedUnitTypes,
     List<ExplorationOrder>? pendingExplorations,
-    Set<GridPosition>? revealedCells,
+    List<GridPosition>? revealedCellsList,
   })  : id = id ?? const Uuid().v4(),
         resources = resources ?? PlayerDefaults.resources(),
         buildings = buildings ?? PlayerDefaults.buildings(),
@@ -70,7 +70,7 @@ class Player extends HiveObject {
         units = units ?? PlayerDefaults.units(),
         recruitedUnitTypes = recruitedUnitTypes ?? [],
         pendingExplorations = pendingExplorations ?? [],
-        revealedCells = revealedCells ?? <GridPosition>{};
+        revealedCellsList = revealedCellsList ?? <GridPosition>[];
 
   Player.withBase({
     required String name,
@@ -84,7 +84,7 @@ class Player extends HiveObject {
           id: id,
           baseX: baseX,
           baseY: baseY,
-          revealedCells: _initialRevealedCells(
+          revealedCellsList: _initialRevealedCells(
             baseX: baseX,
             baseY: baseY,
             mapWidth: mapWidth,
@@ -92,7 +92,15 @@ class Player extends HiveObject {
           ),
         );
 
-  static Set<GridPosition> _initialRevealedCells({
+  Set<GridPosition> get revealedCells => revealedCellsList.toSet();
+
+  bool addRevealedCell(GridPosition pos) {
+    if (revealedCellsList.contains(pos)) return false;
+    revealedCellsList.add(pos);
+    return true;
+  }
+
+  static List<GridPosition> _initialRevealedCells({
     required int baseX,
     required int baseY,
     required int mapWidth,
@@ -104,6 +112,6 @@ class Player extends HiveObject {
       explorerLevel: 0,
       mapWidth: mapWidth,
       mapHeight: mapHeight,
-    ).toSet();
+    );
   }
 }

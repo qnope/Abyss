@@ -17,43 +17,28 @@ class GameAdapter extends TypeAdapter<Game> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Game(
-      player: fields[0] as Player,
-      turn: fields[1] as int,
-      createdAt: fields[2] as DateTime?,
-      resources: (fields[3] as Map?)?.cast<ResourceType, Resource>(),
-      buildings: (fields[4] as Map?)?.cast<BuildingType, Building>(),
-      techBranches: (fields[5] as Map?)?.cast<TechBranch, TechBranchState>(),
-      units: (fields[6] as Map?)?.cast<UnitType, Unit>(),
-      recruitedUnitTypes: (fields[7] as List?)?.cast<UnitType>(),
-      gameMap: fields[8] as GameMap?,
-      pendingExplorations: (fields[9] as List?)?.cast<ExplorationOrder>(),
+      humanPlayerId: fields[1] as String,
+      players: (fields[0] as Map).cast<String, Player>(),
+      turn: fields[2] as int,
+      createdAt: fields[3] as DateTime?,
+      gameMap: fields[4] as GameMap?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Game obj) {
     writer
-      ..writeByte(10)
-      ..writeByte(0)
-      ..write(obj.player)
-      ..writeByte(1)
-      ..write(obj.turn)
-      ..writeByte(2)
-      ..write(obj.createdAt)
-      ..writeByte(3)
-      ..write(obj.resources)
-      ..writeByte(4)
-      ..write(obj.buildings)
       ..writeByte(5)
-      ..write(obj.techBranches)
-      ..writeByte(6)
-      ..write(obj.units)
-      ..writeByte(7)
-      ..write(obj.recruitedUnitTypes)
-      ..writeByte(8)
-      ..write(obj.gameMap)
-      ..writeByte(9)
-      ..write(obj.pendingExplorations);
+      ..writeByte(0)
+      ..write(obj.players)
+      ..writeByte(1)
+      ..write(obj.humanPlayerId)
+      ..writeByte(2)
+      ..write(obj.turn)
+      ..writeByte(3)
+      ..write(obj.createdAt)
+      ..writeByte(4)
+      ..write(obj.gameMap);
   }
 
   @override

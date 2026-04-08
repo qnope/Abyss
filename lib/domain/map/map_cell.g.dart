@@ -20,15 +20,14 @@ class MapCellAdapter extends TypeAdapter<MapCell> {
       terrain: fields[0] as TerrainType,
       content: fields[1] as CellContentType,
       monsterDifficulty: fields[2] as MonsterDifficulty?,
-      isRevealed: fields[3] as bool,
-      isCollected: fields[6] as bool,
+      collectedBy: fields[3] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, MapCell obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.terrain)
       ..writeByte(1)
@@ -36,9 +35,7 @@ class MapCellAdapter extends TypeAdapter<MapCell> {
       ..writeByte(2)
       ..write(obj.monsterDifficulty)
       ..writeByte(3)
-      ..write(obj.isRevealed)
-      ..writeByte(6)
-      ..write(obj.isCollected);
+      ..write(obj.collectedBy);
   }
 
   @override

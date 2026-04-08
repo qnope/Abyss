@@ -24,12 +24,11 @@ class Game extends HiveObject {
 
   Game({
     required this.humanPlayerId,
-    required Map<String, Player> players,
+    required this.players,
     this.turn = 1,
     DateTime? createdAt,
     this.gameMap,
-  })  : players = players,
-        createdAt = createdAt ?? DateTime.now();
+  }) : createdAt = createdAt ?? DateTime.now();
 
   factory Game.singlePlayer(Player human) => Game(
         humanPlayerId: human.id,

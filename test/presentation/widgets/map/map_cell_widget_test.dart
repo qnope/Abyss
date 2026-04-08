@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_widget.dart';
@@ -89,7 +90,10 @@ void main() {
       final cell = MapCell(
         terrain: TerrainType.plain,
         content: CellContentType.monsterLair,
-        monsterDifficulty: MonsterDifficulty.hard,
+        lair: const MonsterLair(
+          difficulty: MonsterDifficulty.hard,
+          unitCount: 100,
+        ),
       );
       await tester.pumpWidget(wrap(
         MapCellWidget(cell: cell, isRevealed: true),

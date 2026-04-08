@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 import 'cell_content_type.dart';
-import 'monster_difficulty.dart';
+import 'monster_lair.dart';
 import 'terrain_type.dart';
 
 part 'map_cell.g.dart';
@@ -16,7 +16,7 @@ class MapCell {
   final CellContentType content;
 
   @HiveField(2)
-  final MonsterDifficulty? monsterDifficulty;
+  final MonsterLair? lair;
 
   @HiveField(3)
   final String? collectedBy;
@@ -24,7 +24,7 @@ class MapCell {
   MapCell({
     required this.terrain,
     this.content = CellContentType.empty,
-    this.monsterDifficulty,
+    this.lair,
     this.collectedBy,
   });
 
@@ -33,13 +33,15 @@ class MapCell {
   MapCell copyWith({
     TerrainType? terrain,
     CellContentType? content,
-    MonsterDifficulty? monsterDifficulty,
+    Object? lair = _sentinel,
     Object? collectedBy = _sentinel,
   }) {
     return MapCell(
       terrain: terrain ?? this.terrain,
       content: content ?? this.content,
-      monsterDifficulty: monsterDifficulty ?? this.monsterDifficulty,
+      lair: identical(lair, _sentinel)
+          ? this.lair
+          : lair as MonsterLair?,
       collectedBy: identical(collectedBy, _sentinel)
           ? this.collectedBy
           : collectedBy as String?,

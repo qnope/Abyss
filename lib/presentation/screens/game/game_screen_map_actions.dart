@@ -94,7 +94,7 @@ void _showCellAction(
         context,
         targetX: x,
         targetY: y,
-        difficulty: cell.monsterDifficulty!,
+        difficulty: cell.lair!.difficulty,
       );
     case CellContentType.empty:
       showCellInfoSheet(

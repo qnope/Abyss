@@ -12,6 +12,7 @@ import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
@@ -36,6 +37,7 @@ void _registerAdapters() {
   Hive.registerAdapter(TerrainTypeAdapter());
   Hive.registerAdapter(CellContentTypeAdapter());
   Hive.registerAdapter(MonsterDifficultyAdapter());
+  Hive.registerAdapter(MonsterLairAdapter());
   Hive.registerAdapter(MapCellAdapter());
   Hive.registerAdapter(GameMapAdapter());
   Hive.registerAdapter(GridPositionAdapter());

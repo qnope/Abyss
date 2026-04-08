@@ -8,6 +8,7 @@ import '../domain/map/game_map.dart';
 import '../domain/map/grid_position.dart';
 import '../domain/map/map_cell.dart';
 import '../domain/map/monster_difficulty.dart';
+import '../domain/map/monster_lair.dart';
 import '../domain/game/player.dart';
 import '../domain/resource/resource.dart';
 import '../domain/resource/resource_type.dart';
@@ -34,6 +35,7 @@ class GameRepository {
     Hive.registerAdapter(TerrainTypeAdapter());
     Hive.registerAdapter(CellContentTypeAdapter());
     Hive.registerAdapter(MonsterDifficultyAdapter());
+    Hive.registerAdapter(MonsterLairAdapter());
     Hive.registerAdapter(MapCellAdapter());
     Hive.registerAdapter(GameMapAdapter());
     Hive.registerAdapter(GridPositionAdapter());

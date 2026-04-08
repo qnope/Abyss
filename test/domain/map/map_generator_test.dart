@@ -39,8 +39,8 @@ void main() {
       for (var i = 0; i < 400; i++) {
         expect(a.map.cells[i].terrain, b.map.cells[i].terrain);
         expect(a.map.cells[i].content, b.map.cells[i].content);
-        expect(a.map.cells[i].monsterDifficulty,
-            b.map.cells[i].monsterDifficulty);
+        expect(a.map.cells[i].lair?.difficulty,
+            b.map.cells[i].lair?.difficulty);
       }
     });
 

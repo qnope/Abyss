@@ -56,10 +56,10 @@ Pure Dart business logic with no Flutter dependency. Split into 8 submodules:
 
 | Submodule | Responsibility |
 |-----------|---------------|
-| `action` | Player actions |
+| `action` | Player actions (operate on `(Game, Player)`) |
 | `building` | Building types and state |
-| `game` | Core game state, player |
-| `map` | Grid, terrain, fog of war |
+| `game` | `Game` multi-player container + `Player` per-player state |
+| `map` | Shared grid and terrain (per-player fog lives on `Player`) |
 | `resource` | 5 resource types |
 | `tech` | Technology branches |
 | `turn` | Turn processing |
@@ -93,3 +93,5 @@ graph LR
 ```
 
 `main.dart` initializes `GameRepository` (Hive), then passes it to `MainMenuScreen`. Screens use domain models and call the repository for persistence. Domain has zero dependencies on the other layers.
+
+`Game` is a multi-player container: it holds a `Map<String, Player>` plus the shared `GameMap` and turn counter. All per-player state (resources, buildings, tech, units, pending explorations, revealed cells) lives on `Player`. Actions and turn resolution iterate per player and read that state from the `Player` argument, not from `Game`.

@@ -50,6 +50,8 @@ class MainMenuScreen extends StatelessWidget {
                   child: const Text('Charger une partie'),
                 ),
               ),
+              const SizedBox(height: 32),
+              _BetaWarning(textTheme: textTheme),
             ],
           ),
         ),
@@ -69,6 +71,60 @@ class MainMenuScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => LoadGameScreen(repository: repository),
+      ),
+    );
+  }
+}
+
+class _BetaWarning extends StatelessWidget {
+  final TextTheme textTheme;
+
+  const _BetaWarning({required this.textTheme});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AbyssColors.warning.withValues(alpha: 0.08),
+        border: Border.all(
+          color: AbyssColors.warning.withValues(alpha: 0.4),
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: AbyssColors.warning,
+            size: 20,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Version bêta',
+                  style: textTheme.titleSmall?.copyWith(
+                    color: AbyssColors.warning,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Le jeu est en cours de développement. Les sauvegardes '
+                  'pourront être supprimées et votre progression perdue '
+                  "tant que le jeu est en bêta.",
+                  style: textTheme.bodySmall?.copyWith(
+                    color: AbyssColors.onSurface,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

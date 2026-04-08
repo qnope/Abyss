@@ -6,12 +6,13 @@ Every rule -- resource production, building upgrades, turn resolution -- lives h
 
 ## Submodules
 
-The layer is split into eight submodules, each in its own subfolder.
+The layer is split into nine submodules, each in its own subfolder.
 
 | Submodule | Path | Role |
 |-----------|------|------|
-| [action](action/README.md) | `lib/domain/action/` | Defines the `Action` interface and `ActionExecutor`. Each player action (upgrade building, research tech, recruit unit, unlock branch, explore, collect treasure) is a concrete `Action` that validates `(Game, Player)` then mutates the target `Player`. |
+| [action](action/README.md) | `lib/domain/action/` | Defines the `Action` interface and `ActionExecutor`. Each player action (upgrade building, research tech, recruit unit, unlock branch, explore, collect treasure, fight monster) is a concrete `Action` that validates `(Game, Player)` then mutates the target `Player`. |
 | [building](building/README.md) | `lib/domain/building/` | `Building` model (type + level), cost calculator, upgrade eligibility check, and the `BuildingDeactivator` used during turn resolution when energy is insufficient. |
+| [fight](fight/README.md) | `lib/domain/fight/` | Combat resolution: combatants, damage, crit, target picking, turn order, engine, loot, casualties. |
 | [game](game/README.md) | `lib/domain/game/` | `Game` -- the multi-player container (players map, human id, turn, shared `gameMap`). `Player` is the per-player state aggregate (resources, buildings, tech, units, pending explorations, revealed cells, base coords). Both are Hive-serializable. |
 | [map](map/README.md) | `lib/domain/map/` | `GameMap` grid, `MapCell`, terrain types, cell content (monsters, resources), procedural generation (`MapGenerator`, `TerrainGenerator`, `ContentPlacer`), and `ConnectivityChecker`. |
 | [resource](resource/README.md) | `lib/domain/resource/` | `Resource` model (type, amount, max storage), `ProductionCalculator`, `ConsumptionCalculator`, `MaintenanceCalculator`, and production formulas. |
@@ -29,12 +30,15 @@ The layer is split into eight submodules, each in its own subfolder.
 ## Dependency flow
 
 ```
-action --> game, building, resource, tech, unit, map
+action --> game, building, resource, tech, unit, map, fight
 turn   --> game, building, resource, unit, map
+fight  --> map, unit, resource
 game   --> building, resource, tech, unit, map
 ```
 
 Actions and turn resolution sit at the top; they iterate per player
 and mutate the target `Player` (and, where unavoidable, the shared
-`GameMap`). The remaining submodules (building, resource, tech, unit,
-map) are standalone data and logic modules.
+`GameMap`). The `fight` submodule is a pure combat resolver consumed
+by `FightMonsterAction`; it never mutates `Game` or `Player` directly.
+The remaining submodules (building, resource, tech, unit, map) are
+standalone data and logic modules.

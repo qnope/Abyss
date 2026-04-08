@@ -44,17 +44,30 @@ GameScreen logic is split into helper files to stay under 150 lines:
 | File | Responsibility |
 |------|---------------|
 | `game_screen_actions.dart` | `showBuildingDetailAction`, `showUnitDetailAction` — wire domain actions to bottom sheets |
-| `game_screen_map_actions.dart` | `buildMapTab` and contextual map-tap routing: exploration sheet for hidden cells, treasure/ruins/lair/info sheets for revealed ones, plus the collect → `ResourceGainDialog` orchestration |
+| `game_screen_map_actions.dart` | `buildMapTab` and contextual map-tap routing: exploration sheet for hidden cells, treasure/ruins/lair/info sheets for revealed ones, plus the collect → `ResourceGainDialog` orchestration. For monster lairs it wires `MonsterLairSheet.onPrepareFight` to `openArmySelection` |
+| `game_screen_fight_actions.dart` | `openArmySelection` — pushes the `ArmySelectionScreen` with the tapped cell, the `MonsterLair`, and the screen's `onChanged` callback |
 | `game_screen_collect_messages.dart` | `titleFor` / `emptyMessageFor` — content-aware strings for the collect dialog |
 | `game_screen_tech_actions.dart` | `showBranchDetail`, `showNodeDetail` — tech tree interactions |
 | `game_screen_turn_helpers.dart` | `computeConsumption`, `computeBuildingsToDeactivate`, `computeUnitsToLose` — pre-turn calculations |
 
+### Fight Screens (`game/fight/`)
+
+Fight orchestration lives in its own subfolder so the main game screen
+stays tab-focused.
+
+| File | Responsibility |
+|------|---------------|
+| `army_selection_screen.dart` | `ArmySelectionScreen` — lists the player's stocks, lets the user dial in how many of each `UnitType` to commit via `UnitQuantityRow`, shows a `MonsterPreview`, and on "Lancer le combat" runs `FightMonsterAction` through the `ActionExecutor`, saves the game, then `pushReplacement`s to `FightSummaryScreen` |
+| `fight_summary_screen.dart` | `FightSummaryScreen` — victory/defeat banner, `MonsterPreview`, player accounting (sent / intact / wounded / dead), monster section, loot list (on victory), and a `FightTurnList` of the per-turn summaries |
+| `fight_summary_screen_sections.dart` | `buildResultBanner`, `buildPlayerAccounting`, `buildMonsterSection`, `buildLoot` — section builders extracted from the summary screen to stay under 150 lines |
+
 ### Map Tap Flow
 
 1. Player taps a map cell
-2. `_showCellAction` routes by state: hidden → exploration sheet, base → info sheet, treasure/ruins → treasure sheet, monster → lair sheet, empty → info sheet
+2. `_showCellAction` routes by state: hidden → exploration sheet, base → info sheet, treasure/ruins (not yet collected) → treasure sheet, monster lair (not yet collected) → lair sheet, empty or collected → info sheet
 3. **Exploration**: `ExplorationSheet` shows cost and area; on confirm, `ExploreAction` consumes 1 scout and queues an `ExplorationOrder` (resolved at turn end). Pending cells show a cyan border on the map
 4. **Collect**: `TreasureSheet` confirms; on collect, `CollectTreasureAction` runs, the sheet closes, and a `ResourceGainDialog` opens with the per-resource deltas from the returned `CollectTreasureResult`
+5. **Fight**: `MonsterLairSheet` shows the lair's stats; the "Préparer le combat" button fires `openArmySelection`, which pushes `ArmySelectionScreen`. Launching the fight executes `FightMonsterAction`, saves the game, and `pushReplacement`s to `FightSummaryScreen`. On return, the map rebuilds (victorious lairs are now `isCollected`, so a subsequent tap falls through to the info sheet)
 
 ### Turn Flow
 

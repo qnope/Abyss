@@ -1,6 +1,6 @@
 # Widgets
 
-`lib/presentation/widgets/` — Reusable UI components organized by domain module. 31 widget files across 7 categories.
+`lib/presentation/widgets/` — Reusable UI components organized by domain module, grouped by the domain they render.
 
 ## Building Widgets (`building/`)
 
@@ -50,8 +50,16 @@
 | `MapCellWidget` | Single cell with terrain, content rendering, tap handler, and exploration marker. Greys out collected treasures and ruins |
 | `ExplorationSheet` | Bottom sheet for confirming scout exploration (cost, reveal area, eligibility) |
 | `TreasureSheet` | Bottom sheet for collecting a `resourceBonus` or `ruins` cell (free, immediate). Triggers `CollectTreasureAction`; on success, `game_screen_map_actions.dart` closes the sheet and opens a `ResourceGainDialog` with the per-resource deltas from the returned `CollectTreasureResult` |
-| `MonsterLairSheet` | Bottom sheet showing monster difficulty and "combat unavailable" notice |
+| `MonsterLairSheet` | Bottom sheet showing monster difficulty, unit count, and monster stats. Exposes a **"Préparer le combat"** button that pops the sheet and fires the `onPrepareFight` callback (wired by `game_screen_map_actions.dart` to `openArmySelection` in `game_screen_fight_actions.dart`) |
 | `CellInfoSheet` | Generic info bottom sheet for empty plains, the player base, and already-collected cells |
+
+## Fight Widgets (`fight/`)
+
+| Widget | Purpose |
+|--------|---------|
+| `UnitQuantityRow` | One row of the army-selection list: unit icon, name + current stock, minus/value/plus controls to pick how many to commit to the fight |
+| `MonsterPreview` | Card showing the lair's SVG, difficulty label, level, unit count, and per-monster HP/ATK/DEF chips. Reused by the army-selection and fight-summary screens |
+| `FightTurnList` | Vertical list of per-turn summary tiles (alive counts, HP, damage dealt/received, crit badge). Feeds from `FightResult.turnSummaries` |
 
 ## Turn Widgets (`turn/`)
 

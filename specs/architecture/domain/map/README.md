@@ -10,7 +10,7 @@ by three core classes, all persisted with Hive:
   does **not** hold base coordinates -- each `Player` stores its own
   `baseX` / `baseY`. Provides `cellAt(x, y)` and `setCell(x, y, cell)`.
 - **`MapCell`** -- A single cell containing a `TerrainType`, a
-  `CellContentType`, an optional `MonsterDifficulty`, and an optional
+  `CellContentType`, an optional `MonsterLair lair`, and an optional
   `collectedBy` string marking which player id looted the cell. The
   computed getter `isCollected` returns `collectedBy != null`. Fog of
   war is **not** stored on the cell -- it lives on
@@ -18,6 +18,24 @@ by three core classes, all persisted with Hive:
   of the shared grid.
 - **`GridPosition`** -- A value object pairing an `x` and `y` coordinate
   with equality and hash support.
+
+### Monster lair
+
+Monster cells are not described by a loose `MonsterDifficulty` enum
+any more; they carry a structured **`MonsterLair`** (Hive typeId 17)
+exposed as `MapCell.lair`:
+
+- `difficulty: MonsterDifficulty` -- easy / medium / hard.
+- `unitCount: int` -- how many monsters defend the lair.
+- `level: int` (computed) -- `1` / `2` / `3` depending on difficulty,
+  used by `MonsterUnitStats.forLevel` in the fight module to pick
+  per-monster `{ hp, atk, def }`.
+
+`ContentPlacer` fills in a `MonsterLair` whenever it places a
+`monsterLair` cell; `MapCell.lair` is `null` for any other content
+type. `FightMonsterAction` reads the lair, runs the fight, and on
+victory stamps `collectedBy: player.id` on the cell (the lair stays
+on the map for history, but `isCollected` prevents further fights).
 
 ## Terrain Types
 
@@ -135,6 +153,7 @@ Players queue **scout** orders which are resolved at end of turn.
 | `terrain_type.dart`     | Terrain enum                      |
 | `cell_content_type.dart`| Content enum                      |
 | `monster_difficulty.dart`| Monster difficulty enum           |
+| `monster_lair.dart`     | `MonsterLair` Hive type (difficulty + unitCount + level) |
 | `map_generator.dart`    | Top-level generation orchestrator |
 | `map_generation_result.dart` | `{ map, baseX, baseY }` result |
 | `terrain_generator.dart`| Terrain assignment logic          |

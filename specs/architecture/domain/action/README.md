@@ -32,7 +32,8 @@ revealed cells, pending explorations) is always read from the
 ## ActionType
 
 An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`,
-`researchTech`, `recruitUnit`, `explore`, `collectTreasure`.
+`researchTech`, `recruitUnit`, `explore`, `collectTreasure`,
+`fightMonster`.
 
 ## ActionResult
 
@@ -47,6 +48,25 @@ A simple result object with two named constructors:
 Sub-class of `ActionResult` returned by `CollectTreasureAction`.
 Carries `Map<ResourceType, int> deltas` so the presentation layer can
 show what was actually gained (post-clamp at `maxStorage`).
+
+### FightMonsterResult
+
+Sub-class of `ActionResult` returned by `FightMonsterAction`. On
+success it carries:
+
+- `victory` -- `true` if the player side won.
+- `fight` -- the full `FightResult` from the engine (turn-by-turn
+  summaries, initial/final combatants, monster counts).
+- `loot` -- `Map<ResourceType, int>` of resources actually added
+  (post-clamp, empty on defeat).
+- `sent` -- units the player committed (non-zero entries only).
+- `survivorsIntact` -- units that survived unscathed, grouped by
+  `UnitType`.
+- `wounded` -- units that fell but returned to the stock.
+- `dead` -- units that fell and were lost for good.
+
+The failure constructor carries a French reason string and empty
+maps.
 
 ## ActionExecutor
 
@@ -114,6 +134,50 @@ the shared map, and returns a `CollectTreasureResult`.
 
 Collection is free and immediate (no scout, no turn delay).
 
+### FightMonsterAction
+
+Takes `targetX`, `targetY`, a `selectedUnits: Map<UnitType, int>`
+(the units the player commits to the fight), and an optional `Random`
+for tests.
+
+**Validation** -- all of:
+
+- `game.gameMap` exists.
+- The target cell's content is `monsterLair` and it is not already
+  collected.
+- `cell.lair` is non-null.
+- Every `selectedUnits` entry is within the player's current stock.
+- At least one unit is selected.
+
+Failures return a `FightMonsterResult.failure(reason)` with a French
+message so the UI can show it directly.
+
+**Execution flow**:
+
+1. Build both combatant lists via `CombatantBuilder`
+   (`playerCombatantsFrom(selectedUnits)` and
+   `monsterCombatantsFrom(lair)`).
+2. Decrement the player stocks by the committed amounts **before**
+   resolving the fight.
+3. Run `FightEngine(random: random).resolve(...)`.
+4. Compute `pctLost` from initial vs final player HP via
+   `FightMonsterHelpers.computePctLost`.
+5. Group final player combatants into `alive` (intact survivors) and
+   `fallen` (hp == 0, mapped back to their initial entries).
+6. Partition `fallen` into `wounded` / `dead` via
+   `CasualtyCalculator.partition`. Wounded units are restored to the
+   player stocks through `FightMonsterHelpers.restoreWounded`.
+7. On victory: roll loot via `LootCalculator`, apply it via
+   `FightMonsterHelpers.applyLoot` (clamped at `maxStorage`), and mark
+   the cell as collected by the player (`copyWith(collectedBy:
+   player.id)`).
+8. Return a `FightMonsterResult.success(...)` with the full fight
+   result plus `sent` / `survivorsIntact` / `wounded` / `dead` /
+   `loot`.
+
+On defeat, the lair stays on the map -- the player can re-engage
+later with a fresh army.
+
 ## File Map
 
 | File | Role |
@@ -122,6 +186,7 @@ Collection is free and immediate (no scout, no turn delay).
 | `action_type.dart` | `ActionType` enum |
 | `action_result.dart` | `ActionResult` value object |
 | `collect_treasure_result.dart` | `CollectTreasureResult` sub-class |
+| `fight_monster_result.dart` | `FightMonsterResult` sub-class |
 | `action_executor.dart` | `ActionExecutor` orchestrator |
 | `upgrade_building_action.dart` | `UpgradeBuildingAction` |
 | `recruit_unit_action.dart` | `RecruitUnitAction` |
@@ -129,3 +194,5 @@ Collection is free and immediate (no scout, no turn delay).
 | `unlock_branch_action.dart` | `UnlockBranchAction` |
 | `explore_action.dart` | `ExploreAction` |
 | `collect_treasure_action.dart` | `CollectTreasureAction` |
+| `fight_monster_action.dart` | `FightMonsterAction` |
+| `fight_monster_helpers.dart` | Pct-lost, wounded restore, loot apply, combatants-by-type helpers |

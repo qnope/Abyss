@@ -9,8 +9,8 @@ flutter test
 ## Organization
 
 The test directory mirrors the source structure under `lib/`. Each source file has a
-corresponding `_test.dart` file in the matching `test/` subdirectory. There are 77 test
-files in total.
+corresponding `_test.dart` file in the matching `test/` subdirectory. There are about
+100 test files in total.
 
 ## Test Helpers
 
@@ -40,15 +40,15 @@ across the entire generated output.
 
 | Module | Files | What is tested |
 |---|---|---|
-| `domain/map` | 17 | Map generation, terrain, cell content, grid positions, monsters, exploration (eligibility, reveal area, resolver) |
-| `domain/action` | 10 | All action types (recruit, research, upgrade, unlock, explore) and executor |
+| `domain/map` | 16 | Map generation, terrain, cell content, grid positions, monsters, per-player exploration (eligibility, reveal area, resolver) |
+| `domain/action` | 14 | All action types (recruit, research, upgrade, unlock, explore, collect) with per-player signatures |
 | `domain/resource` | 7 | Production, consumption, maintenance formulas and calculators |
 | `domain/building` | 6 | Building model, cost calculator, prerequisites, deactivation |
 | `domain/unit` | 5 | Unit model, stats, types, cost and loss calculators |
 | `domain/tech` | 3 | Tech cost calculator, prerequisite checks, branch state |
-| `domain/game` | 2 | Game model and Player model |
-| `domain/turn` | 3 | Turn resolver (production, consumption, recruitment, exploration) and result |
-| `presentation/widgets` | 23 | Widget trees for building, unit, resource, tech, map, turn, common |
-| `presentation/screens` | 6 | Game screen and menu screen rendering |
+| `domain/game` | 2 | `Game` multi-player container and `Player` aggregate state |
+| `domain/turn` | 3 | Turn resolver (production, consumption, recruitment, per-player exploration) and result |
+| `presentation/widgets` | 28 | Widget trees for building, unit, resource, tech, map (per-player fog), turn, common |
+| `presentation/screens` | 10 | Game screen and menu screen rendering |
 | `presentation/extensions` | 4 | Display-formatting extensions |
 | Root | 2 | Theme constants and SVG asset availability |

@@ -29,7 +29,7 @@ class ExplorationResolver {
         var newCells = 0;
         final notable = <CellContentType>[];
         for (final pos in positions) {
-          if (player.revealedCells.add(pos)) {
+          if (player.addRevealedCell(pos)) {
             newCells++;
             final cell = map.cellAt(pos.x, pos.y);
             if (cell.content != CellContentType.empty) {

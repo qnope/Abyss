@@ -3,6 +3,7 @@ import 'action_result.dart';
 import 'action_type.dart';
 import '../building/building_type.dart';
 import '../game/game.dart';
+import '../game/player.dart';
 import '../tech/tech_branch.dart';
 import '../tech/tech_cost_calculator.dart';
 
@@ -18,8 +19,8 @@ class ResearchTechAction extends Action {
   String get description => 'Rechercher tech $branch';
 
   @override
-  ActionResult validate(Game game) {
-    final state = game.techBranches[branch];
+  ActionResult validate(Game game, Player player) {
+    final state = player.techBranches[branch];
     if (state == null) {
       return ActionResult.failure('Branche introuvable');
     }
@@ -30,13 +31,13 @@ class ResearchTechAction extends Action {
     if (targetLevel > TechCostCalculator.maxResearchLevel) {
       return ActionResult.failure('Niveau maximum atteint');
     }
-    final labLevel = game.buildings[BuildingType.laboratory]?.level ?? 0;
+    final labLevel = player.buildings[BuildingType.laboratory]?.level ?? 0;
     if (labLevel < TechCostCalculator.requiredLabLevel(targetLevel)) {
       return ActionResult.failure('Niveau de laboratoire insuffisant');
     }
     final costs = TechCostCalculator.researchCost(branch, targetLevel);
     for (final entry in costs.entries) {
-      final available = game.resources[entry.key]?.amount ?? 0;
+      final available = player.resources[entry.key]?.amount ?? 0;
       if (available < entry.value) {
         return ActionResult.failure('Ressources insuffisantes');
       }
@@ -45,15 +46,15 @@ class ResearchTechAction extends Action {
   }
 
   @override
-  ActionResult execute(Game game) {
-    final validation = validate(game);
+  ActionResult execute(Game game, Player player) {
+    final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
-    final targetLevel = game.techBranches[branch]!.researchLevel + 1;
+    final targetLevel = player.techBranches[branch]!.researchLevel + 1;
     final costs = TechCostCalculator.researchCost(branch, targetLevel);
     for (final entry in costs.entries) {
-      game.resources[entry.key]!.amount -= entry.value;
+      player.resources[entry.key]!.amount -= entry.value;
     }
-    game.techBranches[branch]!.researchLevel = targetLevel;
+    player.techBranches[branch]!.researchLevel = targetLevel;
     return ActionResult.success();
   }
 }

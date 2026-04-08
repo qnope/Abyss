@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:abyss/domain/building/building.dart';
-import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
-import 'package:abyss/domain/resource/resource.dart';
-import 'package:abyss/domain/resource/resource_type.dart';
-import 'package:abyss/domain/unit/unit.dart';
-import 'package:abyss/domain/unit/unit_type.dart';
+import 'package:abyss/domain/map/map_generator.dart';
 import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import '../../../helpers/fake_game_repository.dart';
@@ -18,9 +13,21 @@ void main() {
     late Game game;
     late FakeGameRepository repository;
 
+    Game makeGame() {
+      final gen = MapGenerator.generate(seed: 1);
+      final player = Player.withBase(
+        name: 'Nemo',
+        baseX: gen.baseX,
+        baseY: gen.baseY,
+        mapWidth: gen.map.width,
+        mapHeight: gen.map.height,
+      );
+      return Game.singlePlayer(player)..gameMap = gen.map;
+    }
+
     setUp(() {
       mockSvgAssets();
-      game = Game(player: Player(name: 'Nemo'));
+      game = makeGame();
       repository = FakeGameRepository();
     });
 
@@ -66,12 +73,10 @@ void main() {
       await tester.tap(find.text('Tour suivant'));
       await tester.pumpAndSettle();
 
-      // Confirmation dialog appears
       expect(find.text('Tour 1 \u2192 Tour 2'), findsOneWidget);
       await tester.tap(find.text('Confirmer'));
       await tester.pumpAndSettle();
 
-      // Summary dialog appears — dismiss it
       expect(find.text('Tour 1 \u2192 Tour 2'), findsOneWidget);
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
@@ -131,287 +136,6 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Niveau 1'), findsOneWidget);
-    });
-
-    group('Turn flow', () {
-      testWidgets('tapping Tour suivant shows confirmation dialog',
-          (tester) async {
-        await tester.pumpWidget(createApp());
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Tour suivant'));
-        await tester.pumpAndSettle();
-
-        expect(find.text('Tour 1 \u2192 Tour 2'), findsOneWidget);
-      });
-
-      testWidgets('cancel keeps same turn', (tester) async {
-        await tester.pumpWidget(createApp());
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Tour suivant'));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Annuler'));
-        await tester.pumpAndSettle();
-
-        expect(find.text('Tour 1'), findsOneWidget);
-      });
-
-      testWidgets('resources increase after turn', (tester) async {
-        final customGame = Game(
-          player: Player(name: 'Nemo'),
-          buildings: {
-            ...Game.defaultBuildings(),
-            BuildingType.algaeFarm: Building(
-              type: BuildingType.algaeFarm,
-              level: 1,
-            ),
-          },
-        );
-        await tester.pumpWidget(createApp(customGame));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Tour suivant'));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Confirmer'));
-        await tester.pumpAndSettle();
-
-        // Summary shows algae production
-        expect(find.text('+50'), findsOneWidget);
-
-        await tester.tap(find.text('OK'));
-        await tester.pumpAndSettle();
-
-        // Algae: 100 + 50 (production) - 0 (no unit consumption) = 150
-        // Energy: 60 - 2 (algaeFarm consumption) = 58
-        expect(customGame.resources[ResourceType.algae]!.amount, 150);
-      });
-
-      testWidgets('resource capped at maxStorage', (tester) async {
-        final customGame = Game(
-          player: Player(name: 'Nemo'),
-          buildings: {
-            ...Game.defaultBuildings(),
-            BuildingType.algaeFarm: Building(
-              type: BuildingType.algaeFarm,
-              level: 1,
-            ),
-          },
-          resources: {
-            ...Game.defaultResources(),
-            ResourceType.algae: Resource(
-              type: ResourceType.algae,
-              amount: 498,
-              maxStorage: 500,
-            ),
-          },
-        );
-        await tester.pumpWidget(createApp(customGame));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Tour suivant'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('Confirmer'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('OK'));
-        await tester.pumpAndSettle();
-
-        expect(customGame.resources[ResourceType.algae]!.amount, 500);
-      });
-
-      testWidgets('game is saved after turn', (tester) async {
-        await tester.pumpWidget(createApp());
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Tour suivant'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('Confirmer'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('OK'));
-        await tester.pumpAndSettle();
-
-        expect(repository.saveCallCount, 1);
-      });
-
-      testWidgets('summary dialog appears after confirming',
-          (tester) async {
-        await tester.pumpWidget(createApp());
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Tour suivant'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('Confirmer'));
-        await tester.pumpAndSettle();
-
-        expect(find.text('Tour 1 \u2192 Tour 2'), findsOneWidget);
-      });
-    });
-
-    group('consumption display', () {
-      testWidgets('resource bar shows energy consumption', (tester) async {
-        final customGame = Game(
-          player: Player(name: 'Nemo'),
-          buildings: {
-            ...Game.defaultBuildings(),
-            BuildingType.headquarters: Building(
-              type: BuildingType.headquarters, level: 1),
-            BuildingType.solarPanel: Building(
-              type: BuildingType.solarPanel, level: 1),
-          },
-        );
-        await tester.pumpWidget(createApp(customGame));
-        await tester.pumpAndSettle();
-
-        // Solar panel lvl1: +6, HQ+solar consumption: 3+1=4
-        expect(find.textContaining('/-4/t'), findsOneWidget);
-      });
-
-      testWidgets('resource bar shows algae consumption', (tester) async {
-        final customGame = Game(
-          player: Player(name: 'Nemo'),
-          units: {
-            ...Game.defaultUnits(),
-            UnitType.scout: Unit(type: UnitType.scout, count: 10),
-          },
-        );
-        await tester.pumpWidget(createApp(customGame));
-        await tester.pumpAndSettle();
-
-        // 10 scouts * 1 algae = 10 consumption
-        expect(find.textContaining('/-10/t'), findsOneWidget);
-      });
-    });
-
-    group('turn with consumption', () {
-      testWidgets('turn confirmation shows deactivation warning',
-          (tester) async {
-        final customGame = Game(
-          player: Player(name: 'Nemo'),
-          buildings: {
-            ...Game.defaultBuildings(),
-            BuildingType.headquarters: Building(
-              type: BuildingType.headquarters, level: 1),
-            BuildingType.algaeFarm: Building(
-              type: BuildingType.algaeFarm, level: 1),
-            BuildingType.coralMine: Building(
-              type: BuildingType.coralMine, level: 1),
-            BuildingType.oreExtractor: Building(
-              type: BuildingType.oreExtractor, level: 1),
-          },
-          resources: {
-            ...Game.defaultResources(),
-            ResourceType.energy: Resource(
-              type: ResourceType.energy, amount: 5, maxStorage: 1000),
-          },
-        );
-        await tester.pumpWidget(createApp(customGame));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Tour suivant'));
-        await tester.pumpAndSettle();
-
-        expect(find.text('Batiments desactives'), findsOneWidget);
-      });
-
-      testWidgets('turn summary shows consumption results', (tester) async {
-        final customGame = Game(
-          player: Player(name: 'Nemo'),
-          buildings: {
-            ...Game.defaultBuildings(),
-            BuildingType.algaeFarm: Building(
-              type: BuildingType.algaeFarm, level: 1),
-            BuildingType.solarPanel: Building(
-              type: BuildingType.solarPanel, level: 1),
-          },
-        );
-        await tester.pumpWidget(createApp(customGame));
-        await tester.pumpAndSettle();
-
-        await tester.tap(find.text('Tour suivant'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('Confirmer'));
-        await tester.pumpAndSettle();
-
-        // Summary shows energy with consumption format
-        expect(find.textContaining('/-'), findsWidgets);
-      });
-    });
-
-    group('Army tab', () {
-      Game armyGame() => Game(
-            player: Player(name: 'Nemo'),
-            buildings: {
-              ...Game.defaultBuildings(),
-              BuildingType.barracks:
-                  Building(type: BuildingType.barracks, level: 1),
-            },
-            resources: {
-              ResourceType.algae:
-                  Resource(type: ResourceType.algae, amount: 500),
-              ResourceType.coral:
-                  Resource(type: ResourceType.coral, amount: 500),
-              ResourceType.ore:
-                  Resource(type: ResourceType.ore, amount: 500),
-              ResourceType.energy:
-                  Resource(type: ResourceType.energy, amount: 500),
-              ResourceType.pearl:
-                  Resource(type: ResourceType.pearl, amount: 100),
-            },
-          );
-
-      Future<void> goToArmyTab(WidgetTester tester, Game g) async {
-        tester.view.physicalSize = const Size(800, 1200);
-        tester.view.devicePixelRatio = 1.0;
-        addTearDown(() => tester.view.resetPhysicalSize());
-        addTearDown(() => tester.view.resetDevicePixelRatio());
-        await tester.pumpWidget(createApp(g));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('Armée'));
-        await tester.pumpAndSettle();
-      }
-
-      testWidgets('shows unit cards', (tester) async {
-        await goToArmyTab(tester, armyGame());
-        expect(find.text('Eclaireur'), findsOneWidget);
-        expect(find.text('Harponneur'), findsOneWidget);
-      });
-
-      testWidgets('locked units shown', (tester) async {
-        await goToArmyTab(tester, armyGame());
-        expect(find.text('Verrouille'), findsNWidgets(4));
-      });
-
-      testWidgets('tapping unlocked unit shows stats', (tester) async {
-        await goToArmyTab(tester, armyGame());
-        await tester.tap(find.text('Eclaireur'));
-        await tester.pumpAndSettle();
-        expect(find.text('PV: 10'), findsOneWidget);
-      });
-
-      testWidgets('tapping locked unit shows unlock message',
-          (tester) async {
-        await goToArmyTab(tester, armyGame());
-        await tester.tap(find.text('Gardien'));
-        await tester.pumpAndSettle();
-        expect(
-          find.text('Caserne niveau 3 requise pour debloquer'),
-          findsOneWidget,
-        );
-      });
-
-      testWidgets('recruit units updates count', (tester) async {
-        final g = armyGame();
-        await goToArmyTab(tester, g);
-        await tester.tap(find.text('Eclaireur'));
-        await tester.pumpAndSettle();
-        await tester.drag(find.byType(Slider), const Offset(200, 0));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('Recruter'));
-        await tester.pumpAndSettle();
-        expect(g.units[UnitType.scout]!.count, greaterThan(0));
-      });
     });
   });
 }

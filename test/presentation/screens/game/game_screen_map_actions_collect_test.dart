@@ -4,6 +4,7 @@ import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/game_map.dart';
+import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/domain/resource/resource.dart';
@@ -21,25 +22,42 @@ void main() {
 
     const treasureX = 3;
     const treasureY = 3;
+    const mapSize = 20;
 
     GameMap buildTestMap(CellContentType content) {
       final cells = List.generate(
-        20 * 20,
-        (_) => MapCell(terrain: TerrainType.plain, isRevealed: true),
+        mapSize * mapSize,
+        (_) => MapCell(terrain: TerrainType.plain),
       );
-      cells[treasureY * 20 + treasureX] = MapCell(
+      cells[treasureY * mapSize + treasureX] = MapCell(
         terrain: TerrainType.plain,
         content: content,
-        isRevealed: true,
       );
       return GameMap(
-        width: 20,
-        height: 20,
+        width: mapSize,
+        height: mapSize,
         cells: cells,
-        playerBaseX: 10,
-        playerBaseY: 10,
         seed: 1,
       );
+    }
+
+    List<GridPosition> fullReveal() => [
+          for (var y = 0; y < mapSize; y++)
+            for (var x = 0; x < mapSize; x++) GridPosition(x: x, y: y),
+        ];
+
+    Game buildGame(
+      CellContentType content, {
+      Map<ResourceType, Resource>? resources,
+    }) {
+      final player = Player(
+        name: 'Nemo',
+        baseX: 10,
+        baseY: 10,
+        revealedCellsList: fullReveal(),
+        resources: resources,
+      );
+      return Game.singlePlayer(player)..gameMap = buildTestMap(content);
     }
 
     Widget buildHost(Game game) {
@@ -55,18 +73,14 @@ void main() {
     }
 
     Future<void> tapTreasureCell(WidgetTester tester) async {
-      final view =
-          tester.widget<GameMapView>(find.byType(GameMapView));
+      final view = tester.widget<GameMapView>(find.byType(GameMapView));
       view.onCellTap!(treasureX, treasureY);
       await tester.pumpAndSettle();
     }
 
     testWidgets('resourceBonus shows success dialog after collect',
         (tester) async {
-      final game = Game(
-        player: Player(name: 'Nemo'),
-        gameMap: buildTestMap(CellContentType.resourceBonus),
-      );
+      final game = buildGame(CellContentType.resourceBonus);
       await tester.pumpWidget(buildHost(game));
       await tester.pumpAndSettle();
 
@@ -86,10 +100,7 @@ void main() {
     });
 
     testWidgets('ruins shows ruins dialog after collect', (tester) async {
-      final game = Game(
-        player: Player(name: 'Nemo'),
-        gameMap: buildTestMap(CellContentType.ruins),
-      );
+      final game = buildGame(CellContentType.ruins);
       await tester.pumpWidget(buildHost(game));
       await tester.pumpAndSettle();
 
@@ -102,16 +113,15 @@ void main() {
 
     testWidgets('empty ruins shows empty message when storages full',
         (tester) async {
-      final game = Game(
-        player: Player(name: 'Nemo'),
-        gameMap: buildTestMap(CellContentType.ruins),
+      final game = buildGame(
+        CellContentType.ruins,
         resources: {
           ResourceType.algae: Resource(
               type: ResourceType.algae, amount: 100, maxStorage: 100),
           ResourceType.coral: Resource(
               type: ResourceType.coral, amount: 100, maxStorage: 100),
-          ResourceType.ore: Resource(
-              type: ResourceType.ore, amount: 100, maxStorage: 100),
+          ResourceType.ore:
+              Resource(type: ResourceType.ore, amount: 100, maxStorage: 100),
           ResourceType.energy: Resource(
               type: ResourceType.energy, amount: 60, maxStorage: 1000),
           ResourceType.pearl: Resource(

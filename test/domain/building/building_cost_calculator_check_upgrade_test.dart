@@ -222,5 +222,94 @@ void main() {
 
       expect(result.canUpgrade, isTrue);
     });
+
+    test('cannot upgrade coralCitadel when pearls insufficient', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.coralCitadel,
+        currentLevel: 0,
+        resources: {
+          ResourceType.coral: _resource(ResourceType.coral, 1000),
+          ResourceType.ore: _resource(ResourceType.ore, 1000),
+          ResourceType.energy: _resource(ResourceType.energy, 1000),
+          ResourceType.pearl: _resource(ResourceType.pearl, 2),
+        },
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 3),
+          BuildingType.coralCitadel:
+              Building(type: BuildingType.coralCitadel, level: 0),
+        },
+      );
+
+      expect(result.canUpgrade, isFalse);
+      expect(result.missingResources[ResourceType.pearl], 3);
+    });
+
+    test('cannot upgrade coralCitadel when HQ prerequisite not met', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.coralCitadel,
+        currentLevel: 0,
+        resources: {
+          ResourceType.coral: _resource(ResourceType.coral, 1000),
+          ResourceType.ore: _resource(ResourceType.ore, 1000),
+          ResourceType.energy: _resource(ResourceType.energy, 1000),
+          ResourceType.pearl: _resource(ResourceType.pearl, 100),
+        },
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 2),
+          BuildingType.coralCitadel:
+              Building(type: BuildingType.coralCitadel, level: 0),
+        },
+      );
+
+      expect(result.canUpgrade, isFalse);
+      expect(result.missingPrerequisites[BuildingType.headquarters], 3);
+    });
+
+    test('can upgrade coralCitadel when HQ and resources sufficient', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.coralCitadel,
+        currentLevel: 0,
+        resources: {
+          ResourceType.coral: _resource(ResourceType.coral, 1000),
+          ResourceType.ore: _resource(ResourceType.ore, 1000),
+          ResourceType.energy: _resource(ResourceType.energy, 1000),
+          ResourceType.pearl: _resource(ResourceType.pearl, 100),
+        },
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 3),
+          BuildingType.coralCitadel:
+              Building(type: BuildingType.coralCitadel, level: 0),
+        },
+      );
+
+      expect(result.canUpgrade, isTrue);
+      expect(result.missingResources, isEmpty);
+      expect(result.missingPrerequisites, isEmpty);
+    });
+
+    test('cannot upgrade coralCitadel at max level (isMaxLevel=true)', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.coralCitadel,
+        currentLevel: 5,
+        resources: {
+          ResourceType.coral: _resource(ResourceType.coral, 10000),
+          ResourceType.ore: _resource(ResourceType.ore, 10000),
+          ResourceType.energy: _resource(ResourceType.energy, 10000),
+          ResourceType.pearl: _resource(ResourceType.pearl, 1000),
+        },
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 10),
+          BuildingType.coralCitadel:
+              Building(type: BuildingType.coralCitadel, level: 5),
+        },
+      );
+
+      expect(result.canUpgrade, isFalse);
+      expect(result.isMaxLevel, isTrue);
+    });
   });
 }

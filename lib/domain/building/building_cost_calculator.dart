@@ -1,5 +1,6 @@
 import 'building.dart';
 import 'building_type.dart';
+import 'coral_citadel_costs.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
 import 'upgrade_check.dart';
@@ -35,6 +36,7 @@ class BuildingCostCalculator {
         ResourceType.ore: 25 * (currentLevel * currentLevel + 1),
         ResourceType.energy: 10 * (currentLevel * currentLevel + 1),
       },
+      BuildingType.coralCitadel => coralCitadelCost(currentLevel),
     };
   }
 
@@ -45,7 +47,8 @@ class BuildingCostCalculator {
     BuildingType.oreExtractor ||
     BuildingType.solarPanel ||
     BuildingType.laboratory ||
-    BuildingType.barracks => 5,
+    BuildingType.barracks ||
+    BuildingType.coralCitadel => 5,
   };
 
   Map<BuildingType, int> prerequisites(BuildingType type, int targetLevel) {
@@ -53,6 +56,7 @@ class BuildingCostCalculator {
       BuildingType.headquarters => {},
       BuildingType.laboratory => _laboratoryPrereqs(targetLevel),
       BuildingType.barracks => _barracksPrereqs(targetLevel),
+      BuildingType.coralCitadel => coralCitadelPrereqs(targetLevel),
       BuildingType.algaeFarm ||
       BuildingType.coralMine ||
       BuildingType.oreExtractor ||

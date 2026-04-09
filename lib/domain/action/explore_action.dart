@@ -1,5 +1,6 @@
 import '../game/game.dart';
 import '../game/player.dart';
+import '../history/history_entry.dart';
 import '../map/cell_eligibility_checker.dart';
 import '../map/exploration_order.dart';
 import '../map/grid_position.dart';
@@ -55,5 +56,15 @@ class ExploreAction extends Action {
     );
 
     return const ActionResult.success();
+  }
+
+  @override
+  HistoryEntry? makeHistoryEntry(
+    Game game,
+    Player player,
+    ActionResult result,
+    int turn,
+  ) {
+    return ExploreEntry(turn: turn, targetX: targetX, targetY: targetY);
   }
 }

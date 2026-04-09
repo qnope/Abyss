@@ -1,6 +1,7 @@
 import 'dart:math';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../history/history_entry.dart';
 import '../map/cell_content_type.dart';
 import '../map/grid_position.dart';
 import '../resource/resource_type.dart';
@@ -87,5 +88,20 @@ class CollectTreasureAction extends Action {
     resource.amount =
         (resource.amount + amount).clamp(0, resource.maxStorage);
     return resource.amount - before;
+  }
+
+  @override
+  HistoryEntry? makeHistoryEntry(
+    Game game,
+    Player player,
+    ActionResult result,
+    int turn,
+  ) {
+    return CollectEntry(
+      turn: turn,
+      targetX: targetX,
+      targetY: targetY,
+      gains: (result as CollectTreasureResult).deltas,
+    );
   }
 }

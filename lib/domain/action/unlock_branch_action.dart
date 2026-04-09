@@ -4,6 +4,7 @@ import 'action_type.dart';
 import '../building/building_type.dart';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../history/history_entry.dart';
 import '../tech/tech_branch.dart';
 import '../tech/tech_cost_calculator.dart';
 
@@ -51,5 +52,15 @@ class UnlockBranchAction extends Action {
     }
     player.techBranches[branch]!.unlocked = true;
     return ActionResult.success();
+  }
+
+  @override
+  HistoryEntry? makeHistoryEntry(
+    Game game,
+    Player player,
+    ActionResult result,
+    int turn,
+  ) {
+    return ResearchEntry(turn: turn, branch: branch, isUnlock: true);
   }
 }

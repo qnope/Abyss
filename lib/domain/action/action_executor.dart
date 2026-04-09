@@ -7,6 +7,11 @@ class ActionExecutor {
   ActionResult execute(Action action, Game game, Player player) {
     final validation = action.validate(game, player);
     if (!validation.isSuccess) return validation;
-    return action.execute(game, player);
+    final result = action.execute(game, player);
+    if (result.isSuccess) {
+      final entry = action.makeHistoryEntry(game, player, result, game.turn);
+      if (entry != null) player.addHistoryEntry(entry);
+    }
+    return result;
   }
 }

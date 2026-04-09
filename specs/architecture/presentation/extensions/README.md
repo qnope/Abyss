@@ -16,6 +16,8 @@ Each extension file adds `displayName`, `description`, `iconPath`, and `color` g
 | `tech_branch_extensions.dart` | `TechBranch` | `displayName` |
 | `terrain_type_extensions.dart` | `TerrainType` | Display values for map rendering |
 | `cell_content_type_extensions.dart` | `CellContentType` | Display values for map cell contents |
+| `history_entry_category_extensions.dart` | `HistoryEntryCategory` | `icon`, `backgroundColor(theme)`, `label` — drives history card tinting and filter chips |
+| `history_entry_extensions.dart` | `HistoryEntry` (sealed) | `accentColor(theme)` (combat wins glow success / losses glow error), `isTappable` (combat only) |
 
 ## How to Use
 

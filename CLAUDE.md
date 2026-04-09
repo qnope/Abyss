@@ -4,13 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**ABYSSES** is a game like Travian or OGame, Clash Of Clan
-It is a free game, and it is meant to be a single player.
-Explanation of this game are in `ABYSS.md` file.
+**ABYSSES** is a free, single-player, turn-based strategy game set in the deep sea, inspired by titles like Travian, OGame, and Clash of Clans — but without the real-time waiting. Each turn, the player performs their actions (build, research, move units, fight) and then presses the "next turn" button to advance the world.
 
-It's a turn by turn game. Instead of waiting for hours, we are doing actions, and at the end, we press the "next turn" button.
+The player develops a base, gathers resources, trains an army, researches technologies, explores a fog-of-war world, interacts with rival entities, and progresses through successive zones toward an end-game objective.
 
-We have resources, army, technologies etc.
+The full product vision and the incremental development stages are described in `PRD.md`. Each stage is meant to ship a fully playable version of the game, building on the previous one.
 
 ## Tech
 1. Dart

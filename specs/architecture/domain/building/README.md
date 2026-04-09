@@ -2,7 +2,7 @@
 
 ## Building Types
 
-`BuildingType` is a Hive-persisted enum with 7 values:
+`BuildingType` is a Hive-persisted enum with 8 values:
 
 - **headquarters** -- central building, prerequisite for all others
 - **algaeFarm** -- produces algae (food)
@@ -11,6 +11,7 @@
 - **solarPanel** -- produces energy
 - **laboratory** -- unlocks research
 - **barracks** -- unlocks unit training
+- **coralCitadel** -- defensive building; consumes `1 * level` energy, deactivated last
 
 ## Building
 
@@ -54,5 +55,6 @@ Every building except headquarters requires a minimum headquarters level to upgr
 4. laboratory
 5. barracks
 6. solarPanel
+7. coralCitadel (disabled last)
 
 Headquarters is never disabled. The method iterates this list in reverse priority order, subtracting each building's consumption until the remaining consumption fits within the available energy.

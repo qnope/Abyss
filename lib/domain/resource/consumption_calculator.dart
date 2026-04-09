@@ -12,6 +12,7 @@ class ConsumptionCalculator {
       BuildingType.coralMine => 2 * level,
       BuildingType.oreExtractor => 3 * level,
       BuildingType.solarPanel => 1 * level,
+      BuildingType.coralCitadel => 1 * level,
       BuildingType.laboratory => 4 * level,
       BuildingType.barracks => 3 * level,
     };

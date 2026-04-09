@@ -154,7 +154,7 @@ void main() {
     });
 
     test('solar panel disabled last (before HQ)', () {
-      // All buildings at level 1, production=0, stock=0
+      // All buildings at level 1 (no citadel), production=0, stock=0
       final buildings = _buildings({
         BuildingType.headquarters: 1,
         BuildingType.solarPanel: 1,
@@ -170,6 +170,65 @@ void main() {
         energyStock: 0,
       );
       expect(result.last, BuildingType.solarPanel);
+    });
+
+    test('coral citadel is deactivated last when all buildings level 1', () {
+      // All buildings at level 1 including citadel.
+      // Consumption: HQ=3, citadel=1, solar=1, barracks=3, lab=4,
+      //   algae=2, coralMine=2, ore=3 => total 19.
+      // production=0, stock=0 => full deficit, every non-HQ must go down.
+      final buildings = _buildings({
+        BuildingType.headquarters: 1,
+        BuildingType.coralCitadel: 1,
+        BuildingType.solarPanel: 1,
+        BuildingType.barracks: 1,
+        BuildingType.laboratory: 1,
+        BuildingType.algaeFarm: 1,
+        BuildingType.coralMine: 1,
+        BuildingType.oreExtractor: 1,
+      });
+      final result = BuildingDeactivator.deactivate(
+        buildings: buildings,
+        energyProduction: 0,
+        energyStock: 0,
+      );
+      expect(result.length, 7);
+      expect(result, isNot(contains(BuildingType.headquarters)));
+      expect(result.last, BuildingType.coralCitadel);
+    });
+
+    test('coral citadel is spared when ore extractor alone closes deficit', () {
+      // HQ lvl1=3, citadel lvl1=1, oreExtractor lvl1=3 => total 7.
+      // available = 4, deficit = 3. Deactivating ore extractor alone suffices.
+      final buildings = _buildings({
+        BuildingType.headquarters: 1,
+        BuildingType.coralCitadel: 1,
+        BuildingType.oreExtractor: 1,
+      });
+      final result = BuildingDeactivator.deactivate(
+        buildings: buildings,
+        energyProduction: 4,
+        energyStock: 0,
+      );
+      expect(result, [BuildingType.oreExtractor]);
+      expect(result, isNot(contains(BuildingType.coralCitadel)));
+    });
+
+    test('skips level 0 coral citadel', () {
+      // HQ lvl1=3, citadel lvl0=0, oreExtractor lvl1=3 => total 6.
+      // available=0, deficit=6 — everything non-HQ except level-0 citadel goes.
+      final buildings = _buildings({
+        BuildingType.headquarters: 1,
+        BuildingType.coralCitadel: 0,
+        BuildingType.oreExtractor: 1,
+      });
+      final result = BuildingDeactivator.deactivate(
+        buildings: buildings,
+        energyProduction: 0,
+        energyStock: 0,
+      );
+      expect(result, [BuildingType.oreExtractor]);
+      expect(result, isNot(contains(BuildingType.coralCitadel)));
     });
   });
 }

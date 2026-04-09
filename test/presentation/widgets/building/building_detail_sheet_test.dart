@@ -4,6 +4,7 @@ import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
+import 'package:abyss/presentation/widgets/building/base_shield_badge.dart';
 import 'package:abyss/presentation/widgets/building/coral_citadel_info_section.dart';
 import '../../../helpers/test_svg_helper.dart';
 import 'building_detail_sheet_harness.dart';
@@ -90,6 +91,36 @@ void main() {
       await openSheet(t);
       expect(find.byType(CoralCitadelInfoSection), findsNothing);
       expect(find.textContaining('Bonus DEF actuel'), findsNothing);
+    });
+
+    testWidgets('HQ sheet with citadel level 4 shows +80% badge', (t) async {
+      useTallSurface(t);
+      await t.pumpWidget(buildSheetApp(
+        building: hq(3),
+        allBuildings: {
+          BuildingType.headquarters: hq(3),
+          BuildingType.coralCitadel:
+              Building(type: BuildingType.coralCitadel, level: 4),
+        },
+      ));
+      await openSheet(t);
+      expect(find.byType(BaseShieldBadge), findsOneWidget);
+      expect(find.text('Bouclier de la base : +80%'), findsOneWidget);
+    });
+
+    testWidgets('HQ sheet with citadel level 0 shows no badge', (t) async {
+      useTallSurface(t);
+      await t.pumpWidget(buildSheetApp(
+        building: hq(3),
+        allBuildings: {
+          BuildingType.headquarters: hq(3),
+          BuildingType.coralCitadel:
+              Building(type: BuildingType.coralCitadel, level: 0),
+        },
+      ));
+      await openSheet(t);
+      // BaseShieldBadge is in tree but renders SizedBox.shrink (no label).
+      expect(find.textContaining('Bouclier de la base'), findsNothing);
     });
   });
 

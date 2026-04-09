@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/presentation/widgets/building/base_shield_badge.dart';
 import '../../../helpers/test_svg_helper.dart';
 import 'building_detail_sheet_harness.dart';
 
@@ -56,6 +57,23 @@ void main() {
       await t.pumpWidget(buildSheetApp(building: farm));
       await openSheet(t);
       expect(find.text('Niveau maximum atteint'), findsOneWidget);
+    });
+
+    testWidgets('non-HQ non-Citadel sheet shows no shield badge', (t) async {
+      useTallSurface(t);
+      final farm = Building(type: BuildingType.algaeFarm, level: 2);
+      await t.pumpWidget(buildSheetApp(
+        building: farm,
+        allBuildings: {
+          farm.type: farm,
+          BuildingType.headquarters: hq(5),
+          BuildingType.coralCitadel:
+              Building(type: BuildingType.coralCitadel, level: 3),
+        },
+      ));
+      await openSheet(t);
+      expect(find.byType(BaseShieldBadge), findsNothing);
+      expect(find.textContaining('Bouclier de la base'), findsNothing);
     });
   });
 }

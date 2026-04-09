@@ -23,16 +23,36 @@ void main() {
 
   FightResult buildFight({required bool playerWins}) {
     return FightResult(
-      playerWins ? CombatSide.player : CombatSide.monster,
-      2,
-      const [
-        FightTurnSummary(1, 2, 0, 10, 5, 3, 2, 12, 8),
-        FightTurnSummary(2, 2, 0, 7, 3, 3, 0, 9, 0),
+      winner: playerWins ? CombatSide.player : CombatSide.monster,
+      turnCount: 2,
+      turnSummaries: const [
+        FightTurnSummary(
+          turnNumber: 1,
+          attacksPlayed: 2,
+          critCount: 0,
+          damageDealtByPlayer: 10,
+          damageDealtByMonster: 5,
+          playerAliveAtEnd: 3,
+          monsterAliveAtEnd: 2,
+          playerHpAtEnd: 12,
+          monsterHpAtEnd: 8,
+        ),
+        FightTurnSummary(
+          turnNumber: 2,
+          attacksPlayed: 2,
+          critCount: 0,
+          damageDealtByPlayer: 7,
+          damageDealtByMonster: 3,
+          playerAliveAtEnd: 3,
+          monsterAliveAtEnd: 0,
+          playerHpAtEnd: 9,
+          monsterHpAtEnd: 0,
+        ),
       ],
-      const [],
-      const [],
-      3,
-      playerWins ? 0 : 3,
+      initialPlayerCombatants: const [],
+      finalPlayerCombatants: const [],
+      initialMonsterCount: 3,
+      finalMonsterCount: playerWins ? 0 : 3,
     );
   }
 

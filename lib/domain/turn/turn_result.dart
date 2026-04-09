@@ -1,14 +1,29 @@
+import 'package:hive/hive.dart';
 import '../building/building_type.dart';
 import '../map/exploration_result.dart';
 import '../resource/resource_type.dart';
 import '../unit/unit_type.dart';
 
+part 'turn_result.g.dart';
+
+@HiveType(typeId: 30)
 class TurnResourceChange {
+  @HiveField(0)
   final ResourceType type;
+
+  @HiveField(1)
   final int produced;
+
+  @HiveField(2)
   final int consumed;
+
+  @HiveField(3)
   final bool wasCapped;
+
+  @HiveField(4)
   final int beforeAmount;
+
+  @HiveField(5)
   final int afterAmount;
 
   const TurnResourceChange({

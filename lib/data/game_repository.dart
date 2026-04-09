@@ -1,6 +1,12 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import '../domain/building/building.dart';
 import '../domain/building/building_type.dart';
+import '../domain/fight/combat_side.dart';
+import '../domain/fight/combatant.dart';
+import '../domain/fight/fight_result.dart';
+import '../domain/fight/fight_turn_summary.dart';
+import '../domain/history/history_entry.dart';
+import '../domain/history/history_entry_category.dart';
 import '../domain/map/cell_content_type.dart';
 import '../domain/map/exploration_order.dart';
 import '../domain/game/game.dart';
@@ -15,6 +21,7 @@ import '../domain/resource/resource_type.dart';
 import '../domain/tech/tech_branch.dart';
 import '../domain/tech/tech_branch_state.dart';
 import '../domain/map/terrain_type.dart';
+import '../domain/turn/turn_result.dart';
 import '../domain/unit/unit.dart';
 import '../domain/unit/unit_type.dart';
 
@@ -41,6 +48,19 @@ class GameRepository {
     Hive.registerAdapter(GridPositionAdapter());
     Hive.registerAdapter(ExplorationOrderAdapter());
     Hive.registerAdapter(GameAdapter());
+    Hive.registerAdapter(HistoryEntryCategoryAdapter());
+    Hive.registerAdapter(BuildingEntryAdapter());
+    Hive.registerAdapter(ResearchEntryAdapter());
+    Hive.registerAdapter(RecruitEntryAdapter());
+    Hive.registerAdapter(ExploreEntryAdapter());
+    Hive.registerAdapter(CollectEntryAdapter());
+    Hive.registerAdapter(CombatEntryAdapter());
+    Hive.registerAdapter(TurnEndEntryAdapter());
+    Hive.registerAdapter(CombatSideAdapter());
+    Hive.registerAdapter(CombatantAdapter());
+    Hive.registerAdapter(FightTurnSummaryAdapter());
+    Hive.registerAdapter(FightResultAdapter());
+    Hive.registerAdapter(TurnResourceChangeAdapter());
     try {
       await Hive.openBox<Game>(_boxName);
     } catch (_) {

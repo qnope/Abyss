@@ -23,26 +23,26 @@ void main() {
       currentHp: 5,
     );
     const FightTurnSummary summary = FightTurnSummary(
-      1,
-      2,
-      0,
-      5,
-      3,
-      1,
-      0,
-      5,
-      0,
+      turnNumber: 1,
+      attacksPlayed: 2,
+      critCount: 0,
+      damageDealtByPlayer: 5,
+      damageDealtByMonster: 3,
+      playerAliveAtEnd: 1,
+      monsterAliveAtEnd: 0,
+      playerHpAtEnd: 5,
+      monsterHpAtEnd: 0,
     );
 
     test('constructor stores every field correctly', () {
       final FightResult result = FightResult(
-        CombatSide.player,
-        4,
-        const <FightTurnSummary>[summary],
-        <Combatant>[initialPlayer],
-        <Combatant>[finalPlayer],
-        3,
-        0,
+        winner: CombatSide.player,
+        turnCount: 4,
+        turnSummaries: const <FightTurnSummary>[summary],
+        initialPlayerCombatants: <Combatant>[initialPlayer],
+        finalPlayerCombatants: <Combatant>[finalPlayer],
+        initialMonsterCount: 3,
+        finalMonsterCount: 0,
       );
 
       expect(result.winner, CombatSide.player);
@@ -57,13 +57,13 @@ void main() {
 
     test('isVictory is true when winner is player', () {
       final FightResult result = FightResult(
-        CombatSide.player,
-        2,
-        const <FightTurnSummary>[],
-        const <Combatant>[],
-        const <Combatant>[],
-        1,
-        0,
+        winner: CombatSide.player,
+        turnCount: 2,
+        turnSummaries: const <FightTurnSummary>[],
+        initialPlayerCombatants: const <Combatant>[],
+        finalPlayerCombatants: const <Combatant>[],
+        initialMonsterCount: 1,
+        finalMonsterCount: 0,
       );
 
       expect(result.isVictory, isTrue);
@@ -71,13 +71,13 @@ void main() {
 
     test('isVictory is false when winner is monster', () {
       final FightResult result = FightResult(
-        CombatSide.monster,
-        2,
-        const <FightTurnSummary>[],
-        const <Combatant>[],
-        const <Combatant>[],
-        1,
-        1,
+        winner: CombatSide.monster,
+        turnCount: 2,
+        turnSummaries: const <FightTurnSummary>[],
+        initialPlayerCombatants: const <Combatant>[],
+        finalPlayerCombatants: const <Combatant>[],
+        initialMonsterCount: 1,
+        finalMonsterCount: 1,
       );
 
       expect(result.isVictory, isFalse);

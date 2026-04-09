@@ -6,15 +6,15 @@ void main() {
   group('FightTurnSummary', () {
     test('constructor stores every field correctly', () {
       const FightTurnSummary summary = FightTurnSummary(
-        3,
-        7,
-        2,
-        15,
-        9,
-        4,
-        2,
-        18,
-        6,
+        turnNumber: 3,
+        attacksPlayed: 7,
+        critCount: 2,
+        damageDealtByPlayer: 15,
+        damageDealtByMonster: 9,
+        playerAliveAtEnd: 4,
+        monsterAliveAtEnd: 2,
+        playerHpAtEnd: 18,
+        monsterHpAtEnd: 6,
       );
 
       expect(summary.turnNumber, 3);

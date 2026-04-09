@@ -1,12 +1,27 @@
+import 'package:hive/hive.dart';
 import 'combat_side.dart';
 
+part 'combatant.g.dart';
+
+@HiveType(typeId: 27)
 class Combatant {
+  @HiveField(0)
   final CombatSide side;
+
+  @HiveField(1)
   final String typeKey;
+
+  @HiveField(2)
   final int maxHp;
-  int currentHp;
+
+  @HiveField(3)
   final int atk;
+
+  @HiveField(4)
   final int def;
+
+  @HiveField(5)
+  int currentHp;
 
   Combatant({
     required this.side,

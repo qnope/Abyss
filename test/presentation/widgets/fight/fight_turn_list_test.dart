@@ -3,6 +3,30 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/fight/fight_turn_summary.dart';
 import 'package:abyss/presentation/widgets/fight/fight_turn_list.dart';
 
+FightTurnSummary _summary({
+  required int turnNumber,
+  int attacksPlayed = 2,
+  int critCount = 0,
+  int damageDealtByPlayer = 10,
+  int damageDealtByMonster = 5,
+  int playerAliveAtEnd = 3,
+  int monsterAliveAtEnd = 2,
+  int playerHpAtEnd = 12,
+  int monsterHpAtEnd = 8,
+}) {
+  return FightTurnSummary(
+    turnNumber: turnNumber,
+    attacksPlayed: attacksPlayed,
+    critCount: critCount,
+    damageDealtByPlayer: damageDealtByPlayer,
+    damageDealtByMonster: damageDealtByMonster,
+    playerAliveAtEnd: playerAliveAtEnd,
+    monsterAliveAtEnd: monsterAliveAtEnd,
+    playerHpAtEnd: playerHpAtEnd,
+    monsterHpAtEnd: monsterHpAtEnd,
+  );
+}
+
 void main() {
   Widget wrap(Widget child) {
     return MaterialApp(home: Scaffold(body: SingleChildScrollView(child: child)));
@@ -11,9 +35,27 @@ void main() {
   group('FightTurnList', () {
     testWidgets('renders one Card per summary', (tester) async {
       final summaries = <FightTurnSummary>[
-        const FightTurnSummary(1, 2, 0, 10, 5, 3, 2, 12, 8),
-        const FightTurnSummary(2, 3, 0, 7, 4, 2, 1, 9, 4),
-        const FightTurnSummary(3, 4, 0, 5, 2, 2, 0, 7, 0),
+        _summary(turnNumber: 1),
+        _summary(
+          turnNumber: 2,
+          attacksPlayed: 3,
+          damageDealtByPlayer: 7,
+          damageDealtByMonster: 4,
+          playerAliveAtEnd: 2,
+          monsterAliveAtEnd: 1,
+          playerHpAtEnd: 9,
+          monsterHpAtEnd: 4,
+        ),
+        _summary(
+          turnNumber: 3,
+          attacksPlayed: 4,
+          damageDealtByPlayer: 5,
+          damageDealtByMonster: 2,
+          playerAliveAtEnd: 2,
+          monsterAliveAtEnd: 0,
+          playerHpAtEnd: 7,
+          monsterHpAtEnd: 0,
+        ),
       ];
 
       await tester.pumpWidget(wrap(FightTurnList(summaries: summaries)));
@@ -27,10 +69,10 @@ void main() {
 
     testWidgets('tile content shows alive counts and damage totals',
         (tester) async {
-      const summary = FightTurnSummary(1, 2, 0, 10, 5, 3, 2, 12, 8);
+      final summary = _summary(turnNumber: 1);
 
       await tester.pumpWidget(
-        wrap(const FightTurnList(summaries: [summary])),
+        wrap(FightTurnList(summaries: [summary])),
       );
       await tester.pumpAndSettle();
 
@@ -43,10 +85,10 @@ void main() {
     });
 
     testWidgets('shows crit badge when critCount > 0', (tester) async {
-      const summary = FightTurnSummary(1, 2, 2, 10, 5, 3, 2, 12, 8);
+      final summary = _summary(turnNumber: 1, critCount: 2);
 
       await tester.pumpWidget(
-        wrap(const FightTurnList(summaries: [summary])),
+        wrap(FightTurnList(summaries: [summary])),
       );
       await tester.pumpAndSettle();
 
@@ -54,10 +96,10 @@ void main() {
     });
 
     testWidgets('hides crit badge when critCount is 0', (tester) async {
-      const summary = FightTurnSummary(1, 2, 0, 10, 5, 3, 2, 12, 8);
+      final summary = _summary(turnNumber: 1);
 
       await tester.pumpWidget(
-        wrap(const FightTurnList(summaries: [summary])),
+        wrap(FightTurnList(summaries: [summary])),
       );
       await tester.pumpAndSettle();
 

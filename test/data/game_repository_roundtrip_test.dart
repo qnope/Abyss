@@ -4,8 +4,14 @@ import 'package:hive/hive.dart';
 import 'package:abyss/data/game_repository.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/fight/combat_side.dart';
+import 'package:abyss/domain/fight/combatant.dart';
+import 'package:abyss/domain/fight/fight_result.dart';
+import 'package:abyss/domain/fight/fight_turn_summary.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/history/history_entry.dart';
+import 'package:abyss/domain/history/history_entry_category.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/exploration_order.dart';
 import 'package:abyss/domain/map/game_map.dart';
@@ -18,6 +24,7 @@ import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/domain/tech/tech_branch_state.dart';
+import 'package:abyss/domain/turn/turn_result.dart';
 import 'package:abyss/domain/unit/unit.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 
@@ -43,6 +50,19 @@ void _registerAdapters() {
   Hive.registerAdapter(GridPositionAdapter());
   Hive.registerAdapter(ExplorationOrderAdapter());
   Hive.registerAdapter(GameAdapter());
+  Hive.registerAdapter(HistoryEntryCategoryAdapter());
+  Hive.registerAdapter(BuildingEntryAdapter());
+  Hive.registerAdapter(ResearchEntryAdapter());
+  Hive.registerAdapter(RecruitEntryAdapter());
+  Hive.registerAdapter(ExploreEntryAdapter());
+  Hive.registerAdapter(CollectEntryAdapter());
+  Hive.registerAdapter(CombatEntryAdapter());
+  Hive.registerAdapter(TurnEndEntryAdapter());
+  Hive.registerAdapter(CombatSideAdapter());
+  Hive.registerAdapter(CombatantAdapter());
+  Hive.registerAdapter(FightTurnSummaryAdapter());
+  Hive.registerAdapter(FightResultAdapter());
+  Hive.registerAdapter(TurnResourceChangeAdapter());
 }
 
 void main() {

@@ -113,6 +113,53 @@ void main() {
     });
   });
 
+  group('coralCitadel', () {
+    test('level 0->1: coral=120, ore=120, energy=60, pearl=5', () {
+      final cost = calculator.upgradeCost(BuildingType.coralCitadel, 0);
+      expect(cost[ResourceType.coral], 120);
+      expect(cost[ResourceType.ore], 120);
+      expect(cost[ResourceType.energy], 60);
+      expect(cost[ResourceType.pearl], 5);
+    });
+
+    test('level 1->2: coral=240, ore=240, energy=120, pearl=10', () {
+      final cost = calculator.upgradeCost(BuildingType.coralCitadel, 1);
+      expect(cost[ResourceType.coral], 240);
+      expect(cost[ResourceType.ore], 240);
+      expect(cost[ResourceType.energy], 120);
+      expect(cost[ResourceType.pearl], 10);
+    });
+
+    test('level 2->3: coral=500, ore=500, energy=250, pearl=20', () {
+      final cost = calculator.upgradeCost(BuildingType.coralCitadel, 2);
+      expect(cost[ResourceType.coral], 500);
+      expect(cost[ResourceType.ore], 500);
+      expect(cost[ResourceType.energy], 250);
+      expect(cost[ResourceType.pearl], 20);
+    });
+
+    test('level 3->4: coral=850, ore=850, energy=425, pearl=35', () {
+      final cost = calculator.upgradeCost(BuildingType.coralCitadel, 3);
+      expect(cost[ResourceType.coral], 850);
+      expect(cost[ResourceType.ore], 850);
+      expect(cost[ResourceType.energy], 425);
+      expect(cost[ResourceType.pearl], 35);
+    });
+
+    test('level 4->5: coral=1300, ore=1300, energy=650, pearl=60', () {
+      final cost = calculator.upgradeCost(BuildingType.coralCitadel, 4);
+      expect(cost[ResourceType.coral], 1300);
+      expect(cost[ResourceType.ore], 1300);
+      expect(cost[ResourceType.energy], 650);
+      expect(cost[ResourceType.pearl], 60);
+    });
+
+    test('at max level 5: returns empty map', () {
+      final cost = calculator.upgradeCost(BuildingType.coralCitadel, 5);
+      expect(cost, isEmpty);
+    });
+  });
+
   group('maxLevel', () {
     test('HQ is 10', () {
       expect(calculator.maxLevel(BuildingType.headquarters), 10);
@@ -140,6 +187,10 @@ void main() {
 
     test('barracks is 5', () {
       expect(calculator.maxLevel(BuildingType.barracks), 5);
+    });
+
+    test('coralCitadel is 5', () {
+      expect(calculator.maxLevel(BuildingType.coralCitadel), 5);
     });
   });
 }

@@ -64,5 +64,53 @@ void main() {
       final prereqs = calculator.prerequisites(BuildingType.barracks, 5);
       expect(prereqs[BuildingType.headquarters], 10);
     });
+
+    test('coralCitadel level 1 requires HQ 3', () {
+      final prereqs = calculator.prerequisites(
+        BuildingType.coralCitadel,
+        1,
+      );
+      expect(prereqs[BuildingType.headquarters], 3);
+    });
+
+    test('coralCitadel level 2 requires HQ 5', () {
+      final prereqs = calculator.prerequisites(
+        BuildingType.coralCitadel,
+        2,
+      );
+      expect(prereqs[BuildingType.headquarters], 5);
+    });
+
+    test('coralCitadel level 3 requires HQ 7', () {
+      final prereqs = calculator.prerequisites(
+        BuildingType.coralCitadel,
+        3,
+      );
+      expect(prereqs[BuildingType.headquarters], 7);
+    });
+
+    test('coralCitadel level 4 requires HQ 9', () {
+      final prereqs = calculator.prerequisites(
+        BuildingType.coralCitadel,
+        4,
+      );
+      expect(prereqs[BuildingType.headquarters], 9);
+    });
+
+    test('coralCitadel level 5 requires HQ 10', () {
+      final prereqs = calculator.prerequisites(
+        BuildingType.coralCitadel,
+        5,
+      );
+      expect(prereqs[BuildingType.headquarters], 10);
+    });
+
+    test('coralCitadel level 6 returns empty map', () {
+      final prereqs = calculator.prerequisites(
+        BuildingType.coralCitadel,
+        6,
+      );
+      expect(prereqs, isEmpty);
+    });
   });
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/building/building.dart';
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
+import 'package:abyss/presentation/widgets/building/coral_citadel_info_section.dart';
 import '../../../helpers/test_svg_helper.dart';
 import 'building_detail_sheet_harness.dart';
 
@@ -78,6 +81,55 @@ void main() {
       await t.pumpWidget(buildSheetApp(building: hq(1)));
       await openSheet(t);
       expect(find.text('Améliorer'), findsOneWidget);
+    });
+
+    testWidgets('does NOT show CoralCitadelInfoSection for non-citadel',
+        (t) async {
+      useTallSurface(t);
+      await t.pumpWidget(buildSheetApp(building: hq(1)));
+      await openSheet(t);
+      expect(find.byType(CoralCitadelInfoSection), findsNothing);
+      expect(find.textContaining('Bonus DEF actuel'), findsNothing);
+    });
+  });
+
+  group('BuildingDetailSheet coralCitadel', () {
+    setUp(mockSvgAssets);
+    tearDown(clearSvgMocks);
+
+    testWidgets('shows CoralCitadelInfoSection with bonus rows', (t) async {
+      useTallSurface(t);
+      final citadel = Building(type: BuildingType.coralCitadel, level: 2);
+      await t.pumpWidget(buildSheetApp(
+        building: citadel,
+        allBuildings: {
+          citadel.type: citadel,
+          BuildingType.headquarters: hq(10),
+        },
+      ));
+      await openSheet(t);
+      expect(find.byType(CoralCitadelInfoSection), findsOneWidget);
+      expect(find.text('Bonus DEF actuel : +40%'), findsOneWidget);
+      expect(find.text('Prochain niveau : +60%'), findsOneWidget);
+      expect(find.byIcon(Icons.schedule), findsOneWidget);
+      // Upgrade button still rendered alongside the info section.
+      expect(find.byType(ElevatedButton), findsWidgets);
+    });
+
+    testWidgets('shows apogee message at max level', (t) async {
+      useTallSurface(t);
+      final citadel = Building(type: BuildingType.coralCitadel, level: 5);
+      await t.pumpWidget(buildSheetApp(
+        building: citadel,
+        allBuildings: {
+          citadel.type: citadel,
+          BuildingType.headquarters: hq(10),
+        },
+      ));
+      await openSheet(t);
+      expect(find.byType(CoralCitadelInfoSection), findsOneWidget);
+      expect(find.text('Bonus DEF actuel : +100%'), findsOneWidget);
+      expect(find.text('Bouclier à son apogée'), findsOneWidget);
     });
   });
 }

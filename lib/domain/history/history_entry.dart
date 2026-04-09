@@ -1,15 +1,20 @@
 import 'package:hive/hive.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/fight/fight_result.dart';
 import 'package:abyss/domain/history/history_entry_category.dart';
+import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
+import 'package:abyss/domain/turn/turn_result.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 
 part 'entries/building_entry.dart';
 part 'entries/collect_entry.dart';
+part 'entries/combat_entry.dart';
 part 'entries/explore_entry.dart';
 part 'entries/recruit_entry.dart';
 part 'entries/research_entry.dart';
+part 'entries/turn_end_entry.dart';
 part 'history_entry.g.dart';
 
 /// Abstract base class for all history entries.

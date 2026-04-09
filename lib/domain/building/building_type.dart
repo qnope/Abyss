@@ -11,4 +11,5 @@ enum BuildingType {
   @HiveField(4) solarPanel,
   @HiveField(5) laboratory,
   @HiveField(6) barracks,
+  @HiveField(7) coralCitadel,
 }

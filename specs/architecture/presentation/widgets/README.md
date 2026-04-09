@@ -8,9 +8,11 @@
 |--------|---------|
 | `BuildingCard` | Displays a building with level, status, and production info |
 | `BuildingListView` | Scrollable list of all buildings |
-| `BuildingDetailSheet` | Bottom sheet with stats and upgrade button |
+| `BuildingDetailSheet` | Bottom sheet with stats and upgrade button; embeds `CoralCitadelInfoSection` when the building is the Coral Citadel |
 | `BuildingIcon` | SVG icon for a building type |
 | `UpgradeSection` | Cost breakdown and upgrade controls |
+| `CoralCitadelInfoSection` | Current DEF bonus, next-level bonus, and "dormant effect" notice rendered inside the Citadel detail sheet |
+| `BaseShieldBadge` | Synthetic "Bouclier de la base : +X%" badge reused by the army tab header and the HQ detail sheet; reads `CoralCitadelDefenseBonus` |
 
 ## Unit Widgets (`unit/`)
 

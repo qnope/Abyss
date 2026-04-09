@@ -12,6 +12,7 @@ import '../../widgets/building/building_list_view.dart';
 import '../../widgets/common/game_bottom_bar.dart';
 import '../../widgets/resource/resource_bar.dart';
 import '../../widgets/common/settings_dialog.dart';
+import '../../widgets/history/history_sheet.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import 'game_screen_actions.dart';
 import 'game_screen_map_actions.dart';
@@ -123,14 +124,24 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Future<void> _showSettings() async {
-    if (!await showSettingsDialog(context) || !mounted) return;
-    await widget.repository.save(widget.game);
+    final result = await showSettingsDialog(context);
     if (!mounted) return;
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute<void>(
-        builder: (_) => MainMenuScreen(repository: widget.repository),
-      ),
-      (_) => false,
-    );
+    switch (result) {
+      case SettingsDialogResult.cancel:
+        return;
+      case SettingsDialogResult.openHistory:
+        await showHistorySheet(context, player: _human);
+        return;
+      case SettingsDialogResult.saveAndQuit:
+        await widget.repository.save(widget.game);
+        if (!mounted) return;
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute<void>(
+            builder: (_) => MainMenuScreen(repository: widget.repository),
+          ),
+          (_) => false,
+        );
+        return;
+    }
   }
 }

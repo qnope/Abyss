@@ -75,6 +75,17 @@ stays tab-focused.
 1. Player taps "Next Turn"
 2. Pre-turn calculations compute what will happen
 3. `TurnConfirmationDialog` shows preview (deactivations, losses, pending explorations)
-4. On confirm: `TurnResolver().resolve(game)` mutates game state (includes exploration resolution)
+4. On confirm: `EndTurnAction` is dispatched through `ActionExecutor`, which internally runs `TurnResolver().resolve(game)` and appends a `TurnEndEntry` to the player's history log
 5. Game is saved, UI rebuilds
 6. `TurnSummaryDialog` shows results (includes exploration outcomes)
+
+### Settings / History Flow
+
+Tapping the settings button on `GameScreen` opens `SettingsDialog`,
+which now offers three outcomes:
+
+| Result | Effect |
+|---|---|
+| `cancel` | Closes the dialog, no-op |
+| `saveAndQuit` | Saves the game via `GameRepository` and pops back to the main menu |
+| `openHistory` | Calls `showHistorySheet(context, player: game.humanPlayer)` which opens the modal `HistorySheet` over the game screen. Dismissing the sheet naturally resets the filter because the body owns its own state |

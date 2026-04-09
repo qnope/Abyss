@@ -33,7 +33,7 @@ revealed cells, pending explorations) is always read from the
 
 An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`,
 `researchTech`, `recruitUnit`, `explore`, `collectTreasure`,
-`fightMonster`.
+`fightMonster`, `endTurn`.
 
 ## ActionResult
 
@@ -74,10 +74,35 @@ A thin orchestrator enforcing the validate-then-execute sequence:
 
 1. `action.validate(game, player)`.
 2. If validation fails, return the failure result immediately.
-3. Otherwise `action.execute(game, player)` and return its result.
+3. Otherwise `action.execute(game, player)`.
+4. If the result is successful, call
+   `action.makeHistoryEntry(game, player, result, game.turn)` and, if
+   it returns a non-null entry, append it to the player via
+   `player.addHistoryEntry(entry)` (which enforces the 100-entry FIFO).
+5. Return the execute result.
 
 This guarantees no action reaches `execute` without passing validation
-first.
+first, and that the history log only ever records **successful**
+actions.
+
+### `Action.makeHistoryEntry`
+
+The base `Action` class exposes an overridable hook:
+
+```dart
+HistoryEntry? makeHistoryEntry(
+  Game game,
+  Player player,
+  ActionResult result,
+  int turn,
+) => null;
+```
+
+Every concrete action in this module overrides it to return the
+matching [`HistoryEntry`](../history/README.md) subclass (or `null`
+when there is nothing worth logging). Actions read from the mutated
+`player` / `result` to materialise post-execute state (e.g. the new
+building level), so the hook must be called **after** `execute`.
 
 ## Concrete Actions
 
@@ -183,6 +208,20 @@ message so the UI can show it directly.
 On defeat, the lair stays on the map -- the player can re-engage
 later with a fresh army.
 
+### EndTurnAction
+
+Wraps `TurnResolver` so that "next turn" flows through the uniform
+`Action` + `ActionExecutor` pipeline. `validate` always succeeds
+(ending a turn is never gated), and `execute` delegates to
+`TurnResolver().resolve(game)` and wraps the result in an
+`EndTurnActionResult`. The `makeHistoryEntry` override turns the
+resolved `TurnResult` into a `TurnEndEntry` via `TurnEndEntryFactory`,
+tagged with `tr.previousTurn` — the turn that just ended — because
+`TurnResolver` has already advanced `game.turn` by the time the hook
+runs. Routing "end turn" through the executor is what makes the
+history log homogeneous: every logged event, including the turn
+boundary itself, is a successful `Action` result.
+
 ## File Map
 
 | File | Role |
@@ -200,4 +239,6 @@ later with a fresh army.
 | `explore_action.dart` | `ExploreAction` |
 | `collect_treasure_action.dart` | `CollectTreasureAction` |
 | `fight_monster_action.dart` | `FightMonsterAction` |
-| `fight_monster_helpers.dart` | Pct-lost, generic `restoreToStock`, loot apply, military level lookup, combatants-by-type helpers |
+| `fight_monster_helpers.dart` | Pct-lost, generic `restoreToStock`, loot apply, military level lookup, combatants-by-type helpers, `buildCombatEntry` for the history log |
+| `end_turn_action.dart` | `EndTurnAction` |
+| `end_turn_action_result.dart` | `EndTurnActionResult` (carries the resolved `TurnResult`) |

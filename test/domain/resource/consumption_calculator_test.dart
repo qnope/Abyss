@@ -86,6 +86,33 @@ void main() {
       );
     });
 
+    test('coralCitadel level 0 consumes 0 energy', () {
+      expect(
+        ConsumptionCalculator.buildingEnergyConsumption(
+          BuildingType.coralCitadel, 0,
+        ),
+        0,
+      );
+    });
+
+    test('coralCitadel level 1 consumes 1 energy', () {
+      expect(
+        ConsumptionCalculator.buildingEnergyConsumption(
+          BuildingType.coralCitadel, 1,
+        ),
+        1,
+      );
+    });
+
+    test('coralCitadel level 5 consumes 5 energy', () {
+      expect(
+        ConsumptionCalculator.buildingEnergyConsumption(
+          BuildingType.coralCitadel, 5,
+        ),
+        5,
+      );
+    });
+
     test('level 0 returns 0', () {
       expect(
         ConsumptionCalculator.buildingEnergyConsumption(
@@ -132,6 +159,16 @@ void main() {
         ConsumptionCalculator.totalBuildingConsumption({}),
         0,
       );
+    });
+
+    test('includes coral citadel contribution', () {
+      // HQ lvl2=6, algae lvl1=2, coralCitadel lvl3=3 => 11.
+      final buildings = buildingMap({
+        BuildingType.headquarters: 2,
+        BuildingType.algaeFarm: 1,
+        BuildingType.coralCitadel: 3,
+      });
+      expect(ConsumptionCalculator.totalBuildingConsumption(buildings), 11);
     });
   });
 

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="citadelPink" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#AD1457"/>
+      <stop offset="60%" stop-color="#EC407A"/>
+      <stop offset="100%" stop-color="#F48FB1"/>
+    </linearGradient>
+    <linearGradient id="citadelNavy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3949AB"/>
+      <stop offset="100%" stop-color="#1A237E"/>
+    </linearGradient>
+    <linearGradient id="citadelCrystal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B3E5FC"/>
+      <stop offset="100%" stop-color="#1A237E"/>
+    </linearGradient>
+    <linearGradient id="citadelAlgae" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2E7D32"/>
+      <stop offset="100%" stop-color="#1A237E"/>
+    </linearGradient>
+    <filter id="citadelGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#citadelGlow)">
+    <!-- Algae banners -->
+    <path d="M6 18 Q4 28 6 38 Q8 48 6 58" stroke="url(#citadelAlgae)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M8 22 Q7 32 9 44" stroke="url(#citadelAlgae)" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.8"/>
+    <path d="M58 18 Q60 28 58 38 Q56 48 58 58" stroke="url(#citadelAlgae)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M56 22 Q57 32 55 44" stroke="url(#citadelAlgae)" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.8"/>
+    <!-- Base -->
+    <polygon points="6,56 58,56 56,60 8,60" fill="url(#citadelNavy)" stroke="#1A237E" stroke-width="0.5"/>
+    <!-- Fortress body -->
+    <polygon points="12,56 12,26 32,16 52,26 52,56" fill="url(#citadelPink)" stroke="#AD1457" stroke-width="0.8"/>
+    <!-- Stone block strokes -->
+    <path d="M12 34H52M12 44H52M22 26V34M32 16V34M42 26V34M18 34V44M27 34V44M37 34V44M46 34V44M20 44V56M28 44V56M36 44V56M44 44V56" stroke="#AD1457" stroke-width="0.4" opacity="0.7" fill="none"/>
+    <!-- Corner towers -->
+    <rect x="10" y="22" width="6" height="20" fill="url(#citadelPink)" stroke="#AD1457" stroke-width="0.5"/>
+    <rect x="48" y="22" width="6" height="20" fill="url(#citadelPink)" stroke="#AD1457" stroke-width="0.5"/>
+    <rect x="20" y="14" width="5" height="14" fill="url(#citadelPink)" stroke="#AD1457" stroke-width="0.5"/>
+    <rect x="39" y="14" width="5" height="14" fill="url(#citadelPink)" stroke="#AD1457" stroke-width="0.5"/>
+    <!-- Merlons -->
+    <path d="M10 22V20h1.5v2M12.5 22V20H14v2M15 22V20h1v2M48 22V20h1.5v2M50.5 22V20H52v2M53 22V20h1v2M20 14V12h1.3v2M22 14V12h1.3v2M23.7 14V12H25v2M39 14V12h1.3v2M41 14V12h1.3v2M42.7 14V12H44v2" fill="#EC407A"/>
+    <!-- Main battlement merlons -->
+    <path d="M28 16V13h1.6v3M30.4 16V13H32v3M32.8 16V13h1.6v3M35.2 16V13h1.6v3" fill="#EC407A"/>
+    <!-- Coral defensive spikes -->
+    <polygon points="10,22 8,12 12,22" fill="#EC407A" stroke="#AD1457" stroke-width="0.4"/>
+    <polygon points="52,22 54,10 56,22" fill="#EC407A" stroke="#AD1457" stroke-width="0.4"/>
+    <polygon points="32,16 30,6 34,6" fill="#F48FB1" stroke="#AD1457" stroke-width="0.4"/>
+    <polygon points="18,26 14,18 22,26" fill="#EC407A" stroke="#AD1457" stroke-width="0.4"/>
+    <polygon points="46,26 42,18 50,26" fill="#EC407A" stroke="#AD1457" stroke-width="0.4"/>
+    <!-- Emblem shield -->
+    <path d="M32,36 L27,38 L27,44 Q27,48 32,50 Q37,48 37,44 L37,38 Z" fill="url(#citadelNavy)" stroke="#1A237E" stroke-width="0.5"/>
+    <polygon points="32,40 33,43 36,43 33.5,45 34.5,48 32,46 29.5,48 30.5,45 28,43 31,43" fill="#E0F7FA" opacity="0.9"/>
+    <!-- Portholes -->
+    <circle cx="17" cy="30" r="1.4" fill="#1A237E" stroke="#E0F7FA" stroke-width="0.5"/>
+    <circle cx="47" cy="30" r="1.4" fill="#1A237E" stroke="#E0F7FA" stroke-width="0.5"/>
+    <circle cx="22" cy="50" r="1.2" fill="#1A237E" stroke="#E0F7FA" stroke-width="0.5"/>
+    <circle cx="42" cy="50" r="1.2" fill="#1A237E" stroke="#E0F7FA" stroke-width="0.5"/>
+    <circle cx="32" cy="24" r="1.3" fill="#1A237E" stroke="#E0F7FA" stroke-width="0.5"/>
+    <circle cx="17" cy="30" r="0.6" fill="#B3E5FC"/>
+    <circle cx="47" cy="30" r="0.6" fill="#B3E5FC"/>
+    <circle cx="32" cy="24" r="0.5" fill="#FFFFFF"/>
+    <!-- Crystals -->
+    <polygon points="13,38 14.5,34 16,38 14.5,41" fill="url(#citadelCrystal)" opacity="0.85" stroke="#B3E5FC" stroke-width="0.4"/>
+    <polygon points="48,38 49.5,34 51,38 49.5,41" fill="url(#citadelCrystal)" opacity="0.85" stroke="#B3E5FC" stroke-width="0.4"/>
+    <polygon points="30,54 32,51 34,54 32,57" fill="url(#citadelCrystal)" opacity="0.85" stroke="#B3E5FC" stroke-width="0.4"/>
+  </g>
+</svg>

@@ -6,6 +6,7 @@ import '../../../domain/resource/resource_type.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import 'building_icon.dart';
+import 'coral_citadel_info_section.dart';
 import 'upgrade_section.dart';
 
 void showBuildingDetailSheet(
@@ -74,6 +75,10 @@ class _BuildingDetailSheet extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
+          if (building.type == BuildingType.coralCitadel) ...[
+            const SizedBox(height: 12),
+            CoralCitadelInfoSection(building: building),
+          ],
           const Divider(height: 24),
           UpgradeSection(
             building: building,

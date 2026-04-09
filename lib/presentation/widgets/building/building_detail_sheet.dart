@@ -5,6 +5,7 @@ import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import 'base_shield_badge.dart';
 import 'building_icon.dart';
 import 'coral_citadel_info_section.dart';
 import 'upgrade_section.dart';
@@ -78,6 +79,10 @@ class _BuildingDetailSheet extends StatelessWidget {
           if (building.type == BuildingType.coralCitadel) ...[
             const SizedBox(height: 12),
             CoralCitadelInfoSection(building: building),
+          ],
+          if (building.type == BuildingType.headquarters) ...[
+            const SizedBox(height: 8),
+            BaseShieldBadge(buildings: allBuildings),
           ],
           const Divider(height: 24),
           UpgradeSection(

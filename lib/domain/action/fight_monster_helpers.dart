@@ -1,11 +1,20 @@
+import 'dart:math';
+
+import '../fight/casualty_calculator.dart';
+import '../fight/casualty_split.dart';
 import '../fight/combatant.dart';
 import '../fight/combatant_builder.dart';
+import '../fight/fight_result.dart';
 import '../game/player.dart';
+import '../history/history_entry.dart';
+import '../map/monster_lair.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
 import '../tech/tech_branch.dart';
 import '../tech/tech_branch_state.dart';
 import '../unit/unit_type.dart';
+import 'fight_casualty_breakdown.dart';
+import 'fight_monster_result.dart';
 
 class FightMonsterHelpers {
   const FightMonsterHelpers._();
@@ -74,5 +83,62 @@ class FightMonsterHelpers {
       map[type] = (map[type] ?? 0) + 1;
     }
     return map;
+  }
+
+  /// Resolves the post-fight casualty breakdown: splits the player's fallen
+  /// combatants into wounded/dead using [CasualtyCalculator], restores
+  /// unharmed and wounded survivors to the player's stock, and returns the
+  /// per-[UnitType] counts for intact survivors, wounded, and dead.
+  static FightCasualtyBreakdown resolveCasualties({
+    required Player player,
+    required FightResult fightResult,
+    Random? random,
+  }) {
+    final double pctLost = computePctLost(
+      fightResult.initialPlayerCombatants,
+      fightResult.finalPlayerCombatants,
+    );
+    final List<Combatant> fallen = <Combatant>[];
+    final List<Combatant> alive = <Combatant>[];
+    for (int i = 0; i < fightResult.finalPlayerCombatants.length; i++) {
+      final Combatant initial = fightResult.initialPlayerCombatants[i];
+      final bool down = fightResult.finalPlayerCombatants[i].currentHp <= 0;
+      (down ? fallen : alive).add(initial);
+    }
+    final CasualtySplit split =
+        CasualtyCalculator(random: random).partition(fallen, pctLost);
+    restoreToStock(player, alive);
+    restoreToStock(player, split.wounded);
+    return FightCasualtyBreakdown(
+      survivorsIntact: combatantsByType(alive),
+      wounded: combatantsByType(split.wounded),
+      dead: combatantsByType(split.dead),
+    );
+  }
+
+  /// Builds a [CombatEntry] for the history log from the captured lair and
+  /// the successful [FightMonsterResult]. Returns `null` if either is
+  /// missing.
+  static CombatEntry? buildCombatEntry({
+    required int turn,
+    required int targetX,
+    required int targetY,
+    required MonsterLair? lair,
+    required FightMonsterResult result,
+  }) {
+    if (lair == null || result.fight == null) return null;
+    return CombatEntry(
+      turn: turn,
+      victory: result.victory,
+      targetX: targetX,
+      targetY: targetY,
+      lair: lair,
+      fightResult: result.fight!,
+      loot: result.loot,
+      sent: result.sent,
+      survivorsIntact: result.survivorsIntact,
+      wounded: result.wounded,
+      dead: result.dead,
+    );
   }
 }

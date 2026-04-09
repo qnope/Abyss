@@ -5,6 +5,7 @@ import '../building/building_cost_calculator.dart';
 import '../building/building_type.dart';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../history/history_entry.dart';
 
 class UpgradeBuildingAction extends Action {
   final BuildingType buildingType;
@@ -49,5 +50,19 @@ class UpgradeBuildingAction extends Action {
     }
     player.buildings[buildingType]!.level++;
     return ActionResult.success();
+  }
+
+  @override
+  HistoryEntry? makeHistoryEntry(
+    Game game,
+    Player player,
+    ActionResult result,
+    int turn,
+  ) {
+    return BuildingEntry(
+      turn: turn,
+      buildingType: buildingType,
+      newLevel: player.buildings[buildingType]!.level,
+    );
   }
 }

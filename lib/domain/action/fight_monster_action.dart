@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import '../fight/casualty_calculator.dart';
-import '../fight/casualty_split.dart';
 import '../fight/combatant.dart';
 import '../fight/combatant_builder.dart';
 import '../fight/fight_engine.dart';
@@ -9,6 +7,7 @@ import '../fight/fight_result.dart';
 import '../fight/loot_calculator.dart';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../history/history_entry.dart';
 import '../map/cell_content_type.dart';
 import '../map/map_cell.dart';
 import '../map/monster_lair.dart';
@@ -17,6 +16,7 @@ import '../unit/unit_type.dart';
 import 'action.dart';
 import 'action_result.dart';
 import 'action_type.dart';
+import 'fight_casualty_breakdown.dart';
 import 'fight_monster_helpers.dart';
 import 'fight_monster_result.dart';
 
@@ -25,6 +25,7 @@ class FightMonsterAction extends Action {
   final int targetY;
   final Map<UnitType, int> selectedUnits;
   final Random? random;
+  MonsterLair? _capturedLair;
 
   FightMonsterAction({
     required this.targetX,
@@ -78,7 +79,7 @@ class FightMonsterAction extends Action {
 
     final MapCell cell = game.gameMap!.cellAt(targetX, targetY);
     final MonsterLair lair = cell.lair!;
-
+    _capturedLair = lair;
     final int militaryLevel =
         FightMonsterHelpers.militaryResearchLevelOf(player);
     final List<Combatant> playerCombatants = CombatantBuilder
@@ -96,33 +97,15 @@ class FightMonsterAction extends Action {
       monsterSide: monsterCombatants,
     );
 
-    final double pctLost = FightMonsterHelpers.computePctLost(
-      fightResult.initialPlayerCombatants,
-      fightResult.finalPlayerCombatants,
+    final FightCasualtyBreakdown breakdown =
+        FightMonsterHelpers.resolveCasualties(
+      player: player,
+      fightResult: fightResult,
+      random: random,
     );
-
-    final List<Combatant> fallen = <Combatant>[];
-    final List<Combatant> alive = <Combatant>[];
-    for (int i = 0; i < fightResult.finalPlayerCombatants.length; i++) {
-      final Combatant initial = fightResult.initialPlayerCombatants[i];
-      final bool down = fightResult.finalPlayerCombatants[i].currentHp <= 0;
-      (down ? fallen : alive).add(initial);
-    }
-
-    final CasualtySplit split =
-        CasualtyCalculator(random: random).partition(fallen, pctLost);
-
-    FightMonsterHelpers.restoreToStock(player, alive);
-    FightMonsterHelpers.restoreToStock(player, split.wounded);
 
     final Map<UnitType, int> sent = Map<UnitType, int>.from(selectedUnits)
       ..removeWhere((_, int v) => v <= 0);
-    final Map<UnitType, int> survivorsIntact =
-        FightMonsterHelpers.combatantsByType(alive);
-    final Map<UnitType, int> wounded =
-        FightMonsterHelpers.combatantsByType(split.wounded);
-    final Map<UnitType, int> dead =
-        FightMonsterHelpers.combatantsByType(split.dead);
 
     Map<ResourceType, int> loot = const <ResourceType, int>{};
     if (fightResult.isVictory) {
@@ -141,9 +124,26 @@ class FightMonsterAction extends Action {
       fight: fightResult,
       loot: loot,
       sent: sent,
-      survivorsIntact: survivorsIntact,
-      wounded: wounded,
-      dead: dead,
+      survivorsIntact: breakdown.survivorsIntact,
+      wounded: breakdown.wounded,
+      dead: breakdown.dead,
+    );
+  }
+
+  @override
+  HistoryEntry? makeHistoryEntry(
+    Game game,
+    Player player,
+    ActionResult result,
+    int turn,
+  ) {
+    if (result is! FightMonsterResult || !result.isSuccess) return null;
+    return FightMonsterHelpers.buildCombatEntry(
+      turn: turn,
+      targetX: targetX,
+      targetY: targetY,
+      lair: _capturedLair,
+      result: result,
     );
   }
 }

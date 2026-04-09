@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
+import '../../../domain/action/action_executor.dart';
+import '../../../domain/action/end_turn_action.dart';
+import '../../../domain/action/end_turn_action_result.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
 import '../../../domain/resource/production_calculator.dart';
-import '../../../domain/turn/turn_resolver.dart';
 import '../../widgets/unit/army_list_view.dart';
 import '../../widgets/turn/turn_confirmation_dialog.dart';
 import '../../widgets/turn/turn_summary_dialog.dart';
@@ -117,7 +119,8 @@ class _GameScreenState extends State<GameScreen> {
       pendingExplorationCount: human.pendingExplorations.length,
     );
     if (!confirmed || !mounted) return;
-    final result = TurnResolver().resolve(widget.game);
+    final result = (ActionExecutor().execute(EndTurnAction(), widget.game,
+        _human) as EndTurnActionResult).turnResult!;
     await widget.repository.save(widget.game);
     setState(() {});
     if (mounted) await showTurnSummaryDialog(context, result: result);

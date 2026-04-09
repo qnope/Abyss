@@ -19,13 +19,25 @@ FightResult _fakeFightResult({required bool victory}) {
     def: 1,
   );
   return FightResult(
-    victory ? CombatSide.player : CombatSide.monster,
-    1,
-    const [FightTurnSummary(1, 2, 0, 5, 3, 1, 0, 7, 0)],
-    [playerCombatant],
-    [playerCombatant],
-    1,
-    0,
+    winner: victory ? CombatSide.player : CombatSide.monster,
+    turnCount: 1,
+    turnSummaries: const [
+      FightTurnSummary(
+        turnNumber: 1,
+        attacksPlayed: 2,
+        critCount: 0,
+        damageDealtByPlayer: 5,
+        damageDealtByMonster: 3,
+        playerAliveAtEnd: 1,
+        monsterAliveAtEnd: 0,
+        playerHpAtEnd: 7,
+        monsterHpAtEnd: 0,
+      ),
+    ],
+    initialPlayerCombatants: [playerCombatant],
+    finalPlayerCombatants: [playerCombatant],
+    initialMonsterCount: 1,
+    finalMonsterCount: 0,
   );
 }
 

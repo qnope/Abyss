@@ -23,7 +23,15 @@ void main() {
     });
 
     test('success preserves all fields and victory flag', () {
-      const fight = FightResult(CombatSide.player, 3, [], [], [], 4, 0);
+      const fight = FightResult(
+        winner: CombatSide.player,
+        turnCount: 3,
+        turnSummaries: [],
+        initialPlayerCombatants: [],
+        finalPlayerCombatants: [],
+        initialMonsterCount: 4,
+        finalMonsterCount: 0,
+      );
       const loot = {ResourceType.algae: 12, ResourceType.ore: 4};
       const sent = {UnitType.scout: 3, UnitType.harpoonist: 2};
       const intact = {UnitType.scout: 2};

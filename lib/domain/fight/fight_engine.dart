@@ -37,15 +37,15 @@ class FightEngine {
       final _TurnStats stats = _runTurn(playerSide, monsterSide);
       summaries.add(
         FightTurnSummary(
-          turnNumber,
-          stats.attacks,
-          stats.crits,
-          stats.dmgPlayer,
-          stats.dmgMonster,
-          _countAlive(playerSide),
-          _countAlive(monsterSide),
-          _sumHp(playerSide),
-          _sumHp(monsterSide),
+          turnNumber: turnNumber,
+          attacksPlayed: stats.attacks,
+          critCount: stats.crits,
+          damageDealtByPlayer: stats.dmgPlayer,
+          damageDealtByMonster: stats.dmgMonster,
+          playerAliveAtEnd: _countAlive(playerSide),
+          monsterAliveAtEnd: _countAlive(monsterSide),
+          playerHpAtEnd: _sumHp(playerSide),
+          monsterHpAtEnd: _sumHp(monsterSide),
         ),
       );
     }
@@ -55,13 +55,13 @@ class FightEngine {
     final int finalMonsterCount = _countAlive(monsterSide);
 
     return FightResult(
-      winner,
-      turnNumber,
-      summaries,
-      initialPlayerCombatants,
-      playerSide,
-      initialMonsterCount,
-      finalMonsterCount,
+      winner: winner,
+      turnCount: turnNumber,
+      turnSummaries: summaries,
+      initialPlayerCombatants: initialPlayerCombatants,
+      finalPlayerCombatants: playerSide,
+      initialMonsterCount: initialMonsterCount,
+      finalMonsterCount: finalMonsterCount,
     );
   }
 

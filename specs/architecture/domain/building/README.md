@@ -28,6 +28,10 @@
 
 Headquarters has a max level of 10. All other buildings have a max level of 5.
 
+## Defense bonus
+
+`CoralCitadelDefenseBonus` reads the `coralCitadel` level from a buildings map and returns a multiplier applied to the defender's DEF when the base is attacked: level 0 -> 1.0 (neutral), levels 1-5 -> 1.2 / 1.4 / 1.6 / 1.8 / 2.0. `multiplierFromBuildings` tolerates missing entries (legacy saves) and returns 1.0 in that case. `bonusLabel` yields a human-readable `+X%` string (or `aucun` at level 0).
+
 ## Upgrade Prerequisites
 
 Every building except headquarters requires a minimum headquarters level to upgrade. `BuildingCostCalculator.prerequisites(type, targetLevel)` returns a `Map<BuildingType, int>` specifying the required HQ level. The thresholds differ by building category:
@@ -35,6 +39,7 @@ Every building except headquarters requires a minimum headquarters level to upgr
 - **Production buildings** (algaeFarm, coralMine, oreExtractor, solarPanel): HQ 1/2/4/6/10 for levels 1-5
 - **Laboratory**: HQ 2/3/5/7/10 for levels 1-5
 - **Barracks**: HQ 3/4/6/8/10 for levels 1-5
+- **Coral Citadel**: HQ 3/5/7/9/10 for levels 1-5
 
 ## Upgrade Check
 
@@ -47,14 +52,15 @@ Every building except headquarters requires a minimum headquarters level to upgr
 
 ## Building Deactivation
 
-`BuildingDeactivator.deactivate(...)` handles energy shortages. When total energy consumption exceeds production plus stock, buildings are deactivated from lowest to highest priority:
+`BuildingDeactivator.deactivate(...)` handles energy shortages. When total energy consumption exceeds production plus stock, buildings are deactivated in reverse priority order (lowest-priority entries are disabled first). The priority list is:
 
-1. oreExtractor (disabled first)
-2. coralMine
-3. algaeFarm
+0. headquarters (never disabled)
+1. coralCitadel (disabled last)
+2. solarPanel
+3. barracks
 4. laboratory
-5. barracks
-6. solarPanel
-7. coralCitadel (disabled last)
+5. algaeFarm
+6. coralMine
+7. oreExtractor (disabled first)
 
-Headquarters is never disabled. The method iterates this list in reverse priority order, subtracting each building's consumption until the remaining consumption fits within the available energy.
+The method walks the list from bottom to top, subtracting each building's consumption until the remaining consumption fits within the available energy.

@@ -28,13 +28,14 @@ class PlayerAdapter extends TypeAdapter<Player> {
       recruitedUnitTypes: (fields[8] as List?)?.cast<UnitType>(),
       pendingExplorations: (fields[9] as List?)?.cast<ExplorationOrder>(),
       revealedCellsList: (fields[10] as List?)?.cast<GridPosition>(),
+      historyEntries: (fields[11] as List?)?.cast<HistoryEntry>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Player obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -56,7 +57,9 @@ class PlayerAdapter extends TypeAdapter<Player> {
       ..writeByte(9)
       ..write(obj.pendingExplorations)
       ..writeByte(10)
-      ..write(obj.revealedCellsList);
+      ..write(obj.revealedCellsList)
+      ..writeByte(11)
+      ..write(obj.historyEntries);
   }
 
   @override

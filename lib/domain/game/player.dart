@@ -3,6 +3,8 @@ import 'package:uuid/uuid.dart';
 
 import '../building/building.dart';
 import '../building/building_type.dart';
+import '../history/history_constants.dart';
+import '../history/history_entry.dart';
 import '../map/exploration_order.dart';
 import '../map/grid_position.dart';
 import '../map/reveal_area_calculator.dart';
@@ -51,6 +53,9 @@ class Player extends HiveObject {
   @HiveField(10)
   final List<GridPosition> revealedCellsList;
 
+  @HiveField(11)
+  final List<HistoryEntry> historyEntries;
+
   Player({
     required this.name,
     String? id,
@@ -63,6 +68,7 @@ class Player extends HiveObject {
     List<UnitType>? recruitedUnitTypes,
     List<ExplorationOrder>? pendingExplorations,
     List<GridPosition>? revealedCellsList,
+    List<HistoryEntry>? historyEntries,
   })  : id = id ?? const Uuid().v4(),
         resources = resources ?? PlayerDefaults.resources(),
         buildings = buildings ?? PlayerDefaults.buildings(),
@@ -70,7 +76,8 @@ class Player extends HiveObject {
         units = units ?? PlayerDefaults.units(),
         recruitedUnitTypes = recruitedUnitTypes ?? [],
         pendingExplorations = pendingExplorations ?? [],
-        revealedCellsList = revealedCellsList ?? <GridPosition>[];
+        revealedCellsList = revealedCellsList ?? <GridPosition>[],
+        historyEntries = historyEntries ?? <HistoryEntry>[];
 
   Player.withBase({
     required String name,
@@ -79,6 +86,7 @@ class Player extends HiveObject {
     required int mapWidth,
     required int mapHeight,
     String? id,
+    List<HistoryEntry>? historyEntries,
   }) : this(
           name: name,
           id: id,
@@ -90,7 +98,15 @@ class Player extends HiveObject {
             mapWidth: mapWidth,
             mapHeight: mapHeight,
           ),
+          historyEntries: historyEntries,
         );
+
+  void addHistoryEntry(HistoryEntry entry) {
+    historyEntries.add(entry);
+    while (historyEntries.length > kHistoryMaxEntries) {
+      historyEntries.removeAt(0);
+    }
+  }
 
   Set<GridPosition> get revealedCells => revealedCellsList.toSet();
 

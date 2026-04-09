@@ -7,6 +7,7 @@ extension BuildingTypeColor on BuildingType {
     BuildingType.headquarters => AbyssColors.biolumPurple,
     BuildingType.algaeFarm => AbyssColors.algaeGreen,
     BuildingType.coralMine => AbyssColors.coralPink,
+    BuildingType.coralCitadel => AbyssColors.coralPink,
     BuildingType.oreExtractor => AbyssColors.oreBlue,
     BuildingType.solarPanel => AbyssColors.energyYellow,
     BuildingType.laboratory => AbyssColors.biolumTeal,
@@ -19,6 +20,7 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.headquarters => 'Quartier Général',
     BuildingType.algaeFarm => 'Ferme d\'algues',
     BuildingType.coralMine => 'Mine de corail',
+    BuildingType.coralCitadel => 'Citadelle corallienne',
     BuildingType.oreExtractor => 'Extracteur de minerai',
     BuildingType.solarPanel => 'Panneau solaire',
     BuildingType.laboratory => 'Laboratoire',
@@ -33,6 +35,10 @@ extension BuildingTypeInfo on BuildingType {
       'Cultive des algues pour nourrir votre colonie sous-marine.',
     BuildingType.coralMine =>
       'Extrait du corail des récifs pour la construction.',
+    BuildingType.coralCitadel =>
+      'Forteresse corallienne massive qui renforce la défense des unités '
+      'stationnées dans votre base. Son bouclier s\'activera avec l\'arrivée '
+      'des menaces abyssales.',
     BuildingType.oreExtractor =>
       'Fore les profondeurs pour extraire du minerai océanique.',
     BuildingType.solarPanel =>
@@ -47,6 +53,7 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.headquarters => 'assets/icons/buildings/headquarters.svg',
     BuildingType.algaeFarm => 'assets/icons/buildings/algae_farm.svg',
     BuildingType.coralMine => 'assets/icons/buildings/coral_mine.svg',
+    BuildingType.coralCitadel => 'assets/icons/buildings/coral_citadel.svg',
     BuildingType.oreExtractor => 'assets/icons/buildings/ore_extractor.svg',
     BuildingType.solarPanel => 'assets/icons/buildings/solar_panel.svg',
     BuildingType.laboratory => 'assets/icons/buildings/laboratory.svg',

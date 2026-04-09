@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/presentation/extensions/building_type_extensions.dart';
+import 'package:abyss/presentation/theme/abyss_colors.dart';
 
 void main() {
   group('BuildingTypeInfo', () {
@@ -24,6 +25,29 @@ void main() {
         BuildingType.barracks.iconPath,
         'assets/icons/buildings/barracks.svg',
       );
+    });
+  });
+
+  group('BuildingTypeInfo - coralCitadel', () {
+    test('displayName is Citadelle corallienne', () {
+      expect(BuildingType.coralCitadel.displayName, 'Citadelle corallienne');
+    });
+
+    test('iconPath points to coral_citadel.svg', () {
+      expect(
+        BuildingType.coralCitadel.iconPath,
+        'assets/icons/buildings/coral_citadel.svg',
+      );
+    });
+
+    test('description is non-empty and mentions défense', () {
+      final description = BuildingType.coralCitadel.description;
+      expect(description, isNotEmpty);
+      expect(description, contains('défense'));
+    });
+
+    test('color is AbyssColors.coralPink', () {
+      expect(BuildingType.coralCitadel.color, AbyssColors.coralPink);
     });
   });
 }

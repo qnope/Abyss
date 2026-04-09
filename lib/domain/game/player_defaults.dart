@@ -57,6 +57,7 @@ class PlayerDefaults {
       BuildingType.solarPanel: Building(type: BuildingType.solarPanel, level: 0),
       BuildingType.laboratory: Building(type: BuildingType.laboratory, level: 0),
       BuildingType.barracks: Building(type: BuildingType.barracks, level: 0),
+      BuildingType.coralCitadel: Building(type: BuildingType.coralCitadel, level: 0),
     };
   }
 

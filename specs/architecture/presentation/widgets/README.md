@@ -70,11 +70,21 @@
 | `TurnSummaryDialog` | Results after turn resolution (includes exploration results) |
 | `ExplorationSummarySection` | Exploration results section extracted from turn summary |
 
+## History Widgets (`history/`)
+
+| Widget / Helper | Purpose |
+|--------|---------|
+| `HistoryEntryCard` | Renders a single `HistoryEntry` as a tinted `Card` with an icon, title, optional subtitle, and either a trailing `Tour N` label or a chevron for tappable entries (combat only). All visuals come from the presentation extensions. |
+| `HistoryFilterChips` | Horizontally scrollable row of `ChoiceChip`s bound to the `HistoryFilter` enum. Tapping a chip fires `onChanged(filter)` |
+| `HistorySheetBody` | Stateful body of the history modal bottom sheet. Owns the current `HistoryFilter`, reverses the entries to render newest-first, runs `applyHistoryFilter`, and wires combat cards to `openFightSummaryFromEntry` |
+| `showHistorySheet(context, player: ...)` | Helper that opens a `showModalBottomSheet` hosting a `HistorySheetBody` snapshot of `player.historyEntries` |
+| `openFightSummaryFromEntry(context, combatEntry)` | Helper that rebuilds a `FightMonsterResult` from a persisted `CombatEntry` and pushes the existing `FightSummaryScreen` |
+
 ## Common Widgets (`common/`)
 
 | Widget | Purpose |
 |--------|---------|
 | `GameBottomBar` | Tab navigation + turn button |
-| `SettingsDialog` | Save/quit game settings |
+| `SettingsDialog` | Three-way settings dialog returning a `SettingsDialogResult`: `cancel`, `saveAndQuit`, or `openHistory`. The game screen reacts to `openHistory` by calling `showHistorySheet` |
 | `SavedGameCard` | Card for saved game in load screen |
 | `TabPlaceholder` | Placeholder for empty tab content |

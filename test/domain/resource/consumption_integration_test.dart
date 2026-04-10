@@ -13,13 +13,13 @@ import 'package:abyss/domain/unit/unit_type.dart';
 Game _game({
   Map<BuildingType, Building>? buildings,
   Map<ResourceType, Resource>? resources,
-  Map<UnitType, Unit>? units,
+  Map<int, Map<UnitType, Unit>>? unitsPerLevel,
 }) {
   final player = Player(
     name: 'Test',
     buildings: buildings,
     resources: resources,
-    units: units,
+    unitsPerLevel: unitsPerLevel,
   );
   return Game.singlePlayer(player);
 }
@@ -40,10 +40,10 @@ void main() {
         BuildingType.solarPanel: _b(BuildingType.solarPanel, 1),
         BuildingType.barracks: _b(BuildingType.barracks, 5),
       },
-      units: {
-        ...PlayerDefaults.units(),
+      unitsPerLevel: {1: {
+        ...PlayerDefaults.unitsPerLevel()[1]!,
         UnitType.scout: Unit(type: UnitType.scout, count: 10),
-      },
+      }},
     );
     final player = game.humanPlayer;
 

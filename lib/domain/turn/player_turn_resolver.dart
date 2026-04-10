@@ -41,15 +41,16 @@ class PlayerTurnResolver {
     // Steps 6-8: Algae consumption & unit losses
     final algaeProd = production[ResourceType.algae] ?? 0;
     final algaeStock = player.resources[ResourceType.algae]?.amount ?? 0;
+    final units = player.unitsOnLevel(1);
     final lostUnits = UnitLossCalculator.calculateLosses(
-      units: player.units,
+      units: units,
       algaeProduction: algaeProd,
       algaeStock: algaeStock,
     );
 
     // Step 9: Apply unit losses
     for (final entry in lostUnits.entries) {
-      final unit = player.units[entry.key];
+      final unit = units[entry.key];
       if (unit != null) unit.count -= entry.value;
     }
 
@@ -59,7 +60,7 @@ class PlayerTurnResolver {
       excluded: deactivated.toSet(),
     );
     final algaeConsumption =
-        ConsumptionCalculator.totalUnitConsumption(player.units);
+        ConsumptionCalculator.totalUnitConsumption(units);
 
     // Step 11: Apply resource changes
     final changes = _applyResourceChanges(

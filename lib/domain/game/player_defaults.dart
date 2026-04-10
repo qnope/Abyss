@@ -58,6 +58,8 @@ class PlayerDefaults {
       BuildingType.laboratory: Building(type: BuildingType.laboratory, level: 0),
       BuildingType.barracks: Building(type: BuildingType.barracks, level: 0),
       BuildingType.coralCitadel: Building(type: BuildingType.coralCitadel, level: 0),
+      BuildingType.descentModule: Building(type: BuildingType.descentModule, level: 0),
+      BuildingType.pressureCapsule: Building(type: BuildingType.pressureCapsule, level: 0),
     };
   }
 

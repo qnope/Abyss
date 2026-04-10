@@ -12,6 +12,8 @@ extension BuildingTypeColor on BuildingType {
     BuildingType.solarPanel => AbyssColors.energyYellow,
     BuildingType.laboratory => AbyssColors.biolumTeal,
     BuildingType.barracks => AbyssColors.biolumPink,
+    BuildingType.descentModule => AbyssColors.biolumBlue,
+    BuildingType.pressureCapsule => AbyssColors.biolumCyan,
   };
 }
 
@@ -25,6 +27,8 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.solarPanel => 'Panneau solaire',
     BuildingType.laboratory => 'Laboratoire',
     BuildingType.barracks => 'Caserne',
+    BuildingType.descentModule => 'Module de Descente',
+    BuildingType.pressureCapsule => 'Capsule Pressurisee',
   };
 
   String get description => switch (this) {
@@ -47,6 +51,10 @@ extension BuildingTypeInfo on BuildingType {
       'Centre de recherche sous-marin pour développer de nouvelles technologies.',
     BuildingType.barracks =>
       'Forme et entraîne vos unités militaires sous-marines.',
+    BuildingType.descentModule =>
+      'Module spécialisé permettant l\'assaut des failles abyssales.',
+    BuildingType.pressureCapsule =>
+      'Capsule haute pression permettant l\'assaut des cheminées hydrothermales.',
   };
 
   String get iconPath => switch (this) {
@@ -58,5 +66,7 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.solarPanel => 'assets/icons/buildings/solar_panel.svg',
     BuildingType.laboratory => 'assets/icons/buildings/laboratory.svg',
     BuildingType.barracks => 'assets/icons/buildings/barracks.svg',
+    BuildingType.descentModule => 'assets/icons/buildings/descent_module.svg',
+    BuildingType.pressureCapsule => 'assets/icons/buildings/pressure_capsule.svg',
   };
 }

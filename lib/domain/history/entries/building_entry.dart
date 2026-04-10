@@ -43,4 +43,6 @@ String _buildingLabel(BuildingType type) => switch (type) {
   BuildingType.laboratory => 'Laboratoire',
   BuildingType.barracks => 'Caserne',
   BuildingType.coralCitadel => 'Citadelle corallienne',
+  BuildingType.descentModule => 'Module de Descente',
+  BuildingType.pressureCapsule => 'Capsule Pressurisee',
 };

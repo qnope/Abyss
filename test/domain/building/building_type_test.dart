@@ -23,8 +23,8 @@ void main() {
       expect(BuildingType.headquarters, isNotNull);
     });
 
-    test('enum has exactly 8 values', () {
-      expect(BuildingType.values.length, 8);
+    test('enum has exactly 10 values', () {
+      expect(BuildingType.values.length, 10);
     });
 
     test('laboratory exists', () {

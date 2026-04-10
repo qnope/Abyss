@@ -15,12 +15,15 @@ extension HistoryEntryDisplay on HistoryEntry {
   Color accentColor(ThemeData theme) => switch (this) {
     CombatEntry(:final victory) =>
       victory ? AbyssColors.success : theme.colorScheme.error,
+    CaptureEntry() => AbyssColors.energyYellow,
     BuildingEntry() ||
     ResearchEntry() ||
     RecruitEntry() ||
     ExploreEntry() ||
     CollectEntry() ||
-    TurnEndEntry() => category.backgroundColor(theme),
+    TurnEndEntry() ||
+    DescentEntry() ||
+    ReinforcementEntry() => category.backgroundColor(theme),
   };
 
   /// Whether tapping this entry should open a detail view.
@@ -28,12 +31,14 @@ extension HistoryEntryDisplay on HistoryEntry {
   /// Only combat entries currently carry enough data (the full
   /// [FightResult]) to be replayable, so only they are tappable.
   bool get isTappable => switch (this) {
-    CombatEntry() => true,
+    CombatEntry() || CaptureEntry() => true,
     BuildingEntry() ||
     ResearchEntry() ||
     RecruitEntry() ||
     ExploreEntry() ||
     CollectEntry() ||
-    TurnEndEntry() => false,
+    TurnEndEntry() ||
+    DescentEntry() ||
+    ReinforcementEntry() => false,
   };
 }

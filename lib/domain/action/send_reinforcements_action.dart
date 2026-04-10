@@ -3,6 +3,7 @@ import 'action_result.dart';
 import 'action_type.dart';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../history/history_entry.dart';
 import '../map/cell_content_type.dart';
 import '../map/grid_position.dart';
 import '../map/reinforcement_order.dart';
@@ -13,6 +14,8 @@ class SendReinforcementsAction extends Action {
   final int transitionY;
   final int fromLevel;
   final Map<UnitType, int> selectedUnits;
+  int? _targetLevel;
+  int _totalSent = 0;
 
   SendReinforcementsAction({
     required this.transitionX,
@@ -86,11 +89,16 @@ class SendReinforcementsAction extends Action {
     );
 
     final units = <UnitType, int>{};
+    int total = 0;
     for (final entry in selectedUnits.entries) {
       if (entry.value <= 0) continue;
       player.unitsOnLevel(fromLevel)[entry.key]!.count -= entry.value;
       units[entry.key] = entry.value;
+      total += entry.value;
     }
+
+    _targetLevel = targetLevel;
+    _totalSent = total;
 
     player.pendingReinforcements.add(
       ReinforcementOrder(
@@ -103,5 +111,21 @@ class SendReinforcementsAction extends Action {
     );
 
     return const ActionResult.success();
+  }
+
+  @override
+  HistoryEntry? makeHistoryEntry(
+    Game game,
+    Player player,
+    ActionResult result,
+    int turn,
+  ) {
+    if (!result.isSuccess || _targetLevel == null) return null;
+    return ReinforcementEntry(
+      turn: turn,
+      targetLevel: _targetLevel!,
+      unitCount: _totalSent,
+      subtitle: '$_totalSent unites en transit',
+    );
   }
 }

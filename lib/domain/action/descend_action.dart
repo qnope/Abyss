@@ -99,5 +99,14 @@ class DescendAction extends Action {
     Player player,
     ActionResult result,
     int turn,
-  ) => null;
+  ) {
+    if (result is! DescendResult || !result.isSuccess) return null;
+    final total = result.unitsSent!.values.fold(0, (a, b) => a + b);
+    return DescentEntry(
+      turn: turn,
+      targetLevel: result.targetLevel!,
+      unitCount: total,
+      subtitle: '$total unites envoyees',
+    );
+  }
 }

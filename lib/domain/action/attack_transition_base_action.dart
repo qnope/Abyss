@@ -11,6 +11,7 @@ import '../map/cell_content_type.dart';
 import '../map/map_cell.dart';
 import '../map/transition_base.dart';
 import '../unit/unit_type.dart';
+import '../history/history_entry.dart';
 import 'action.dart';
 import 'action_result.dart';
 import 'action_type.dart';
@@ -25,6 +26,7 @@ class AttackTransitionBaseAction extends Action {
   final int level;
   final Map<UnitType, int> selectedUnits;
   final Random? random;
+  String? _capturedBaseName;
 
   AttackTransitionBaseAction({
     required this.targetX,
@@ -113,6 +115,7 @@ class AttackTransitionBaseAction extends Action {
 
     if (captured) {
       base.capturedBy = player.id;
+      _capturedBaseName = base.name;
     }
 
     return AttackTransitionBaseResult.success(
@@ -123,6 +126,24 @@ class AttackTransitionBaseAction extends Action {
       survivorsIntact: breakdown.survivorsIntact,
       wounded: breakdown.wounded,
       dead: breakdown.dead,
+    );
+  }
+
+  @override
+  HistoryEntry? makeHistoryEntry(
+    Game game,
+    Player player,
+    ActionResult result,
+    int turn,
+  ) {
+    if (result is! AttackTransitionBaseResult) return null;
+    if (!result.captured || result.fight == null) return null;
+    return CaptureEntry(
+      turn: turn,
+      transitionBaseName: _capturedBaseName ?? '',
+      fightResult: result.fight!,
+      subtitle:
+          'Victoire en ${result.fight!.turnCount} tours',
     );
   }
 }

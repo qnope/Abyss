@@ -3,8 +3,8 @@ import 'package:abyss/domain/history/history_entry_category.dart';
 
 void main() {
   group('HistoryEntryCategory', () {
-    test('enum has exactly 7 values', () {
-      expect(HistoryEntryCategory.values.length, 7);
+    test('enum has exactly 10 values', () {
+      expect(HistoryEntryCategory.values.length, 10);
     });
 
     test('all expected categories exist', () {
@@ -15,6 +15,9 @@ void main() {
       expect(HistoryEntryCategory.explore, isNotNull);
       expect(HistoryEntryCategory.collect, isNotNull);
       expect(HistoryEntryCategory.turnEnd, isNotNull);
+      expect(HistoryEntryCategory.capture, isNotNull);
+      expect(HistoryEntryCategory.descent, isNotNull);
+      expect(HistoryEntryCategory.reinforcement, isNotNull);
     });
 
     test('all categories are distinct', () {

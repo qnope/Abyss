@@ -11,4 +11,7 @@ enum HistoryEntryCategory {
   @HiveField(4) explore,
   @HiveField(5) collect,
   @HiveField(6) turnEnd,
+  @HiveField(7) capture,
+  @HiveField(8) descent,
+  @HiveField(9) reinforcement,
 }

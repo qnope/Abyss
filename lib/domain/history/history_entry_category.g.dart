@@ -27,6 +27,12 @@ class HistoryEntryCategoryAdapter extends TypeAdapter<HistoryEntryCategory> {
         return HistoryEntryCategory.collect;
       case 6:
         return HistoryEntryCategory.turnEnd;
+      case 7:
+        return HistoryEntryCategory.capture;
+      case 8:
+        return HistoryEntryCategory.descent;
+      case 9:
+        return HistoryEntryCategory.reinforcement;
       default:
         return HistoryEntryCategory.combat;
     }
@@ -55,6 +61,15 @@ class HistoryEntryCategoryAdapter extends TypeAdapter<HistoryEntryCategory> {
         break;
       case HistoryEntryCategory.turnEnd:
         writer.writeByte(6);
+        break;
+      case HistoryEntryCategory.capture:
+        writer.writeByte(7);
+        break;
+      case HistoryEntryCategory.descent:
+        writer.writeByte(8);
+        break;
+      case HistoryEntryCategory.reinforcement:
+        writer.writeByte(9);
         break;
     }
   }

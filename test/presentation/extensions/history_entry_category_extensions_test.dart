@@ -14,6 +14,9 @@ void main() {
       expect(HistoryEntryCategory.explore.icon, Icons.explore);
       expect(HistoryEntryCategory.collect.icon, Icons.inventory_2);
       expect(HistoryEntryCategory.turnEnd.icon, Icons.hourglass_bottom);
+      expect(HistoryEntryCategory.capture.icon, Icons.flag);
+      expect(HistoryEntryCategory.descent.icon, Icons.arrow_downward);
+      expect(HistoryEntryCategory.reinforcement.icon, Icons.groups);
     });
 
     test('returns a distinct icon for every category', () {
@@ -31,6 +34,9 @@ void main() {
       expect(HistoryEntryCategory.explore.label, 'Exploration');
       expect(HistoryEntryCategory.collect.label, 'Collecte');
       expect(HistoryEntryCategory.turnEnd.label, 'Fin de tour');
+      expect(HistoryEntryCategory.capture.label, 'Capture');
+      expect(HistoryEntryCategory.descent.label, 'Descente');
+      expect(HistoryEntryCategory.reinforcement.label, 'Renfort');
     });
 
     test('returns a distinct, non-empty label for every category', () {

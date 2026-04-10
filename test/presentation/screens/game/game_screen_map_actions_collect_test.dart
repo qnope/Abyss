@@ -57,7 +57,7 @@ void main() {
         revealedCellsPerLevel: {1: fullReveal()},
         resources: resources,
       );
-      return Game.singlePlayer(player)..gameMap = buildTestMap(content);
+      return Game.singlePlayer(player)..levels = {1: buildTestMap(content)};
     }
 
     Widget buildHost(Game game) {

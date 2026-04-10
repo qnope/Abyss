@@ -57,11 +57,11 @@ Player buildCollectTestPlayer({String id = 'test-uuid'}) {
   final game = Game(
     humanPlayerId: player.id,
     players: {player.id: player},
-    gameMap: buildCollectTestMap(
+    levels: {1: buildCollectTestMap(
       content: content,
       lair: lair,
       collectedBy: collectedBy,
-    ),
+    )},
   );
   return (game: game, player: player);
 }

@@ -118,6 +118,6 @@ Game buildHistoryScenarioGame({String playerId = 'human-uuid'}) {
   return Game(
     humanPlayerId: player.id,
     players: {player.id: player},
-    gameMap: buildHistoryScenarioMap(),
+    levels: {1: buildHistoryScenarioMap()},
   );
 }

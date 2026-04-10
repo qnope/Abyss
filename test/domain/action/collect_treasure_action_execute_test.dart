@@ -90,10 +90,10 @@ void main() {
         random: Random(42),
       ).execute(scenario.game, scenario.player);
       expect(
-        scenario.game.gameMap!.cellAt(1, 1).collectedBy,
+        scenario.game.levels[1]!.cellAt(1, 1).collectedBy,
         scenario.player.id,
       );
-      expect(scenario.game.gameMap!.cellAt(1, 1).isCollected, isTrue);
+      expect(scenario.game.levels[1]!.cellAt(1, 1).isCollected, isTrue);
     });
 
     test('collecting already-collected cell fails', () {

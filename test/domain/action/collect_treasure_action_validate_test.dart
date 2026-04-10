@@ -13,7 +13,6 @@ void main() {
       final game = Game(
         humanPlayerId: player.id,
         players: {player.id: player},
-        gameMap: null,
       );
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
       final result = action.validate(game, player);
@@ -28,7 +27,7 @@ void main() {
       final game = Game(
         humanPlayerId: player.id,
         players: {player.id: player},
-        gameMap: scenario.game.gameMap,
+        levels: scenario.game.levels,
       );
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
       final result = action.validate(game, player);

@@ -42,10 +42,10 @@ class FightMonsterAction extends Action {
 
   @override
   ActionResult validate(Game game, Player player) {
-    if (game.gameMap == null) {
+    if (game.levels[1] == null) {
       return const FightMonsterResult.failure('Carte non générée');
     }
-    final MapCell cell = game.gameMap!.cellAt(targetX, targetY);
+    final MapCell cell = game.levels[1]!.cellAt(targetX, targetY);
     if (cell.content != CellContentType.monsterLair) {
       return const FightMonsterResult.failure('Pas de monstre ici');
     }
@@ -77,7 +77,7 @@ class FightMonsterAction extends Action {
     final ActionResult validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
-    final MapCell cell = game.gameMap!.cellAt(targetX, targetY);
+    final MapCell cell = game.levels[1]!.cellAt(targetX, targetY);
     final MonsterLair lair = cell.lair!;
     _capturedLair = lair;
     final int militaryLevel =
@@ -112,7 +112,7 @@ class FightMonsterAction extends Action {
       final Map<ResourceType, int> rolled =
           LootCalculator(random: random).compute(lair.difficulty);
       loot = FightMonsterHelpers.applyLoot(player, rolled);
-      game.gameMap!.setCell(
+      game.levels[1]!.setCell(
         targetX,
         targetY,
         cell.copyWith(collectedBy: player.id),

@@ -91,7 +91,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
       mapWidth: generation.map.width,
       mapHeight: generation.map.height,
     );
-    final game = Game.singlePlayer(player)..gameMap = generation.map;
+    final game = Game.singlePlayer(player)..levels = {1: generation.map};
     await widget.repository.save(game);
 
     if (!mounted) return;

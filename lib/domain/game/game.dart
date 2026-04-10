@@ -20,14 +20,14 @@ class Game extends HiveObject {
   final DateTime createdAt;
 
   @HiveField(4)
-  GameMap? gameMap;
+  Map<int, GameMap> levels;
 
   Game({
     required this.humanPlayerId,
     required this.players,
     this.turn = 1,
     DateTime? createdAt,
-    this.gameMap,
+    this.levels = const {},
   }) : createdAt = createdAt ?? DateTime.now();
 
   factory Game.singlePlayer(Player human) => Game(
@@ -36,4 +36,8 @@ class Game extends HiveObject {
       );
 
   Player get humanPlayer => players[humanPlayerId]!;
+
+  GameMap? mapForLevel(int level) => levels[level];
+
+  GameMap get currentMap => levels[1]!;
 }

@@ -33,7 +33,7 @@ void main() {
         mapWidth: mapResult.map.width,
         mapHeight: mapResult.map.height,
       );
-      return Game.singlePlayer(player)..gameMap = mapResult.map;
+      return Game.singlePlayer(player)..levels = {1: mapResult.map};
     }
 
     testWidgets('displays existing map without regeneration',
@@ -45,7 +45,7 @@ void main() {
       await tester.tap(find.text('Carte'));
       await tester.pumpAndSettle();
 
-      expect(game.gameMap!.seed, 42);
+      expect(game.levels[1]!.seed, 42);
       expect(find.byType(GameMapView), findsOneWidget);
       expect(repository.saveCallCount, 0);
     });

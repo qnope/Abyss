@@ -43,7 +43,7 @@ void main() {
       final fight = result as FightMonsterResult;
       expect(fight.victory, isTrue);
 
-      final cell = scenario.game.gameMap!.cellAt(1, 1);
+      final cell = scenario.game.levels[1]!.cellAt(1, 1);
       expect(cell.isCollected, isTrue);
       expect(cell.collectedBy, scenario.player.id);
 

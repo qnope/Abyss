@@ -29,7 +29,7 @@ Widget buildMapTab(
       .map((e) => (e.target.x, e.target.y))
       .toSet();
   return GameMapView(
-    gameMap: game.gameMap!,
+    gameMap: game.levels[1]!,
     revealedCells: game.humanPlayer.revealedCells,
     baseX: game.humanPlayer.baseX,
     baseY: game.humanPlayer.baseY,
@@ -52,7 +52,7 @@ void _showCellAction(
   int y,
   VoidCallback onChanged,
 ) {
-  final cell = game.gameMap!.cellAt(x, y);
+  final cell = game.levels[1]!.cellAt(x, y);
   final human = game.humanPlayer;
 
   if (!human.revealedCells.contains(GridPosition(x: x, y: y))) {
@@ -117,7 +117,7 @@ void _showExplorationFlow(
   final explorerLevel =
       human.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
   final isEligible =
-      CellEligibilityChecker.isEligible(game.gameMap!, human, x, y);
+      CellEligibilityChecker.isEligible(game.levels[1]!, human, x, y);
 
   showExplorationSheet(
     context,

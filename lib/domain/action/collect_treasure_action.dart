@@ -29,10 +29,10 @@ class CollectTreasureAction extends Action {
 
   @override
   ActionResult validate(Game game, Player player) {
-    if (game.gameMap == null) {
+    if (game.levels[1] == null) {
       return const CollectTreasureResult.failure('Carte non générée');
     }
-    final cell = game.gameMap!.cellAt(targetX, targetY);
+    final cell = game.levels[1]!.cellAt(targetX, targetY);
     if (!player.revealedCells.contains(
       GridPosition(x: targetX, y: targetY),
     )) {
@@ -53,7 +53,7 @@ class CollectTreasureAction extends Action {
     final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
-    final cell = game.gameMap!.cellAt(targetX, targetY);
+    final cell = game.levels[1]!.cellAt(targetX, targetY);
     final deltas = <ResourceType, int>{};
 
     if (cell.content == CellContentType.resourceBonus) {
@@ -74,7 +74,7 @@ class CollectTreasureAction extends Action {
           _addResource(player, ResourceType.pearl, _random.nextInt(3));
     }
 
-    game.gameMap!.setCell(
+    game.levels[1]!.setCell(
       targetX,
       targetY,
       cell.copyWith(collectedBy: player.id),

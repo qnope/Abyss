@@ -15,10 +15,12 @@ import '../../widgets/map/exploration_sheet.dart';
 import '../../widgets/map/game_map_view.dart';
 import '../../widgets/map/level_selector.dart';
 import '../../widgets/map/monster_lair_sheet.dart';
+import '../../widgets/map/transition_base_sheet.dart';
 import '../../widgets/map/treasure_sheet.dart';
 import '../../widgets/resource/resource_gain_dialog.dart';
 import 'game_screen_collect_messages.dart';
 import 'game_screen_fight_actions.dart';
+import 'game_screen_transition_actions.dart';
 
 Widget buildMapTab(
   BuildContext context, Game game, GameRepository repository, {
@@ -46,10 +48,13 @@ Widget buildMapTab(
         baseX: human.baseX, baseY: human.baseY,
         humanPlayerId: human.id,
         onCellTap: (x, y) => _showCellAction(
-          context, game, repository, x, y, level, () {
+          context, game, repository, x, y, level,
+          onChanged: () {
             repository.save(game);
             onChanged();
-          }),
+          },
+          onLevelSelected: onLevelSelected,
+        ),
         pendingTargets: pendingTargets,
       ),
     ),
@@ -57,8 +62,10 @@ Widget buildMapTab(
 }
 
 void _showCellAction(BuildContext context, Game game,
-    GameRepository repository, int x, int y, int level,
-    VoidCallback onChanged) {
+    GameRepository repository, int x, int y, int level, {
+    required VoidCallback onChanged,
+    required ValueChanged<int> onLevelSelected,
+}) {
   final cell = game.levels[level]!.cellAt(x, y);
   final human = game.humanPlayer;
   if (!human.revealedCellsSetOnLevel(level).contains(
@@ -91,9 +98,25 @@ void _showCellAction(BuildContext context, Game game,
         onPrepareFight: () => openArmySelection(
             context, game, repository, x, y, cell.lair!, onChanged));
     case CellContentType.transitionBase:
+      final base = cell.transitionBase;
+      if (base == null) {
+        showCellInfoSheet(context, title: 'Plaine ($x, $y)',
+          message: "Il n'y a rien a voir ici");
+        return;
+      }
+      showTransitionBaseSheet(context,
+        transitionBase: base, level: level, player: human,
+        onAttack: () => handleAttackTransitionBase(
+          context, game, repository, base, x, y, level, onChanged),
+        onDescend: () => handleDescend(
+          context, game, repository, base, x, y, level,
+          onChanged: onChanged, onLevelSelected: onLevelSelected),
+        onReinforce: () => handleSendReinforcements(
+          context, game, repository, base, x, y, level, onChanged),
+      );
     case CellContentType.empty:
       showCellInfoSheet(context, title: 'Plaine ($x, $y)',
-        message: "Il n'y a rien à voir ici");
+        message: "Il n'y a rien a voir ici");
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import '../building/building_type.dart';
 import '../map/exploration_result.dart';
+import '../map/reinforcement_order.dart';
 import '../resource/resource_type.dart';
 import '../unit/unit_type.dart';
 
@@ -44,6 +45,7 @@ class TurnResult {
   final List<BuildingType> deactivatedBuildings;
   final Map<UnitType, int> lostUnits;
   final List<ExplorationResult> explorations;
+  final List<ReinforcementOrder> arrivedReinforcements;
 
   const TurnResult({
     required this.changes,
@@ -53,5 +55,6 @@ class TurnResult {
     this.deactivatedBuildings = const [],
     this.lostUnits = const {},
     this.explorations = const [],
+    this.arrivedReinforcements = const [],
   });
 }

@@ -23,7 +23,7 @@ class UnitCostCalculator {
       ResourceType.ore: 25,
       ResourceType.energy: 15,
     },
-    UnitType.siphoner => {
+    UnitType.abyssAdmiral => {
       ResourceType.algae: 20,
       ResourceType.energy: 10,
       ResourceType.pearl: 2,
@@ -40,14 +40,14 @@ class UnitCostCalculator {
     UnitType.harpoonist => {ResourceType.algae: 2},
     UnitType.guardian => {ResourceType.algae: 3},
     UnitType.domeBreaker => {ResourceType.algae: 2},
-    UnitType.siphoner => {ResourceType.algae: 3},
+    UnitType.abyssAdmiral => {ResourceType.algae: 3},
     UnitType.saboteur => {ResourceType.algae: 2},
   };
 
   int unlockLevel(UnitType type) => switch (type) {
     UnitType.scout || UnitType.harpoonist => 1,
     UnitType.guardian || UnitType.domeBreaker => 3,
-    UnitType.siphoner || UnitType.saboteur => 5,
+    UnitType.abyssAdmiral || UnitType.saboteur => 5,
   };
 
   bool isUnlocked(UnitType type, int barracksLevel) =>

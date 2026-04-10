@@ -198,9 +198,9 @@ void main() {
       );
     });
 
-    test('siphoner consumes 2 algae', () {
+    test('abyssAdmiral consumes 2 algae', () {
       expect(
-        ConsumptionCalculator.unitAlgaeConsumption(UnitType.siphoner),
+        ConsumptionCalculator.unitAlgaeConsumption(UnitType.abyssAdmiral),
         2,
       );
     });

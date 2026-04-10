@@ -139,7 +139,7 @@ void main() {
       final units = _units({
         UnitType.scout: 3,
         UnitType.guardian: 2,
-        UnitType.siphoner: 4,
+        UnitType.abyssAdmiral: 4,
       });
       final result = UnitLossCalculator.calculateLosses(
         units: units,
@@ -149,7 +149,7 @@ void main() {
       expect(result, {
         UnitType.scout: 3,
         UnitType.guardian: 2,
-        UnitType.siphoner: 4,
+        UnitType.abyssAdmiral: 4,
       });
     });
   });

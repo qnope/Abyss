@@ -56,8 +56,8 @@ void main() {
       });
     });
 
-    test('siphoner costs algae, energy, pearl', () {
-      expect(calculator.recruitmentCost(UnitType.siphoner), {
+    test('abyssAdmiral costs algae, energy, pearl', () {
+      expect(calculator.recruitmentCost(UnitType.abyssAdmiral), {
         ResourceType.algae: 20,
         ResourceType.energy: 10,
         ResourceType.pearl: 2,
@@ -90,8 +90,8 @@ void main() {
       expect(calculator.unlockLevel(UnitType.domeBreaker), 3);
     });
 
-    test('siphoner requires barracks 5', () {
-      expect(calculator.unlockLevel(UnitType.siphoner), 5);
+    test('abyssAdmiral requires barracks 5', () {
+      expect(calculator.unlockLevel(UnitType.abyssAdmiral), 5);
     });
 
     test('saboteur requires barracks 5', () {
@@ -164,8 +164,8 @@ void main() {
       });
     });
 
-    test('siphoner costs 3 algae', () {
-      expect(calculator.maintenanceCost(UnitType.siphoner), {
+    test('abyssAdmiral costs 3 algae', () {
+      expect(calculator.maintenanceCost(UnitType.abyssAdmiral), {
         ResourceType.algae: 3,
       });
     });

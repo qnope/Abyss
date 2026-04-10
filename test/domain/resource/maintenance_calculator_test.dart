@@ -9,14 +9,14 @@ Map<UnitType, Unit> _units({
   int harpoonist = 0,
   int guardian = 0,
   int domeBreaker = 0,
-  int siphoner = 0,
+  int abyssAdmiral = 0,
   int saboteur = 0,
 }) => {
   UnitType.scout: Unit(type: UnitType.scout, count: scout),
   UnitType.harpoonist: Unit(type: UnitType.harpoonist, count: harpoonist),
   UnitType.guardian: Unit(type: UnitType.guardian, count: guardian),
   UnitType.domeBreaker: Unit(type: UnitType.domeBreaker, count: domeBreaker),
-  UnitType.siphoner: Unit(type: UnitType.siphoner, count: siphoner),
+  UnitType.abyssAdmiral: Unit(type: UnitType.abyssAdmiral, count: abyssAdmiral),
   UnitType.saboteur: Unit(type: UnitType.saboteur, count: saboteur),
 };
 

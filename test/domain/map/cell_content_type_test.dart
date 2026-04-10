@@ -3,12 +3,16 @@ import 'package:abyss/domain/map/cell_content_type.dart';
 
 void main() {
   group('CellContentType', () {
-    test('has all 4 values', () {
-      expect(CellContentType.values.length, 4);
+    test('has all 5 values', () {
+      expect(CellContentType.values.length, 5);
       expect(CellContentType.values, contains(CellContentType.empty));
       expect(CellContentType.values, contains(CellContentType.resourceBonus));
       expect(CellContentType.values, contains(CellContentType.ruins));
       expect(CellContentType.values, contains(CellContentType.monsterLair));
+      expect(
+        CellContentType.values,
+        contains(CellContentType.transitionBase),
+      );
     });
 
     test('values have correct indices', () {

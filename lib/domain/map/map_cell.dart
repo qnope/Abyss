@@ -2,6 +2,7 @@ import 'package:hive/hive.dart';
 import 'cell_content_type.dart';
 import 'monster_lair.dart';
 import 'terrain_type.dart';
+import 'transition_base.dart';
 
 part 'map_cell.g.dart';
 
@@ -21,11 +22,15 @@ class MapCell {
   @HiveField(3)
   final String? collectedBy;
 
+  @HiveField(4)
+  final TransitionBase? transitionBase;
+
   MapCell({
     required this.terrain,
     this.content = CellContentType.empty,
     this.lair,
     this.collectedBy,
+    this.transitionBase,
   });
 
   bool get isCollected => collectedBy != null;
@@ -35,6 +40,7 @@ class MapCell {
     CellContentType? content,
     Object? lair = _sentinel,
     Object? collectedBy = _sentinel,
+    Object? transitionBase = _sentinel,
   }) {
     return MapCell(
       terrain: terrain ?? this.terrain,
@@ -45,6 +51,9 @@ class MapCell {
       collectedBy: identical(collectedBy, _sentinel)
           ? this.collectedBy
           : collectedBy as String?,
+      transitionBase: identical(transitionBase, _sentinel)
+          ? this.transitionBase
+          : transitionBase as TransitionBase?,
     );
   }
 }

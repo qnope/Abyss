@@ -29,6 +29,10 @@ class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
         return BuildingType.barracks;
       case 7:
         return BuildingType.coralCitadel;
+      case 8:
+        return BuildingType.descentModule;
+      case 9:
+        return BuildingType.pressureCapsule;
       default:
         return BuildingType.headquarters;
     }
@@ -60,6 +64,12 @@ class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
         break;
       case BuildingType.coralCitadel:
         writer.writeByte(7);
+        break;
+      case BuildingType.descentModule:
+        writer.writeByte(8);
+        break;
+      case BuildingType.pressureCapsule:
+        writer.writeByte(9);
         break;
     }
   }

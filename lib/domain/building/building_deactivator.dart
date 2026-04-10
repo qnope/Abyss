@@ -9,11 +9,13 @@ class BuildingDeactivator {
     BuildingType.headquarters, // 0 - never disabled
     BuildingType.coralCitadel, // 1 - last to be disabled
     BuildingType.solarPanel, // 2
-    BuildingType.barracks, // 3
-    BuildingType.laboratory, // 4
-    BuildingType.algaeFarm, // 5
-    BuildingType.coralMine, // 6
-    BuildingType.oreExtractor, // 7 - disabled first
+    BuildingType.descentModule, // 3
+    BuildingType.pressureCapsule, // 4
+    BuildingType.barracks, // 5
+    BuildingType.laboratory, // 6
+    BuildingType.algaeFarm, // 7
+    BuildingType.coralMine, // 8
+    BuildingType.oreExtractor, // 9 - disabled first
   ];
 
   /// Returns list of buildings that must be deactivated.

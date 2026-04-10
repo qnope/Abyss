@@ -15,6 +15,8 @@ class ConsumptionCalculator {
       BuildingType.coralCitadel => 1 * level,
       BuildingType.laboratory => 4 * level,
       BuildingType.barracks => 3 * level,
+      BuildingType.descentModule => 2 * level,
+      BuildingType.pressureCapsule => 2 * level,
     };
   }
 

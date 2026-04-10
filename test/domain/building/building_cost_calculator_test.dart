@@ -192,5 +192,56 @@ void main() {
     test('coralCitadel is 5', () {
       expect(calculator.maxLevel(BuildingType.coralCitadel), 5);
     });
+
+    test('descentModule is 1', () {
+      expect(calculator.maxLevel(BuildingType.descentModule), 1);
+    });
+
+    test('pressureCapsule is 1', () {
+      expect(calculator.maxLevel(BuildingType.pressureCapsule), 1);
+    });
+  });
+
+  group('descentModule', () {
+    test('level 0->1: coral=200, ore=150, energy=80, pearl=5', () {
+      final cost = calculator.upgradeCost(BuildingType.descentModule, 0);
+      expect(cost[ResourceType.coral], 200);
+      expect(cost[ResourceType.ore], 150);
+      expect(cost[ResourceType.energy], 80);
+      expect(cost[ResourceType.pearl], 5);
+    });
+
+    test('at max level 1: returns empty map', () {
+      final cost = calculator.upgradeCost(BuildingType.descentModule, 1);
+      expect(cost, isEmpty);
+    });
+
+    test('prerequisites: HQ level 5', () {
+      final prereqs = calculator.prerequisites(BuildingType.descentModule, 1);
+      expect(prereqs, {BuildingType.headquarters: 5});
+    });
+  });
+
+  group('pressureCapsule', () {
+    test('level 0->1: coral=400, ore=300, energy=150, pearl=15', () {
+      final cost = calculator.upgradeCost(BuildingType.pressureCapsule, 0);
+      expect(cost[ResourceType.coral], 400);
+      expect(cost[ResourceType.ore], 300);
+      expect(cost[ResourceType.energy], 150);
+      expect(cost[ResourceType.pearl], 15);
+    });
+
+    test('at max level 1: returns empty map', () {
+      final cost = calculator.upgradeCost(BuildingType.pressureCapsule, 1);
+      expect(cost, isEmpty);
+    });
+
+    test('prerequisites: HQ level 8', () {
+      final prereqs = calculator.prerequisites(
+        BuildingType.pressureCapsule,
+        1,
+      );
+      expect(prereqs, {BuildingType.headquarters: 8});
+    });
   });
 }

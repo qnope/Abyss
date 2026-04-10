@@ -1,5 +1,6 @@
 import '../game/game.dart';
 import '../map/exploration_resolver.dart';
+import '../map/reinforcement_resolver.dart';
 import 'player_turn_resolver.dart';
 import 'turn_result.dart';
 
@@ -15,6 +16,7 @@ class TurnResolver {
     }
 
     final explorations = ExplorationResolver.resolve(game);
+    final reinforcements = ReinforcementResolver.resolve(game);
     game.turn++;
 
     final human = humanResult!;
@@ -26,6 +28,7 @@ class TurnResolver {
       deactivatedBuildings: human.deactivatedBuildings,
       lostUnits: human.lostUnits,
       explorations: explorations,
+      arrivedReinforcements: reinforcements,
     );
   }
 }

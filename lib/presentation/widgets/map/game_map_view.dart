@@ -97,12 +97,15 @@ class _GameMapViewState extends State<GameMapView> {
         final isCollectedByOther = cell.collectedBy != null &&
             cell.collectedBy != widget.humanPlayerId;
         final isBase = x == widget.baseX && y == widget.baseY;
+        final isCapturedTransitionBase =
+            cell.transitionBase?.capturedBy == widget.humanPlayerId;
         return MapCellWidget(
           cell: cell,
           isRevealed: isRevealed,
           isCollectedByOther: isCollectedByOther,
           isBase: isBase,
           hasPendingExploration: widget.pendingTargets.contains((x, y)),
+          isCapturedTransitionBase: isCapturedTransitionBase,
           onTap: widget.onCellTap != null
               ? () => widget.onCellTap!(x, y)
               : null,

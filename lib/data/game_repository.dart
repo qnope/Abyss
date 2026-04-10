@@ -9,12 +9,15 @@ import '../domain/history/history_entry.dart';
 import '../domain/history/history_entry_category.dart';
 import '../domain/map/cell_content_type.dart';
 import '../domain/map/exploration_order.dart';
+import '../domain/map/reinforcement_order.dart';
 import '../domain/game/game.dart';
 import '../domain/map/game_map.dart';
 import '../domain/map/grid_position.dart';
 import '../domain/map/map_cell.dart';
 import '../domain/map/monster_difficulty.dart';
 import '../domain/map/monster_lair.dart';
+import '../domain/map/transition_base.dart';
+import '../domain/map/transition_base_type.dart';
 import '../domain/game/player.dart';
 import '../domain/resource/resource.dart';
 import '../domain/resource/resource_type.dart';
@@ -61,6 +64,9 @@ class GameRepository {
     Hive.registerAdapter(FightTurnSummaryAdapter());
     Hive.registerAdapter(FightResultAdapter());
     Hive.registerAdapter(TurnResourceChangeAdapter());
+    Hive.registerAdapter(TransitionBaseTypeAdapter());
+    Hive.registerAdapter(TransitionBaseAdapter());
+    Hive.registerAdapter(ReinforcementOrderAdapter());
     try {
       await Hive.openBox<Game>(_boxName);
     } catch (_) {

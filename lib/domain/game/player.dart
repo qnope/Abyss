@@ -7,6 +7,7 @@ import '../history/history_constants.dart';
 import '../history/history_entry.dart';
 import '../map/exploration_order.dart';
 import '../map/grid_position.dart';
+import '../map/reinforcement_order.dart';
 import '../map/reveal_area_calculator.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
@@ -56,6 +57,9 @@ class Player extends HiveObject {
   @HiveField(11)
   final List<HistoryEntry> historyEntries;
 
+  @HiveField(13)
+  final List<ReinforcementOrder> pendingReinforcements;
+
   Player({
     required this.name,
     String? id,
@@ -69,6 +73,7 @@ class Player extends HiveObject {
     List<ExplorationOrder>? pendingExplorations,
     Map<int, List<GridPosition>>? revealedCellsPerLevel,
     List<HistoryEntry>? historyEntries,
+    List<ReinforcementOrder>? pendingReinforcements,
   })  : id = id ?? const Uuid().v4(),
         resources = resources ?? PlayerDefaults.resources(),
         buildings = buildings ?? PlayerDefaults.buildings(),
@@ -77,7 +82,8 @@ class Player extends HiveObject {
         recruitedUnitTypes = recruitedUnitTypes ?? [],
         pendingExplorations = pendingExplorations ?? [],
         revealedCellsPerLevel = revealedCellsPerLevel ?? {},
-        historyEntries = historyEntries ?? <HistoryEntry>[];
+        historyEntries = historyEntries ?? <HistoryEntry>[],
+        pendingReinforcements = pendingReinforcements ?? [];
 
   Player.withBase({
     required String name,

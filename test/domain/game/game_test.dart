@@ -26,10 +26,12 @@ void main() {
       expect(game.createdAt, isNotNull);
     });
 
-    test('gameMap is null initially', () {
+    test('levels is empty initially', () {
       final p = Player(id: 'a', name: 'A', baseX: 5, baseY: 5);
       final game = Game.singlePlayer(p);
-      expect(game.gameMap, isNull);
+      expect(game.levels, isEmpty);
+      expect(game.mapForLevel(1), isNull);
+      expect(game.mapForLevel(2), isNull);
     });
   });
 

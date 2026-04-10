@@ -41,7 +41,7 @@ void main() {
         id: 'solo',
         pendingExplorations: [ExplorationOrder(target: target)],
       );
-      final game = Game.singlePlayer(player)..gameMap = map;
+      final game = Game.singlePlayer(player)..levels = {1: map};
 
       final results = ExplorationResolver.resolve(game);
 
@@ -67,7 +67,7 @@ void main() {
         ],
         revealedCellsPerLevel: {1: [GridPosition(x: 3, y: 3)]},
       );
-      final game = Game.singlePlayer(player)..gameMap = map;
+      final game = Game.singlePlayer(player)..levels = {1: map};
 
       final results = ExplorationResolver.resolve(game);
 
@@ -83,7 +83,7 @@ void main() {
           ExplorationOrder(target: GridPosition(x: 9, y: 0)),
         ],
       );
-      final game = Game.singlePlayer(player)..gameMap = map;
+      final game = Game.singlePlayer(player)..levels = {1: map};
 
       final results = ExplorationResolver.resolve(game);
 
@@ -115,7 +115,7 @@ void main() {
       final game = Game(
         humanPlayerId: alice.id,
         players: {alice.id: alice, bob.id: bob},
-      )..gameMap = map;
+      )..levels = {1: map};
 
       ExplorationResolver.resolve(game);
 
@@ -139,7 +139,7 @@ void main() {
       final game = Game(
         humanPlayerId: alice.id,
         players: {alice.id: alice, bob.id: bob},
-      )..gameMap = map;
+      )..levels = {1: map};
 
       ExplorationResolver.resolve(game);
 

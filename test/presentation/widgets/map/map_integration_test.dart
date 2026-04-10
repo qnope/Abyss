@@ -18,7 +18,7 @@ Game _buildGame({int seed = 42}) {
     mapWidth: generation.map.width,
     mapHeight: generation.map.height,
   );
-  return Game.singlePlayer(player)..gameMap = generation.map;
+  return Game.singlePlayer(player)..levels = {1: generation.map};
 }
 
 void main() {
@@ -38,14 +38,14 @@ void main() {
 
     testWidgets('tab opens and shows pre-generated map', (tester) async {
       final game = _buildGame();
-      expect(game.gameMap, isNotNull);
+      expect(game.levels[1], isNotNull);
 
       await tester.pumpWidget(createApp(game));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Carte'));
       await tester.pumpAndSettle();
 
-      expect(game.gameMap!.cells.length, 400);
+      expect(game.levels[1]!.cells.length, 400);
       expect(find.byType(GameMapView), findsOneWidget);
     });
 
@@ -58,7 +58,7 @@ void main() {
       await tester.tap(find.text('Carte'));
       await tester.pumpAndSettle();
 
-      expect(game.gameMap!.seed, 42);
+      expect(game.levels[1]!.seed, 42);
       expect(repository.saveCallCount, 0);
       expect(find.byType(GameMapView), findsOneWidget);
     });
@@ -71,8 +71,8 @@ void main() {
       await tester.tap(find.text('Carte'));
       await tester.pumpAndSettle();
 
-      expect(game.gameMap!.width, 20);
-      expect(game.gameMap!.height, 20);
+      expect(game.levels[1]!.width, 20);
+      expect(game.levels[1]!.height, 20);
       expect(repository.saveCallCount, 0);
     });
   });

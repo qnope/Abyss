@@ -21,7 +21,7 @@ class GameAdapter extends TypeAdapter<Game> {
       players: (fields[0] as Map).cast<String, Player>(),
       turn: fields[2] as int,
       createdAt: fields[3] as DateTime?,
-      gameMap: fields[4] as GameMap?,
+      levels: (fields[4] as Map).cast<int, GameMap>(),
     );
   }
 
@@ -38,7 +38,7 @@ class GameAdapter extends TypeAdapter<Game> {
       ..writeByte(3)
       ..write(obj.createdAt)
       ..writeByte(4)
-      ..write(obj.gameMap);
+      ..write(obj.levels);
   }
 
   @override

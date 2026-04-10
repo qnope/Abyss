@@ -23,7 +23,7 @@ class ExploreAction extends Action {
 
   @override
   ActionResult validate(Game game, Player player) {
-    if (game.gameMap == null) {
+    if (game.levels[1] == null) {
       return const ActionResult.failure('Carte non générée');
     }
 
@@ -33,7 +33,7 @@ class ExploreAction extends Action {
     }
 
     if (!CellEligibilityChecker.isEligible(
-      game.gameMap!,
+      game.levels[1]!,
       player,
       targetX,
       targetY,

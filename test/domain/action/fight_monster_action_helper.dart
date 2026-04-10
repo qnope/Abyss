@@ -79,13 +79,13 @@ Player buildFightTestPlayer({
   final Game game = Game(
     humanPlayerId: player.id,
     players: {player.id: player},
-    gameMap: buildFightTestMap(
+    levels: {1: buildFightTestMap(
       difficulty: difficulty,
       unitCount: unitCount,
       collectedBy: collectedBy,
       withLair: withLair,
       content: content,
-    ),
+    )},
   );
   return (game: game, player: player);
 }

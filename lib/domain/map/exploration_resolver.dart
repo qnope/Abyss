@@ -6,9 +6,9 @@ import 'reveal_area_calculator.dart';
 
 class ExplorationResolver {
   static List<ExplorationResult> resolve(Game game) {
-    if (game.gameMap == null) return [];
+    if (game.levels[1] == null) return [];
 
-    final map = game.gameMap!;
+    final map = game.levels[1]!;
     final results = <ExplorationResult>[];
 
     for (final player in game.players.values) {

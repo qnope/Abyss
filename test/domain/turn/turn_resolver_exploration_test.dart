@@ -33,7 +33,9 @@ Game _game({
     branch: TechBranch.explorer,
     researchLevel: explorerLevel,
   );
-  return Game.singlePlayer(player)..gameMap = gameMap;
+  final game = Game.singlePlayer(player);
+  if (gameMap != null) game.levels = {1: gameMap};
+  return game;
 }
 
 void main() {

@@ -93,6 +93,6 @@ Game buildFightPersistenceGame() {
   return Game(
     humanPlayerId: player.id,
     players: {player.id: player},
-    gameMap: buildFightPersistenceMap(),
+    levels: {1: buildFightPersistenceMap()},
   );
 }

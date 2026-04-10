@@ -32,7 +32,7 @@ void main() {
         mapWidth: gen.map.width,
         mapHeight: gen.map.height,
       );
-      return Game.singlePlayer(player)..gameMap = gen.map;
+      return Game.singlePlayer(player)..levels = {1: gen.map};
     }
 
     setUp(() {
@@ -167,7 +167,7 @@ void main() {
             for (var x = 0; x < mapSize; x++) GridPosition(x: x, y: y),
         ]},
       ))
-        ..gameMap = lairMap;
+        ..levels = {1: lairMap};
       lairGame.humanPlayer.unitsOnLevel(1)[UnitType.scout]!.count = 3;
 
       await tester.pumpWidget(createApp(lairGame));

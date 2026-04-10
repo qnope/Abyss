@@ -107,7 +107,7 @@ void main() {
       // does not receive the military research level. Rebuilding the list
       // from the same lair must yield monsters with raw stats.
       final MonsterLair lair =
-          scenario.game.gameMap!.cellAt(1, 1).lair!;
+          scenario.game.levels[1]!.cellAt(1, 1).lair!;
       final List<Combatant> monsterCombatants =
           CombatantBuilder.monsterCombatantsFrom(lair);
       final int monsterBaseAtk = MonsterUnitStats.forLevel(1).atk;

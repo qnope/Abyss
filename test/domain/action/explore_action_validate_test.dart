@@ -24,7 +24,7 @@ void main() {
 
     test('fails with no map', () {
       final scenario = createExploreScenario();
-      scenario.game.gameMap = null;
+      scenario.game.levels = {};
       final action = ExploreAction(targetX: 2, targetY: 2);
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);

@@ -37,7 +37,7 @@ void main() {
 
       expect(result.victory, isTrue);
 
-      final cell = scenario.game.gameMap!.cellAt(1, 1);
+      final cell = scenario.game.levels[1]!.cellAt(1, 1);
       expect(cell.isCollected, isTrue);
       expect(cell.collectedBy, scenario.player.id);
       expect(cell.lair, isNotNull,
@@ -78,7 +78,7 @@ void main() {
 
       expect(result.victory, isFalse);
 
-      final cell = scenario.game.gameMap!.cellAt(1, 1);
+      final cell = scenario.game.levels[1]!.cellAt(1, 1);
       expect(cell.isCollected, isFalse);
       expect(cell.collectedBy, isNull);
 

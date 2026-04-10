@@ -36,7 +36,7 @@ void main() {
           newLevel: 2,
         ),
       );
-      game = Game.singlePlayer(player)..gameMap = gen.map;
+      game = Game.singlePlayer(player)..levels = {1: gen.map};
       repository = FakeGameRepository();
     });
 

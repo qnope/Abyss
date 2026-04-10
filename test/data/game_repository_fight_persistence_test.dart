@@ -65,7 +65,7 @@ void main() {
 
     expect(reloaded, hasLength(1));
     final Game loaded = reloaded.first;
-    final MapCell loadedCell = loaded.gameMap!.cellAt(1, 1);
+    final MapCell loadedCell = loaded.levels[1]!.cellAt(1, 1);
     expect(loadedCell.isCollected, isTrue);
     expect(loadedCell.collectedBy, player.id);
     expect(loadedCell.content, CellContentType.monsterLair);

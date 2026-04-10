@@ -33,7 +33,7 @@ Game _game({
     branch: TechBranch.explorer,
     researchLevel: explorerLevel,
   );
-  return Game.singlePlayer(player)..gameMap = gameMap;
+  return Game.singlePlayer(player)..levels = {1: gameMap};
 }
 
 void main() {

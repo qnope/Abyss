@@ -59,7 +59,7 @@ List<GridPosition> _initialRevealedCells(int baseX, int baseY) {
   final game = Game(
     humanPlayerId: player.id,
     players: {player.id: player},
-    gameMap: gameMap ?? buildExploreTestMap(),
+    levels: {1: gameMap ?? buildExploreTestMap()},
   );
   return (game: game, player: player);
 }

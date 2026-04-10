@@ -25,12 +25,8 @@ import '../menu/main_menu_screen.dart';
 class GameScreen extends StatefulWidget {
   final Game game;
   final GameRepository repository;
-
   const GameScreen({
-    super.key,
-    required this.game,
-    required this.repository,
-  });
+    super.key, required this.game, required this.repository});
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -38,15 +34,20 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   int _currentTab = 0;
-
+  int _currentLevel = 1;
   Player get _human => widget.game.humanPlayer;
+  Set<int> get _unlockedLevels => widget.game.levels.keys.toSet();
+
+  void _selectLevel(int level) {
+    if (widget.game.levels.containsKey(level)) {
+      setState(() => _currentLevel = level);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final production = ProductionCalculator.fromBuildings(
-      _human.buildings,
-      techBranches: _human.techBranches,
-    );
+      _human.buildings, techBranches: _human.techBranches);
     final consumption = computeConsumption(_human);
     return Scaffold(
       body: Column(
@@ -80,13 +81,21 @@ class _GameScreenState extends State<GameScreen> {
           context, g, b, () => setState(() {})),
       ),
       1 => buildMapTab(
-        context, g, widget.repository, () => setState(() {})),
+        context,
+        g,
+        widget.repository,
+        currentLevel: _currentLevel,
+        unlockedLevels: _unlockedLevels,
+        onLevelSelected: _selectLevel,
+        onChanged: () => setState(() {}),
+      ),
       2 => ArmyListView(
-        units: human.unitsOnLevel(1),
+        units: human.unitsOnLevel(_currentLevel),
         barracksLevel: human.buildings[BuildingType.barracks]!.level,
         buildings: human.buildings,
         onUnitTap: (t) => showUnitDetailAction(
-          context, g, t, () => setState(() {})),
+          context, g, t, () => setState(() {}),
+          level: _currentLevel),
       ),
       3 => TechTreeView(
         techBranches: human.techBranches,
@@ -104,24 +113,19 @@ class _GameScreenState extends State<GameScreen> {
   Future<void> _nextTurn() async {
     final human = _human;
     final production = ProductionCalculator.fromBuildings(
-      human.buildings,
-      techBranches: human.techBranches,
-    );
+      human.buildings, techBranches: human.techBranches);
     final consumption = computeConsumption(human);
     final deactivated = computeBuildingsToDeactivate(human, production);
-    final unitsToLose = computeUnitsToLose(human, deactivated);
-    final confirmed = await showTurnConfirmationDialog(
-      context,
+    final confirmed = await showTurnConfirmationDialog(context,
       currentTurn: widget.game.turn,
-      production: production,
-      consumption: consumption,
+      production: production, consumption: consumption,
       buildingsToDeactivate: deactivated,
-      unitsToLose: unitsToLose,
-      pendingExplorationCount: human.pendingExplorations.length,
-    );
+      unitsToLose: computeUnitsToLose(human, deactivated),
+      pendingExplorationCount: human.pendingExplorations.length);
     if (!confirmed || !mounted) return;
-    final result = (ActionExecutor().execute(EndTurnAction(), widget.game,
-        _human) as EndTurnActionResult).turnResult!;
+    final result = (ActionExecutor().execute(
+      EndTurnAction(), widget.game, _human) as EndTurnActionResult)
+        .turnResult!;
     await widget.repository.save(widget.game);
     setState(() {});
     if (mounted) await showTurnSummaryDialog(context, result: result);
@@ -131,21 +135,16 @@ class _GameScreenState extends State<GameScreen> {
     final result = await showSettingsDialog(context);
     if (!mounted) return;
     switch (result) {
-      case SettingsDialogResult.cancel:
-        return;
+      case SettingsDialogResult.cancel: return;
       case SettingsDialogResult.openHistory:
         await showHistorySheet(context, player: _human);
-        return;
       case SettingsDialogResult.saveAndQuit:
         await widget.repository.save(widget.game);
         if (!mounted) return;
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute<void>(
-            builder: (_) => MainMenuScreen(repository: widget.repository),
-          ),
-          (_) => false,
-        );
-        return;
+            builder: (_) => MainMenuScreen(repository: widget.repository)),
+          (_) => false);
     }
   }
 }

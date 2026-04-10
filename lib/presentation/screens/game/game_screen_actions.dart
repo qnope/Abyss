@@ -37,13 +37,14 @@ void showUnitDetailAction(
   BuildContext context,
   Game game,
   UnitType unitType,
-  VoidCallback onChanged,
-) {
+  VoidCallback onChanged, {
+  int level = 1,
+}) {
   final human = game.humanPlayer;
   final calculator = UnitCostCalculator();
   final barracksLevel = human.buildings[BuildingType.barracks]!.level;
   final isUnlocked = calculator.isUnlocked(unitType, barracksLevel);
-  final count = human.unitsOnLevel(1)[unitType]?.count ?? 0;
+  final count = human.unitsOnLevel(level)[unitType]?.count ?? 0;
   final hasRecruitedThisType = human.recruitedUnitTypes.contains(unitType);
   showUnitDetailSheet(
     context,

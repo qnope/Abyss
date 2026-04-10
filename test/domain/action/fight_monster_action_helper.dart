@@ -51,7 +51,7 @@ Player buildFightTestPlayer({
     baseY: 2,
   );
   for (final MapEntry<UnitType, int> entry in stock.entries) {
-    player.units[entry.key]!.count = entry.value;
+    player.unitsOnLevel(1)[entry.key]!.count = entry.value;
   }
   if (militaryResearchLevel > 0) {
     final TechBranchState mil = player.techBranches[TechBranch.military]!;

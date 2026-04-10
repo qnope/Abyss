@@ -27,7 +27,7 @@ class ExploreAction extends Action {
       return const ActionResult.failure('Carte non générée');
     }
 
-    final scoutCount = player.units[UnitType.scout]?.count ?? 0;
+    final scoutCount = player.unitsOnLevel(1)[UnitType.scout]?.count ?? 0;
     if (scoutCount <= 0) {
       return const ActionResult.failure('Aucun éclaireur disponible');
     }
@@ -49,7 +49,7 @@ class ExploreAction extends Action {
     final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
-    player.units[UnitType.scout]!.count -= 1;
+    player.unitsOnLevel(1)[UnitType.scout]!.count -= 1;
 
     player.pendingExplorations.add(
       ExplorationOrder(target: GridPosition(x: targetX, y: targetY)),

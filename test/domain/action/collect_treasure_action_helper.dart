@@ -43,7 +43,7 @@ Player buildCollectTestPlayer({String id = 'test-uuid'}) {
     name: 'Test',
     baseX: 2,
     baseY: 2,
-    revealedCellsList: revealed,
+    revealedCellsPerLevel: {1: revealed},
   );
 }
 

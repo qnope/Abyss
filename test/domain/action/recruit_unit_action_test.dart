@@ -102,7 +102,7 @@ void main() {
         final s = _createScenario();
         RecruitUnitAction(unitType: UnitType.scout, quantity: 3)
             .execute(s.game, s.player);
-        expect(s.player.units[UnitType.scout]!.count, 3);
+        expect(s.player.unitsOnLevel(1)[UnitType.scout]!.count, 3);
       });
 
       test('marks recruited', () {
@@ -142,7 +142,7 @@ void main() {
             RecruitUnitAction(unitType: UnitType.scout, quantity: 2);
         final result = ActionExecutor().execute(action, s.game, s.player);
         expect(result.isSuccess, isTrue);
-        expect(s.player.units[UnitType.scout]!.count, 2);
+        expect(s.player.unitsOnLevel(1)[UnitType.scout]!.count, 2);
       });
     });
   });

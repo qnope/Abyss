@@ -19,14 +19,14 @@ void main() {
         unitCount: 4,
         stock: {UnitType.harpoonist: 20},
       );
-      scenario.player.addRevealedCell(GridPosition(x: 1, y: 1));
+      scenario.player.addRevealedCell(1, GridPosition(x: 1, y: 1));
 
       final Map<ResourceType, int> before = <ResourceType, int>{
         for (final entry in scenario.player.resources.entries)
           entry.key: entry.value.amount,
       };
       final int initialHarpoonists =
-          scenario.player.units[UnitType.harpoonist]!.count;
+          scenario.player.unitsOnLevel(1)[UnitType.harpoonist]!.count;
 
       final result = FightMonsterAction(
         targetX: 1,
@@ -51,7 +51,7 @@ void main() {
 
       final int dead = result.dead[UnitType.harpoonist] ?? 0;
       final int finalStock =
-          scenario.player.units[UnitType.harpoonist]!.count;
+          scenario.player.unitsOnLevel(1)[UnitType.harpoonist]!.count;
       expect(finalStock, initialHarpoonists - dead);
     });
 
@@ -62,7 +62,7 @@ void main() {
         unitCount: 150,
         stock: {UnitType.saboteur: 1},
       );
-      scenario.player.addRevealedCell(GridPosition(x: 1, y: 1));
+      scenario.player.addRevealedCell(1, GridPosition(x: 1, y: 1));
 
       final Map<ResourceType, int> before = <ResourceType, int>{
         for (final entry in scenario.player.resources.entries)
@@ -92,7 +92,7 @@ void main() {
 
       // Final stock = initial - dead (US-04: survivors + wounded return).
       final int finalStock =
-          scenario.player.units[UnitType.saboteur]!.count;
+          scenario.player.unitsOnLevel(1)[UnitType.saboteur]!.count;
       final int dead = result.dead[UnitType.saboteur] ?? 0;
       expect(finalStock, 1 - dead,
           reason: 'Only dead saboteurs should be removed from stock');
@@ -105,10 +105,10 @@ void main() {
         unitCount: 6,
         stock: {UnitType.harpoonist: 8},
       );
-      scenario.player.addRevealedCell(GridPosition(x: 1, y: 1));
+      scenario.player.addRevealedCell(1, GridPosition(x: 1, y: 1));
 
       final int initialStock =
-          scenario.player.units[UnitType.harpoonist]!.count;
+          scenario.player.unitsOnLevel(1)[UnitType.harpoonist]!.count;
 
       final result = FightMonsterAction(
         targetX: 1,
@@ -132,7 +132,7 @@ void main() {
 
       // US-04 invariant: final stock == initial - dead.
       final int finalStock =
-          scenario.player.units[UnitType.harpoonist]!.count;
+          scenario.player.unitsOnLevel(1)[UnitType.harpoonist]!.count;
       expect(finalStock, initialStock - dead);
     });
   });

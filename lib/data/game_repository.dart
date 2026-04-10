@@ -67,6 +67,9 @@ class GameRepository {
     Hive.registerAdapter(TransitionBaseTypeAdapter());
     Hive.registerAdapter(TransitionBaseAdapter());
     Hive.registerAdapter(ReinforcementOrderAdapter());
+    Hive.registerAdapter(CaptureEntryAdapter());
+    Hive.registerAdapter(DescentEntryAdapter());
+    Hive.registerAdapter(ReinforcementEntryAdapter());
     try {
       await Hive.openBox<Game>(_boxName);
     } catch (_) {

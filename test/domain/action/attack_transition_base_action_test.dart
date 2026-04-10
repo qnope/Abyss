@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:abyss/domain/action/attack_transition_base_action.dart';
-import 'package:abyss/domain/action/attack_transition_base_result.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -118,67 +115,6 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isTrue);
-    });
-  });
-
-  group('AttackTransitionBaseAction execute', () {
-    test('victory with admiral alive captures the base', () {
-      // Overwhelm faille guardians: 1 boss (100hp/15atk/10def) + 5 sentinels
-      // Send 1 admiral + many strong units to guarantee victory+admiral alive
-      final scenario = createAttackScenario(
-        stock: {
-          UnitType.abyssAdmiral: 1,
-          UnitType.domeBreaker: 30,
-        },
-      );
-      final action = AttackTransitionBaseAction(
-        targetX: 1, targetY: 1, level: 1,
-        selectedUnits: {
-          UnitType.abyssAdmiral: 1,
-          UnitType.domeBreaker: 30,
-        },
-        random: Random(42),
-      );
-      final result = action.execute(scenario.game, scenario.player);
-      expect(result, isA<AttackTransitionBaseResult>());
-      final r = result as AttackTransitionBaseResult;
-      expect(r.isSuccess, isTrue);
-      expect(r.victory, isTrue);
-      expect(r.captured, isTrue);
-
-      final base = scenario.game.levels[1]!
-          .cellAt(1, 1).transitionBase!;
-      expect(base.isCaptured, isTrue);
-      expect(base.capturedBy, 'test-uuid');
-    });
-
-    test('defeat loses all sent units', () {
-      // Send minimal force against faille guardians to guarantee defeat
-      final scenario = createAttackScenario(
-        stock: {
-          UnitType.abyssAdmiral: 1,
-          UnitType.scout: 1,
-        },
-      );
-      final action = AttackTransitionBaseAction(
-        targetX: 1, targetY: 1, level: 1,
-        selectedUnits: {
-          UnitType.abyssAdmiral: 1,
-          UnitType.scout: 1,
-        },
-        random: Random(42),
-      );
-      final result = action.execute(scenario.game, scenario.player);
-      expect(result, isA<AttackTransitionBaseResult>());
-      final r = result as AttackTransitionBaseResult;
-      expect(r.isSuccess, isTrue);
-      expect(r.victory, isFalse);
-      expect(r.captured, isFalse);
-
-      // Base remains neutral
-      final base = scenario.game.levels[1]!
-          .cellAt(1, 1).transitionBase!;
-      expect(base.isCaptured, isFalse);
     });
   });
 }

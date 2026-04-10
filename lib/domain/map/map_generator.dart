@@ -4,13 +4,14 @@ import 'content_placer.dart';
 import 'game_map.dart';
 import 'map_generation_result.dart';
 import 'terrain_generator.dart';
+import 'transition_base_placer.dart';
 
 class MapGenerator {
   static const _size = 20;
   static const _center = 10;
   static const _offset = 2;
 
-  static MapGenerationResult generate({int? seed}) {
+  static MapGenerationResult generate({int? seed, int level = 1}) {
     final actualSeed = seed ?? Random().nextInt(0x7FFFFFFF);
     final random = Random(actualSeed);
 
@@ -31,6 +32,16 @@ class MapGenerator {
       height: _size,
       baseX: baseX,
       baseY: baseY,
+      random: random,
+    );
+
+    TransitionBasePlacer.place(
+      cells: cells,
+      width: _size,
+      height: _size,
+      baseX: baseX,
+      baseY: baseY,
+      level: level,
       random: random,
     );
 

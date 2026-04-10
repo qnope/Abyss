@@ -1,6 +1,25 @@
-# Bases de Transition — Les Failles Abyssales
+# Progression Verticale — Les Failles Abyssales
 
-## 1. Lore
+> **Etape PRD** : 11 — Progression verticale
+> **Dependances** : Etape 6 (Technologies), Etape 7 (Factions IA)
+> **Objectif** : Etendre le monde en niveaux de profondeur successifs, relies par des points de passage gardes. Le joueur progresse vers le Noyau en capturant ces passages.
+
+---
+
+## 1. Hypotheses
+
+Ce document presuppose que les systemes suivants sont deja implementes :
+
+- **Factions IA** (Etape 7) : plusieurs factions IA hostiles peuplent la carte et agissent de facon autonome.
+- **Combat standard** : le `FightEngine` resout un combat en un seul appel (pas de combat multi-tours).
+- **Technologies** : la branche `military` supporte 5 niveaux de recherche.
+- **QG** : le QG peut atteindre le niveau 10 (suffisant pour les prerequis 7 et 9).
+- **Ressources** : les 4 ressources (Corail, Minerai, Energie, Perles) existent avec un stock global unique.
+- **Unites** : Eclaireur, Harponneur, Gardien, Briseur de Dome et Siphonneur existent.
+
+---
+
+## 2. Lore
 
 ### Qu'est-ce qu'une Faille Abyssale ?
 
@@ -11,46 +30,45 @@ Les **Failles Abyssales** sont des formations geologiques naturelles — des gou
 | Passage | Nom | Description |
 |---------|-----|-------------|
 | Niveau 1 → 2 | **Faille Abyssale** | Crevasse sombre dans le fond corallien, entouree de recifs brises. Des courants descendants violents aspirent tout vers les profondeurs. La bioluminescence des creatures gardiennes eclaire l'entree d'une lueur inquietante. Les parois sont couvertes de cristaux mineraux et de concretions anciennes. |
-| Niveau 2 → 3 | **Cheminee du Noyau** | Cheminee volcanique massive crachant de la fumee noire. La temperature augmente, le sol vibre. Des creatures de lave et de roche gardent l'acces. L'environnement est hostile — pression extreme, courants thermiques, visibilite quasi nulle sauf par la lueur volcanique. |
+| Niveau 2 → 3 | **Cheminee du Noyau** | Cheminee volcanique massive crachant de la fumee noire. La temperature augmente, le sol vibre. Des creatures de lave et de roche gardent l'acces. Pression extreme, courants thermiques, visibilite quasi nulle sauf par la lueur volcanique. |
 
 ### Pourquoi sont-elles gardees ?
 
-Les creatures des profondeurs remontent naturellement par ces failles pour chasser dans les eaux superieures. Des especes puissantes s'y sont installees comme **predateurs apex**, controlant le flux entre les niveaux. La faille est leur territoire — et quiconque veut descendre doit d'abord les vaincre.
+Les creatures des profondeurs remontent naturellement par ces failles pour chasser dans les eaux superieures. Des especes puissantes s'y sont installees comme predateurs dominants, controlant le flux entre les niveaux. La faille est leur territoire — et quiconque veut descendre doit d'abord les vaincre.
 
 ---
 
-## 2. Placement sur la carte
+## 3. Placement sur la carte
 
 ### Niveau 1 (Surface) — Failles Abyssales
 
-- **Nombre** : 1 par alliance presente sur la carte
-- **Placement** : Reparties sur les bords exterieurs de la carte (distance > 8 cases du centre)
-- **Espacement** : Minimum 5 cases entre deux failles
-- **Visibilite** : Cachees par le fog of war, decouvertes par exploration
-- **Terrain adjacent** : Les 4 cases cardinales adjacentes a la faille sont du terrain "Fault" (faille, -3 PV si traverse) — signalant une zone dangereuse au joueur
-- **Contenu de la case** : Nouveau type `CellContentType.transitionBase`
+- **Nombre** : proportionnel a la taille de la carte — 1 faille par quadrant 10x10. Sur la carte 20x20 actuelle : **4 failles**
+- **Placement** : reparties sur les bords exterieurs de la carte (distance > 8 cases du centre), une par quadrant
+- **Espacement** : minimum 5 cases entre deux failles
+- **Visibilite** : cachees par le fog of war, decouvertes par exploration
+- **Terrain adjacent** : les 4 cases cardinales adjacentes a la faille sont du terrain "Fault" (-3 PV si traverse) — signalant une zone dangereuse au joueur
+- **Contenu de la case** : nouveau type `CellContentType.transitionBase`
 
 ### Niveau 2 (Profondeurs) — Cheminees du Noyau
 
-- **Nombre** : 1 pour 2 alliances (arrondi au superieur). Exemple : 5 alliances au niveau 2 = 3 cheminees
-- **Placement** : Meme logique mais encore plus eloignees (distance > 10 du centre)
-- **Consequence strategique** : 2 alliances se disputent chaque cheminee — capturer une cheminee bloque l'autre alliance, creant une competition directe pour l'acces au Noyau
+- **Nombre** : **3 cheminees** (nombre fixe)
+- **Placement** : meme logique de bord de carte mais encore plus eloignees (distance > 10 du centre)
+- **Espacement** : minimum 5 cases entre deux cheminees
 
 ---
 
-## 3. Decouverte
+## 4. Decouverte
 
 1. Le joueur explore la carte normalement avec des Eclaireurs
 2. Quand une faille est revelee, un **marqueur special** apparait sur la carte (icone de gouffre avec lueur pulsante)
 3. **Informations affichees a la decouverte** :
    - Nom de la faille (genere : ex. "Faille de l'Ombre Profonde", "Cheminee du Serpent Noir")
-   - Difficulte estimee des gardiens
-   - Statut : non capturee / capturee par [faction/alliance]
-4. Les failles sont attribuees aux alliances lors de la generation de la carte, mais cette attribution est invisible — c'est uniquement pour guider le comportement de l'IA
+   - Difficulte estimee : **statique par niveau** (Faille Abyssale : difficulte 4/5, Cheminee du Noyau : difficulte 5/5)
+   - Statut : neutre / capturee par le joueur / capturee par [faction IA]
 
 ---
 
-## 4. Prerequis pour l'assaut
+## 5. Prerequis pour l'assaut
 
 Avant de pouvoir attaquer une faille, le joueur doit remplir des conditions :
 
@@ -60,7 +78,7 @@ Avant de pouvoir attaquer une faille, le joueur doit remplir des conditions :
 |-----------|--------|
 | QG | Niveau 7+ |
 | Tech Militaire | Niveau 3+ |
-| Batiment special | "Module de descente" construit dans la base |
+| Batiment special | "Module de descente" construit dans la base principale |
 
 **Cout du Module de descente :**
 
@@ -77,7 +95,7 @@ Avant de pouvoir attaquer une faille, le joueur doit remplir des conditions :
 |-----------|--------|
 | QG | Niveau 9+ |
 | Tech Militaire | Niveau 5 |
-| Batiment special | "Capsule de pression" construite dans la base |
+| Batiment special | "Capsule de pression" construite dans la base principale |
 
 **Cout de la Capsule de pression :**
 
@@ -92,53 +110,60 @@ Avant de pouvoir attaquer une faille, le joueur doit remplir des conditions :
 
 ---
 
-## 5. Assaut initial — Combat de boss
+## 6. Assaut initial — Combat de boss
+
+### Definition mecanique du boss
+
+Les gardiens de faille utilisent le systeme de combat standard avec deux specificites :
+
+- **Flag `isBoss`** : les creatures marquees `isBoss` sont les gardiens principaux de la faille.
+- **Bonus de siege** : le Briseur de Dome inflige **x2 degats** contre les unites `isBoss`.
 
 ### Gardiens de la Faille Abyssale (Niveau 1 → 2)
 
 **"Leviathan des Abysses"** — 1 boss + escorte
 
-| Creature | PV | ATK | DEF | Nombre |
-|----------|----|-----|-----|--------|
-| Leviathan | 100 | 15 | 10 | 1 |
-| Sentinelle abyssale | 30 | 8 | 5 | 5 |
+| Creature | PV | ATK | DEF | Nombre | isBoss |
+|----------|----|-----|-----|--------|--------|
+| Leviathan | 100 | 15 | 10 | 1 | oui |
+| Sentinelle abyssale | 30 | 8 | 5 | 5 | non |
 
 ### Gardiens de la Cheminee du Noyau (Niveau 2 → 3)
 
 **"Titan Volcanique"** — 1 boss + escorte renforcee
 
-| Creature | PV | ATK | DEF | Nombre |
-|----------|----|-----|-----|--------|
-| Titan Volcanique | 200 | 25 | 15 | 1 |
-| Golem de magma | 50 | 12 | 8 | 8 |
+| Creature | PV | ATK | DEF | Nombre | isBoss |
+|----------|----|-----|-----|--------|--------|
+| Titan Volcanique | 200 | 25 | 15 | 1 | oui |
+| Golem de magma | 50 | 12 | 8 | 8 | non |
 
 ### Deroulement du combat
 
-1. Le joueur selectionne les unites a envoyer
-2. Le combat utilise le systeme de combat standard
+1. Le joueur selectionne les unites a envoyer (au moins **1 Siphonneur** obligatoire)
+2. Le combat utilise le systeme de combat standard (avec bonus x2 du Briseur de Dome contre `isBoss`)
 3. **Chaine d'assaut recommandee** :
    - **Eclaireur** : reperage (bonus de precision pour le groupe)
-   - **Briseur de Dome** : bonus de degats de siege contre le boss
+   - **Briseur de Dome** : degats de siege x2 contre le boss
    - **Harponneurs** : degats principaux
    - **Gardiens** : absorbent les degats du boss
    - **Siphonneur** : capture la faille une fois les gardiens vaincus
 
-### En cas d'echec
-
-- L'armee envoyee est **perdue** (unites detruites)
-- Les gardiens **regenerent 50% de leurs PV** chaque tour
-- Le joueur doit recruter une nouvelle armee et retenter
-
 ### Capture
 
 - Une fois les gardiens vaincus, le **Siphonneur** capture la faille
-- **Au moins 1 Siphonneur** doit faire partie de l'armee d'assaut
+- Si tous les Siphonneurs sont morts pendant le combat : le combat est **gagne** mais la **capture echoue**. Le joueur doit relancer un assaut avec au moins 1 Siphonneur vivant (les gardiens sont vaincus, pas de nouveau combat necessaire)
 - La faille passe sous controle du joueur
 - Evenement narratif : *"Les creatures se dispersent dans les profondeurs... La faille est a vous. Un gouffre sans fond s'ouvre devant vos forces. Les profondeurs vous attendent."*
 
+### En cas d'echec
+
+- L'armee envoyee est **perdue** (unites detruites)
+- Les gardiens **se reforment a pleine sante** a la tentative suivante
+- Le joueur doit recruter une nouvelle armee et retenter
+
 ---
 
-## 6. Defense de la faille capturee
+## 7. Defense de la faille capturee
 
 ### Garnison
 
@@ -183,18 +208,20 @@ Trois batiments constructibles **uniquement dans les failles capturees** :
 |--------|----------------|------|----------------|
 | 1 | 1 tour | 40 Corail, 30 Minerai, 50 Energie | 5 Energie |
 | 2 | 2 tours | 80 Corail, 60 Minerai, 100 Energie | 10 Energie |
+| 3 | 3 tours | 160 Corail, 120 Minerai, 200 Energie | 15 Energie |
 
-**Regles des batiments defensifs :**
+### Regles des batiments defensifs
 
 - Construction : 1 tour par niveau
 - Limite : 1 de chaque type par faille (maximum 3 batiments)
 - L'entretien en Energie est preleve depuis le stock global du joueur
+- **Si l'energie globale est insuffisante** : les batiments defensifs sont **desactives** (pas detruits) tant que l'energie manque. Ils se reactivent automatiquement quand l'energie redevient suffisante
 
 ---
 
-## 7. Contre-attaques IA
+## 8. Contre-attaques IA
 
-Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles capturees.
+Les factions IA hostiles peuvent attaquer les failles capturees par le joueur.
 
 ### Probabilite
 
@@ -207,25 +234,25 @@ Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles 
 
 ### Deroulement
 
-1. **Detection (si Sonar)** : Le joueur est prevenu X tours a l'avance → notification dans le resume de tour : *"Le sonar detecte un mouvement hostile vers la Faille de l'Ombre Profonde. Attaque estimee dans X tours."*
-2. **Attaque** : L'armee IA attaque la faille
+1. **Detection (si Sonar actif)** : le joueur est prevenu X tours a l'avance. Notification dans le resume de tour : *"Le sonar detecte un mouvement hostile vers la Faille de l'Ombre Profonde. Attaque estimee dans X tours."*
+2. **Attaque** : l'armee IA attaque la faille
 3. **Resolution** :
    - La tourelle inflige ses degats pre-combat
    - Le bouclier absorbe les premiers degats
    - Combat garnison (+50% DEF) vs armee IA
 4. **Resultat** :
-   - **Victoire defenseur** : L'armee IA est detruite, la faille reste au joueur
-   - **Victoire attaquant** : La garnison est detruite, les batiments defensifs sont detruits, la faille redevient **neutre** (sans gardiens boss)
+   - **Victoire defenseur** : l'armee IA est detruite, la faille reste au joueur
+   - **Victoire attaquant** : la garnison est detruite, les batiments defensifs sont **endommages** (ramenes au niveau 1 ; detruits si deja au niveau 1), la faille redevient **neutre** (sans gardiens boss)
 
 ### Recapture apres perte
 
 - Pas besoin de combattre un boss (les gardiens naturels ne reviennent pas)
 - Le joueur doit envoyer un **Siphonneur** pour recapturer
-- Si une faction IA a capture la faille, le joueur doit d'abord vaincre la garnison IA
+- Si une faction IA a capture la faille entre-temps, le joueur doit d'abord vaincre la garnison IA
 
 ---
 
-## 8. Transition vers le niveau suivant
+## 9. Transition vers le niveau suivant
 
 ### Conditions pour descendre
 
@@ -245,21 +272,31 @@ Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles 
 1. Le joueur appuie sur **"Descendre"** depuis l'interface de la faille
 2. Il selectionne les unites a emmener (dans la limite de capacite)
 3. Animation de descente
-4. **Nouveau niveau** : Une nouvelle grille 20x20 est generee, entierement en fog of war
+4. **Nouveau niveau** : une nouvelle grille 20x20 est generee, entierement en fog of war
 5. Le joueur demarre au **point d'arrivee** de la faille (position fixee lors de la generation)
 6. Les unites selectionnees sont disponibles immediatement
-7. **Pas de base au depart** : Le joueur doit capturer une base IA ou construire un avant-poste
+
+### Station d'arrivee
+
+Au point d'arrivee, un emplacement de **Station d'arrivee** est present (niveau 0 = non construite). Le joueur doit la construire pour securiser sa position :
+
+- **Batiment unique** de type `transitionStation`, constructible uniquement au point d'arrivee
+- **Entretien energetique tres eleve** (preleve sur le stock global partage)
+- **Garnison** : la Station peut recevoir des unites en defense
+- **Si non construite** : le point d'arrivee reste vulnerable et le joueur n'a aucune defense
+
+> *Les couts exacts et l'entretien energetique de la Station d'arrivee seront definis lors de la phase d'equilibrage (Etape 13).*
 
 ### Gestion multi-niveaux
 
 - Le joueur **conserve sa base** au niveau precedent (production continue)
 - Les **ressources sont partagees** entre tous les niveaux (stock unique global)
 - Le recrutement se fait depuis la base principale et les unites sont envoyees via la faille
-- **Transport inter-niveaux** : Possible via les failles controlees, prend 1 tour, limite par la capacite du batiment
+- **Transport inter-niveaux** : possible via les failles controlees, prend 1 tour, limite par la capacite du batiment
 
 ---
 
-## 9. Articulation a l'ecran (UI/UX)
+## 10. Articulation a l'ecran (UI/UX)
 
 ### Representation sur la carte
 
@@ -267,7 +304,7 @@ Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles 
 |------|-----------|
 | Non decouverte | Case fog of war normale |
 | Decouverte, non capturee | Icone de gouffre + lueur rouge pulsante + halo de danger |
-| Capturee par le joueur | Icone de gouffre + lueur cyan + badge alliance du joueur |
+| Capturee par le joueur | Icone de gouffre + lueur cyan |
 | Capturee par une faction IA | Icone de gouffre + lueur orange + badge faction |
 
 ### Bottom sheet — Faille non capturee
@@ -278,14 +315,14 @@ Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles 
 |     "Faille de l'Ombre Profonde"          |
 |                                           |
 |  Gardiens : Leviathan des Abysses         |
-|  Difficulte : ★★★★☆                       |
+|  Difficulte : 4/5                         |
 |                                           |
 |  Prerequis :                              |
-|  ✅ QG niveau 7                            |
-|  ✅ Tech Militaire niveau 3                |
-|  ❌ Module de descente (non construit)     |
+|  V QG niveau 7                            |
+|  V Tech Militaire niveau 3               |
+|  X Module de descente (non construit)     |
 |                                           |
-|  [ Lancer l'assaut ] (grise si ❌)         |
+|  [ Lancer l'assaut ] (grise si X)         |
 +-------------------------------------------+
 ```
 
@@ -295,15 +332,15 @@ Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles 
 +-------------------------------------------+
 |          [Icone gouffre cyan]              |
 |     "Faille de l'Ombre Profonde"          |
-|     Controlee par votre alliance          |
+|     Sous votre controle                   |
 |                                           |
 |  Garnison : 8/15 unites                   |
 |  Defenses :                               |
 |    Bouclier Niv 2 (100 degats)            |
 |    Tourelle Niv 1 (20 degats)             |
-|    Sonar Niv 1 (1 tour d'avance)          |
+|    Sonar Niv 2 (2 tours d'avance)         |
 |                                           |
-|  ⚠️ Attaque detectee dans 2 tours !        |
+|  ! Attaque detectee dans 2 tours          |
 |                                           |
 |  [ Gerer garnison ]                       |
 |  [ Construire defenses ]                  |
@@ -311,13 +348,13 @@ Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles 
 +-------------------------------------------+
 ```
 
-### Bottom sheet — Faille capturee (IA)
+### Bottom sheet — Faille capturee (faction IA)
 
 ```
 +-------------------------------------------+
 |          [Icone gouffre orange]            |
 |     "Faille du Recif Brise"               |
-|     Controlee par : Alliance du Nord      |
+|     Controlee par : Faction Abyssale      |
 |                                           |
 |  Garnison estimee : ~12 unites            |
 |  Defenses estimees : Bouclier + Tourelle  |
@@ -326,11 +363,27 @@ Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles 
 +-------------------------------------------+
 ```
 
+### Bottom sheet — Station d'arrivee (Niveau 2)
+
+```
++-------------------------------------------+
+|          [Icone station]                   |
+|     "Station d'arrivee"                   |
+|     Point de descente depuis Niveau 1     |
+|                                           |
+|  Niveau : 0 (non construite)              |
+|  Garnison : 0 unites                      |
+|  Entretien : -- Energie/tour              |
+|                                           |
+|  [ Construire la station ]                |
++-------------------------------------------+
+```
+
 ### Selecteur de niveau (en haut de l'onglet carte)
 
 ```
-[ Niv 1: Surface ]  [ 🔒 Niv 2: Profondeurs ]  [ 🔒 Niv 3: Noyau ]
-     (actif)             (grise)                    (grise)
+[ Niv 1: Surface ]  [ Niv 2: Profondeurs ]  [ Niv 3: Noyau ]
+     (actif)           (verrouille)           (verrouille)
 ```
 
 - Les niveaux non debloques sont grises avec un cadenas
@@ -348,12 +401,12 @@ Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles 
 |                                           |
 |  Selectionnez les unites a envoyer :      |
 |                                           |
-|  ☑ Eclaireurs      x5                    |
-|  ☑ Harponneurs     x8                    |
-|  ☐ Gardiens        x3                    |
-|  ☑ Siphonneurs     x2                    |
+|  [x] Eclaireurs      x5                  |
+|  [x] Harponneurs     x8                  |
+|  [x] Gardiens        x3                  |
+|  [x] Siphonneurs     x2                  |
 |                                           |
-|  Capacite : 15/20 unites                  |
+|  Capacite : 18/20 unites                  |
 |                                           |
 |      [ Annuler ]  [ Descendre ]           |
 +-------------------------------------------+
@@ -361,36 +414,45 @@ Les factions IA hostiles (hors alliance du joueur) peuvent attaquer les failles 
 
 ---
 
-## 10. Specificite Niveau 2 → Niveau 3 (competition)
+## 11. Specificite Niveau 2 vers Niveau 3 (rarete)
 
-Au niveau 2, chaque Cheminee du Noyau est partagee entre **2 alliances**. C'est le climax strategique du jeu.
+Au Niveau 2, les **3 Cheminees du Noyau** sont les seuls passages vers l'objectif final. Leur rarete en fait le point de tension strategique du jeu.
 
 ### Consequences
 
-- **Course a la capture** : La premiere alliance a vaincre les gardiens prend le controle
-- **Blocage** : L'alliance qui ne controle pas la cheminee ne peut pas descendre au Noyau
-- **Le joueur a 3 options** :
-  1. **Attaquer** la cheminee controlee par l'alliance rivale (guerre directe)
-  2. **Negocier** avec l'alliance en controle (diplomatie, si implementee)
-  3. **Eliminer** une autre alliance pour liberer une cheminee
+- **Rarete** : seulement 3 cheminees pour l'ensemble du Niveau 2 — le joueur et les factions IA se les disputent
+- **Course a la capture** : les factions IA peuvent tenter de capturer les cheminees pour bloquer le joueur
+- **Defense critique** : une cheminee capturee par le joueur doit etre fortement defendue, car les factions IA tenteront de la reprendre
 
 ### Tension narrative
 
-> *Au Niveau 1, chaque alliance avait sa propre porte vers les profondeurs. Ici, dans les tenebres ecrasantes du Niveau 2, les cheminees sont rares. Deux alliances se retrouvent face a face devant le meme passage vers le Noyau. L'une descendra. L'autre restera dans l'obscurite.*
+> *Au Niveau 1, les failles etaient nombreuses. Ici, dans les tenebres ecrasantes du Niveau 2, les cheminees sont rares. Trois passages seulement vers le Noyau. Le joueur et les factions rivales convergent vers les memes points. La descente vers le Noyau se merite.*
 
 ---
 
-## 11. Integration avec les systemes existants
+## 12. Integration avec les systemes existants
 
 | Systeme | Impact |
 |---------|--------|
-| **Generation de carte** | Nouveau `CellContentType.transitionBase` + placement en bordure de carte |
-| **Combat** | Reutilise le systeme de combat standard, boss = unites avec stats speciales |
-| **Batiments** | Nouveaux types : `descentModule`, `pressureCapsule`, `currentShield`, `harpoonTurret`, `detectionSonar` |
-| **Unites** | Siphonneur requis pour capture, chaine d'assaut complete utilisee |
-| **Technologies** | Prerequis branche Militaire pour attaquer |
-| **Ressources** | Couts de construction + entretien energie des defenses (stock partage multi-niveaux) |
-| **Resolution de tour** | Nouveau step : resolution des contre-attaques sur failles + transport inter-niveaux |
-| **Actions** | Nouvelles : `attackTransitionBase`, `manageGarrison`, `buildDefense`, `descend` |
+| **Generation de carte** | Nouveau `CellContentType.transitionBase`, nouveau `TerrainType.fault` (-3 PV), placement par quadrant en bordure |
+| **Combat** | Reutilise le systeme standard. Ajout du flag `isBoss` + multiplicateur x2 pour le Briseur de Dome contre `isBoss` |
+| **Batiments** | Nouveaux types : `descentModule`, `pressureCapsule`, `currentShield`, `harpoonTurret`, `detectionSonar`, `transitionStation` |
+| **Unites** | Siphonneur requis pour capture. Chaine d'assaut recommandee |
+| **Technologies** | Prerequis branche Militaire niveaux 3 et 5 |
+| **Ressources** | Couts de construction + entretien energie des defenses + entretien station (stock partage multi-niveaux) |
+| **Resolution de tour** | Nouveau step : resolution des contre-attaques sur failles + transport inter-niveaux + desactivation batiments si energie insuffisante |
+| **Actions** | Nouvelles : `attackTransitionBase`, `manageGarrison`, `buildDefense`, `descend`, `buildStation` |
 | **Factions IA** | L'IA decide d'attaquer les failles, gere ses propres garnisons et descentes |
-| **Persistence** | Nouveaux modeles Hive : TransitionBase, Garrison, failles par niveau |
+| **Persistence** | Nouveaux modeles Hive : TransitionBase, Garrison, TransitionStation, donnees par niveau |
+
+---
+
+## 13. Questions ouvertes
+
+Les points suivants restent a definir dans des documents dedies ou lors de la phase d'equilibrage :
+
+- **Contenu du Niveau 3 (Noyau)** : que trouve le joueur au Niveau 3 ? Objectif final ?
+- **Valeurs numeriques de la Station d'arrivee** : cout de construction, entretien energetique, capacite de garnison par niveau
+- **Mecanique de remontee** : le joueur peut-il renvoyer des unites du Niveau 2 vers le Niveau 1 via la faille ? (Le transport inter-niveaux le sous-entend, mais ce n'est pas explicite)
+- **Politique de destruction des defenses** : a valider — ramener au niveau 1 (actuel) vs destruction totale
+- **Equilibrage des contre-attaques** : frequence, composition et force des armees IA en fonction du tour et du niveau

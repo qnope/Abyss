@@ -24,10 +24,12 @@ class PlayerAdapter extends TypeAdapter<Player> {
       resources: (fields[4] as Map?)?.cast<ResourceType, Resource>(),
       buildings: (fields[5] as Map?)?.cast<BuildingType, Building>(),
       techBranches: (fields[6] as Map?)?.cast<TechBranch, TechBranchState>(),
-      units: (fields[7] as Map?)?.cast<UnitType, Unit>(),
+      unitsPerLevel: (fields[7] as Map?)?.map((dynamic k, dynamic v) =>
+          MapEntry(k as int, (v as Map).cast<UnitType, Unit>())),
       recruitedUnitTypes: (fields[8] as List?)?.cast<UnitType>(),
       pendingExplorations: (fields[9] as List?)?.cast<ExplorationOrder>(),
-      revealedCellsList: (fields[10] as List?)?.cast<GridPosition>(),
+      revealedCellsPerLevel: (fields[10] as Map?)?.map((dynamic k, dynamic v) =>
+          MapEntry(k as int, (v as List).cast<GridPosition>())),
       historyEntries: (fields[11] as List?)?.cast<HistoryEntry>(),
     );
   }
@@ -51,13 +53,13 @@ class PlayerAdapter extends TypeAdapter<Player> {
       ..writeByte(6)
       ..write(obj.techBranches)
       ..writeByte(7)
-      ..write(obj.units)
+      ..write(obj.unitsPerLevel)
       ..writeByte(8)
       ..write(obj.recruitedUnitTypes)
       ..writeByte(9)
       ..write(obj.pendingExplorations)
       ..writeByte(10)
-      ..write(obj.revealedCellsList)
+      ..write(obj.revealedCellsPerLevel)
       ..writeByte(11)
       ..write(obj.historyEntries);
   }

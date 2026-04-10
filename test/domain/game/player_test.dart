@@ -68,17 +68,23 @@ void main() {
 
     test('default units contain all 6 unit types at count 0', () {
       final p = Player(name: 'A');
-      expect(p.units.length, UnitType.values.length);
-      for (final u in p.units.values) {
+      final units = p.unitsOnLevel(1);
+      expect(units.length, UnitType.values.length);
+      for (final u in units.values) {
         expect(u.count, 0);
       }
+    });
+
+    test('unitsOnLevel returns empty map for absent level', () {
+      final p = Player(name: 'A');
+      expect(p.unitsOnLevel(2), isEmpty);
     });
 
     test('default recruitedUnitTypes and pendingExplorations are empty', () {
       final p = Player(name: 'A');
       expect(p.recruitedUnitTypes, isEmpty);
       expect(p.pendingExplorations, isEmpty);
-      expect(p.revealedCellsList, isEmpty);
+      expect(p.revealedCellsPerLevel, isEmpty);
     });
   });
 

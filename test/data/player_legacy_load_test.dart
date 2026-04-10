@@ -61,13 +61,13 @@ void main() {
         ..writeByte(6)
         ..write(legacy.techBranches)
         ..writeByte(7)
-        ..write(legacy.units)
+        ..write(legacy.unitsPerLevel)
         ..writeByte(8)
         ..write(legacy.recruitedUnitTypes)
         ..writeByte(9)
         ..write(legacy.pendingExplorations)
         ..writeByte(10)
-        ..write(legacy.revealedCellsList);
+        ..write(legacy.revealedCellsPerLevel);
 
       final bytes = writer.toBytes();
       final reader = BinaryReaderImpl(bytes, Hive);

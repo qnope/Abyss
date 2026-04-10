@@ -42,7 +42,7 @@ class Player extends HiveObject {
   final Map<TechBranch, TechBranchState> techBranches;
 
   @HiveField(7)
-  final Map<UnitType, Unit> units;
+  final Map<int, Map<UnitType, Unit>> unitsPerLevel;
 
   @HiveField(8)
   final List<UnitType> recruitedUnitTypes;
@@ -51,7 +51,7 @@ class Player extends HiveObject {
   final List<ExplorationOrder> pendingExplorations;
 
   @HiveField(10)
-  final List<GridPosition> revealedCellsList;
+  final Map<int, List<GridPosition>> revealedCellsPerLevel;
 
   @HiveField(11)
   final List<HistoryEntry> historyEntries;
@@ -64,19 +64,19 @@ class Player extends HiveObject {
     Map<ResourceType, Resource>? resources,
     Map<BuildingType, Building>? buildings,
     Map<TechBranch, TechBranchState>? techBranches,
-    Map<UnitType, Unit>? units,
+    Map<int, Map<UnitType, Unit>>? unitsPerLevel,
     List<UnitType>? recruitedUnitTypes,
     List<ExplorationOrder>? pendingExplorations,
-    List<GridPosition>? revealedCellsList,
+    Map<int, List<GridPosition>>? revealedCellsPerLevel,
     List<HistoryEntry>? historyEntries,
   })  : id = id ?? const Uuid().v4(),
         resources = resources ?? PlayerDefaults.resources(),
         buildings = buildings ?? PlayerDefaults.buildings(),
         techBranches = techBranches ?? PlayerDefaults.techBranches(),
-        units = units ?? PlayerDefaults.units(),
+        unitsPerLevel = unitsPerLevel ?? PlayerDefaults.unitsPerLevel(),
         recruitedUnitTypes = recruitedUnitTypes ?? [],
         pendingExplorations = pendingExplorations ?? [],
-        revealedCellsList = revealedCellsList ?? <GridPosition>[],
+        revealedCellsPerLevel = revealedCellsPerLevel ?? {},
         historyEntries = historyEntries ?? <HistoryEntry>[];
 
   Player.withBase({
@@ -92,14 +92,26 @@ class Player extends HiveObject {
           id: id,
           baseX: baseX,
           baseY: baseY,
-          revealedCellsList: _initialRevealedCells(
-            baseX: baseX,
-            baseY: baseY,
-            mapWidth: mapWidth,
-            mapHeight: mapHeight,
-          ),
+          revealedCellsPerLevel: {
+            1: _initialRevealedCells(
+              baseX: baseX,
+              baseY: baseY,
+              mapWidth: mapWidth,
+              mapHeight: mapHeight,
+            ),
+          },
           historyEntries: historyEntries,
         );
+
+  Map<UnitType, Unit> unitsOnLevel(int level) => unitsPerLevel[level] ?? {};
+
+  List<GridPosition> revealedCellsOnLevel(int level) =>
+      revealedCellsPerLevel[level] ?? [];
+
+  Set<GridPosition> revealedCellsSetOnLevel(int level) =>
+      revealedCellsOnLevel(level).toSet();
+
+  Set<GridPosition> get revealedCells => revealedCellsSetOnLevel(1);
 
   void addHistoryEntry(HistoryEntry entry) {
     historyEntries.add(entry);
@@ -108,11 +120,10 @@ class Player extends HiveObject {
     }
   }
 
-  Set<GridPosition> get revealedCells => revealedCellsList.toSet();
-
-  bool addRevealedCell(GridPosition pos) {
-    if (revealedCellsList.contains(pos)) return false;
-    revealedCellsList.add(pos);
+  bool addRevealedCell(int level, GridPosition pos) {
+    final cells = revealedCellsPerLevel.putIfAbsent(level, () => []);
+    if (cells.contains(pos)) return false;
+    cells.add(pos);
     return true;
   }
 
@@ -122,7 +133,6 @@ class Player extends HiveObject {
     required int mapWidth,
     required int mapHeight,
   }) {
-    // Level 2 yields a 5x5 square centered on the base for the initial vision.
     return RevealAreaCalculator.cellsToReveal(
       targetX: baseX,
       targetY: baseY,

@@ -61,9 +61,9 @@ class PlayerDefaults {
     };
   }
 
-  static Map<UnitType, Unit> units() {
+  static Map<int, Map<UnitType, Unit>> unitsPerLevel() {
     return {
-      for (final type in UnitType.values) type: Unit(type: type),
+      1: {for (final type in UnitType.values) type: Unit(type: type)},
     };
   }
 }

@@ -23,6 +23,9 @@ class Combatant {
   @HiveField(5)
   int currentHp;
 
+  @HiveField(6, defaultValue: false)
+  final bool isBoss;
+
   Combatant({
     required this.side,
     required this.typeKey,
@@ -30,6 +33,7 @@ class Combatant {
     required this.atk,
     required this.def,
     int? currentHp,
+    this.isBoss = false,
   }) : currentHp = currentHp ?? maxHp;
 
   bool get isAlive => currentHp > 0;

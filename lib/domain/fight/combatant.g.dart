@@ -23,13 +23,14 @@ class CombatantAdapter extends TypeAdapter<Combatant> {
       atk: fields[3] as int,
       def: fields[4] as int,
       currentHp: fields[5] as int?,
+      isBoss: fields[6] == null ? false : fields[6] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Combatant obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.side)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class CombatantAdapter extends TypeAdapter<Combatant> {
       ..writeByte(4)
       ..write(obj.def)
       ..writeByte(5)
-      ..write(obj.currentHp);
+      ..write(obj.currentHp)
+      ..writeByte(6)
+      ..write(obj.isBoss);
   }
 
   @override

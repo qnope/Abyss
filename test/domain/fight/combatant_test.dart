@@ -18,6 +18,31 @@ void main() {
       expect(c.isAlive, isTrue);
     });
 
+    test('isBoss defaults to false', () {
+      final Combatant c = Combatant(
+        side: CombatSide.player,
+        typeKey: 'scout',
+        maxHp: 10,
+        atk: 3,
+        def: 1,
+      );
+
+      expect(c.isBoss, isFalse);
+    });
+
+    test('isBoss can be set to true', () {
+      final Combatant c = Combatant(
+        side: CombatSide.monster,
+        typeKey: 'boss',
+        maxHp: 100,
+        atk: 20,
+        def: 10,
+        isBoss: true,
+      );
+
+      expect(c.isBoss, isTrue);
+    });
+
     test('applyDamage drops HP and returns amount applied', () {
       final Combatant c = Combatant(
         side: CombatSide.player,

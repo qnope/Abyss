@@ -41,7 +41,7 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
   @override
   void initState() {
     super.initState();
-    for (final UnitType type in widget.game.humanPlayer.units.keys) {
+    for (final UnitType type in widget.game.humanPlayer.unitsOnLevel(1).keys) {
       _selected[type] = 0;
     }
   }
@@ -67,7 +67,7 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
   Widget _buildBody(BuildContext context) {
     final player = widget.game.humanPlayer;
     final List<Widget> rows = <Widget>[];
-    for (final MapEntry<UnitType, dynamic> entry in player.units.entries) {
+    for (final MapEntry<UnitType, dynamic> entry in player.unitsOnLevel(1).entries) {
       final int stock = entry.value.count as int;
       if (stock <= 0) continue;
       final UnitType type = entry.key;

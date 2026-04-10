@@ -162,13 +162,13 @@ void main() {
         name: 'Nemo',
         baseX: 10,
         baseY: 10,
-        revealedCellsList: [
+        revealedCellsPerLevel: {1: [
           for (var y = 0; y < mapSize; y++)
             for (var x = 0; x < mapSize; x++) GridPosition(x: x, y: y),
-        ],
+        ]},
       ))
         ..gameMap = lairMap;
-      lairGame.humanPlayer.units[UnitType.scout]!.count = 3;
+      lairGame.humanPlayer.unitsOnLevel(1)[UnitType.scout]!.count = 3;
 
       await tester.pumpWidget(createApp(lairGame));
       await tester.pumpAndSettle();

@@ -82,7 +82,7 @@ class _GameScreenState extends State<GameScreen> {
       1 => buildMapTab(
         context, g, widget.repository, () => setState(() {})),
       2 => ArmyListView(
-        units: human.units,
+        units: human.unitsOnLevel(1),
         barracksLevel: human.buildings[BuildingType.barracks]!.level,
         buildings: human.buildings,
         onUnitTap: (t) => showUnitDetailAction(

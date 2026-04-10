@@ -367,3 +367,144 @@ class TurnEndEntryAdapter extends TypeAdapter<TurnEndEntry> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class CaptureEntryAdapter extends TypeAdapter<CaptureEntry> {
+  @override
+  final int typeId = 34;
+
+  @override
+  CaptureEntry read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return CaptureEntry(
+      turn: fields[0] as int,
+      transitionBaseName: fields[4] as String,
+      fightResult: fields[5] as FightResult,
+      subtitle: fields[3] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, CaptureEntry obj) {
+    writer
+      ..writeByte(6)
+      ..writeByte(0)
+      ..write(obj.turn)
+      ..writeByte(1)
+      ..write(obj.category)
+      ..writeByte(2)
+      ..write(obj.title)
+      ..writeByte(3)
+      ..write(obj.subtitle)
+      ..writeByte(4)
+      ..write(obj.transitionBaseName)
+      ..writeByte(5)
+      ..write(obj.fightResult);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CaptureEntryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class DescentEntryAdapter extends TypeAdapter<DescentEntry> {
+  @override
+  final int typeId = 35;
+
+  @override
+  DescentEntry read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return DescentEntry(
+      turn: fields[0] as int,
+      targetLevel: fields[4] as int,
+      unitCount: fields[5] as int,
+      subtitle: fields[3] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, DescentEntry obj) {
+    writer
+      ..writeByte(6)
+      ..writeByte(0)
+      ..write(obj.turn)
+      ..writeByte(1)
+      ..write(obj.category)
+      ..writeByte(2)
+      ..write(obj.title)
+      ..writeByte(3)
+      ..write(obj.subtitle)
+      ..writeByte(4)
+      ..write(obj.targetLevel)
+      ..writeByte(5)
+      ..write(obj.unitCount);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DescentEntryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class ReinforcementEntryAdapter extends TypeAdapter<ReinforcementEntry> {
+  @override
+  final int typeId = 36;
+
+  @override
+  ReinforcementEntry read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return ReinforcementEntry(
+      turn: fields[0] as int,
+      targetLevel: fields[4] as int,
+      unitCount: fields[5] as int,
+      subtitle: fields[3] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, ReinforcementEntry obj) {
+    writer
+      ..writeByte(6)
+      ..writeByte(0)
+      ..write(obj.turn)
+      ..writeByte(1)
+      ..write(obj.category)
+      ..writeByte(2)
+      ..write(obj.title)
+      ..writeByte(3)
+      ..write(obj.subtitle)
+      ..writeByte(4)
+      ..write(obj.targetLevel)
+      ..writeByte(5)
+      ..write(obj.unitCount);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ReinforcementEntryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

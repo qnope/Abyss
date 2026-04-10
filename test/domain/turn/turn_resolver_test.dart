@@ -23,7 +23,7 @@ Player _player({
     p.resources[type]!.amount = amount;
   });
   unitCounts?.forEach((type, count) {
-    p.units[type] = Unit(type: type, count: count);
+    p.unitsOnLevel(1)[type] = Unit(type: type, count: count);
   });
   return p;
 }
@@ -112,7 +112,7 @@ void main() {
       );
       final result = resolver.resolve(_singleGame(p));
       expect(result.lostUnits[UnitType.scout], greaterThan(0));
-      expect(p.units[UnitType.scout]!.count, lessThan(100));
+      expect(p.unitsOnLevel(1)[UnitType.scout]!.count, lessThan(100));
     });
   });
 

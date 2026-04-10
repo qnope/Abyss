@@ -88,8 +88,8 @@ Game buildFightPersistenceGame() {
     baseX: 2,
     baseY: 2,
   );
-  player.units[UnitType.harpoonist]!.count = 15;
-  player.addRevealedCell(GridPosition(x: 1, y: 1));
+  player.unitsOnLevel(1)[UnitType.harpoonist]!.count = 15;
+  player.addRevealedCell(1, GridPosition(x: 1, y: 1));
   return Game(
     humanPlayerId: player.id,
     players: {player.id: player},

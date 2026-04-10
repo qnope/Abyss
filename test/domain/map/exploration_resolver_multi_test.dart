@@ -39,7 +39,7 @@ Game _game({
     baseX: 5,
     baseY: 5,
     pendingExplorations: pendingExplorations,
-    revealedCellsList: revealed.toList(),
+    revealedCellsPerLevel: {1: revealed.toList()},
   );
   player.techBranches[TechBranch.explorer] = TechBranchState(
     branch: TechBranch.explorer,

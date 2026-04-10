@@ -97,7 +97,7 @@ Player buildHistoryScenarioPlayer({String id = 'human-uuid'}) {
       BuildingType.barracks:
           Building(type: BuildingType.barracks, level: 1),
     },
-    units: {
+    unitsPerLevel: {1: {
       for (final type in UnitType.values)
         type: Unit(
           type: type,
@@ -107,8 +107,8 @@ Player buildHistoryScenarioPlayer({String id = 'human-uuid'}) {
             _ => 0,
           },
         ),
-    },
-    revealedCellsList: _fullyRevealed(),
+    }},
+    revealedCellsPerLevel: {1: _fullyRevealed()},
   );
   return player;
 }

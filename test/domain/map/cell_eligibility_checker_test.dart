@@ -23,7 +23,7 @@ import 'package:abyss/domain/map/terrain_type.dart';
     name: 'Test',
     baseX: 3,
     baseY: 3,
-    revealedCellsList: revealed,
+    revealedCellsPerLevel: {1: revealed},
   );
   return (map: map, player: player);
 }
@@ -40,7 +40,7 @@ void main() {
 
     test('revealed cell at map edge is eligible', () {
       final t = _makeTestMap();
-      t.player.addRevealedCell(GridPosition(x: 0, y: 3));
+      t.player.addRevealedCell(1, GridPosition(x: 0, y: 3));
       expect(
         CellEligibilityChecker.isEligible(t.map, t.player, 0, 3),
         isTrue,

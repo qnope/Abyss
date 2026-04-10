@@ -20,7 +20,7 @@ GameMap _buildMap({int width = 10, int height = 10}) {
 Player _player({
   required String id,
   List<ExplorationOrder>? pendingExplorations,
-  List<GridPosition>? revealedCellsList,
+  Map<int, List<GridPosition>>? revealedCellsPerLevel,
 }) {
   return Player(
     id: id,
@@ -28,7 +28,7 @@ Player _player({
     baseX: 5,
     baseY: 5,
     pendingExplorations: pendingExplorations,
-    revealedCellsList: revealedCellsList,
+    revealedCellsPerLevel: revealedCellsPerLevel,
   );
 }
 
@@ -65,7 +65,7 @@ void main() {
         pendingExplorations: [
           ExplorationOrder(target: GridPosition(x: 3, y: 3)),
         ],
-        revealedCellsList: [GridPosition(x: 3, y: 3)],
+        revealedCellsPerLevel: {1: [GridPosition(x: 3, y: 3)]},
       );
       final game = Game.singlePlayer(player)..gameMap = map;
 

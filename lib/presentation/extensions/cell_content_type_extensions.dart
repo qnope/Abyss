@@ -7,6 +7,7 @@ extension CellContentTypeExtensions on CellContentType {
     CellContentType.resourceBonus => 'Ressources',
     CellContentType.ruins => 'Ruines',
     CellContentType.monsterLair => 'Repaire',
+    CellContentType.transitionBase => 'Faille Abyssale',
   };
 
   String? get svgPath => switch (this) {
@@ -15,6 +16,7 @@ extension CellContentTypeExtensions on CellContentType {
       'assets/icons/map_content/resource_bonus.svg',
     CellContentType.ruins => 'assets/icons/map_content/ruins.svg',
     CellContentType.monsterLair => null,
+    CellContentType.transitionBase => null,
   };
 }
 

@@ -83,6 +83,7 @@ class _TreasureSheet extends StatelessWidget {
         return 'Corail, minerai et perles';
       case CellContentType.empty:
       case CellContentType.monsterLair:
+      case CellContentType.transitionBase:
         return '';
     }
   }

@@ -98,6 +98,7 @@ void _showCellAction(
           lair: cell.lair!,
           onPrepareFight: () => openArmySelection(
               context, game, repository, x, y, cell.lair!, onChanged));
+    case CellContentType.transitionBase:
     case CellContentType.empty:
       showCellInfoSheet(context,
           title: 'Plaine ($x, $y)',

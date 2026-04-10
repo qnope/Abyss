@@ -8,4 +8,5 @@ enum CellContentType {
   @HiveField(1) resourceBonus,
   @HiveField(2) ruins,
   @HiveField(3) monsterLair,
+  @HiveField(4) transitionBase,
 }

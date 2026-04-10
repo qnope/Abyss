@@ -21,6 +21,8 @@ class CellContentTypeAdapter extends TypeAdapter<CellContentType> {
         return CellContentType.ruins;
       case 3:
         return CellContentType.monsterLair;
+      case 4:
+        return CellContentType.transitionBase;
       default:
         return CellContentType.empty;
     }
@@ -40,6 +42,9 @@ class CellContentTypeAdapter extends TypeAdapter<CellContentType> {
         break;
       case CellContentType.monsterLair:
         writer.writeByte(3);
+        break;
+      case CellContentType.transitionBase:
+        writer.writeByte(4);
         break;
     }
   }

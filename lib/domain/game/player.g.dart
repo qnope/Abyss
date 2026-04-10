@@ -31,13 +31,14 @@ class PlayerAdapter extends TypeAdapter<Player> {
       revealedCellsPerLevel: (fields[10] as Map?)?.map((dynamic k, dynamic v) =>
           MapEntry(k as int, (v as List).cast<GridPosition>())),
       historyEntries: (fields[11] as List?)?.cast<HistoryEntry>(),
+      pendingReinforcements: (fields[13] as List?)?.cast<ReinforcementOrder>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Player obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -61,7 +62,9 @@ class PlayerAdapter extends TypeAdapter<Player> {
       ..writeByte(10)
       ..write(obj.revealedCellsPerLevel)
       ..writeByte(11)
-      ..write(obj.historyEntries);
+      ..write(obj.historyEntries)
+      ..writeByte(13)
+      ..write(obj.pendingReinforcements);
   }
 
   @override

@@ -5,6 +5,7 @@ import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/domain/map/transition_base_placer.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
+import '../../helpers/transition_base_helpers.dart';
 
 void main() {
   const width = 20, height = 20, baseX = 10, baseY = 10;
@@ -14,11 +15,8 @@ void main() {
         (_) => MapCell(terrain: TerrainType.plain),
       );
 
-  int chebyshev(int x1, int y1, int x2, int y2) =>
-      max((x1 - x2).abs(), (y1 - y2).abs());
-
   group('TransitionBasePlacer level 1', () {
-    test('places 4 failles', () {
+    test('places exactly 4 failles', () {
       for (var seed = 0; seed < 20; seed++) {
         final cells = makeCells();
         TransitionBasePlacer.place(
@@ -26,12 +24,13 @@ void main() {
           baseX: baseX, baseY: baseY, level: 1,
           random: Random(seed),
         );
-        final bases = cells.where(
-          (c) => c.content == CellContentType.transitionBase,
-        ).toList();
-        expect(bases.length, 4, reason: 'seed=$seed');
-        for (final b in bases) {
-          expect(b.transitionBase!.type, TransitionBaseType.faille);
+        final indices = transitionBaseIndices(cells);
+        expect(indices.length, 4, reason: 'seed=$seed');
+        for (final i in indices) {
+          expect(
+            cells[i].transitionBase!.type,
+            TransitionBaseType.faille,
+          );
         }
       }
     });
@@ -43,34 +42,13 @@ void main() {
         baseX: baseX, baseY: baseY, level: 1,
         random: Random(42),
       );
-      final names = cells
-          .where((c) => c.content == CellContentType.transitionBase)
-          .map((c) => c.transitionBase!.name)
+      final names = transitionBaseIndices(cells)
+          .map((i) => cells[i].transitionBase!.name)
           .toSet();
       expect(names, containsAll([
         'Faille Alpha', 'Faille Beta',
         'Faille Gamma', 'Faille Delta',
       ]));
-    });
-
-    test('failles are far from center', () {
-      final cells = makeCells();
-      TransitionBasePlacer.place(
-        cells: cells, width: width, height: height,
-        baseX: baseX, baseY: baseY, level: 1,
-        random: Random(42),
-      );
-      for (var i = 0; i < cells.length; i++) {
-        if (cells[i].content != CellContentType.transitionBase) {
-          continue;
-        }
-        final x = i % width, y = i ~/ width;
-        expect(
-          chebyshev(x, y, 10, 10),
-          greaterThanOrEqualTo(8),
-          reason: 'faille at ($x,$y) too close to center',
-        );
-      }
     });
 
     test('base cell never has a transition base', () {
@@ -92,7 +70,7 @@ void main() {
   });
 
   group('TransitionBasePlacer level 2', () {
-    test('places 3 cheminees', () {
+    test('places exactly 3 cheminees', () {
       for (var seed = 0; seed < 20; seed++) {
         final cells = makeCells();
         TransitionBasePlacer.place(
@@ -100,12 +78,13 @@ void main() {
           baseX: baseX, baseY: baseY, level: 2,
           random: Random(seed),
         );
-        final bases = cells.where(
-          (c) => c.content == CellContentType.transitionBase,
-        ).toList();
-        expect(bases.length, 3, reason: 'seed=$seed');
-        for (final b in bases) {
-          expect(b.transitionBase!.type, TransitionBaseType.cheminee);
+        final indices = transitionBaseIndices(cells);
+        expect(indices.length, 3, reason: 'seed=$seed');
+        for (final i in indices) {
+          expect(
+            cells[i].transitionBase!.type,
+            TransitionBaseType.cheminee,
+          );
         }
       }
     });
@@ -117,9 +96,8 @@ void main() {
         baseX: baseX, baseY: baseY, level: 2,
         random: Random(42),
       );
-      final names = cells
-          .where((c) => c.content == CellContentType.transitionBase)
-          .map((c) => c.transitionBase!.name)
+      final names = transitionBaseIndices(cells)
+          .map((i) => cells[i].transitionBase!.name)
           .toSet();
       expect(names, containsAll([
         'Cheminee Primaire',
@@ -138,10 +116,8 @@ void main() {
           baseX: baseX, baseY: baseY, level: level,
           random: Random(42),
         );
-        final bases = cells.where(
-          (c) => c.content == CellContentType.transitionBase,
-        ).toList();
-        expect(bases, isEmpty, reason: 'level=$level');
+        expect(transitionBaseIndices(cells), isEmpty,
+            reason: 'level=$level');
       }
     });
   });

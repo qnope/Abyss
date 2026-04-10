@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/map_generator.dart';
+import 'package:abyss/domain/map/transition_base_type.dart';
 
 void main() {
   group('MapGenerator.generate', () {
@@ -53,20 +54,28 @@ void main() {
       }
     });
 
-    test('level 1 map has 4 transition bases', () {
+    test('level 1 map has 4 failles', () {
       final result = MapGenerator.generate(seed: 42, level: 1);
-      final count = result.map.cells
+      final bases = result.map.cells
           .where((c) => c.content == CellContentType.transitionBase)
-          .length;
-      expect(count, 4);
+          .toList();
+      expect(bases.length, 4);
+      for (final b in bases) {
+        expect(b.transitionBase!.type, TransitionBaseType.faille);
+      }
     });
 
-    test('level 2 map has 3 transition bases', () {
+    test('level 2 map has 3 cheminees', () {
       final result = MapGenerator.generate(seed: 42, level: 2);
-      final count = result.map.cells
+      final bases = result.map.cells
           .where((c) => c.content == CellContentType.transitionBase)
-          .length;
-      expect(count, 3);
+          .toList();
+      expect(bases.length, 3);
+      for (final b in bases) {
+        expect(
+          b.transitionBase!.type, TransitionBaseType.cheminee,
+        );
+      }
     });
 
     test('level 3 map has no transition bases', () {

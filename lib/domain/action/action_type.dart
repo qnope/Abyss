@@ -6,5 +6,8 @@ enum ActionType {
   explore,
   collectTreasure,
   fightMonster,
+  descend,
+  sendReinforcements,
+  attackTransitionBase,
   endTurn,
 }

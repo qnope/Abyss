@@ -15,6 +15,9 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
     HistoryEntryCategory.explore => Icons.explore,
     HistoryEntryCategory.collect => Icons.inventory_2,
     HistoryEntryCategory.turnEnd => Icons.hourglass_bottom,
+    HistoryEntryCategory.capture => Icons.flag,
+    HistoryEntryCategory.descent => Icons.arrow_downward,
+    HistoryEntryCategory.reinforcement => Icons.groups,
   };
 
   /// Background / accent color for this category, sourced from the
@@ -30,6 +33,9 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
       HistoryEntryCategory.explore => scheme.primary,
       HistoryEntryCategory.collect => AbyssColors.algaeGreen,
       HistoryEntryCategory.turnEnd => scheme.tertiary,
+      HistoryEntryCategory.capture => AbyssColors.energyYellow,
+      HistoryEntryCategory.descent => AbyssColors.biolumPurple,
+      HistoryEntryCategory.reinforcement => AbyssColors.biolumTeal,
     };
   }
 
@@ -42,5 +48,8 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
     HistoryEntryCategory.explore => 'Exploration',
     HistoryEntryCategory.collect => 'Collecte',
     HistoryEntryCategory.turnEnd => 'Fin de tour',
+    HistoryEntryCategory.capture => 'Capture',
+    HistoryEntryCategory.descent => 'Descente',
+    HistoryEntryCategory.reinforcement => 'Renfort',
   };
 }

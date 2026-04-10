@@ -40,7 +40,10 @@ List<HistoryEntry> applyHistoryFilter(
       return e.category == HistoryEntryCategory.recruit ||
           e.category == HistoryEntryCategory.explore ||
           e.category == HistoryEntryCategory.collect ||
-          e.category == HistoryEntryCategory.turnEnd;
+          e.category == HistoryEntryCategory.turnEnd ||
+          e.category == HistoryEntryCategory.capture ||
+          e.category == HistoryEntryCategory.descent ||
+          e.category == HistoryEntryCategory.reinforcement;
     }).toList(),
   };
 }

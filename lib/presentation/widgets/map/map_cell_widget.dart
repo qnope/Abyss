@@ -15,6 +15,7 @@ class MapCellWidget extends StatelessWidget {
   final bool isCollectedByOther;
   final bool isBase;
   final bool hasPendingExploration;
+  final bool isCapturedTransitionBase;
   final VoidCallback? onTap;
 
   const MapCellWidget({
@@ -24,6 +25,7 @@ class MapCellWidget extends StatelessWidget {
     this.isCollectedByOther = false,
     this.isBase = false,
     this.hasPendingExploration = false,
+    this.isCapturedTransitionBase = false,
     this.onTap,
   });
 
@@ -60,6 +62,9 @@ class MapCellWidget extends StatelessWidget {
   }
 
   Widget _contentLayer() {
+    if (cell.content == CellContentType.transitionBase) {
+      return _transitionBaseOverlay();
+    }
     final path = _contentSvgPath;
     if (path == null) return const SizedBox.shrink();
     final icon = Center(
@@ -69,6 +74,33 @@ class MapCellWidget extends StatelessWidget {
       return Opacity(opacity: 0.3, child: icon);
     }
     return icon;
+  }
+
+  Widget _transitionBaseOverlay() {
+    final glowColor = isCapturedTransitionBase
+        ? AbyssColors.biolumCyan
+        : AbyssColors.error;
+    return Center(
+      child: Container(
+        width: _contentSize,
+        height: _contentSize,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: glowColor.withValues(alpha: 0.6),
+              blurRadius: 12,
+              spreadRadius: 4,
+            ),
+          ],
+        ),
+        child: Icon(
+          Icons.electric_bolt,
+          color: glowColor,
+          size: _contentSize,
+        ),
+      ),
+    );
   }
 
   String? get _contentSvgPath {

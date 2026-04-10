@@ -6,6 +6,8 @@ import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
+import 'package:abyss/domain/map/transition_base.dart';
+import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_widget.dart';
 
@@ -99,6 +101,63 @@ void main() {
         MapCellWidget(cell: cell, isRevealed: true),
       ));
       expect(find.byType(SvgPicture), findsWidgets);
+    });
+
+    testWidgets('transition base not captured shows red glow',
+        (tester) async {
+      final cell = MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.transitionBase,
+        transitionBase: TransitionBase(
+          type: TransitionBaseType.faille,
+          name: 'Test Faille',
+        ),
+      );
+      await tester.pumpWidget(wrap(
+        MapCellWidget(cell: cell, isRevealed: true),
+      ));
+      expect(find.byIcon(Icons.electric_bolt), findsOneWidget);
+      final icon = tester.widget<Icon>(find.byIcon(Icons.electric_bolt));
+      expect(icon.color, AbyssColors.error);
+    });
+
+    testWidgets('transition base captured shows cyan glow',
+        (tester) async {
+      final cell = MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.transitionBase,
+        transitionBase: TransitionBase(
+          type: TransitionBaseType.faille,
+          name: 'Test Faille',
+          capturedBy: 'player-id',
+        ),
+      );
+      await tester.pumpWidget(wrap(
+        MapCellWidget(
+          cell: cell,
+          isRevealed: true,
+          isCapturedTransitionBase: true,
+        ),
+      ));
+      expect(find.byIcon(Icons.electric_bolt), findsOneWidget);
+      final icon = tester.widget<Icon>(find.byIcon(Icons.electric_bolt));
+      expect(icon.color, AbyssColors.biolumCyan);
+    });
+
+    testWidgets('transition base not revealed has no icon',
+        (tester) async {
+      final cell = MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.transitionBase,
+        transitionBase: TransitionBase(
+          type: TransitionBaseType.faille,
+          name: 'Test Faille',
+        ),
+      );
+      await tester.pumpWidget(wrap(
+        MapCellWidget(cell: cell, isRevealed: false),
+      ));
+      expect(find.byIcon(Icons.electric_bolt), findsNothing);
     });
   });
 }

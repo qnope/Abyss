@@ -13,6 +13,7 @@ import '../../../domain/unit/unit_type.dart';
 import '../../widgets/map/cell_info_sheet.dart';
 import '../../widgets/map/exploration_sheet.dart';
 import '../../widgets/map/game_map_view.dart';
+import '../../widgets/map/level_selector.dart';
 import '../../widgets/map/monster_lair_sheet.dart';
 import '../../widgets/map/treasure_sheet.dart';
 import '../../widgets/resource/resource_gain_dialog.dart';
@@ -20,89 +21,79 @@ import 'game_screen_collect_messages.dart';
 import 'game_screen_fight_actions.dart';
 
 Widget buildMapTab(
-  BuildContext context,
-  Game game,
-  GameRepository repository,
-  VoidCallback onChanged,
-) {
-  final pendingTargets = game.humanPlayer.pendingExplorations
-      .map((e) => (e.target.x, e.target.y))
-      .toSet();
-  return GameMapView(
-    gameMap: game.levels[1]!,
-    revealedCells: game.humanPlayer.revealedCells,
-    baseX: game.humanPlayer.baseX,
-    baseY: game.humanPlayer.baseY,
-    humanPlayerId: game.humanPlayer.id,
-    onCellTap: (x, y) => _showCellAction(
-      context, game, repository, x, y, () {
-        repository.save(game);
-        onChanged();
-      },
+  BuildContext context, Game game, GameRepository repository, {
+  required int currentLevel, required Set<int> unlockedLevels,
+  required ValueChanged<int> onLevelSelected,
+  required VoidCallback onChanged,
+}) {
+  final human = game.humanPlayer;
+  final level = game.levels.containsKey(currentLevel) ? currentLevel : 1;
+  final pendingTargets =
+      human.pendingExplorations.map((e) => (e.target.x, e.target.y)).toSet();
+  return Column(children: [
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: LevelSelector(
+        currentLevel: level,
+        unlockedLevels: unlockedLevels,
+        onLevelSelected: onLevelSelected,
+      ),
     ),
-    pendingTargets: pendingTargets,
-  );
+    Expanded(
+      child: GameMapView(
+        gameMap: game.levels[level]!,
+        revealedCells: human.revealedCellsSetOnLevel(level),
+        baseX: human.baseX, baseY: human.baseY,
+        humanPlayerId: human.id,
+        onCellTap: (x, y) => _showCellAction(
+          context, game, repository, x, y, level, () {
+            repository.save(game);
+            onChanged();
+          }),
+        pendingTargets: pendingTargets,
+      ),
+    ),
+  ]);
 }
 
-void _showCellAction(
-  BuildContext context,
-  Game game,
-  GameRepository repository,
-  int x,
-  int y,
-  VoidCallback onChanged,
-) {
-  final cell = game.levels[1]!.cellAt(x, y);
+void _showCellAction(BuildContext context, Game game,
+    GameRepository repository, int x, int y, int level,
+    VoidCallback onChanged) {
+  final cell = game.levels[level]!.cellAt(x, y);
   final human = game.humanPlayer;
-
-  if (!human.revealedCells.contains(GridPosition(x: x, y: y))) {
-    _showExplorationFlow(context, game, x, y, onChanged);
+  if (!human.revealedCellsSetOnLevel(level).contains(
+        GridPosition(x: x, y: y))) {
+    _showExplorationFlow(context, game, x, y, level, onChanged);
     return;
   }
-
   if (cell.isCollected) {
-    showCellInfoSheet(
-      context,
-      title: 'Déjà visité',
-      message: 'Vous êtes déjà venu par ici',
-      icon: Icons.check_circle_outline,
-    );
+    showCellInfoSheet(context,
+      title: 'Déjà visité', message: 'Vous êtes déjà venu par ici',
+      icon: Icons.check_circle_outline);
     return;
   }
-
   if (x == human.baseX && y == human.baseY) {
-    showCellInfoSheet(
-      context,
-      title: 'Votre base',
-      message: 'Votre quartier général',
-      icon: Icons.home,
-    );
+    showCellInfoSheet(context,
+      title: 'Votre base', message: 'Votre quartier général',
+      icon: Icons.home);
     return;
   }
-
   switch (cell.content) {
     case CellContentType.resourceBonus:
     case CellContentType.ruins:
-      showTreasureSheet(
-        context,
-        targetX: x,
-        targetY: y,
+      showTreasureSheet(context, targetX: x, targetY: y,
         contentType: cell.content,
         onCollect: () =>
-            _collectTreasure(context, game, x, y, cell.content, onChanged),
-      );
+            _collectTreasure(context, game, x, y, cell.content, onChanged));
     case CellContentType.monsterLair:
-      showMonsterLairSheet(context,
-          targetX: x,
-          targetY: y,
-          lair: cell.lair!,
-          onPrepareFight: () => openArmySelection(
-              context, game, repository, x, y, cell.lair!, onChanged));
+      showMonsterLairSheet(context, targetX: x, targetY: y,
+        lair: cell.lair!,
+        onPrepareFight: () => openArmySelection(
+            context, game, repository, x, y, cell.lair!, onChanged));
     case CellContentType.transitionBase:
     case CellContentType.empty:
-      showCellInfoSheet(context,
-          title: 'Plaine ($x, $y)',
-          message: "Il n'y a rien à voir ici");
+      showCellInfoSheet(context, title: 'Plaine ($x, $y)',
+        message: "Il n'y a rien à voir ici");
   }
 }
 
@@ -111,14 +102,15 @@ void _showExplorationFlow(
   Game game,
   int x,
   int y,
+  int level,
   VoidCallback onChanged,
 ) {
   final human = game.humanPlayer;
-  final scoutCount = human.unitsOnLevel(1)[UnitType.scout]?.count ?? 0;
+  final scoutCount = human.unitsOnLevel(level)[UnitType.scout]?.count ?? 0;
   final explorerLevel =
       human.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
   final isEligible =
-      CellEligibilityChecker.isEligible(game.levels[1]!, human, x, y);
+      CellEligibilityChecker.isEligible(game.levels[level]!, human, x, y);
 
   showExplorationSheet(
     context,

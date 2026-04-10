@@ -65,8 +65,13 @@ void main() {
         theme: AbyssTheme.create(),
         home: Scaffold(
           body: Builder(
-            builder: (context) =>
-                buildMapTab(context, game, FakeGameRepository(), () {}),
+            builder: (context) => buildMapTab(
+              context, game, FakeGameRepository(),
+              currentLevel: 1,
+              unlockedLevels: game.levels.keys.toSet(),
+              onLevelSelected: (_) {},
+              onChanged: () {},
+            ),
           ),
         ),
       );

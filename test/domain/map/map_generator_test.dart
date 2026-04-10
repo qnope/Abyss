@@ -52,5 +52,41 @@ void main() {
         expect(cell.collectedBy, isNull);
       }
     });
+
+    test('level 1 map has 4 transition bases', () {
+      final result = MapGenerator.generate(seed: 42, level: 1);
+      final count = result.map.cells
+          .where((c) => c.content == CellContentType.transitionBase)
+          .length;
+      expect(count, 4);
+    });
+
+    test('level 2 map has 3 transition bases', () {
+      final result = MapGenerator.generate(seed: 42, level: 2);
+      final count = result.map.cells
+          .where((c) => c.content == CellContentType.transitionBase)
+          .length;
+      expect(count, 3);
+    });
+
+    test('level 3 map has no transition bases', () {
+      final result = MapGenerator.generate(seed: 42, level: 3);
+      final count = result.map.cells
+          .where((c) => c.content == CellContentType.transitionBase)
+          .length;
+      expect(count, 0);
+    });
+
+    test('base cell never has transition base', () {
+      for (final level in [1, 2]) {
+        final result = MapGenerator.generate(seed: 42, level: level);
+        final base = result.map.cellAt(result.baseX, result.baseY);
+        expect(
+          base.content,
+          isNot(CellContentType.transitionBase),
+          reason: 'level=$level',
+        );
+      }
+    });
   });
 }

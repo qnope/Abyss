@@ -11,7 +11,7 @@ void main() {
       final action = ExploreAction(targetX: 2, targetY: 2);
       final result = action.execute(scenario.game, scenario.player);
       expect(result.isSuccess, isTrue);
-      expect(scenario.player.units[UnitType.scout]!.count, 2);
+      expect(scenario.player.unitsOnLevel(1)[UnitType.scout]!.count, 2);
     });
 
     test('adds exploration order with correct target', () {
@@ -30,7 +30,7 @@ void main() {
           .execute(scenario.game, scenario.player);
       ExploreAction(targetX: 4, targetY: 4)
           .execute(scenario.game, scenario.player);
-      expect(scenario.player.units[UnitType.scout]!.count, 1);
+      expect(scenario.player.unitsOnLevel(1)[UnitType.scout]!.count, 1);
       expect(scenario.player.pendingExplorations, hasLength(2));
       expect(scenario.player.pendingExplorations[0].target.x, 2);
       expect(scenario.player.pendingExplorations[0].target.y, 2);

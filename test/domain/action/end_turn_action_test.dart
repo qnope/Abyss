@@ -24,13 +24,13 @@ import 'package:abyss/domain/unit/unit_type.dart';
   if (resources != null) r.addAll(resources);
   final b = PlayerDefaults.buildings();
   if (buildings != null) b.addAll(buildings);
-  final u = PlayerDefaults.units();
+  final u = PlayerDefaults.unitsPerLevel()[1]!;
   if (units != null) u.addAll(units);
   final player = Player(
     name: 'Nemo',
     buildings: b,
     resources: r,
-    units: u,
+    unitsPerLevel: {1: u},
   );
   final game = Game.singlePlayer(player)..turn = turn;
   return (game: game, player: player);

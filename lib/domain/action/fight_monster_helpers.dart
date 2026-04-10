@@ -39,17 +39,18 @@ class FightMonsterHelpers {
     return (initialHp - finalHp) / initialHp;
   }
 
-  /// Restores the given combatants to `player.units` (one stock increment
-  /// per combatant).
+  /// Restores the given combatants to the player's Level 1 units (one stock
+  /// increment per combatant).
   static void restoreToStock(Player player, List<Combatant> combatants) {
+    final units = player.unitsOnLevel(1);
     for (final Combatant combatant in combatants) {
       final UnitType? type =
           CombatantBuilder.unitTypeFromKey(combatant.typeKey);
       if (type == null) {
         continue;
       }
-      final int current = player.units[type]?.count ?? 0;
-      player.units[type]!.count = current + 1;
+      final int current = units[type]?.count ?? 0;
+      units[type]!.count = current + 1;
     }
   }
 

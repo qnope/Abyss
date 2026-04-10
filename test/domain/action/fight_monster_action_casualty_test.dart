@@ -19,7 +19,7 @@ void main() {
       );
 
       final int initialStock =
-          scenario.player.units[UnitType.harpoonist]!.count;
+          scenario.player.unitsOnLevel(1)[UnitType.harpoonist]!.count;
 
       final action = FightMonsterAction(
         targetX: 1,
@@ -45,7 +45,7 @@ void main() {
       // US-04 invariant: only dead units are permanently removed from stock.
       // Intact survivors and wounded both rejoin the stock at end of fight.
       final int finalStock =
-          scenario.player.units[UnitType.harpoonist]!.count;
+          scenario.player.unitsOnLevel(1)[UnitType.harpoonist]!.count;
       expect(finalStock, initialStock - dead);
     });
 

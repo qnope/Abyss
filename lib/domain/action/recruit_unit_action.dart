@@ -55,7 +55,7 @@ class RecruitUnitAction extends Action {
     for (final entry in costs.entries) {
       player.resources[entry.key]!.amount -= entry.value * quantity;
     }
-    player.units[unitType]!.count += quantity;
+    player.unitsOnLevel(1)[unitType]!.count += quantity;
     player.recruitedUnitTypes.add(unitType);
 
     return ActionResult.success();

@@ -47,14 +47,14 @@ List<GridPosition> _initialRevealedCells(int baseX, int baseY) {
     name: 'Test',
     baseX: 3,
     baseY: 3,
-    units: {
+    unitsPerLevel: {1: {
       for (final type in UnitType.values)
         type: Unit(
           type: type,
           count: type == UnitType.scout ? scoutCount : 0,
         ),
-    },
-    revealedCellsList: _initialRevealedCells(3, 3),
+    }},
+    revealedCellsPerLevel: {1: _initialRevealedCells(3, 3)},
   );
   final game = Game(
     humanPlayerId: player.id,

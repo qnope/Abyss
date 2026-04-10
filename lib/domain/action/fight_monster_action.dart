@@ -60,7 +60,7 @@ class FightMonsterAction extends Action {
       if (entry.value <= 0) {
         continue;
       }
-      final int stock = player.units[entry.key]?.count ?? 0;
+      final int stock = player.unitsOnLevel(1)[entry.key]?.count ?? 0;
       if (entry.value > stock) {
         return const FightMonsterResult.failure('Unités insuffisantes');
       }
@@ -88,7 +88,7 @@ class FightMonsterAction extends Action {
         CombatantBuilder.monsterCombatantsFrom(lair);
 
     for (final MapEntry<UnitType, int> entry in selectedUnits.entries) {
-      player.units[entry.key]!.count -= entry.value;
+      player.unitsOnLevel(1)[entry.key]!.count -= entry.value;
     }
 
     final FightEngine engine = FightEngine(random: random);

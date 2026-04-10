@@ -15,6 +15,9 @@ part 'entries/explore_entry.dart';
 part 'entries/recruit_entry.dart';
 part 'entries/research_entry.dart';
 part 'entries/turn_end_entry.dart';
+part 'entries/capture_entry.dart';
+part 'entries/descent_entry.dart';
+part 'entries/reinforcement_entry.dart';
 part 'history_entry.g.dart';
 
 /// Abstract base class for all history entries.

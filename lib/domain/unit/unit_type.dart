@@ -8,6 +8,6 @@ enum UnitType {
   @HiveField(1) harpoonist,
   @HiveField(2) guardian,
   @HiveField(3) domeBreaker,
-  @HiveField(4) siphoner,
+  @HiveField(4) abyssAdmiral,
   @HiveField(5) saboteur,
 }

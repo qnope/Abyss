@@ -48,7 +48,7 @@ void main() {
       expect(find.text('Harponneur'), findsOneWidget);
       expect(find.text('Gardien'), findsOneWidget);
       expect(find.text('Briseur'), findsOneWidget);
-      expect(find.text('Siphonneur'), findsOneWidget);
+      expect(find.text('Amiral des Abysses'), findsOneWidget);
       expect(find.text('Saboteur'), findsOneWidget);
     });
 
@@ -56,7 +56,7 @@ void main() {
         (tester) async {
       await tester.pumpWidget(createApp(barracksLevel: 1));
       await tester.pumpAndSettle();
-      // 4 locked units show Verrouille (guardian, domeBreaker, siphoner, saboteur)
+      // 4 locked units show Verrouille (guardian, domeBreaker, abyssAdmiral, saboteur)
       expect(find.text('Verrouille'), findsNWidgets(4));
     });
 

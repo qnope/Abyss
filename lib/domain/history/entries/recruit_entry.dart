@@ -41,7 +41,7 @@ String _unitLabel(UnitType type, int quantity) {
     UnitType.harpoonist => plural ? 'harponneurs' : 'harponneur',
     UnitType.guardian => plural ? 'gardiens' : 'gardien',
     UnitType.domeBreaker => plural ? 'briseurs' : 'briseur',
-    UnitType.siphoner => plural ? 'siphonneurs' : 'siphonneur',
+    UnitType.abyssAdmiral => plural ? 'amiraux des abysses' : 'amiral des abysses',
     UnitType.saboteur => plural ? 'saboteurs' : 'saboteur',
   };
 }

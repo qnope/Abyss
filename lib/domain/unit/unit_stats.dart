@@ -16,7 +16,7 @@ class UnitStats {
         UnitType.harpoonist => const UnitStats(hp: 15, atk: 5, def: 2),
         UnitType.guardian => const UnitStats(hp: 25, atk: 2, def: 6),
         UnitType.domeBreaker => const UnitStats(hp: 20, atk: 8, def: 3),
-        UnitType.siphoner => const UnitStats(hp: 12, atk: 3, def: 2),
+        UnitType.abyssAdmiral => const UnitStats(hp: 100, atk: 0, def: 0),
         UnitType.saboteur => const UnitStats(hp: 8, atk: 10, def: 1),
       };
 }

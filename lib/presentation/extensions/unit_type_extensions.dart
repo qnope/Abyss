@@ -7,7 +7,7 @@ extension UnitTypeExtensions on UnitType {
     UnitType.harpoonist => 'Harponneur',
     UnitType.guardian => 'Gardien',
     UnitType.domeBreaker => 'Briseur',
-    UnitType.siphoner => 'Siphonneur',
+    UnitType.abyssAdmiral => 'Amiral des Abysses',
     UnitType.saboteur => 'Saboteur',
   };
 
@@ -16,7 +16,7 @@ extension UnitTypeExtensions on UnitType {
     UnitType.harpoonist => const Color(0xFFBF360C),
     UnitType.guardian => const Color(0xFF607D8B),
     UnitType.domeBreaker => const Color(0xFFE65100),
-    UnitType.siphoner => const Color(0xFF4A148C),
+    UnitType.abyssAdmiral => const Color(0xFF4A148C),
     UnitType.saboteur => const Color(0xFF1B5E20),
   };
 
@@ -25,7 +25,7 @@ extension UnitTypeExtensions on UnitType {
     UnitType.harpoonist => 'assets/icons/units/harpoonist.svg',
     UnitType.guardian => 'assets/icons/units/guardian.svg',
     UnitType.domeBreaker => 'assets/icons/units/dome_breaker.svg',
-    UnitType.siphoner => 'assets/icons/units/siphoner.svg',
+    UnitType.abyssAdmiral => 'assets/icons/units/abyss_admiral.svg',
     UnitType.saboteur => 'assets/icons/units/saboteur.svg',
   };
 
@@ -34,7 +34,7 @@ extension UnitTypeExtensions on UnitType {
     UnitType.harpoonist => 'DPS',
     UnitType.guardian => 'Tank',
     UnitType.domeBreaker => 'Siege',
-    UnitType.siphoner => 'Voleur',
+    UnitType.abyssAdmiral => 'Amiral',
     UnitType.saboteur => 'Verre-canon',
   };
 }

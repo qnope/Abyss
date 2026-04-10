@@ -32,11 +32,11 @@ void main() {
       expect(stats.def, 3);
     });
 
-    test('siphoner', () {
-      final stats = UnitStats.forType(UnitType.siphoner);
-      expect(stats.hp, 12);
-      expect(stats.atk, 3);
-      expect(stats.def, 2);
+    test('abyssAdmiral', () {
+      final stats = UnitStats.forType(UnitType.abyssAdmiral);
+      expect(stats.hp, 100);
+      expect(stats.atk, 0);
+      expect(stats.def, 0);
     });
 
     test('saboteur', () {

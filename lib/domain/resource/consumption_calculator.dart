@@ -37,7 +37,7 @@ class ConsumptionCalculator {
       UnitType.harpoonist => 2,
       UnitType.guardian => 3,
       UnitType.domeBreaker => 3,
-      UnitType.siphoner => 2,
+      UnitType.abyssAdmiral => 2,
       UnitType.saboteur => 2,
     };
   }

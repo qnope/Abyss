@@ -22,7 +22,7 @@ class UnitTypeAdapter extends TypeAdapter<UnitType> {
       case 3:
         return UnitType.domeBreaker;
       case 4:
-        return UnitType.siphoner;
+        return UnitType.abyssAdmiral;
       case 5:
         return UnitType.saboteur;
       default:
@@ -45,7 +45,7 @@ class UnitTypeAdapter extends TypeAdapter<UnitType> {
       case UnitType.domeBreaker:
         writer.writeByte(3);
         break;
-      case UnitType.siphoner:
+      case UnitType.abyssAdmiral:
         writer.writeByte(4);
         break;
       case UnitType.saboteur:

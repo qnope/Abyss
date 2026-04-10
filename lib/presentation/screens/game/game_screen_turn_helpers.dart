@@ -13,7 +13,7 @@ Map<ResourceType, int> computeConsumption(Player player) {
   final energy =
       ConsumptionCalculator.totalBuildingConsumption(player.buildings);
   if (energy > 0) consumption[ResourceType.energy] = energy;
-  final algae = ConsumptionCalculator.totalUnitConsumption(player.units);
+  final algae = ConsumptionCalculator.totalUnitConsumption(player.unitsOnLevel(1));
   if (algae > 0) consumption[ResourceType.algae] = algae;
   return consumption;
 }
@@ -46,7 +46,7 @@ Map<UnitType, int> computeUnitsToLose(
   final algaeProd = prod[ResourceType.algae] ?? 0;
   final algaeStock = player.resources[ResourceType.algae]?.amount ?? 0;
   return UnitLossCalculator.calculateLosses(
-    units: player.units,
+    units: player.unitsOnLevel(1),
     algaeProduction: algaeProd,
     algaeStock: algaeStock,
   );

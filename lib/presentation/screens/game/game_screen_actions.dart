@@ -43,7 +43,7 @@ void showUnitDetailAction(
   final calculator = UnitCostCalculator();
   final barracksLevel = human.buildings[BuildingType.barracks]!.level;
   final isUnlocked = calculator.isUnlocked(unitType, barracksLevel);
-  final count = human.units[unitType]?.count ?? 0;
+  final count = human.unitsOnLevel(1)[unitType]?.count ?? 0;
   final hasRecruitedThisType = human.recruitedUnitTypes.contains(unitType);
   showUnitDetailSheet(
     context,

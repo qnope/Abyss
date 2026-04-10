@@ -54,7 +54,7 @@ void main() {
         name: 'Nemo',
         baseX: 10,
         baseY: 10,
-        revealedCellsList: fullReveal(),
+        revealedCellsPerLevel: {1: fullReveal()},
         resources: resources,
       );
       return Game.singlePlayer(player)..gameMap = buildTestMap(content);

@@ -94,7 +94,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Recruter'));
       await tester.pumpAndSettle();
-      expect(g.humanPlayer.units[UnitType.scout]!.count, greaterThan(0));
+      expect(g.humanPlayer.unitsOnLevel(1)[UnitType.scout]!.count, greaterThan(0));
     });
   });
 }

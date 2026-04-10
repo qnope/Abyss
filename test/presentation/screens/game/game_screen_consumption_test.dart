@@ -38,10 +38,10 @@ void main() {
       if (buildings != null) b.addAll(buildings);
       final r = PlayerDefaults.resources();
       if (resources != null) r.addAll(resources);
-      final u = PlayerDefaults.units();
+      final u = PlayerDefaults.unitsPerLevel()[1]!;
       if (units != null) u.addAll(units);
       return Game.singlePlayer(
-        Player(name: 'Nemo', buildings: b, resources: r, units: u),
+        Player(name: 'Nemo', buildings: b, resources: r, unitsPerLevel: {1: u}),
       );
     }
 

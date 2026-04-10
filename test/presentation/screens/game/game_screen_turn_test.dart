@@ -21,11 +21,13 @@ Game _game({
 }) {
   final r = PlayerDefaults.resources();
   if (resources != null) r.addAll(resources);
+  Map<int, Map<UnitType, Unit>>? unitsPerLevel;
+  if (units != null) unitsPerLevel = {1: units};
   return Game.singlePlayer(Player(
     name: 'Test',
     buildings: buildings,
     resources: r,
-    units: units,
+    unitsPerLevel: unitsPerLevel,
     recruitedUnitTypes: recruitedUnitTypes,
   ))..turn = turn;
 }
@@ -36,7 +38,7 @@ Map<ResourceType, int> _netProduction(Game game) {
     h.buildings, techBranches: h.techBranches,
   );
   final eCons = ConsumptionCalculator.totalBuildingConsumption(h.buildings);
-  final aCons = ConsumptionCalculator.totalUnitConsumption(h.units);
+  final aCons = ConsumptionCalculator.totalUnitConsumption(h.unitsOnLevel(1));
   final net = <ResourceType, int>{...prod};
   net[ResourceType.energy] = (net[ResourceType.energy] ?? 0) - eCons;
   net[ResourceType.algae] = (net[ResourceType.algae] ?? 0) - aCons;

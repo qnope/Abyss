@@ -113,7 +113,7 @@ void _showExplorationFlow(
   VoidCallback onChanged,
 ) {
   final human = game.humanPlayer;
-  final scoutCount = human.units[UnitType.scout]?.count ?? 0;
+  final scoutCount = human.unitsOnLevel(1)[UnitType.scout]?.count ?? 0;
   final explorerLevel =
       human.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
   final isEligible =

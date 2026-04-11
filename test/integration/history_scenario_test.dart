@@ -77,6 +77,7 @@ void main() {
         FightMonsterAction(
           targetX: 2,
           targetY: 3,
+          level: 1,
           selectedUnits: const {UnitType.harpoonist: 15},
           random: Random(0),
         ),

@@ -41,8 +41,12 @@ class FightMonsterHelpers {
 
   /// Restores the given combatants to the player's Level 1 units (one stock
   /// increment per combatant).
-  static void restoreToStock(Player player, List<Combatant> combatants) {
-    final units = player.unitsOnLevel(1);
+  static void restoreToStock(
+    Player player,
+    List<Combatant> combatants, {
+    required int level,
+  }) {
+    final units = player.unitsOnLevel(level);
     for (final Combatant combatant in combatants) {
       final UnitType? type =
           CombatantBuilder.unitTypeFromKey(combatant.typeKey);
@@ -92,6 +96,7 @@ class FightMonsterHelpers {
   /// per-[UnitType] counts for intact survivors, wounded, and dead.
   static FightCasualtyBreakdown resolveCasualties({
     required Player player,
+    required int level,
     required FightResult fightResult,
     Random? random,
   }) {
@@ -108,8 +113,8 @@ class FightMonsterHelpers {
     }
     final CasualtySplit split =
         CasualtyCalculator(random: random).partition(fallen, pctLost);
-    restoreToStock(player, alive);
-    restoreToStock(player, split.wounded);
+    restoreToStock(player, alive, level: level);
+    restoreToStock(player, split.wounded, level: level);
     return FightCasualtyBreakdown(
       survivorsIntact: combatantsByType(alive),
       wounded: combatantsByType(split.wounded),

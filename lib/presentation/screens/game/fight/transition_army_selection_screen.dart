@@ -53,6 +53,9 @@ class _TransitionArmySelectionScreenState
   int get _totalSelected =>
       _selected.values.fold<int>(0, (sum, v) => sum + v);
 
+  bool get _hasAdmiral =>
+      (_selected[UnitType.abyssAdmiral] ?? 0) > 0;
+
   int get _militaryLevel =>
       _summary.militaryLevelOf(widget.game.humanPlayer);
 
@@ -88,6 +91,16 @@ class _TransitionArmySelectionScreenState
           totalDef: _summary.totalDef(_selected),
           militaryLevel: _militaryLevel,
         ),
+        if (!_hasAdmiral) ...[
+          const SizedBox(height: 8),
+          Text(
+            'Un Amiral des Abysses est requis pour lancer l\'assaut',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).colorScheme.error,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
         const SizedBox(height: 16),
         _buildActions(),
       ],
@@ -98,7 +111,9 @@ class _TransitionArmySelectionScreenState
     return Row(children: [
       Expanded(
         child: ElevatedButton(
-          onPressed: _totalSelected == 0 ? null : _onLaunchPressed,
+          onPressed: _totalSelected == 0 || !_hasAdmiral
+              ? null
+              : _onLaunchPressed,
           child: const Text('Lancer l\'assaut'),
         ),
       ),
@@ -124,6 +139,13 @@ class _TransitionArmySelectionScreenState
     final result = ActionExecutor().execute(
       action, widget.game, widget.game.humanPlayer,
     );
+    if (!result.isSuccess) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result.reason ?? 'Erreur')),
+      );
+      return;
+    }
     await widget.repository.save(widget.game);
     widget.onChanged();
     if (!mounted) return;

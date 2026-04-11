@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 
 import '../map/game_map.dart';
+import '../map/transition_base_type.dart';
 import 'player.dart';
 
 part 'game.g.dart';
@@ -40,4 +41,16 @@ class Game extends HiveObject {
   GameMap? mapForLevel(int level) => levels[level];
 
   GameMap get currentMap => levels[1]!;
+
+  Set<TransitionBaseType> capturedBaseTypesOf(String playerId) {
+    final types = <TransitionBaseType>{};
+    for (final map in levels.values) {
+      for (final cell in map.cells) {
+        if (cell.transitionBase?.capturedBy == playerId) {
+          types.add(cell.transitionBase!.type);
+        }
+      }
+    }
+    return types;
+  }
 }

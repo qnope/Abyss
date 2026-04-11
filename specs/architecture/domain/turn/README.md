@@ -36,7 +36,9 @@ This module resolves the end-of-turn sequence and packages the results for UI di
                         |
 10. Resolve pending explorations (ExplorationResolver)
                         |
-11. Clear recruited units list, increment turn counter
+11. Resolve pending reinforcements (deliver arrived units)
+                        |
+12. Clear recruited units list, increment turn counter
                         |
 12. Return TurnResult
 ```
@@ -59,6 +61,7 @@ Packages the outcomes of a single turn resolution so the UI can display what hap
 | `deactivatedBuildings` | `List<BuildingType>` | Buildings shut down due to energy shortage |
 | `lostUnits` | `Map<UnitType, int>` | Units lost due to algae shortage |
 | `explorations` | `List<ExplorationResult>` | Exploration outcomes (cells revealed, notable content) |
+| `arrivedReinforcements` | `int` | Number of reinforcement orders that arrived this turn |
 
 ## TurnResourceChange
 

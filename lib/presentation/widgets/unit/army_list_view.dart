@@ -8,18 +8,27 @@ import '../building/base_shield_badge.dart';
 import 'unit_card.dart';
 
 class ArmyListView extends StatelessWidget {
-  final Map<UnitType, Unit> units;
+  final Map<int, Map<UnitType, Unit>> unitsPerLevel;
   final int barracksLevel;
   final Map<BuildingType, Building> buildings;
   final void Function(UnitType unitType) onUnitTap;
 
   const ArmyListView({
     super.key,
-    required this.units,
+    required this.unitsPerLevel,
     required this.barracksLevel,
     required this.buildings,
     required this.onUnitTap,
   });
+
+  Map<int, int> _countsFor(UnitType type) {
+    final result = <int, int>{};
+    for (final entry in unitsPerLevel.entries) {
+      final count = entry.value[type]?.count ?? 0;
+      if (count > 0) result[entry.key] = count;
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +40,7 @@ class ArmyListView extends StatelessWidget {
             itemCount: UnitType.values.length,
             itemBuilder: (context, index) {
               final unitType = UnitType.values[index];
-              final count = units[unitType]?.count ?? 0;
+              final countsPerLevel = _countsFor(unitType);
               final isUnlocked = UnitCostCalculator().isUnlocked(
                 unitType,
                 barracksLevel,
@@ -45,7 +54,7 @@ class ArmyListView extends StatelessWidget {
                 ),
                 child: UnitCard(
                   unitType: unitType,
-                  count: count,
+                  countsPerLevel: countsPerLevel,
                   isUnlocked: isUnlocked,
                   onTap: () => onUnitTap(unitType),
                 ),

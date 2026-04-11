@@ -43,6 +43,7 @@ The `productionFormulas` constant maps building types to their formulas:
 - `totalBuildingConsumption(buildings, {excluded})` -- sums energy consumption across all buildings, optionally excluding a set of types
 - `unitAlgaeConsumption(type)` -- returns 1-3 algae per unit type
 - `totalUnitConsumption(units)` -- sums algae consumption across all unit counts
+- `totalUnitConsumptionAllLevels(unitsPerLevel)` -- sums algae consumption across all levels
 
 ## Maintenance Calculator
 

@@ -23,9 +23,10 @@ Hive requires a registered adapter for every type it persists. `GameRepository.i
 
 1. **Enums** -- `BuildingType`, `ResourceType`, `TechBranch`, `UnitType`, `TerrainType`, `CellContentType`, `MonsterDifficulty`, `HistoryEntryCategory`, `CombatSide`
 2. **Value objects** -- `Building`, `Resource`, `TechBranchState`, `Unit`, `MonsterLair`, `MapCell`, `GridPosition`, `ExplorationOrder`, `Combatant`, `FightTurnSummary`, `FightResult`, `TurnResourceChange`
-3. **History entries** -- `BuildingEntry`, `ResearchEntry`, `RecruitEntry`, `ExploreEntry`, `CollectEntry`, `CombatEntry`, `TurnEndEntry`
-4. **Aggregates** -- `Player` (holds `List<HistoryEntry>`), `GameMap`
-5. **Root** -- `Game`
+3. **Transition types** -- `TransitionBaseType`, `TransitionBase`, `ReinforcementOrder`
+4. **History entries** -- `BuildingEntry`, `ResearchEntry`, `RecruitEntry`, `ExploreEntry`, `CollectEntry`, `CombatEntry`, `CaptureEntry`, `DescentEntry`, `ReinforcementEntry`, `TurnEndEntry`
+5. **Aggregates** -- `Player` (holds `List<HistoryEntry>`), `GameMap`
+6. **Root** -- `Game`
 
 `MonsterLair` is registered before `MapCell` because cells embed an
 optional `lair` reference. Fight outcomes (lair `collectedBy`, updated

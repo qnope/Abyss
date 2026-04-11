@@ -18,15 +18,18 @@ class ExplorationOrderAdapter extends TypeAdapter<ExplorationOrder> {
     };
     return ExplorationOrder(
       target: fields[0] as GridPosition,
+      level: fields[1] as int? ?? 1,
     );
   }
 
   @override
   void write(BinaryWriter writer, ExplorationOrder obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.target);
+      ..write(obj.target)
+      ..writeByte(1)
+      ..write(obj.level);
   }
 
   @override

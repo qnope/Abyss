@@ -234,4 +234,34 @@ void main() {
       expect(ConsumptionCalculator.totalUnitConsumption({}), 0);
     });
   });
+
+  group('totalUnitConsumptionAllLevels', () {
+    test('sums across multiple levels', () {
+      final unitsPerLevel = {
+        1: unitMap({UnitType.scout: 10}),
+        2: unitMap({UnitType.scout: 5, UnitType.guardian: 3}),
+      };
+      // Level 1: 10*1=10, Level 2: 5*1 + 3*3 = 14 => total 24
+      expect(
+        ConsumptionCalculator.totalUnitConsumptionAllLevels(unitsPerLevel),
+        24,
+      );
+    });
+
+    test('single level same as totalUnitConsumption', () {
+      final units = unitMap({UnitType.harpoonist: 5});
+      final single = ConsumptionCalculator.totalUnitConsumption(units);
+      final multi = ConsumptionCalculator.totalUnitConsumptionAllLevels(
+        {1: units},
+      );
+      expect(multi, single);
+    });
+
+    test('empty levels returns 0', () {
+      expect(
+        ConsumptionCalculator.totalUnitConsumptionAllLevels({}),
+        0,
+      );
+    });
+  });
 }

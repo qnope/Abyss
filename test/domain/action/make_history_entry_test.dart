@@ -265,6 +265,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 20},
         random: Random(0),
       );
@@ -305,6 +306,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 20},
         random: Random(0),
       );

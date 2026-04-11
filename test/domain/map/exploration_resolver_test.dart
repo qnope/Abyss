@@ -147,4 +147,91 @@ void main() {
       expect(bob.pendingExplorations, isEmpty);
     });
   });
+
+  group('level 2 exploration', () {
+    test('reveals cells on level 2 map', () {
+      final map2 = _buildMap();
+      final target = GridPosition(x: 4, y: 4);
+      final player = _player(
+        id: 'solo',
+        pendingExplorations: [
+          ExplorationOrder(target: target, level: 2),
+        ],
+      );
+      final game = Game.singlePlayer(player)
+        ..levels = {1: _buildMap(), 2: map2};
+
+      final results = ExplorationResolver.resolve(game);
+
+      final revealed2 = player.revealedCellsSetOnLevel(2);
+      expect(revealed2.contains(target), isTrue);
+      expect(results.single.newCellsRevealed, greaterThan(0));
+      expect(player.pendingExplorations, isEmpty);
+    });
+
+    test('does not reveal cells on level 1 when exploring level 2', () {
+      final target = GridPosition(x: 4, y: 4);
+      final player = _player(
+        id: 'solo',
+        pendingExplorations: [
+          ExplorationOrder(target: target, level: 2),
+        ],
+      );
+      final game = Game.singlePlayer(player)
+        ..levels = {1: _buildMap(), 2: _buildMap()};
+
+      ExplorationResolver.resolve(game);
+
+      expect(player.revealedCellsSetOnLevel(1), isEmpty);
+      expect(player.revealedCellsSetOnLevel(2), isNotEmpty);
+    });
+
+    test('skips order when target level map is missing', () {
+      final player = _player(
+        id: 'solo',
+        pendingExplorations: [
+          ExplorationOrder(
+            target: GridPosition(x: 4, y: 4), level: 2,
+          ),
+        ],
+      );
+      final game = Game.singlePlayer(player)
+        ..levels = {1: _buildMap()};
+
+      final results = ExplorationResolver.resolve(game);
+
+      expect(results, isEmpty);
+      expect(player.pendingExplorations, isEmpty);
+    });
+
+    test('mixed level explorations resolve independently', () {
+      final player = _player(
+        id: 'solo',
+        pendingExplorations: [
+          ExplorationOrder(
+            target: GridPosition(x: 2, y: 2), level: 1,
+          ),
+          ExplorationOrder(
+            target: GridPosition(x: 7, y: 7), level: 2,
+          ),
+        ],
+      );
+      final game = Game.singlePlayer(player)
+        ..levels = {1: _buildMap(), 2: _buildMap()};
+
+      final results = ExplorationResolver.resolve(game);
+
+      expect(results, hasLength(2));
+      expect(
+        player.revealedCellsSetOnLevel(1)
+            .contains(GridPosition(x: 2, y: 2)),
+        isTrue,
+      );
+      expect(
+        player.revealedCellsSetOnLevel(2)
+            .contains(GridPosition(x: 7, y: 7)),
+        isTrue,
+      );
+    });
+  });
 }

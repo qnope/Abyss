@@ -18,6 +18,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 1},
       );
       final result = action.validate(game, player);
@@ -35,6 +36,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 1},
       );
       final result = action.validate(scenario.game, scenario.player);
@@ -50,6 +52,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 1},
       );
       final result = action.validate(scenario.game, scenario.player);
@@ -65,6 +68,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 1},
       );
       final result = action.validate(scenario.game, scenario.player);
@@ -80,6 +84,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 10},
       );
       final result = action.validate(scenario.game, scenario.player);
@@ -94,6 +99,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 0},
       );
       final result = action.validate(scenario.game, scenario.player);
@@ -108,6 +114,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: const {},
       );
       final result = action.validate(scenario.game, scenario.player);
@@ -122,6 +129,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 2},
       );
       final result = action.validate(scenario.game, scenario.player);

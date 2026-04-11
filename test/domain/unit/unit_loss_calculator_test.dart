@@ -153,4 +153,84 @@ void main() {
       });
     });
   });
+
+  group('calculateLossesAllLevels', () {
+    test('no deficit returns empty', () {
+      final result = UnitLossCalculator.calculateLossesAllLevels(
+        unitsPerLevel: {1: _units({UnitType.scout: 5})},
+        algaeProduction: 100,
+        algaeStock: 0,
+      );
+      expect(result, isEmpty);
+    });
+
+    test('counts units on all levels for consumption', () {
+      // Lv1: 10 scouts=10, Lv2: 10 scouts=10 => total 20
+      // available=10 => deficit=10, ratio=0.5
+      // Each level loses ceil(10*0.5)=5
+      // Aggregated: scout=10
+      final result = UnitLossCalculator.calculateLossesAllLevels(
+        unitsPerLevel: {
+          1: _units({UnitType.scout: 10}),
+          2: _units({UnitType.scout: 10}),
+        },
+        algaeProduction: 10,
+        algaeStock: 0,
+      );
+      expect(result, {UnitType.scout: 10});
+    });
+
+    test('does not mutate units', () {
+      final lv1 = _units({UnitType.scout: 10});
+      final lv2 = _units({UnitType.scout: 10});
+      UnitLossCalculator.calculateLossesAllLevels(
+        unitsPerLevel: {1: lv1, 2: lv2},
+        algaeProduction: 0,
+        algaeStock: 0,
+      );
+      expect(lv1[UnitType.scout]!.count, 10);
+      expect(lv2[UnitType.scout]!.count, 10);
+    });
+  });
+
+  group('applyLossesAllLevels', () {
+    test('no deficit does nothing', () {
+      final lv1 = _units({UnitType.scout: 5});
+      final result = UnitLossCalculator.applyLossesAllLevels(
+        unitsPerLevel: {1: lv1},
+        algaeProduction: 100,
+        algaeStock: 0,
+      );
+      expect(result, isEmpty);
+      expect(lv1[UnitType.scout]!.count, 5);
+    });
+
+    test('mutates units on all levels', () {
+      // Lv1: 10 scouts=10, Lv2: 10 scouts=10 => total 20
+      // available=10 => deficit=10, ratio=0.5
+      final lv1 = _units({UnitType.scout: 10});
+      final lv2 = _units({UnitType.scout: 10});
+      UnitLossCalculator.applyLossesAllLevels(
+        unitsPerLevel: {1: lv1, 2: lv2},
+        algaeProduction: 10,
+        algaeStock: 0,
+      );
+      expect(lv1[UnitType.scout]!.count, 5);
+      expect(lv2[UnitType.scout]!.count, 5);
+    });
+
+    test('returns aggregated losses', () {
+      final lv1 = _units({UnitType.scout: 6});
+      final lv2 = _units({UnitType.scout: 4});
+      // total consumption = 10, available = 0, ratio = 1.0
+      final result = UnitLossCalculator.applyLossesAllLevels(
+        unitsPerLevel: {1: lv1, 2: lv2},
+        algaeProduction: 0,
+        algaeStock: 0,
+      );
+      expect(result, {UnitType.scout: 10});
+      expect(lv1[UnitType.scout]!.count, 0);
+      expect(lv2[UnitType.scout]!.count, 0);
+    });
+  });
 }

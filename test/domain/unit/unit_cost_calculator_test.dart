@@ -90,8 +90,8 @@ void main() {
       expect(calculator.unlockLevel(UnitType.domeBreaker), 3);
     });
 
-    test('abyssAdmiral requires barracks 5', () {
-      expect(calculator.unlockLevel(UnitType.abyssAdmiral), 5);
+    test('abyssAdmiral requires barracks 2', () {
+      expect(calculator.unlockLevel(UnitType.abyssAdmiral), 2);
     });
 
     test('saboteur requires barracks 5', () {

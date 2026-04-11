@@ -7,8 +7,8 @@ import 'map_cell_widget.dart';
 class GameMapView extends StatefulWidget {
   final GameMap gameMap;
   final Set<GridPosition> revealedCells;
-  final int baseX;
-  final int baseY;
+  final int? baseX;
+  final int? baseY;
   final String humanPlayerId;
   final void Function(int x, int y)? onCellTap;
   final Set<(int, int)> pendingTargets;
@@ -17,8 +17,8 @@ class GameMapView extends StatefulWidget {
     super.key,
     required this.gameMap,
     required this.revealedCells,
-    required this.baseX,
-    required this.baseY,
+    this.baseX,
+    this.baseY,
     required this.humanPlayerId,
     this.onCellTap,
     this.pendingTargets = const {},
@@ -48,8 +48,10 @@ class _GameMapViewState extends State<GameMapView> {
   void _centerOnBase() {
     final size = MediaQuery.of(context).size;
     final scale = size.width / (_defaultVisibleCells * cellSize);
-    final basePixelX = widget.baseX * cellSize;
-    final basePixelY = widget.baseY * cellSize;
+    final centerX = widget.baseX ?? _mapSize ~/ 2;
+    final centerY = widget.baseY ?? _mapSize ~/ 2;
+    final basePixelX = centerX * cellSize;
+    final basePixelY = centerY * cellSize;
     final dx = size.width / 2 - (basePixelX + cellSize / 2) * scale;
     final dy = size.height / 2 - (basePixelY + cellSize / 2) * scale;
     _controller.value = Matrix4(

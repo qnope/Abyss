@@ -1,13 +1,11 @@
 import 'dart:math';
 
-import '../building/building_type.dart';
 import '../fight/casualty_calculator.dart';
 import '../fight/casualty_split.dart';
 import '../fight/combatant.dart';
 import '../fight/combatant_builder.dart';
 import '../fight/fight_result.dart';
 import '../game/player.dart';
-import '../map/transition_base_type.dart';
 import '../unit/unit.dart';
 import '../unit/unit_type.dart';
 import 'attack_transition_base_result.dart';
@@ -37,22 +35,6 @@ class AttackTransitionBaseHelpers {
           'Unités insuffisantes',
         );
       }
-    }
-    return null;
-  }
-
-  static AttackTransitionBaseResult? validateBuilding(
-    Player player,
-    TransitionBaseType type,
-  ) {
-    final BuildingType req = type == TransitionBaseType.faille
-        ? BuildingType.descentModule
-        : BuildingType.pressureCapsule;
-    final int bLevel = player.buildings[req]?.level ?? 0;
-    if (bLevel < 1) {
-      return const AttackTransitionBaseResult.failure(
-        'Bâtiment requis manquant',
-      );
     }
     return null;
   }

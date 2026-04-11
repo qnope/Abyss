@@ -1,6 +1,5 @@
 import 'package:abyss/domain/action/attack_transition_base_action.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
-import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -50,7 +49,7 @@ void main() {
       expect(result.reason, 'Base déjà capturée');
     });
 
-    test('fails without required building for faille', () {
+    test('succeeds without descent module (not required for attack)', () {
       final scenario = createAttackScenario(
         descentModuleLevel: 0,
         stock: {UnitType.abyssAdmiral: 1, UnitType.harpoonist: 10},
@@ -60,23 +59,7 @@ void main() {
         selectedUnits: {UnitType.abyssAdmiral: 1, UnitType.harpoonist: 5},
       );
       final result = action.validate(scenario.game, scenario.player);
-      expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Bâtiment requis manquant');
-    });
-
-    test('fails without required building for cheminee', () {
-      final scenario = createAttackScenario(
-        baseType: TransitionBaseType.cheminee,
-        pressureCapsuleLevel: 0,
-        stock: {UnitType.abyssAdmiral: 1, UnitType.harpoonist: 10},
-      );
-      final action = AttackTransitionBaseAction(
-        targetX: 1, targetY: 1, level: 1,
-        selectedUnits: {UnitType.abyssAdmiral: 1, UnitType.harpoonist: 5},
-      );
-      final result = action.validate(scenario.game, scenario.player);
-      expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Bâtiment requis manquant');
+      expect(result.isSuccess, isTrue);
     });
 
     test('fails without abyss admiral', () {

@@ -29,6 +29,7 @@ class UpgradeBuildingAction extends Action {
       currentLevel: building.level,
       resources: player.resources,
       allBuildings: player.buildings,
+      capturedBaseTypes: game.capturedBaseTypesOf(player.id),
     );
     if (check.isMaxLevel) {
       return ActionResult.failure('Niveau maximum atteint');

@@ -26,6 +26,7 @@ void main() {
       final action = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.scout: 1},
         random: Random(1),
       );

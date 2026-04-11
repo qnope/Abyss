@@ -39,6 +39,7 @@ void main() {
                 1,
                 lair,
                 () {},
+                level: 1,
               ),
               child: const Text('open'),
             ),

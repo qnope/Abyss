@@ -23,7 +23,7 @@ void main() {
     tearDown(clearSvgMocks);
 
     Widget createApp({
-      Map<UnitType, Unit>? units,
+      Map<int, Map<UnitType, Unit>>? unitsPerLevel,
       int barracksLevel = 1,
       Map<BuildingType, Building>? buildings,
       void Function(UnitType)? onUnitTap,
@@ -32,7 +32,7 @@ void main() {
         theme: AbyssTheme.create(),
         home: Scaffold(
           body: ArmyListView(
-            units: units ?? _defaultUnits(),
+            unitsPerLevel: unitsPerLevel ?? {1: _defaultUnits()},
             barracksLevel: barracksLevel,
             buildings: buildings ?? _buildings(),
             onUnitTap: onUnitTap ?? (_) {},

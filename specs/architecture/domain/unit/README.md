@@ -10,7 +10,7 @@
 | harpoonist   | Ranged DPS    | 15 |  5  |  2  | 1                       |
 | guardian      | Tank          | 25 |  2  |  6  | 3                       |
 | domeBreaker  | Siege         | 20 |  8  |  3  | 3                       |
-| siphoner     | Resource raid | 12 |  3  |  2  | 5                       |
+| abyssAdmiral | Commander     |100 |  0  |  0  | 5                       |
 | saboteur     | Glass cannon  | 8  | 10  |  1  | 5                       |
 
 ## Unit
@@ -39,8 +39,10 @@ Instance-method utility for recruitment economics:
 ## UnitLossCalculator
 
 Static utility that computes starvation losses when algae is insufficient.
+Operates across all levels via `Player.unitsPerLevel`.
 
-- Compares total unit algae consumption against `algaeProduction + algaeStock`.
+- Sums total unit algae consumption across all levels.
+- Compares against `algaeProduction + algaeStock`.
 - When there is a deficit, a `lossRatio` (deficit / total consumption) is computed.
-- Each unit type loses `ceil(count * lossRatio)` units, capped at its current count.
-- Returns an empty map when supply meets or exceeds consumption.
+- Each unit type on each level loses `ceil(count * lossRatio)` units, capped at its current count.
+- Returns losses per level as `Map<int, Map<UnitType, int>>`, empty when supply meets demand.

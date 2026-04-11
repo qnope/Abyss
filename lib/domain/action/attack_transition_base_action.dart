@@ -61,9 +61,6 @@ class AttackTransitionBaseAction extends Action {
     if (base.isCaptured) {
       return const AttackTransitionBaseResult.failure('Base déjà capturée');
     }
-    final buildingErr =
-        AttackTransitionBaseHelpers.validateBuilding(player, base.type);
-    if (buildingErr != null) return buildingErr;
     final unitErr = AttackTransitionBaseHelpers.validateUnits(
       player, level, selectedUnits,
     );

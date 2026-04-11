@@ -12,6 +12,8 @@
 - **laboratory** -- unlocks research
 - **barracks** -- unlocks unit training
 - **coralCitadel** -- defensive building; consumes `1 * level` energy, deactivated last
+- **descentModule** -- unlocks faille assault (max level 1, requires HQ 5)
+- **pressureCapsule** -- unlocks cheminee assault (max level 1, requires HQ 8)
 
 ## Building
 
@@ -40,6 +42,8 @@ Every building except headquarters requires a minimum headquarters level to upgr
 - **Laboratory**: HQ 2/3/5/7/10 for levels 1-5
 - **Barracks**: HQ 3/4/6/8/10 for levels 1-5
 - **Coral Citadel**: HQ 3/5/7/9/10 for levels 1-5
+- **Descent Module**: HQ 5 for level 1 (max level 1)
+- **Pressure Capsule**: HQ 8 for level 1 (max level 1)
 
 ## Upgrade Check
 

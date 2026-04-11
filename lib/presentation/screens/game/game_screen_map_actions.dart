@@ -4,10 +4,14 @@ import '../../../domain/action/action_executor.dart';
 import '../../../domain/action/collect_treasure_action.dart';
 import '../../../domain/action/collect_treasure_result.dart';
 import '../../../domain/action/explore_action.dart';
+import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
+import '../../../domain/game/player.dart';
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/cell_eligibility_checker.dart';
 import '../../../domain/map/grid_position.dart';
+import '../../../domain/map/transition_base.dart';
+import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/tech/tech_branch.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../widgets/map/cell_info_sheet.dart';
@@ -45,7 +49,8 @@ Widget buildMapTab(
       child: GameMapView(
         gameMap: game.levels[level]!,
         revealedCells: human.revealedCellsSetOnLevel(level),
-        baseX: human.baseX, baseY: human.baseY,
+        baseX: level == 1 ? human.baseX : null,
+        baseY: level == 1 ? human.baseY : null,
         humanPlayerId: human.id,
         onCellTap: (x, y) => _showCellAction(
           context, game, repository, x, y, level,
@@ -96,7 +101,8 @@ void _showCellAction(BuildContext context, Game game,
       showMonsterLairSheet(context, targetX: x, targetY: y,
         lair: cell.lair!,
         onPrepareFight: () => openArmySelection(
-            context, game, repository, x, y, cell.lair!, onChanged));
+            context, game, repository, x, y, cell.lair!, onChanged,
+            level: level));
     case CellContentType.transitionBase:
       final base = cell.transitionBase;
       if (base == null) {
@@ -104,15 +110,17 @@ void _showCellAction(BuildContext context, Game game,
           message: "Il n'y a rien a voir ici");
         return;
       }
+      final human = game.humanPlayer;
       showTransitionBaseSheet(context,
-        transitionBase: base, level: level, player: human,
+        transitionBase: base, level: level,
+        hasBuildingRequirement: _hasBuildingFor(human, base),
+        requiredBuildingName: _requiredBuildingNameFor(base),
+        unitCountOnTarget: _unitCountOnLevel(human, base.targetLevel),
         onAttack: () => handleAttackTransitionBase(
           context, game, repository, base, x, y, level, onChanged),
         onDescend: () => handleDescend(
           context, game, repository, base, x, y, level,
           onChanged: onChanged, onLevelSelected: onLevelSelected),
-        onReinforce: () => handleSendReinforcements(
-          context, game, repository, base, x, y, level, onChanged),
       );
     case CellContentType.empty:
       showCellInfoSheet(context, title: 'Plaine ($x, $y)',
@@ -133,7 +141,9 @@ void _showExplorationFlow(
   final explorerLevel =
       human.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
   final isEligible =
-      CellEligibilityChecker.isEligible(game.levels[level]!, human, x, y);
+      CellEligibilityChecker.isEligible(
+        game.levels[level]!, human, x, y, level: level,
+      );
 
   showExplorationSheet(
     context,
@@ -143,7 +153,9 @@ void _showExplorationFlow(
     explorerLevel: explorerLevel,
     isEligible: isEligible,
     onConfirm: () {
-      final action = ExploreAction(targetX: x, targetY: y);
+      final action = ExploreAction(
+        targetX: x, targetY: y, level: level,
+      );
       final result = ActionExecutor().execute(action, game, human);
       if (result.isSuccess) onChanged();
     },
@@ -161,4 +173,22 @@ void _collectTreasure(BuildContext context, Game game, int x, int y,
       title: titleFor(content),
       deltas: result.deltas,
       emptyMessage: emptyMessageFor(content));
+}
+
+bool _hasBuildingFor(Player player, TransitionBase base) {
+  final buildingType = base.type == TransitionBaseType.faille
+      ? BuildingType.descentModule
+      : BuildingType.pressureCapsule;
+  return (player.buildings[buildingType]?.level ?? 0) > 0;
+}
+
+String _requiredBuildingNameFor(TransitionBase base) {
+  return base.type == TransitionBaseType.faille
+      ? 'le Module de Descente'
+      : 'la Capsule Pressurisee';
+}
+
+int _unitCountOnLevel(Player player, int level) {
+  final units = player.unitsOnLevel(level);
+  return units.values.fold<int>(0, (sum, u) => sum + u.count);
 }

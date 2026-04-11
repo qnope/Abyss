@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_cost_calculator.dart';
 import '../../../domain/building/building_type.dart';
+import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
+import '../../extensions/transition_base_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../resource/resource_icon.dart';
 
@@ -13,6 +15,7 @@ class UpgradeSection extends StatelessWidget {
   final Building building;
   final Map<ResourceType, Resource> resources;
   final Map<BuildingType, Building> allBuildings;
+  final Set<TransitionBaseType> capturedBaseTypes;
   final VoidCallback onUpgrade;
 
   const UpgradeSection({
@@ -20,6 +23,7 @@ class UpgradeSection extends StatelessWidget {
     required this.building,
     required this.resources,
     required this.allBuildings,
+    this.capturedBaseTypes = const {},
     required this.onUpgrade,
   });
 
@@ -31,6 +35,7 @@ class UpgradeSection extends StatelessWidget {
       currentLevel: building.level,
       resources: resources,
       allBuildings: allBuildings,
+      capturedBaseTypes: capturedBaseTypes,
     );
     final textTheme = Theme.of(context).textTheme;
 
@@ -57,6 +62,8 @@ class UpgradeSection extends StatelessWidget {
         const SizedBox(height: 8),
         ...costs.entries.map((e) => _costRow(e.key, e.value, textTheme)),
         ...prereqs.entries.map((e) => _prereqRow(e.key, e.value, textTheme)),
+        if (check.missingCapturedBase != null)
+          _capturedBaseRow(check.missingCapturedBase!, textTheme),
         const SizedBox(height: 12),
         ElevatedButton(
           onPressed: check.canUpgrade ? onUpgrade : null,
@@ -101,6 +108,27 @@ class UpgradeSection extends StatelessWidget {
             child: Text(type.displayName, style: TextStyle(color: color)),
           ),
           Text('Niv. $level', style: TextStyle(color: color)),
+        ],
+      ),
+    );
+  }
+
+  Widget _capturedBaseRow(
+    TransitionBaseType type,
+    TextTheme textTheme,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        children: [
+          const Icon(Icons.lock, size: 16, color: AbyssColors.error),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              '${type.displayName} capturee requise',
+              style: const TextStyle(color: AbyssColors.error),
+            ),
+          ),
         ],
       ),
     );

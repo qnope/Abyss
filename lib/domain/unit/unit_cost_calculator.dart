@@ -47,7 +47,8 @@ class UnitCostCalculator {
   int unlockLevel(UnitType type) => switch (type) {
     UnitType.scout || UnitType.harpoonist => 1,
     UnitType.guardian || UnitType.domeBreaker => 3,
-    UnitType.abyssAdmiral || UnitType.saboteur => 5,
+    UnitType.abyssAdmiral => 2,
+    UnitType.saboteur => 5,
   };
 
   bool isUnlocked(UnitType type, int barracksLevel) =>

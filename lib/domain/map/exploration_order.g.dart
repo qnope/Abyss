@@ -18,7 +18,7 @@ class ExplorationOrderAdapter extends TypeAdapter<ExplorationOrder> {
     };
     return ExplorationOrder(
       target: fields[0] as GridPosition,
-      level: fields[1] as int? ?? 1,
+      level: fields[1] as int,
     );
   }
 

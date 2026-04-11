@@ -12,9 +12,10 @@ class ContentPlacer {
     required int baseX,
     required int baseY,
     required Random random,
+    Set<int> reservedIndices = const {},
   }) {
     final eligible = _buildEligibleIndices(
-      cells, width, height, baseX, baseY,
+      cells, width, height, baseX, baseY, reservedIndices,
     );
     eligible.shuffle(random);
 
@@ -46,13 +47,16 @@ class ContentPlacer {
     List<MapCell> cells,
     int width, int height,
     int baseX, int baseY,
+    Set<int> reservedIndices,
   ) {
     final result = <int>[];
     for (var y = 0; y < height; y++) {
       for (var x = 0; x < width; x++) {
+        final idx = y * width + x;
         final dist = max((x - baseX).abs(), (y - baseY).abs());
         if (dist <= 2) continue;
-        result.add(y * width + x);
+        if (reservedIndices.contains(idx)) continue;
+        result.add(idx);
       }
     }
     return result;

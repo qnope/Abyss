@@ -120,6 +120,29 @@ void main() {
       );
     });
 
+    test('reserved indices have no content placed', () {
+      const reserved = {50, 100, 200};
+      for (var seed = 0; seed < 20; seed++) {
+        final random = Random(seed);
+        final cells = TerrainGenerator.generate(
+          width: width, height: height,
+          random: random, baseX: baseX, baseY: baseY,
+        );
+        ContentPlacer.place(
+          cells: cells, width: width, height: height,
+          baseX: baseX, baseY: baseY, random: random,
+          reservedIndices: reserved,
+        );
+        for (final idx in reserved) {
+          expect(
+            cells[idx].content,
+            CellContentType.empty,
+            reason: 'seed=$seed idx=$idx should remain empty',
+          );
+        }
+      }
+    });
+
     test('same seed produces same content', () {
       final a = generate(99);
       final b = generate(99);

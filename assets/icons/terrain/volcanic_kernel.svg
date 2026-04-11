@@ -49,4 +49,32 @@
   <path d="M30 59 L32 57 L34 58 L33 60 Z" fill="#262626" opacity="0.5"/>
   <path d="M18 60 L20 58 L21 59 Z" fill="#232323" opacity="0.6"/>
 
+  <!-- === Volcano body silhouette === -->
+  <path d="M8 52 Q10 50, 14 48 Q16 44, 18 40 Q20 36, 22 30 Q24 24, 26 20 Q27 17, 28 16 Q29 18, 31 22 Q33 26, 36 32 Q39 38, 42 42 Q46 46, 50 48 Q54 50, 56 52 Z" fill="url(#vkRockGrad)"/>
+
+  <!-- Rock texture overlays (wavy horizontal lines) -->
+  <path d="M14 46 Q20 45, 26 46 Q32 47, 38 46 Q44 45, 50 46" fill="none" stroke="#2A1F1A" stroke-width="0.6" opacity="0.5"/>
+  <path d="M18 40 Q24 39, 30 40 Q36 41, 42 40" fill="none" stroke="#1F1510" stroke-width="0.5" opacity="0.4"/>
+  <path d="M22 34 Q26 33, 30 34 Q34 35, 38 34" fill="none" stroke="#251A14" stroke-width="0.5" opacity="0.35"/>
+
+  <!-- Crack/ridge strokes on surface -->
+  <path d="M20 42 L22 38" fill="none" stroke="#4E342E" stroke-width="0.7" opacity="0.5"/>
+  <path d="M35 36 L37 32" fill="none" stroke="#4E342E" stroke-width="0.6" opacity="0.45"/>
+  <path d="M40 44 L43 40" fill="none" stroke="#4E342E" stroke-width="0.8" opacity="0.4"/>
+  <path d="M16 46 L18 43" fill="none" stroke="#4E342E" stroke-width="0.5" opacity="0.55"/>
+  <path d="M28 28 L30 25" fill="none" stroke="#4E342E" stroke-width="0.6" opacity="0.6"/>
+
+  <!-- Shadow patches on right flank -->
+  <path d="M38 34 Q42 38, 46 42 Q48 44, 50 48 L44 46 Q40 40, 38 36 Z" fill="#1A1A1A" opacity="0.3"/>
+  <path d="M42 42 Q46 46, 52 50 L48 50 Q44 46, 42 44 Z" fill="#1A1A1A" opacity="0.25"/>
+  <path d="M34 30 Q36 32, 40 36 L38 36 Q35 33, 34 31 Z" fill="#1A1A1A" opacity="0.2"/>
+
+  <!-- === Crater at peak === -->
+  <!-- Crater rim -->
+  <ellipse cx="28" cy="18" rx="6" ry="3" fill="none" stroke="#2A1F1A" stroke-width="1" opacity="0.7"/>
+  <!-- Crater inner glow -->
+  <ellipse cx="28" cy="18" rx="5" ry="2.5" fill="url(#vkCraterGlow)"/>
+  <!-- Bright center of crater -->
+  <circle cx="28" cy="18" r="1.5" fill="#FFAB00" opacity="0.9"/>
+
 </svg>

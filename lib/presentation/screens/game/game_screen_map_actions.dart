@@ -35,8 +35,10 @@ Widget buildMapTab(
 }) {
   final human = game.humanPlayer;
   final level = game.levels.containsKey(currentLevel) ? currentLevel : 1;
-  final pendingTargets =
-      human.pendingExplorations.map((e) => (e.target.x, e.target.y)).toSet();
+  final pendingTargets = human.pendingExplorations
+      .where((e) => e.level == level)
+      .map((e) => (e.target.x, e.target.y))
+      .toSet();
   return Column(children: [
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),

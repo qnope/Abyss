@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <!-- Rock gradient (bottom-to-top, dark to brown) -->
+    <linearGradient id="vkRockGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#1A1A1A"/>
+      <stop offset="100%" stop-color="#3E2723"/>
+    </linearGradient>
+    <!-- Lava gradient (bottom-to-top, red to orange) -->
+    <linearGradient id="vkLavaGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#FF3D00"/>
+      <stop offset="100%" stop-color="#FF9100"/>
+    </linearGradient>
+    <!-- Crater glow (radial, bright center fading out) -->
+    <radialGradient id="vkCraterGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFAB00" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#FF6D00" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF6D00" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Hydrothermal plume gradient (opaque cyan to transparent teal) -->
+    <linearGradient id="vkPlumeGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#00BCD4" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Ember glow (radial, bright center to edge) -->
+    <radialGradient id="vkEmberGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFAB00"/>
+      <stop offset="100%" stop-color="#FF6D00"/>
+    </radialGradient>
+    <!-- Seabed gradient (dark grays) -->
+    <linearGradient id="vkSeabedGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#2D2D2D"/>
+      <stop offset="100%" stop-color="#1B1B1B"/>
+    </linearGradient>
+    <!-- Glow filter -->
+    <filter id="vkGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- === Seabed base layer === -->
+  <path d="M0 54 Q4 52, 8 54 Q14 56, 20 53 Q28 55, 36 54 Q44 56, 52 53 Q58 55, 64 54 L64 64 L0 64 Z" fill="url(#vkSeabedGrad)"/>
+  <!-- Scattered small rocks on seabed -->
+  <path d="M5 58 L7 56 L9 57 L8 59 Z" fill="#252525" opacity="0.7"/>
+  <path d="M50 57 L53 55 L55 56 L54 58 Z" fill="#222222" opacity="0.6"/>
+  <path d="M30 59 L32 57 L34 58 L33 60 Z" fill="#262626" opacity="0.5"/>
+  <path d="M18 60 L20 58 L21 59 Z" fill="#232323" opacity="0.6"/>
+
+</svg>

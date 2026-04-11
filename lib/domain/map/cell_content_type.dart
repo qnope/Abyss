@@ -9,4 +9,5 @@ enum CellContentType {
   @HiveField(2) ruins,
   @HiveField(3) monsterLair,
   @HiveField(4) transitionBase,
+  @HiveField(5) passage,
 }

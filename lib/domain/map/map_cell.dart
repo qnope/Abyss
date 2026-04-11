@@ -25,12 +25,16 @@ class MapCell {
   @HiveField(4)
   final TransitionBase? transitionBase;
 
+  @HiveField(5)
+  final String? passageName;
+
   MapCell({
     required this.terrain,
     this.content = CellContentType.empty,
     this.lair,
     this.collectedBy,
     this.transitionBase,
+    this.passageName,
   });
 
   bool get isCollected => collectedBy != null;
@@ -41,6 +45,7 @@ class MapCell {
     Object? lair = _sentinel,
     Object? collectedBy = _sentinel,
     Object? transitionBase = _sentinel,
+    Object? passageName = _sentinel,
   }) {
     return MapCell(
       terrain: terrain ?? this.terrain,
@@ -54,6 +59,9 @@ class MapCell {
       transitionBase: identical(transitionBase, _sentinel)
           ? this.transitionBase
           : transitionBase as TransitionBase?,
+      passageName: identical(passageName, _sentinel)
+          ? this.passageName
+          : passageName as String?,
     );
   }
 }

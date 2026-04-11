@@ -123,6 +123,7 @@ void _showCellAction(BuildContext context, Game game,
           onChanged: onChanged, onLevelSelected: onLevelSelected),
       );
     case CellContentType.empty:
+    case CellContentType.passage:
       showCellInfoSheet(context, title: 'Plaine ($x, $y)',
         message: "Il n'y a rien a voir ici");
   }

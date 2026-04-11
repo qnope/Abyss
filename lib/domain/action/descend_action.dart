@@ -1,6 +1,9 @@
 import '../game/game.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
+import '../map/cell_content_type.dart';
+import '../map/game_map.dart';
+import '../map/grid_position.dart';
 import '../map/map_generator.dart';
 import '../map/reveal_area_calculator.dart';
 import '../unit/unit.dart';
@@ -65,8 +68,27 @@ class DescendAction extends Action {
     );
   }
 
+  static Map<GridPosition, String> _extractPassages(GameMap map) {
+    final result = <GridPosition, String>{};
+    for (var y = 0; y < map.height; y++) {
+      for (var x = 0; x < map.width; x++) {
+        final cell = map.cellAt(x, y);
+        if (cell.content == CellContentType.transitionBase &&
+            cell.transitionBase != null) {
+          result[GridPosition(x: x, y: y)] = cell.transitionBase!.name;
+        }
+      }
+    }
+    return result;
+  }
+
   void _generateTargetLevel(Game game, Player player, int targetLevel) {
-    final result = MapGenerator.generate(level: targetLevel);
+    final parentMap = game.levels[fromLevel]!;
+    final passages = _extractPassages(parentMap);
+    final result = MapGenerator.generate(
+      level: targetLevel,
+      reservedPassages: passages,
+    );
     final levels = Map<int, dynamic>.from(game.levels);
     levels[targetLevel] = result.map;
     game.levels = levels.cast();

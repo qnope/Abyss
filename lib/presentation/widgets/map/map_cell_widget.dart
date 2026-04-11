@@ -49,19 +49,18 @@ class MapCellWidget extends StatelessWidget {
     );
   }
 
-  Widget _background() {
-    return Container(color: AbyssColors.abyssBlack);
-  }
+  Widget _background() => Container(color: AbyssColors.abyssBlack);
 
-  Widget _terrainLayer() {
-    return SvgPicture.asset(
-      cell.terrain.svgPath,
-      width: cellSize,
-      height: cellSize,
-    );
-  }
+  Widget _terrainLayer() => SvgPicture.asset(
+        cell.terrain.svgPath,
+        width: cellSize,
+        height: cellSize,
+      );
 
   Widget _contentLayer() {
+    if (cell.content == CellContentType.passage) {
+      return _passageOverlay();
+    }
     if (cell.content == CellContentType.transitionBase) {
       return _transitionBaseOverlay();
     }
@@ -74,6 +73,26 @@ class MapCellWidget extends StatelessWidget {
       return Opacity(opacity: 0.3, child: icon);
     }
     return icon;
+  }
+
+  Widget _passageOverlay() {
+    return Center(
+      child: Container(
+        width: _contentSize,
+        height: _contentSize,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AbyssColors.biolumPurple.withValues(alpha: 0.3),
+          boxShadow: [
+            BoxShadow(
+              color: AbyssColors.biolumPurple.withValues(alpha: 0.6),
+              blurRadius: 12,
+              spreadRadius: 4,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _transitionBaseOverlay() {

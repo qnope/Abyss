@@ -14,6 +14,7 @@ import '../../../domain/map/transition_base.dart';
 import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/tech/tech_branch.dart';
 import '../../../domain/unit/unit_type.dart';
+import '../../theme/abyss_colors.dart';
 import '../../widgets/map/cell_info_sheet.dart';
 import '../../widgets/map/exploration_sheet.dart';
 import '../../widgets/map/game_map_view.dart';
@@ -122,8 +123,15 @@ void _showCellAction(BuildContext context, Game game,
           context, game, repository, base, x, y, level,
           onChanged: onChanged, onLevelSelected: onLevelSelected),
       );
-    case CellContentType.empty:
     case CellContentType.passage:
+      final name = cell.passageName ?? 'passage inconnu';
+      showCellInfoSheet(context,
+        title: 'Passage vers $name',
+        message: 'Ce lieu marque un passage vers le niveau inferieur.',
+        icon: Icons.blur_circular,
+        iconColor: AbyssColors.biolumPurple,
+      );
+    case CellContentType.empty:
       showCellInfoSheet(context, title: 'Plaine ($x, $y)',
         message: "Il n'y a rien a voir ici");
   }

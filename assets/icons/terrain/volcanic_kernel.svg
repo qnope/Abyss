@@ -97,4 +97,35 @@
   <!-- Side vent vapor wisp -->
   <path d="M43 35 Q45 32, 44 28" fill="none" stroke="#00E5FF" stroke-width="0.8" stroke-linecap="round" opacity="0.3"/>
 
+  <!-- === Hydrothermal plumes === -->
+  <!-- Plume 1 (main, from crater rising left) -->
+  <path d="M26 16 Q22 10, 18 2" fill="none" stroke="url(#vkPlumeGrad)" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+  <!-- Plume 2 (secondary, from crater rising right) -->
+  <path d="M30 16 Q34 10, 40 4" fill="none" stroke="#00BCD4" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+  <!-- Plume 3 (from side vent, smaller) -->
+  <path d="M43 34 Q46 28, 48 20" fill="none" stroke="#00E5FF" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+
+  <!-- === Bubbles (scattered organically) === -->
+  <circle cx="20" cy="8" r="1.5" fill="none" stroke="#00E5FF" stroke-width="0.4" opacity="0.35"/>
+  <circle cx="36" cy="6" r="1.0" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.3"/>
+  <circle cx="12" cy="12" r="0.8" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.25"/>
+  <circle cx="48" cy="14" r="1.2" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.2"/>
+  <circle cx="8" cy="22" r="2.0" fill="none" stroke="#00E5FF" stroke-width="0.4" opacity="0.15"/>
+  <circle cx="54" cy="10" r="0.7" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.4"/>
+  <circle cx="42" cy="4" r="0.5" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.3"/>
+  <circle cx="16" cy="4" r="0.6" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.25"/>
+
+  <!-- === Ember/particles near crater and lava === -->
+  <circle cx="26" cy="14" r="0.8" fill="url(#vkEmberGrad)" opacity="0.7"/>
+  <circle cx="30" cy="15" r="0.6" fill="#FF6D00" opacity="0.6"/>
+  <circle cx="22" cy="22" r="1.0" fill="#FFAB00" opacity="0.5"/>
+  <circle cx="34" cy="24" r="0.5" fill="#FF6D00" opacity="0.8"/>
+  <circle cx="16" cy="38" r="0.4" fill="#FFAB00" opacity="0.4"/>
+  <circle cx="44" cy="30" r="1.2" fill="#FF6D00" opacity="0.45"/>
+
+  <!-- === Suspended particles in water column === -->
+  <circle cx="6" cy="30" r="0.4" fill="#00E5FF" opacity="0.15"/>
+  <circle cx="58" cy="20" r="0.3" fill="#00E5FF" opacity="0.12"/>
+  <circle cx="52" cy="42" r="0.5" fill="#00BCD4" opacity="0.1"/>
+
 </svg>

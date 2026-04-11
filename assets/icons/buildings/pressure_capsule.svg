@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <!-- Main capsule body gradient: dark cyan to biolumCyan -->
+    <linearGradient id="pcBodyGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#004D5E"/>
+      <stop offset="100%" stop-color="#00E5FF"/>
+    </linearGradient>
+    <!-- Armor plating gradient -->
+    <linearGradient id="pcArmorGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#003844"/>
+      <stop offset="100%" stop-color="#00838F"/>
+    </linearGradient>
+    <!-- Heavy-duty base gradient -->
+    <linearGradient id="pcBaseGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#0D2B33"/>
+      <stop offset="100%" stop-color="#004D5E"/>
+    </linearGradient>
+    <!-- Heat indicator accent gradient -->
+    <linearGradient id="pcHeatGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#FF3D00"/>
+      <stop offset="100%" stop-color="#FF6D00"/>
+    </linearGradient>
+    <!-- Vapor wisps gradient (radial, fades to transparent) -->
+    <radialGradient id="pcVaporGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Glow filter -->
+    <filter id="pcGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#pcGlow)">
+
+    <!-- ======================== -->
+    <!-- Heavy-duty base platform -->
+    <!-- ======================== -->
+    <!-- Main base plate -->
+    <rect x="6" y="50" width="52" height="6" rx="2" fill="url(#pcBaseGrad)" stroke="#004D5E" stroke-width="1"/>
+    <!-- Base surface detail lines -->
+    <line x1="10" y1="52" x2="54" y2="52" stroke="#003844" stroke-width="0.6" stroke-opacity="0.5"/>
+    <line x1="10" y1="54" x2="54" y2="54" stroke="#003844" stroke-width="0.4" stroke-opacity="0.3"/>
+    <!-- Left support strut -->
+    <polygon points="14,50 18,50 20,44 12,44" fill="url(#pcBaseGrad)" stroke="#004D5E" stroke-width="0.8"/>
+    <!-- Right support strut (symmetric) -->
+    <polygon points="46,50 50,50 52,44 44,44" fill="url(#pcBaseGrad)" stroke="#004D5E" stroke-width="0.8"/>
+    <!-- Center support strut -->
+    <rect x="28" y="44" width="8" height="6" rx="1" fill="url(#pcBaseGrad)" stroke="#004D5E" stroke-width="0.7"/>
+    <!-- Base bolts left -->
+    <circle cx="10" cy="53" r="1" fill="#00838F" stroke="#003844" stroke-width="0.4"/>
+    <!-- Base bolts right (symmetric) -->
+    <circle cx="54" cy="53" r="1" fill="#00838F" stroke="#003844" stroke-width="0.4"/>
+
+    <!-- ================================ -->
+    <!-- Main capsule body — outer shell  -->
+    <!-- ================================ -->
+    <!-- Outer shell: thick rounded rectangle -->
+    <rect x="14" y="10" width="36" height="36" rx="10" fill="url(#pcBodyGrad)" fill-opacity="0.15" stroke="#00E5FF" stroke-width="2" stroke-opacity="0.7"/>
+    <!-- Inner shell (double outline for thick wall effect) -->
+    <rect x="16" y="12" width="32" height="32" rx="8" fill="url(#pcBodyGrad)" fill-opacity="0.25" stroke="#00838F" stroke-width="1.2"/>
+
+    <!-- ============================ -->
+    <!-- Armor plating — 3 segments   -->
+    <!-- ============================ -->
+    <!-- Top armor panel -->
+    <rect x="18" y="14" width="28" height="8" rx="4" fill="url(#pcArmorGrad)" fill-opacity="0.6" stroke="#004D5E" stroke-width="0.7"/>
+    <!-- Middle armor panel -->
+    <rect x="18" y="24" width="28" height="8" rx="2" fill="url(#pcArmorGrad)" fill-opacity="0.5" stroke="#004D5E" stroke-width="0.7"/>
+    <!-- Bottom armor panel -->
+    <rect x="18" y="34" width="28" height="8" rx="4" fill="url(#pcArmorGrad)" fill-opacity="0.6" stroke="#004D5E" stroke-width="0.7"/>
+    <!-- Panel separation lines -->
+    <line x1="18" y1="22.5" x2="46" y2="22.5" stroke="#003844" stroke-width="0.5" stroke-opacity="0.6"/>
+    <line x1="18" y1="32.5" x2="46" y2="32.5" stroke="#003844" stroke-width="0.5" stroke-opacity="0.6"/>
+
+    <!-- ======================================== -->
+    <!-- Pressure containment bands — 4 rings     -->
+    <!-- ======================================== -->
+    <!-- Band 1 (top) -->
+    <rect x="15" y="15" width="34" height="1.5" rx="0.5" fill="#00838F" fill-opacity="0.7" stroke="#004D5E" stroke-width="0.4"/>
+    <!-- Band 2 -->
+    <rect x="15" y="22" width="34" height="1.5" rx="0.5" fill="#00838F" fill-opacity="0.7" stroke="#004D5E" stroke-width="0.4"/>
+    <!-- Band 3 -->
+    <rect x="15" y="32" width="34" height="1.5" rx="0.5" fill="#00838F" fill-opacity="0.7" stroke="#004D5E" stroke-width="0.4"/>
+    <!-- Band 4 (bottom) -->
+    <rect x="15" y="39" width="34" height="1.5" rx="0.5" fill="#00838F" fill-opacity="0.7" stroke="#004D5E" stroke-width="0.4"/>
+
+    <!-- ================================ -->
+    <!-- Rivet / bolt details — 8 rivets  -->
+    <!-- ================================ -->
+    <!-- Band 1 rivets (left and right) -->
+    <circle cx="19" cy="15.75" r="1.2" fill="#00838F" stroke="#003844" stroke-width="0.5"/>
+    <circle cx="45" cy="15.75" r="1.2" fill="#00838F" stroke="#003844" stroke-width="0.5"/>
+    <!-- Band 2 rivets -->
+    <circle cx="19" cy="22.75" r="1.2" fill="#00838F" stroke="#003844" stroke-width="0.5"/>
+    <circle cx="45" cy="22.75" r="1.2" fill="#00838F" stroke="#003844" stroke-width="0.5"/>
+    <!-- Band 3 rivets -->
+    <circle cx="19" cy="32.75" r="1.2" fill="#00838F" stroke="#003844" stroke-width="0.5"/>
+    <circle cx="45" cy="32.75" r="1.2" fill="#00838F" stroke="#003844" stroke-width="0.5"/>
+    <!-- Band 4 rivets -->
+    <circle cx="19" cy="39.75" r="1.2" fill="#00838F" stroke="#003844" stroke-width="0.5"/>
+    <circle cx="45" cy="39.75" r="1.2" fill="#00838F" stroke="#003844" stroke-width="0.5"/>
+
+    <!-- ============================================ -->
+    <!-- Pressure gauges / indicator lights            -->
+    <!-- ============================================ -->
+    <!-- Gauge 1 (left) — pressure manometer -->
+    <circle cx="24" cy="28" r="3" fill="#0D2B33" stroke="#FF6D00" stroke-width="0.8"/>
+    <circle cx="24" cy="28" r="2" fill="url(#pcHeatGrad)" fill-opacity="0.8"/>
+    <line x1="24" y1="28" x2="25.2" y2="26.8" stroke="#FFFFFF" stroke-width="0.5" stroke-linecap="round"/>
+    <circle cx="24" cy="28" r="0.5" fill="#FFFFFF" opacity="0.9"/>
+    <!-- Gauge tick marks -->
+    <line x1="24" y1="25.2" x2="24" y2="26" stroke="#FF6D00" stroke-width="0.3" stroke-opacity="0.7"/>
+    <line x1="21.2" y1="28" x2="22" y2="28" stroke="#FF6D00" stroke-width="0.3" stroke-opacity="0.7"/>
+    <line x1="26" y1="28" x2="26.8" y2="28" stroke="#FF6D00" stroke-width="0.3" stroke-opacity="0.7"/>
+
+    <!-- Gauge 2 (right, symmetric) — indicator light -->
+    <circle cx="40" cy="28" r="3" fill="#0D2B33" stroke="#FF6D00" stroke-width="0.8"/>
+    <circle cx="40" cy="28" r="2" fill="url(#pcHeatGrad)" fill-opacity="0.8"/>
+    <line x1="40" y1="28" x2="38.8" y2="26.8" stroke="#FFFFFF" stroke-width="0.5" stroke-linecap="round"/>
+    <circle cx="40" cy="28" r="0.5" fill="#FFFFFF" opacity="0.9"/>
+    <!-- Gauge tick marks -->
+    <line x1="40" y1="25.2" x2="40" y2="26" stroke="#FF6D00" stroke-width="0.3" stroke-opacity="0.7"/>
+    <line x1="37.2" y1="28" x2="38" y2="28" stroke="#FF6D00" stroke-width="0.3" stroke-opacity="0.7"/>
+    <line x1="42" y1="28" x2="42.8" y2="28" stroke="#FF6D00" stroke-width="0.3" stroke-opacity="0.7"/>
+
+    <!-- Small warning indicator (center top) -->
+    <circle cx="32" cy="17.5" r="1.5" fill="#FF3D00" fill-opacity="0.6" stroke="#FF6D00" stroke-width="0.5"/>
+    <circle cx="32" cy="17.5" r="0.6" fill="#FFFFFF" opacity="0.8"/>
+
+    <!-- ============================================ -->
+    <!-- Reinforcement detail — vertical stiffeners   -->
+    <!-- ============================================ -->
+    <!-- Left stiffener -->
+    <line x1="24" y1="12" x2="24" y2="44" stroke="#003844" stroke-width="0.6" stroke-opacity="0.5"/>
+    <!-- Right stiffener (symmetric) -->
+    <line x1="40" y1="12" x2="40" y2="44" stroke="#003844" stroke-width="0.6" stroke-opacity="0.5"/>
+    <!-- Center stiffener -->
+    <line x1="32" y1="10" x2="32" y2="46" stroke="#003844" stroke-width="0.5" stroke-opacity="0.4"/>
+
+    <!-- ============================================ -->
+    <!-- Pressure valve / port at top                  -->
+    <!-- ============================================ -->
+    <!-- Valve housing -->
+    <rect x="29" y="7" width="6" height="4" rx="1.5" fill="url(#pcArmorGrad)" stroke="#004D5E" stroke-width="0.8"/>
+    <!-- Valve cap -->
+    <rect x="30.5" y="5.5" width="3" height="2" rx="1" fill="#00838F" stroke="#003844" stroke-width="0.5"/>
+    <!-- Valve bolt -->
+    <circle cx="32" cy="6.5" r="0.7" fill="#00E5FF" opacity="0.6"/>
+
+    <!-- ============================================ -->
+    <!-- Vapor / steam particles                       -->
+    <!-- ============================================ -->
+    <!-- Rising steam above capsule -->
+    <circle cx="28" cy="4" r="1" fill="url(#pcVaporGrad)" opacity="0.5"/>
+    <circle cx="36" cy="3" r="0.8" fill="url(#pcVaporGrad)" opacity="0.4"/>
+    <circle cx="32" cy="2" r="1.2" fill="url(#pcVaporGrad)" opacity="0.3"/>
+    <!-- Side vapor (left) -->
+    <circle cx="10" cy="24" r="0.9" fill="#00E5FF" opacity="0.3"/>
+    <circle cx="11" cy="30" r="0.7" fill="#00E5FF" opacity="0.2"/>
+    <!-- Side vapor (right, symmetric) -->
+    <circle cx="54" cy="24" r="0.9" fill="#00E5FF" opacity="0.3"/>
+    <circle cx="53" cy="30" r="0.7" fill="#00E5FF" opacity="0.2"/>
+    <!-- Vapor wisp paths (curved trails) -->
+    <path d="M26,5 Q24,2 26,0" fill="none" stroke="#00E5FF" stroke-width="0.6" stroke-opacity="0.4" stroke-linecap="round"/>
+    <path d="M38,5 Q40,2 38,0" fill="none" stroke="#00E5FF" stroke-width="0.6" stroke-opacity="0.4" stroke-linecap="round"/>
+    <!-- Lower vent vapor (near base) -->
+    <circle cx="12" cy="46" r="0.6" fill="#00E5FF" opacity="0.25"/>
+    <circle cx="52" cy="46" r="0.6" fill="#00E5FF" opacity="0.25"/>
+
+    <!-- ============================================ -->
+    <!-- Additional surface detail — hatch marks       -->
+    <!-- ============================================ -->
+    <!-- Cross-hatch on middle panel (left) -->
+    <line x1="20" y1="25" x2="22" y2="27" stroke="#003844" stroke-width="0.3" stroke-opacity="0.4"/>
+    <line x1="20" y1="27" x2="22" y2="25" stroke="#003844" stroke-width="0.3" stroke-opacity="0.4"/>
+    <!-- Cross-hatch on middle panel (right, symmetric) -->
+    <line x1="42" y1="25" x2="44" y2="27" stroke="#003844" stroke-width="0.3" stroke-opacity="0.4"/>
+    <line x1="42" y1="27" x2="44" y2="25" stroke="#003844" stroke-width="0.3" stroke-opacity="0.4"/>
+    <!-- Small data readout on bottom panel -->
+    <rect x="28" y="36" width="8" height="3" rx="0.5" fill="#0D2B33" stroke="#00E5FF" stroke-width="0.4" stroke-opacity="0.5"/>
+    <line x1="29" y1="37.2" x2="35" y2="37.2" stroke="#00E5FF" stroke-width="0.4" stroke-opacity="0.6"/>
+    <line x1="29" y1="38.2" x2="33" y2="38.2" stroke="#00E5FF" stroke-width="0.4" stroke-opacity="0.4"/>
+
+    <!-- ============================================ -->
+    <!-- Side pipe connectors                          -->
+    <!-- ============================================ -->
+    <!-- Left pipe -->
+    <rect x="8" y="26" width="6" height="3" rx="1.5" fill="url(#pcArmorGrad)" stroke="#004D5E" stroke-width="0.6"/>
+    <circle cx="8" cy="27.5" r="1.2" fill="#003844" stroke="#004D5E" stroke-width="0.4"/>
+    <!-- Right pipe (symmetric) -->
+    <rect x="50" y="26" width="6" height="3" rx="1.5" fill="url(#pcArmorGrad)" stroke="#004D5E" stroke-width="0.6"/>
+    <circle cx="56" cy="27.5" r="1.2" fill="#003844" stroke="#004D5E" stroke-width="0.4"/>
+
+  </g>
+</svg>

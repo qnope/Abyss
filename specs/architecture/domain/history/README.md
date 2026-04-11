@@ -36,6 +36,9 @@ Common contract:
 | `ExploreEntry` | `explore` | `ExploreAction` |
 | `CollectEntry` | `collect` | `CollectTreasureAction` |
 | `CombatEntry` | `combat` | `FightMonsterAction` |
+| `CaptureEntry` | `capture` | `AttackTransitionBaseAction` |
+| `DescentEntry` | `descent` | `DescendAction` |
+| `ReinforcementEntry` | `reinforcement` | `SendReinforcementsAction` |
 | `TurnEndEntry` | `turnEnd` | `EndTurnAction` |
 
 `CombatEntry` is the only entry that is **tappable** in the presentation

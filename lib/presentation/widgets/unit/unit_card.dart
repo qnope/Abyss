@@ -6,17 +6,20 @@ import 'unit_icon.dart';
 
 class UnitCard extends StatelessWidget {
   final UnitType unitType;
-  final int count;
+  final Map<int, int> countsPerLevel;
   final bool isUnlocked;
   final VoidCallback onTap;
 
   const UnitCard({
     super.key,
     required this.unitType,
-    required this.count,
+    required this.countsPerLevel,
     required this.isUnlocked,
     required this.onTap,
   });
+
+  int get _totalCount =>
+      countsPerLevel.values.fold(0, (a, b) => a + b);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,16 @@ class UnitCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String get _subtitle {
+    final nonEmpty = countsPerLevel.entries
+        .where((e) => e.value > 0)
+        .toList();
+    if (nonEmpty.length <= 1) return '$_totalCount unites';
+    return nonEmpty
+        .map((e) => 'Niv ${e.key}: ${e.value}')
+        .join(' · ');
   }
 
   Widget _buildContent(TextTheme textTheme) {
@@ -55,7 +68,7 @@ class UnitCard extends StatelessWidget {
             ),
             if (isUnlocked)
               Text(
-                '$count unites',
+                _subtitle,
                 style: textTheme.bodySmall?.copyWith(
                   color: AbyssColors.onSurfaceDim,
                 ),

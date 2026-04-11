@@ -2,6 +2,7 @@ import 'building.dart';
 import 'building_type.dart';
 import 'coral_citadel_costs.dart';
 import 'descent_costs.dart';
+import '../map/transition_base_type.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
 import 'upgrade_check.dart';
@@ -71,6 +72,14 @@ class BuildingCostCalculator {
     };
   }
 
+  TransitionBaseType? requiredCapturedBase(BuildingType type) {
+    return switch (type) {
+      BuildingType.descentModule => TransitionBaseType.faille,
+      BuildingType.pressureCapsule => TransitionBaseType.cheminee,
+      _ => null,
+    };
+  }
+
   Map<BuildingType, int> _productionBuildingPrereqs(int targetLevel) {
     final hqLevel = switch (targetLevel) {
       1 => 1,
@@ -112,6 +121,7 @@ class BuildingCostCalculator {
     required int currentLevel,
     required Map<ResourceType, Resource> resources,
     required Map<BuildingType, Building> allBuildings,
+    Set<TransitionBaseType> capturedBaseTypes = const {},
   }) {
     if (currentLevel >= maxLevel(type)) {
       return const UpgradeCheck(canUpgrade: false, isMaxLevel: true);
@@ -135,10 +145,19 @@ class BuildingCostCalculator {
       }
     }
 
+    final reqBase = requiredCapturedBase(type);
+    final TransitionBaseType? missingBase =
+        reqBase != null && !capturedBaseTypes.contains(reqBase)
+            ? reqBase
+            : null;
+
     return UpgradeCheck(
-      canUpgrade: missingResources.isEmpty && missingPrereqs.isEmpty,
+      canUpgrade: missingResources.isEmpty &&
+          missingPrereqs.isEmpty &&
+          missingBase == null,
       missingResources: missingResources,
       missingPrerequisites: missingPrereqs,
+      missingCapturedBase: missingBase,
     );
   }
 }

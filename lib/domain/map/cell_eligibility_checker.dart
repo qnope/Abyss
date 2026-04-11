@@ -3,11 +3,14 @@ import 'game_map.dart';
 import 'grid_position.dart';
 
 class CellEligibilityChecker {
-  static bool isEligible(GameMap map, Player player, int x, int y) {
-    // Base cell is never eligible
-    if (x == player.baseX && y == player.baseY) return false;
+  static bool isEligible(
+    GameMap map, Player player, int x, int y, {int level = 1,
+  }) {
+    if (level == 1 && x == player.baseX && y == player.baseY) {
+      return false;
+    }
 
-    final revealed = player.revealedCells;
+    final revealed = player.revealedCellsSetOnLevel(level);
 
     // Revealed cells are eligible
     if (revealed.contains(GridPosition(x: x, y: y))) return true;

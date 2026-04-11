@@ -33,7 +33,8 @@ revealed cells, pending explorations) is always read from the
 
 An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`,
 `researchTech`, `recruitUnit`, `explore`, `collectTreasure`,
-`fightMonster`, `endTurn`.
+`fightMonster`, `attackTransitionBase`, `descend`,
+`sendReinforcements`, `endTurn`.
 
 ## ActionResult
 
@@ -208,6 +209,45 @@ message so the UI can show it directly.
 On defeat, the lair stays on the map -- the player can re-engage
 later with a fresh army.
 
+### AttackTransitionBaseAction
+
+Takes a `TransitionBase`, `selectedUnits: Map<UnitType, int>`, a
+`level: int`, and an optional `Random`.
+
+**Validation**: at least one abyssAdmiral, required building built
+(descentModule for faille, pressureCapsule for cheminee), base not
+already captured, units available on the given level.
+
+**Execution**: builds player combatants vs guardian combatants from
+`GuardianFactory`, runs the fight engine, then:
+- Victory + abyssAdmiral alive → base captured (`capturedBy = player.id`)
+- Victory + no admiral → survivors return, no capture
+- Defeat → army lost, guardians reform
+
+Returns an `AttackTransitionBaseResult` with fight details and outcome.
+
+### DescendAction
+
+Takes a `TransitionBase`, `selectedUnits: Map<UnitType, int>`, and
+`level: int`.
+
+**Validation**: base must be captured by the player, required building
+built, units available, target level derived from base type.
+
+**Execution**: if the target level has no map yet, generates one via
+`MapGenerator.generate(level: targetLevel)`. Removes units from source
+level, adds them to target level. One-way transfer (no ascent).
+
+### SendReinforcementsAction
+
+Takes a `TransitionBase`, `selectedUnits`, and `level: int`.
+
+**Validation**: base captured, target level map exists, units available.
+
+**Execution**: removes units from source level immediately, creates a
+`ReinforcementOrder` with 1-turn transit time, appended to
+`player.pendingReinforcements`. Resolution happens in `TurnResolver`.
+
 ### EndTurnAction
 
 Wraps `TurnResolver` so that "next turn" flows through the uniform
@@ -240,5 +280,10 @@ boundary itself, is a successful `Action` result.
 | `collect_treasure_action.dart` | `CollectTreasureAction` |
 | `fight_monster_action.dart` | `FightMonsterAction` |
 | `fight_monster_helpers.dart` | Pct-lost, generic `restoreToStock`, loot apply, military level lookup, combatants-by-type helpers, `buildCombatEntry` for the history log |
+| `attack_transition_base_action.dart` | `AttackTransitionBaseAction` |
+| `attack_transition_base_helpers.dart` | Transition base combat helpers |
+| `attack_transition_base_result.dart` | `AttackTransitionBaseResult` |
+| `descend_action.dart` | `DescendAction` |
+| `send_reinforcements_action.dart` | `SendReinforcementsAction` |
 | `end_turn_action.dart` | `EndTurnAction` |
 | `end_turn_action_result.dart` | `EndTurnActionResult` (carries the resolved `TurnResult`) |

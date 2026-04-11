@@ -90,7 +90,7 @@ class _GameScreenState extends State<GameScreen> {
         onChanged: () => setState(() {}),
       ),
       2 => ArmyListView(
-        units: human.unitsOnLevel(_currentLevel),
+        unitsPerLevel: human.unitsPerLevel,
         barracksLevel: human.buildings[BuildingType.barracks]!.level,
         buildings: human.buildings,
         onUnitTap: (t) => showUnitDetailAction(

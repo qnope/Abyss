@@ -17,6 +17,7 @@ class ArmySelectionScreen extends StatefulWidget {
   final GameRepository repository;
   final int targetX;
   final int targetY;
+  final int level;
   final MonsterLair lair;
   final VoidCallback onChanged;
 
@@ -26,6 +27,7 @@ class ArmySelectionScreen extends StatefulWidget {
     required this.repository,
     required this.targetX,
     required this.targetY,
+    required this.level,
     required this.lair,
     required this.onChanged,
   });
@@ -41,7 +43,7 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
   @override
   void initState() {
     super.initState();
-    for (final UnitType type in widget.game.humanPlayer.unitsOnLevel(1).keys) {
+    for (final UnitType type in widget.game.humanPlayer.unitsOnLevel(widget.level).keys) {
       _selected[type] = 0;
     }
   }
@@ -67,7 +69,7 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
   Widget _buildBody(BuildContext context) {
     final player = widget.game.humanPlayer;
     final List<Widget> rows = <Widget>[];
-    for (final MapEntry<UnitType, dynamic> entry in player.unitsOnLevel(1).entries) {
+    for (final MapEntry<UnitType, dynamic> entry in player.unitsOnLevel(widget.level).entries) {
       final int stock = entry.value.count as int;
       if (stock <= 0) continue;
       final UnitType type = entry.key;
@@ -120,6 +122,7 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
     final FightMonsterAction action = FightMonsterAction(
       targetX: widget.targetX,
       targetY: widget.targetY,
+      level: widget.level,
       selectedUnits: nonZero,
     );
     final result = ActionExecutor().execute(

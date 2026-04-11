@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/game/player.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../extensions/transition_base_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
@@ -11,10 +10,11 @@ void showTransitionBaseSheet(
   BuildContext context, {
   required TransitionBase transitionBase,
   required int level,
-  required Player player,
+  required bool hasBuildingRequirement,
+  required String requiredBuildingName,
+  required int unitCountOnTarget,
   VoidCallback? onAttack,
   VoidCallback? onDescend,
-  VoidCallback? onReinforce,
 }) {
   showModalBottomSheet<void>(
     context: context,
@@ -22,12 +22,13 @@ void showTransitionBaseSheet(
     builder: (_) => transitionBase.isCaptured
         ? TransitionBaseCapturedSection(
             transitionBase: transitionBase,
+            hasBuildingRequirement: hasBuildingRequirement,
+            requiredBuildingName: requiredBuildingName,
+            unitCountOnTarget: unitCountOnTarget,
             onDescend: onDescend,
-            onReinforce: onReinforce,
           )
         : TransitionBaseUncapturedSection(
             transitionBase: transitionBase,
-            player: player,
             onAttack: onAttack,
           ),
   );

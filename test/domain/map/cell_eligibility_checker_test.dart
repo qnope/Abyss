@@ -123,4 +123,50 @@ void main() {
       );
     });
   });
+
+  group('level 2 behavior', () {
+    test('base cell is eligible on level 2', () {
+      final t = _makeTestMap();
+      // Add the base cell as revealed on level 2
+      t.player.addRevealedCell(2, GridPosition(x: 3, y: 3));
+      expect(
+        CellEligibilityChecker.isEligible(
+          t.map, t.player, 3, 3, level: 2,
+        ),
+        isTrue,
+      );
+    });
+
+    test('uses level 2 revealed cells', () {
+      final t = _makeTestMap();
+      // Level 1 has revealed cells around (3,3)
+      // Level 2 has only one revealed cell at (6,6)
+      t.player.addRevealedCell(2, GridPosition(x: 6, y: 6));
+      // (6,6) is revealed on level 2 → eligible
+      expect(
+        CellEligibilityChecker.isEligible(
+          t.map, t.player, 6, 6, level: 2,
+        ),
+        isTrue,
+      );
+      // (2,2) is revealed on level 1 but NOT on level 2
+      expect(
+        CellEligibilityChecker.isEligible(
+          t.map, t.player, 2, 2, level: 2,
+        ),
+        isFalse,
+      );
+    });
+
+    test('unrevealed cell adjacent to level 2 revealed is eligible', () {
+      final t = _makeTestMap();
+      t.player.addRevealedCell(2, GridPosition(x: 5, y: 5));
+      expect(
+        CellEligibilityChecker.isEligible(
+          t.map, t.player, 5, 6, level: 2,
+        ),
+        isTrue,
+      );
+    });
+  });
 }

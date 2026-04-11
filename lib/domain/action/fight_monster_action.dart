@@ -23,6 +23,7 @@ import 'fight_monster_result.dart';
 class FightMonsterAction extends Action {
   final int targetX;
   final int targetY;
+  final int level;
   final Map<UnitType, int> selectedUnits;
   final Random? random;
   MonsterLair? _capturedLair;
@@ -30,6 +31,7 @@ class FightMonsterAction extends Action {
   FightMonsterAction({
     required this.targetX,
     required this.targetY,
+    required this.level,
     required this.selectedUnits,
     this.random,
   });
@@ -42,10 +44,10 @@ class FightMonsterAction extends Action {
 
   @override
   ActionResult validate(Game game, Player player) {
-    if (game.levels[1] == null) {
+    if (game.levels[level] == null) {
       return const FightMonsterResult.failure('Carte non générée');
     }
-    final MapCell cell = game.levels[1]!.cellAt(targetX, targetY);
+    final MapCell cell = game.levels[level]!.cellAt(targetX, targetY);
     if (cell.content != CellContentType.monsterLair) {
       return const FightMonsterResult.failure('Pas de monstre ici');
     }
@@ -60,7 +62,7 @@ class FightMonsterAction extends Action {
       if (entry.value <= 0) {
         continue;
       }
-      final int stock = player.unitsOnLevel(1)[entry.key]?.count ?? 0;
+      final int stock = player.unitsOnLevel(level)[entry.key]?.count ?? 0;
       if (entry.value > stock) {
         return const FightMonsterResult.failure('Unités insuffisantes');
       }
@@ -77,7 +79,7 @@ class FightMonsterAction extends Action {
     final ActionResult validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
-    final MapCell cell = game.levels[1]!.cellAt(targetX, targetY);
+    final MapCell cell = game.levels[level]!.cellAt(targetX, targetY);
     final MonsterLair lair = cell.lair!;
     _capturedLair = lair;
     final int militaryLevel =
@@ -88,7 +90,7 @@ class FightMonsterAction extends Action {
         CombatantBuilder.monsterCombatantsFrom(lair);
 
     for (final MapEntry<UnitType, int> entry in selectedUnits.entries) {
-      player.unitsOnLevel(1)[entry.key]!.count -= entry.value;
+      player.unitsOnLevel(level)[entry.key]!.count -= entry.value;
     }
 
     final FightEngine engine = FightEngine(random: random);
@@ -100,6 +102,7 @@ class FightMonsterAction extends Action {
     final FightCasualtyBreakdown breakdown =
         FightMonsterHelpers.resolveCasualties(
       player: player,
+      level: level,
       fightResult: fightResult,
       random: random,
     );
@@ -112,7 +115,7 @@ class FightMonsterAction extends Action {
       final Map<ResourceType, int> rolled =
           LootCalculator(random: random).compute(lair.difficulty);
       loot = FightMonsterHelpers.applyLoot(player, rolled);
-      game.levels[1]!.setCell(
+      game.levels[level]!.setCell(
         targetX,
         targetY,
         cell.copyWith(collectedBy: player.id),

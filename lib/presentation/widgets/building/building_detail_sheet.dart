@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_type.dart';
+import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../extensions/building_type_extensions.dart';
@@ -15,6 +16,7 @@ void showBuildingDetailSheet(
   required Building building,
   required Map<ResourceType, Resource> resources,
   required Map<BuildingType, Building> allBuildings,
+  Set<TransitionBaseType> capturedBaseTypes = const {},
   required VoidCallback onUpgrade,
 }) {
   showModalBottomSheet<void>(
@@ -24,6 +26,7 @@ void showBuildingDetailSheet(
       building: building,
       resources: resources,
       allBuildings: allBuildings,
+      capturedBaseTypes: capturedBaseTypes,
       onUpgrade: onUpgrade,
     ),
   );
@@ -33,12 +36,14 @@ class _BuildingDetailSheet extends StatelessWidget {
   final Building building;
   final Map<ResourceType, Resource> resources;
   final Map<BuildingType, Building> allBuildings;
+  final Set<TransitionBaseType> capturedBaseTypes;
   final VoidCallback onUpgrade;
 
   const _BuildingDetailSheet({
     required this.building,
     required this.resources,
     required this.allBuildings,
+    this.capturedBaseTypes = const {},
     required this.onUpgrade,
   });
 
@@ -89,6 +94,7 @@ class _BuildingDetailSheet extends StatelessWidget {
             building: building,
             resources: resources,
             allBuildings: allBuildings,
+            capturedBaseTypes: capturedBaseTypes,
             onUpgrade: onUpgrade,
           ),
         ],

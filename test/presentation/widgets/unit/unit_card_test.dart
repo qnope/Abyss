@@ -12,7 +12,7 @@ void main() {
 
     Widget createApp({
       UnitType type = UnitType.scout,
-      int count = 0,
+      Map<int, int> countsPerLevel = const {1: 0},
       bool isUnlocked = true,
       VoidCallback? onTap,
     }) {
@@ -21,7 +21,7 @@ void main() {
         home: Scaffold(
           body: UnitCard(
             unitType: type,
-            count: count,
+            countsPerLevel: countsPerLevel,
             isUnlocked: isUnlocked,
             onTap: onTap ?? () {},
           ),
@@ -36,7 +36,7 @@ void main() {
     });
 
     testWidgets('unlocked card shows count', (tester) async {
-      await tester.pumpWidget(createApp(count: 5));
+      await tester.pumpWidget(createApp(countsPerLevel: {1: 5}));
       await tester.pumpAndSettle();
       expect(find.text('5 unites'), findsOneWidget);
     });
@@ -66,6 +66,32 @@ void main() {
       await tester.pumpAndSettle();
       final opacity = tester.widget<Opacity>(find.byType(Opacity));
       expect(opacity.opacity, 0.5);
+    });
+
+    testWidgets('shows per-level breakdown when multiple levels',
+        (tester) async {
+      await tester.pumpWidget(
+        createApp(countsPerLevel: {1: 5, 2: 3}),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Niv 1: 5 · Niv 2: 3'), findsOneWidget);
+    });
+
+    testWidgets('shows simple count when only one level has units',
+        (tester) async {
+      await tester.pumpWidget(
+        createApp(countsPerLevel: {1: 7}),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('7 unites'), findsOneWidget);
+    });
+
+    testWidgets('ignores levels with zero count', (tester) async {
+      await tester.pumpWidget(
+        createApp(countsPerLevel: {1: 4, 2: 0}),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('4 unites'), findsOneWidget);
     });
   });
 }

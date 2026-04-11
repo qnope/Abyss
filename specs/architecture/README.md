@@ -52,14 +52,16 @@ See: [data/](data/)
 
 ### Domain (`lib/domain/`)
 
-Pure Dart business logic with no Flutter dependency. Split into 8 submodules:
+Pure Dart business logic with no Flutter dependency. Split into 10 submodules:
 
 | Submodule | Responsibility |
 |-----------|---------------|
 | `action` | Player actions (operate on `(Game, Player)`) |
 | `building` | Building types and state |
+| `fight` | Combat resolution engine |
 | `game` | `Game` multi-player container + `Player` per-player state |
-| `map` | Shared grid and terrain (per-player fog lives on `Player`) |
+| `history` | Sealed `HistoryEntry` hierarchy for action logging |
+| `map` | Multi-level grid, terrain, transition bases (per-player fog lives on `Player`) |
 | `resource` | 5 resource types |
 | `tech` | Technology branches |
 | `turn` | Turn processing |
@@ -94,4 +96,4 @@ graph LR
 
 `main.dart` initializes `GameRepository` (Hive), then passes it to `MainMenuScreen`. Screens use domain models and call the repository for persistence. Domain has zero dependencies on the other layers.
 
-`Game` is a multi-player container: it holds a `Map<String, Player>` plus the shared `GameMap` and turn counter. All per-player state (resources, buildings, tech, units, pending explorations, revealed cells) lives on `Player`. Actions and turn resolution iterate per player and read that state from the `Player` argument, not from `Game`.
+`Game` is a multi-player container: it holds a `Map<String, Player>` plus the shared `Map<int, GameMap> levels` (one map per depth level) and turn counter. All per-player state (resources, buildings, tech, units per level, pending explorations, revealed cells per level, pending reinforcements) lives on `Player`. Actions and turn resolution iterate per player and read that state from the `Player` argument, not from `Game`.

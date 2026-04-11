@@ -12,8 +12,13 @@ import 'action_type.dart';
 class ExploreAction extends Action {
   final int targetX;
   final int targetY;
+  final int level;
 
-  ExploreAction({required this.targetX, required this.targetY});
+  ExploreAction({
+    required this.targetX,
+    required this.targetY,
+    this.level = 1,
+  });
 
   @override
   ActionType get type => ActionType.explore;
@@ -23,20 +28,22 @@ class ExploreAction extends Action {
 
   @override
   ActionResult validate(Game game, Player player) {
-    if (game.levels[1] == null) {
+    if (game.levels[level] == null) {
       return const ActionResult.failure('Carte non générée');
     }
 
-    final scoutCount = player.unitsOnLevel(1)[UnitType.scout]?.count ?? 0;
+    final scoutCount =
+        player.unitsOnLevel(level)[UnitType.scout]?.count ?? 0;
     if (scoutCount <= 0) {
       return const ActionResult.failure('Aucun éclaireur disponible');
     }
 
     if (!CellEligibilityChecker.isEligible(
-      game.levels[1]!,
+      game.levels[level]!,
       player,
       targetX,
       targetY,
+      level: level,
     )) {
       return const ActionResult.failure('Cellule non éligible');
     }
@@ -49,10 +56,13 @@ class ExploreAction extends Action {
     final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
-    player.unitsOnLevel(1)[UnitType.scout]!.count -= 1;
+    player.unitsOnLevel(level)[UnitType.scout]!.count -= 1;
 
     player.pendingExplorations.add(
-      ExplorationOrder(target: GridPosition(x: targetX, y: targetY)),
+      ExplorationOrder(
+        target: GridPosition(x: targetX, y: targetY),
+        level: level,
+      ),
     );
 
     return const ActionResult.success();

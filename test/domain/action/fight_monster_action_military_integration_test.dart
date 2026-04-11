@@ -25,6 +25,7 @@ void main() {
     final action = FightMonsterAction(
       targetX: 1,
       targetY: 1,
+      level: 1,
       selectedUnits: {UnitType.harpoonist: 6},
       random: Random(seed),
     );

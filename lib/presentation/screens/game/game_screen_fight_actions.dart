@@ -11,8 +11,9 @@ void openArmySelection(
   int x,
   int y,
   MonsterLair lair,
-  VoidCallback onChanged,
-) {
+  VoidCallback onChanged, {
+  required int level,
+}) {
   Navigator.of(context).push(
     MaterialPageRoute<void>(
       builder: (_) => ArmySelectionScreen(
@@ -20,6 +21,7 @@ void openArmySelection(
         repository: repository,
         targetX: x,
         targetY: y,
+        level: level,
         lair: lair,
         onChanged: onChanged,
       ),

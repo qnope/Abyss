@@ -8,5 +8,8 @@ class ExplorationOrder extends HiveObject {
   @HiveField(0)
   final GridPosition target;
 
-  ExplorationOrder({required this.target});
+  @HiveField(1)
+  final int level;
+
+  ExplorationOrder({required this.target, this.level = 1});
 }

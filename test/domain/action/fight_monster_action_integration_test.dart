@@ -31,6 +31,7 @@ void main() {
       final result = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 5},
         random: Random(0),
       ).execute(scenario.game, scenario.player) as FightMonsterResult;
@@ -72,6 +73,7 @@ void main() {
       final result = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.saboteur: 1},
         random: Random(1),
       ).execute(scenario.game, scenario.player) as FightMonsterResult;
@@ -113,6 +115,7 @@ void main() {
       final result = FightMonsterAction(
         targetX: 1,
         targetY: 1,
+        level: 1,
         selectedUnits: {UnitType.harpoonist: 8},
         random: Random(0),
       ).execute(scenario.game, scenario.player) as FightMonsterResult;

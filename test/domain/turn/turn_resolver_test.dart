@@ -114,6 +114,54 @@ void main() {
       expect(result.lostUnits[UnitType.scout], greaterThan(0));
       expect(p.unitsOnLevel(1)[UnitType.scout]!.count, lessThan(100));
     });
+
+    test('units on level 2 still consume algae', () {
+      final p = _player(
+        resourceAmounts: {ResourceType.algae: 0},
+        unitCounts: {UnitType.scout: 10},
+      );
+      // Add 10 scouts on level 2
+      p.unitsPerLevel[2] = {
+        for (final t in UnitType.values) t: Unit(type: t),
+      };
+      p.unitsOnLevel(2)[UnitType.scout]!.count = 10;
+
+      final result = resolver.resolve(_singleGame(p));
+      // Both levels should lose units
+      expect(result.lostUnits[UnitType.scout], greaterThan(0));
+      expect(p.unitsOnLevel(1)[UnitType.scout]!.count, lessThan(10));
+      expect(p.unitsOnLevel(2)[UnitType.scout]!.count, lessThan(10));
+    });
+
+    test('moving units to level 2 does not reduce algae consumption', () {
+      // 20 scouts on level 1 only
+      final pA = _player(
+        resourceAmounts: {ResourceType.algae: 1000},
+        unitCounts: {UnitType.scout: 20},
+      );
+      final gameA = _singleGame(pA);
+      final resultA = resolver.resolve(gameA);
+      final consumedA = resultA.changes
+          .firstWhere((c) => c.type == ResourceType.algae)
+          .consumed;
+
+      // 10 on level 1, 10 on level 2
+      final pB = _player(
+        resourceAmounts: {ResourceType.algae: 1000},
+        unitCounts: {UnitType.scout: 10},
+      );
+      pB.unitsPerLevel[2] = {
+        for (final t in UnitType.values) t: Unit(type: t),
+      };
+      pB.unitsOnLevel(2)[UnitType.scout]!.count = 10;
+      final gameB = _singleGame(pB);
+      final resultB = resolver.resolve(gameB);
+      final consumedB = resultB.changes
+          .firstWhere((c) => c.type == ResourceType.algae)
+          .consumed;
+
+      expect(consumedA, consumedB);
+    });
   });
 
   group('Multi-player isolation', () {

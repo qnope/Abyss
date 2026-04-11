@@ -6,9 +6,6 @@ import 'reveal_area_calculator.dart';
 
 class ExplorationResolver {
   static List<ExplorationResult> resolve(Game game) {
-    if (game.levels[1] == null) return [];
-
-    final map = game.levels[1]!;
     final results = <ExplorationResult>[];
 
     for (final player in game.players.values) {
@@ -18,6 +15,9 @@ class ExplorationResolver {
           player.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
 
       for (final order in player.pendingExplorations) {
+        final map = game.levels[order.level];
+        if (map == null) continue;
+
         final positions = RevealAreaCalculator.cellsToReveal(
           targetX: order.target.x,
           targetY: order.target.y,
@@ -29,7 +29,7 @@ class ExplorationResolver {
         var newCells = 0;
         final notable = <CellContentType>[];
         for (final pos in positions) {
-          if (player.addRevealedCell(1, pos)) {
+          if (player.addRevealedCell(order.level, pos)) {
             newCells++;
             final cell = map.cellAt(pos.x, pos.y);
             if (cell.content != CellContentType.empty) {

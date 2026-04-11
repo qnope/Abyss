@@ -7,13 +7,17 @@ import 'transition_base_sheet.dart';
 class TransitionBaseCapturedSection extends StatelessWidget {
   final TransitionBase transitionBase;
   final VoidCallback? onDescend;
-  final VoidCallback? onReinforce;
+  final bool hasBuildingRequirement;
+  final String requiredBuildingName;
+  final int unitCountOnTarget;
 
   const TransitionBaseCapturedSection({
     super.key,
     required this.transitionBase,
+    required this.hasBuildingRequirement,
+    required this.requiredBuildingName,
+    required this.unitCountOnTarget,
     this.onDescend,
-    this.onReinforce,
   });
 
   @override
@@ -33,27 +37,40 @@ class TransitionBaseCapturedSection extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          if (unitCountOnTarget > 0) ...[
+            const SizedBox(height: 6),
+            Text(
+              '$unitCountOnTarget unites au Niveau '
+              '${transitionBase.targetLevel}',
+              style: textTheme.bodySmall?.copyWith(
+                color: AbyssColors.onSurfaceDim,
+              ),
+            ),
+          ],
           const Divider(height: 24),
+          if (!hasBuildingRequirement) ...[
+            Text(
+              'Construisez $requiredBuildingName '
+              'pour envoyer des unites',
+              style: textTheme.bodySmall?.copyWith(
+                color: AbyssColors.error,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+          ],
           FilledButton(
-            onPressed: onDescend == null
-                ? null
-                : () {
+            onPressed: hasBuildingRequirement && onDescend != null
+                ? () {
                     Navigator.pop(context);
                     onDescend!();
-                  },
+                  }
+                : null,
             child: Text(
-              'Descendre au Niveau ${transitionBase.targetLevel}',
+              'Envoyer des unites au Niveau '
+              '${transitionBase.targetLevel}',
             ),
           ),
-          const SizedBox(height: 8),
-          if (onReinforce != null)
-            OutlinedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                onReinforce!();
-              },
-              child: const Text('Envoyer des renforts'),
-            ),
         ],
       ),
     );

@@ -54,6 +54,7 @@ on the map for history, but `isCollected` prevents further fights).
 | `resourceBonus` | Treasure: collectable bundle of algae, coral and ore                     |
 | `ruins`         | Collectable ruins yielding small amounts of coral, ore and pearl         |
 | `monsterLair`   | Guarded by a monster (easy, medium, or hard)                             |
+| `transitionBase`| Passage point guarded by a boss; connects two depth levels               |
 
 Monster difficulty scales with distance from the (first) player base:
 cells farther than 7 tiles favor medium/hard monsters, while closer
@@ -61,13 +62,14 @@ cells favor easy/medium.
 
 ## Procedural Generation Pipeline
 
-`MapGenerator.generate({int? seed})` returns a `MapGenerationResult`
-bundling the `GameMap` with the chosen `baseX` / `baseY`. The caller
-(typically new-game setup) hands those coordinates to `Player.withBase`
-so the player stores its own base location and initial fog-of-war.
+`MapGenerator.generate({int? seed, int level = 1})` returns a
+`MapGenerationResult` bundling the `GameMap` with the chosen
+`baseX` / `baseY`. The `level` parameter controls which transition
+bases are placed (failles on level 1, cheminees on level 2, none on
+level 3).
 
 ```
-MapGenerator.generate(seed?)
+MapGenerator.generate(seed?, level)
     |
     v
 pick baseX, baseY (center +/- 2)
@@ -84,11 +86,59 @@ ContentPlacer.place()            -- Place content on eligible cells
     |                               10% ruins, 10% monster lair.
     |                               Enforces 5-10 monsters total.
     v
+TransitionBasePlacer.place()     -- Place transition bases per level:
+    |                               Level 1: 4 failles (one per quadrant,
+    |                               outer edges, min 3 cells from base).
+    |                               Level 2: 3 cheminees (spread across
+    |                               grid with spacing constraints).
+    |                               Level 3: none.
+    v
 Base cell cleared                -- Base cell content set to empty.
     |
     v
 MapGenerationResult { map, baseX, baseY }
 ```
+
+## Transition Bases
+
+Transition bases are guarded passage points connecting depth levels.
+Each base is a `TransitionBase` (Hive typeId 32) stored on a `MapCell`.
+
+### TransitionBaseType (Hive typeId 31)
+
+| Type | Level | Target | Count | Guardians |
+|------|-------|--------|-------|-----------|
+| `faille` | 1 | Level 2 | 4 | 1 Leviathan (boss) + 5 Sentinelles |
+| `cheminee` | 2 | Level 3 | 3 | 1 Titan Volcanique (boss) + 8 Golems |
+
+### TransitionBase fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `type` | `TransitionBaseType` | faille or cheminee |
+| `name` | `String` | Display name (e.g. "Faille Alpha") |
+| `capturedBy` | `String?` | Player id or null |
+
+Computed: `difficulty` (4 for faille, 5 for cheminee),
+`targetLevel` (2 or 3).
+
+### GuardianFactory
+
+Static factory producing boss combatant lists per base type. Boss
+combatants have `isBoss: true` on `Combatant`.
+
+### ReinforcementOrder (Hive typeId 33)
+
+Represents units in transit between levels through a captured base.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `fromLevel` / `toLevel` | `int` | Source and destination levels |
+| `units` | `Map<UnitType, int>` | Units being transferred |
+| `departTurn` | `int` | Turn when sent |
+| `arrivalPoint` | `GridPosition` | Where units arrive |
+
+Resolves when `game.turn > departTurn` (1-turn transit).
 
 ## Fog of War (per-player)
 
@@ -164,3 +214,8 @@ Players queue **scout** orders which are resolved at end of turn.
 | `reveal_area_calculator.dart` | Reveal area computation |
 | `exploration_resolver.dart` | Per-player exploration resolution |
 | `exploration_result.dart` | Per-exploration result data |
+| `transition_base_type.dart` | `TransitionBaseType` enum (faille, cheminee) |
+| `transition_base.dart` | `TransitionBase` Hive type |
+| `transition_base_placer.dart` | Placement logic for transition bases |
+| `guardian_factory.dart` | Boss combatant generation per base type |
+| `reinforcement_order.dart` | `ReinforcementOrder` Hive type |

@@ -71,6 +71,27 @@ void main() {
       expect(nonBase.isBase, isFalse);
     });
 
+    testWidgets('no cell is marked as base when baseX/baseY are null',
+        (tester) async {
+      final result = MapGenerator.generate(seed: 42);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: GameMapView(
+              gameMap: result.map,
+              revealedCells: {},
+              humanPlayerId: 'human-uuid',
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final widgets = tester
+          .widgetList<MapCellWidget>(find.byType(MapCellWidget))
+          .toList();
+      expect(widgets.any((w) => w.isBase), isFalse);
+    });
+
     testWidgets('initial scale shows 8 visible cells', (tester) async {
       await pumpView(tester, revealedCells: {});
       final viewer = tester.widget<InteractiveViewer>(

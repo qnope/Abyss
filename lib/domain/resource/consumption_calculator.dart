@@ -51,4 +51,14 @@ class ConsumptionCalculator {
     }
     return total;
   }
+
+  static int totalUnitConsumptionAllLevels(
+    Map<int, Map<UnitType, Unit>> unitsPerLevel,
+  ) {
+    var total = 0;
+    for (final units in unitsPerLevel.values) {
+      total += totalUnitConsumption(units);
+    }
+    return total;
+  }
 }

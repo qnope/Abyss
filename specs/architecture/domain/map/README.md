@@ -10,12 +10,13 @@ by three core classes, all persisted with Hive:
   does **not** hold base coordinates -- each `Player` stores its own
   `baseX` / `baseY`. Provides `cellAt(x, y)` and `setCell(x, y, cell)`.
 - **`MapCell`** -- A single cell containing a `TerrainType`, a
-  `CellContentType`, an optional `MonsterLair lair`, and an optional
-  `collectedBy` string marking which player id looted the cell. The
-  computed getter `isCollected` returns `collectedBy != null`. Fog of
-  war is **not** stored on the cell -- it lives on
-  `Player.revealedCellsList`, so every player has an independent view
-  of the shared grid.
+  `CellContentType`, an optional `MonsterLair lair`, an optional
+  `collectedBy` string marking which player id looted the cell, and an
+  optional `passageName` string referencing the transition base name
+  from the level below. The computed getter `isCollected` returns
+  `collectedBy != null`. Fog of war is **not** stored on the cell --
+  it lives on `Player.revealedCellsList`, so every player has an
+  independent view of the shared grid.
 - **`GridPosition`** -- A value object pairing an `x` and `y` coordinate
   with equality and hash support.
 
@@ -55,6 +56,7 @@ on the map for history, but `isCollected` prevents further fights).
 | `ruins`         | Collectable ruins yielding small amounts of coral, ore and pearl         |
 | `monsterLair`   | Guarded by a monster (easy, medium, or hard)                             |
 | `transitionBase`| Passage point guarded by a boss; connects two depth levels               |
+| `passage`       | Reserved cell marking a transition base position from the level below    |
 
 Monster difficulty scales with distance from the (first) player base:
 cells farther than 7 tiles favor medium/hard monsters, while closer
@@ -62,17 +64,23 @@ cells favor easy/medium.
 
 ## Procedural Generation Pipeline
 
-`MapGenerator.generate({int? seed, int level = 1})` returns a
+`MapGenerator.generate({int? seed, int level = 1, Map<GridPosition, String> reservedPassages = const {}})` returns a
 `MapGenerationResult` bundling the `GameMap` with the chosen
 `baseX` / `baseY`. The `level` parameter controls which transition
 bases are placed (failles on level 1, cheminees on level 2, none on
-level 3).
+level 3). The `reservedPassages` parameter marks positions that
+correspond to transition bases on the parent level -- these cells
+are excluded from content and transition base placement, then
+stamped as `passage` cells with the parent base's name.
 
 ```
-MapGenerator.generate(seed?, level)
+MapGenerator.generate(seed?, level, reservedPassages?)
     |
     v
 pick baseX, baseY (center +/- 2)
+    |
+    v
+compute reservedIndices from reservedPassages
     |
     v
 TerrainGenerator.generate()     -- Fill 20x20 grid with terrain
@@ -80,13 +88,16 @@ TerrainGenerator.generate()     -- Fill 20x20 grid with terrain
     |                               neighbors randomized (reef/plain);
     |                               remaining cells use weighted rolls.
     v
-ContentPlacer.place()            -- Place content on eligible cells
-    |                               (distance > 2 from base, not rock).
-    |                               Rolls: 60% empty, 20% resource,
-    |                               10% ruins, 10% monster lair.
-    |                               Enforces 5-10 monsters total.
+ContentPlacer.place(reservedIndices)
+    |                            -- Place content on eligible cells
+    |                               (distance > 2 from base, not rock,
+    |                               not reserved). Rolls: 60% empty,
+    |                               20% resource, 10% ruins, 10% monster
+    |                               lair. Enforces 5-10 monsters total.
     v
-TransitionBasePlacer.place()     -- Place transition bases per level:
+TransitionBasePlacer.place(reservedIndices)
+    |                            -- Place transition bases per level,
+    |                               skipping reserved positions.
     |                               Level 1: 4 failles (one per quadrant,
     |                               outer edges, min 3 cells from base).
     |                               Level 2: 3 cheminees (spread across
@@ -95,6 +106,10 @@ TransitionBasePlacer.place()     -- Place transition bases per level:
     v
 Base cell cleared                -- Base cell content set to empty.
     |
+    v
+_markPassages()                  -- Stamp reserved positions as
+    |                               CellContentType.passage with
+    |                               passageName from parent base.
     v
 MapGenerationResult { map, baseX, baseY }
 ```
@@ -165,7 +180,10 @@ itself, so the random rolls happen at collect time.
 Players queue **scout** orders which are resolved at end of turn.
 
 - **`ExplorationOrder`** -- Hive model (typeId 16) storing the target
-  `GridPosition`. Queued orders live on `Player.pendingExplorations`.
+  `GridPosition` and `level`. Queued orders live on
+  `Player.pendingExplorations`. Pending exploration markers (cyan
+  borders) are filtered by the currently viewed level so they only
+  appear on the level where the exploration was ordered.
 - **`CellEligibilityChecker`** -- Determines if a cell can be explored
   for a given player: revealed cells and unrevealed cells adjacent
   (Chebyshev distance 1) to a revealed cell are eligible. The player's

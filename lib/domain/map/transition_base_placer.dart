@@ -22,18 +22,21 @@ class TransitionBasePlacer {
     required int baseY,
     required int level,
     required Random random,
+    Set<int> reservedIndices = const {},
   }) {
     if (level == 1) {
       _placeAll(
         cells, width, height, baseX, baseY, random,
         _buildQuadrants(width, height),
         TransitionBaseType.faille, _failleNames, 8, 5,
+        reservedIndices,
       );
     } else if (level == 2) {
       _placeAll(
         cells, width, height, baseX, baseY, random,
         List.filled(3, _outerEdgeCells(width, height)),
         TransitionBaseType.cheminee, _chemineeNames, 10, 5,
+        reservedIndices,
       );
     }
   }
@@ -44,6 +47,7 @@ class TransitionBasePlacer {
     Random random, List<List<int>> candidateSets,
     TransitionBaseType type, List<String> names,
     int minCenterDist, int minSpacing,
+    Set<int> reservedIndices,
   ) {
     final centerX = width ~/ 2, centerY = height ~/ 2;
     final placed = <int>[];
@@ -51,6 +55,7 @@ class TransitionBasePlacer {
       final idx = _pickCell(
         candidateSets[i], width, centerX, centerY,
         baseX, baseY, minCenterDist, minSpacing, placed, random,
+        reservedIndices,
       );
       if (idx != null) {
         cells[idx] = cells[idx].copyWith(
@@ -67,9 +72,11 @@ class TransitionBasePlacer {
     int centerX, int centerY, int baseX, int baseY,
     int minCenterDist, int minSpacing,
     List<int> placed, Random random,
+    Set<int> reservedIndices,
   ) {
     for (var spacing = minSpacing; spacing >= 0; spacing--) {
       final valid = candidates.where((idx) {
+        if (reservedIndices.contains(idx)) return false;
         final x = idx % width, y = idx ~/ width;
         if (x == baseX && y == baseY) return false;
         if (_chebyshev(x, y, centerX, centerY) < minCenterDist) {

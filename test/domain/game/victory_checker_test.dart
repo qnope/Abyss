@@ -7,7 +7,7 @@ import 'package:abyss/domain/game/victory_checker.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Player _player({
+  Player buildPlayer({
     required String id,
     required String name,
     int kernelLevel = 0,
@@ -24,7 +24,7 @@ void main() {
     );
   }
 
-  Game _game({
+  Game buildGame({
     required Player human,
     List<Player> others = const [],
     GameStatus status = GameStatus.playing,
@@ -42,39 +42,39 @@ void main() {
 
   group('VictoryChecker', () {
     test('returns null when no player has kernel at level 10', () {
-      final human = _player(id: 'h', name: 'Human', kernelLevel: 5);
-      final game = _game(human: human);
+      final human = buildPlayer(id: 'h', name: 'Human', kernelLevel: 5);
+      final game = buildGame(human: human);
       expect(VictoryChecker.check(game), isNull);
     });
 
     test('returns victory when human kernel is level 10', () {
-      final human = _player(id: 'h', name: 'Human', kernelLevel: 10);
-      final game = _game(human: human);
+      final human = buildPlayer(id: 'h', name: 'Human', kernelLevel: 10);
+      final game = buildGame(human: human);
       expect(VictoryChecker.check(game), GameStatus.victory);
     });
 
     test('returns defeat when non-human kernel is level 10', () {
-      final human = _player(id: 'h', name: 'Human', kernelLevel: 3);
-      final enemy = _player(id: 'e', name: 'Enemy', kernelLevel: 10);
-      final game = _game(human: human, others: [enemy]);
+      final human = buildPlayer(id: 'h', name: 'Human', kernelLevel: 3);
+      final enemy = buildPlayer(id: 'e', name: 'Enemy', kernelLevel: 10);
+      final game = buildGame(human: human, others: [enemy]);
       expect(VictoryChecker.check(game), GameStatus.defeat);
     });
 
     test('returns null when game status is freePlay', () {
-      final human = _player(id: 'h', name: 'Human', kernelLevel: 10);
-      final game = _game(human: human, status: GameStatus.freePlay);
+      final human = buildPlayer(id: 'h', name: 'Human', kernelLevel: 10);
+      final game = buildGame(human: human, status: GameStatus.freePlay);
       expect(VictoryChecker.check(game), isNull);
     });
 
     test('returns null when game status is already victory', () {
-      final human = _player(id: 'h', name: 'Human', kernelLevel: 10);
-      final game = _game(human: human, status: GameStatus.victory);
+      final human = buildPlayer(id: 'h', name: 'Human', kernelLevel: 10);
+      final game = buildGame(human: human, status: GameStatus.victory);
       expect(VictoryChecker.check(game), isNull);
     });
 
     test('returns null when kernel is level 9', () {
-      final human = _player(id: 'h', name: 'Human', kernelLevel: 9);
-      final game = _game(human: human);
+      final human = buildPlayer(id: 'h', name: 'Human', kernelLevel: 9);
+      final game = buildGame(human: human);
       expect(VictoryChecker.check(game), isNull);
     });
   });

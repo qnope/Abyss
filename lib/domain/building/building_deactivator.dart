@@ -15,7 +15,8 @@ class BuildingDeactivator {
     BuildingType.laboratory, // 6
     BuildingType.algaeFarm, // 7
     BuildingType.coralMine, // 8
-    BuildingType.oreExtractor, // 9 - disabled first
+    BuildingType.volcanicKernel, // 10
+    BuildingType.oreExtractor, // 11 - disabled first
   ];
 
   /// Returns list of buildings that must be deactivated.

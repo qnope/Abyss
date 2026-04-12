@@ -60,6 +60,7 @@ class PlayerDefaults {
       BuildingType.coralCitadel: Building(type: BuildingType.coralCitadel, level: 0),
       BuildingType.descentModule: Building(type: BuildingType.descentModule, level: 0),
       BuildingType.pressureCapsule: Building(type: BuildingType.pressureCapsule, level: 0),
+      BuildingType.volcanicKernel: Building(type: BuildingType.volcanicKernel, level: 0),
     };
   }
 

@@ -17,6 +17,7 @@ class ConsumptionCalculator {
       BuildingType.barracks => 3 * level,
       BuildingType.descentModule => 2 * level,
       BuildingType.pressureCapsule => 2 * level,
+      BuildingType.volcanicKernel => 0,
     };
   }
 

@@ -136,6 +136,9 @@ void _showCellAction(BuildContext context, Game game,
     case CellContentType.empty:
       showCellInfoSheet(context, title: 'Plaine ($x, $y)',
         message: "Il n'y a rien a voir ici");
+    case CellContentType.volcanicKernel:
+      showCellInfoSheet(context, title: 'Noyau Volcanique ($x, $y)',
+        message: 'Un noyau volcanique pulse de chaleur.');
   }
 }
 

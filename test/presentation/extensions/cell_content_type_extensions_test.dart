@@ -31,6 +31,17 @@ void main() {
         expect(c.label, isNotEmpty);
       }
     });
+
+    test('volcanicKernel has correct label', () {
+      expect(CellContentType.volcanicKernel.label, 'Noyau Volcanique');
+    });
+
+    test('volcanicKernel has correct svgPath', () {
+      expect(
+        CellContentType.volcanicKernel.svgPath,
+        'assets/icons/terrain/volcanic_kernel.svg',
+      );
+    });
   });
 
   group('MonsterDifficultyExtensions', () {

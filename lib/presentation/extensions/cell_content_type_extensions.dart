@@ -9,6 +9,7 @@ extension CellContentTypeExtensions on CellContentType {
     CellContentType.monsterLair => 'Repaire',
     CellContentType.transitionBase => 'Faille Abyssale',
     CellContentType.passage => 'Passage',
+    CellContentType.volcanicKernel => 'Noyau Volcanique',
   };
 
   String? get svgPath => switch (this) {
@@ -19,6 +20,8 @@ extension CellContentTypeExtensions on CellContentType {
     CellContentType.monsterLair => null,
     CellContentType.transitionBase => null,
     CellContentType.passage => null,
+    CellContentType.volcanicKernel =>
+      'assets/icons/terrain/volcanic_kernel.svg',
   };
 }
 

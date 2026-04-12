@@ -85,6 +85,7 @@ class _TreasureSheet extends StatelessWidget {
       case CellContentType.monsterLair:
       case CellContentType.transitionBase:
       case CellContentType.passage:
+      case CellContentType.volcanicKernel:
         return '';
     }
   }

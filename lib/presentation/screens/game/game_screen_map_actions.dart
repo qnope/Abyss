@@ -22,9 +22,11 @@ import '../../widgets/map/level_selector.dart';
 import '../../widgets/map/monster_lair_sheet.dart';
 import '../../widgets/map/transition_base_sheet.dart';
 import '../../widgets/map/treasure_sheet.dart';
+import '../../widgets/map/volcanic_kernel_sheet.dart';
 import '../../widgets/resource/resource_gain_dialog.dart';
 import 'game_screen_collect_messages.dart';
 import 'game_screen_fight_actions.dart';
+import 'game_screen_kernel_actions.dart';
 import 'game_screen_transition_actions.dart';
 
 Widget buildMapTab(
@@ -137,8 +139,14 @@ void _showCellAction(BuildContext context, Game game,
       showCellInfoSheet(context, title: 'Plaine ($x, $y)',
         message: "Il n'y a rien a voir ici");
     case CellContentType.volcanicKernel:
-      showCellInfoSheet(context, title: 'Noyau Volcanique ($x, $y)',
-        message: 'Un noyau volcanique pulse de chaleur.');
+      final isCaptured = cell.collectedBy == human.id;
+      showVolcanicKernelSheet(
+        context,
+        isCaptured: isCaptured,
+        onAttack: () => handleAttackVolcanicKernel(
+          context, game, repository, x, y, level, onChanged,
+        ),
+      );
   }
 }
 

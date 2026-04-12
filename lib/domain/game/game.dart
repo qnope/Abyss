@@ -2,6 +2,7 @@ import 'package:hive/hive.dart';
 
 import '../map/game_map.dart';
 import '../map/transition_base_type.dart';
+import 'game_status.dart';
 import 'player.dart';
 
 part 'game.g.dart';
@@ -23,12 +24,16 @@ class Game extends HiveObject {
   @HiveField(4)
   Map<int, GameMap> levels;
 
+  @HiveField(5)
+  GameStatus status;
+
   Game({
     required this.humanPlayerId,
     required this.players,
     this.turn = 1,
     DateTime? createdAt,
     this.levels = const {},
+    this.status = GameStatus.playing,
   }) : createdAt = createdAt ?? DateTime.now();
 
   factory Game.singlePlayer(Player human) => Game(

@@ -28,6 +28,20 @@ void main() {
     });
   });
 
+  group('BuildingTypeInfo - volcanicKernel', () {
+    test('color is AbyssColors.warning', () {
+      expect(BuildingType.volcanicKernel.color, AbyssColors.warning);
+    });
+
+    test('displayName is Noyau Volcanique', () {
+      expect(BuildingType.volcanicKernel.displayName, 'Noyau Volcanique');
+    });
+
+    test('iconPath is not empty', () {
+      expect(BuildingType.volcanicKernel.iconPath, isNotEmpty);
+    });
+  });
+
   group('BuildingTypeInfo - coralCitadel', () {
     test('displayName is Citadelle corallienne', () {
       expect(BuildingType.coralCitadel.displayName, 'Citadelle corallienne');

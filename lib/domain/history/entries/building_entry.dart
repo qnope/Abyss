@@ -45,4 +45,5 @@ String _buildingLabel(BuildingType type) => switch (type) {
   BuildingType.coralCitadel => 'Citadelle corallienne',
   BuildingType.descentModule => 'Module de Descente',
   BuildingType.pressureCapsule => 'Capsule Pressurisee',
+  BuildingType.volcanicKernel => 'Noyau Volcanique',
 };

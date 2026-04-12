@@ -14,4 +14,5 @@ enum BuildingType {
   @HiveField(7) coralCitadel,
   @HiveField(8) descentModule,
   @HiveField(9) pressureCapsule,
+  @HiveField(10) volcanicKernel,
 }

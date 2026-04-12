@@ -41,6 +41,7 @@ class BuildingCostCalculator {
       BuildingType.coralCitadel => coralCitadelCost(currentLevel),
       BuildingType.descentModule => descentModuleCost(),
       BuildingType.pressureCapsule => pressureCapsuleCost(),
+      BuildingType.volcanicKernel => {},
     };
   }
 
@@ -55,6 +56,7 @@ class BuildingCostCalculator {
     BuildingType.coralCitadel => 5,
     BuildingType.descentModule ||
     BuildingType.pressureCapsule => 1,
+    BuildingType.volcanicKernel => 10,
   };
 
   Map<BuildingType, int> prerequisites(BuildingType type, int targetLevel) {
@@ -69,6 +71,7 @@ class BuildingCostCalculator {
       BuildingType.solarPanel => _productionBuildingPrereqs(targetLevel),
       BuildingType.descentModule => {BuildingType.headquarters: 5},
       BuildingType.pressureCapsule => {BuildingType.headquarters: 8},
+      BuildingType.volcanicKernel => {},
     };
   }
 

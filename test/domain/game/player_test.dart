@@ -40,9 +40,9 @@ void main() {
       expect(p.resources[ResourceType.pearl]!.maxStorage, 100);
     });
 
-    test('default buildings contain 10 buildings at level 0', () {
+    test('default buildings contain 11 buildings at level 0', () {
       final p = Player(name: 'A');
-      expect(p.buildings.length, 10);
+      expect(p.buildings.length, 11);
       for (final type in [
         BuildingType.headquarters,
         BuildingType.algaeFarm,
@@ -54,6 +54,7 @@ void main() {
         BuildingType.coralCitadel,
         BuildingType.descentModule,
         BuildingType.pressureCapsule,
+        BuildingType.volcanicKernel,
       ]) {
         expect(p.buildings[type]!.level, 0);
       }

@@ -14,6 +14,7 @@ extension BuildingTypeColor on BuildingType {
     BuildingType.barracks => AbyssColors.biolumPink,
     BuildingType.descentModule => AbyssColors.biolumBlue,
     BuildingType.pressureCapsule => AbyssColors.biolumCyan,
+    BuildingType.volcanicKernel => AbyssColors.coralPink,
   };
 }
 
@@ -29,6 +30,7 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.barracks => 'Caserne',
     BuildingType.descentModule => 'Module de Descente',
     BuildingType.pressureCapsule => 'Capsule Pressurisee',
+    BuildingType.volcanicKernel => 'Noyau Volcanique',
   };
 
   String get description => switch (this) {
@@ -55,6 +57,8 @@ extension BuildingTypeInfo on BuildingType {
       'Module spécialisé permettant l\'assaut des failles abyssales.',
     BuildingType.pressureCapsule =>
       'Capsule haute pression permettant l\'assaut des cheminées hydrothermales.',
+    BuildingType.volcanicKernel =>
+      'Le noyau volcanique, source de toute puissance',
   };
 
   String get iconPath => switch (this) {
@@ -68,5 +72,6 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.barracks => 'assets/icons/buildings/barracks.svg',
     BuildingType.descentModule => 'assets/icons/buildings/descent_module.svg',
     BuildingType.pressureCapsule => 'assets/icons/buildings/pressure_capsule.svg',
+    BuildingType.volcanicKernel => 'assets/icons/buildings/volcanic_kernel.svg',
   };
 }

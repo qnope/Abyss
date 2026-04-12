@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/game/player_defaults.dart';
 
 const _boxName = 'building_type_test';
 
@@ -23,8 +24,12 @@ void main() {
       expect(BuildingType.headquarters, isNotNull);
     });
 
-    test('enum has exactly 10 values', () {
-      expect(BuildingType.values.length, 10);
+    test('enum has exactly 11 values', () {
+      expect(BuildingType.values.length, 11);
+    });
+
+    test('volcanicKernel exists', () {
+      expect(BuildingType.volcanicKernel, isNotNull);
     });
 
     test('laboratory exists', () {
@@ -37,6 +42,14 @@ void main() {
 
     test('coralCitadel exists', () {
       expect(BuildingType.coralCitadel, isNotNull);
+    });
+  });
+
+  group('PlayerDefaults.buildings()', () {
+    test('contains volcanicKernel at level 0', () {
+      final buildings = PlayerDefaults.buildings();
+      expect(buildings.containsKey(BuildingType.volcanicKernel), isTrue);
+      expect(buildings[BuildingType.volcanicKernel]!.level, 0);
     });
   });
 

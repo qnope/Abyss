@@ -11,6 +11,7 @@ import '../domain/map/cell_content_type.dart';
 import '../domain/map/exploration_order.dart';
 import '../domain/map/reinforcement_order.dart';
 import '../domain/game/game.dart';
+import '../domain/game/game_status.dart';
 import '../domain/map/game_map.dart';
 import '../domain/map/grid_position.dart';
 import '../domain/map/map_cell.dart';
@@ -70,6 +71,7 @@ class GameRepository {
     Hive.registerAdapter(CaptureEntryAdapter());
     Hive.registerAdapter(DescentEntryAdapter());
     Hive.registerAdapter(ReinforcementEntryAdapter());
+    Hive.registerAdapter(GameStatusAdapter());
     try {
       await Hive.openBox<Game>(_boxName);
     } catch (_) {

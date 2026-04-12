@@ -57,6 +57,7 @@ on the map for history, but `isCollected` prevents further fights).
 | `monsterLair`   | Guarded by a monster (easy, medium, or hard)                             |
 | `transitionBase`| Passage point guarded by a boss; connects two depth levels               |
 | `passage`       | Reserved cell marking a transition base position from the level below    |
+| `volcanicKernel`| Unique end-game objective cell at the center of Level 3                  |
 
 Monster difficulty scales with distance from the (first) player base:
 cells farther than 7 tiles favor medium/hard monsters, while closer
@@ -104,6 +105,11 @@ TransitionBasePlacer.place(reservedIndices)
     |                               grid with spacing constraints).
     |                               Level 3: none.
     v
+VolcanicKernelPlacer.place()     -- Level 3 only: places the unique
+    |                               volcanic kernel at the map center
+    |                               (width/2, height/2), replacing any
+    |                               existing content.
+    v
 Base cell cleared                -- Base cell content set to empty.
     |
     v
@@ -141,6 +147,12 @@ Computed: `difficulty` (4 for faille, 5 for cheminee),
 
 Static factory producing boss combatant lists per base type. Boss
 combatants have `isBoss: true` on `Combatant`.
+
+Also provides `forVolcanicKernel()` returning 11 combatants:
+- 1 boss "Seigneur du Noyau" (350 HP, 35 ATK, 20 DEF)
+- 10 minions "Sentinelle du Noyau" (80 HP, 18 ATK, 12 DEF)
+
+Total 1150 HP — significantly stronger than cheminee guardians (600 HP).
 
 ### ReinforcementOrder (Hive typeId 33)
 
@@ -235,5 +247,6 @@ Players queue **scout** orders which are resolved at end of turn.
 | `transition_base_type.dart` | `TransitionBaseType` enum (faille, cheminee) |
 | `transition_base.dart` | `TransitionBase` Hive type |
 | `transition_base_placer.dart` | Placement logic for transition bases |
-| `guardian_factory.dart` | Boss combatant generation per base type |
+| `guardian_factory.dart` | Boss combatant generation per base type and volcanic kernel |
+| `volcanic_kernel_placer.dart` | Places the volcanic kernel at the center of Level 3 |
 | `reinforcement_order.dart` | `ReinforcementOrder` Hive type |

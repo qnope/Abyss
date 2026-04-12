@@ -12,6 +12,10 @@ players together with the shared map and turn counter.
 | File | Description |
 |------|-------------|
 | `game.dart` | Root `Game` container |
+| `game_status.dart` | `GameStatus` enum (playing, victory, defeat, freePlay) |
+| `game_statistics.dart` | `GameStatistics` data class (turns, monsters, bases, resources) |
+| `game_statistics_calculator.dart` | Computes post-game statistics from history |
+| `victory_checker.dart` | `VictoryChecker` — checks end-game condition |
 | `player.dart` | `Player` per-player state aggregate |
 | `player_defaults.dart` | Default resources, buildings, tech branches, and units for a new player |
 
@@ -32,6 +36,7 @@ explorations, and revealed cells all live on `Player`.
 | `turn` | `int` | Current turn number (starts at 1) |
 | `createdAt` | `DateTime` | Timestamp of game creation |
 | `levels` | `Map<int, GameMap>` | One map per depth level (1 = Surface, 2 = Profondeurs, 3 = Noyau) |
+| `status` | `GameStatus` | Game state: playing, victory, defeat, or freePlay (default: playing) |
 
 ### Helpers
 
@@ -43,6 +48,36 @@ explorations, and revealed cells all live on `Player`.
 - `GameMap get currentMap` -- shortcut for `levels[1]!` (Level 1).
 - `Set<TransitionBaseType> capturedBaseTypesOf(String playerId)` --
   scans all levels for transition bases captured by the given player.
+- `bool isVolcanicKernelCapturedBy(String playerId)` --
+  scans Level 3 cells for a volcanic kernel captured by the given player.
+
+## GameStatus
+
+`GameStatus` is a Hive-serializable enum tracking the game lifecycle:
+
+| Value | Meaning |
+|-------|---------|
+| `playing` | Active gameplay (default) |
+| `victory` | Player won (volcanic kernel built to level 10) |
+| `defeat` | Opponent won (reserved for future multiplayer) |
+| `freePlay` | Sandbox mode after victory — no more victory checks |
+
+## VictoryChecker
+
+`VictoryChecker.check(Game game)` returns a `GameStatus?`:
+- `null` if the game is already in `freePlay` or no player has reached level 10
+- `victory` if the human player's volcanic kernel building is level 10
+- `defeat` if a non-human player's volcanic kernel building is level 10
+
+Called after each building upgrade to detect the end-game condition.
+
+## GameStatisticsCalculator
+
+`GameStatisticsCalculator.compute(Game game)` produces a `GameStatistics` record by scanning the player's history entries:
+- **turnsPlayed**: `game.turn`
+- **monstersDefeated**: count of `CombatEntry` with victory
+- **basesCaptured**: count of `CaptureEntry`
+- **totalResourcesCollected**: sum of `CollectEntry` deltas + current inventory
 
 ## Player
 

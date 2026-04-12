@@ -41,18 +41,18 @@ across the entire generated output.
 | Module | Files | What is tested |
 |---|---|---|
 | `domain/map` | 17 | Map generation, terrain, cell content, grid positions, monster lairs, per-player exploration (eligibility, reveal area, resolver) |
-| `domain/action` | 20 | All action types (recruit, research, upgrade, unlock, explore, collect, fight monster, end turn) with per-player signatures and `makeHistoryEntry` hooks |
+| `domain/action` | 24 | All action types (recruit, research, upgrade, unlock, explore, collect, fight monster, attack volcanic kernel, end turn) with per-player signatures and `makeHistoryEntry` hooks |
 | `domain/history` | 3 | Sealed `HistoryEntry` hierarchy, `Player.addHistoryEntry` FIFO cap, `TurnEndEntryFactory` |
 | `domain/fight` | 14 | Combat resolver: combatants, damage, crit, target picking, turn order, engine, loot, casualties |
 | `domain/resource` | 7 | Production, consumption, maintenance formulas and calculators |
-| `domain/building` | 6 | Building model, cost calculator, prerequisites, deactivation |
+| `domain/building` | 8 | Building model, cost calculator, prerequisites, deactivation, volcanic kernel costs |
 | `domain/unit` | 5 | Unit model, stats, types, cost and loss calculators |
 | `domain/tech` | 3 | Tech cost calculator, prerequisite checks, branch state |
-| `domain/game` | 2 | `Game` multi-player container and `Player` aggregate state |
+| `domain/game` | 6 | `Game` container, `Player` aggregate, `GameStatus`, `VictoryChecker`, `GameStatisticsCalculator` |
 | `domain/turn` | 3 | Turn resolver (production, consumption, recruitment, per-player exploration) and result |
 | `presentation/widgets` | 35 | Widget trees for building, unit, resource, tech, map (per-player fog), fight (army row, monster preview, turn list), turn, history (card, filter, sheet), common (settings dialog) |
 | `presentation/screens` | 13 | Game screen (settings + end-turn flow), fight screens (army selection, summary), and menu screen rendering |
 | `presentation/extensions` | 4 | Display-formatting extensions |
 | `data` | 3 | Repository round-trip including fight persistence (lair collection, looted resources, unit casualties) |
-| `integration` | 4 | End-to-end history scenario (build → research → recruit → explore → collect → fight → end turn), persistence round-trip, FIFO under load, tap-combat reopens `FightSummaryScreen` |
+| `integration` | 6 | End-to-end history scenario, persistence round-trip, FIFO under load, tap-combat reopens `FightSummaryScreen`, end-game flow (capture kernel → build to level 10 → victory) |
 | Root | 2 | Theme constants and SVG asset availability |

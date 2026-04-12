@@ -46,6 +46,8 @@ GameScreen logic is split into helper files to stay under 150 lines:
 | `game_screen_actions.dart` | `showBuildingDetailAction`, `showUnitDetailAction` — wire domain actions to bottom sheets |
 | `game_screen_map_actions.dart` | `buildMapTab` and contextual map-tap routing: exploration sheet for hidden cells, treasure/ruins/lair/info sheets for revealed ones, plus the collect → `ResourceGainDialog` orchestration. For monster lairs it wires `MonsterLairSheet.onPrepareFight` to `openArmySelection` |
 | `game_screen_fight_actions.dart` | `openArmySelection` — pushes the `ArmySelectionScreen` with the tapped cell, the `MonsterLair`, and the screen's `onChanged` callback |
+| `game_screen_kernel_actions.dart` | `handleAttackVolcanicKernel` — navigates to the kernel army selection screen |
+| `game_screen_victory_actions.dart` | `showVictoryScreen` — computes stats, pushes `VictoryScreen`, handles continue/menu callbacks |
 | `game_screen_collect_messages.dart` | `titleFor` / `emptyMessageFor` — content-aware strings for the collect dialog |
 | `game_screen_tech_actions.dart` | `showBranchDetail`, `showNodeDetail` — tech tree interactions |
 | `game_screen_turn_helpers.dart` | `computeConsumption`, `computeBuildingsToDeactivate`, `computeUnitsToLose` — pre-turn calculations |
@@ -61,6 +63,15 @@ stays tab-focused.
 | `army_selection_summary.dart` | `ArmySelectionSummary` helper — `militaryLevelOf`, `totalAtk`, `totalDef` used by the screen body and the `SelectionSummaryCard` |
 | `fight_summary_screen.dart` | `FightSummaryScreen` — victory/defeat banner, `MonsterPreview`, player accounting (sent / intact / wounded / dead), monster section, loot list (on victory), and a `FightTurnList` of the per-turn summaries |
 | `fight_summary_screen_sections.dart` | `buildResultBanner`, `buildPlayerAccounting`, `buildMonsterSection`, `buildLoot` — section builders extracted from the summary screen to stay under 150 lines |
+| `kernel_army_selection_screen.dart` | `KernelArmySelectionScreen` — army selection for volcanic kernel assault, requires an admiral, fires `AttackVolcanicKernelAction` |
+| `kernel_fight_summary_screen.dart` | `KernelFightSummaryScreen` — fight results for kernel assault with capture/victory/defeat banner |
+
+### Victory Screen
+
+`VictoryScreen` is displayed when the player builds the volcanic kernel to level 10. It shows:
+- Volcanic kernel icon and "VICTOIRE !" title
+- A statistics card (turns played, monsters defeated, bases captured, resources collected)
+- Two buttons: "Continuer en mode libre" (sets `freePlay`) and "Retour au menu"
 
 ### Map Tap Flow
 
@@ -69,6 +80,7 @@ stays tab-focused.
 3. **Exploration**: `ExplorationSheet` shows cost and area; on confirm, `ExploreAction` consumes 1 scout and queues an `ExplorationOrder` (resolved at turn end). Pending cells show a cyan border on the map
 4. **Collect**: `TreasureSheet` confirms; on collect, `CollectTreasureAction` runs, the sheet closes, and a `ResourceGainDialog` opens with the per-resource deltas from the returned `CollectTreasureResult`
 5. **Fight**: `MonsterLairSheet` shows the lair's stats; the "Préparer le combat" button fires `openArmySelection`, which pushes `ArmySelectionScreen`. Launching the fight executes `FightMonsterAction`, saves the game, and `pushReplacement`s to `FightSummaryScreen`. On return, the map rebuilds (victorious lairs are now `isCollected`, so a subsequent tap falls through to the info sheet)
+6. **Volcanic Kernel**: `VolcanicKernelSheet` shows the kernel status; if uncaptured, a "Lancer l'assaut" button fires `handleAttackVolcanicKernel`, which pushes `KernelArmySelectionScreen`. Successful capture marks the cell as collected
 
 ### Turn Flow
 

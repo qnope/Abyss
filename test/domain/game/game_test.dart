@@ -1,6 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/map/cell_content_type.dart';
+import 'package:abyss/domain/map/game_map.dart';
+import 'package:abyss/domain/map/map_cell.dart';
+import 'package:abyss/domain/map/terrain_type.dart';
 
 void main() {
   group('Game.singlePlayer', () {
@@ -56,6 +60,57 @@ void main() {
         turn: 12,
       );
       expect(game.turn, 12);
+    });
+  });
+
+  group('Game.isVolcanicKernelCapturedBy', () {
+    final player = Player(id: 'p1', name: 'P', baseX: 0, baseY: 0);
+
+    Game gameWithLevel3(List<MapCell> cells) {
+      return Game(
+        humanPlayerId: player.id,
+        players: {player.id: player},
+        levels: {
+          3: GameMap(width: cells.length, height: 1, cells: cells, seed: 0),
+        },
+      );
+    }
+
+    test('returns false when Level 3 does not exist', () {
+      final game = Game.singlePlayer(player);
+      expect(game.isVolcanicKernelCapturedBy('p1'), isFalse);
+    });
+
+    test('returns false when kernel is uncaptured', () {
+      final game = gameWithLevel3([
+        MapCell(
+          terrain: TerrainType.plain,
+          content: CellContentType.volcanicKernel,
+        ),
+      ]);
+      expect(game.isVolcanicKernelCapturedBy('p1'), isFalse);
+    });
+
+    test('returns true when kernel is captured by playerId', () {
+      final game = gameWithLevel3([
+        MapCell(
+          terrain: TerrainType.plain,
+          content: CellContentType.volcanicKernel,
+          collectedBy: 'p1',
+        ),
+      ]);
+      expect(game.isVolcanicKernelCapturedBy('p1'), isTrue);
+    });
+
+    test('returns false when kernel is captured by another player', () {
+      final game = gameWithLevel3([
+        MapCell(
+          terrain: TerrainType.plain,
+          content: CellContentType.volcanicKernel,
+          collectedBy: 'other',
+        ),
+      ]);
+      expect(game.isVolcanicKernelCapturedBy('p1'), isFalse);
     });
   });
 }

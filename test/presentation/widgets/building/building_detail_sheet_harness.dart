@@ -14,6 +14,7 @@ Widget buildSheetApp({
   required Building building,
   Map<ResourceType, Resource>? resources,
   Map<BuildingType, Building>? allBuildings,
+  bool isVolcanicKernelCaptured = false,
   VoidCallback? onUpgrade,
 }) {
   return MaterialApp(
@@ -26,6 +27,7 @@ Widget buildSheetApp({
             building: building,
             resources: resources ?? defaultPlayer.resources,
             allBuildings: allBuildings ?? {building.type: building},
+            isVolcanicKernelCaptured: isVolcanicKernelCaptured,
             onUpgrade: onUpgrade ?? () {},
           ),
           child: const Text('Open'),

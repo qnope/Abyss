@@ -16,6 +16,7 @@ class UpgradeSection extends StatelessWidget {
   final Map<ResourceType, Resource> resources;
   final Map<BuildingType, Building> allBuildings;
   final Set<TransitionBaseType> capturedBaseTypes;
+  final bool isVolcanicKernelCaptured;
   final VoidCallback onUpgrade;
 
   const UpgradeSection({
@@ -24,6 +25,7 @@ class UpgradeSection extends StatelessWidget {
     required this.resources,
     required this.allBuildings,
     this.capturedBaseTypes = const {},
+    this.isVolcanicKernelCaptured = false,
     required this.onUpgrade,
   });
 
@@ -36,6 +38,7 @@ class UpgradeSection extends StatelessWidget {
       resources: resources,
       allBuildings: allBuildings,
       capturedBaseTypes: capturedBaseTypes,
+      isVolcanicKernelCaptured: isVolcanicKernelCaptured,
     );
     final textTheme = Theme.of(context).textTheme;
 
@@ -64,6 +67,8 @@ class UpgradeSection extends StatelessWidget {
         ...prereqs.entries.map((e) => _prereqRow(e.key, e.value, textTheme)),
         if (check.missingCapturedBase != null)
           _capturedBaseRow(check.missingCapturedBase!, textTheme),
+        if (check.missingCapturedKernel)
+          _capturedKernelRow(textTheme),
         const SizedBox(height: 12),
         ElevatedButton(
           onPressed: check.canUpgrade ? onUpgrade : null,
@@ -113,10 +118,13 @@ class UpgradeSection extends StatelessWidget {
     );
   }
 
-  Widget _capturedBaseRow(
-    TransitionBaseType type,
-    TextTheme textTheme,
-  ) {
+  Widget _capturedBaseRow(TransitionBaseType type, TextTheme textTheme) =>
+      _lockedRow('${type.displayName} capturee requise');
+
+  Widget _capturedKernelRow(TextTheme textTheme) =>
+      _lockedRow('Noyau Volcanique capture requis');
+
+  Widget _lockedRow(String label) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
@@ -124,10 +132,8 @@ class UpgradeSection extends StatelessWidget {
           const Icon(Icons.lock, size: 16, color: AbyssColors.error),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(
-              '${type.displayName} capturee requise',
-              style: const TextStyle(color: AbyssColors.error),
-            ),
+            child: Text(label,
+                style: const TextStyle(color: AbyssColors.error)),
           ),
         ],
       ),

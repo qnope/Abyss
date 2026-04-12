@@ -28,7 +28,7 @@ graph TD
 
     subgraph "Domain Layer"
         domain[domain/]
-        action & building & game & map
+        action & building & fight & game & map
         resource & tech & turn & unit
     end
 
@@ -96,4 +96,4 @@ graph LR
 
 `main.dart` initializes `GameRepository` (Hive), then passes it to `MainMenuScreen`. Screens use domain models and call the repository for persistence. Domain has zero dependencies on the other layers.
 
-`Game` is a multi-player container: it holds a `Map<String, Player>` plus the shared `Map<int, GameMap> levels` (one map per depth level) and turn counter. All per-player state (resources, buildings, tech, units per level, pending explorations, revealed cells per level, pending reinforcements) lives on `Player`. Actions and turn resolution iterate per player and read that state from the `Player` argument, not from `Game`.
+`Game` is a multi-player container: it holds a `Map<String, Player>` plus the shared `Map<int, GameMap> levels` (one map per depth level), turn counter, and a `GameStatus` tracking whether the game is in progress, won, lost, or in free-play mode. All per-player state (resources, buildings, tech, units per level, pending explorations, revealed cells per level, pending reinforcements) lives on `Player`. Actions and turn resolution iterate per player and read that state from the `Player` argument, not from `Game`.

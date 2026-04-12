@@ -54,6 +54,7 @@
 | `TreasureSheet` | Bottom sheet for collecting a `resourceBonus` or `ruins` cell (free, immediate). Triggers `CollectTreasureAction`; on success, `game_screen_map_actions.dart` closes the sheet and opens a `ResourceGainDialog` with the per-resource deltas from the returned `CollectTreasureResult` |
 | `MonsterLairSheet` | Bottom sheet showing monster difficulty, unit count, and monster stats. Exposes a **"Préparer le combat"** button that pops the sheet and fires the `onPrepareFight` callback (wired by `game_screen_map_actions.dart` to `openArmySelection` in `game_screen_fight_actions.dart`) |
 | `CellInfoSheet` | Generic info bottom sheet for empty plains, the player base, and already-collected cells |
+| `VolcanicKernelSheet` | Bottom sheet for the volcanic kernel cell: shows capture status, guardian description, and attack button if uncaptured |
 
 ## Fight Widgets (`fight/`)
 

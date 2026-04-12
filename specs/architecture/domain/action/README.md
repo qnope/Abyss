@@ -33,8 +33,8 @@ revealed cells, pending explorations) is always read from the
 
 An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`,
 `researchTech`, `recruitUnit`, `explore`, `collectTreasure`,
-`fightMonster`, `attackTransitionBase`, `descend`,
-`sendReinforcements`, `endTurn`.
+`fightMonster`, `attackTransitionBase`, `attackVolcanicKernel`,
+`descend`, `sendReinforcements`, `endTurn`.
 
 ## ActionResult
 
@@ -226,6 +226,27 @@ already captured, units available on the given level.
 
 Returns an `AttackTransitionBaseResult` with fight details and outcome.
 
+### AttackVolcanicKernelAction
+
+Takes `targetX`, `targetY`, `level` (always 3),
+`selectedUnits: Map<UnitType, int>`, and an optional `Random`.
+
+**Validation**: volcanic kernel cell exists at the target, not already
+captured, player has the selected units on the given level, at least
+one `abyssAdmiral` is selected.
+
+**Execution**: builds player combatants vs volcanic kernel guardians
+from `GuardianFactory.forVolcanicKernel()`, runs the fight engine,
+then:
+- Victory + abyssAdmiral alive → kernel captured
+  (`cell.collectedBy = player.id`)
+- Victory + no admiral → survivors return, no capture
+- Defeat → army lost, kernel remains
+
+Returns an `AttackVolcanicKernelResult` with the fight details and
+capture outcome. History entry is a `CaptureEntry` on capture, or a
+`CombatEntry` otherwise.
+
 ### DescendAction
 
 Takes a `TransitionBase`, `selectedUnits: Map<UnitType, int>`, and
@@ -283,6 +304,9 @@ boundary itself, is a successful `Action` result.
 | `attack_transition_base_action.dart` | `AttackTransitionBaseAction` |
 | `attack_transition_base_helpers.dart` | Transition base combat helpers |
 | `attack_transition_base_result.dart` | `AttackTransitionBaseResult` |
+| `attack_volcanic_kernel_action.dart` | `AttackVolcanicKernelAction` |
+| `attack_volcanic_kernel_helpers.dart` | Volcanic kernel combat helpers |
+| `attack_volcanic_kernel_result.dart` | `AttackVolcanicKernelResult` |
 | `descend_action.dart` | `DescendAction` |
 | `send_reinforcements_action.dart` | `SendReinforcementsAction` |
 | `end_turn_action.dart` | `EndTurnAction` |

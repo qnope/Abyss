@@ -2,7 +2,7 @@
 
 ## Building Types
 
-`BuildingType` is a Hive-persisted enum with 8 values:
+`BuildingType` is a Hive-persisted enum with 11 values:
 
 - **headquarters** -- central building, prerequisite for all others
 - **algaeFarm** -- produces algae (food)
@@ -14,6 +14,7 @@
 - **coralCitadel** -- defensive building; consumes `1 * level` energy, deactivated last
 - **descentModule** -- unlocks faille assault (max level 1, requires HQ 5)
 - **pressureCapsule** -- unlocks cheminee assault (max level 1, requires HQ 8)
+- **volcanicKernel** -- end-game building (max level 10, requires HQ 10 + kernel captured)
 
 ## Building
 
@@ -28,7 +29,11 @@
 
 ## Max Level
 
-Headquarters has a max level of 10. All other buildings have a max level of 5.
+Headquarters and volcanic kernel have a max level of 10. All other buildings have a max level of 5.
+
+## Volcanic Kernel Costs
+
+`volcanicKernelCost(currentLevel)` uses a quadratic scaling formula separate from the standard buildings: coral `50 * (level^2 + 1)`, ore `40 * (level^2 + 1)`, energy `30 * (level^2 + 1)`, pearl `5 + 3 * (level + 1)`. Building the volcanic kernel to level 10 triggers the victory condition.
 
 ## Defense bonus
 
@@ -49,17 +54,18 @@ Every building except headquarters requires a minimum headquarters level to upgr
 
 `BuildingCostCalculator.checkUpgrade(...)` takes the building type, current level, available resources, and all buildings. It returns an `UpgradeCheck` value object containing:
 
-- `canUpgrade` -- true only if resources and prerequisites are both satisfied
+- `canUpgrade` -- true only if resources, prerequisites, and capture requirement are satisfied
 - `isMaxLevel` -- true when the building is already at max level
 - `missingResources` -- map of resource shortfalls
 - `missingPrerequisites` -- map of unmet building level requirements
+- `missingCapturedKernel` -- true when the volcanic kernel building requires a captured kernel cell
 
 ## Building Deactivation
 
 `BuildingDeactivator.deactivate(...)` handles energy shortages. When total energy consumption exceeds production plus stock, buildings are deactivated in reverse priority order (lowest-priority entries are disabled first). The priority list is:
 
 0. headquarters (never disabled)
-1. coralCitadel (disabled last)
+1. volcanicKernel, coralCitadel (disabled last)
 2. solarPanel
 3. barracks
 4. laboratory

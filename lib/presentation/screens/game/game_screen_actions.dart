@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import '../../../data/game_repository.dart';
 import '../../../domain/action/action_executor.dart';
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
+import '../../../domain/game/game_status.dart';
+import '../../../domain/game/victory_checker.dart';
 import '../../../domain/action/recruit_unit_action.dart';
 import '../../../domain/unit/unit_cost_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../../domain/action/upgrade_building_action.dart';
 import '../../widgets/building/building_detail_sheet.dart';
 import '../../widgets/unit/unit_detail_sheet.dart';
+import 'game_screen_victory_actions.dart';
 
 void showBuildingDetailAction(
   BuildContext context,
   Game game,
+  GameRepository repository,
   Building building,
   VoidCallback onChanged,
 ) {
@@ -28,6 +33,13 @@ void showBuildingDetailAction(
       final action = UpgradeBuildingAction(buildingType: building.type);
       final result = ActionExecutor().execute(action, game, human);
       if (result.isSuccess) {
+        final newStatus = VictoryChecker.check(game);
+        if (newStatus == GameStatus.victory) {
+          game.status = GameStatus.victory;
+          Navigator.pop(context);
+          showVictoryScreen(context, game, repository, onChanged);
+          return;
+        }
         onChanged();
         Navigator.pop(context);
       }

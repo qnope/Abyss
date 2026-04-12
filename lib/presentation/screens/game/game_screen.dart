@@ -78,7 +78,7 @@ class _GameScreenState extends State<GameScreen> {
         buildings: human.buildings,
         resources: human.resources,
         onBuildingTap: (b) => showBuildingDetailAction(
-          context, g, b, () => setState(() {})),
+          context, g, widget.repository, b, () => setState(() {})),
       ),
       1 => buildMapTab(
         context,

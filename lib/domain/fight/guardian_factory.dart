@@ -45,6 +45,27 @@ class GuardianFactory {
         ),
       ];
 
+  static List<Combatant> forVolcanicKernel() => [
+        Combatant(
+          side: CombatSide.monster,
+          typeKey: 'seigneurNoyau',
+          maxHp: 350,
+          atk: 35,
+          def: 20,
+          isBoss: true,
+        ),
+        ...List.generate(
+          10,
+          (_) => Combatant(
+            side: CombatSide.monster,
+            typeKey: 'sentinelleNoyau',
+            maxHp: 80,
+            atk: 18,
+            def: 12,
+          ),
+        ),
+      ];
+
   static List<Combatant> forType(TransitionBaseType type) => switch (type) {
         TransitionBaseType.faille => forFaille(),
         TransitionBaseType.cheminee => forCheminee(),

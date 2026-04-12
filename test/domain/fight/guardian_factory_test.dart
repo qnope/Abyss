@@ -76,6 +76,53 @@ void main() {
       });
     });
 
+    group('forVolcanicKernel', () {
+      test('returns 11 combatants with exactly 1 boss', () {
+        final combatants = GuardianFactory.forVolcanicKernel();
+        expect(combatants, hasLength(11));
+        expect(combatants.where((c) => c.isBoss), hasLength(1));
+      });
+
+      test('boss has correct stats', () {
+        final boss = GuardianFactory.forVolcanicKernel()
+            .firstWhere((c) => c.isBoss);
+        expect(boss.typeKey, 'seigneurNoyau');
+        expect(boss.maxHp, 350);
+        expect(boss.atk, 35);
+        expect(boss.def, 20);
+        expect(boss.side, CombatSide.monster);
+      });
+
+      test('all minions have correct stats', () {
+        final minions = GuardianFactory.forVolcanicKernel()
+            .where((c) => !c.isBoss).toList();
+        expect(minions, hasLength(10));
+        for (final m in minions) {
+          expect(m.typeKey, 'sentinelleNoyau');
+          expect(m.maxHp, 80);
+          expect(m.atk, 18);
+          expect(m.def, 12);
+          expect(m.side, CombatSide.monster);
+        }
+      });
+
+      test('boss stats are strictly greater than Titan Volcanique', () {
+        final boss = GuardianFactory.forVolcanicKernel()
+            .firstWhere((c) => c.isBoss);
+        expect(boss.maxHp, greaterThan(200));
+        expect(boss.atk, greaterThan(25));
+        expect(boss.def, greaterThan(15));
+      });
+
+      test('minion stats are strictly greater than Golem de Magma', () {
+        final minion = GuardianFactory.forVolcanicKernel()
+            .firstWhere((c) => !c.isBoss);
+        expect(minion.maxHp, greaterThan(50));
+        expect(minion.atk, greaterThan(12));
+        expect(minion.def, greaterThan(8));
+      });
+    });
+
     group('forType', () {
       test('dispatches faille', () {
         final combatants =

@@ -30,6 +30,8 @@ class UpgradeBuildingAction extends Action {
       resources: player.resources,
       allBuildings: player.buildings,
       capturedBaseTypes: game.capturedBaseTypesOf(player.id),
+      isVolcanicKernelCaptured:
+          game.isVolcanicKernelCapturedBy(player.id),
     );
     if (check.isMaxLevel) {
       return ActionResult.failure('Niveau maximum atteint');

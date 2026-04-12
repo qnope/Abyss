@@ -7,6 +7,7 @@ import 'map_cell.dart';
 import 'map_generation_result.dart';
 import 'terrain_generator.dart';
 import 'transition_base_placer.dart';
+import 'volcanic_kernel_placer.dart';
 
 class MapGenerator {
   static const _size = 20;
@@ -57,6 +58,14 @@ class MapGenerator {
       random: random,
       reservedIndices: reservedIndices,
     );
+
+    if (level == 3) {
+      VolcanicKernelPlacer.place(
+        cells: cells,
+        width: _size,
+        height: _size,
+      );
+    }
 
     _clearBaseContent(cells, baseX, baseY);
     _markPassages(cells, baseX, baseY, reservedPassages);

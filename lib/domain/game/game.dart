@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 
+import '../map/cell_content_type.dart';
 import '../map/game_map.dart';
 import '../map/transition_base_type.dart';
 import 'game_status.dart';
@@ -57,5 +58,17 @@ class Game extends HiveObject {
       }
     }
     return types;
+  }
+
+  bool isVolcanicKernelCapturedBy(String playerId) {
+    final map = levels[3];
+    if (map == null) return false;
+    for (final cell in map.cells) {
+      if (cell.content == CellContentType.volcanicKernel &&
+          cell.collectedBy == playerId) {
+        return true;
+      }
+    }
+    return false;
   }
 }

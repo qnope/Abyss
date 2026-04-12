@@ -31,19 +31,21 @@ class MapCellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        width: cellSize,
-        height: cellSize,
-        child: Stack(
-          children: [
-            _background(),
-            _terrainLayer(),
-            if (isRevealed) _contentLayer(),
-            if (hasPendingExploration) _explorationMarker(),
-            if (!isRevealed) _fogOverlay(),
-          ],
+    return RepaintBoundary(
+      child: GestureDetector(
+        onTap: onTap,
+        child: SizedBox(
+          width: cellSize,
+          height: cellSize,
+          child: Stack(
+            children: [
+              _background(),
+              _terrainLayer(),
+              if (isRevealed) _contentLayer(),
+              if (hasPendingExploration) _explorationMarker(),
+              if (!isRevealed) _fogOverlay(),
+            ],
+          ),
         ),
       ),
     );

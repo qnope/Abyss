@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'data/game_repository.dart';
 import 'presentation/screens/menu/main_menu_screen.dart';
+import 'presentation/svg_precache.dart';
 import 'presentation/theme/abyss_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GameRepository.initialize();
+  await Future.wait([
+    GameRepository.initialize(),
+    precacheSvgAssets(),
+  ]);
   runApp(AbyssApp(repository: GameRepository()));
 }
 

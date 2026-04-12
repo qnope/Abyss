@@ -23,6 +23,7 @@ void showBuildingDetailAction(
     resources: human.resources,
     allBuildings: human.buildings,
     capturedBaseTypes: game.capturedBaseTypesOf(human.id),
+    isVolcanicKernelCaptured: game.isVolcanicKernelCapturedBy(human.id),
     onUpgrade: () {
       final action = UpgradeBuildingAction(buildingType: building.type);
       final result = ActionExecutor().execute(action, game, human);

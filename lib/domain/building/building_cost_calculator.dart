@@ -63,17 +63,21 @@ class BuildingCostCalculator {
   Map<BuildingType, int> prerequisites(BuildingType type, int targetLevel) {
     return switch (type) {
       BuildingType.headquarters => {},
-      BuildingType.laboratory => _laboratoryPrereqs(targetLevel),
-      BuildingType.barracks => _barracksPrereqs(targetLevel),
+      BuildingType.laboratory => _hqPrereq(targetLevel, [2, 3, 5, 7, 10]),
+      BuildingType.barracks => _hqPrereq(targetLevel, [3, 4, 6, 8, 10]),
       BuildingType.coralCitadel => coralCitadelPrereqs(targetLevel),
       BuildingType.algaeFarm ||
       BuildingType.coralMine ||
       BuildingType.oreExtractor ||
-      BuildingType.solarPanel => _productionBuildingPrereqs(targetLevel),
+      BuildingType.solarPanel => _hqPrereq(targetLevel, [1, 2, 4, 6, 10]),
       BuildingType.descentModule => {BuildingType.headquarters: 5},
       BuildingType.pressureCapsule => {BuildingType.headquarters: 8},
-      BuildingType.volcanicKernel => {},
+      BuildingType.volcanicKernel => {BuildingType.headquarters: 10},
     };
+  }
+
+  bool requiresCapturedKernel(BuildingType type) {
+    return type == BuildingType.volcanicKernel;
   }
 
   TransitionBaseType? requiredCapturedBase(BuildingType type) {
@@ -84,39 +88,10 @@ class BuildingCostCalculator {
     };
   }
 
-  Map<BuildingType, int> _productionBuildingPrereqs(int targetLevel) {
-    final hqLevel = switch (targetLevel) {
-      1 => 1,
-      2 => 2,
-      3 => 4,
-      4 => 6,
-      5 => 10,
-      _ => 0,
-    };
-    return hqLevel > 0 ? {BuildingType.headquarters: hqLevel} : {};
-  }
-
-  Map<BuildingType, int> _laboratoryPrereqs(int targetLevel) {
-    final hqLevel = switch (targetLevel) {
-      1 => 2,
-      2 => 3,
-      3 => 5,
-      4 => 7,
-      5 => 10,
-      _ => 0,
-    };
-    return hqLevel > 0 ? {BuildingType.headquarters: hqLevel} : {};
-  }
-
-  Map<BuildingType, int> _barracksPrereqs(int targetLevel) {
-    final hqLevel = switch (targetLevel) {
-      1 => 3,
-      2 => 4,
-      3 => 6,
-      4 => 8,
-      5 => 10,
-      _ => 0,
-    };
+  Map<BuildingType, int> _hqPrereq(int targetLevel, List<int> levels) {
+    final hqLevel = targetLevel >= 1 && targetLevel <= levels.length
+        ? levels[targetLevel - 1]
+        : 0;
     return hqLevel > 0 ? {BuildingType.headquarters: hqLevel} : {};
   }
 
@@ -126,6 +101,7 @@ class BuildingCostCalculator {
     required Map<ResourceType, Resource> resources,
     required Map<BuildingType, Building> allBuildings,
     Set<TransitionBaseType> capturedBaseTypes = const {},
+    bool isVolcanicKernelCaptured = false,
   }) {
     if (currentLevel >= maxLevel(type)) {
       return const UpgradeCheck(canUpgrade: false, isMaxLevel: true);
@@ -155,13 +131,18 @@ class BuildingCostCalculator {
             ? reqBase
             : null;
 
+    final bool missingKernel =
+        requiresCapturedKernel(type) && !isVolcanicKernelCaptured;
+
     return UpgradeCheck(
       canUpgrade: missingResources.isEmpty &&
           missingPrereqs.isEmpty &&
-          missingBase == null,
+          missingBase == null &&
+          !missingKernel,
       missingResources: missingResources,
       missingPrerequisites: missingPrereqs,
       missingCapturedBase: missingBase,
+      missingCapturedKernel: missingKernel,
     );
   }
 }

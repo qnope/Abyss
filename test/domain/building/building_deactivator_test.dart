@@ -214,6 +214,41 @@ void main() {
       expect(result, isNot(contains(BuildingType.coralCitadel)));
     });
 
+    test('volcanicKernel is in the priority list', () {
+      // All buildings at level 1, production=0, stock=0 => full deficit.
+      final buildings = _buildings({
+        BuildingType.headquarters: 1,
+        BuildingType.volcanicKernel: 1,
+        BuildingType.coralCitadel: 1,
+        BuildingType.oreExtractor: 1,
+      });
+      final result = BuildingDeactivator.deactivate(
+        buildings: buildings,
+        energyProduction: 0,
+        energyStock: 0,
+      );
+      expect(result, contains(BuildingType.volcanicKernel));
+    });
+
+    test('volcanicKernel is not among first buildings disabled', () {
+      // All buildings at level 1 with small deficit: only oreExtractor needed.
+      // HQ lvl1=3, volcanic lvl1=1, citadel lvl1=1, ore lvl1=3 => total 8.
+      // available=5, deficit=3. Deactivating oreExtractor (3) closes it.
+      final buildings = _buildings({
+        BuildingType.headquarters: 1,
+        BuildingType.volcanicKernel: 1,
+        BuildingType.coralCitadel: 1,
+        BuildingType.oreExtractor: 1,
+      });
+      final result = BuildingDeactivator.deactivate(
+        buildings: buildings,
+        energyProduction: 5,
+        energyStock: 0,
+      );
+      expect(result, [BuildingType.oreExtractor]);
+      expect(result, isNot(contains(BuildingType.volcanicKernel)));
+    });
+
     test('skips level 0 coral citadel', () {
       // HQ lvl1=3, citadel lvl0=0, oreExtractor lvl1=3 => total 6.
       // available=0, deficit=6 — everything non-HQ except level-0 citadel goes.

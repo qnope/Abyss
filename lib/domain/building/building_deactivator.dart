@@ -7,16 +7,16 @@ class BuildingDeactivator {
   /// HQ is never disabled (index 0, never reached).
   static const List<BuildingType> _priority = [
     BuildingType.headquarters, // 0 - never disabled
-    BuildingType.coralCitadel, // 1 - last to be disabled
-    BuildingType.solarPanel, // 2
-    BuildingType.descentModule, // 3
-    BuildingType.pressureCapsule, // 4
-    BuildingType.barracks, // 5
-    BuildingType.laboratory, // 6
-    BuildingType.algaeFarm, // 7
-    BuildingType.coralMine, // 8
-    BuildingType.volcanicKernel, // 10
-    BuildingType.oreExtractor, // 11 - disabled first
+    BuildingType.volcanicKernel, // 1 - second to last disabled
+    BuildingType.coralCitadel, // 2
+    BuildingType.solarPanel, // 3
+    BuildingType.descentModule, // 4
+    BuildingType.pressureCapsule, // 5
+    BuildingType.barracks, // 6
+    BuildingType.laboratory, // 7
+    BuildingType.algaeFarm, // 8
+    BuildingType.coralMine, // 9
+    BuildingType.oreExtractor, // 10 - disabled first
   ];
 
   /// Returns list of buildings that must be deactivated.

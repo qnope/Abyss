@@ -14,7 +14,7 @@ extension BuildingTypeColor on BuildingType {
     BuildingType.barracks => AbyssColors.biolumPink,
     BuildingType.descentModule => AbyssColors.biolumBlue,
     BuildingType.pressureCapsule => AbyssColors.biolumCyan,
-    BuildingType.volcanicKernel => AbyssColors.coralPink,
+    BuildingType.volcanicKernel => AbyssColors.warning,
   };
 }
 
@@ -58,7 +58,8 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.pressureCapsule =>
       'Capsule haute pression permettant l\'assaut des cheminées hydrothermales.',
     BuildingType.volcanicKernel =>
-      'Le noyau volcanique, source de toute puissance',
+      'Le coeur brulant des abysses. '
+      'Construisez-le au niveau 10 pour remporter la victoire.',
   };
 
   String get iconPath => switch (this) {
@@ -72,6 +73,6 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.barracks => 'assets/icons/buildings/barracks.svg',
     BuildingType.descentModule => 'assets/icons/buildings/descent_module.svg',
     BuildingType.pressureCapsule => 'assets/icons/buildings/pressure_capsule.svg',
-    BuildingType.volcanicKernel => 'assets/icons/buildings/volcanic_kernel.svg',
+    BuildingType.volcanicKernel => 'assets/icons/terrain/volcanic_kernel.svg',
   };
 }

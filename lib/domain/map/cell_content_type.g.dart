@@ -25,6 +25,8 @@ class CellContentTypeAdapter extends TypeAdapter<CellContentType> {
         return CellContentType.transitionBase;
       case 5:
         return CellContentType.passage;
+      case 6:
+        return CellContentType.volcanicKernel;
       default:
         return CellContentType.empty;
     }
@@ -50,6 +52,9 @@ class CellContentTypeAdapter extends TypeAdapter<CellContentType> {
         break;
       case CellContentType.passage:
         writer.writeByte(5);
+        break;
+      case CellContentType.volcanicKernel:
+        writer.writeByte(6);
         break;
     }
   }

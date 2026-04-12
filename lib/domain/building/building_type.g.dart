@@ -33,6 +33,8 @@ class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
         return BuildingType.descentModule;
       case 9:
         return BuildingType.pressureCapsule;
+      case 10:
+        return BuildingType.volcanicKernel;
       default:
         return BuildingType.headquarters;
     }
@@ -70,6 +72,9 @@ class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
         break;
       case BuildingType.pressureCapsule:
         writer.writeByte(9);
+        break;
+      case BuildingType.volcanicKernel:
+        writer.writeByte(10);
         break;
     }
   }

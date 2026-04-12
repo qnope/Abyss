@@ -10,4 +10,5 @@ enum CellContentType {
   @HiveField(3) monsterLair,
   @HiveField(4) transitionBase,
   @HiveField(5) passage,
+  @HiveField(6) volcanicKernel,
 }

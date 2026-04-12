@@ -86,6 +86,35 @@ void main() {
       expect(count, 0);
     });
 
+    test('level 3 has exactly one volcanicKernel at center', () {
+      final result = MapGenerator.generate(seed: 42, level: 3);
+      final kernels = result.map.cells
+          .where((c) => c.content == CellContentType.volcanicKernel)
+          .toList();
+      expect(kernels.length, 1);
+      final centerIndex = 10 * 20 + 10;
+      expect(
+        result.map.cells[centerIndex].content,
+        CellContentType.volcanicKernel,
+      );
+    });
+
+    test('level 1 has no volcanicKernel', () {
+      final result = MapGenerator.generate(seed: 42, level: 1);
+      final count = result.map.cells
+          .where((c) => c.content == CellContentType.volcanicKernel)
+          .length;
+      expect(count, 0);
+    });
+
+    test('level 2 has no volcanicKernel', () {
+      final result = MapGenerator.generate(seed: 42, level: 2);
+      final count = result.map.cells
+          .where((c) => c.content == CellContentType.volcanicKernel)
+          .length;
+      expect(count, 0);
+    });
+
     test('base cell never has transition base', () {
       for (final level in [1, 2]) {
         final result = MapGenerator.generate(seed: 42, level: level);

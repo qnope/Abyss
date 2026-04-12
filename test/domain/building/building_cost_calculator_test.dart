@@ -252,11 +252,11 @@ void main() {
   });
 
   group('volcanicKernel', () {
-    test('level 0->1: coral=50, ore=40, energy=30, pearl=8', () {
+    test('level 0->1: coral=50, ore=40, energy=12, pearl=8', () {
       final cost = calculator.upgradeCost(BuildingType.volcanicKernel, 0);
       expect(cost[ResourceType.coral], 50);
       expect(cost[ResourceType.ore], 40);
-      expect(cost[ResourceType.energy], 30);
+      expect(cost[ResourceType.energy], 12);
       expect(cost[ResourceType.pearl], 8);
     });
 

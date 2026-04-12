@@ -5,7 +5,7 @@ Map<ResourceType, int> volcanicKernelCost(int currentLevel) {
   return {
     ResourceType.coral: 50 * scale,
     ResourceType.ore: 40 * scale,
-    ResourceType.energy: 30 * scale,
+    ResourceType.energy: 12 * scale,
     ResourceType.pearl: 5 + 3 * (currentLevel + 1),
   };
 }

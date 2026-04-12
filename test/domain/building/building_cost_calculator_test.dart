@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_cost_calculator.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 
 void main() {
@@ -261,6 +263,93 @@ void main() {
     test('at max level 10: returns empty map', () {
       final cost = calculator.upgradeCost(BuildingType.volcanicKernel, 10);
       expect(cost, isEmpty);
+    });
+
+    test('prerequisites at level 1: HQ 10', () {
+      final prereqs = calculator.prerequisites(
+        BuildingType.volcanicKernel,
+        1,
+      );
+      expect(prereqs, {BuildingType.headquarters: 10});
+    });
+
+    test('prerequisites at level 5: HQ 10', () {
+      final prereqs = calculator.prerequisites(
+        BuildingType.volcanicKernel,
+        5,
+      );
+      expect(prereqs, {BuildingType.headquarters: 10});
+    });
+  });
+
+  group('requiresCapturedKernel', () {
+    test('true for volcanicKernel', () {
+      expect(calculator.requiresCapturedKernel(BuildingType.volcanicKernel),
+          isTrue);
+    });
+
+    test('false for headquarters', () {
+      expect(calculator.requiresCapturedKernel(BuildingType.headquarters),
+          isFalse);
+    });
+  });
+
+  group('checkUpgrade volcanicKernel', () {
+    Map<ResourceType, Resource> abundant() => {
+          ResourceType.coral: Resource(
+              type: ResourceType.coral, amount: 99999),
+          ResourceType.ore: Resource(
+              type: ResourceType.ore, amount: 99999),
+          ResourceType.energy: Resource(
+              type: ResourceType.energy, amount: 99999),
+          ResourceType.pearl: Resource(
+              type: ResourceType.pearl, amount: 99999),
+        };
+
+    test('kernel not captured returns canUpgrade false', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.volcanicKernel,
+        currentLevel: 0,
+        resources: abundant(),
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 10),
+        },
+        isVolcanicKernelCaptured: false,
+      );
+      expect(result.canUpgrade, isFalse);
+      expect(result.missingCapturedKernel, isTrue);
+    });
+
+    test('kernel captured + HQ 10 + resources returns canUpgrade true', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.volcanicKernel,
+        currentLevel: 0,
+        resources: abundant(),
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 10),
+        },
+        isVolcanicKernelCaptured: true,
+      );
+      expect(result.canUpgrade, isTrue);
+      expect(result.missingCapturedKernel, isFalse);
+    });
+
+    test('kernel captured but HQ < 10 returns canUpgrade false', () {
+      final result = calculator.checkUpgrade(
+        type: BuildingType.volcanicKernel,
+        currentLevel: 0,
+        resources: abundant(),
+        allBuildings: {
+          BuildingType.headquarters:
+              Building(type: BuildingType.headquarters, level: 9),
+        },
+        isVolcanicKernelCaptured: true,
+      );
+      expect(result.canUpgrade, isFalse);
+      expect(result.missingPrerequisites, {BuildingType.headquarters: 10});
+      expect(result.missingCapturedKernel, isFalse);
     });
   });
 }

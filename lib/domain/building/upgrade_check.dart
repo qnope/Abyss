@@ -8,6 +8,7 @@ class UpgradeCheck {
   final Map<ResourceType, int> missingResources;
   final Map<BuildingType, int> missingPrerequisites;
   final TransitionBaseType? missingCapturedBase;
+  final bool missingCapturedKernel;
 
   const UpgradeCheck({
     required this.canUpgrade,
@@ -15,5 +16,6 @@ class UpgradeCheck {
     this.missingResources = const {},
     this.missingPrerequisites = const {},
     this.missingCapturedBase,
+    this.missingCapturedKernel = false,
   });
 }

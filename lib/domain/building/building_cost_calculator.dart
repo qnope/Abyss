@@ -2,6 +2,7 @@ import 'building.dart';
 import 'building_type.dart';
 import 'coral_citadel_costs.dart';
 import 'descent_costs.dart';
+import 'volcanic_kernel_costs.dart';
 import '../map/transition_base_type.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
@@ -41,7 +42,7 @@ class BuildingCostCalculator {
       BuildingType.coralCitadel => coralCitadelCost(currentLevel),
       BuildingType.descentModule => descentModuleCost(),
       BuildingType.pressureCapsule => pressureCapsuleCost(),
-      BuildingType.volcanicKernel => {},
+      BuildingType.volcanicKernel => volcanicKernelCost(currentLevel),
     };
   }
 

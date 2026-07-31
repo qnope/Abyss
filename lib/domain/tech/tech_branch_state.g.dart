@@ -8,7 +8,7 @@ part of 'tech_branch_state.dart';
 
 class TechBranchStateAdapter extends TypeAdapter<TechBranchState> {
   @override
-  final int typeId = 7;
+  final typeId = 7;
 
   @override
   TechBranchState read(BinaryReader reader) {
@@ -18,8 +18,8 @@ class TechBranchStateAdapter extends TypeAdapter<TechBranchState> {
     };
     return TechBranchState(
       branch: fields[0] as TechBranch,
-      unlocked: fields[1] as bool,
-      researchLevel: fields[2] as int,
+      unlocked: fields[1] == null ? false : fields[1] as bool,
+      researchLevel: fields[2] == null ? 0 : (fields[2] as num).toInt(),
     );
   }
 

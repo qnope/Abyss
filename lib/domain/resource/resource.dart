@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'resource_type.dart';
 
 part 'resource.g.dart';

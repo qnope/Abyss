@@ -8,7 +8,7 @@ part of 'tech_branch.dart';
 
 class TechBranchAdapter extends TypeAdapter<TechBranch> {
   @override
-  final int typeId = 6;
+  final typeId = 6;
 
   @override
   TechBranch read(BinaryReader reader) {
@@ -29,13 +29,10 @@ class TechBranchAdapter extends TypeAdapter<TechBranch> {
     switch (obj) {
       case TechBranch.military:
         writer.writeByte(0);
-        break;
       case TechBranch.resources:
         writer.writeByte(1);
-        break;
       case TechBranch.explorer:
         writer.writeByte(2);
-        break;
     }
   }
 

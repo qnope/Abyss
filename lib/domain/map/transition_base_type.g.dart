@@ -8,7 +8,7 @@ part of 'transition_base_type.dart';
 
 class TransitionBaseTypeAdapter extends TypeAdapter<TransitionBaseType> {
   @override
-  final int typeId = 31;
+  final typeId = 31;
 
   @override
   TransitionBaseType read(BinaryReader reader) {
@@ -27,10 +27,8 @@ class TransitionBaseTypeAdapter extends TypeAdapter<TransitionBaseType> {
     switch (obj) {
       case TransitionBaseType.faille:
         writer.writeByte(0);
-        break;
       case TransitionBaseType.cheminee:
         writer.writeByte(1);
-        break;
     }
   }
 

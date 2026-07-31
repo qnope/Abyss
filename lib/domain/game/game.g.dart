@@ -8,7 +8,7 @@ part of 'game.dart';
 
 class GameAdapter extends TypeAdapter<Game> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
   Game read(BinaryReader reader) {
@@ -19,10 +19,13 @@ class GameAdapter extends TypeAdapter<Game> {
     return Game(
       humanPlayerId: fields[1] as String,
       players: (fields[0] as Map).cast<String, Player>(),
-      turn: fields[2] as int,
+      turn: fields[2] == null ? 1 : (fields[2] as num).toInt(),
       createdAt: fields[3] as DateTime?,
-      levels: (fields[4] as Map).cast<int, GameMap>(),
-      status: fields[5] as GameStatus,
+      levels:
+          fields[4] == null
+              ? const {}
+              : (fields[4] as Map).cast<int, GameMap>(),
+      status: fields[5] == null ? GameStatus.playing : fields[5] as GameStatus,
     );
   }
 

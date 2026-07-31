@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'monster_difficulty.dart';
 
 part 'monster_lair.g.dart';

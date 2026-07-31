@@ -8,7 +8,7 @@ part of 'history_entry_category.dart';
 
 class HistoryEntryCategoryAdapter extends TypeAdapter<HistoryEntryCategory> {
   @override
-  final int typeId = 18;
+  final typeId = 18;
 
   @override
   HistoryEntryCategory read(BinaryReader reader) {
@@ -43,34 +43,24 @@ class HistoryEntryCategoryAdapter extends TypeAdapter<HistoryEntryCategory> {
     switch (obj) {
       case HistoryEntryCategory.combat:
         writer.writeByte(0);
-        break;
       case HistoryEntryCategory.building:
         writer.writeByte(1);
-        break;
       case HistoryEntryCategory.research:
         writer.writeByte(2);
-        break;
       case HistoryEntryCategory.recruit:
         writer.writeByte(3);
-        break;
       case HistoryEntryCategory.explore:
         writer.writeByte(4);
-        break;
       case HistoryEntryCategory.collect:
         writer.writeByte(5);
-        break;
       case HistoryEntryCategory.turnEnd:
         writer.writeByte(6);
-        break;
       case HistoryEntryCategory.capture:
         writer.writeByte(7);
-        break;
       case HistoryEntryCategory.descent:
         writer.writeByte(8);
-        break;
       case HistoryEntryCategory.reinforcement:
         writer.writeByte(9);
-        break;
     }
   }
 

@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'combat_side.dart';
 import 'combatant.dart';
 import 'fight_turn_summary.dart';

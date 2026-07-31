@@ -8,7 +8,7 @@ part of 'turn_result.dart';
 
 class TurnResourceChangeAdapter extends TypeAdapter<TurnResourceChange> {
   @override
-  final int typeId = 30;
+  final typeId = 30;
 
   @override
   TurnResourceChange read(BinaryReader reader) {
@@ -18,11 +18,11 @@ class TurnResourceChangeAdapter extends TypeAdapter<TurnResourceChange> {
     };
     return TurnResourceChange(
       type: fields[0] as ResourceType,
-      produced: fields[1] as int,
-      consumed: fields[2] as int,
+      produced: (fields[1] as num).toInt(),
+      consumed: fields[2] == null ? 0 : (fields[2] as num).toInt(),
       wasCapped: fields[3] as bool,
-      beforeAmount: fields[4] as int,
-      afterAmount: fields[5] as int,
+      beforeAmount: (fields[4] as num).toInt(),
+      afterAmount: (fields[5] as num).toInt(),
     );
   }
 

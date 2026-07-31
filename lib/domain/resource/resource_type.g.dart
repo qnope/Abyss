@@ -8,7 +8,7 @@ part of 'resource_type.dart';
 
 class ResourceTypeAdapter extends TypeAdapter<ResourceType> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
   ResourceType read(BinaryReader reader) {
@@ -33,19 +33,14 @@ class ResourceTypeAdapter extends TypeAdapter<ResourceType> {
     switch (obj) {
       case ResourceType.algae:
         writer.writeByte(0);
-        break;
       case ResourceType.coral:
         writer.writeByte(1);
-        break;
       case ResourceType.ore:
         writer.writeByte(2);
-        break;
       case ResourceType.energy:
         writer.writeByte(3);
-        break;
       case ResourceType.pearl:
         writer.writeByte(4);
-        break;
     }
   }
 

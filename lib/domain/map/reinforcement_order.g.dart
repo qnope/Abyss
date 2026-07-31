@@ -8,7 +8,7 @@ part of 'reinforcement_order.dart';
 
 class ReinforcementOrderAdapter extends TypeAdapter<ReinforcementOrder> {
   @override
-  final int typeId = 33;
+  final typeId = 33;
 
   @override
   ReinforcementOrder read(BinaryReader reader) {
@@ -17,10 +17,10 @@ class ReinforcementOrderAdapter extends TypeAdapter<ReinforcementOrder> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ReinforcementOrder(
-      fromLevel: fields[0] as int,
-      toLevel: fields[1] as int,
+      fromLevel: (fields[0] as num).toInt(),
+      toLevel: (fields[1] as num).toInt(),
       units: (fields[2] as Map).cast<UnitType, int>(),
-      departTurn: fields[3] as int,
+      departTurn: (fields[3] as num).toInt(),
       arrivalPoint: fields[4] as GridPosition,
     );
   }

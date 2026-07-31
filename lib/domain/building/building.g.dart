@@ -8,7 +8,7 @@ part of 'building.dart';
 
 class BuildingAdapter extends TypeAdapter<Building> {
   @override
-  final int typeId = 5;
+  final typeId = 5;
 
   @override
   Building read(BinaryReader reader) {
@@ -18,7 +18,7 @@ class BuildingAdapter extends TypeAdapter<Building> {
     };
     return Building(
       type: fields[0] as BuildingType,
-      level: fields[1] as int,
+      level: fields[1] == null ? 0 : (fields[1] as num).toInt(),
     );
   }
 

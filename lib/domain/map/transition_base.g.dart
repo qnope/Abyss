@@ -8,7 +8,7 @@ part of 'transition_base.dart';
 
 class TransitionBaseAdapter extends TypeAdapter<TransitionBase> {
   @override
-  final int typeId = 32;
+  final typeId = 32;
 
   @override
   TransitionBase read(BinaryReader reader) {

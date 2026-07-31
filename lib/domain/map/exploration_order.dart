@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'grid_position.dart';
 
 part 'exploration_order.g.dart';

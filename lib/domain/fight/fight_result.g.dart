@@ -8,7 +8,7 @@ part of 'fight_result.dart';
 
 class FightResultAdapter extends TypeAdapter<FightResult> {
   @override
-  final int typeId = 29;
+  final typeId = 29;
 
   @override
   FightResult read(BinaryReader reader) {
@@ -18,12 +18,12 @@ class FightResultAdapter extends TypeAdapter<FightResult> {
     };
     return FightResult(
       winner: fields[0] as CombatSide,
-      turnCount: fields[1] as int,
+      turnCount: (fields[1] as num).toInt(),
       turnSummaries: (fields[2] as List).cast<FightTurnSummary>(),
       initialPlayerCombatants: (fields[3] as List).cast<Combatant>(),
       finalPlayerCombatants: (fields[4] as List).cast<Combatant>(),
-      initialMonsterCount: fields[5] as int,
-      finalMonsterCount: fields[6] as int,
+      initialMonsterCount: (fields[5] as num).toInt(),
+      finalMonsterCount: (fields[6] as num).toInt(),
     );
   }
 

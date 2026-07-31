@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'tech_branch.dart';
 
 part 'tech_branch_state.g.dart';

@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'transition_base_type.dart';
 
 part 'transition_base.g.dart';

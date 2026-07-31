@@ -8,7 +8,7 @@ part of 'fight_turn_summary.dart';
 
 class FightTurnSummaryAdapter extends TypeAdapter<FightTurnSummary> {
   @override
-  final int typeId = 28;
+  final typeId = 28;
 
   @override
   FightTurnSummary read(BinaryReader reader) {
@@ -17,15 +17,15 @@ class FightTurnSummaryAdapter extends TypeAdapter<FightTurnSummary> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FightTurnSummary(
-      turnNumber: fields[0] as int,
-      attacksPlayed: fields[1] as int,
-      critCount: fields[2] as int,
-      damageDealtByPlayer: fields[3] as int,
-      damageDealtByMonster: fields[4] as int,
-      playerAliveAtEnd: fields[5] as int,
-      monsterAliveAtEnd: fields[6] as int,
-      playerHpAtEnd: fields[7] as int,
-      monsterHpAtEnd: fields[8] as int,
+      turnNumber: (fields[0] as num).toInt(),
+      attacksPlayed: (fields[1] as num).toInt(),
+      critCount: (fields[2] as num).toInt(),
+      damageDealtByPlayer: (fields[3] as num).toInt(),
+      damageDealtByMonster: (fields[4] as num).toInt(),
+      playerAliveAtEnd: (fields[5] as num).toInt(),
+      monsterAliveAtEnd: (fields[6] as num).toInt(),
+      playerHpAtEnd: (fields[7] as num).toInt(),
+      monsterHpAtEnd: (fields[8] as num).toInt(),
     );
   }
 

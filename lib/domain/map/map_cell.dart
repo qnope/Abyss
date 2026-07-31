@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'cell_content_type.dart';
 import 'monster_lair.dart';
 import 'terrain_type.dart';

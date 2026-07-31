@@ -8,7 +8,7 @@ part of 'monster_lair.dart';
 
 class MonsterLairAdapter extends TypeAdapter<MonsterLair> {
   @override
-  final int typeId = 17;
+  final typeId = 17;
 
   @override
   MonsterLair read(BinaryReader reader) {
@@ -18,7 +18,7 @@ class MonsterLairAdapter extends TypeAdapter<MonsterLair> {
     };
     return MonsterLair(
       difficulty: fields[0] as MonsterDifficulty,
-      unitCount: fields[1] as int,
+      unitCount: (fields[1] as num).toInt(),
     );
   }
 

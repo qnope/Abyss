@@ -8,7 +8,7 @@ part of 'terrain_type.dart';
 
 class TerrainTypeAdapter extends TypeAdapter<TerrainType> {
   @override
-  final int typeId = 10;
+  final typeId = 10;
 
   @override
   TerrainType read(BinaryReader reader) {
@@ -25,7 +25,6 @@ class TerrainTypeAdapter extends TypeAdapter<TerrainType> {
     switch (obj) {
       case TerrainType.plain:
         writer.writeByte(1);
-        break;
     }
   }
 

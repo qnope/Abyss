@@ -8,7 +8,7 @@ part of 'unit_type.dart';
 
 class UnitTypeAdapter extends TypeAdapter<UnitType> {
   @override
-  final int typeId = 8;
+  final typeId = 8;
 
   @override
   UnitType read(BinaryReader reader) {
@@ -35,22 +35,16 @@ class UnitTypeAdapter extends TypeAdapter<UnitType> {
     switch (obj) {
       case UnitType.scout:
         writer.writeByte(0);
-        break;
       case UnitType.harpoonist:
         writer.writeByte(1);
-        break;
       case UnitType.guardian:
         writer.writeByte(2);
-        break;
       case UnitType.domeBreaker:
         writer.writeByte(3);
-        break;
       case UnitType.abyssAdmiral:
         writer.writeByte(4);
-        break;
       case UnitType.saboteur:
         writer.writeByte(5);
-        break;
     }
   }
 

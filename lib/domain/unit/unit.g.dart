@@ -8,7 +8,7 @@ part of 'unit.dart';
 
 class UnitAdapter extends TypeAdapter<Unit> {
   @override
-  final int typeId = 9;
+  final typeId = 9;
 
   @override
   Unit read(BinaryReader reader) {
@@ -18,7 +18,7 @@ class UnitAdapter extends TypeAdapter<Unit> {
     };
     return Unit(
       type: fields[0] as UnitType,
-      count: fields[1] as int,
+      count: fields[1] == null ? 0 : (fields[1] as num).toInt(),
     );
   }
 

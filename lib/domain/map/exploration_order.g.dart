@@ -8,7 +8,7 @@ part of 'exploration_order.dart';
 
 class ExplorationOrderAdapter extends TypeAdapter<ExplorationOrder> {
   @override
-  final int typeId = 16;
+  final typeId = 16;
 
   @override
   ExplorationOrder read(BinaryReader reader) {
@@ -18,7 +18,7 @@ class ExplorationOrderAdapter extends TypeAdapter<ExplorationOrder> {
     };
     return ExplorationOrder(
       target: fields[0] as GridPosition,
-      level: fields[1] as int,
+      level: fields[1] == null ? 1 : (fields[1] as num).toInt(),
     );
   }
 

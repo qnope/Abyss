@@ -8,7 +8,7 @@ part of 'grid_position.dart';
 
 class GridPositionAdapter extends TypeAdapter<GridPosition> {
   @override
-  final int typeId = 15;
+  final typeId = 15;
 
   @override
   GridPosition read(BinaryReader reader) {
@@ -17,8 +17,8 @@ class GridPositionAdapter extends TypeAdapter<GridPosition> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return GridPosition(
-      x: fields[0] as int,
-      y: fields[1] as int,
+      x: (fields[0] as num).toInt(),
+      y: (fields[1] as num).toInt(),
     );
   }
 

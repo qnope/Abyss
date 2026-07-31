@@ -8,7 +8,7 @@ part of 'resource.dart';
 
 class ResourceAdapter extends TypeAdapter<Resource> {
   @override
-  final int typeId = 3;
+  final typeId = 3;
 
   @override
   Resource read(BinaryReader reader) {
@@ -18,8 +18,8 @@ class ResourceAdapter extends TypeAdapter<Resource> {
     };
     return Resource(
       type: fields[0] as ResourceType,
-      amount: fields[1] as int,
-      maxStorage: fields[3] as int,
+      amount: (fields[1] as num).toInt(),
+      maxStorage: fields[3] == null ? 500 : (fields[3] as num).toInt(),
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'map_cell.dart';
 
 part 'game_map.g.dart';

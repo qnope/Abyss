@@ -8,7 +8,7 @@ part of 'combat_side.dart';
 
 class CombatSideAdapter extends TypeAdapter<CombatSide> {
   @override
-  final int typeId = 26;
+  final typeId = 26;
 
   @override
   CombatSide read(BinaryReader reader) {
@@ -27,10 +27,8 @@ class CombatSideAdapter extends TypeAdapter<CombatSide> {
     switch (obj) {
       case CombatSide.player:
         writer.writeByte(0);
-        break;
       case CombatSide.monster:
         writer.writeByte(1);
-        break;
     }
   }
 

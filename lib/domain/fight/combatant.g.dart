@@ -8,7 +8,7 @@ part of 'combatant.dart';
 
 class CombatantAdapter extends TypeAdapter<Combatant> {
   @override
-  final int typeId = 27;
+  final typeId = 27;
 
   @override
   Combatant read(BinaryReader reader) {
@@ -19,10 +19,10 @@ class CombatantAdapter extends TypeAdapter<Combatant> {
     return Combatant(
       side: fields[0] as CombatSide,
       typeKey: fields[1] as String,
-      maxHp: fields[2] as int,
-      atk: fields[3] as int,
-      def: fields[4] as int,
-      currentHp: fields[5] as int?,
+      maxHp: (fields[2] as num).toInt(),
+      atk: (fields[3] as num).toInt(),
+      def: (fields[4] as num).toInt(),
+      currentHp: (fields[5] as num?)?.toInt(),
       isBoss: fields[6] == null ? false : fields[6] as bool,
     );
   }

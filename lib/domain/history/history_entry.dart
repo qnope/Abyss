@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/fight/fight_result.dart';
 import 'package:abyss/domain/history/history_entry_category.dart';

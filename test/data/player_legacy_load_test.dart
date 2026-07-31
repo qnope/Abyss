@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive/hive.dart';
-import 'package:hive/src/binary/binary_reader_impl.dart';
-import 'package:hive/src/binary/binary_writer_impl.dart';
+import 'package:hive_ce/hive.dart';
+import 'package:hive_ce/src/binary/binary_reader_impl.dart';
+import 'package:hive_ce/src/binary/binary_writer_impl.dart';
 
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/resource/resource_type.dart';

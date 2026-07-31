@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/player_defaults.dart';

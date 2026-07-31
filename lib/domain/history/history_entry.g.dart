@@ -8,7 +8,7 @@ part of 'history_entry.dart';
 
 class BuildingEntryAdapter extends TypeAdapter<BuildingEntry> {
   @override
-  final int typeId = 19;
+  final typeId = 19;
 
   @override
   BuildingEntry read(BinaryReader reader) {
@@ -17,9 +17,9 @@ class BuildingEntryAdapter extends TypeAdapter<BuildingEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return BuildingEntry(
-      turn: fields[0] as int,
+      turn: (fields[0] as num).toInt(),
       buildingType: fields[4] as BuildingType,
-      newLevel: fields[5] as int,
+      newLevel: (fields[5] as num).toInt(),
       subtitle: fields[3] as String?,
     );
   }
@@ -27,13 +27,9 @@ class BuildingEntryAdapter extends TypeAdapter<BuildingEntry> {
   @override
   void write(BinaryWriter writer, BuildingEntry obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)
@@ -55,7 +51,7 @@ class BuildingEntryAdapter extends TypeAdapter<BuildingEntry> {
 
 class CollectEntryAdapter extends TypeAdapter<CollectEntry> {
   @override
-  final int typeId = 23;
+  final typeId = 23;
 
   @override
   CollectEntry read(BinaryReader reader) {
@@ -64,9 +60,9 @@ class CollectEntryAdapter extends TypeAdapter<CollectEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CollectEntry(
-      turn: fields[0] as int,
-      targetX: fields[4] as int,
-      targetY: fields[5] as int,
+      turn: (fields[0] as num).toInt(),
+      targetX: (fields[4] as num).toInt(),
+      targetY: (fields[5] as num).toInt(),
       gains: (fields[6] as Map).cast<ResourceType, int>(),
       subtitle: fields[3] as String?,
     );
@@ -75,13 +71,9 @@ class CollectEntryAdapter extends TypeAdapter<CollectEntry> {
   @override
   void write(BinaryWriter writer, CollectEntry obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)
@@ -105,7 +97,7 @@ class CollectEntryAdapter extends TypeAdapter<CollectEntry> {
 
 class CombatEntryAdapter extends TypeAdapter<CombatEntry> {
   @override
-  final int typeId = 24;
+  final typeId = 24;
 
   @override
   CombatEntry read(BinaryReader reader) {
@@ -114,10 +106,10 @@ class CombatEntryAdapter extends TypeAdapter<CombatEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CombatEntry(
-      turn: fields[0] as int,
+      turn: (fields[0] as num).toInt(),
       victory: fields[4] as bool,
-      targetX: fields[5] as int,
-      targetY: fields[6] as int,
+      targetX: (fields[5] as num).toInt(),
+      targetY: (fields[6] as num).toInt(),
       lair: fields[7] as MonsterLair,
       fightResult: fields[8] as FightResult,
       loot: (fields[9] as Map).cast<ResourceType, int>(),
@@ -132,13 +124,9 @@ class CombatEntryAdapter extends TypeAdapter<CombatEntry> {
   @override
   void write(BinaryWriter writer, CombatEntry obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)
@@ -176,7 +164,7 @@ class CombatEntryAdapter extends TypeAdapter<CombatEntry> {
 
 class ExploreEntryAdapter extends TypeAdapter<ExploreEntry> {
   @override
-  final int typeId = 22;
+  final typeId = 22;
 
   @override
   ExploreEntry read(BinaryReader reader) {
@@ -185,9 +173,9 @@ class ExploreEntryAdapter extends TypeAdapter<ExploreEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ExploreEntry(
-      turn: fields[0] as int,
-      targetX: fields[4] as int,
-      targetY: fields[5] as int,
+      turn: (fields[0] as num).toInt(),
+      targetX: (fields[4] as num).toInt(),
+      targetY: (fields[5] as num).toInt(),
       subtitle: fields[3] as String?,
     );
   }
@@ -195,13 +183,9 @@ class ExploreEntryAdapter extends TypeAdapter<ExploreEntry> {
   @override
   void write(BinaryWriter writer, ExploreEntry obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)
@@ -223,7 +207,7 @@ class ExploreEntryAdapter extends TypeAdapter<ExploreEntry> {
 
 class RecruitEntryAdapter extends TypeAdapter<RecruitEntry> {
   @override
-  final int typeId = 21;
+  final typeId = 21;
 
   @override
   RecruitEntry read(BinaryReader reader) {
@@ -232,9 +216,9 @@ class RecruitEntryAdapter extends TypeAdapter<RecruitEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return RecruitEntry(
-      turn: fields[0] as int,
+      turn: (fields[0] as num).toInt(),
       unitType: fields[4] as UnitType,
-      quantity: fields[5] as int,
+      quantity: (fields[5] as num).toInt(),
       subtitle: fields[3] as String?,
     );
   }
@@ -242,13 +226,9 @@ class RecruitEntryAdapter extends TypeAdapter<RecruitEntry> {
   @override
   void write(BinaryWriter writer, RecruitEntry obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)
@@ -270,7 +250,7 @@ class RecruitEntryAdapter extends TypeAdapter<RecruitEntry> {
 
 class ResearchEntryAdapter extends TypeAdapter<ResearchEntry> {
   @override
-  final int typeId = 20;
+  final typeId = 20;
 
   @override
   ResearchEntry read(BinaryReader reader) {
@@ -279,10 +259,10 @@ class ResearchEntryAdapter extends TypeAdapter<ResearchEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ResearchEntry(
-      turn: fields[0] as int,
+      turn: (fields[0] as num).toInt(),
       branch: fields[4] as TechBranch,
       isUnlock: fields[5] as bool,
-      newLevel: fields[6] as int?,
+      newLevel: (fields[6] as num?)?.toInt(),
       subtitle: fields[3] as String?,
     );
   }
@@ -290,13 +270,9 @@ class ResearchEntryAdapter extends TypeAdapter<ResearchEntry> {
   @override
   void write(BinaryWriter writer, ResearchEntry obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)
@@ -320,7 +296,7 @@ class ResearchEntryAdapter extends TypeAdapter<ResearchEntry> {
 
 class TurnEndEntryAdapter extends TypeAdapter<TurnEndEntry> {
   @override
-  final int typeId = 25;
+  final typeId = 25;
 
   @override
   TurnEndEntry read(BinaryReader reader) {
@@ -329,7 +305,7 @@ class TurnEndEntryAdapter extends TypeAdapter<TurnEndEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TurnEndEntry(
-      turn: fields[0] as int,
+      turn: (fields[0] as num).toInt(),
       changes: (fields[4] as List).cast<TurnResourceChange>(),
       deactivatedBuildings: (fields[5] as List).cast<BuildingType>(),
       lostUnits: (fields[6] as Map).cast<UnitType, int>(),
@@ -340,13 +316,9 @@ class TurnEndEntryAdapter extends TypeAdapter<TurnEndEntry> {
   @override
   void write(BinaryWriter writer, TurnEndEntry obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)
@@ -370,7 +342,7 @@ class TurnEndEntryAdapter extends TypeAdapter<TurnEndEntry> {
 
 class CaptureEntryAdapter extends TypeAdapter<CaptureEntry> {
   @override
-  final int typeId = 34;
+  final typeId = 34;
 
   @override
   CaptureEntry read(BinaryReader reader) {
@@ -379,7 +351,7 @@ class CaptureEntryAdapter extends TypeAdapter<CaptureEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CaptureEntry(
-      turn: fields[0] as int,
+      turn: (fields[0] as num).toInt(),
       transitionBaseName: fields[4] as String,
       fightResult: fields[5] as FightResult,
       subtitle: fields[3] as String?,
@@ -389,13 +361,9 @@ class CaptureEntryAdapter extends TypeAdapter<CaptureEntry> {
   @override
   void write(BinaryWriter writer, CaptureEntry obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)
@@ -417,7 +385,7 @@ class CaptureEntryAdapter extends TypeAdapter<CaptureEntry> {
 
 class DescentEntryAdapter extends TypeAdapter<DescentEntry> {
   @override
-  final int typeId = 35;
+  final typeId = 35;
 
   @override
   DescentEntry read(BinaryReader reader) {
@@ -426,9 +394,9 @@ class DescentEntryAdapter extends TypeAdapter<DescentEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return DescentEntry(
-      turn: fields[0] as int,
-      targetLevel: fields[4] as int,
-      unitCount: fields[5] as int,
+      turn: (fields[0] as num).toInt(),
+      targetLevel: (fields[4] as num).toInt(),
+      unitCount: (fields[5] as num).toInt(),
       subtitle: fields[3] as String?,
     );
   }
@@ -436,13 +404,9 @@ class DescentEntryAdapter extends TypeAdapter<DescentEntry> {
   @override
   void write(BinaryWriter writer, DescentEntry obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)
@@ -464,7 +428,7 @@ class DescentEntryAdapter extends TypeAdapter<DescentEntry> {
 
 class ReinforcementEntryAdapter extends TypeAdapter<ReinforcementEntry> {
   @override
-  final int typeId = 36;
+  final typeId = 36;
 
   @override
   ReinforcementEntry read(BinaryReader reader) {
@@ -473,9 +437,9 @@ class ReinforcementEntryAdapter extends TypeAdapter<ReinforcementEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ReinforcementEntry(
-      turn: fields[0] as int,
-      targetLevel: fields[4] as int,
-      unitCount: fields[5] as int,
+      turn: (fields[0] as num).toInt(),
+      targetLevel: (fields[4] as num).toInt(),
+      unitCount: (fields[5] as num).toInt(),
       subtitle: fields[3] as String?,
     );
   }
@@ -483,13 +447,9 @@ class ReinforcementEntryAdapter extends TypeAdapter<ReinforcementEntry> {
   @override
   void write(BinaryWriter writer, ReinforcementEntry obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.turn)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.title)
       ..writeByte(3)
       ..write(obj.subtitle)
       ..writeByte(4)

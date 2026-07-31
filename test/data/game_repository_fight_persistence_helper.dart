@@ -24,7 +24,7 @@ import 'package:abyss/domain/tech/tech_branch_state.dart';
 import 'package:abyss/domain/turn/turn_result.dart';
 import 'package:abyss/domain/unit/unit.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 void registerFightPersistenceAdapters() {
   if (Hive.isAdapterRegistered(0)) return;

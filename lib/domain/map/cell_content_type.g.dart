@@ -8,7 +8,7 @@ part of 'cell_content_type.dart';
 
 class CellContentTypeAdapter extends TypeAdapter<CellContentType> {
   @override
-  final int typeId = 11;
+  final typeId = 11;
 
   @override
   CellContentType read(BinaryReader reader) {
@@ -37,25 +37,18 @@ class CellContentTypeAdapter extends TypeAdapter<CellContentType> {
     switch (obj) {
       case CellContentType.empty:
         writer.writeByte(0);
-        break;
       case CellContentType.resourceBonus:
         writer.writeByte(1);
-        break;
       case CellContentType.ruins:
         writer.writeByte(2);
-        break;
       case CellContentType.monsterLair:
         writer.writeByte(3);
-        break;
       case CellContentType.transitionBase:
         writer.writeByte(4);
-        break;
       case CellContentType.passage:
         writer.writeByte(5);
-        break;
       case CellContentType.volcanicKernel:
         writer.writeByte(6);
-        break;
     }
   }
 

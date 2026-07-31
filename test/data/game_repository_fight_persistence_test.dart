@@ -11,7 +11,7 @@ import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 import 'game_repository_fight_persistence_helper.dart';
 

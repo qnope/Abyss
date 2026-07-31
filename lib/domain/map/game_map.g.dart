@@ -8,7 +8,7 @@ part of 'game_map.dart';
 
 class GameMapAdapter extends TypeAdapter<GameMap> {
   @override
-  final int typeId = 14;
+  final typeId = 14;
 
   @override
   GameMap read(BinaryReader reader) {
@@ -17,10 +17,10 @@ class GameMapAdapter extends TypeAdapter<GameMap> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return GameMap(
-      width: fields[0] as int,
-      height: fields[1] as int,
+      width: (fields[0] as num).toInt(),
+      height: (fields[1] as num).toInt(),
       cells: (fields[2] as List).cast<MapCell>(),
-      seed: fields[5] as int,
+      seed: (fields[5] as num).toInt(),
     );
   }
 

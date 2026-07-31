@@ -8,7 +8,7 @@ part of 'map_cell.dart';
 
 class MapCellAdapter extends TypeAdapter<MapCell> {
   @override
-  final int typeId = 13;
+  final typeId = 13;
 
   @override
   MapCell read(BinaryReader reader) {
@@ -18,7 +18,10 @@ class MapCellAdapter extends TypeAdapter<MapCell> {
     };
     return MapCell(
       terrain: fields[0] as TerrainType,
-      content: fields[1] as CellContentType,
+      content:
+          fields[1] == null
+              ? CellContentType.empty
+              : fields[1] as CellContentType,
       lair: fields[2] as MonsterLair?,
       collectedBy: fields[3] as String?,
       transitionBase: fields[4] as TransitionBase?,

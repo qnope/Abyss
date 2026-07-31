@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import '../building/building_type.dart';
 import '../map/exploration_result.dart';
 import '../map/reinforcement_order.dart';

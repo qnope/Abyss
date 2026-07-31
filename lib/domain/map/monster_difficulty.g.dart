@@ -8,7 +8,7 @@ part of 'monster_difficulty.dart';
 
 class MonsterDifficultyAdapter extends TypeAdapter<MonsterDifficulty> {
   @override
-  final int typeId = 12;
+  final typeId = 12;
 
   @override
   MonsterDifficulty read(BinaryReader reader) {
@@ -29,13 +29,10 @@ class MonsterDifficultyAdapter extends TypeAdapter<MonsterDifficulty> {
     switch (obj) {
       case MonsterDifficulty.easy:
         writer.writeByte(0);
-        break;
       case MonsterDifficulty.medium:
         writer.writeByte(1);
-        break;
       case MonsterDifficulty.hard:
         writer.writeByte(2);
-        break;
     }
   }
 

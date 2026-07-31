@@ -8,7 +8,7 @@ part of 'player.dart';
 
 class PlayerAdapter extends TypeAdapter<Player> {
   @override
-  final int typeId = 0;
+  final typeId = 0;
 
   @override
   Player read(BinaryReader reader) {
@@ -19,17 +19,21 @@ class PlayerAdapter extends TypeAdapter<Player> {
     return Player(
       name: fields[0] as String,
       id: fields[1] as String?,
-      baseX: fields[2] as int,
-      baseY: fields[3] as int,
+      baseX: fields[2] == null ? 0 : (fields[2] as num).toInt(),
+      baseY: fields[3] == null ? 0 : (fields[3] as num).toInt(),
       resources: (fields[4] as Map?)?.cast<ResourceType, Resource>(),
       buildings: (fields[5] as Map?)?.cast<BuildingType, Building>(),
       techBranches: (fields[6] as Map?)?.cast<TechBranch, TechBranchState>(),
-      unitsPerLevel: (fields[7] as Map?)?.map((dynamic k, dynamic v) =>
-          MapEntry(k as int, (v as Map).cast<UnitType, Unit>())),
+      unitsPerLevel: (fields[7] as Map?)?.map(
+        (dynamic k, dynamic v) =>
+            MapEntry((k as num).toInt(), (v as Map).cast<UnitType, Unit>()),
+      ),
       recruitedUnitTypes: (fields[8] as List?)?.cast<UnitType>(),
       pendingExplorations: (fields[9] as List?)?.cast<ExplorationOrder>(),
-      revealedCellsPerLevel: (fields[10] as Map?)?.map((dynamic k, dynamic v) =>
-          MapEntry(k as int, (v as List).cast<GridPosition>())),
+      revealedCellsPerLevel: (fields[10] as Map?)?.map(
+        (dynamic k, dynamic v) =>
+            MapEntry((k as num).toInt(), (v as List).cast<GridPosition>()),
+      ),
       historyEntries: (fields[11] as List?)?.cast<HistoryEntry>(),
       pendingReinforcements: (fields[13] as List?)?.cast<ReinforcementOrder>(),
     );

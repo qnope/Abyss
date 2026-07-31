@@ -8,7 +8,7 @@ part of 'building_type.dart';
 
 class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
   @override
-  final int typeId = 4;
+  final typeId = 4;
 
   @override
   BuildingType read(BinaryReader reader) {
@@ -45,37 +45,26 @@ class BuildingTypeAdapter extends TypeAdapter<BuildingType> {
     switch (obj) {
       case BuildingType.headquarters:
         writer.writeByte(0);
-        break;
       case BuildingType.algaeFarm:
         writer.writeByte(1);
-        break;
       case BuildingType.coralMine:
         writer.writeByte(2);
-        break;
       case BuildingType.oreExtractor:
         writer.writeByte(3);
-        break;
       case BuildingType.solarPanel:
         writer.writeByte(4);
-        break;
       case BuildingType.laboratory:
         writer.writeByte(5);
-        break;
       case BuildingType.barracks:
         writer.writeByte(6);
-        break;
       case BuildingType.coralCitadel:
         writer.writeByte(7);
-        break;
       case BuildingType.descentModule:
         writer.writeByte(8);
-        break;
       case BuildingType.pressureCapsule:
         writer.writeByte(9);
-        break;
       case BuildingType.volcanicKernel:
         writer.writeByte(10);
-        break;
     }
   }
 

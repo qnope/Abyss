@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../domain/map/game_map.dart';
 import '../../../domain/map/grid_position.dart';
-import '../../theme/abyss_colors.dart';
-import 'map_cell_widget.dart';
+import 'map_painter.dart';
+import 'map_sprites.dart';
+import 'map_visuals_builder.dart';
 
 class GameMapView extends StatefulWidget {
   final GameMap gameMap;
@@ -30,9 +31,8 @@ class GameMapView extends StatefulWidget {
 
 class _GameMapViewState extends State<GameMapView> {
   late final TransformationController _controller;
+  MapSprites? _sprites;
 
-  static const _mapSize = 20;
-  static const _gridSize = _mapSize * cellSize;
   static const _defaultVisibleCells = 8.0;
   static const _maxVisibleCells = 1.0;
 
@@ -40,6 +40,12 @@ class _GameMapViewState extends State<GameMapView> {
   void initState() {
     super.initState();
     _controller = TransformationController();
+    MapSprites.load().then(
+      (sprites) {
+        if (mounted) setState(() => _sprites = sprites);
+      },
+      onError: (Object error) => debugPrint('Map sprites failed: $error'),
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _centerOnBase();
     });
@@ -48,8 +54,8 @@ class _GameMapViewState extends State<GameMapView> {
   void _centerOnBase() {
     final size = MediaQuery.of(context).size;
     final scale = size.width / (_defaultVisibleCells * cellSize);
-    final centerX = widget.baseX ?? _mapSize ~/ 2;
-    final centerY = widget.baseY ?? _mapSize ~/ 2;
+    final centerX = widget.baseX ?? widget.gameMap.width ~/ 2;
+    final centerY = widget.baseY ?? widget.gameMap.height ~/ 2;
     final basePixelX = centerX * cellSize;
     final basePixelY = centerY * cellSize;
     final dx = size.width / 2 - (basePixelX + cellSize / 2) * scale;
@@ -70,8 +76,10 @@ class _GameMapViewState extends State<GameMapView> {
 
   @override
   Widget build(BuildContext context) {
+    final map = widget.gameMap;
+    final gridSize = Size(map.width * cellSize, map.height * cellSize);
     final screenWidth = MediaQuery.of(context).size.width;
-    final minScale = screenWidth / _gridSize;
+    final minScale = screenWidth / gridSize.width;
     final maxScale = screenWidth / (_maxVisibleCells * cellSize);
 
     return InteractiveViewer(
@@ -79,40 +87,34 @@ class _GameMapViewState extends State<GameMapView> {
       transformationController: _controller,
       minScale: minScale,
       maxScale: maxScale,
-      child: Container(
-        color: AbyssColors.abyssBlack,
-        width: _gridSize,
-        height: _gridSize,
-        child: Column(
-          children: List.generate(_mapSize, (y) => _buildRow(y)),
+      child: GestureDetector(
+        onTapUp: widget.onCellTap == null ? null : _handleTap,
+        child: RepaintBoundary(
+          child: CustomPaint(
+            size: gridSize,
+            painter: MapPainter(
+              visuals: buildMapVisuals(
+                gameMap: map,
+                revealedCells: widget.revealedCells,
+                humanPlayerId: widget.humanPlayerId,
+                baseX: widget.baseX,
+                baseY: widget.baseY,
+                pendingTargets: widget.pendingTargets,
+              ),
+              columns: map.width,
+              sprites: _sprites,
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Row _buildRow(int y) {
-    return Row(
-      children: List.generate(_mapSize, (x) {
-        final cell = widget.gameMap.cellAt(x, y);
-        final pos = GridPosition(x: x, y: y);
-        final isRevealed = widget.revealedCells.contains(pos);
-        final isCollectedByOther = cell.collectedBy != null &&
-            cell.collectedBy != widget.humanPlayerId;
-        final isBase = x == widget.baseX && y == widget.baseY;
-        final isCapturedTransitionBase =
-            cell.transitionBase?.capturedBy == widget.humanPlayerId;
-        return MapCellWidget(
-          cell: cell,
-          isRevealed: isRevealed,
-          isCollectedByOther: isCollectedByOther,
-          isBase: isBase,
-          hasPendingExploration: widget.pendingTargets.contains((x, y)),
-          isCapturedTransitionBase: isCapturedTransitionBase,
-          onTap: widget.onCellTap != null
-              ? () => widget.onCellTap!(x, y)
-              : null,
-        );
-      }),
-    );
+  void _handleTap(TapUpDetails details) {
+    final x = details.localPosition.dx ~/ cellSize;
+    final y = details.localPosition.dy ~/ cellSize;
+    final map = widget.gameMap;
+    if (x < 0 || y < 0 || x >= map.width || y >= map.height) return;
+    widget.onCellTap!(x, y);
   }
 }

@@ -1,161 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <!-- Rock gradient (bottom-to-top, dark to brown) -->
-    <linearGradient id="vkRockGrad" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0%" stop-color="#1A1A1A"/>
-      <stop offset="100%" stop-color="#3E2723"/>
+    <linearGradient id="vkLava" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFD740"/>
+      <stop offset="1" stop-color="#FF3D00"/>
     </linearGradient>
-    <!-- Lava gradient (bottom-to-top, red to orange) -->
-    <linearGradient id="vkLavaGrad" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0%" stop-color="#FF3D00"/>
-      <stop offset="100%" stop-color="#FF9100"/>
-    </linearGradient>
-    <!-- Crater glow (radial, bright center fading out) -->
-    <radialGradient id="vkCraterGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FFAB00" stop-opacity="0.9"/>
-      <stop offset="60%" stop-color="#FF6D00" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#FF6D00" stop-opacity="0"/>
-    </radialGradient>
-    <!-- Hydrothermal plume gradient (opaque cyan to transparent teal) -->
-    <linearGradient id="vkPlumeGrad" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0%" stop-color="#00E5FF" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#00BCD4" stop-opacity="0"/>
-    </linearGradient>
-    <!-- Ember glow (radial, bright center to edge) -->
-    <radialGradient id="vkEmberGrad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FFAB00"/>
-      <stop offset="100%" stop-color="#FF6D00"/>
-    </radialGradient>
-    <!-- Seabed gradient (dark grays) -->
-    <linearGradient id="vkSeabedGrad" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0%" stop-color="#2D2D2D"/>
-      <stop offset="100%" stop-color="#1B1B1B"/>
-    </linearGradient>
-    <!-- Glow filter -->
-    <filter id="vkGlow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
   </defs>
-
-  <!-- === Seabed base layer === -->
-  <path d="M0 54 Q4 52, 8 54 Q14 56, 20 53 Q28 55, 36 54 Q44 56, 52 53 Q58 55, 64 54 L64 64 L0 64 Z" fill="url(#vkSeabedGrad)"/>
-  <!-- Scattered small rocks on seabed -->
-  <path d="M5 58 L7 56 L9 57 L8 59 Z" fill="#252525" opacity="0.7"/>
-  <path d="M50 57 L53 55 L55 56 L54 58 Z" fill="#222222" opacity="0.6"/>
-  <path d="M30 59 L32 57 L34 58 L33 60 Z" fill="#262626" opacity="0.5"/>
-  <path d="M18 60 L20 58 L21 59 Z" fill="#232323" opacity="0.6"/>
-  <!-- Seabed sediment streaks -->
-  <path d="M2 60 Q10 59, 18 60 Q26 61, 34 60" fill="none" stroke="#333333" stroke-width="0.4" opacity="0.3"/>
-  <path d="M38 61 Q46 60, 54 61 Q60 62, 64 61" fill="none" stroke="#2E2E2E" stroke-width="0.3" opacity="0.25"/>
-  <!-- Extra small rock debris -->
-  <path d="M42 59 L44 58 L45 59 Z" fill="#242424" opacity="0.5"/>
-  <path d="M60 58 L62 57 L62 59 Z" fill="#232323" opacity="0.4"/>
-
-  <!-- === Volcano body silhouette === -->
-  <path d="M8 52 Q10 50, 14 48 Q16 44, 18 40 Q20 36, 22 30 Q24 24, 26 20 Q27 17, 28 16 Q29 18, 31 22 Q33 26, 36 32 Q39 38, 42 42 Q46 46, 50 48 Q54 50, 56 52 Z" fill="url(#vkRockGrad)"/>
-
-  <!-- Rock texture overlays (wavy horizontal lines) -->
-  <path d="M14 46 Q20 45, 26 46 Q32 47, 38 46 Q44 45, 50 46" fill="none" stroke="#2A1F1A" stroke-width="0.6" opacity="0.5"/>
-  <path d="M18 40 Q24 39, 30 40 Q36 41, 42 40" fill="none" stroke="#1F1510" stroke-width="0.5" opacity="0.4"/>
-  <path d="M22 34 Q26 33, 30 34 Q34 35, 38 34" fill="none" stroke="#251A14" stroke-width="0.5" opacity="0.35"/>
-  <!-- Additional rock band near base -->
-  <path d="M10 50 Q18 49, 26 50 Q34 51, 42 50 Q50 49, 54 50" fill="none" stroke="#1E1410" stroke-width="0.4" opacity="0.3"/>
-
-  <!-- Crack/ridge strokes on surface -->
-  <path d="M20 42 L22 38" fill="none" stroke="#4E342E" stroke-width="0.7" opacity="0.5"/>
-  <path d="M35 36 L37 32" fill="none" stroke="#4E342E" stroke-width="0.6" opacity="0.45"/>
-  <path d="M40 44 L43 40" fill="none" stroke="#4E342E" stroke-width="0.8" opacity="0.4"/>
-  <path d="M16 46 L18 43" fill="none" stroke="#4E342E" stroke-width="0.5" opacity="0.55"/>
-  <path d="M28 28 L30 25" fill="none" stroke="#4E342E" stroke-width="0.6" opacity="0.6"/>
-
-  <!-- Shadow patches on right flank -->
-  <path d="M38 34 Q42 38, 46 42 Q48 44, 50 48 L44 46 Q40 40, 38 36 Z" fill="#1A1A1A" opacity="0.3"/>
-  <path d="M42 42 Q46 46, 52 50 L48 50 Q44 46, 42 44 Z" fill="#1A1A1A" opacity="0.25"/>
-  <path d="M34 30 Q36 32, 40 36 L38 36 Q35 33, 34 31 Z" fill="#1A1A1A" opacity="0.2"/>
-
-  <!-- === Crater at peak === -->
-  <!-- Crater rim -->
-  <ellipse cx="28" cy="18" rx="6" ry="3" fill="none" stroke="#2A1F1A" stroke-width="1" opacity="0.7"/>
-  <!-- Crater inner glow -->
-  <ellipse cx="28" cy="18" rx="5" ry="2.5" fill="url(#vkCraterGlow)"/>
-  <!-- Bright center of crater -->
-  <circle cx="28" cy="18" r="1.5" fill="#FFAB00" opacity="0.9"/>
-
-  <!-- === Lava flows === -->
-  <!-- Lava flow 1 glow (left flank, behind main stroke) -->
-  <path d="M24 20 Q22 26, 18 34 Q16 40, 14 48" fill="none" stroke="#FF3D00" stroke-width="4" stroke-linecap="round" opacity="0.25" filter="url(#vkGlow)"/>
-  <!-- Lava flow 1 (left flank) -->
-  <path d="M24 20 Q22 26, 18 34 Q16 40, 14 48" fill="none" stroke="#FF3D00" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
-  <!-- Lava flow 2 glow (right flank, behind main stroke) -->
-  <path d="M32 20 Q34 28, 38 36 Q42 44, 46 50" fill="none" stroke="#FF6D00" stroke-width="3.5" stroke-linecap="round" opacity="0.2" filter="url(#vkGlow)"/>
-  <!-- Lava flow 2 (right flank) -->
-  <path d="M32 20 Q34 28, 38 36 Q42 44, 46 50" fill="none" stroke="#FF6D00" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
-  <!-- Lava flow 3 (short, left-center) -->
-  <path d="M26 22 Q24 28, 22 34" fill="none" stroke="#FF9100" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-
-  <!-- === Side vent === -->
-  <!-- Crack in rock at side vent -->
-  <path d="M40 34 L44 36 L42 38" fill="none" stroke="#4E342E" stroke-width="0.8" opacity="0.7"/>
-  <!-- Side vent lava glow -->
-  <ellipse cx="42" cy="36" rx="2.5" ry="1.5" fill="#FF6D00" opacity="0.6" filter="url(#vkGlow)"/>
-  <!-- Side vent bright center -->
-  <circle cx="42" cy="36" r="1" fill="#FFAB00" opacity="0.7"/>
-  <!-- Side vent vapor wisp -->
-  <path d="M43 35 Q45 32, 44 28" fill="none" stroke="#00E5FF" stroke-width="0.8" stroke-linecap="round" opacity="0.3"/>
-
-  <!-- === Hydrothermal plumes === -->
-  <!-- Plume 1 (main, from crater rising left) -->
-  <path d="M26 16 Q22 10, 18 2" fill="none" stroke="url(#vkPlumeGrad)" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
-  <!-- Plume 2 (secondary, from crater rising right) -->
-  <path d="M30 16 Q34 10, 40 4" fill="none" stroke="#00BCD4" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-  <!-- Plume 3 (from side vent, smaller) -->
-  <path d="M43 34 Q46 28, 48 20" fill="none" stroke="#00E5FF" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
-
-  <!-- === Bubbles (scattered organically) === -->
-  <circle cx="20" cy="8" r="1.5" fill="none" stroke="#00E5FF" stroke-width="0.4" opacity="0.35"/>
-  <circle cx="36" cy="6" r="1.0" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.3"/>
-  <circle cx="12" cy="12" r="0.8" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.25"/>
-  <circle cx="48" cy="14" r="1.2" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.2"/>
-  <circle cx="8" cy="22" r="2.0" fill="none" stroke="#00E5FF" stroke-width="0.4" opacity="0.15"/>
-  <circle cx="54" cy="10" r="0.7" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.4"/>
-  <circle cx="42" cy="4" r="0.5" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.3"/>
-  <circle cx="16" cy="4" r="0.6" fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.25"/>
-
-  <!-- === Ember/particles near crater and lava === -->
-  <circle cx="26" cy="14" r="0.8" fill="url(#vkEmberGrad)" opacity="0.7"/>
-  <circle cx="30" cy="15" r="0.6" fill="#FF6D00" opacity="0.6"/>
-  <circle cx="22" cy="22" r="1.0" fill="#FFAB00" opacity="0.5"/>
-  <circle cx="34" cy="24" r="0.5" fill="#FF6D00" opacity="0.8"/>
-  <circle cx="16" cy="38" r="0.4" fill="#FFAB00" opacity="0.4"/>
-  <circle cx="44" cy="30" r="1.2" fill="#FF6D00" opacity="0.45"/>
-
-  <!-- === Suspended particles in water column === -->
-  <circle cx="6" cy="30" r="0.4" fill="#00E5FF" opacity="0.15"/>
-  <circle cx="58" cy="20" r="0.3" fill="#00E5FF" opacity="0.12"/>
-  <circle cx="52" cy="42" r="0.5" fill="#00BCD4" opacity="0.1"/>
-
-  <!-- === Lava pool at base of flow 1 === -->
-  <ellipse cx="14" cy="49" rx="3" ry="1" fill="#FF3D00" opacity="0.4" filter="url(#vkGlow)"/>
-  <ellipse cx="14" cy="49" rx="2" ry="0.6" fill="#FF9100" opacity="0.5"/>
-
-  <!-- === Lava pool at base of flow 2 === -->
-  <ellipse cx="46" cy="51" rx="2.5" ry="0.8" fill="#FF6D00" opacity="0.35" filter="url(#vkGlow)"/>
-  <ellipse cx="46" cy="51" rx="1.5" ry="0.5" fill="#FFAB00" opacity="0.45"/>
-
-  <!-- === Additional ambient detail === -->
-  <!-- Faint heat shimmer above crater -->
-  <path d="M24 14 Q26 12, 28 13 Q30 12, 32 14" fill="none" stroke="#FFAB00" stroke-width="0.4" opacity="0.2"/>
-  <path d="M22 12 Q25 10, 28 11 Q31 10, 34 12" fill="none" stroke="#FF6D00" stroke-width="0.3" opacity="0.15"/>
-  <!-- Mineral deposit highlights on left flank -->
-  <path d="M12 46 L14 45" fill="none" stroke="#5D4037" stroke-width="0.4" opacity="0.3"/>
-  <path d="M10 48 L12 47" fill="none" stroke="#4E342E" stroke-width="0.3" opacity="0.25"/>
-  <!-- Deep water ambient particles -->
-  <circle cx="3" cy="44" r="0.3" fill="#00BCD4" opacity="0.08"/>
-  <circle cx="60" cy="38" r="0.35" fill="#00E5FF" opacity="0.1"/>
-  <circle cx="56" cy="52" r="0.25" fill="#00BCD4" opacity="0.07"/>
-
+  <circle cx="34" cy="10" r="3" fill="#00E5FF" fill-opacity="0.55"/>
+  <circle cx="29" cy="4" r="2" fill="#00E5FF" fill-opacity="0.4"/>
+  <circle cx="37" cy="17" r="2" fill="#00E5FF" fill-opacity="0.7"/>
+  <path d="M4 58 L22 24 H42 L60 58 Z" fill="#3E2723"/>
+  <path d="M32 24 H42 L60 58 H40 Z" fill="#2A1A16"/>
+  <path d="M20 28 Q32 20 44 28 Q32 33 20 28 Z" fill="url(#vkLava)"/>
+  <path d="M27 30 L24 42 L28 40 L25 54 L31 38 L27 39 Z" fill="#FF6D00"/>
+  <path d="M37 30 L40 40 L37 39 L41 50 L34 36 L37 36 Z" fill="#FF9100"/>
+  <ellipse cx="32" cy="27" rx="7" ry="2" fill="#FFF3C4"/>
+  <path d="M0 58 H64 V64 H0 Z" fill="#1A1A1A"/>
+  <path d="M8 58 Q14 54 20 58 Z M44 58 Q51 53 58 58 Z" fill="#4E342E"/>
+  <circle cx="16" cy="48" r="1.2" fill="#FFAB00"/>
+  <circle cx="48" cy="46" r="1" fill="#FFAB00"/>
 </svg>

@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/map_generator.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
-import 'package:abyss/presentation/widgets/map/map_cell_widget.dart';
+import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
+import 'package:abyss/presentation/widgets/map/map_painter.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
@@ -16,6 +17,7 @@ void main() {
     int baseX = 10,
     int baseY = 10,
     String humanPlayerId = 'human-uuid',
+    void Function(int x, int y)? onCellTap,
   }) async {
     final result = MapGenerator.generate(seed: 42);
     await tester.pumpWidget(
@@ -27,6 +29,7 @@ void main() {
             baseX: baseX,
             baseY: baseY,
             humanPlayerId: humanPlayerId,
+            onCellTap: onCellTap,
           ),
         ),
       ),
@@ -34,10 +37,43 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  List<MapCellVisual> visualsOf(WidgetTester tester) {
+    final paint = tester.widget<CustomPaint>(find.byWidgetPredicate(
+      (w) => w is CustomPaint && w.painter is MapPainter,
+    ));
+    return (paint.painter! as MapPainter).visuals;
+  }
+
   group('GameMapView', () {
-    testWidgets('renders 400 MapCellWidgets in 20x20 grid', (tester) async {
+    testWidgets('paints 400 cells in a single painter', (tester) async {
       await pumpView(tester, revealedCells: {});
-      expect(find.byType(MapCellWidget), findsNWidgets(400));
+      expect(visualsOf(tester), hasLength(400));
+      final painter = tester
+          .widget<CustomPaint>(find.byWidgetPredicate(
+            (w) => w is CustomPaint && w.painter is MapPainter,
+          ))
+          .size;
+      expect(painter, const Size(20 * cellSize, 20 * cellSize));
+    });
+
+    testWidgets('tap reports the cell under the pointer', (tester) async {
+      (int, int)? tapped;
+      await pumpView(
+        tester,
+        revealedCells: {},
+        onCellTap: (x, y) => tapped = (x, y),
+      );
+      final viewer = find.byType(InteractiveViewer);
+      final matrix = tester
+          .widget<InteractiveViewer>(viewer)
+          .transformationController!
+          .value;
+      final scale = matrix.getMaxScaleOnAxis();
+      final origin = tester.getTopLeft(viewer);
+      final translation = Offset(matrix.storage[12], matrix.storage[13]);
+      final cellCenter = const Offset(10.5 * cellSize, 10.5 * cellSize);
+      await tester.tapAt(origin + translation + cellCenter * scale);
+      expect(tapped, (10, 10));
     });
 
     testWidgets('contains InteractiveViewer', (tester) async {
@@ -52,23 +88,21 @@ void main() {
         GridPosition(x: 1, y: 0),
       };
       await pumpView(tester, revealedCells: revealed);
-      final widgets = tester
-          .widgetList<MapCellWidget>(find.byType(MapCellWidget))
-          .toList();
-      expect(widgets[0].isRevealed, isTrue);
-      expect(widgets[1].isRevealed, isTrue);
-      expect(widgets[2].isRevealed, isFalse);
+      final visuals = visualsOf(tester);
+      expect(visuals[0].revealed, isTrue);
+      expect(visuals[1].revealed, isTrue);
+      expect(visuals[2].revealed, isFalse);
     });
 
     testWidgets('marks the cell at (baseX, baseY) as isBase', (tester) async {
-      await pumpView(tester, revealedCells: {}, baseX: 5, baseY: 7);
-      final widgets = tester
-          .widgetList<MapCellWidget>(find.byType(MapCellWidget))
-          .toList();
-      final baseWidget = widgets[7 * 20 + 5];
-      expect(baseWidget.isBase, isTrue);
-      final nonBase = widgets[7 * 20 + 6];
-      expect(nonBase.isBase, isFalse);
+      final revealed = {
+        GridPosition(x: 5, y: 7),
+        GridPosition(x: 6, y: 7),
+      };
+      await pumpView(tester, revealedCells: revealed, baseX: 5, baseY: 7);
+      final visuals = visualsOf(tester);
+      expect(visuals[7 * 20 + 5].contentSprite, playerBaseSvgPath);
+      expect(visuals[7 * 20 + 6].contentSprite, isNot(playerBaseSvgPath));
     });
 
     testWidgets('no cell is marked as base when baseX/baseY are null',
@@ -79,17 +113,18 @@ void main() {
           home: Scaffold(
             body: GameMapView(
               gameMap: result.map,
-              revealedCells: {},
+              revealedCells: {GridPosition(x: 10, y: 10)},
               humanPlayerId: 'human-uuid',
             ),
           ),
         ),
       );
       await tester.pumpAndSettle();
-      final widgets = tester
-          .widgetList<MapCellWidget>(find.byType(MapCellWidget))
-          .toList();
-      expect(widgets.any((w) => w.isBase), isFalse);
+      final visuals = visualsOf(tester);
+      expect(
+        visuals.any((v) => v.contentSprite == playerBaseSvgPath),
+        isFalse,
+      );
     });
 
     testWidgets('initial scale shows 8 visible cells', (tester) async {

@@ -7,7 +7,8 @@ import 'package:abyss/presentation/widgets/tech/tech_node_widget.dart';
 
 void main() {
   group('TechNodeWidget', () {
-    Widget build(TechNodeState state, {VoidCallback? onTap}) {
+    Widget build(TechNodeState state,
+        {bool selected = false, VoidCallback? onTap}) {
       return MaterialApp(
         theme: AbyssTheme.create(),
         home: Scaffold(
@@ -15,8 +16,8 @@ void main() {
             child: TechNodeWidget(
               color: Colors.pink,
               state: state,
-              label: '+40%',
-              caption: 'Niv. 2',
+              label: '2',
+              selected: selected,
               onTap: onTap,
             ),
           ),
@@ -27,10 +28,13 @@ void main() {
     Finder dashedRing() => find.byWidgetPredicate((w) =>
         w is CustomPaint && w.foregroundPainter is DashedRingPainter);
 
-    testWidgets('displays bonus label and caption', (t) async {
+    BoxDecoration decoration(WidgetTester t) =>
+        t.widget<Container>(find.byType(Container).first).decoration!
+            as BoxDecoration;
+
+    testWidgets('displays its label', (t) async {
       await t.pumpWidget(build(TechNodeState.researched));
-      expect(find.text('+40%'), findsOneWidget);
-      expect(find.text('Niv. 2'), findsOneWidget);
+      expect(find.text('2'), findsOneWidget);
     });
 
     testWidgets('accessible node is ringed with dashes', (t) async {
@@ -46,18 +50,21 @@ void main() {
       expect(dashedRing(), findsNothing);
     });
 
-    testWidgets('researched node glows', (t) async {
+    testWidgets('researched node is filled with its colour', (t) async {
       await t.pumpWidget(build(TechNodeState.researched));
-      final box = t.widget<Container>(find.byType(Container).first);
-      final decoration = box.decoration! as BoxDecoration;
-      expect(decoration.boxShadow, isNotEmpty);
+      expect(decoration(t).color, Colors.pink);
+    });
+
+    testWidgets('selected node gets a white halo', (t) async {
+      await t.pumpWidget(build(TechNodeState.locked, selected: true));
+      expect(decoration(t).boxShadow!.first.color, Colors.white);
     });
 
     testWidgets('onTap callback fires', (t) async {
       var tapped = false;
       await t.pumpWidget(
         build(TechNodeState.locked, onTap: () => tapped = true));
-      await t.tap(find.text('+40%'));
+      await t.tap(find.text('2'));
       expect(tapped, isTrue);
     });
   });

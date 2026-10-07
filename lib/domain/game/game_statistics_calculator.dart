@@ -1,5 +1,6 @@
 import '../history/history_entry.dart';
 import 'game.dart';
+import 'game_status.dart';
 import 'game_statistics.dart';
 
 class GameStatisticsCalculator {
@@ -29,7 +30,9 @@ class GameStatisticsCalculator {
         .fold(0, (sum, r) => sum + r.amount);
 
     return GameStatistics(
-      turnsPlayed: game.turn,
+      // A lost game already moved past the turn the base fell on.
+      turnsPlayed:
+          game.status == GameStatus.defeat ? game.turn - 1 : game.turn,
       monstersDefeated: monstersDefeated,
       basesCaptured: basesCaptured,
       totalResourcesCollected: collectedResources + currentResources,

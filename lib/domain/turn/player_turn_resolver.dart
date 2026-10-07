@@ -8,13 +8,20 @@ import '../unit/unit_loss_calculator.dart';
 import 'turn_result.dart';
 
 class PlayerTurnResolver {
-  static TurnResult resolve(Player player, int previousTurn) {
+  static TurnResult resolve(
+    Player player,
+    int previousTurn, {
+    Map<ResourceType, int> extraProduction = const {},
+  }) {
     final hadRecruitedUnits = player.recruitedUnitTypes.isNotEmpty;
 
     // Step 1: Calculate initial production
-    var production = ProductionCalculator.fromBuildings(
-      player.buildings,
-      techBranches: player.techBranches,
+    var production = _withExtra(
+      ProductionCalculator.fromBuildings(
+        player.buildings,
+        techBranches: player.techBranches,
+      ),
+      extraProduction,
     );
 
     // Steps 2-4: Energy consumption & building deactivation
@@ -32,9 +39,12 @@ class PlayerTurnResolver {
       for (final type in deactivated) {
         activeBuildings[type] = Building(type: type, level: 0);
       }
-      production = ProductionCalculator.fromBuildings(
-        activeBuildings,
-        techBranches: player.techBranches,
+      production = _withExtra(
+        ProductionCalculator.fromBuildings(
+          activeBuildings,
+          techBranches: player.techBranches,
+        ),
+        extraProduction,
       );
     }
 
@@ -75,6 +85,16 @@ class PlayerTurnResolver {
       deactivatedBuildings: deactivated,
       lostUnits: lostUnits,
     );
+  }
+
+  static Map<ResourceType, int> _withExtra(
+    Map<ResourceType, int> production,
+    Map<ResourceType, int> extra,
+  ) {
+    for (final entry in extra.entries) {
+      production[entry.key] = (production[entry.key] ?? 0) + entry.value;
+    }
+    return production;
   }
 
   static List<TurnResourceChange> _applyResourceChanges({

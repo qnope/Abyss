@@ -37,6 +37,13 @@ class TransitionBaseCapturedSection extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          const SizedBox(height: 6),
+          Text(
+            '+${transitionBase.pearlsPerTurn} perles par tour',
+            style: textTheme.bodyMedium?.copyWith(
+              color: AbyssColors.pearlWhite,
+            ),
+          ),
           if (unitCountOnTarget > 0) ...[
             const SizedBox(height: 6),
             Text(

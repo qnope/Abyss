@@ -1,76 +1,95 @@
 import 'package:flutter/material.dart';
 import '../../../domain/tech/tech_node_state.dart';
 import '../../theme/abyss_colors.dart';
-import '../common/raster_svg.dart';
+import 'dashed_ring_painter.dart';
 
+/// Round research node showing its reward ([label]) and a short
+/// [caption]. Researched nodes glow, the next reachable one is ringed
+/// with dashes and locked ones fade into the background.
 class TechNodeWidget extends StatelessWidget {
-  final String iconPath;
   final Color color;
   final TechNodeState state;
-  final int? level;
+  final String label;
+  final String caption;
+  final double size;
   final VoidCallback? onTap;
 
   const TechNodeWidget({
     super.key,
-    required this.iconPath,
     required this.color,
     required this.state,
-    this.level,
+    required this.label,
+    required this.caption,
+    this.size = 56,
     this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final opacity = switch (state) {
-      TechNodeState.locked => 0.3,
-      TechNodeState.accessible => 0.7,
-      TechNodeState.researched => 1.0,
-    };
-
+    final textTheme = Theme.of(context).textTheme;
+    final node = Container(
+      width: size,
+      height: size,
+      padding: const EdgeInsets.all(6),
+      decoration: _decoration(),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Column(children: [
+          Text(label,
+            style: textTheme.labelLarge?.copyWith(
+              color: _labelColor, fontWeight: FontWeight.w800)),
+          Text(caption,
+            style: textTheme.labelSmall?.copyWith(
+              color: _captionColor, fontSize: 9)),
+        ]),
+      ),
+    );
     return GestureDetector(
       onTap: onTap,
-      child: Opacity(
-        opacity: opacity,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AbyssColors.surfaceLight,
-                border: _buildBorder(),
-              ),
-              child: Center(
-                child: RasterSvg(
-                  assetPath: iconPath,
-                  color: state == TechNodeState.locked ? Colors.grey : null,
-                  colorBlendMode: BlendMode.saturation,
-                ),
-              ),
-            ),
-            if (level != null) ...[
-              const SizedBox(height: 4),
-              Text(
-                'Niv. $level',
-                style: TextStyle(
-                  fontSize: 10,
-                  color: state == TechNodeState.researched
-                      ? color
-                      : AbyssColors.onSurfaceDim,
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
+      child: state == TechNodeState.accessible
+          ? CustomPaint(
+              foregroundPainter: DashedRingPainter(color: color),
+              child: node)
+          : node,
     );
   }
 
-  Border? _buildBorder() => switch (state) {
-    TechNodeState.locked => null,
-    TechNodeState.accessible => Border.all(color: color, width: 1),
-    TechNodeState.researched => Border.all(color: color, width: 2),
+  BoxDecoration _decoration() => switch (state) {
+    TechNodeState.researched => BoxDecoration(
+      shape: BoxShape.circle,
+      gradient: RadialGradient(colors: [
+        color.withValues(alpha: 0.45),
+        color.withValues(alpha: 0.12),
+      ]),
+      border: Border.all(color: color, width: 2),
+      boxShadow: [
+        BoxShadow(color: color.withValues(alpha: 0.5), blurRadius: 14),
+      ],
+    ),
+    TechNodeState.accessible => BoxDecoration(
+      shape: BoxShape.circle,
+      color: AbyssColors.surfaceLight,
+      boxShadow: [
+        BoxShadow(
+          color: color.withValues(alpha: 0.18), spreadRadius: 6),
+      ],
+    ),
+    TechNodeState.locked => BoxDecoration(
+      shape: BoxShape.circle,
+      color: AbyssColors.surfaceDim,
+      border: Border.all(color: AbyssColors.surfaceBright),
+    ),
+  };
+
+  Color get _labelColor => switch (state) {
+    TechNodeState.researched => Colors.white,
+    TechNodeState.accessible => color,
+    TechNodeState.locked => AbyssColors.disabled,
+  };
+
+  Color get _captionColor => switch (state) {
+    TechNodeState.researched => AbyssColors.onSurface,
+    TechNodeState.accessible => color,
+    TechNodeState.locked => AbyssColors.onSurfaceDim,
   };
 }

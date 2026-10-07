@@ -45,11 +45,8 @@ class _TechNodeSheet extends StatelessWidget {
     required this.onResearch,
   });
 
-  String get _bonusText => switch (branch) {
-    TechBranch.military => '+${level * 20}% attaque et défense',
-    TechBranch.resources => '+${level * 20}% production de ressources',
-    TechBranch.explorer => '+${level * 20}% portée d\'exploration',
-  };
+  String get _bonusText =>
+      '+${branch.bonusPercent(level)}% ${branch.shortEffect}';
 
   @override
   Widget build(BuildContext context) {

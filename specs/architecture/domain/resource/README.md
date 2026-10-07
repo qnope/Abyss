@@ -41,10 +41,7 @@ The `productionFormulas` constant maps building types to their formulas:
 
 - `buildingEnergyConsumption(type, level)` -- returns `multiplier * level`, where the multiplier is 1-4 depending on building type (laboratory is highest at 4, solarPanel lowest at 1)
 - `totalBuildingConsumption(buildings, {excluded})` -- sums energy consumption across all buildings, optionally excluding a set of types
-- `unitAlgaeConsumption(type)` -- returns 1-3 algae per unit type
+- `unitAlgaeConsumption(type)` -- returns 1-3 algae per unit type; the single source of truth for unit upkeep
 - `totalUnitConsumption(units)` -- sums algae consumption across all unit counts
 - `totalUnitConsumptionAllLevels(unitsPerLevel)` -- sums algae consumption across all levels
 
-## Maintenance Calculator
-
-`MaintenanceCalculator.fromUnits(units)` computes per-turn resource costs for maintaining an army. It delegates to `UnitCostCalculator.maintenanceCost(type)` for each unit type, multiplies by the unit count, and aggregates across all resource types. Units with a count of 0 or below are skipped.

@@ -11,6 +11,8 @@ class GameStatisticsCalculator {
     var monstersDefeated = 0;
     var basesCaptured = 0;
     var collectedResources = 0;
+    var raidsRepelled = 0;
+    var raidsLost = 0;
 
     for (final entry in entries) {
       switch (entry) {
@@ -20,6 +22,10 @@ class GameStatisticsCalculator {
           basesCaptured++;
         case CollectEntry(:final gains):
           collectedResources += gains.values.fold(0, (a, b) => a + b);
+        case RaidEntry(:final victory) when victory:
+          raidsRepelled++;
+        case RaidEntry():
+          raidsLost++;
         default:
           break;
       }
@@ -33,6 +39,8 @@ class GameStatisticsCalculator {
       monstersDefeated: monstersDefeated,
       basesCaptured: basesCaptured,
       totalResourcesCollected: collectedResources + currentResources,
+      raidsRepelled: raidsRepelled,
+      raidsLost: raidsLost,
     );
   }
 }

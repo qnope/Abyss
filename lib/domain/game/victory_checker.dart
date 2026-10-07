@@ -1,5 +1,6 @@
 import 'package:abyss/domain/building/building_type.dart';
 
+import '../raid/defeat_rules.dart';
 import 'game.dart';
 import 'game_status.dart';
 
@@ -20,6 +21,9 @@ class VictoryChecker {
             ? GameStatus.victory
             : GameStatus.defeat;
       }
+    }
+    if (DefeatRules.isDefeated(game.humanPlayer.raidState)) {
+      return GameStatus.defeat;
     }
     return null;
   }

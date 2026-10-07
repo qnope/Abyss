@@ -31,7 +31,6 @@ Value object with `hp`, `atk`, and `def` fields. The static factory `UnitStats.f
 Instance-method utility for recruitment economics:
 
 - **`recruitmentCost(type)`** -- per-unit resource cost. Basic units cost algae/coral; advanced units add ore, energy, or pearls.
-- **`maintenanceCost(type)`** -- per-unit per-turn algae upkeep (1-3 algae depending on type).
 - **`unlockLevel(type)`** -- minimum barracks level required: 1 for scout/harpoonist, 3 for guardian/domeBreaker, 5 for siphoner/saboteur.
 - **`isUnlocked(type, barracksLevel)`** -- checks barracks level against `unlockLevel`.
 - **`maxRecruitableCount(type, barracksLevel, resources)`** -- returns the maximum affordable count, capped at `barracksLevel * 100`.

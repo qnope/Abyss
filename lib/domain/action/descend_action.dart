@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../game/game.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
@@ -20,11 +22,15 @@ class DescendAction extends Action {
   final int fromLevel;
   final Map<UnitType, int> selectedUnits;
 
+  /// Seeds the map of a level reached for the first time.
+  final Random? random;
+
   DescendAction({
     required this.transitionX,
     required this.transitionY,
     required this.fromLevel,
     required this.selectedUnits,
+    this.random,
   });
 
   @override
@@ -86,6 +92,7 @@ class DescendAction extends Action {
     final parentMap = game.levels[fromLevel]!;
     final passages = _extractPassages(parentMap);
     final result = MapGenerator.generate(
+      seed: random?.nextInt(0x7FFFFFFF),
       level: targetLevel,
       reservedPassages: passages,
     );

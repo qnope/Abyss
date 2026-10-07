@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../game/defeat_checker.dart';
 import '../game/game.dart';
 import '../map/exploration_resolver.dart';
@@ -8,7 +10,9 @@ import 'player_turn_resolver.dart';
 import 'turn_result.dart';
 
 class TurnResolver {
-  TurnResult resolve(Game game) {
+  /// [random] drives the raid fights; pass a seeded one for a
+  /// reproducible turn.
+  TurnResult resolve(Game game, {Random? random}) {
     final previousTurn = game.turn;
     final humanId = game.humanPlayer.id;
     TurnResult? humanResult;
@@ -20,7 +24,11 @@ class TurnResolver {
         previousTurn,
         extraProduction: PearlIncome.asProduction(game, player.id),
       );
-      final outcome = RaidResolver.resolve(player, previousTurn);
+      final outcome = RaidResolver.resolve(
+        player,
+        previousTurn,
+        random: random,
+      );
       if (player.id == humanId) {
         humanResult = result;
         raid = outcome;

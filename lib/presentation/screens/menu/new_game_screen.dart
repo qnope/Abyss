@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/cheat_codes.dart';
-import '../../../domain/game/game.dart';
-import '../../../domain/game/player.dart';
-import '../../../domain/map/map_generator.dart';
+import '../../../domain/game/game_factory.dart';
 import '../game/game_screen.dart';
 
 class NewGameScreen extends StatefulWidget {
@@ -85,16 +83,8 @@ class _NewGameScreenState extends State<NewGameScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final name = _controller.text.trim();
-    final generation = MapGenerator.generate();
-    final player = Player.withBase(
-      name: name,
-      baseX: generation.baseX,
-      baseY: generation.baseY,
-      mapWidth: generation.map.width,
-      mapHeight: generation.map.height,
-    );
-    CheatCodes.apply(player);
-    final game = Game.singlePlayer(player)..levels = {1: generation.map};
+    final game = GameFactory.newSinglePlayer(playerName: name);
+    CheatCodes.apply(game.humanPlayer);
     await widget.repository.save(game);
 
     if (!mounted) return;

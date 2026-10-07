@@ -1,0 +1,23 @@
+{
+  "name": "rush-caserne",
+  "otherwise": "economy",
+  "turns": {
+    "1": [
+      {"do": "upgrade", "building": "headquarters"},
+      {"do": "upgrade", "building": "algaeFarm"},
+      {"do": "upgrade", "building": "coralMine"}
+    ],
+    "8": [
+      {"do": "upgrade", "building": "headquarters"}
+    ],
+    "11": [
+      {"do": "upgrade", "building": "headquarters"}
+    ],
+    "12": [
+      {"do": "upgrade", "building": "barracks"}
+    ],
+    "13": [
+      {"do": "recruit", "unit": "harpoonist", "count": 10}
+    ]
+  }
+}

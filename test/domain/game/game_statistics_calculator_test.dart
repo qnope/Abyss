@@ -2,6 +2,7 @@ import 'package:abyss/domain/fight/combat_side.dart';
 import 'package:abyss/domain/fight/fight_result.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_statistics_calculator.dart';
+import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
@@ -75,6 +76,22 @@ void main() {
       expect(stats.turnsPlayed, 7);
       expect(stats.monstersDefeated, 0);
       expect(stats.basesCaptured, 0);
+    });
+
+    test('a lost game counts the turn the base fell on as the last', () {
+      final game = _gameWith(turn: 28)..status = GameStatus.defeat;
+      expect(_calculator.compute(game).turnsPlayed, 27);
+    });
+
+    test('raid outcomes come from the raid state', () {
+      final game = _gameWith();
+      game.humanPlayer.raidState
+        ..recordOutcome(victory: true)
+        ..recordOutcome(victory: false)
+        ..recordOutcome(victory: false);
+      final stats = _calculator.compute(game);
+      expect(stats.raidsRepelled, 1);
+      expect(stats.raidsLost, 2);
     });
 
     test('combat victories count initial monsters', () {

@@ -7,14 +7,15 @@ void main() {
       expect(DamageCalculator.compute(atk: 10, def: 0), 10);
     });
 
-    test('ceils fractional damage when defense reduces output', () {
-      // 10 * 100 / 110 = 9.0909... -> ceil -> 10
-      expect(DamageCalculator.compute(atk: 10, def: 10), 10);
+    test('defense equal to the armour constant halves damage', () {
+      expect(DamageCalculator.compute(atk: 10, def: 10), 5);
     });
 
-    test('ceils to 1 when result is exactly 1.0', () {
-      // 2 * 100 / 200 = 1.0 -> ceil -> 1
-      expect(DamageCalculator.compute(atk: 2, def: 100), 1);
+    test('floors fractional damage so small DEF already matters', () {
+      // 5 * 10 / 12 = 4.17 -> floor -> 4
+      expect(DamageCalculator.compute(atk: 5, def: 2), 4);
+      // 2 * 10 / 16 = 1.25 -> floor -> 1
+      expect(DamageCalculator.compute(atk: 2, def: 6), 1);
     });
 
     test('clamps to minimum of 1 when defense is overwhelming', () {
@@ -29,35 +30,33 @@ void main() {
       expect(DamageCalculator.compute(atk: 1, def: 1000, crit: true), 3);
     });
 
-    test('is deterministic across repeated calls', () {
-      final samples = <List<int>>[
-        [50, 25],
-        [7, 13],
-        [123, 456],
-        [1, 0],
-        [99, 99],
-      ];
-      for (final sample in samples) {
-        final atk = sample[0];
-        final def = sample[1];
-        final first = DamageCalculator.compute(atk: atk, def: def);
-        final second = DamageCalculator.compute(atk: atk, def: def);
-        expect(first, second);
-        expect(first, greaterThanOrEqualTo(1));
+    test('ignoreDef deals full atk whatever the defense', () {
+      expect(
+        DamageCalculator.compute(atk: 10, def: 20, ignoreDef: true),
+        10,
+      );
+    });
 
-        final critFirst =
-            DamageCalculator.compute(atk: atk, def: def, crit: true);
-        expect(critFirst, first * 3);
-      }
+    test('multiplier scales damage before the crit', () {
+      expect(DamageCalculator.compute(atk: 8, def: 10, multiplier: 2), 8);
+      expect(
+        DamageCalculator.compute(
+          atk: 8,
+          def: 10,
+          multiplier: 2,
+          crit: true,
+        ),
+        24,
+      );
     });
 
     test('matches the explicit formula for several combinations', () {
       const cases = <Map<String, int>>[
         {'atk': 100, 'def': 0, 'expected': 100},
-        {'atk': 100, 'def': 100, 'expected': 50},
-        {'atk': 100, 'def': 300, 'expected': 25},
-        {'atk': 50, 'def': 50, 'expected': 34}, // 50*100/150 = 33.33 -> 34
-        {'atk': 33, 'def': 67, 'expected': 20}, // 33*100/167 = 19.76 -> 20
+        {'atk': 100, 'def': 10, 'expected': 50},
+        {'atk': 100, 'def': 30, 'expected': 25},
+        {'atk': 50, 'def': 5, 'expected': 33}, // 500/15 = 33.3 -> 33
+        {'atk': 7, 'def': 4, 'expected': 5}, // 70/14 = 5
       ];
       for (final c in cases) {
         expect(

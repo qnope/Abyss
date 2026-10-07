@@ -39,7 +39,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('PV: 20'), findsOneWidget);
-      expect(find.text('ATK: 4'), findsOneWidget);
+      expect(find.text('ATK: 5'), findsOneWidget);
       expect(find.text('DEF: 2'), findsOneWidget);
     });
 
@@ -54,7 +54,7 @@ void main() {
 
       expect(find.text('Facile'), findsOneWidget);
       expect(find.text('PV: 10'), findsOneWidget);
-      expect(find.text('ATK: 2'), findsOneWidget);
+      expect(find.text('ATK: 3'), findsOneWidget);
       expect(find.text('DEF: 1'), findsOneWidget);
     });
   });

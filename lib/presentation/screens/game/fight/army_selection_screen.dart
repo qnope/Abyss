@@ -56,7 +56,7 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
 
   int get _totalAtk => _summary.totalAtk(_selected, _militaryLevel);
 
-  int get _totalDef => _summary.totalDef(_selected);
+  int get _totalDef => _summary.totalDef(_selected, _militaryLevel);
 
   @override
   Widget build(BuildContext context) {

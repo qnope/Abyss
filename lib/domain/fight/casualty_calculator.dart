@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'casualty_split.dart';
+import 'combat_role.dart';
 import 'combatant.dart';
 
 class CasualtyCalculator {
@@ -26,7 +27,9 @@ class CasualtyCalculator {
     final List<Combatant> wounded = <Combatant>[];
     final List<Combatant> dead = <Combatant>[];
     for (final Combatant combatant in killedPlayerCombatants) {
-      if (random.nextDouble() < p) {
+      if (CombatRole.of(combatant) == CombatRole.evasive) {
+        wounded.add(combatant);
+      } else if (random.nextDouble() < p) {
         wounded.add(combatant);
       } else {
         dead.add(combatant);

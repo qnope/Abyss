@@ -71,6 +71,14 @@ class _UnitDetailSheet extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(unitType.role, style: textTheme.bodySmall),
+          const SizedBox(height: 4),
+          Text(
+            unitType.roleEffect,
+            textAlign: TextAlign.center,
+            style: textTheme.bodySmall?.copyWith(
+              color: AbyssColors.onSurfaceDim,
+            ),
+          ),
           if (!isUnlocked) ..._lockedContent(textTheme),
           if (isUnlocked) ..._unlockedContent(textTheme),
         ],

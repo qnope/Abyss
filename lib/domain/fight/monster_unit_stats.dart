@@ -14,11 +14,11 @@ class MonsterUnitStats {
   factory MonsterUnitStats.forLevel(int level) {
     switch (level) {
       case 1:
-        return const MonsterUnitStats(hp: 10, atk: 2, def: 1);
+        return const MonsterUnitStats(hp: 10, atk: 3, def: 1);
       case 2:
-        return const MonsterUnitStats(hp: 20, atk: 4, def: 2);
+        return const MonsterUnitStats(hp: 20, atk: 5, def: 2);
       case 3:
-        return const MonsterUnitStats(hp: 35, atk: 7, def: 4);
+        return const MonsterUnitStats(hp: 35, atk: 8, def: 3);
       default:
         throw ArgumentError.value(
           level,

@@ -35,7 +35,7 @@ void main() {
           expect(e.typeKey, 'sentinelle');
           expect(e.maxHp, 30);
           expect(e.atk, 8);
-          expect(e.def, 5);
+          expect(e.def, 4);
           expect(e.side, CombatSide.monster);
         }
       });
@@ -70,7 +70,7 @@ void main() {
           expect(e.typeKey, 'golemMagma');
           expect(e.maxHp, 50);
           expect(e.atk, 12);
-          expect(e.def, 8);
+          expect(e.def, 7);
           expect(e.side, CombatSide.monster);
         }
       });
@@ -101,7 +101,7 @@ void main() {
           expect(m.typeKey, 'sentinelleNoyau');
           expect(m.maxHp, 80);
           expect(m.atk, 18);
-          expect(m.def, 12);
+          expect(m.def, 10);
           expect(m.side, CombatSide.monster);
         }
       });
@@ -119,7 +119,7 @@ void main() {
             .firstWhere((c) => !c.isBoss);
         expect(minion.maxHp, greaterThan(50));
         expect(minion.atk, greaterThan(12));
-        expect(minion.def, greaterThan(8));
+        expect(minion.def, greaterThan(7));
       });
     });
 

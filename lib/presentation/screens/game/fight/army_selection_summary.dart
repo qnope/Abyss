@@ -1,3 +1,4 @@
+import '../../../../domain/fight/military_bonus.dart';
 import '../../../../domain/game/player.dart';
 import '../../../../domain/tech/tech_branch.dart';
 import '../../../../domain/tech/tech_branch_state.dart';
@@ -6,10 +7,8 @@ import '../../../../domain/unit/unit_type.dart';
 
 /// Pure computation helpers for the [ArmySelectionScreen] summary card.
 ///
-/// Duplicates the `(atk * (1 + 0.20 * level)).round()` formula from the
-/// domain's `CombatantBuilder` on purpose: keeping the UI math local
-/// avoids a shared helper for a single line of arithmetic. Update both
-/// if the formula changes.
+/// Uses the same [MilitaryBonus] as the domain's `CombatantBuilder`, so the
+/// totals shown match the stats the units fight with.
 class ArmySelectionSummary {
   const ArmySelectionSummary();
 
@@ -19,23 +18,22 @@ class ArmySelectionSummary {
     return s.researchLevel;
   }
 
-  int totalAtk(Map<UnitType, int> selected, int militaryLevel) {
-    int sum = 0;
-    for (final MapEntry<UnitType, int> e in selected.entries) {
-      if (e.value <= 0) continue;
-      final UnitStats stats = UnitStats.forType(e.key);
-      final int boosted =
-          (stats.atk * (1 + 0.20 * militaryLevel)).round();
-      sum += boosted * e.value;
-    }
-    return sum;
-  }
+  int totalAtk(Map<UnitType, int> selected, int militaryLevel) =>
+      _total(selected, (UnitStats s) => s.atk, militaryLevel);
 
-  int totalDef(Map<UnitType, int> selected) {
+  int totalDef(Map<UnitType, int> selected, int militaryLevel) =>
+      _total(selected, (UnitStats s) => s.def, militaryLevel);
+
+  int _total(
+    Map<UnitType, int> selected,
+    int Function(UnitStats) stat,
+    int militaryLevel,
+  ) {
     int sum = 0;
     for (final MapEntry<UnitType, int> e in selected.entries) {
       if (e.value <= 0) continue;
-      sum += UnitStats.forType(e.key).def * e.value;
+      final int base = stat(UnitStats.forType(e.key));
+      sum += MilitaryBonus.boost(base, militaryLevel) * e.value;
     }
     return sum;
   }

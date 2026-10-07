@@ -51,7 +51,7 @@ void main() {
       expect(find.text('Moyen'), findsOneWidget);
       expect(find.text('2'), findsOneWidget);
       expect(find.text('4'), findsOneWidget);
-      expect(find.text('20 / 4 / 2'), findsOneWidget);
+      expect(find.text('20 / 5 / 2'), findsOneWidget);
     });
 
     testWidgets('renders stats for hard difficulty', (tester) async {
@@ -64,7 +64,7 @@ void main() {
       ));
       await openSheet(tester);
       expect(find.text('Difficile'), findsOneWidget);
-      expect(find.text('35 / 7 / 4'), findsOneWidget);
+      expect(find.text('35 / 8 / 3'), findsOneWidget);
     });
 
     testWidgets('tapping Préparer le combat invokes callback once',

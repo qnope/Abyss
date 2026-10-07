@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'combat_side.dart';
 import 'combatant.dart';
+import 'attack_damage.dart';
 import 'crit_roller.dart';
-import 'damage_calculator.dart';
 import 'fight_result.dart';
 import 'fight_turn_summary.dart';
 import 'target_picker.dart';
@@ -79,7 +79,7 @@ class FightEngine {
       }
       final List<Combatant> pool =
           attacker.side == CombatSide.player ? monsterSide : playerSide;
-      final Combatant? target = TargetPicker.pickRandom(pool, _random);
+      final Combatant? target = TargetPicker.pick(pool, _random);
       if (target == null) {
         break;
       }
@@ -87,9 +87,9 @@ class FightEngine {
       if (crit) {
         stats.crits += 1;
       }
-      final int dmg = DamageCalculator.compute(
-        atk: attacker.atk,
-        def: target.def,
+      final int dmg = AttackDamage.compute(
+        attacker: attacker,
+        target: target,
         crit: crit,
       );
       final int applied = target.applyDamage(dmg);
@@ -111,6 +111,7 @@ class FightEngine {
       atk: c.atk,
       def: c.def,
       currentHp: c.maxHp,
+      isBoss: c.isBoss,
     );
   }
 

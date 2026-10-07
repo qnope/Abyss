@@ -42,9 +42,9 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.coralMine =>
       'Extrait du corail des récifs pour la construction.',
     BuildingType.coralCitadel =>
-      'Forteresse corallienne massive qui renforce la défense des unités '
-      'stationnées dans votre base. Son bouclier s\'activera avec l\'arrivée '
-      'des menaces abyssales.',
+      'Forteresse corallienne massive qui dresse un rempart pour la défense '
+      'de votre base. Pendant un raid, il encaisse les coups à la place des '
+      'unités stationnées.',
     BuildingType.oreExtractor =>
       'Fore les profondeurs pour extraire du minerai océanique.',
     BuildingType.solarPanel =>

@@ -2,63 +2,62 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/tech/tech_node_state.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/widgets/tech/dashed_ring_painter.dart';
 import 'package:abyss/presentation/widgets/tech/tech_node_widget.dart';
-import '../../../helpers/test_svg_helper.dart';
 
 void main() {
   group('TechNodeWidget', () {
-    setUp(mockSvgAssets);
-    tearDown(clearSvgMocks);
-
-    Widget build(TechNodeState state, {int? level, VoidCallback? onTap}) {
+    Widget build(TechNodeState state, {VoidCallback? onTap}) {
       return MaterialApp(
         theme: AbyssTheme.create(),
         home: Scaffold(
-          body: TechNodeWidget(
-            iconPath: 'assets/icons/buildings/barracks.svg',
-            color: Colors.pink,
-            state: state,
-            level: level,
-            onTap: onTap,
+          body: Center(
+            child: TechNodeWidget(
+              color: Colors.pink,
+              state: state,
+              label: '+40%',
+              caption: 'Niv. 2',
+              onTap: onTap,
+            ),
           ),
         ),
       );
     }
 
-    testWidgets('researched state has full opacity', (t) async {
+    Finder dashedRing() => find.byWidgetPredicate((w) =>
+        w is CustomPaint && w.foregroundPainter is DashedRingPainter);
+
+    testWidgets('displays bonus label and caption', (t) async {
       await t.pumpWidget(build(TechNodeState.researched));
-      final opacity = t.widget<Opacity>(find.byType(Opacity));
-      expect(opacity.opacity, 1.0);
+      expect(find.text('+40%'), findsOneWidget);
+      expect(find.text('Niv. 2'), findsOneWidget);
     });
 
-    testWidgets('locked state has reduced opacity', (t) async {
-      await t.pumpWidget(build(TechNodeState.locked));
-      final opacity = t.widget<Opacity>(find.byType(Opacity));
-      expect(opacity.opacity, 0.3);
-    });
-
-    testWidgets('accessible state has intermediate opacity', (t) async {
+    testWidgets('accessible node is ringed with dashes', (t) async {
       await t.pumpWidget(build(TechNodeState.accessible));
-      final opacity = t.widget<Opacity>(find.byType(Opacity));
-      expect(opacity.opacity, 0.7);
+      expect(dashedRing(), findsOneWidget);
     });
 
-    testWidgets('displays level badge when level is set', (t) async {
-      await t.pumpWidget(build(TechNodeState.researched, level: 3));
-      expect(find.text('Niv. 3'), findsOneWidget);
-    });
-
-    testWidgets('hides level badge when level is null', (t) async {
+    testWidgets('researched and locked nodes have no dashed ring',
+        (t) async {
       await t.pumpWidget(build(TechNodeState.researched));
-      expect(find.textContaining('Niv.'), findsNothing);
+      expect(dashedRing(), findsNothing);
+      await t.pumpWidget(build(TechNodeState.locked));
+      expect(dashedRing(), findsNothing);
+    });
+
+    testWidgets('researched node glows', (t) async {
+      await t.pumpWidget(build(TechNodeState.researched));
+      final box = t.widget<Container>(find.byType(Container).first);
+      final decoration = box.decoration! as BoxDecoration;
+      expect(decoration.boxShadow, isNotEmpty);
     });
 
     testWidgets('onTap callback fires', (t) async {
       var tapped = false;
       await t.pumpWidget(
-        build(TechNodeState.researched, onTap: () => tapped = true),
-      );
-      await t.tap(find.byType(GestureDetector).first);
+        build(TechNodeState.locked, onTap: () => tapped = true));
+      await t.tap(find.text('+40%'));
       expect(tapped, isTrue);
     });
   });

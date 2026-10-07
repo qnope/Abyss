@@ -101,10 +101,10 @@ class _GameScreenState extends State<GameScreen> {
         techBranches: human.techBranches,
         buildings: human.buildings,
         resources: human.resources,
-        onBranchTap: (branch) => showBranchDetail(
-          context, g, branch, () => setState(() {})),
-        onNodeTap: (branch, level) => showNodeDetail(
-          context, g, branch, level, () => setState(() {})),
+        onUnlock: (branch) =>
+          unlockBranch(g, branch, () => setState(() {})),
+        onResearch: (branch) =>
+          researchTech(g, branch, () => setState(() {})),
       ),
       _ => const SizedBox.shrink(),
     };

@@ -28,32 +28,29 @@ class RasterSvg extends StatefulWidget {
 
 class _RasterSvgState extends State<RasterSvg> {
   ui.Image? _image;
-  (String, int)? _key;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     _resolve();
   }
 
   @override
   void didUpdateWidget(RasterSvg oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _resolve();
+    if (oldWidget.assetPath != widget.assetPath) _resolve();
   }
 
+  /// Icons are normally preloaded at startup and drawn on the first frame;
+  /// any other asset is rasterized once, then shown.
   void _resolve() {
-    final ratio = MediaQuery.maybeDevicePixelRatioOf(context) ?? 1;
-    final key = (
-      widget.assetPath,
-      SvgRasterCache.pixelsFor(widget.size, ratio),
-    );
-    if (key == _key) return;
-    _key = key;
-    _image = SvgRasterCache.peek(key.$1, key.$2);
+    final path = widget.assetPath;
+    _image = SvgRasterCache.peek(path);
     if (_image != null) return;
-    SvgRasterCache.load(key.$1, key.$2).then((image) {
-      if (mounted && _key == key) setState(() => _image = image);
+    SvgRasterCache.load(path).then((image) {
+      if (mounted && widget.assetPath == path) {
+        setState(() => _image = image);
+      }
     }, onError: (Object _) {});
   }
 

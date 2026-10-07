@@ -1,42 +1,51 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-/// Bitmaps of SVG assets, rasterized once per (asset, pixel size).
+/// Bitmaps of SVG assets, rasterized once per asset.
 ///
 /// Detailed SVGs hold hundreds of shapes: replaying them every frame is
 /// costly, especially on the web where pictures are not raster-cached.
-/// Drawing a shared bitmap instead costs a single image draw.
+/// Drawing a shared bitmap instead costs a single image draw. Every SVG is
+/// rasterized at [pixels] and drawn downscaled with mipmaps, so any icon
+/// size reuses the same bitmap.
 abstract final class SvgRasterCache {
-  static const _bucket = 32;
+  /// Side of every bitmap: sharp for map sprites and the largest icons.
+  static const pixels = 256;
 
-  static final _pending = <(String, int), Future<ui.Image>>{};
-  static final _ready = <(String, int), ui.Image>{};
-
-  /// Pixel size to rasterize a [logicalSize] icon at, rounded up to a
-  /// bucket so close sizes share the same bitmap.
-  static int pixelsFor(double logicalSize, double devicePixelRatio) {
-    final pixels = (logicalSize * devicePixelRatio).ceil();
-    return ((pixels + _bucket - 1) ~/ _bucket).clamp(1, 1 << 10) * _bucket;
-  }
+  static final _pending = <String, Future<ui.Image>>{};
+  static final _ready = <String, ui.Image>{};
 
   /// The bitmap if it is already rasterized, without waiting.
-  static ui.Image? peek(String path, int pixels) => _ready[(path, pixels)];
+  static ui.Image? peek(String path) => _ready[path];
 
-  /// Rasterizes [path] into a [pixels] x [pixels] bitmap on first use only.
-  static Future<ui.Image> load(String path, int pixels) {
-    final key = (path, pixels);
-    return _pending[key] ??= _rasterize(path, pixels).then(
-      (image) => _ready[key] = image,
+  /// Rasterizes [path] on first use only.
+  static Future<ui.Image> load(String path) {
+    return _pending[path] ??= _rasterize(path).then(
+      (image) => _ready[path] = image,
       onError: (Object error) {
-        _pending.remove(key);
+        _pending.remove(path);
         throw error;
       },
     );
   }
 
-  static Future<ui.Image> _rasterize(String path, int pixels) async {
+  /// Rasterizes every SVG asset of the app, so no screen ever waits for
+  /// one. Meant to run once at startup: assets go one at a time so the
+  /// screen shown meanwhile stays responsive.
+  static Future<void> preloadAll([AssetBundle? bundle]) async {
+    final manifest = await AssetManifest.loadFromAssetBundle(
+      bundle ?? rootBundle,
+    );
+    final paths = manifest.listAssets().where((p) => p.endsWith('.svg'));
+    for (final path in paths) {
+      await load(path);
+    }
+  }
+
+  static Future<ui.Image> _rasterize(String path) async {
     final info = await vg.loadPicture(SvgAssetLoader(path), null);
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);

@@ -15,7 +15,7 @@ import 'map_glow_sprites.dart';
 /// which matters when hundreds of cells are repainted while panning.
 class MapSprites {
   /// Pixel size of each sprite: keeps the detailed art sharp when zoomed in.
-  static const spriteSize = 256;
+  static const spriteSize = SvgRasterCache.pixels;
 
   static Future<MapSprites>? _shared;
 
@@ -48,7 +48,7 @@ class MapSprites {
     final paths = svgPaths.toList();
     final glows = MapGlow.values.where((g) => g != MapGlow.none).toList();
     final svgImages = await Future.wait(
-      paths.map((path) => SvgRasterCache.load(path, spriteSize)),
+      paths.map(SvgRasterCache.load),
     );
     final glowImages = await Future.wait(
       glows.map((g) => rasterizeGlow(g, spriteSize)),

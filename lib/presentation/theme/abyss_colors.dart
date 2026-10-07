@@ -36,4 +36,9 @@ abstract final class AbyssColors {
   static const Color onSurface = Color(0xFFCAE5FF);
   static const Color onSurfaceDim = Color(0xFF7B9CC0);
   static const Color disabled = Color(0xFF3A5070);
+
+  /// [color] faded as an unavailable item (unbuilt, locked). Fading each
+  /// color is far cheaper than wrapping the item in an `Opacity` layer.
+  static Color dimmed(Color color) =>
+      color.withValues(alpha: color.a * 0.5);
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/building/building_card.dart';
 import '../../../helpers/test_svg_helper.dart';
@@ -47,13 +48,15 @@ void main() {
       expect(find.text('Non construit'), findsOneWidget);
     });
 
-    testWidgets('card is dimmed when level 0', (tester) async {
+    testWidgets('card is faded when level 0', (tester) async {
       final building = Building(type: BuildingType.headquarters, level: 0);
       await tester.pumpWidget(createApp(building: building));
       await tester.pumpAndSettle();
 
-      final opacity = tester.widget<Opacity>(find.byType(Opacity));
-      expect(opacity.opacity, 0.5);
+      // Faded through colors: an Opacity layer is costly while scrolling.
+      expect(find.byType(Opacity), findsNothing);
+      final icon = tester.widget<RawImage>(find.byType(RawImage));
+      expect(icon.color, AbyssColors.dimmed(AbyssColors.disabled));
     });
 
     testWidgets('calls onTap callback when tapped', (tester) async {

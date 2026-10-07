@@ -26,7 +26,7 @@ class BuildingCard extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: _isBuilt ? content : Opacity(opacity: 0.5, child: content),
+          child: content,
         ),
       ),
     );
@@ -39,6 +39,7 @@ class BuildingCard extends StatelessWidget {
           type: building.type,
           size: 40,
           greyscale: !_isBuilt,
+          faded: !_isBuilt,
         ),
         const SizedBox(width: 16),
         Column(
@@ -47,7 +48,9 @@ class BuildingCard extends StatelessWidget {
             Text(
               building.type.displayName,
               style: textTheme.titleMedium?.copyWith(
-                color: _isBuilt ? building.type.color : null,
+                color: _isBuilt
+                    ? building.type.color
+                    : AbyssColors.dimmed(AbyssColors.onSurface),
               ),
             ),
             Text(
@@ -57,7 +60,7 @@ class BuildingCard extends StatelessWidget {
               style: textTheme.bodySmall?.copyWith(
                 color: _isBuilt
                     ? AbyssColors.onSurfaceDim
-                    : AbyssColors.disabled,
+                    : AbyssColors.dimmed(AbyssColors.disabled),
               ),
             ),
           ],

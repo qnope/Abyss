@@ -31,8 +31,7 @@ class UnitCard extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child:
-              isUnlocked ? content : Opacity(opacity: 0.5, child: content),
+          child: content,
         ),
       ),
     );
@@ -55,6 +54,7 @@ class UnitCard extends StatelessWidget {
           type: unitType,
           size: 40,
           greyscale: !isUnlocked,
+          faded: !isUnlocked,
         ),
         const SizedBox(width: 16),
         Column(
@@ -63,7 +63,9 @@ class UnitCard extends StatelessWidget {
             Text(
               unitType.displayName,
               style: textTheme.titleMedium?.copyWith(
-                color: isUnlocked ? unitType.color : null,
+                color: isUnlocked
+                    ? unitType.color
+                    : AbyssColors.dimmed(AbyssColors.onSurface),
               ),
             ),
             if (isUnlocked)
@@ -76,16 +78,16 @@ class UnitCard extends StatelessWidget {
             else
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.lock,
                     size: 14,
-                    color: AbyssColors.disabled,
+                    color: AbyssColors.dimmed(AbyssColors.disabled),
                   ),
                   const SizedBox(width: 4),
                   Text(
                     'Verrouille',
                     style: textTheme.bodySmall?.copyWith(
-                      color: AbyssColors.disabled,
+                      color: AbyssColors.dimmed(AbyssColors.disabled),
                     ),
                   ),
                 ],

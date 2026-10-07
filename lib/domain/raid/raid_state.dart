@@ -27,12 +27,22 @@ class RaidState {
   @HiveField(4)
   int lostInARow;
 
+  /// Raids pushed back since the start of the game.
+  @HiveField(5)
+  int raidsRepelled;
+
+  /// Raids lost since the start of the game.
+  @HiveField(6)
+  int raidsLost;
+
   RaidState({
     this.noise = 0,
     this.totalNoise = 0,
     this.incoming,
     this.arrivalTurn,
     this.lostInARow = 0,
+    this.raidsRepelled = 0,
+    this.raidsLost = 0,
   });
 
   bool get isIncoming => incoming != null && arrivalTurn != null;
@@ -47,6 +57,17 @@ class RaidState {
     incoming = wave;
     arrivalTurn = turn;
     noise = 0;
+  }
+
+  /// Records the outcome of a raid fought on the base.
+  void recordOutcome({required bool victory}) {
+    if (victory) {
+      raidsRepelled++;
+      lostInARow = 0;
+    } else {
+      raidsLost++;
+      lostInARow++;
+    }
   }
 
   void clearIncoming() {

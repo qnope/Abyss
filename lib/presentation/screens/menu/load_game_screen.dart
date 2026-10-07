@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
+import '../../../domain/game/game_status.dart';
 import '../../theme/abyss_colors.dart';
 import '../../widgets/common/saved_game_card.dart';
 import '../game/game_screen.dart';
+import '../game/game_screen_defeat_actions.dart';
 
 class LoadGameScreen extends StatefulWidget {
   final GameRepository repository;
@@ -71,6 +73,10 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
   }
 
   void _loadGame(Game game) {
+    if (game.status == GameStatus.defeat) {
+      showDefeatScreen(context, game, widget.repository);
+      return;
+    }
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute<void>(
         builder: (_) => GameScreen(

@@ -44,4 +44,18 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('shows the lost raid streak once a raid is lost',
+      (tester) async {
+    final state = RaidState()..recordOutcome(victory: false);
+    await tester.pumpWidget(
+        _wrap(RaidStatusBar(state: state, currentTurn: 15)));
+    expect(find.text("Raids perdus d'affilée : 1/3"), findsOneWidget);
+  });
+
+  testWidgets('hides the streak while no raid is lost', (tester) async {
+    await tester.pumpWidget(
+        _wrap(RaidStatusBar(state: RaidState(), currentTurn: 15)));
+    expect(find.textContaining("Raids perdus"), findsNothing);
+  });
 }

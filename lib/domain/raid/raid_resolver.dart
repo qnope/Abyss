@@ -38,7 +38,7 @@ abstract final class RaidResolver {
         turn: endedTurn,
         random: random,
       );
-      state.lostInARow = report.victory ? 0 : state.lostInARow + 1;
+      state.recordOutcome(victory: report.victory);
       player.addHistoryEntry(_entryOf(report));
       state.clearIncoming();
     }

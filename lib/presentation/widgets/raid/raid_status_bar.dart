@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/game/defeat_checker.dart';
 import '../../../domain/raid/noise_rules.dart';
 import '../../../domain/raid/raid_state.dart';
 import '../../extensions/monster_lair_extensions.dart';
@@ -22,7 +23,33 @@ class RaidStatusBar extends StatelessWidget {
     return Container(
       color: AbyssColors.surfaceDim,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      child: state.isIncoming ? _alert(context) : _gauge(context),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          state.isIncoming ? _alert(context) : _gauge(context),
+          if (state.lostInARow > 0) _lostStreak(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _lostStreak(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Row(
+        children: [
+          const Icon(Icons.heart_broken, size: 16, color: AbyssColors.error),
+          const SizedBox(width: 8),
+          Text(
+            "Raids perdus d'affilée : ${state.lostInARow}/"
+            '${DefeatChecker.lostRaidsLimit}',
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(color: AbyssColors.error),
+          ),
+        ],
+      ),
     );
   }
 

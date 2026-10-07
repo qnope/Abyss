@@ -5,6 +5,7 @@ import '../../../domain/action/end_turn_action.dart';
 import '../../../domain/action/end_turn_action_result.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
+import '../../../domain/game/game_status.dart';
 import '../../../domain/game/player.dart';
 import '../../widgets/unit/army_list_view.dart';
 import '../../widgets/turn/turn_confirmation_dialog.dart';
@@ -17,6 +18,7 @@ import '../../widgets/history/history_sheet.dart';
 import '../../widgets/raid/raid_status_bar.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import 'game_screen_actions.dart';
+import 'game_screen_defeat_actions.dart';
 import 'game_screen_map_actions.dart';
 import 'game_screen_tech_actions.dart';
 import 'game_screen_turn_helpers.dart';
@@ -133,6 +135,9 @@ class _GameScreenState extends State<GameScreen> {
     if (mounted) await showTurnSummaryDialog(context, result: result);
     final raid = result.raid;
     if (raid != null && mounted) await RaidSummaryScreen.open(context, raid);
+    if (widget.game.status == GameStatus.defeat && mounted) {
+      await showDefeatScreen(context, widget.game, widget.repository);
+    }
   }
 
   Future<void> _showSettings() async {

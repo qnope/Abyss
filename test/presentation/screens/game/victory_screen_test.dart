@@ -47,15 +47,15 @@ void main() {
       );
     });
 
-    testWidgets('displays all 4 statistics with correct values',
+    testWidgets('displays the statistics with correct values',
         (tester) async {
       await tester.pumpWidget(buildScreen());
       await tester.pumpAndSettle();
 
-      expect(find.text('Tours joues: 42'), findsOneWidget);
-      expect(find.text('Monstres vaincus: 15'), findsOneWidget);
-      expect(find.text('Bases capturees: 3'), findsOneWidget);
-      expect(find.text('Ressources collectees: 9001'), findsOneWidget);
+      expect(find.text('Tours joués : 42'), findsOneWidget);
+      expect(find.text('Monstres vaincus : 15'), findsOneWidget);
+      expect(find.text('Bases capturées : 3'), findsOneWidget);
+      expect(find.text('Ressources collectées : 9001'), findsOneWidget);
     });
 
     testWidgets('Continuer button calls onContinue', (tester) async {

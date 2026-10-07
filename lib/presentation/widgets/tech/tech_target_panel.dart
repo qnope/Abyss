@@ -10,28 +10,28 @@ import '../../../domain/tech/tech_cost_calculator.dart';
 import '../../extensions/tech_branch_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import 'tech_cost_row.dart';
-import 'tech_selection.dart';
+import 'tech_target.dart';
 
-/// Card under the reef describing the selected branch or node, its cost
-/// and the button to unlock or research it.
-class TechSelectionPanel extends StatelessWidget {
-  final TechSelection selection;
+/// Content of the popup opened from the reef: the tapped branch or node,
+/// its bonus, cost or blocker, and the button to unlock or research it.
+class TechTargetPanel extends StatelessWidget {
+  final TechTarget target;
   final Map<TechBranch, TechBranchState> techBranches;
   final Map<BuildingType, Building> buildings;
   final Map<ResourceType, Resource> resources;
   final VoidCallback onAct;
 
-  const TechSelectionPanel({
+  const TechTargetPanel({
     super.key,
-    required this.selection,
+    required this.target,
     required this.techBranches,
     required this.buildings,
     required this.resources,
     required this.onAct,
   });
 
-  TechBranch get _branch => selection.branch;
-  int? get _level => selection.level;
+  TechBranch get _branch => target.branch;
+  int? get _level => target.level;
   TechBranchState? get _state => techBranches[_branch];
   bool get _done => _level == null
       ? _state?.unlocked ?? false

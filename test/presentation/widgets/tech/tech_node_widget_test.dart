@@ -7,8 +7,7 @@ import 'package:abyss/presentation/widgets/tech/tech_node_widget.dart';
 
 void main() {
   group('TechNodeWidget', () {
-    Widget build(TechNodeState state,
-        {bool selected = false, VoidCallback? onTap}) {
+    Widget build(TechNodeState state, {VoidCallback? onTap}) {
       return MaterialApp(
         theme: AbyssTheme.create(),
         home: Scaffold(
@@ -17,7 +16,6 @@ void main() {
               color: Colors.pink,
               state: state,
               label: '2',
-              selected: selected,
               onTap: onTap,
             ),
           ),
@@ -53,11 +51,6 @@ void main() {
     testWidgets('researched node is filled with its colour', (t) async {
       await t.pumpWidget(build(TechNodeState.researched));
       expect(decoration(t).color, Colors.pink);
-    });
-
-    testWidgets('selected node gets a white halo', (t) async {
-      await t.pumpWidget(build(TechNodeState.locked, selected: true));
-      expect(decoration(t).boxShadow!.first.color, Colors.white);
     });
 
     testWidgets('onTap callback fires', (t) async {

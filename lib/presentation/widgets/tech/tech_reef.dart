@@ -11,22 +11,20 @@ import 'tech_branch_medallion.dart';
 import 'tech_node_widget.dart';
 import 'tech_reef_geometry.dart';
 import 'tech_reef_painter.dart';
-import 'tech_selection.dart';
+import 'tech_target.dart';
 
 /// Radial research tree: the laboratory in the centre and the three
 /// branches radiating out like a sonar, one ring per research level.
 class TechReef extends StatelessWidget {
   final Map<TechBranch, TechBranchState> techBranches;
   final int labLevel;
-  final TechSelection? selection;
-  final ValueChanged<TechSelection> onSelect;
+  final ValueChanged<TechTarget> onTap;
 
   const TechReef({
     super.key,
     required this.techBranches,
     required this.labLevel,
-    required this.selection,
-    required this.onSelect,
+    required this.onTap,
   });
 
   @override
@@ -70,14 +68,12 @@ class TechReef extends StatelessWidget {
   );
 
   Widget _node(TechBranch branch, int level, double size) {
-    final target = TechSelection(branch, level);
     return TechNodeWidget(
       color: branch.color,
       state: nodeState(branch, level),
       label: '$level',
       size: size,
-      selected: selection == target,
-      onTap: () => onSelect(target),
+      onTap: () => onTap(TechTarget(branch, level)),
     );
   }
 
@@ -95,10 +91,9 @@ class TechReef extends StatelessWidget {
         detail: unlocked ? '+${branch.bonusPercent(level)}%' : null,
         color: branch.color,
         unlocked: unlocked,
-        selected: selection == TechSelection(branch),
         labelAbove: above,
         size: TechReefGeometry.medallionRadius * 2,
-        onTap: () => onSelect(TechSelection(branch)),
+        onTap: () => onTap(TechTarget(branch)),
       ),
     );
   }

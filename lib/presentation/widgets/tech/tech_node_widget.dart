@@ -4,14 +4,12 @@ import '../../theme/abyss_colors.dart';
 import 'dashed_ring_painter.dart';
 
 /// Small round research node. Researched nodes are filled and glow, the
-/// next reachable one is ringed with dashes, locked ones fade away and
-/// the [selected] one gets a white halo.
+/// next reachable one is ringed with dashes and locked ones fade away.
 class TechNodeWidget extends StatelessWidget {
   final Color color;
   final TechNodeState state;
   final String label;
   final double size;
-  final bool selected;
   final VoidCallback? onTap;
 
   const TechNodeWidget({
@@ -20,7 +18,6 @@ class TechNodeWidget extends StatelessWidget {
     required this.state,
     required this.label,
     this.size = 24,
-    this.selected = false,
     this.onTap,
   });
 
@@ -49,16 +46,11 @@ class TechNodeWidget extends StatelessWidget {
     );
   }
 
-  BoxDecoration _decoration() {
-    final halo = selected
-        ? [const BoxShadow(color: Colors.white, spreadRadius: 3)]
-        : <BoxShadow>[];
-    return switch (state) {
+  BoxDecoration _decoration() => switch (state) {
       TechNodeState.researched => BoxDecoration(
         shape: BoxShape.circle,
         color: color,
         boxShadow: [
-          ...halo,
           BoxShadow(color: color.withValues(alpha: 0.7), blurRadius: 10),
         ],
       ),
@@ -66,7 +58,6 @@ class TechNodeWidget extends StatelessWidget {
         shape: BoxShape.circle,
         color: AbyssColors.surfaceDim,
         boxShadow: [
-          ...halo,
           BoxShadow(color: color.withValues(alpha: 0.25), spreadRadius: 3),
         ],
       ),
@@ -74,10 +65,8 @@ class TechNodeWidget extends StatelessWidget {
         shape: BoxShape.circle,
         color: AbyssColors.surfaceDim,
         border: Border.all(color: AbyssColors.surfaceBright, width: 1.5),
-        boxShadow: halo,
       ),
     };
-  }
 
   Color get _labelColor => switch (state) {
     TechNodeState.researched => AbyssColors.abyssBlack,

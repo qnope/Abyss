@@ -20,6 +20,7 @@ import '../domain/map/monster_lair.dart';
 import '../domain/map/transition_base.dart';
 import '../domain/map/transition_base_type.dart';
 import '../domain/game/player.dart';
+import '../domain/raid/raid_state.dart';
 import '../domain/resource/resource.dart';
 import '../domain/resource/resource_type.dart';
 import '../domain/tech/tech_branch.dart';
@@ -72,6 +73,8 @@ class GameRepository {
     Hive.registerAdapter(DescentEntryAdapter());
     Hive.registerAdapter(ReinforcementEntryAdapter());
     Hive.registerAdapter(GameStatusAdapter());
+    Hive.registerAdapter(RaidStateAdapter());
+    Hive.registerAdapter(RaidEntryAdapter());
     try {
       await Hive.openBox<Game>(_boxName);
     } catch (_) {

@@ -19,6 +19,7 @@ import 'attack_volcanic_kernel_helpers.dart';
 import 'attack_volcanic_kernel_result.dart';
 import 'fight_casualty_breakdown.dart';
 import 'fight_monster_helpers.dart';
+import '../raid/noise_rules.dart';
 
 class AttackVolcanicKernelAction extends Action {
   final int targetX;
@@ -124,4 +125,7 @@ class AttackVolcanicKernelAction extends Action {
       subtitle: 'Victoire en ${result.fight!.turnCount} tours',
     );
   }
+
+  @override
+  int noiseMade(Player player) => NoiseRules.perFight;
 }

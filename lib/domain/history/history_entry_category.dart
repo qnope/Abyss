@@ -14,4 +14,5 @@ enum HistoryEntryCategory {
   @HiveField(7) capture,
   @HiveField(8) descent,
   @HiveField(9) reinforcement,
+  @HiveField(10) raid,
 }

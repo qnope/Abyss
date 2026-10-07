@@ -9,6 +9,7 @@ import '../map/exploration_order.dart';
 import '../map/grid_position.dart';
 import '../map/reinforcement_order.dart';
 import '../map/reveal_area_calculator.dart';
+import '../raid/raid_state.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
 import '../tech/tech_branch.dart';
@@ -60,6 +61,9 @@ class Player extends HiveObject {
   @HiveField(13)
   final List<ReinforcementOrder> pendingReinforcements;
 
+  @HiveField(14)
+  final RaidState raidState;
+
   Player({
     required this.name,
     String? id,
@@ -74,6 +78,7 @@ class Player extends HiveObject {
     Map<int, List<GridPosition>>? revealedCellsPerLevel,
     List<HistoryEntry>? historyEntries,
     List<ReinforcementOrder>? pendingReinforcements,
+    RaidState? raidState,
   })  : id = id ?? const Uuid().v4(),
         resources = resources ?? PlayerDefaults.resources(),
         buildings = buildings ?? PlayerDefaults.buildings(),
@@ -83,7 +88,8 @@ class Player extends HiveObject {
         pendingExplorations = pendingExplorations ?? [],
         revealedCellsPerLevel = revealedCellsPerLevel ?? {},
         historyEntries = historyEntries ?? <HistoryEntry>[],
-        pendingReinforcements = pendingReinforcements ?? [];
+        pendingReinforcements = pendingReinforcements ?? [],
+        raidState = raidState ?? RaidState();
 
   Player.withBase({
     required String name,

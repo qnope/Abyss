@@ -19,6 +19,9 @@ enum CombatRole {
   /// Flees instead of dying: always comes back wounded.
   evasive;
 
+  /// Type key of the Coral Citadel rampart (see `CoralCitadelRampart`).
+  static const String rampartKey = 'rampart';
+
   static CombatRole forUnit(UnitType type) => switch (type) {
         UnitType.guardian => CombatRole.taunt,
         UnitType.domeBreaker => CombatRole.bossBreaker,
@@ -27,9 +30,11 @@ enum CombatRole {
         UnitType.harpoonist || UnitType.abyssAdmiral => CombatRole.none,
       };
 
-  /// Role of [combatant]; monsters never have one.
+  /// Role of [combatant]; monsters never have one, the Citadel rampart
+  /// always taunts.
   static CombatRole of(Combatant combatant) {
     if (combatant.side != CombatSide.player) return CombatRole.none;
+    if (combatant.typeKey == rampartKey) return CombatRole.taunt;
     final UnitType? type = UnitType.values.asNameMap()[combatant.typeKey];
     return type == null ? CombatRole.none : forUnit(type);
   }

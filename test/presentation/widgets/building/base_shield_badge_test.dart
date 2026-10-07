@@ -22,23 +22,23 @@ void main() {
         _wrap(BaseShieldBadge(buildings: _buildings(0))),
       );
       expect(find.byIcon(Icons.shield), findsNothing);
-      expect(find.textContaining('Bouclier de la base'), findsNothing);
+      expect(find.textContaining('Rempart de la base'), findsNothing);
     });
 
-    testWidgets('renders +60% at level 3', (tester) async {
+    testWidgets('renders the level 3 rampart', (tester) async {
       await tester.pumpWidget(
         _wrap(BaseShieldBadge(buildings: _buildings(3))),
       );
       expect(find.byIcon(Icons.shield), findsOneWidget);
-      expect(find.text('Bouclier de la base : +60%'), findsOneWidget);
+      expect(find.text('Rempart de la base : 120 PV, DEF 7'), findsOneWidget);
     });
 
-    testWidgets('renders +100% at level 5', (tester) async {
+    testWidgets('renders the level 5 rampart', (tester) async {
       await tester.pumpWidget(
         _wrap(BaseShieldBadge(buildings: _buildings(5))),
       );
       expect(find.byIcon(Icons.shield), findsOneWidget);
-      expect(find.text('Bouclier de la base : +100%'), findsOneWidget);
+      expect(find.text('Rempart de la base : 200 PV, DEF 9'), findsOneWidget);
     });
 
     testWidgets('hidden when citadel absent from map', (tester) async {
@@ -46,7 +46,7 @@ void main() {
         _wrap(const BaseShieldBadge(buildings: {})),
       );
       expect(find.byIcon(Icons.shield), findsNothing);
-      expect(find.textContaining('Bouclier de la base'), findsNothing);
+      expect(find.textContaining('Rempart de la base'), findsNothing);
     });
   });
 }

@@ -3,12 +3,14 @@ import '../../../domain/building/building.dart';
 import '../../../domain/building/building_cost_calculator.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/map/transition_base_type.dart';
+import '../../../domain/raid/noise_rules.dart';
 import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
 import '../../extensions/transition_base_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import '../raid/noise_cost_row.dart';
 import '../resource/resource_icon.dart';
 
 class UpgradeSection extends StatelessWidget {
@@ -64,6 +66,7 @@ class UpgradeSection extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         ...costs.entries.map((e) => _costRow(e.key, e.value, textTheme)),
+        NoiseCostRow(noise: NoiseRules.forUpgrade(building.level + 1)),
         ...prereqs.entries.map((e) => _prereqRow(e.key, e.value, textTheme)),
         if (check.missingCapturedBase != null)
           _capturedBaseRow(check.missingCapturedBase!, textTheme),

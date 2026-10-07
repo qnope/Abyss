@@ -19,6 +19,7 @@ import 'action_type.dart';
 import 'fight_casualty_breakdown.dart';
 import 'fight_monster_helpers.dart';
 import 'fight_monster_result.dart';
+import '../raid/noise_rules.dart';
 
 class FightMonsterAction extends Action {
   final int targetX;
@@ -149,4 +150,7 @@ class FightMonsterAction extends Action {
       result: result,
     );
   }
+
+  @override
+  int noiseMade(Player player) => NoiseRules.perFight;
 }

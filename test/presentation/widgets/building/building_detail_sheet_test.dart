@@ -93,7 +93,7 @@ void main() {
       expect(find.textContaining('Bonus DEF actuel'), findsNothing);
     });
 
-    testWidgets('HQ sheet with citadel level 4 shows +80% badge', (t) async {
+    testWidgets('HQ sheet with citadel level 4 shows rampart badge', (t) async {
       useTallSurface(t);
       await t.pumpWidget(buildSheetApp(
         building: hq(3),
@@ -105,7 +105,7 @@ void main() {
       ));
       await openSheet(t);
       expect(find.byType(BaseShieldBadge), findsOneWidget);
-      expect(find.text('Bouclier de la base : +80%'), findsOneWidget);
+      expect(find.text('Rempart de la base : 160 PV, DEF 8'), findsOneWidget);
     });
 
     testWidgets('HQ sheet with citadel level 0 shows no badge', (t) async {
@@ -120,7 +120,7 @@ void main() {
       ));
       await openSheet(t);
       // BaseShieldBadge is in tree but renders SizedBox.shrink (no label).
-      expect(find.textContaining('Bouclier de la base'), findsNothing);
+      expect(find.textContaining('Rempart de la base'), findsNothing);
     });
   });
 
@@ -128,7 +128,7 @@ void main() {
     setUp(mockSvgAssets);
     tearDown(clearSvgMocks);
 
-    testWidgets('shows CoralCitadelInfoSection with bonus rows', (t) async {
+    testWidgets('shows CoralCitadelInfoSection with rampart rows', (t) async {
       useTallSurface(t);
       final citadel = Building(type: BuildingType.coralCitadel, level: 2);
       await t.pumpWidget(buildSheetApp(
@@ -140,9 +140,9 @@ void main() {
       ));
       await openSheet(t);
       expect(find.byType(CoralCitadelInfoSection), findsOneWidget);
-      expect(find.text('Bonus DEF actuel : +40%'), findsOneWidget);
-      expect(find.text('Prochain niveau : +60%'), findsOneWidget);
-      expect(find.byIcon(Icons.schedule), findsOneWidget);
+      expect(find.text('Rempart actuel : 80 PV, DEF 6'), findsOneWidget);
+      expect(find.text('Prochain niveau : 120 PV, DEF 7'), findsOneWidget);
+      expect(find.byIcon(Icons.fort), findsOneWidget);
       // Upgrade button still rendered alongside the info section.
       expect(find.byType(ElevatedButton), findsWidgets);
     });
@@ -159,8 +159,8 @@ void main() {
       ));
       await openSheet(t);
       expect(find.byType(CoralCitadelInfoSection), findsOneWidget);
-      expect(find.text('Bonus DEF actuel : +100%'), findsOneWidget);
-      expect(find.text('Bouclier à son apogée'), findsOneWidget);
+      expect(find.text('Rempart actuel : 200 PV, DEF 9'), findsOneWidget);
+      expect(find.text('Rempart à son apogée'), findsOneWidget);
     });
   });
 }

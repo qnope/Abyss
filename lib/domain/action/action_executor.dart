@@ -11,6 +11,7 @@ class ActionExecutor {
     if (result.isSuccess) {
       final entry = action.makeHistoryEntry(game, player, result, game.turn);
       if (entry != null) player.addHistoryEntry(entry);
+      player.raidState.addNoise(action.noiseMade(player));
     }
     return result;
   }

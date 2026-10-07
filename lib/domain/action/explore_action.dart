@@ -8,6 +8,7 @@ import '../unit/unit_type.dart';
 import 'action.dart';
 import 'action_result.dart';
 import 'action_type.dart';
+import '../raid/noise_rules.dart';
 
 class ExploreAction extends Action {
   final int targetX;
@@ -77,4 +78,7 @@ class ExploreAction extends Action {
   ) {
     return ExploreEntry(turn: turn, targetX: targetX, targetY: targetY);
   }
+
+  @override
+  int noiseMade(Player player) => NoiseRules.perExploration;
 }

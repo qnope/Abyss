@@ -6,6 +6,7 @@ import '../building/building_type.dart';
 import '../game/game.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
+import '../raid/noise_rules.dart';
 
 class UpgradeBuildingAction extends Action {
   final BuildingType buildingType;
@@ -68,4 +69,8 @@ class UpgradeBuildingAction extends Action {
       newLevel: player.buildings[buildingType]!.level,
     );
   }
+
+  @override
+  int noiseMade(Player player) =>
+      NoiseRules.forUpgrade(player.buildings[buildingType]!.level);
 }

@@ -4,10 +4,11 @@ import 'package:hive_ce/hive.dart';
 import 'package:abyss/data/game_repository.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
-import 'package:abyss/domain/building/coral_citadel_defense_bonus.dart';
+import 'package:abyss/domain/building/coral_citadel_rampart.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/raid/raid_state.dart';
 import 'package:abyss/domain/game/player_defaults.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/exploration_order.dart';
@@ -47,6 +48,7 @@ void _registerAdapters() {
   Hive.registerAdapter(ExplorationOrderAdapter());
   Hive.registerAdapter(GameAdapter());
   Hive.registerAdapter(GameStatusAdapter());
+  Hive.registerAdapter(RaidStateAdapter());
 }
 
 void main() {
@@ -98,11 +100,8 @@ void main() {
     // save genuinely returns a map without the coralCitadel entry.
     expect(loadedPlayer.buildings[BuildingType.coralCitadel], isNull);
 
-    // The defense-bonus helper must tolerate a missing entry gracefully.
-    expect(
-      CoralCitadelDefenseBonus.multiplierFromBuildings(loadedPlayer.buildings),
-      1.0,
-    );
+    // The rampart helper must tolerate a missing entry gracefully.
+    expect(CoralCitadelRampart.levelOf(loadedPlayer.buildings), 0);
 
     // Other buildings still intact.
     expect(loadedPlayer.buildings[BuildingType.headquarters]!.level, 0);

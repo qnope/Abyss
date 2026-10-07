@@ -19,6 +19,7 @@ import 'attack_transition_base_helpers.dart';
 import 'attack_transition_base_result.dart';
 import 'fight_casualty_breakdown.dart';
 import 'fight_monster_helpers.dart';
+import '../raid/noise_rules.dart';
 
 class AttackTransitionBaseAction extends Action {
   final int targetX;
@@ -143,4 +144,7 @@ class AttackTransitionBaseAction extends Action {
           'Victoire en ${result.fight!.turnCount} tours',
     );
   }
+
+  @override
+  int noiseMade(Player player) => NoiseRules.perFight;
 }

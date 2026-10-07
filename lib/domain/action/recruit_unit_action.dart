@@ -7,6 +7,7 @@ import '../game/player.dart';
 import '../history/history_entry.dart';
 import '../unit/unit_cost_calculator.dart';
 import '../unit/unit_type.dart';
+import '../raid/noise_rules.dart';
 
 class RecruitUnitAction extends Action {
   final UnitType unitType;
@@ -74,4 +75,7 @@ class RecruitUnitAction extends Action {
       quantity: quantity,
     );
   }
+
+  @override
+  int noiseMade(Player player) => NoiseRules.perRecruit * quantity;
 }

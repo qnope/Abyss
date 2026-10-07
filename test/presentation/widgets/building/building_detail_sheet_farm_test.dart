@@ -73,7 +73,7 @@ void main() {
       ));
       await openSheet(t);
       expect(find.byType(BaseShieldBadge), findsNothing);
-      expect(find.textContaining('Bouclier de la base'), findsNothing);
+      expect(find.textContaining('Rempart de la base'), findsNothing);
     });
   });
 }

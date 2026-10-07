@@ -4,11 +4,13 @@ import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/consumption_calculator.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
+import '../../../domain/raid/raid_battle.dart';
 import '../../../domain/resource/pearl_income.dart';
 import '../../../domain/resource/production_calculator.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/unit/unit_loss_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
+import '../../widgets/raid/raid_due_warning.dart';
 
 Map<ResourceType, int> computeProduction(Game game, Player player) {
   final production = ProductionCalculator.fromBuildings(
@@ -64,4 +66,14 @@ Map<UnitType, int> computeUnitsToLose(
     algaeProduction: algaeProd,
     algaeStock: algaeStock,
   );
+}
+
+/// Warning for the end-of-turn confirmation when a raid hits this turn.
+RaidDueWarning? raidDueWarning(Game game, Player player) {
+  final state = player.raidState;
+  if (!state.isIncoming || state.arrivalTurn! > game.turn) return null;
+  final defenders = RaidBattle.defendersOf(player)
+      .values
+      .fold<int>(0, (sum, count) => sum + count);
+  return RaidDueWarning(wave: state.incoming!, defenderCount: defenders);
 }

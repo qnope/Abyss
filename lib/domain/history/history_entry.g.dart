@@ -468,3 +468,70 @@ class ReinforcementEntryAdapter extends TypeAdapter<ReinforcementEntry> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class RaidEntryAdapter extends TypeAdapter<RaidEntry> {
+  @override
+  final typeId = 39;
+
+  @override
+  RaidEntry read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return RaidEntry(
+      turn: (fields[0] as num).toInt(),
+      victory: fields[4] as bool,
+      wave: fields[5] as MonsterLair,
+      fightResult: fields[6] as FightResult,
+      loot: (fields[7] as Map).cast<ResourceType, int>(),
+      pillaged: (fields[8] as Map).cast<ResourceType, int>(),
+      defenders: (fields[9] as Map).cast<UnitType, int>(),
+      survivorsIntact: (fields[10] as Map).cast<UnitType, int>(),
+      wounded: (fields[11] as Map).cast<UnitType, int>(),
+      dead: (fields[12] as Map).cast<UnitType, int>(),
+      rampartLevel: (fields[13] as num).toInt(),
+      subtitle: fields[3] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, RaidEntry obj) {
+    writer
+      ..writeByte(12)
+      ..writeByte(0)
+      ..write(obj.turn)
+      ..writeByte(3)
+      ..write(obj.subtitle)
+      ..writeByte(4)
+      ..write(obj.victory)
+      ..writeByte(5)
+      ..write(obj.wave)
+      ..writeByte(6)
+      ..write(obj.fightResult)
+      ..writeByte(7)
+      ..write(obj.loot)
+      ..writeByte(8)
+      ..write(obj.pillaged)
+      ..writeByte(9)
+      ..write(obj.defenders)
+      ..writeByte(10)
+      ..write(obj.survivorsIntact)
+      ..writeByte(11)
+      ..write(obj.wounded)
+      ..writeByte(12)
+      ..write(obj.dead)
+      ..writeByte(13)
+      ..write(obj.rampartLevel);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RaidEntryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

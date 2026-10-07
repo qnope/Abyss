@@ -88,7 +88,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.byType(BaseShieldBadge), findsOneWidget);
-      expect(find.textContaining('Bouclier de la base'), findsNothing);
+      expect(find.textContaining('Rempart de la base'), findsNothing);
     });
 
     testWidgets('citadel level 2 shows shield badge above unit cards',
@@ -98,7 +98,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.byType(BaseShieldBadge), findsOneWidget);
-      expect(find.text('Bouclier de la base : +40%'), findsOneWidget);
+      expect(find.text('Rempart de la base : 80 PV, DEF 6'), findsOneWidget);
     });
   });
 }

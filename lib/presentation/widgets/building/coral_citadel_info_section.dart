@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_cost_calculator.dart';
-import '../../../domain/building/coral_citadel_defense_bonus.dart';
+import '../../../domain/building/coral_citadel_rampart.dart';
 import '../../theme/abyss_colors.dart';
 
 class CoralCitadelInfoSection extends StatelessWidget {
@@ -13,12 +13,12 @@ class CoralCitadelInfoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final level = building.level;
-    final currentLabel = CoralCitadelDefenseBonus.bonusLabel(level);
+    final currentLabel = CoralCitadelRampart.label(level);
     final maxLevel = BuildingCostCalculator().maxLevel(building.type);
     final isMax = level >= maxLevel;
     final nextLabel = isMax
         ? null
-        : CoralCitadelDefenseBonus.bonusLabel(level + 1);
+        : CoralCitadelRampart.label(level + 1);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -26,7 +26,7 @@ class CoralCitadelInfoSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Bonus DEF actuel : $currentLabel',
+            'Rempart actuel : $currentLabel',
             style: textTheme.bodyMedium?.copyWith(
               color: level == 0
                   ? AbyssColors.disabled
@@ -36,7 +36,7 @@ class CoralCitadelInfoSection extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             isMax
-                ? 'Bouclier à son apogée'
+                ? 'Rempart à son apogée'
                 : 'Prochain niveau : $nextLabel',
             style: textTheme.bodyMedium,
           ),
@@ -45,14 +45,15 @@ class CoralCitadelInfoSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Icon(
-                Icons.schedule,
+                Icons.fort,
                 size: 16,
                 color: AbyssColors.onSurfaceDim,
               ),
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  "Effet dormant — en attente du système d'attaque de base",
+                  'Pendant un raid, le rempart combat avec les défenseurs '
+                  'du niveau 1 et attire toutes les attaques.',
                   style: textTheme.bodySmall?.copyWith(
                     color: AbyssColors.onSurfaceDim,
                   ),

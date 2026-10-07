@@ -14,11 +14,13 @@ import '../../widgets/common/game_bottom_bar.dart';
 import '../../widgets/resource/resource_bar.dart';
 import '../../widgets/common/settings_dialog.dart';
 import '../../widgets/history/history_sheet.dart';
+import '../../widgets/raid/raid_status_bar.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import 'game_screen_actions.dart';
 import 'game_screen_map_actions.dart';
 import 'game_screen_tech_actions.dart';
 import 'game_screen_turn_helpers.dart';
+import 'raid/raid_summary_screen.dart';
 import '../menu/main_menu_screen.dart';
 
 class GameScreen extends StatefulWidget {
@@ -55,6 +57,8 @@ class _GameScreenState extends State<GameScreen> {
             production: production,
             consumption: consumption,
           ),
+          RaidStatusBar(
+            state: _human.raidState, currentTurn: widget.game.turn),
           Expanded(child: _buildTabContent()),
         ],
       ),
@@ -118,7 +122,8 @@ class _GameScreenState extends State<GameScreen> {
       production: production, consumption: consumption,
       buildingsToDeactivate: deactivated,
       unitsToLose: computeUnitsToLose(human, deactivated),
-      pendingExplorationCount: human.pendingExplorations.length);
+      pendingExplorationCount: human.pendingExplorations.length,
+      raidWarning: raidDueWarning(widget.game, human));
     if (!confirmed || !mounted) return;
     final result = (ActionExecutor().execute(
       EndTurnAction(), widget.game, _human) as EndTurnActionResult)
@@ -126,6 +131,8 @@ class _GameScreenState extends State<GameScreen> {
     await widget.repository.save(widget.game);
     setState(() {});
     if (mounted) await showTurnSummaryDialog(context, result: result);
+    final raid = result.raid;
+    if (raid != null && mounted) await RaidSummaryScreen.open(context, raid);
   }
 
   Future<void> _showSettings() async {

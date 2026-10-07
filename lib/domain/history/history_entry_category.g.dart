@@ -33,6 +33,8 @@ class HistoryEntryCategoryAdapter extends TypeAdapter<HistoryEntryCategory> {
         return HistoryEntryCategory.descent;
       case 9:
         return HistoryEntryCategory.reinforcement;
+      case 10:
+        return HistoryEntryCategory.raid;
       default:
         return HistoryEntryCategory.combat;
     }
@@ -61,6 +63,8 @@ class HistoryEntryCategoryAdapter extends TypeAdapter<HistoryEntryCategory> {
         writer.writeByte(8);
       case HistoryEntryCategory.reinforcement:
         writer.writeByte(9);
+      case HistoryEntryCategory.raid:
+        writer.writeByte(10);
     }
   }
 

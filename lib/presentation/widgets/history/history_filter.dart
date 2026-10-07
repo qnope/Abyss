@@ -28,7 +28,9 @@ List<HistoryEntry> applyHistoryFilter(
   return switch (filter) {
     HistoryFilter.all => entries,
     HistoryFilter.combat => entries
-        .where((e) => e.category == HistoryEntryCategory.combat)
+        .where((e) =>
+            e.category == HistoryEntryCategory.combat ||
+            e.category == HistoryEntryCategory.raid)
         .toList(),
     HistoryFilter.building => entries
         .where((e) => e.category == HistoryEntryCategory.building)

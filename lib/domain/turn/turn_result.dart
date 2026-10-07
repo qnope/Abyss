@@ -1,7 +1,9 @@
 import 'package:hive_ce/hive.dart';
 import '../building/building_type.dart';
 import '../map/exploration_result.dart';
+import '../map/monster_lair.dart';
 import '../map/reinforcement_order.dart';
+import '../raid/raid_report.dart';
 import '../resource/resource_type.dart';
 import '../unit/unit_type.dart';
 
@@ -47,6 +49,14 @@ class TurnResult {
   final List<ExplorationResult> explorations;
   final List<ReinforcementOrder> arrivedReinforcements;
 
+  /// Raid fought on the base at the end of this turn, if any.
+  final RaidReport? raid;
+
+  /// Raid announced at the end of this turn, if any; it hits the base at
+  /// the end of [announcedRaidTurn].
+  final MonsterLair? announcedRaid;
+  final int? announcedRaidTurn;
+
   const TurnResult({
     required this.changes,
     required this.previousTurn,
@@ -56,5 +66,8 @@ class TurnResult {
     this.lostUnits = const {},
     this.explorations = const [],
     this.arrivedReinforcements = const [],
+    this.raid,
+    this.announcedRaid,
+    this.announcedRaidTurn,
   });
 }

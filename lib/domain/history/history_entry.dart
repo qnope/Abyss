@@ -18,6 +18,7 @@ part 'entries/turn_end_entry.dart';
 part 'entries/capture_entry.dart';
 part 'entries/descent_entry.dart';
 part 'entries/reinforcement_entry.dart';
+part 'entries/raid_entry.dart';
 part 'history_entry.g.dart';
 
 /// Abstract base class for all history entries.

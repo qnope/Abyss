@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/raid/noise_rules.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/unit/unit_cost_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/resource_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import '../raid/noise_cost_row.dart';
 import '../resource/resource_icon.dart';
 
 class RecruitmentSection extends StatefulWidget {
@@ -61,6 +63,7 @@ class _RecruitmentSectionState extends State<RecruitmentSection> {
         Text('$_sliderValue unites', style: textTheme.bodyMedium),
         const SizedBox(height: 8),
         ...costs.entries.map((e) => _costRow(e.key, e.value, textTheme)),
+        NoiseCostRow(noise: NoiseRules.perRecruit * _sliderValue),
         const SizedBox(height: 12),
         ElevatedButton(
           onPressed: _sliderValue > 0

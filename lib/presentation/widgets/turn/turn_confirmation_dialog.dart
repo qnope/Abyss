@@ -16,6 +16,7 @@ Future<bool> showTurnConfirmationDialog(
   List<BuildingType> buildingsToDeactivate = const [],
   Map<UnitType, int> unitsToLose = const {},
   int pendingExplorationCount = 0,
+  Widget? raidWarning,
 }) async {
   final result = await showDialog<bool>(
     context: context,
@@ -26,6 +27,7 @@ Future<bool> showTurnConfirmationDialog(
       buildingsToDeactivate: buildingsToDeactivate,
       unitsToLose: unitsToLose,
       pendingExplorationCount: pendingExplorationCount,
+      raidWarning: raidWarning,
     ),
   );
   return result ?? false;
@@ -38,6 +40,7 @@ class _TurnConfirmationDialog extends StatelessWidget {
   final List<BuildingType> buildingsToDeactivate;
   final Map<UnitType, int> unitsToLose;
   final int pendingExplorationCount;
+  final Widget? raidWarning;
 
   const _TurnConfirmationDialog({
     required this.currentTurn,
@@ -46,6 +49,7 @@ class _TurnConfirmationDialog extends StatelessWidget {
     required this.buildingsToDeactivate,
     required this.unitsToLose,
     required this.pendingExplorationCount,
+    this.raidWarning,
   });
 
   @override
@@ -71,7 +75,8 @@ class _TurnConfirmationDialog extends StatelessWidget {
     final hasWarnings = buildingsToDeactivate.isNotEmpty;
     final hasLosses = unitsToLose.isNotEmpty;
 
-    if (!hasProduction && !hasWarnings && !hasLosses) {
+    if (!hasProduction && !hasWarnings && !hasLosses &&
+        raidWarning == null) {
       return const Text('Aucune production ce tour.');
     }
 
@@ -98,6 +103,7 @@ class _TurnConfirmationDialog extends StatelessWidget {
         if (pendingExplorationCount > 0) ..._buildExplorationSection(),
         if (hasWarnings) ..._buildBuildingWarnings(),
         if (hasLosses) ..._buildUnitLosses(),
+        if (raidWarning != null) raidWarning!,
       ],
     );
   }

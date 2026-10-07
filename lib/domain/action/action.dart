@@ -16,4 +16,8 @@ abstract class Action {
     ActionResult result,
     int turn,
   ) => null;
+
+  /// Noise this action made once executed successfully; it fills the
+  /// player's raid gauge (see `NoiseRules`).
+  int noiseMade(Player player) => 0;
 }

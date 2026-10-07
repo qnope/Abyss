@@ -71,5 +71,47 @@ void main() {
         expect(count, lessThan(500));
       }
     });
+    group('TargetPicker.pick', () {
+    Combatant guardian() => Combatant(
+          side: CombatSide.player,
+          typeKey: 'guardian',
+          maxHp: 25,
+          atk: 2,
+          def: 6,
+        );
+
+    test('always targets a standing guardian first', () {
+      final Combatant tank = guardian();
+      final List<Combatant> pool = <Combatant>[
+        _alive('harpoonist', side: CombatSide.player),
+        tank,
+        _alive('scout', side: CombatSide.player),
+      ];
+      final Random random = Random(7);
+      for (int i = 0; i < 20; i++) {
+        expect(TargetPicker.pick(pool, random), same(tank));
+      }
+    });
+
+    test('falls back to any alive target once guardians are down', () {
+      final Combatant tank = guardian()..applyDamage(999);
+      final Combatant other = _alive('harpoonist', side: CombatSide.player);
+      final List<Combatant> pool = <Combatant>[tank, other];
+      expect(TargetPicker.pick(pool, Random(1)), same(other));
+    });
+
+    test('monster guardians do not taunt', () {
+      final List<Combatant> pool = <Combatant>[
+        _alive('guardian'),
+        _alive('a'),
+      ];
+      final Set<String> seen = <String>{};
+      final Random random = Random(3);
+      for (int i = 0; i < 30; i++) {
+        seen.add(TargetPicker.pick(pool, random)!.typeKey);
+      }
+      expect(seen, containsAll(<String>['guardian', 'a']));
+    });
   });
+});
 }

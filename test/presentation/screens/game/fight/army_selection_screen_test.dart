@@ -241,7 +241,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Bonus militaire : +60% ATK (niveau 3)'),
+        find.text('Bonus militaire : +60% ATK et DEF (niveau 3)'),
         findsOneWidget,
       );
     });

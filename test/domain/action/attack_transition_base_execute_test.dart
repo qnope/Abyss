@@ -39,22 +39,22 @@ void main() {
     });
 
     test('victory with admiral dead does not capture', () {
-      // 11 harpoonists + seed 33: player wins but admiral dies.
+      // 12 harpoonists + seed 94: player wins but admiral dies.
       // Admiral has 100hp but 0atk/0def, so it takes damage
       // and cannot fight back.
       final scenario = createAttackScenario(
         stock: {
           UnitType.abyssAdmiral: 1,
-          UnitType.harpoonist: 11,
+          UnitType.harpoonist: 12,
         },
       );
       final action = AttackTransitionBaseAction(
         targetX: 1, targetY: 1, level: 1,
         selectedUnits: {
           UnitType.abyssAdmiral: 1,
-          UnitType.harpoonist: 11,
+          UnitType.harpoonist: 12,
         },
-        random: Random(33),
+        random: Random(94),
       );
       final result = action.execute(scenario.game, scenario.player);
       final r = result as AttackTransitionBaseResult;

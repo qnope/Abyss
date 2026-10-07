@@ -88,7 +88,7 @@ class _TransitionArmySelectionScreenState
         const SizedBox(height: 12),
         SelectionSummaryCard(
           totalAtk: _summary.totalAtk(_selected, _militaryLevel),
-          totalDef: _summary.totalDef(_selected),
+          totalDef: _summary.totalDef(_selected, _militaryLevel),
           militaryLevel: _militaryLevel,
         ),
         if (!_hasAdmiral) ...[

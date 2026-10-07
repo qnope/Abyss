@@ -37,4 +37,13 @@ extension UnitTypeExtensions on UnitType {
     UnitType.abyssAdmiral => 'Amiral',
     UnitType.saboteur => 'Verre-canon',
   };
+
+  String get roleEffect => switch (this) {
+    UnitType.scout => 'Fuit au lieu de mourir : revient toujours blessé.',
+    UnitType.harpoonist => 'Dégâts réguliers, sans règle spéciale.',
+    UnitType.guardian => 'Provoque : les monstres le ciblent en priorité.',
+    UnitType.domeBreaker => 'Inflige le double de dégâts aux boss.',
+    UnitType.abyssAdmiral => 'Commande les assauts, sans combattre.',
+    UnitType.saboteur => 'Ignore la défense de sa cible.',
+  };
 }

@@ -134,12 +134,13 @@ void main() {
       );
     });
 
-    test('bonus does not affect hp or def', () {
+    test('bonus boosts def but not hp', () {
       final List<Combatant> combatants = CombatantBuilder.playerCombatantsFrom(
         <UnitType, int>{UnitType.guardian: 1},
         militaryResearchLevel: 3,
       );
-      expect(combatants.first.def, 6);
+      // 6 * 1.6 = 9.6 -> 10
+      expect(combatants.first.def, 10);
       expect(combatants.first.maxHp, 25);
     });
 

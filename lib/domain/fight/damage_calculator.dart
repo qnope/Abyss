@@ -5,20 +5,30 @@
 class DamageCalculator {
   const DamageCalculator._();
 
+  /// Armour constant of the formula: a defender with this much DEF halves
+  /// incoming damage.
+  static const int armourConstant = 10;
+
   /// Computes the damage dealt by an attacker with [atk] against a
-  /// defender with [def]. When [crit] is true, the damage is tripled.
+  /// defender with [def].
   ///
-  /// The base damage is `ceil(atk * 100 / (100 + def))`, clamped to a
-  /// minimum of `1`.
+  /// The base damage is `floor(atk * 10 / (10 + def))`, clamped to a
+  /// minimum of `1`. [ignoreDef] treats the defender as unarmoured,
+  /// [multiplier] scales the base damage (role bonuses) and [crit] triples
+  /// the result.
   static int compute({
     required int atk,
     required int def,
     bool crit = false,
+    bool ignoreDef = false,
+    int multiplier = 1,
   }) {
-    var base = (atk * 100 / (100 + def)).ceil();
+    final int effectiveDef = ignoreDef || def < 0 ? 0 : def;
+    var base = (atk * armourConstant) ~/ (armourConstant + effectiveDef);
     if (base < 1) {
       base = 1;
     }
+    base *= multiplier;
     return crit ? base * 3 : base;
   }
 }

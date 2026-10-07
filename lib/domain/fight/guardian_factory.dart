@@ -19,7 +19,7 @@ class GuardianFactory {
             typeKey: 'sentinelle',
             maxHp: 30,
             atk: 8,
-            def: 5,
+            def: 4,
           ),
         ),
       ];
@@ -40,7 +40,7 @@ class GuardianFactory {
             typeKey: 'golemMagma',
             maxHp: 50,
             atk: 12,
-            def: 8,
+            def: 7,
           ),
         ),
       ];
@@ -61,7 +61,7 @@ class GuardianFactory {
             typeKey: 'sentinelleNoyau',
             maxHp: 80,
             atk: 18,
-            def: 12,
+            def: 10,
           ),
         ),
       ];

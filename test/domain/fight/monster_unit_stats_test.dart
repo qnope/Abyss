@@ -4,25 +4,25 @@ import 'package:abyss/domain/map/monster_difficulty.dart';
 
 void main() {
   group('MonsterUnitStats.forLevel', () {
-    test('level 1 returns hp 10, atk 2, def 1', () {
+    test('level 1 returns hp 10, atk 3, def 1', () {
       final stats = MonsterUnitStats.forLevel(1);
       expect(stats.hp, 10);
-      expect(stats.atk, 2);
+      expect(stats.atk, 3);
       expect(stats.def, 1);
     });
 
-    test('level 2 returns hp 20, atk 4, def 2', () {
+    test('level 2 returns hp 20, atk 5, def 2', () {
       final stats = MonsterUnitStats.forLevel(2);
       expect(stats.hp, 20);
-      expect(stats.atk, 4);
+      expect(stats.atk, 5);
       expect(stats.def, 2);
     });
 
-    test('level 3 returns hp 35, atk 7, def 4', () {
+    test('level 3 returns hp 35, atk 8, def 3', () {
       final stats = MonsterUnitStats.forLevel(3);
       expect(stats.hp, 35);
-      expect(stats.atk, 7);
-      expect(stats.def, 4);
+      expect(stats.atk, 8);
+      expect(stats.def, 3);
     });
 
     test('level 0 throws ArgumentError', () {

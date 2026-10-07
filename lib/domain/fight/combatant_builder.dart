@@ -3,6 +3,7 @@ import '../unit/unit_stats.dart';
 import '../unit/unit_type.dart';
 import 'combat_side.dart';
 import 'combatant.dart';
+import 'military_bonus.dart';
 import 'monster_unit_stats.dart';
 
 class CombatantBuilder {
@@ -19,16 +20,16 @@ class CombatantBuilder {
         continue;
       }
       final UnitStats stats = UnitStats.forType(entry.key);
-      final int boostedAtk =
-          (stats.atk * (1 + 0.20 * militaryResearchLevel)).round();
+      final int atk = MilitaryBonus.boost(stats.atk, militaryResearchLevel);
+      final int def = MilitaryBonus.boost(stats.def, militaryResearchLevel);
       for (int i = 0; i < count; i++) {
         combatants.add(
           Combatant(
             side: CombatSide.player,
             typeKey: entry.key.name,
             maxHp: stats.hp,
-            atk: boostedAtk,
-            def: stats.def,
+            atk: atk,
+            def: def,
           ),
         );
       }

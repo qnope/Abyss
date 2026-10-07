@@ -16,7 +16,7 @@ class SelectionSummaryCard extends StatelessWidget {
   String get _bonusLabel {
     if (militaryLevel <= 0) return 'Bonus militaire : aucun';
     final int pct = militaryLevel * 20;
-    return 'Bonus militaire : +$pct% ATK (niveau $militaryLevel)';
+    return 'Bonus militaire : +$pct% ATK et DEF (niveau $militaryLevel)';
   }
 
   @override

@@ -34,15 +34,15 @@ void main() {
 
     test('victory with admiral dead does not capture', () {
       final scenario = createKernelScenario(
-        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 30},
+        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 40},
       );
       final action = AttackVolcanicKernelAction(
         targetX: 1, targetY: 1, level: 3,
         selectedUnits: {
           UnitType.abyssAdmiral: 1,
-          UnitType.domeBreaker: 30,
+          UnitType.domeBreaker: 40,
         },
-        random: Random(1),
+        random: Random(36),
       );
       final result = action.execute(scenario.game, scenario.player);
       final r = result as AttackVolcanicKernelResult;

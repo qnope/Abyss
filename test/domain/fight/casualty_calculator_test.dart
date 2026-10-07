@@ -77,5 +77,15 @@ void main() {
       final bWoundedKeys = b.wounded.map((c) => c.typeKey).toList();
       expect(aWoundedKeys, bWoundedKeys);
     });
+    group('CasualtyCalculator.partition evasive scouts', () {
+    test('fallen scouts always come back wounded', () {
+      final List<Combatant> scouts = <Combatant>[
+        for (var i = 0; i < 50; i++) _c('scout'),
+      ];
+      final split = CasualtyCalculator(random: Random(5)).partition(scouts, 1);
+      expect(split.dead, isEmpty);
+      expect(split.wounded.length, 50);
+    });
   });
+});
 }

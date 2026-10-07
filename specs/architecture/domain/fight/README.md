@@ -35,10 +35,10 @@ while (any alive on both sides):
     for attacker in order:
         if not attacker.isAlive: continue
         pool = opponents of attacker.side
-        target = TargetPicker.pickRandom(pool, random)
+        target = TargetPicker.pick(pool, random)
         if target == null: break
         crit = CritRoller.roll()
-        dmg  = DamageCalculator.compute(atk, def, crit)
+        dmg  = AttackDamage.compute(attacker, target, crit)
         target.applyDamage(dmg)
     summaries.add(FightTurnSummary(...))
 winner = side that still has alive combatants
@@ -51,13 +51,22 @@ is not cloned because the action only needs its initial/final count.
 
 ## Calculators and helpers
 
-- **`DamageCalculator.compute(atk, def, crit)`** -- Pure utility.
-  Formula: `ceil(atk * 100 / (100 + def))`, clamped to at least `1`,
-  then tripled on crit.
+- **`DamageCalculator.compute(atk, def, crit, ignoreDef, multiplier)`**
+  -- Pure utility. Formula: `floor(atk * 10 / (10 + def))`, clamped to
+  at least `1`, multiplied by `multiplier`, then tripled on crit. A DEF
+  of 10 halves the damage.
+- **`CombatRole`** -- Special rule of a player unit, read from its
+  `typeKey`: the Guardian taunts, the Dome Breaker deals x2 to bosses,
+  the Saboteur ignores DEF, the Scout flees (never dies). Monsters have
+  no role.
+- **`AttackDamage.compute(attacker, target, crit)`** -- Applies the
+  attacker's `CombatRole` on top of `DamageCalculator`.
 - **`CritRoller`** -- Draws a crit on each attack with a configurable
   probability (default `0.05`).
 - **`TargetPicker.pickRandom(pool, random)`** -- Returns a uniformly
   random alive combatant from the pool, or `null` if none.
+  `TargetPicker.pick` does the same but only among taunting combatants
+  (Guardians) while one of them still stands.
 - **`TurnOrder.shuffle(playerSide, monsterSide, random)`** -- Builds
   a single shuffled list of alive combatants across both sides so
   initiative is randomised each turn.
@@ -65,8 +74,8 @@ is not cloned because the action only needs its initial/final count.
   `{ hp, atk, def }` and a `MonsterDifficulty` to a level.
 - **`CombatantBuilder`** -- Converts game data into combatants:
   `playerCombatantsFrom(Map<UnitType, int>, {int militaryResearchLevel = 0})`
-  reads `UnitStats` and applies a `+20% / level` multiplier on `atk`
-  (formula `(atk * (1 + 0.20 * level)).round()`).
+  reads `UnitStats` and applies `MilitaryBonus.boost`, a `+20% / level`
+  multiplier on `atk` and `def` (`(stat * (1 + 0.20 * level)).round()`).
   `monsterCombatantsFrom(MonsterLair)` reads `MonsterUnitStats` and is
   unaffected by the military bonus. Also resolves a `typeKey` back to
   a `UnitType`.
@@ -91,7 +100,8 @@ These are called by the action **after** `FightEngine.resolve`:
   killed player combatants into **wounded** (return to stock) and
   **dead** (lost for good). The wounded probability decreases
   linearly from `0.8` at `<=50%` losses to `0.2` at `>=80%`, encoded
-  in `woundedProbability(pctLost)`.
+  in `woundedProbability(pctLost)`. Fallen Scouts (`CombatRole.evasive`)
+  are always wounded, never dead.
 - **`CasualtySplit`** -- Value object returned by
   `CasualtyCalculator`, holding `wounded` and `dead` lists.
 
@@ -103,7 +113,10 @@ These are called by the action **after** `FightEngine.resolve`:
 | `combatant.dart` | Mutable fighter model with `applyDamage` |
 | `damage_calculator.dart` | Damage formula (with crit) |
 | `crit_roller.dart` | Crit probability roller |
-| `target_picker.dart` | Random alive-target selection |
+| `target_picker.dart` | Random alive-target selection, taunt first |
+| `combat_role.dart` | Special rule of each player unit |
+| `attack_damage.dart` | Damage of one attack, roles included |
+| `military_bonus.dart` | Military research ATK / DEF boost |
 | `turn_order.dart` | Per-turn shuffled initiative order |
 | `monster_unit_stats.dart` | Stats per monster level / difficulty |
 | `combatant_builder.dart` | Build combatants from units / lair |

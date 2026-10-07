@@ -26,6 +26,6 @@ extension ResourceTypeInfo on ResourceType {
     ResourceType.coral => 'Matériau de construction récolté sur les récifs pour bâtir votre base.',
     ResourceType.ore => 'Métal extrait des profondeurs pour forger des équipements avancés.',
     ResourceType.energy => 'Énergie captée pour alimenter vos bâtiments et machines.',
-    ResourceType.pearl => 'Gemmes rares découvertes lors d\'explorations, essentielles aux technologies avancées.',
+    ResourceType.pearl => 'Gemmes rares trouvées dans les ruines et les repaires, et récoltées chaque tour dans les failles et cheminées capturées.',
   };
 }

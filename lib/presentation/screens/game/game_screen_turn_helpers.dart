@@ -2,11 +2,24 @@ import '../../../domain/building/building.dart';
 import '../../../domain/building/building_deactivator.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/consumption_calculator.dart';
+import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
+import '../../../domain/resource/pearl_income.dart';
 import '../../../domain/resource/production_calculator.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/unit/unit_loss_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
+
+Map<ResourceType, int> computeProduction(Game game, Player player) {
+  final production = ProductionCalculator.fromBuildings(
+    player.buildings, techBranches: player.techBranches);
+  final pearls = PearlIncome.of(game, player.id);
+  if (pearls > 0) {
+    production[ResourceType.pearl] =
+        (production[ResourceType.pearl] ?? 0) + pearls;
+  }
+  return production;
+}
 
 Map<ResourceType, int> computeConsumption(Player player) {
   final consumption = <ResourceType, int>{};

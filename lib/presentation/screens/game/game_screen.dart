@@ -6,7 +6,6 @@ import '../../../domain/action/end_turn_action_result.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
-import '../../../domain/resource/production_calculator.dart';
 import '../../widgets/unit/army_list_view.dart';
 import '../../widgets/turn/turn_confirmation_dialog.dart';
 import '../../widgets/turn/turn_summary_dialog.dart';
@@ -46,8 +45,7 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final production = ProductionCalculator.fromBuildings(
-      _human.buildings, techBranches: _human.techBranches);
+    final production = computeProduction(widget.game, _human);
     final consumption = computeConsumption(_human);
     return Scaffold(
       body: Column(
@@ -112,8 +110,7 @@ class _GameScreenState extends State<GameScreen> {
 
   Future<void> _nextTurn() async {
     final human = _human;
-    final production = ProductionCalculator.fromBuildings(
-      human.buildings, techBranches: human.techBranches);
+    final production = computeProduction(widget.game, human);
     final consumption = computeConsumption(human);
     final deactivated = computeBuildingsToDeactivate(human, production);
     final confirmed = await showTurnConfirmationDialog(context,

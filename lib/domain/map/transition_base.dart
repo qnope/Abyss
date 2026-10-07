@@ -25,6 +25,10 @@ class TransitionBase {
   int get difficulty =>
       type == TransitionBaseType.faille ? 4 : 5;
 
+  /// Pearls the base yields each turn once captured.
+  int get pearlsPerTurn =>
+      type == TransitionBaseType.faille ? 2 : 3;
+
   int get targetLevel =>
       type == TransitionBaseType.faille ? 2 : 3;
 }

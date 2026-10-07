@@ -28,6 +28,9 @@ class TransitionBaseUncapturedSection extends StatelessWidget {
           _infoRow(textTheme, 'Difficulte',
               '${transitionBase.difficulty}/5'),
           const SizedBox(height: 6),
+          _infoRow(textTheme, 'Revenu une fois capturee',
+              '+${transitionBase.pearlsPerTurn} perles / tour'),
+          const SizedBox(height: 6),
           Text(
             'Neutre \u2014 Gardiens presents',
             style: textTheme.bodyMedium?.copyWith(

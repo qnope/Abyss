@@ -101,7 +101,8 @@ void _showCellAction(BuildContext context, Game game,
       showTreasureSheet(context, targetX: x, targetY: y,
         contentType: cell.content,
         onCollect: () =>
-            _collectTreasure(context, game, x, y, cell.content, onChanged));
+            _collectTreasure(
+            context, game, x, y, level, cell.content, onChanged));
     case CellContentType.monsterLair:
       showMonsterLairSheet(context, targetX: x, targetY: y,
         lair: cell.lair!,
@@ -185,8 +186,8 @@ void _showExplorationFlow(
 }
 
 void _collectTreasure(BuildContext context, Game game, int x, int y,
-    CellContentType content, VoidCallback onChanged) {
-  final action = CollectTreasureAction(targetX: x, targetY: y);
+    int level, CellContentType content, VoidCallback onChanged) {
+  final action = CollectTreasureAction(targetX: x, targetY: y, level: level);
   final result = ActionExecutor().execute(action, game, game.humanPlayer);
   if (!result.isSuccess) return;
   onChanged();

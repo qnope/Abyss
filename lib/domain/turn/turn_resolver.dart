@@ -1,6 +1,7 @@
 import '../game/game.dart';
 import '../map/exploration_resolver.dart';
 import '../map/reinforcement_resolver.dart';
+import '../resource/pearl_income.dart';
 import 'player_turn_resolver.dart';
 import 'turn_result.dart';
 
@@ -11,7 +12,11 @@ class TurnResolver {
     TurnResult? humanResult;
 
     for (final player in game.players.values) {
-      final result = PlayerTurnResolver.resolve(player, previousTurn);
+      final result = PlayerTurnResolver.resolve(
+        player,
+        previousTurn,
+        extraProduction: PearlIncome.asProduction(game, player.id),
+      );
       if (player.id == humanId) humanResult = result;
     }
 

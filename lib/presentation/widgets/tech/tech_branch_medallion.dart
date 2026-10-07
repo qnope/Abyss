@@ -10,7 +10,6 @@ class TechBranchMedallion extends StatelessWidget {
   final String? detail;
   final Color color;
   final bool unlocked;
-  final bool selected;
   final bool labelAbove;
   final double size;
   final VoidCallback? onTap;
@@ -22,7 +21,6 @@ class TechBranchMedallion extends StatelessWidget {
     this.detail,
     required this.color,
     required this.unlocked,
-    this.selected = false,
     this.labelAbove = false,
     this.size = 52,
     this.onTap,
@@ -63,8 +61,7 @@ class TechBranchMedallion extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: AbyssColors.surfaceLight,
-            border: Border.all(
-              color: selected ? Colors.white : ring, width: 2.5),
+            border: Border.all(color: ring, width: 2.5),
             boxShadow: unlocked
                 ? [BoxShadow(
                     color: color.withValues(alpha: 0.55), blurRadius: 16)]

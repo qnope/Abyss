@@ -18,6 +18,7 @@ class MapSprites {
   static const spriteSize = SvgRasterCache.pixels;
 
   static Future<MapSprites>? _shared;
+  static MapSprites? _ready;
 
   final Map<String, ui.Image> _svgs;
   final Map<MapGlow, ui.Image> _glows;
@@ -26,11 +27,18 @@ class MapSprites {
 
   /// Loads the shared sprites, rasterizing them on first use only.
   static Future<MapSprites> load() {
-    return _shared ??= _rasterizeAll().catchError((Object error) {
-      _shared = null;
-      throw error;
-    });
+    return _shared ??= _rasterizeAll().then(
+      (sprites) => _ready = sprites,
+      onError: (Object error) {
+        _shared = null;
+        throw error;
+      },
+    );
   }
+
+  /// The shared sprites if already loaded (e.g. at startup), so a map can
+  /// paint them on its very first frame.
+  static MapSprites? get ready => _ready;
 
   ui.Image? svg(String path) => _svgs[path];
 

@@ -18,6 +18,9 @@ abstract final class SvgRasterCache {
   static final _pending = <String, Future<ui.Image>>{};
   static final _ready = <String, ui.Image>{};
 
+  /// Paths of every SVG rasterized so far.
+  static Iterable<String> get readyPaths => _ready.keys;
+
   /// The bitmap if it is already rasterized, without waiting.
   static ui.Image? peek(String path) => _ready[path];
 

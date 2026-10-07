@@ -40,15 +40,24 @@ class _GameMapViewState extends State<GameMapView> {
   void initState() {
     super.initState();
     _controller = TransformationController();
+    _sprites = MapSprites.ready;
+    if (_sprites == null) _loadSprites();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Centered before the first frame, so the map never shows a jump.
+    if (_controller.value.isIdentity()) _centerOnBase();
+  }
+
+  void _loadSprites() {
     MapSprites.load().then(
       (sprites) {
         if (mounted) setState(() => _sprites = sprites);
       },
       onError: (Object error) => debugPrint('Map sprites failed: $error'),
     );
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _centerOnBase();
-    });
   }
 
   void _centerOnBase() {

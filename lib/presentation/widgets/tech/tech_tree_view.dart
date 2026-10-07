@@ -7,6 +7,7 @@ import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/tech/tech_branch.dart';
 import '../../../domain/tech/tech_branch_state.dart';
+import '../../theme/abyss_colors.dart';
 import 'tech_reef.dart';
 import 'tech_selection.dart';
 import 'tech_selection_panel.dart';
@@ -38,21 +39,23 @@ class _TechTreeViewState extends State<TechTreeView> {
   static const _panelSpace = 150.0;
   static const _minReefHeight = 380.0;
 
-  late TechSelection _selection =
-      TechSelection.suggested(widget.techBranches);
+  TechSelection? _selection;
 
   int get _labLevel =>
       widget.buildings[BuildingType.laboratory]?.level ?? 0;
 
-  void _act() {
-    final branch = _selection.branch;
-    if (_selection.level == null) {
-      widget.onUnlock(branch);
+  void _act(TechSelection selection) {
+    if (selection.level == null) {
+      widget.onUnlock(selection.branch);
     } else {
-      widget.onResearch(branch);
+      widget.onResearch(selection.branch);
     }
-    setState(() => _selection = _selection.next);
+    setState(() => _selection = selection.next);
   }
+
+  /// Tapping the selected item again clears the selection.
+  void _select(TechSelection target) => setState(
+    () => _selection = target == _selection ? null : target);
 
   @override
   Widget build(BuildContext context) {
@@ -68,19 +71,32 @@ class _TechTreeViewState extends State<TechTreeView> {
               techBranches: widget.techBranches,
               labLevel: _labLevel,
               selection: _selection,
-              onSelect: (s) => setState(() => _selection = s),
+              onSelect: _select,
             ),
           ),
           const SizedBox(height: 8),
-          TechSelectionPanel(
-            selection: _selection,
-            techBranches: widget.techBranches,
-            buildings: widget.buildings,
-            resources: widget.resources,
-            onAct: _act,
-          ),
+          _panel(),
         ]),
       );
     });
+  }
+
+  Widget _panel() {
+    final selection = _selection;
+    if (selection == null) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        child: Text('Touchez une branche ou un niveau',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: AbyssColors.onSurfaceDim)),
+      );
+    }
+    return TechSelectionPanel(
+      selection: selection,
+      techBranches: widget.techBranches,
+      buildings: widget.buildings,
+      resources: widget.resources,
+      onAct: () => _act(selection),
+    );
   }
 }

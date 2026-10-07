@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/resource.dart';
@@ -11,6 +10,7 @@ import '../../extensions/resource_type_extensions.dart';
 import '../../extensions/tech_branch_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../resource/resource_icon.dart';
+import '../common/raster_svg.dart';
 
 void showTechNodeDetailSheet(
   BuildContext context, {
@@ -60,7 +60,7 @@ class _TechNodeSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(branch.iconPath, width: 64, height: 64),
+          RasterSvg(assetPath: branch.iconPath, size: 64),
           const SizedBox(height: 12),
           Text('${branch.displayName} — Niveau $level',
             style: textTheme.headlineSmall?.copyWith(color: color)),

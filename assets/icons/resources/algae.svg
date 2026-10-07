@@ -1,8 +1,128 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M32 60 C30 46 34 34 31 20 C30 14 32 8 34 4" fill="none" stroke="#2E7D5B" stroke-width="4" stroke-linecap="round"/>
-  <path d="M31 40 C22 38 14 30 10 22 C20 24 28 30 31 40 Z" fill="#2E9E6A"/>
-  <path d="M32 32 C40 28 48 20 52 12 C42 14 34 22 32 32 Z" fill="#69F0AE"/>
-  <path d="M31 22 C26 18 22 12 22 6 C28 10 31 15 31 22 Z" fill="#43C987"/>
-  <path d="M33 50 C40 48 48 44 54 36 C44 36 36 42 33 50 Z" fill="#43C987"/>
-  <path d="M30 52 C24 50 18 48 12 50 C18 54 24 55 30 52 Z" fill="#69F0AE"/>
+  <defs>
+    <linearGradient id="algLeafA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C8FFE0"/>
+      <stop offset="0.4" stop-color="#69F0AE"/>
+      <stop offset="1" stop-color="#1E8E5C"/>
+    </linearGradient>
+    <linearGradient id="algLeafB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7FE8B4"/>
+      <stop offset="0.5" stop-color="#34B479"/>
+      <stop offset="1" stop-color="#145E3E"/>
+    </linearGradient>
+    <linearGradient id="algStem" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7FE0A8"/>
+      <stop offset="0.5" stop-color="#2E8E5E"/>
+      <stop offset="1" stop-color="#145E3E"/>
+    </linearGradient>
+    <radialGradient id="algBladder" cx="0.35" cy="0.3" r="0.75">
+      <stop offset="0" stop-color="#F4FF81"/>
+      <stop offset="0.5" stop-color="#9CCC65"/>
+      <stop offset="1" stop-color="#33691E"/>
+    </radialGradient>
+    <radialGradient id="algGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#69F0AE" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#69F0AE" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- soft bioluminescent glow -->
+  <ellipse cx="32" cy="32" rx="26" ry="28" fill="url(#algGlow)"/>
+  <!-- back stem -->
+  <path d="M35 59 C38 50 40 42 41 34 C42 28 44 24 47 20" fill="none" stroke="#0B3D2A" stroke-opacity="0.8" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M35 59 C38 50 40 42 41 34 C42 28 44 24 47 20" fill="none" stroke="#1E7A50" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- back fronds -->
+  <g transform="translate(41 34) rotate(-60) scale(0.84 0.615)">
+    <path d="M0 0 C3 -3.6 7 -5.8 10.5 -5.4 Q12.6 -6.6 14.6 -5 Q17.6 -4.2 20 -1 Q17.4 0.2 15 0.6 Q12.6 2.4 9.6 2.2 Q6.4 2.6 3.4 1.6 Q1.4 1.2 0 0 Z" fill="url(#algLeafB)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.73" stroke-linejoin="round"/>
+    <path d="M1.5 -0.9 C5 -3.6 9 -4.6 12.5 -4.4 Q15.5 -4.2 18 -2" fill="none" stroke="#E8FFF3" stroke-opacity="0.45" stroke-width="0.67" stroke-linecap="round"/>
+    <path d="M0.5 -0.1 Q9 -1.8 19 -1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.75" stroke-width="0.73" stroke-linecap="round"/>
+    <path d="M5 -0.9 L7.5 -3.4 M9 -1.3 L11.5 -3.8 M13 -1.4 L15.4 -3.2 M6 -0.7 L8 1.4 M10.5 -1 L12.6 1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.4" stroke-width="0.47" stroke-linecap="round"/>
+    <circle cx="8" cy="-2.6" r="0.60" fill="#E8FFF3" fill-opacity="0.7"/>
+    <path d="M16 0.4 Q18.4 -0.2 19.6 -0.9" fill="none" stroke="#1DE9B6" stroke-opacity="0.7" stroke-width="0.60" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(38.5 46) rotate(-10) scale(0.78 0.574)">
+    <path d="M0 0 C3 -3.6 7 -5.8 10.5 -5.4 Q12.6 -6.6 14.6 -5 Q17.6 -4.2 20 -1 Q17.4 0.2 15 0.6 Q12.6 2.4 9.6 2.2 Q6.4 2.6 3.4 1.6 Q1.4 1.2 0 0 Z" fill="url(#algLeafB)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.79" stroke-linejoin="round"/>
+    <path d="M1.5 -0.9 C5 -3.6 9 -4.6 12.5 -4.4 Q15.5 -4.2 18 -2" fill="none" stroke="#E8FFF3" stroke-opacity="0.45" stroke-width="0.71" stroke-linecap="round"/>
+    <path d="M0.5 -0.1 Q9 -1.8 19 -1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.75" stroke-width="0.79" stroke-linecap="round"/>
+    <path d="M5 -0.9 L7.5 -3.4 M9 -1.3 L11.5 -3.8 M13 -1.4 L15.4 -3.2 M6 -0.7 L8 1.4 M10.5 -1 L12.6 1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.4" stroke-width="0.50" stroke-linecap="round"/>
+    <circle cx="8" cy="-2.6" r="0.64" fill="#E8FFF3" fill-opacity="0.7"/>
+    <path d="M16 0.4 Q18.4 -0.2 19.6 -0.9" fill="none" stroke="#1DE9B6" stroke-opacity="0.7" stroke-width="0.64" stroke-linecap="round"/>
+  </g>
+  <!-- main stem -->
+  <path d="M32 60 C30 46 34 34 31 20 C30 14 32 8 34 4" fill="none" stroke="#0B3D2A" stroke-opacity="0.85" stroke-width="4.6" stroke-linecap="round"/>
+  <path d="M32 60 C30 46 34 34 31 20 C30 14 32 8 34 4" fill="none" stroke="url(#algStem)" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M31 58 C29.4 46 33 34 30.2 20 C29.4 14 30.8 9 32.6 5.4" fill="none" stroke="#D7FFE9" stroke-opacity="0.5" stroke-width="0.7" stroke-linecap="round"/>
+  <path d="M33.6 56 C32.6 46 35.4 36 33 24" fill="none" stroke="#1DE9B6" stroke-opacity="0.6" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- fronds -->
+  <g transform="translate(30 52) rotate(186) scale(1.03 -0.7544)">
+    <path d="M0 0 C3 -3.6 7 -5.8 10.5 -5.4 Q12.6 -6.6 14.6 -5 Q17.6 -4.2 20 -1 Q17.4 0.2 15 0.6 Q12.6 2.4 9.6 2.2 Q6.4 2.6 3.4 1.6 Q1.4 1.2 0 0 Z" fill="url(#algLeafB)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.60" stroke-linejoin="round"/>
+    <path d="M1.5 -0.9 C5 -3.6 9 -4.6 12.5 -4.4 Q15.5 -4.2 18 -2" fill="none" stroke="#E8FFF3" stroke-opacity="0.45" stroke-width="0.54" stroke-linecap="round"/>
+    <path d="M0.5 -0.1 Q9 -1.8 19 -1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.75" stroke-width="0.60" stroke-linecap="round"/>
+    <path d="M5 -0.9 L7.5 -3.4 M9 -1.3 L11.5 -3.8 M13 -1.4 L15.4 -3.2 M6 -0.7 L8 1.4 M10.5 -1 L12.6 1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.4" stroke-width="0.38" stroke-linecap="round"/>
+    <circle cx="8" cy="-2.6" r="0.49" fill="#E8FFF3" fill-opacity="0.7"/>
+    <path d="M16 0.4 Q18.4 -0.2 19.6 -0.9" fill="none" stroke="#1DE9B6" stroke-opacity="0.7" stroke-width="0.49" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(33 50) rotate(-34) scale(1.37 1.0004)">
+    <path d="M0 0 C3 -3.6 7 -5.8 10.5 -5.4 Q12.6 -6.6 14.6 -5 Q17.6 -4.2 20 -1 Q17.4 0.2 15 0.6 Q12.6 2.4 9.6 2.2 Q6.4 2.6 3.4 1.6 Q1.4 1.2 0 0 Z" fill="url(#algLeafA)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.45" stroke-linejoin="round"/>
+    <path d="M1.5 -0.9 C5 -3.6 9 -4.6 12.5 -4.4 Q15.5 -4.2 18 -2" fill="none" stroke="#E8FFF3" stroke-opacity="0.45" stroke-width="0.41" stroke-linecap="round"/>
+    <path d="M0.5 -0.1 Q9 -1.8 19 -1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.75" stroke-width="0.45" stroke-linecap="round"/>
+    <path d="M5 -0.9 L7.5 -3.4 M9 -1.3 L11.5 -3.8 M13 -1.4 L15.4 -3.2 M6 -0.7 L8 1.4 M10.5 -1 L12.6 1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.4" stroke-width="0.29" stroke-linecap="round"/>
+    <circle cx="8" cy="-2.6" r="0.37" fill="#E8FFF3" fill-opacity="0.7"/>
+    <path d="M16 0.4 Q18.4 -0.2 19.6 -0.9" fill="none" stroke="#1DE9B6" stroke-opacity="0.7" stroke-width="0.37" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(31.5 40) rotate(220) scale(1.51 -1.107)">
+    <path d="M0 0 C3 -3.6 7 -5.8 10.5 -5.4 Q12.6 -6.6 14.6 -5 Q17.6 -4.2 20 -1 Q17.4 0.2 15 0.6 Q12.6 2.4 9.6 2.2 Q6.4 2.6 3.4 1.6 Q1.4 1.2 0 0 Z" fill="url(#algLeafA)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.41" stroke-linejoin="round"/>
+    <path d="M1.5 -0.9 C5 -3.6 9 -4.6 12.5 -4.4 Q15.5 -4.2 18 -2" fill="none" stroke="#E8FFF3" stroke-opacity="0.45" stroke-width="0.37" stroke-linecap="round"/>
+    <path d="M0.5 -0.1 Q9 -1.8 19 -1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.75" stroke-width="0.41" stroke-linecap="round"/>
+    <path d="M5 -0.9 L7.5 -3.4 M9 -1.3 L11.5 -3.8 M13 -1.4 L15.4 -3.2 M6 -0.7 L8 1.4 M10.5 -1 L12.6 1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.4" stroke-width="0.26" stroke-linecap="round"/>
+    <circle cx="8" cy="-2.6" r="0.33" fill="#E8FFF3" fill-opacity="0.7"/>
+    <path d="M16 0.4 Q18.4 -0.2 19.6 -0.9" fill="none" stroke="#1DE9B6" stroke-opacity="0.7" stroke-width="0.33" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(32 32) rotate(-46) scale(1.57 1.148)">
+    <path d="M0 0 C3 -3.6 7 -5.8 10.5 -5.4 Q12.6 -6.6 14.6 -5 Q17.6 -4.2 20 -1 Q17.4 0.2 15 0.6 Q12.6 2.4 9.6 2.2 Q6.4 2.6 3.4 1.6 Q1.4 1.2 0 0 Z" fill="url(#algLeafA)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.39" stroke-linejoin="round"/>
+    <path d="M1.5 -0.9 C5 -3.6 9 -4.6 12.5 -4.4 Q15.5 -4.2 18 -2" fill="none" stroke="#E8FFF3" stroke-opacity="0.45" stroke-width="0.36" stroke-linecap="round"/>
+    <path d="M0.5 -0.1 Q9 -1.8 19 -1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.75" stroke-width="0.39" stroke-linecap="round"/>
+    <path d="M5 -0.9 L7.5 -3.4 M9 -1.3 L11.5 -3.8 M13 -1.4 L15.4 -3.2 M6 -0.7 L8 1.4 M10.5 -1 L12.6 1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.4" stroke-width="0.25" stroke-linecap="round"/>
+    <circle cx="8" cy="-2.6" r="0.32" fill="#E8FFF3" fill-opacity="0.7"/>
+    <path d="M16 0.4 Q18.4 -0.2 19.6 -0.9" fill="none" stroke="#1DE9B6" stroke-opacity="0.7" stroke-width="0.32" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(31 22) rotate(240) scale(1.03 -0.7544)">
+    <path d="M0 0 C3 -3.6 7 -5.8 10.5 -5.4 Q12.6 -6.6 14.6 -5 Q17.6 -4.2 20 -1 Q17.4 0.2 15 0.6 Q12.6 2.4 9.6 2.2 Q6.4 2.6 3.4 1.6 Q1.4 1.2 0 0 Z" fill="url(#algLeafA)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.60" stroke-linejoin="round"/>
+    <path d="M1.5 -0.9 C5 -3.6 9 -4.6 12.5 -4.4 Q15.5 -4.2 18 -2" fill="none" stroke="#E8FFF3" stroke-opacity="0.45" stroke-width="0.54" stroke-linecap="round"/>
+    <path d="M0.5 -0.1 Q9 -1.8 19 -1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.75" stroke-width="0.60" stroke-linecap="round"/>
+    <path d="M5 -0.9 L7.5 -3.4 M9 -1.3 L11.5 -3.8 M13 -1.4 L15.4 -3.2 M6 -0.7 L8 1.4 M10.5 -1 L12.6 1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.4" stroke-width="0.38" stroke-linecap="round"/>
+    <circle cx="8" cy="-2.6" r="0.49" fill="#E8FFF3" fill-opacity="0.7"/>
+    <path d="M16 0.4 Q18.4 -0.2 19.6 -0.9" fill="none" stroke="#1DE9B6" stroke-opacity="0.7" stroke-width="0.49" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(32.6 12) rotate(-50) scale(0.67 0.49199999999999994)">
+    <path d="M0 0 C3 -3.6 7 -5.8 10.5 -5.4 Q12.6 -6.6 14.6 -5 Q17.6 -4.2 20 -1 Q17.4 0.2 15 0.6 Q12.6 2.4 9.6 2.2 Q6.4 2.6 3.4 1.6 Q1.4 1.2 0 0 Z" fill="url(#algLeafA)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.92" stroke-linejoin="round"/>
+    <path d="M1.5 -0.9 C5 -3.6 9 -4.6 12.5 -4.4 Q15.5 -4.2 18 -2" fill="none" stroke="#E8FFF3" stroke-opacity="0.45" stroke-width="0.83" stroke-linecap="round"/>
+    <path d="M0.5 -0.1 Q9 -1.8 19 -1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.75" stroke-width="0.92" stroke-linecap="round"/>
+    <path d="M5 -0.9 L7.5 -3.4 M9 -1.3 L11.5 -3.8 M13 -1.4 L15.4 -3.2 M6 -0.7 L8 1.4 M10.5 -1 L12.6 1.1" fill="none" stroke="#0E5A3C" stroke-opacity="0.4" stroke-width="0.58" stroke-linecap="round"/>
+    <circle cx="8" cy="-2.6" r="0.75" fill="#E8FFF3" fill-opacity="0.7"/>
+    <path d="M16 0.4 Q18.4 -0.2 19.6 -0.9" fill="none" stroke="#1DE9B6" stroke-opacity="0.7" stroke-width="0.75" stroke-linecap="round"/>
+  </g>
+  <!-- gas bladders at frond bases -->
+  <ellipse cx="29.6" cy="41" rx="1.6" ry="1.9" fill="url(#algBladder)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.4"/>
+  <circle cx="29.1" cy="40.3" r="0.45" fill="#FFFFFF" fill-opacity="0.85"/>
+  <ellipse cx="34.4" cy="32.6" rx="1.6" ry="1.9" fill="url(#algBladder)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.4"/>
+  <circle cx="33.9" cy="31.900000000000002" r="0.45" fill="#FFFFFF" fill-opacity="0.85"/>
+  <ellipse cx="34.8" cy="49.6" rx="1.6" ry="1.9" fill="url(#algBladder)" stroke="#0B3D2A" stroke-opacity="0.7" stroke-width="0.4"/>
+  <circle cx="34.3" cy="48.9" r="0.45" fill="#FFFFFF" fill-opacity="0.85"/>
+  <!-- holdfast and rock -->
+  <path d="M24 61 Q25 57 30 56.5 Q34 55.6 38 57 Q41 58 41 61 Q32 62.6 24 61 Z" fill="#24405E" stroke="#0A0E1A" stroke-opacity="0.7" stroke-width="0.5"/>
+  <path d="M26 58.6 Q30 56.8 34 57" fill="none" stroke="#7B9CC0" stroke-opacity="0.5" stroke-width="0.5" stroke-linecap="round"/>
+  <path d="M32 58 Q29 58 27 60 M32 58 Q31 59.4 30 61 M32.4 58 Q35 58.4 37 60.2 M32.6 58 Q34 59.6 34.4 61" fill="none" stroke="#1E7A50" stroke-width="0.9" stroke-linecap="round"/>
+  <!-- bioluminescent spores and bubbles -->
+  <g fill="#B9F6CA">
+    <circle cx="15" cy="30" r="0.6" fill-opacity="0.8"/>
+    <circle cx="50" cy="26" r="0.5" fill-opacity="0.7"/>
+    <circle cx="24" cy="12" r="0.45" fill-opacity="0.7"/>
+    <circle cx="54" cy="44" r="0.5" fill-opacity="0.7"/>
+  </g>
+  <g fill="#00E5FF" fill-opacity="0.15" stroke="#00E5FF" stroke-opacity="0.8" stroke-width="0.4">
+    <circle cx="40" cy="8" r="1.4"/>
+    <circle cx="43" cy="3.6" r="0.9"/>
+    <circle cx="20" cy="45" r="1"/>
+  </g>
+  <circle cx="39.5" cy="7.5" r="0.4" fill="#FFFFFF" fill-opacity="0.9"/>
 </svg>

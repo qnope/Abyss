@@ -2,10 +2,21 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-/// Keeps SVG icons cheap to rasterize: the map draws hundreds of them.
-const _maxShapes = 24;
-const _maxGradients = 1;
-const _forbidden = [' opacity=', '<filter', '<mask', '<clipPath', '<image'];
+/// Keeps detailed SVG icons compatible with flutter_svg and quick to
+/// rasterize. Icons are drawn from cached bitmaps (see SvgRasterCache).
+const _maxShapes = 300;
+const _maxGradients = 16;
+const _maxBytes = 24000;
+const _forbidden = [
+  ' opacity=',
+  '<filter',
+  '<mask',
+  '<clipPath',
+  '<image',
+  '<text',
+  '<style',
+  '<use',
+];
 
 void main() {
   final svgFiles = Directory('assets/icons')
@@ -34,6 +45,10 @@ void main() {
       test('stays within the shape budget', () {
         final shapes = shapePattern.allMatches(content).length;
         expect(shapes, lessThanOrEqualTo(_maxShapes));
+      });
+
+      test('stays within the size budget', () {
+        expect(content.length, lessThanOrEqualTo(_maxBytes));
       });
 
       test('stays within the gradient budget', () {

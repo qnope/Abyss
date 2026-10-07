@@ -1,21 +1,145 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
+    <linearGradient id="vkCone" x1="0" y1="0" x2="1" y2="0.3">
+      <stop offset="0" stop-color="#7A5547"/>
+      <stop offset="0.45" stop-color="#4A2F27"/>
+      <stop offset="1" stop-color="#1E120F"/>
+    </linearGradient>
+    <linearGradient id="vkShade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#120A08" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0A0605" stop-opacity="0.75"/>
+    </linearGradient>
+    <radialGradient id="vkPool" cx="0.45" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#FFFDE7"/>
+      <stop offset="0.35" stop-color="#FFE57F"/>
+      <stop offset="0.7" stop-color="#FF9100"/>
+      <stop offset="1" stop-color="#DD2C00"/>
+    </radialGradient>
+    <radialGradient id="vkGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FF9100" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#FF3D00" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FF3D00" stop-opacity="0"/>
+    </radialGradient>
     <linearGradient id="vkLava" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FFD740"/>
-      <stop offset="1" stop-color="#FF3D00"/>
+      <stop offset="0" stop-color="#FFE57F"/>
+      <stop offset="0.5" stop-color="#FF9100"/>
+      <stop offset="1" stop-color="#E63A00"/>
+    </linearGradient>
+    <linearGradient id="vkMound" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#34496A"/>
+      <stop offset="1" stop-color="#16243C"/>
+    </linearGradient>
+    <radialGradient id="vkSmoke" cx="0.4" cy="0.35" r="0.65">
+      <stop offset="0" stop-color="#5A6478"/>
+      <stop offset="0.7" stop-color="#2E3446"/>
+      <stop offset="1" stop-color="#1A1E2C" stop-opacity="0.6"/>
+    </radialGradient>
+    <linearGradient id="vkChim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B8C4C8"/>
+      <stop offset="0.5" stop-color="#6E7C84"/>
+      <stop offset="1" stop-color="#2F3A42"/>
     </linearGradient>
   </defs>
-  <circle cx="34" cy="10" r="3" fill="#00E5FF" fill-opacity="0.55"/>
-  <circle cx="29" cy="4" r="2" fill="#00E5FF" fill-opacity="0.4"/>
-  <circle cx="37" cy="17" r="2" fill="#00E5FF" fill-opacity="0.7"/>
-  <path d="M4 58 L22 24 H42 L60 58 Z" fill="#3E2723"/>
-  <path d="M32 24 H42 L60 58 H40 Z" fill="#2A1A16"/>
-  <path d="M20 28 Q32 20 44 28 Q32 33 20 28 Z" fill="url(#vkLava)"/>
-  <path d="M27 30 L24 42 L28 40 L25 54 L31 38 L27 39 Z" fill="#FF6D00"/>
-  <path d="M37 30 L40 40 L37 39 L41 50 L34 36 L37 36 Z" fill="#FF9100"/>
-  <ellipse cx="32" cy="27" rx="7" ry="2" fill="#FFF3C4"/>
-  <path d="M0 58 H64 V64 H0 Z" fill="#1A1A1A"/>
-  <path d="M8 58 Q14 54 20 58 Z M44 58 Q51 53 58 58 Z" fill="#4E342E"/>
-  <circle cx="16" cy="48" r="1.2" fill="#FFAB00"/>
-  <circle cx="48" cy="46" r="1" fill="#FFAB00"/>
+  <!-- contact shadow -->
+  <ellipse cx="32" cy="58" rx="29" ry="4" fill="#000" fill-opacity="0.38"/>
+  <!-- seabed mound -->
+  <g>
+    <path d="M3 58 Q5 51 14 50 Q32 46 50 50 Q59 51 61 58 Q32 62 3 58 Z" fill="url(#vkMound)" stroke="#0A0E1A" stroke-opacity="0.6" stroke-width="0.5"/>
+    <path d="M6 54 Q14 50 26 49.5" fill="none" stroke="#7E9BC0" stroke-opacity="0.4" stroke-width="0.6" stroke-linecap="round"/>
+    <path d="M44 59.5 Q54 59 60 56.5" fill="none" stroke="#1DE9B6" stroke-opacity="0.35" stroke-width="0.6" stroke-linecap="round"/>
+    <ellipse cx="9" cy="56" rx="1.8" ry="1.1" fill="#4A5F80"/>
+    <ellipse cx="8.5" cy="55.6" rx="0.8" ry="0.4" fill="#9FB4D0" fill-opacity="0.5"/>
+    <ellipse cx="55" cy="56.5" rx="1.5" ry="0.9" fill="#3E5274"/>
+    <ellipse cx="54.6" cy="56.1" rx="0.6" ry="0.3" fill="#9FB4D0" fill-opacity="0.5"/>
+    <circle cx="13" cy="58" r="0.7" fill="#2C3E5C"/>
+    <circle cx="50" cy="59" r="0.6" fill="#2C3E5C"/>
+    <path d="M5 56 C4.6 54 5.8 53 5.2 51.4 M6 56 C6.6 54.4 6 53.4 7 52.2" fill="none" stroke="#2E9A73" stroke-width="0.7" stroke-linecap="round"/>
+    <path d="M58.5 56 C58 54.6 59.2 53.6 58.6 52.4" fill="none" stroke="#2E9A73" stroke-width="0.7" stroke-linecap="round"/>
+  </g>
+  <!-- lava glow behind the cone -->
+  <circle cx="32" cy="26" r="20" fill="url(#vkGlow)"/>
+  <!-- smoke plume -->
+  <g>
+    <circle cx="31" cy="18.5" r="4" fill="url(#vkSmoke)" fill-opacity="0.6"/>
+    <circle cx="34.5" cy="13" r="4.6" fill="url(#vkSmoke)" fill-opacity="0.55"/>
+    <circle cx="31.5" cy="8.5" r="3.6" fill="url(#vkSmoke)" fill-opacity="0.45"/>
+    <circle cx="37" cy="5.5" r="2.6" fill="url(#vkSmoke)" fill-opacity="0.35"/>
+    <ellipse cx="32" cy="21.4" rx="4" ry="1.3" fill="#FF9100" fill-opacity="0.35"/>
+    <path d="M30 11 Q31.5 9 34 9.4 M32.5 15 Q34 12.6 37 13" fill="none" stroke="#A5B0C4" stroke-opacity="0.4" stroke-width="0.6" stroke-linecap="round"/>
+  </g>
+  <!-- volcano cone -->
+  <g>
+    <path d="M9 54 Q12 49 14.5 44 L17.5 38 Q19 33 22 29 Q23 26 25 25 Q32 23 39 25 Q41 26 42 29 Q45 33 47 38 L50.5 44 Q52 49 55 54 Q44 57.4 32 57.4 Q20 57.4 9 54 Z" fill="url(#vkCone)" stroke="#0A0E1A" stroke-opacity="0.75" stroke-width="0.7" stroke-linejoin="round"/>
+    <path d="M36 25 Q40 26 42 29 Q45 33 47 38 L50.5 44 Q52 49 55 54 Q44 57.4 34 57.4 Q38 48 36 38 Q35 30 36 25 Z" fill="url(#vkShade)"/>
+    <!-- rock strata & facets -->
+    <path d="M12 47 Q18 45 24 46.5 M11 51.5 Q15.5 50.3 21 51.6 M43 45 Q48 44 52 46 M44 51 Q49 50 53 51.6 M18 38 Q21 37 24 38.5 M41 36 Q44 36 46 38" fill="none" stroke="#1A0E0B" stroke-opacity="0.7" stroke-width="0.5" stroke-linecap="round"/>
+    <path d="M12.5 46.5 Q18 44.6 23.5 46 M11.5 51 Q15.5 49.8 20.5 51 M18.4 37.5 Q21 36.6 23.6 38" fill="none" stroke="#B08878" stroke-opacity="0.45" stroke-width="0.4" stroke-linecap="round"/>
+    <path d="M14 44 L17 41 L20 42.5 L18 45 Z M28 52 L31 50 L33 52.5 L30 54 Z M46 48 L49 47 L50 49.5 L47 50 Z" fill="#2A1A15" stroke="#0A0E1A" stroke-opacity="0.5" stroke-width="0.3"/>
+    <path d="M14 44 L17 41 L18 42 Z M28 52 L31 50 L31.5 51 Z" fill="#C49A88" fill-opacity="0.5"/>
+    <!-- top-left highlight -->
+    <path d="M11 51.6 Q14 46 17 40 Q20 33 24 27.5 Q22 33 20 38 Q15 46 11 51.6 Z" fill="#E0B8A0" fill-opacity="0.3"/>
+    <!-- cyan rim light -->
+    <path d="M43 31 Q47 37 51 44.5 Q52.6 49.6 54.6 53.4" fill="none" stroke="#00E5FF" stroke-opacity="0.55" stroke-width="0.7" stroke-linecap="round"/>
+  </g>
+  <!-- lava cracks -->
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <path d="M27 28 L25 34 L28 36 L23 44 L26 46 L21.5 53 M37 28 L39 33 L36 35 L41 42 L38 44 L42.5 50.5" fill="none" stroke="#FF3D00" stroke-opacity="0.3" stroke-width="3"/>
+    <path d="M27 28 L25 34 L28 36 L23 44 L26 46 L21.5 53 M37 28 L39 33 L36 35 L41 42 L38 44 L42.5 50.5" fill="none" stroke="url(#vkLava)" stroke-width="1.3"/>
+    <path d="M27 28 L25 34 L28 36 L23 44 M37 28 L39 33 L36 35 L41 42" fill="none" stroke="#FFF3C4" stroke-width="0.45"/>
+    <path d="M28 36 L32 39 L31 45 M23 44 L19 46 M41 42 L45 41 M26 46 L29 49" fill="none" stroke="#FF6D00" stroke-width="0.6"/>
+    <circle cx="32" cy="40" r="2.4" fill="#FF6D00" fill-opacity="0.25"/>
+  </g>
+  <!-- lava drips from the rim -->
+  <g>
+    <path d="M24.5 25.5 Q24 28 24.6 30 Q25.4 31.5 25.8 29 Q26 27 26.5 25.6 Z" fill="url(#vkLava)"/>
+    <path d="M38 25.5 Q38.6 28.5 38.3 31.5 Q38.9 33 39.5 31 Q39.8 28 39.8 26 Z" fill="url(#vkLava)"/>
+    <path d="M31 26 Q30.8 29 31.4 30.4 Q32.2 31 32.4 29.4 Q32.6 27.5 32.8 26 Z" fill="url(#vkLava)"/>
+  </g>
+  <!-- crater: crusted rim + glowing lava pool -->
+  <g>
+    <ellipse cx="32" cy="25.6" rx="9.2" ry="3.2" fill="#2A1A16" stroke="#0A0E1A" stroke-opacity="0.8" stroke-width="0.6"/>
+    <ellipse cx="32" cy="25.4" rx="7.4" ry="2.3" fill="url(#vkPool)"/>
+    <ellipse cx="31" cy="25" rx="3.6" ry="0.9" fill="#FFFDE7" fill-opacity="0.85"/>
+    <circle cx="35.5" cy="25.6" r="0.6" fill="#FF6D00"/>
+    <circle cx="28" cy="25.8" r="0.45" fill="#FF6D00"/>
+    <path d="M23.2 25.2 Q25 23 32 22.6 Q37 22.7 40 24" fill="none" stroke="#B08878" stroke-opacity="0.6" stroke-width="0.5" stroke-linecap="round"/>
+    <path d="M24.5 27.6 Q32 29.4 39.6 27.4" fill="none" stroke="#FFAB40" stroke-opacity="0.7" stroke-width="0.5" stroke-linecap="round"/>
+  </g>
+  <!-- hydrothermal chimneys with mineral crust -->
+  <g>
+    <path d="M12.4 50 Q13.4 48 13.2 46 Q12.8 44.6 13.7 43 Q14.6 41.8 15.6 43 Q15.4 44.8 16.2 46.2 Q16.2 48.4 17 50 Z" fill="url(#vkChim)" stroke="#0A0E1A" stroke-opacity="0.6" stroke-width="0.4"/>
+    <ellipse cx="14.6" cy="42.8" rx="1.3" ry="0.5" fill="#1DE9B6" fill-opacity="0.8"/>
+    <path d="M13.3 46 H16 M13.2 48 H16.2" fill="none" stroke="#0A0E1A" stroke-opacity="0.35" stroke-width="0.3"/>
+    <circle cx="13.4" cy="44.5" r="0.45" fill="#FFF59D"/>
+    <circle cx="16" cy="47" r="0.4" fill="#FFF59D"/>
+    <path d="M47.4 52 Q48.4 50 48.2 48.4 Q47.9 47 48.6 46 Q49.4 44.8 50.3 46 Q50.2 47.6 50.8 48.8 Q50.8 50.6 51.6 52 Z" fill="url(#vkChim)" stroke="#0A0E1A" stroke-opacity="0.6" stroke-width="0.4"/>
+    <ellipse cx="49.4" cy="45.8" rx="1.1" ry="0.45" fill="#1DE9B6" fill-opacity="0.8"/>
+    <circle cx="48.6" cy="49" r="0.4" fill="#FFF59D"/>
+    <circle cx="20" cy="50" r="0.5" fill="#E0E0C0" fill-opacity="0.7"/>
+    <circle cx="44.5" cy="54" r="0.5" fill="#E0E0C0" fill-opacity="0.7"/>
+    <circle cx="36" cy="56" r="0.45" fill="#FFF59D" fill-opacity="0.7"/>
+  </g>
+  <!-- rising bubbles -->
+  <g fill="#00E5FF" fill-opacity="0.18" stroke="#00E5FF" stroke-opacity="0.85" stroke-width="0.4">
+    <circle cx="44" cy="18" r="1.8"/>
+    <circle cx="47" cy="11" r="1.3"/>
+    <circle cx="45" cy="5" r="0.9"/>
+    <circle cx="20" cy="22" r="1.2"/>
+    <circle cx="18" cy="15" r="0.8"/>
+    <circle cx="14.4" cy="38" r="0.8"/>
+    <circle cx="15" cy="34" r="0.6"/>
+    <circle cx="49.8" cy="41" r="0.7"/>
+  </g>
+  <g fill="#FFFFFF" fill-opacity="0.85">
+    <circle cx="43.4" cy="17.4" r="0.5"/>
+    <circle cx="46.6" cy="10.6" r="0.35"/>
+    <circle cx="19.6" cy="21.6" r="0.35"/>
+  </g>
+  <!-- glowing embers -->
+  <g fill="#FFAB00">
+    <circle cx="22" cy="18" r="0.5"/>
+    <circle cx="41" cy="21" r="0.45"/>
+    <circle cx="35" cy="18.5" r="0.35"/>
+    <circle cx="16" cy="49" r="0.4" fill-opacity="0.8"/>
+  </g>
 </svg>

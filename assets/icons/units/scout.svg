@@ -1,15 +1,149 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M2 30 H12 M0 38 H10 M4 46 H12" stroke="#448AFF" stroke-width="2" stroke-linecap="round"/>
-  <path d="M8 64 Q8 44 32 42 Q56 44 56 64 Z" fill="#1565C0"/>
-  <path d="M32 42 Q56 44 56 64 H32 Z" fill="#0D47A1"/>
-  <path d="M26 42 H38 L36 64 H28 Z" fill="#0A2A66"/>
-  <circle cx="32" cy="26" r="15" fill="#1E88E5"/>
-  <path d="M32 11 A15 15 0 0 1 32 41 Z" fill="#1565C0"/>
-  <path d="M30 6 L36 2 L36 12 Z" fill="#82B1FF"/>
-  <rect x="20" y="20" width="24" height="11" rx="5.5" fill="#0A0E1A"/>
-  <rect x="22" y="22" width="20" height="7" rx="3.5" fill="#00E5FF"/>
-  <rect x="24" y="23" width="6" height="2" rx="1" fill="#E0F7FA"/>
-  <circle cx="44" cy="54" r="5" fill="#0A0E1A"/>
-  <circle cx="44" cy="54" r="3.5" fill="#00E5FF"/>
-  <path d="M42 54 H46 M44 52 V56" stroke="#0A0E1A" stroke-width="1"/>
+  <defs>
+    <radialGradient id="scGlow" cx="32" cy="28" r="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF" stop-opacity="0.3"/>
+      <stop offset="0.6" stop-color="#448AFF" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#448AFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="scSuit" x1="12" y1="42" x2="52" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#42A5F5"/>
+      <stop offset="0.45" stop-color="#1565C0"/>
+      <stop offset="1" stop-color="#0A2A66"/>
+    </linearGradient>
+    <radialGradient id="scHelm" cx="32" cy="26" r="16" fx="25" fy="17" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#90CAF9"/>
+      <stop offset="0.4" stop-color="#1E88E5"/>
+      <stop offset="1" stop-color="#0D3A80"/>
+    </radialGradient>
+    <linearGradient id="scVisor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E0F7FA"/>
+      <stop offset="0.35" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#006C80"/>
+    </linearGradient>
+    <linearGradient id="scFin" x1="30" y1="2" x2="37" y2="12" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E3F2FD"/>
+      <stop offset="0.5" stop-color="#82B1FF"/>
+      <stop offset="1" stop-color="#2962FF"/>
+    </linearGradient>
+    <radialGradient id="scSonar" cx="44" cy="54" r="5" fx="43" fy="53" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E0F7FA"/>
+      <stop offset="0.45" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#00838F"/>
+    </radialGradient>
+  </defs>
+
+  <!-- background glow -->
+  <circle cx="32" cy="30" r="28" fill="url(#scGlow)"/>
+
+  <!-- speed streaks -->
+  <g stroke-linecap="round">
+    <path d="M2 30 H12" stroke="#448AFF" stroke-width="2"/>
+    <path d="M1 38 H10" stroke="#448AFF" stroke-width="2"/>
+    <path d="M4 46 H12" stroke="#448AFF" stroke-width="2"/>
+    <path d="M3 30 H8 M2 38 H6 M5 46 H9" stroke="#E0F7FA" stroke-width="0.6" stroke-opacity="0.8"/>
+    <path d="M6 34 H11 M7 42 H11" stroke="#00E5FF" stroke-width="0.8" stroke-opacity="0.5"/>
+  </g>
+
+  <!-- torso / suit -->
+  <g>
+    <path d="M8 64 Q8 47 20 43.5 Q26 41.8 32 41.8 Q38 41.8 44 43.5 Q56 47 56 64 Z" fill="url(#scSuit)" stroke="#06183A" stroke-width="0.6" stroke-opacity="0.8"/>
+    <path d="M13 58 Q16 51 22 49 M42 49 Q48 51 51 59 M18 63 Q19 58 23 55" fill="none" stroke="#0A2A66" stroke-width="0.7" stroke-opacity="0.7" stroke-linecap="round"/>
+    <path d="M13.6 56.4 Q16.4 50.6 21.6 48.6" fill="none" stroke="#90CAF9" stroke-width="0.5" stroke-opacity="0.5" stroke-linecap="round"/>
+    <path d="M10 60 Q11 50 19 45.4" fill="none" stroke="#BBDEFB" stroke-width="1" stroke-opacity="0.35" stroke-linecap="round"/>
+    <path d="M55.6 62 Q55 50 46 45.4" fill="none" stroke="#00E5FF" stroke-width="0.7" stroke-opacity="0.6" stroke-linecap="round"/>
+    <!-- shoulder plates -->
+    <path d="M9 52 Q9.6 45.6 17 44 L22 43.4 Q21 48 17 50 Z" fill="#1E88E5" stroke="#06183A" stroke-width="0.5"/>
+    <path d="M10.4 49 Q11.6 45.6 17 44.6" fill="none" stroke="#E3F2FD" stroke-width="0.6" stroke-opacity="0.6" stroke-linecap="round"/>
+    <path d="M55 52 Q54.4 45.6 47 44 L42 43.4 Q43 48 47 50 Z" fill="#0D47A1" stroke="#06183A" stroke-width="0.5"/>
+    <path d="M53.6 50 Q53 46.4 48 45" fill="none" stroke="#00E5FF" stroke-width="0.5" stroke-opacity="0.7"/>
+    <circle cx="13" cy="48" r="0.55" fill="#E3F2FD"/>
+    <circle cx="17" cy="46.4" r="0.55" fill="#E3F2FD"/>
+    <circle cx="51" cy="48" r="0.55" fill="#90CAF9"/>
+  </g>
+
+  <!-- center zip panel -->
+  <g>
+    <path d="M26 43 H38 L36 64 H28 Z" fill="#0A2A66" stroke="#06183A" stroke-width="0.5"/>
+    <path d="M32 44 V64" stroke="#448AFF" stroke-width="0.6" stroke-opacity="0.7"/>
+    <path d="M31 46 H33 M31 49 H33 M31 52 H33 M31 55 H33 M31 58 H33 M31 61 H33" stroke="#82B1FF" stroke-width="0.4" stroke-opacity="0.6"/>
+    <circle cx="32" cy="46" r="0.9" fill="#E0F7FA"/>
+    <path d="M27 44 L28.6 63" stroke="#448AFF" stroke-width="0.4" stroke-opacity="0.5"/>
+  </g>
+
+  <!-- sonar / compass emblem -->
+  <g>
+    <circle cx="44" cy="54" r="6.6" fill="#00E5FF" fill-opacity="0.15"/>
+    <circle cx="44" cy="54" r="5" fill="#0A0E1A" stroke="#90CAF9" stroke-width="0.5"/>
+    <circle cx="44" cy="54" r="3.6" fill="url(#scSonar)"/>
+    <path d="M42 54 H46 M44 52 V56" stroke="#0A0E1A" stroke-width="0.9" stroke-linecap="round"/>
+    <circle cx="44" cy="54" r="2.4" fill="none" stroke="#0A0E1A" stroke-width="0.3" stroke-opacity="0.6"/>
+    <circle cx="42.8" cy="52.6" r="0.5" fill="#FFFFFF"/>
+  </g>
+
+  <!-- collar ring -->
+  <g>
+    <ellipse cx="32" cy="41.6" rx="11" ry="3" fill="#0D47A1" stroke="#06183A" stroke-width="0.5"/>
+    <path d="M22 41 Q32 38 42 41" fill="none" stroke="#82B1FF" stroke-width="0.6" stroke-opacity="0.8"/>
+    <circle cx="24" cy="43" r="0.5" fill="#BBDEFB"/>
+    <circle cx="32" cy="44.4" r="0.5" fill="#BBDEFB"/>
+    <circle cx="40" cy="43" r="0.5" fill="#BBDEFB"/>
+  </g>
+
+  <!-- helmet fin -->
+  <g>
+    <path d="M28.6 12 Q29 6 36.4 1.6 L36 12.6 Z" fill="url(#scFin)" stroke="#0D3A80" stroke-width="0.5" stroke-linejoin="round"/>
+    <path d="M30 10.6 Q31 6.4 35.6 3" fill="none" stroke="#FFFFFF" stroke-width="0.6" stroke-opacity="0.7" stroke-linecap="round"/>
+    <path d="M32 11 L35.4 6 M33.6 11.4 L35.6 8.4" stroke="#2962FF" stroke-width="0.4" stroke-opacity="0.7"/>
+  </g>
+
+  <!-- helmet -->
+  <g>
+    <circle cx="32" cy="26" r="15" fill="url(#scHelm)" stroke="#051A40" stroke-width="0.7"/>
+    <path d="M19 21 Q22 13.4 30 11.6" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-opacity="0.5" stroke-linecap="round"/>
+    <path d="M46.4 29 Q44.6 38 35 40.8" fill="none" stroke="#00E5FF" stroke-width="0.9" stroke-opacity="0.75" stroke-linecap="round"/>
+    <path d="M32 11 V19" stroke="#0D3A80" stroke-width="0.5" stroke-opacity="0.7"/>
+    <path d="M19 33 Q32 40 45 33" fill="none" stroke="#0D3A80" stroke-width="0.5" stroke-opacity="0.7"/>
+    <path d="M21 36 L23 35 M41 15 L43 16.4" stroke="#BBDEFB" stroke-width="0.35" stroke-opacity="0.6"/>
+    <!-- side lamp -->
+    <rect x="15.4" y="23" width="3.6" height="6" rx="1.4" fill="#0D47A1" stroke="#051A40" stroke-width="0.4"/>
+    <circle cx="17.2" cy="26" r="1.1" fill="#E0F7FA"/>
+    <circle cx="17.2" cy="26" r="2.4" fill="#00E5FF" fill-opacity="0.25"/>
+    <!-- antenna nub -->
+    <rect x="44.6" y="22" width="2.6" height="7" rx="1" fill="#0D3A80" stroke="#051A40" stroke-width="0.4"/>
+    <circle cx="45.9" cy="23.6" r="0.5" fill="#00E5FF"/>
+    <!-- visor -->
+    <rect x="20" y="19.4" width="24" height="12" rx="6" fill="#0A0E1A" stroke="#051A40" stroke-width="0.5"/>
+    <rect x="21.8" y="21.2" width="20.4" height="8.4" rx="4.2" fill="url(#scVisor)"/>
+    <path d="M24 26.4 Q27 24.8 30 26.2 M34 26.2 Q37 24.8 40 26.4" fill="none" stroke="#004D5A" stroke-width="0.9" stroke-opacity="0.7" stroke-linecap="round"/>
+    <ellipse cx="27" cy="26" rx="1.3" ry="0.9" fill="#FFFFFF"/>
+    <ellipse cx="37" cy="26" rx="1.3" ry="0.9" fill="#FFFFFF"/>
+    <path d="M22 28.4 Q32 31 42 28.4" fill="none" stroke="#00E5FF" stroke-width="0.6" stroke-opacity="0.7"/>
+    <rect x="23.6" y="22.2" width="6.6" height="1.8" rx="0.9" fill="#FFFFFF" fill-opacity="0.85"/>
+    <circle cx="32" cy="22.8" r="0.5" fill="#FFFFFF" fill-opacity="0.8"/>
+    <path d="M38.6 22.4 L40.6 24.4" stroke="#FFFFFF" stroke-width="0.5" stroke-opacity="0.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- bioluminescent plankton -->
+  <g fill="#00E5FF">
+    <circle cx="5" cy="8" r="1.4" fill-opacity="0.15"/>
+    <circle cx="5" cy="8" r="0.45" fill-opacity="0.9"/>
+    <circle cx="59" cy="6" r="1.4" fill-opacity="0.15"/>
+    <circle cx="59" cy="6" r="0.45" fill-opacity="0.9"/>
+    <circle cx="3" cy="24" r="1.4" fill-opacity="0.15"/>
+    <circle cx="3" cy="24" r="0.45" fill-opacity="0.9"/>
+    <circle cx="61" cy="26" r="1.4" fill-opacity="0.15"/>
+    <circle cx="61" cy="26" r="0.45" fill-opacity="0.9"/>
+    <circle cx="58" cy="60" r="1.4" fill-opacity="0.15"/>
+    <circle cx="58" cy="60" r="0.45" fill-opacity="0.9"/>
+    <circle cx="4" cy="40" r="1.4" fill-opacity="0.15"/>
+    <circle cx="4" cy="40" r="0.45" fill-opacity="0.9"/>
+  </g>
+
+  <!-- bubbles -->
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.4" stroke-opacity="0.7">
+    <circle cx="50" cy="10" r="1.6"/>
+    <circle cx="54" cy="15" r="1"/>
+    <circle cx="47" cy="5" r="0.8"/>
+  </g>
+  <circle cx="49.5" cy="9.5" r="0.45" fill="#FFFFFF"/>
 </svg>

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../domain/tech/tech_node_state.dart';
 import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
 
 class TechNodeWidget extends StatelessWidget {
   final String iconPath;
@@ -43,16 +43,10 @@ class TechNodeWidget extends StatelessWidget {
                 border: _buildBorder(),
               ),
               child: Center(
-                child: SvgPicture.asset(
-                  iconPath,
-                  width: 24,
-                  height: 24,
-                  colorFilter: state == TechNodeState.locked
-                      ? const ColorFilter.mode(
-                          Colors.grey,
-                          BlendMode.saturation,
-                        )
-                      : null,
+                child: RasterSvg(
+                  assetPath: iconPath,
+                  color: state == TechNodeState.locked ? Colors.grey : null,
+                  colorBlendMode: BlendMode.saturation,
                 ),
               ),
             ),

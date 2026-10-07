@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/presentation/widgets/resource/resource_icon.dart';
+import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 
 void main() {
   group('ResourceIcon', () {
@@ -16,9 +16,9 @@ void main() {
       };
       for (final type in ResourceType.values) {
         final icon = ResourceIcon(type: type);
-        final svg = icon.build(_FakeContext()) as SvgPicture;
+        final svg = icon.build(_FakeContext()) as RasterSvg;
         expect(
-          svg.bytesLoader.toString(),
+          svg.assetPath,
           contains(expected[type]),
         );
       }
@@ -26,16 +26,14 @@ void main() {
 
     test('default size is 24', () {
       const icon = ResourceIcon(type: ResourceType.algae);
-      final svg = icon.build(_FakeContext()) as SvgPicture;
-      expect(svg.width, 24);
-      expect(svg.height, 24);
+      final svg = icon.build(_FakeContext()) as RasterSvg;
+      expect(svg.size, 24);
     });
 
     test('custom size is applied', () {
       const icon = ResourceIcon(type: ResourceType.coral, size: 48);
-      final svg = icon.build(_FakeContext()) as SvgPicture;
-      expect(svg.width, 48);
-      expect(svg.height, 48);
+      final svg = icon.build(_FakeContext()) as RasterSvg;
+      expect(svg.size, 48);
     });
 
     test('all five resource types exist', () {

@@ -1,13 +1,184 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M6 54 H58 L54 60 H10 Z" fill="#1B3150"/>
-  <rect x="6" y="52" width="52" height="3" fill="#2F5A82"/>
-  <path d="M8 52 V30 H56 V52 Z" fill="#455A64"/>
-  <path d="M32 30 H56 V52 H32 Z" fill="#37474F"/>
-  <path d="M6 30 H58 V24 H52 V27 H46 V24 H40 V27 H34 V24 H30 V27 H24 V24 H18 V27 H12 V24 H6 Z" fill="#78909C"/>
-  <path d="M24 52 V42 A8 8 0 0 1 40 42 V52 Z" fill="#0A0E1A"/>
-  <rect x="12" y="36" width="8" height="4" rx="1" fill="#FF80AB"/>
-  <rect x="44" y="36" width="8" height="4" rx="1" fill="#FF80AB"/>
-  <path d="M18 4 L46 22 M46 4 L18 22" stroke="#CFD8DC" stroke-width="2.5" stroke-linecap="round"/>
-  <path d="M15 2 L21 3 L19 7 Z M49 2 L43 3 L45 7 Z" fill="#FF80AB"/>
-  <circle cx="32" cy="13" r="4" fill="#FF80AB"/>
+  <defs>
+    <linearGradient id="brSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B84AC"/><stop offset="0.4" stop-color="#2F5A82"/><stop offset="1" stop-color="#13243A"/></linearGradient>
+    <radialGradient id="brPeb" cx="0.35" cy="0.3" r="0.75"><stop offset="0" stop-color="#CFD8DC"/><stop offset="0.5" stop-color="#78909C"/><stop offset="1" stop-color="#37474F"/></radialGradient>
+    <linearGradient id="brWall" x1="0" y1="0" x2="1" y2="0.3"><stop offset="0" stop-color="#6D8796"/><stop offset="0.5" stop-color="#455A64"/><stop offset="1" stop-color="#263238"/></linearGradient>
+    <linearGradient id="brTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFD8DC"/><stop offset="0.5" stop-color="#90A4AE"/><stop offset="1" stop-color="#546E7A"/></linearGradient>
+    <linearGradient id="brTower" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#90A4AE"/><stop offset="0.5" stop-color="#546E7A"/><stop offset="1" stop-color="#263238"/></linearGradient>
+    <linearGradient id="brBlade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.45" stop-color="#CFD8DC"/><stop offset="1" stop-color="#78909C"/></linearGradient>
+    <radialGradient id="brPink" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#FFE0EA"/><stop offset="0.4" stop-color="#FF80AB"/><stop offset="1" stop-color="#C2185B"/></radialGradient>
+    <linearGradient id="brDoor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A0E1A"/><stop offset="0.55" stop-color="#2A0F22"/><stop offset="1" stop-color="#C2185B"/></linearGradient>
+    <linearGradient id="brMetal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFD8DC"/><stop offset="0.45" stop-color="#78909C"/><stop offset="1" stop-color="#263238"/></linearGradient>
+  </defs>
+  <!-- seabed mound + contact shadow -->
+  <g>
+    <ellipse cx="32" cy="56.8" rx="29" ry="3.6" fill="#000000" fill-opacity="0.38"/>
+    <path d="M5 55 C8 50.5 20 49 32 49 C44 49 56 50.5 59 55 C56 58.2 44 59.5 32 59.5 C20 59.5 8 58.2 5 55 Z" fill="url(#brSand)" stroke="#0A0E1A" stroke-width="0.5" stroke-opacity="0.7"/>
+    <ellipse cx="32" cy="52" rx="22" ry="2" fill="#0A0E1A" fill-opacity="0.45"/>
+    <path d="M6 54.4 C9 50.6 20 49.6 30 49.5" fill="none" stroke="#9CC3E6" stroke-opacity="0.5" stroke-width="0.6" stroke-linecap="round"/>
+    <path d="M58 55.8 C55 58.4 44 59 36 59.2" fill="none" stroke="#00E5FF" stroke-opacity="0.45" stroke-width="0.5" stroke-linecap="round"/>
+    <path d="M10 56.2 q3 -1 6 0 M47 57.4 q3 -1 6 0 M24 58.2 q3 -0.8 6 0" fill="none" stroke="#0D1B2A" stroke-opacity="0.45" stroke-width="0.4" stroke-linecap="round"/>
+    <ellipse cx="9" cy="55.5" rx="1.4" ry="0.9" fill="url(#brPeb)" stroke="#0A0E1A" stroke-width="0.3" stroke-opacity="0.6"/>
+    <ellipse cx="13.5" cy="57.3" rx="0.9" ry="0.6" fill="url(#brPeb)" stroke="#0A0E1A" stroke-width="0.3" stroke-opacity="0.6"/>
+    <ellipse cx="53.5" cy="56.6" rx="1.3" ry="0.8" fill="url(#brPeb)" stroke="#0A0E1A" stroke-width="0.3" stroke-opacity="0.6"/>
+    <ellipse cx="57" cy="55" rx="0.8" ry="0.55" fill="url(#brPeb)" stroke="#0A0E1A" stroke-width="0.3" stroke-opacity="0.6"/>
+    <path d="M8 54.5 q-1 -2.5 0.6 -4.5 M9.2 54.7 q0.8 -2 -0.2 -3.6 M55.6 54.6 q1 -2.6 -0.4 -4.8 M56.8 55 q-0.6 -1.8 0.6 -3.2" fill="none" stroke="#69F0AE" stroke-opacity="0.85" stroke-width="0.6" stroke-linecap="round"/>
+  </g>
+  <!-- back sword (mirrored) -->
+  <g transform="translate(64 0) scale(-1 1)">
+    <g transform="translate(16 3.2) rotate(33.9)">
+    <path d="M6.4 -1.25 H30.6 L35 0 L30.6 1.25 H6.4 Z" fill="url(#brBlade)" stroke="#263238" stroke-width="0.4" stroke-linejoin="round"/>
+    <path d="M7.6 0 H29.5" stroke="#455A64" stroke-opacity="0.7" stroke-width="0.45"/>
+    <path d="M7 -0.85 H30.5" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.3"/>
+    <rect x="1" y="-0.8" width="4.4" height="1.6" rx="0.4" fill="#4E342E" stroke="#1B0F0B" stroke-width="0.3"/>
+    <path d="M2 -0.8 V0.8 M3.2 -0.8 V0.8 M4.4 -0.8 V0.8" stroke="#8D6E63" stroke-width="0.35"/>
+    <rect x="5.1" y="-3" width="1.7" height="6" rx="0.7" fill="url(#brPink)" stroke="#880E4F" stroke-width="0.35"/>
+    <circle cx="5.95" cy="0" r="0.6" fill="#E0F7FA"/>
+    <circle cx="0.3" cy="0" r="1.45" fill="url(#brPink)" stroke="#880E4F" stroke-width="0.35"/>
+    <circle cx="-0.1" cy="-0.45" r="0.4" fill="#FFFFFF"/>
+    </g>
+  </g>
+  <!-- front sword -->
+  <g transform="translate(16 3.2) rotate(33.9)">
+    <path d="M6.4 -1.25 H30.6 L35 0 L30.6 1.25 H6.4 Z" fill="url(#brBlade)" stroke="#263238" stroke-width="0.4" stroke-linejoin="round"/>
+    <path d="M7.6 0 H29.5" stroke="#455A64" stroke-opacity="0.7" stroke-width="0.45"/>
+    <path d="M7 -0.85 H30.5" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.3"/>
+    <rect x="1" y="-0.8" width="4.4" height="1.6" rx="0.4" fill="#4E342E" stroke="#1B0F0B" stroke-width="0.3"/>
+    <path d="M2 -0.8 V0.8 M3.2 -0.8 V0.8 M4.4 -0.8 V0.8" stroke="#8D6E63" stroke-width="0.35"/>
+    <rect x="5.1" y="-3" width="1.7" height="6" rx="0.7" fill="url(#brPink)" stroke="#880E4F" stroke-width="0.35"/>
+    <circle cx="5.95" cy="0" r="0.6" fill="#E0F7FA"/>
+    <circle cx="0.3" cy="0" r="1.45" fill="url(#brPink)" stroke="#880E4F" stroke-width="0.35"/>
+    <circle cx="-0.1" cy="-0.45" r="0.4" fill="#FFFFFF"/>
+  </g>
+  <!-- main wall -->
+  <g>
+    <path d="M10 52 V29.5 H54 V52 Z" fill="url(#brWall)" stroke="#0A0E1A" stroke-width="0.6" stroke-opacity="0.8"/>
+    <path d="M10 36.5 H54 M10 43.5 H54 M18 29.5 V36.5 M30 29.5 V36.5 M42 29.5 V36.5 M14 36.5 V43.5 M24 36.5 V43.5 M46 36.5 V43.5 M18 43.5 V52 M46 43.5 V52" stroke="#1C262B" stroke-opacity="0.7" stroke-width="0.4"/>
+    <path d="M10.3 37 H53.7 M10.3 44 H53.7" stroke="#B0BEC5" stroke-opacity="0.3" stroke-width="0.3"/>
+    <circle cx="12" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="16" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="20" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="24" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="28" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="32" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="36" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="40" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="44" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="48" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="52" cy="35.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="12" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="16" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="20" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="24" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="28" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="32" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="36" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="40" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="44" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="48" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="52" cy="42.4" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <rect x="10.6" y="30" width="1.2" height="21.5" fill="#FFFFFF" fill-opacity="0.18"/>
+    <path d="M53.6 31 V51.5" stroke="#00E5FF" stroke-opacity="0.5" stroke-width="0.5"/>
+  </g>
+  <!-- battlements -->
+  <g>
+    <path d="M8.5 30.2 H55.5 V26.6 H51 V24 H45 V26.6 H38.5 V24 H25.5 V26.6 H19 V24 H13 V26.6 H8.5 Z" fill="url(#brTop)" stroke="#1C262B" stroke-width="0.5" stroke-linejoin="round"/>
+    <path d="M13.4 24.5 H18.6 M25.9 24.5 H38.1 M45.4 24.5 H50.6 M8.9 27 H12.6 M19.4 27 H25 M39 27 H44.6 M51.4 27 H55" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.4"/>
+    <path d="M8.5 29 H55.5" stroke="#263238" stroke-opacity="0.5" stroke-width="0.4"/>
+    <circle cx="11" cy="28.6" r="0.28" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="17" cy="28.6" r="0.28" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="23" cy="28.6" r="0.28" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="29" cy="28.6" r="0.28" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="35" cy="28.6" r="0.28" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="41" cy="28.6" r="0.28" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="47" cy="28.6" r="0.28" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="53" cy="28.6" r="0.28" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+  </g>
+  <!-- corner towers -->
+  <g>
+    <path d="M4.6 52 V27 H11 V52 Z M53 52 V27 H59.4 V52 Z" fill="url(#brTower)" stroke="#0A0E1A" stroke-width="0.55" stroke-opacity="0.8"/>
+    <path d="M4 27.4 V23.8 H5.8 V25.4 H7 V23.8 H8.6 V25.4 H9.8 V23.8 H11.6 V27.4 Z M52.4 27.4 V23.8 H54.2 V25.4 H55.4 V23.8 H57 V25.4 H58.2 V23.8 H60 V27.4 Z" fill="url(#brTop)" stroke="#1C262B" stroke-width="0.45"/>
+    <path d="M4.6 34 H11 M4.6 41 H11 M53 34 H59.4 M53 41 H59.4" stroke="#1C262B" stroke-opacity="0.6" stroke-width="0.4"/>
+    <rect x="5.3" y="28" width="0.9" height="23" fill="#FFFFFF" fill-opacity="0.2"/>
+    <path d="M59.2 28 V51.5" stroke="#00E5FF" stroke-opacity="0.55" stroke-width="0.5"/>
+    <circle cx="6.2" cy="33" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="9.4" cy="33" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="6.2" cy="40" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="9.4" cy="40" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="54.6" cy="33" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="57.8" cy="33" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="54.6" cy="40" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="57.8" cy="40" r="0.3" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+  </g>
+  <!-- tower lamps -->
+  <g>
+    <circle cx="7.8" cy="37.6" r="2.25" fill="#00E5FF" fill-opacity="0.08"/>
+    <circle cx="7.8" cy="37.6" r="1.42" fill="#00E5FF" fill-opacity="0.2"/>
+    <circle cx="7.8" cy="37.6" r="0.75" fill="#E0F7FA"/>
+    <circle cx="56.2" cy="37.6" r="2.25" fill="#00E5FF" fill-opacity="0.08"/>
+    <circle cx="56.2" cy="37.6" r="1.42" fill="#00E5FF" fill-opacity="0.2"/>
+    <circle cx="56.2" cy="37.6" r="0.75" fill="#E0F7FA"/>
+  </g>
+  <!-- glowing window slits -->
+  <g>
+    <rect x="12.5" y="37.6" width="9" height="5" rx="1.6" fill="#FF80AB" fill-opacity="0.22"/>
+    <rect x="42.5" y="37.6" width="9" height="5" rx="1.6" fill="#FF80AB" fill-opacity="0.22"/>
+    <rect x="13.5" y="38.4" width="7" height="3.4" rx="1" fill="url(#brMetal)" stroke="#1C262B" stroke-width="0.35"/>
+    <rect x="43.5" y="38.4" width="7" height="3.4" rx="1" fill="url(#brMetal)" stroke="#1C262B" stroke-width="0.35"/>
+    <rect x="14.3" y="39" width="5.4" height="2.2" rx="0.7" fill="url(#brPink)"/>
+    <rect x="44.3" y="39" width="5.4" height="2.2" rx="0.7" fill="url(#brPink)"/>
+    <path d="M16.1 39 V41.2 M17.9 39 V41.2 M46.1 39 V41.2 M47.9 39 V41.2" stroke="#4A0E2A" stroke-width="0.4"/>
+    <path d="M14.8 39.5 H16" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="0.35" stroke-linecap="round"/>
+    <path d="M44.8 39.5 H46" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="0.35" stroke-linecap="round"/>
+  </g>
+  <!-- gate with portcullis -->
+  <g>
+    <path d="M23.2 52 V42.3 A8.8 8.8 0 0 1 40.8 42.3 V52 Z" fill="url(#brTop)" stroke="#1C262B" stroke-width="0.5"/>
+    <path d="M24.8 52 V42.5 A7.2 7.2 0 0 1 39.2 42.5 V52 Z" fill="url(#brDoor)"/>
+    <path d="M27.6 36.6 V52 M30.6 35.4 V52 M33.4 35.4 V52 M36.4 36.6 V52 M24.8 42 H39.2 M24.8 46.4 H39.2" stroke="#90A4AE" stroke-width="0.55"/>
+    <path d="M27.6 52 l-0.4 1 M30.6 52 l-0.4 1 M33.4 52 l-0.4 1 M36.4 52 l-0.4 1" stroke="#90A4AE" stroke-width="0.45"/>
+    <circle cx="27.6" cy="42" r="0.3" fill="#ECEFF1" stroke="#263238" stroke-width="0.25"/>
+    <circle cx="30.6" cy="42" r="0.3" fill="#ECEFF1" stroke="#263238" stroke-width="0.25"/>
+    <circle cx="33.4" cy="42" r="0.3" fill="#ECEFF1" stroke="#263238" stroke-width="0.25"/>
+    <circle cx="36.4" cy="42" r="0.3" fill="#ECEFF1" stroke="#263238" stroke-width="0.25"/>
+    <circle cx="27.6" cy="46.4" r="0.3" fill="#ECEFF1" stroke="#263238" stroke-width="0.25"/>
+    <circle cx="30.6" cy="46.4" r="0.3" fill="#ECEFF1" stroke="#263238" stroke-width="0.25"/>
+    <circle cx="33.4" cy="46.4" r="0.3" fill="#ECEFF1" stroke="#263238" stroke-width="0.25"/>
+    <circle cx="36.4" cy="46.4" r="0.3" fill="#ECEFF1" stroke="#263238" stroke-width="0.25"/>
+    <path d="M32 33.6 L33.4 35.2 H30.6 Z" fill="#CFD8DC" stroke="#263238" stroke-width="0.3"/>
+    <ellipse cx="32" cy="52.6" rx="7" ry="1.2" fill="#FF80AB" fill-opacity="0.3"/>
+  </g>
+  <!-- shield emblem -->
+  <g>
+    <circle cx="32" cy="13" r="7" fill="#FF80AB" fill-opacity="0.12"/>
+    <circle cx="32" cy="13" r="5" fill="url(#brMetal)" stroke="#263238" stroke-width="0.5"/>
+    <circle cx="32" cy="13" r="3.8" fill="url(#brPink)" stroke="#880E4F" stroke-width="0.4"/>
+    <path d="M32 10.4 L33.2 13 L32 15.6 L30.8 13 Z" fill="#880E4F" fill-opacity="0.8"/>
+    <path d="M29.4 13 H34.6" stroke="#880E4F" stroke-opacity="0.8" stroke-width="0.5"/>
+    <circle cx="28.2" cy="13" r="0.32" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="35.8" cy="13" r="0.32" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="32" cy="8.6" r="0.32" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <circle cx="32" cy="17.4" r="0.32" fill="#CFD8DC" stroke="#1C2A33" stroke-width="0.25"/>
+    <path d="M29.4 11.2 A3 3 0 0 1 31.2 10" fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="0.45" stroke-linecap="round"/>
+  </g>
+  <!-- barnacles + growth -->
+  <g>
+    <circle cx="13" cy="51.4" r="0.95" fill="#B0BEC5" stroke="#37474F" stroke-width="0.3"/>
+    <circle cx="13" cy="51.4" r="0.35" fill="#263238"/>
+    <circle cx="14.9" cy="51.9" r="0.6" fill="#B0BEC5" stroke="#37474F" stroke-width="0.3"/>
+    <circle cx="50.4" cy="51.5" r="0.85" fill="#B0BEC5" stroke="#37474F" stroke-width="0.3"/>
+    <circle cx="50.4" cy="51.5" r="0.3" fill="#263238"/>
+    <path d="M21 52 q-0.8 -2.4 0.6 -4 M22.2 52 q0.6 -1.8 -0.2 -3" fill="none" stroke="#69F0AE" stroke-opacity="0.85" stroke-width="0.55" stroke-linecap="round"/>
+    <path d="M2.8 52.6 C3 50.4 2 49.6 2.6 48 M3 50.4 C4 50 4.4 49 4.3 48.2" fill="none" stroke="#FF6E91" stroke-width="0.75" stroke-linecap="round"/>
+  </g>
+  <!-- bubbles -->
+  <g>
+    <circle cx="56" cy="18" r="1.2" fill="#B2EBF2" fill-opacity="0.12" stroke="#E0F7FA" stroke-opacity="0.75" stroke-width="0.3"/>
+    <circle cx="55.54" cy="17.54" r="0.34" fill="#FFFFFF" fill-opacity="0.85"/>
+    <circle cx="58" cy="13.5" r="0.7" fill="#B2EBF2" fill-opacity="0.12" stroke="#E0F7FA" stroke-opacity="0.75" stroke-width="0.3"/>
+    <circle cx="55.5" cy="9.5" r="0.5" fill="#B2EBF2" fill-opacity="0.12" stroke="#E0F7FA" stroke-opacity="0.75" stroke-width="0.3"/>
+    <circle cx="8" cy="18" r="0.8" fill="#B2EBF2" fill-opacity="0.12" stroke="#E0F7FA" stroke-opacity="0.75" stroke-width="0.3"/>
+    <circle cx="7.7" cy="17.7" r="0.22" fill="#FFFFFF" fill-opacity="0.85"/>
+    <circle cx="6.6" cy="14" r="0.5" fill="#B2EBF2" fill-opacity="0.12" stroke="#E0F7FA" stroke-opacity="0.75" stroke-width="0.3"/>
+  </g>
 </svg>

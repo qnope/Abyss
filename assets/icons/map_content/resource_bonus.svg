@@ -1,16 +1,205 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M10 34 H54 V54 Q54 56 52 56 H12 Q10 56 10 54 Z" fill="#6D4C41"/>
-  <path d="M32 34 H54 V54 Q54 56 52 56 H32 Z" fill="#5D4037"/>
-  <path d="M12 30 L16 14 H52 L48 30 Z" fill="#8D6E63"/>
-  <path d="M16 14 H52 L50 20 H15 Z" fill="#A1887F"/>
-  <circle cx="22" cy="31" r="5" fill="#E0F7FA"/>
-  <circle cx="32" cy="29" r="6" fill="#FFD740"/>
-  <circle cx="42" cy="31" r="5" fill="#B388FF"/>
-  <circle cx="30" cy="27" r="2" fill="#FFF8E1"/>
-  <rect x="10" y="34" width="44" height="4" fill="#FFB300"/>
-  <rect x="18" y="38" width="4" height="18" fill="#FFB300"/>
-  <rect x="42" y="38" width="4" height="18" fill="#FFB300"/>
-  <rect x="28" y="40" width="8" height="8" rx="1.5" fill="#FFD740"/>
-  <rect x="31" y="43" width="2" height="3" fill="#3E2723"/>
-  <path d="M54 10 L55.5 13.5 L59 15 L55.5 16.5 L54 20 L52.5 16.5 L49 15 L52.5 13.5 Z" fill="#FFF8E1"/>
+  <defs>
+    <linearGradient id="rbSand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A5A80"/>
+      <stop offset="1" stop-color="#16294A"/>
+    </linearGradient>
+    <linearGradient id="rbWood" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8D6E63"/>
+      <stop offset="0.5" stop-color="#6D4C41"/>
+      <stop offset="1" stop-color="#3E2723"/>
+    </linearGradient>
+    <linearGradient id="rbLid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#795548"/>
+      <stop offset="1" stop-color="#3E2723"/>
+    </linearGradient>
+    <linearGradient id="rbGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF59D"/>
+      <stop offset="0.45" stop-color="#FFC400"/>
+      <stop offset="1" stop-color="#B26A00"/>
+    </linearGradient>
+    <radialGradient id="rbHeap" cx="0.4" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#FFF8E1"/>
+      <stop offset="0.4" stop-color="#FFD740"/>
+      <stop offset="1" stop-color="#C77800"/>
+    </radialGradient>
+    <radialGradient id="rbPearl" cx="0.35" cy="0.3" r="0.75">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.6" stop-color="#E0F7FA"/>
+      <stop offset="1" stop-color="#80A8C0"/>
+    </radialGradient>
+    <linearGradient id="rbGemP" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E1CCFF"/>
+      <stop offset="0.5" stop-color="#B388FF"/>
+      <stop offset="1" stop-color="#5E35B1"/>
+    </linearGradient>
+    <linearGradient id="rbGemC" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E0F7FA"/>
+      <stop offset="0.5" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#00838F"/>
+    </linearGradient>
+    <radialGradient id="rbGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFD740" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#FFD740" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- golden glow -->
+  <ellipse cx="32" cy="30" rx="26" ry="18" fill="url(#rbGlow)" fill-opacity="0.6"/>
+
+  <!-- contact shadow + sand mound -->
+  <ellipse cx="32" cy="57.8" rx="28" ry="4.2" fill="#000" fill-opacity="0.38"/>
+  <path d="M4 57 Q7 51.5 18 51 H46 Q57 51.5 60 57 Q57 61 32 61.4 Q7 61 4 57 Z" fill="url(#rbSand)" stroke="#0A0E1A" stroke-width="0.5" stroke-opacity="0.7"/>
+  <path d="M7.5 55.5 Q11 52.5 18 52.2" fill="none" stroke="#7FA6CC" stroke-width="0.6" stroke-opacity="0.55" stroke-linecap="round"/>
+
+  <!-- open lid (inside visible) -->
+  <path d="M12.5 36 L15 19.5 Q32 14.5 49 19.5 L51.5 36 Z" fill="url(#rbLid)" stroke="#1A0E0A" stroke-width="0.7"/>
+  <path d="M15 19.5 Q32 14.5 49 19.5 L48.6 22 Q32 17.4 15.4 22 Z" fill="url(#rbGold)" stroke="#5C3A00" stroke-width="0.4"/>
+  <g stroke="#1A0E0A" stroke-width="0.4" stroke-opacity="0.8">
+    <path d="M14 27 Q32 23.4 50 27"/>
+    <path d="M13.2 31.6 Q32 28.4 50.8 31.6"/>
+  </g>
+  <path d="M20 21 L19 36 M44 21 L45 36" stroke="#B26A00" stroke-width="1.8"/>
+  <path d="M19.6 21 L18.7 36 M43.6 21 L44.6 36" stroke="#FFE57F" stroke-width="0.4" stroke-opacity="0.7"/>
+
+  <!-- treasure heap -->
+  <path d="M12.5 37 Q14 30.5 21 29.4 Q26 26.4 32 26.6 Q38 26.4 43 29.4 Q50 30.5 51.5 37 Z" fill="url(#rbHeap)" stroke="#8D5A00" stroke-width="0.5"/>
+  <!-- coins in the heap -->
+  <g fill="#FFD740" stroke="#B26A00" stroke-width="0.35">
+    <ellipse cx="18" cy="34" rx="2.2" ry="1.1"/>
+    <ellipse cx="25" cy="31" rx="2.2" ry="1.1"/>
+    <ellipse cx="38.5" cy="32.4" rx="2.2" ry="1.1"/>
+    <ellipse cx="46" cy="34.4" rx="2.2" ry="1.1"/>
+    <ellipse cx="30" cy="34.6" rx="2.2" ry="1.1"/>
+  </g>
+  <g fill="#FFFDE7">
+    <ellipse cx="17.4" cy="33.7" rx="0.8" ry="0.3"/>
+    <ellipse cx="24.4" cy="30.7" rx="0.8" ry="0.3"/>
+    <ellipse cx="37.9" cy="32.1" rx="0.8" ry="0.3"/>
+  </g>
+
+  <!-- big pearl -->
+  <circle cx="21.5" cy="30" r="4.4" fill="url(#rbPearl)" stroke="#4F7A94" stroke-width="0.45"/>
+  <path d="M18.6 29.4 A3 3 0 0 1 21 26.8" fill="none" stroke="#fff" stroke-width="0.8" stroke-linecap="round"/>
+  <circle cx="20.2" cy="28.4" r="0.8" fill="#fff"/>
+  <path d="M23.6 33.4 A4.2 4.2 0 0 0 25.8 30.6" fill="none" stroke="#B388FF" stroke-width="0.5" stroke-opacity="0.7" stroke-linecap="round"/>
+  <!-- small pearls -->
+  <g fill="url(#rbPearl)" stroke="#4F7A94" stroke-width="0.35">
+    <circle cx="35" cy="28.4" r="1.9"/>
+    <circle cx="27.4" cy="33.6" r="1.6"/>
+    <circle cx="48.4" cy="33" r="1.5"/>
+  </g>
+  <g fill="#fff">
+    <circle cx="34.4" cy="27.8" r="0.5"/>
+    <circle cx="26.9" cy="33.1" r="0.4"/>
+    <circle cx="47.9" cy="32.5" r="0.4"/>
+  </g>
+
+  <!-- purple gem -->
+  <g>
+    <path d="M38 25.4 L42.8 24 L46.4 27.4 L42.8 32.8 L37.4 28.6 Z" fill="url(#rbGemP)" stroke="#311B92" stroke-width="0.5" stroke-linejoin="round"/>
+    <path d="M38 25.4 L42.8 24 L42 27.6 Z" fill="#fff" fill-opacity="0.6"/>
+    <path d="M42 27.6 L46.4 27.4 L42.8 32.8 Z" fill="#311B92" fill-opacity="0.35"/>
+    <path d="M37.4 28.6 L42 27.6 L42.8 32.8 Z" fill="#7E57C2" fill-opacity="0.5"/>
+    <circle cx="40.2" cy="25.6" r="0.5" fill="#fff"/>
+  </g>
+  <!-- cyan gem -->
+  <g>
+    <path d="M27.4 26.6 L30 22.6 L33 26.6 L30 30.4 Z" fill="url(#rbGemC)" stroke="#004D56" stroke-width="0.5" stroke-linejoin="round"/>
+    <path d="M27.4 26.6 L30 22.6 L30 26.6 Z" fill="#fff" fill-opacity="0.55"/>
+    <path d="M30 26.6 L33 26.6 L30 30.4 Z" fill="#004D56" fill-opacity="0.35"/>
+    <circle cx="29.2" cy="24.6" r="0.4" fill="#fff"/>
+  </g>
+  <!-- pink coral pendant -->
+  <path d="M14.6 31.6 Q15.6 28 17.8 27.4" fill="none" stroke="#FF6E91" stroke-width="0.9" stroke-linecap="round"/>
+  <circle cx="17.9" cy="27.3" r="0.8" fill="#FF80AB"/>
+
+  <!-- chest body -->
+  <path d="M11 36 H53 V53.5 Q53 55.5 51 55.5 H13 Q11 55.5 11 53.5 Z" fill="url(#rbWood)" stroke="#1A0E0A" stroke-width="0.7"/>
+  <!-- planks -->
+  <g stroke="#2B1A14" stroke-width="0.45" stroke-opacity="0.85">
+    <path d="M11 42.4 H53"/>
+    <path d="M11 48.8 H53"/>
+  </g>
+  <g stroke="#BCAAA4" stroke-width="0.35" stroke-opacity="0.45">
+    <path d="M12 42.9 H52"/>
+    <path d="M12 49.3 H52"/>
+  </g>
+  <!-- wood grain -->
+  <g fill="none" stroke="#3E2723" stroke-width="0.3" stroke-opacity="0.6" stroke-linecap="round">
+    <path d="M23 45 Q25 44.4 27 45.2"/>
+    <path d="M34 51.6 Q36.5 51 39 51.8"/>
+    <path d="M13.5 52 Q15 51.4 16.5 52"/>
+    <path d="M47.5 45.6 Q49 45 50.5 45.6"/>
+  </g>
+  <!-- shadow under the rim -->
+  <rect x="11.4" y="39.4" width="41.2" height="1.4" fill="#1A0E0A" fill-opacity="0.45"/>
+  <!-- gold rim band -->
+  <rect x="10.4" y="35.6" width="43.2" height="4" rx="0.8" fill="url(#rbGold)" stroke="#5C3A00" stroke-width="0.5"/>
+  <path d="M11.4 36.5 H52.6" stroke="#FFFDE7" stroke-width="0.5" stroke-opacity="0.8"/>
+  <!-- vertical gold straps -->
+  <g fill="url(#rbGold)" stroke="#5C3A00" stroke-width="0.5">
+    <rect x="17" y="39.6" width="4.4" height="15.9"/>
+    <rect x="42.6" y="39.6" width="4.4" height="15.9"/>
+  </g>
+  <g fill="#FFFDE7" fill-opacity="0.55">
+    <rect x="17.5" y="39.6" width="0.9" height="15.9"/>
+    <rect x="43.1" y="39.6" width="0.9" height="15.9"/>
+  </g>
+  <!-- rivets -->
+  <g fill="#8D5A00">
+    <circle cx="19.2" cy="42" r="0.55"/>
+    <circle cx="19.2" cy="47.6" r="0.55"/>
+    <circle cx="19.2" cy="53.2" r="0.55"/>
+    <circle cx="44.8" cy="42" r="0.55"/>
+    <circle cx="44.8" cy="47.6" r="0.55"/>
+    <circle cx="44.8" cy="53.2" r="0.55"/>
+  </g>
+  <g fill="#FFFDE7">
+    <circle cx="19" cy="41.8" r="0.2"/>
+    <circle cx="19" cy="47.4" r="0.2"/>
+    <circle cx="44.6" cy="41.8" r="0.2"/>
+    <circle cx="44.6" cy="47.4" r="0.2"/>
+  </g>
+  <!-- lock plate -->
+  <path d="M27.6 38 H36.4 V45.4 Q36.4 48.4 32 49.6 Q27.6 48.4 27.6 45.4 Z" fill="url(#rbGold)" stroke="#5C3A00" stroke-width="0.6"/>
+  <path d="M28.4 38.8 H31 V45 Q31 47 29.4 47.6" fill="none" stroke="#FFFDE7" stroke-width="0.5" stroke-opacity="0.7"/>
+  <circle cx="32" cy="42.6" r="1.2" fill="#3E2723"/>
+  <path d="M31.4 43 L32 46.2 L32.6 43 Z" fill="#3E2723"/>
+  <!-- cyan rim light -->
+  <path d="M53 41 V53.4 Q53 55.4 51 55.4" fill="none" stroke="#1DE9B6" stroke-width="0.6" stroke-opacity="0.7"/>
+  <!-- barnacles on the chest -->
+  <g fill="#9EB4C8" stroke="#2B1A14" stroke-width="0.3">
+    <circle cx="13.6" cy="53" r="0.9"/>
+    <circle cx="15.2" cy="54.3" r="0.6"/>
+    <circle cx="50.4" cy="45.6" r="0.7"/>
+  </g>
+  <g fill="#2B1A14">
+    <circle cx="13.6" cy="53" r="0.3"/>
+    <circle cx="50.4" cy="45.6" r="0.25"/>
+  </g>
+
+  <!-- spilled treasure on the sand -->
+  <g stroke="#B26A00" stroke-width="0.35">
+    <ellipse cx="7.6" cy="57.2" rx="2" ry="0.9" fill="#FFD740"/>
+    <ellipse cx="9.4" cy="58.8" rx="1.7" ry="0.8" fill="#FFC400"/>
+    <ellipse cx="56" cy="57.8" rx="1.8" ry="0.85" fill="#FFD740"/>
+  </g>
+  <circle cx="58.5" cy="56" r="1.3" fill="url(#rbPearl)" stroke="#4F7A94" stroke-width="0.3"/>
+  <circle cx="58.1" cy="55.6" r="0.35" fill="#fff"/>
+  <path d="M5.8 57 Q6.2 54 5.2 52 M7 56.4 Q7.8 54.4 7.2 53" fill="none" stroke="#69F0AE" stroke-width="0.6" stroke-linecap="round"/>
+
+  <!-- sparkles -->
+  <g fill="#FFFDE7">
+    <path d="M53 7.5 L54.2 11.4 L58 12.6 L54.2 13.8 L53 17.7 L51.8 13.8 L48 12.6 L51.8 11.4 Z"/>
+    <path d="M10 15 L10.7 17.3 L13 18 L10.7 18.7 L10 21 L9.3 18.7 L7 18 L9.3 17.3 Z"/>
+    <path d="M44 4.5 L44.4 5.8 L45.7 6.2 L44.4 6.6 L44 7.9 L43.6 6.6 L42.3 6.2 L43.6 5.8 Z"/>
+  </g>
+  <circle cx="53" cy="12.6" r="3" fill="#FFD740" fill-opacity="0.25"/>
+  <!-- bubbles -->
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#B2EBF2" stroke-width="0.35" stroke-opacity="0.8">
+    <circle cx="25" cy="11" r="1.1"/>
+    <circle cx="27.4" cy="7" r="0.7"/>
+    <circle cx="38" cy="12.5" r="0.8"/>
+  </g>
 </svg>

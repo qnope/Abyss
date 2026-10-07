@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/unit_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
 
 class UnitIcon extends StatelessWidget {
   final UnitType type;
@@ -18,13 +18,10 @@ class UnitIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      type.iconPath,
-      width: size,
-      height: size,
-      colorFilter: greyscale
-          ? const ColorFilter.mode(AbyssColors.disabled, BlendMode.srcIn)
-          : null,
+    return RasterSvg(
+      assetPath: type.iconPath,
+      size: size,
+      color: greyscale ? AbyssColors.disabled : null,
     );
   }
 }

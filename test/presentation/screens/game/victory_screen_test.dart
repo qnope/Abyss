@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/game/game_statistics.dart';
 import 'package:abyss/presentation/screens/game/victory_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 
 import '../../../helpers/test_svg_helper.dart';
+import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 
 void main() {
   setUp(mockSvgAssets);
@@ -85,7 +85,7 @@ void main() {
       await tester.pumpWidget(buildScreen());
       await tester.pumpAndSettle();
 
-      expect(find.byType(SvgPicture), findsOneWidget);
+      expect(find.byType(RasterSvg), findsOneWidget);
     });
   });
 }

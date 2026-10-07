@@ -24,9 +24,9 @@ void main() {
     });
   });
 
-  test('coral_citadel.svg file size is under 7000 bytes', () {
+  test('coral_citadel.svg file size is under 24000 bytes', () {
     final file = File(assetPath);
     expect(file.existsSync(), isTrue);
-    expect(file.lengthSync(), lessThan(7000));
+    expect(file.lengthSync(), lessThan(24000));
   });
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
 
 void showVolcanicKernelSheet(
   BuildContext context, {
@@ -34,10 +34,9 @@ class _VolcanicKernelSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(
-            'assets/icons/terrain/volcanic_kernel.svg',
-            width: 64,
-            height: 64,
+          RasterSvg(
+            assetPath: 'assets/icons/terrain/volcanic_kernel.svg',
+            size: 64,
           ),
           const SizedBox(height: 12),
           Text(

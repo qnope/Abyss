@@ -1,15 +1,172 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M2 60 Q6 30 32 26 Q58 30 62 60 Z" fill="#3D1F24"/>
-  <path d="M32 26 Q58 30 62 60 H32 Z" fill="#2D161A"/>
-  <path d="M12 60 Q14 34 32 33 Q50 34 52 60 Z" fill="#0A0E1A"/>
-  <path d="M20 56 Q20 38 32 38 Q44 38 44 56 Z" fill="#6A1B2A"/>
-  <path d="M20 50 Q10 50 8 58 Q14 54 20 56 Z M44 50 Q54 50 56 58 Q50 54 44 56 Z" fill="#8E2436"/>
-  <path d="M24 56 Q22 62 16 62 Q24 64 28 56 Z M40 56 Q42 62 48 62 Q40 64 36 56 Z" fill="#8E2436"/>
-  <path d="M24 46 L30 48 L24 49 Z M40 46 L34 48 L40 49 Z" fill="#FF5252"/>
-  <path d="M27 53 H37 L35 56 L33 54 L31 56 L29 54 Z" fill="#FFCDD2"/>
-  <rect x="10" y="3" width="44" height="18" rx="9" fill="#8E1B1B"/>
-  <rect x="11.5" y="4.5" width="41" height="15" rx="7.5" fill="#C62828"/>
-  <path d="M21.0 7.0 L22.5 10.5 L26.2 10.8 L23.4 13.3 L24.2 16.9 L21.0 15.0 L17.8 16.9 L18.6 13.3 L15.8 10.8 L19.5 10.5 Z" fill="#FFCDD2"/>
-  <path d="M32.0 7.0 L33.5 10.5 L37.2 10.8 L34.4 13.3 L35.2 16.9 L32.0 15.0 L28.8 16.9 L29.6 13.3 L26.8 10.8 L30.5 10.5 Z" fill="#FFCDD2"/>
-  <path d="M43.0 7.0 L44.5 10.5 L48.2 10.8 L45.4 13.3 L46.2 16.9 L43.0 15.0 L39.8 16.9 L40.6 13.3 L37.8 10.8 L41.5 10.5 Z" fill="#FFCDD2"/>
+  <defs>
+    <linearGradient id="mhRock" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6E3A44"/>
+      <stop offset="0.5" stop-color="#3D1F24"/>
+      <stop offset="1" stop-color="#1A0B0E"/>
+    </linearGradient>
+    <radialGradient id="mhCave" cx="0.5" cy="0.75" r="0.75">
+      <stop offset="0" stop-color="#4A0A14"/>
+      <stop offset="0.6" stop-color="#14060A"/>
+      <stop offset="1" stop-color="#05070D"/>
+    </radialGradient>
+    <radialGradient id="mhHead" cx="0.38" cy="0.25" r="0.85">
+      <stop offset="0" stop-color="#D2475A"/>
+      <stop offset="0.5" stop-color="#8E2436"/>
+      <stop offset="1" stop-color="#3A0C16"/>
+    </radialGradient>
+    <linearGradient id="mhTent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C23A4E"/>
+      <stop offset="1" stop-color="#5A1020"/>
+    </linearGradient>
+    <linearGradient id="mhEye" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF59D"/>
+      <stop offset="0.5" stop-color="#FF9100"/>
+      <stop offset="1" stop-color="#D50000"/>
+    </linearGradient>
+    <radialGradient id="mhGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FF1744" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FF1744" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mhBadge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EF5350"/>
+      <stop offset="0.5" stop-color="#C62828"/>
+      <stop offset="1" stop-color="#7F0000"/>
+    </linearGradient>
+    <linearGradient id="mhStar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.55" stop-color="#FFCDD2"/>
+      <stop offset="1" stop-color="#EF9A9A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- contact shadow -->
+  <ellipse cx="32" cy="59" rx="30" ry="4" fill="#000" fill-opacity="0.42"/>
+
+  <!-- rock lair -->
+  <path d="M2.5 59 Q3 45 9 37.5 Q13 32.5 18.5 30.5 Q24 26.5 31 26.5 Q35 25.5 39 27 Q47 28.5 52 33.5 Q58.5 39.5 60.5 48 Q61.5 53 61.5 59 Z" fill="url(#mhRock)" stroke="#0A0E1A" stroke-width="0.7" stroke-opacity="0.85"/>
+  <g fill="#A0626C" fill-opacity="0.45">
+    <path d="M9 37.5 Q13 32.5 18.5 30.5 Q17 36 11.5 39.5 Z"/>
+    <path d="M18.5 30.5 Q24 26.5 31 26.5 Q28 30.4 21.5 32.6 Z"/>
+    <path d="M31 26.5 Q35 25.5 39 27 Q36 29 32 28.8 Z"/>
+  </g>
+  <g fill="#0A0406" fill-opacity="0.5">
+    <path d="M52 33.5 Q58.5 39.5 60.5 48 Q61.5 53 61.5 59 H55.5 Q56 46 50 37 Z"/>
+    <path d="M39 27 Q47 28.5 52 33.5 Q47 33 42 30.6 Z"/>
+  </g>
+  <g fill="none" stroke="#0A0E1A" stroke-width="0.45" stroke-opacity="0.7" stroke-linecap="round">
+    <path d="M11.5 39.5 Q9 45 8 51"/>
+    <path d="M21.5 32.6 L19.5 36.5"/>
+    <path d="M42 30.6 L45 35 L44.6 39"/>
+  </g>
+  <path d="M8 43 Q10 36 16.5 32.6 M22 29.4 Q27 27.2 34 27" fill="none" stroke="#E0A0A8" stroke-width="0.6" stroke-opacity="0.5" stroke-linecap="round"/>
+  <!-- skulls & bones of victims -->
+  <g fill="#D7CCC8" stroke="#3E2723" stroke-width="0.3">
+    <path d="M10.5 44.5 Q10.5 42 12.8 42 Q15 42 15 44.5 Q15 45.6 14 45.8 V46.6 H11.6 V45.8 Q10.5 45.6 10.5 44.5 Z"/>
+    <path d="M51 41.8 L56 40.6 L56.2 41.4 L51.2 42.6 Z"/>
+  </g>
+  <g fill="#3E2723">
+    <circle cx="11.9" cy="44.2" r="0.55"/>
+    <circle cx="13.7" cy="44.2" r="0.55"/>
+  </g>
+
+  <!-- cave mouth -->
+  <path d="M13.5 59 Q13 45 19.5 39.2 Q25 35 32 35 Q39 35 44.5 39.6 Q51 45.5 50.5 59 Z" fill="url(#mhCave)" stroke="#0A0E1A" stroke-width="0.8"/>
+  <ellipse cx="32" cy="48" rx="16" ry="11" fill="url(#mhGlow)"/>
+
+  <!-- tentacle reaching up over the rock (behind head) -->
+  <path d="M40 44 Q47.5 38.5 49.6 32.6 Q50.6 29.6 48.6 29.4 Q47.2 29.6 47.8 31.4 Q46 36.4 38.6 41 Z" fill="url(#mhTent)" stroke="#2A0A12" stroke-width="0.5"/>
+  <g fill="#FFCDD2" fill-opacity="0.85">
+    <circle cx="42.2" cy="41" r="0.5"/>
+    <circle cx="44.6" cy="39" r="0.45"/>
+    <circle cx="46.6" cy="36.6" r="0.4"/>
+    <circle cx="47.8" cy="34" r="0.35"/>
+  </g>
+
+  <!-- kraken mantle -->
+  <path d="M20.5 55 Q18.5 44 23 39.5 Q27 36 32 36 Q37 36 41 39.5 Q45.5 44 43.5 55 Z" fill="url(#mhHead)" stroke="#2A0A12" stroke-width="0.7"/>
+  <!-- mantle spots and ridges -->
+  <g fill="#FF8A80" fill-opacity="0.45">
+    <circle cx="26" cy="40.5" r="0.7"/>
+    <circle cx="29.5" cy="38.6" r="0.5"/>
+    <circle cx="36" cy="38.8" r="0.55"/>
+    <circle cx="39.5" cy="41.5" r="0.45"/>
+  </g>
+  <path d="M22.5 45 Q24 39 30 37.2" fill="none" stroke="#FFCDD2" stroke-width="0.8" stroke-linecap="round" stroke-opacity="0.55"/>
+  <path d="M42 43.5 Q43.4 48 42.8 53" fill="none" stroke="#FF5252" stroke-width="0.6" stroke-linecap="round" stroke-opacity="0.7"/>
+  <!-- angry eyes -->
+  <circle cx="26.5" cy="46.5" r="3.6" fill="#FF9100" fill-opacity="0.22"/>
+  <circle cx="37.5" cy="46.5" r="3.6" fill="#FF9100" fill-opacity="0.22"/>
+  <path d="M22.6 44.4 L29.6 46.4 Q28.6 49 25.8 48.6 Q23.2 48 22.6 44.4 Z" fill="url(#mhEye)" stroke="#2A0A12" stroke-width="0.5"/>
+  <path d="M41.4 44.4 L34.4 46.4 Q35.4 49 38.2 48.6 Q40.8 48 41.4 44.4 Z" fill="url(#mhEye)" stroke="#2A0A12" stroke-width="0.5"/>
+  <rect x="25.6" y="45.6" width="1.4" height="2.8" rx="0.6" fill="#0A0E1A"/>
+  <rect x="37" y="45.6" width="1.4" height="2.8" rx="0.6" fill="#0A0E1A"/>
+  <circle cx="25" cy="45.8" r="0.4" fill="#fff"/>
+  <circle cx="36.4" cy="45.8" r="0.4" fill="#fff"/>
+  <path d="M21.8 43.4 L30 45.6 M42.2 43.4 L34 45.6" stroke="#2A0A12" stroke-width="0.9" stroke-linecap="round"/>
+  <!-- fanged beak -->
+  <path d="M27 51 Q32 49.6 37 51 Q35.6 54.6 32 55 Q28.4 54.6 27 51 Z" fill="#1A0408" stroke="#2A0A12" stroke-width="0.5"/>
+  <g fill="#FFEBEE" stroke="#6D4C52" stroke-width="0.25" stroke-linejoin="round">
+    <path d="M28.2 50.8 L29 53.2 L29.9 50.5 Z"/>
+    <path d="M31.1 50.3 L32 53.8 L32.9 50.3 Z"/>
+    <path d="M34.1 50.5 L35 53.2 L35.8 50.8 Z"/>
+  </g>
+
+  <!-- side tentacles curling over the seabed -->
+  <g stroke="#2A0A12" stroke-width="0.55" stroke-linejoin="round">
+    <path d="M21 50 Q11 47.5 7 53.5 Q5.3 57.6 8.6 58.6 Q11.2 59 11.2 57 Q9.4 57.4 9.6 55.4 Q11.4 51.6 21 55 Z" fill="url(#mhTent)"/>
+    <path d="M43 50 Q53 47.5 57 53.5 Q58.7 57.6 55.4 58.6 Q52.8 59 52.8 57 Q54.6 57.4 54.4 55.4 Q52.6 51.6 43 55 Z" fill="url(#mhTent)"/>
+    <path d="M24.5 53.5 Q23 60 16 61 Q13.6 61.2 14 59.8 Q19.6 59.2 21.6 53.2 Z" fill="url(#mhTent)"/>
+    <path d="M39.5 53.5 Q41 60 48 61 Q50.4 61.2 50 59.8 Q44.4 59.2 42.4 53.2 Z" fill="url(#mhTent)"/>
+  </g>
+  <!-- tentacle highlights -->
+  <path d="M19 50 Q11.5 48.6 8.3 53.8 M45 50 Q52.5 48.6 55.7 53.8" fill="none" stroke="#FF8A80" stroke-width="0.5" stroke-linecap="round" stroke-opacity="0.7"/>
+  <!-- suckers -->
+  <g fill="#FFCDD2" stroke="#8E2436" stroke-width="0.2">
+    <circle cx="17.5" cy="53.4" r="0.6"/>
+    <circle cx="14.6" cy="53" r="0.55"/>
+    <circle cx="12" cy="53.6" r="0.5"/>
+    <circle cx="10.4" cy="55.4" r="0.42"/>
+    <circle cx="46.5" cy="53.4" r="0.6"/>
+    <circle cx="49.4" cy="53" r="0.55"/>
+    <circle cx="52" cy="53.6" r="0.5"/>
+    <circle cx="53.6" cy="55.4" r="0.42"/>
+    <circle cx="21.4" cy="56.6" r="0.5"/>
+    <circle cx="19.6" cy="58.8" r="0.42"/>
+    <circle cx="42.6" cy="56.6" r="0.5"/>
+    <circle cx="44.4" cy="58.8" r="0.42"/>
+  </g>
+
+  <!-- pebbles -->
+  <g fill="#4A2A30" stroke="#0A0E1A" stroke-width="0.3">
+    <ellipse cx="4.6" cy="59.4" rx="1.4" ry="0.8"/>
+    <ellipse cx="59.4" cy="59.4" rx="1.4" ry="0.8"/>
+  </g>
+
+  <!-- blood-red bubbles -->
+  <g fill="#FF5252" fill-opacity="0.15" stroke="#FF8A80" stroke-width="0.35" stroke-opacity="0.7">
+    <circle cx="17" cy="39" r="0.9"/>
+    <circle cx="15.6" cy="35.4" r="0.6"/>
+    <circle cx="53.5" cy="29" r="0.7"/>
+  </g>
+
+  <!-- difficulty badge: hard, three stars -->
+  <g>
+    <rect x="7" y="1.6" width="50" height="21.4" rx="10.7" fill="#FF1744" fill-opacity="0.15"/>
+    <rect x="9" y="3" width="46" height="18.4" rx="9.2" fill="#4A0000" stroke="#0A0E1A" stroke-width="0.6"/>
+    <rect x="10.2" y="4.2" width="43.6" height="16" rx="8" fill="url(#mhBadge)" stroke="#FFCDD2" stroke-width="0.5"/>
+    <path d="M13.6 8.8 Q14.6 6 18.6 5.8 H44" fill="none" stroke="#FFEBEE" stroke-width="0.9" stroke-linecap="round" stroke-opacity="0.55"/>
+    <g transform="translate(20.5 12.4)">
+      <path d="M0 -5 L1.5 -1.6 L5.2 -1.2 L2.4 1.3 L3.2 4.9 L0 3 L-3.2 4.9 L-2.4 1.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="url(#mhStar)" stroke="#4A0000" stroke-width="0.5" stroke-linejoin="round"/>
+      <path d="M0 -5 L0 0.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="#fff" fill-opacity="0.4"/>
+    </g>
+    <g transform="translate(32 12.4)">
+      <path d="M0 -5 L1.5 -1.6 L5.2 -1.2 L2.4 1.3 L3.2 4.9 L0 3 L-3.2 4.9 L-2.4 1.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="url(#mhStar)" stroke="#4A0000" stroke-width="0.5" stroke-linejoin="round"/>
+      <path d="M0 -5 L0 0.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="#fff" fill-opacity="0.4"/>
+    </g>
+    <g transform="translate(43.5 12.4)">
+      <path d="M0 -5 L1.5 -1.6 L5.2 -1.2 L2.4 1.3 L3.2 4.9 L0 3 L-3.2 4.9 L-2.4 1.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="url(#mhStar)" stroke="#4A0000" stroke-width="0.5" stroke-linejoin="round"/>
+      <path d="M0 -5 L0 0.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="#fff" fill-opacity="0.4"/>
+    </g>
+  </g>
 </svg>

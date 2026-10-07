@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../domain/game/game.dart';
+import '../../../domain/game/game_status.dart';
 import '../../theme/abyss_colors.dart';
 
 class SavedGameCard extends StatelessWidget {
@@ -64,9 +65,13 @@ class SavedGameCard extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          'Tour ${game.turn}',
+          game.status == GameStatus.defeat
+              ? 'Défaite au tour ${game.turn - 1}'
+              : 'Tour ${game.turn}',
           style: textTheme.bodyMedium?.copyWith(
-            color: AbyssColors.onSurface,
+            color: game.status == GameStatus.defeat
+                ? AbyssColors.error
+                : AbyssColors.onSurface,
           ),
         ),
         const SizedBox(height: 2),

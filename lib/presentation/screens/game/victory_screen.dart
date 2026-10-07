@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../../../domain/game/game_statistics.dart';
 import '../../theme/abyss_colors.dart';
-import '../../widgets/common/raster_svg.dart';
+import 'game_over_screen.dart';
 
 class VictoryScreen extends StatelessWidget {
   final GameStatistics statistics;
@@ -17,131 +18,19 @@ class VictoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RasterSvg(
-                assetPath: 'assets/icons/terrain/volcanic_kernel.svg',
-                size: 96,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'VICTOIRE !',
-                style: textTheme.displayMedium?.copyWith(
-                  color: AbyssColors.warning,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Vous avez conquis le Noyau Volcanique !',
-                style: textTheme.bodyLarge?.copyWith(
-                  color: AbyssColors.onSurfaceDim,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const Divider(height: 32),
-              _StatisticsCard(statistics: statistics),
-              const SizedBox(height: 32),
-              _ActionButtons(
-                onContinue: onContinue,
-                onReturnToMenu: onReturnToMenu,
-              ),
-            ],
-          ),
+    return GameOverScreen(
+      emblemAsset: 'assets/icons/terrain/volcanic_kernel.svg',
+      title: 'VICTOIRE !',
+      titleColor: AbyssColors.warning,
+      subtitle: 'Vous avez conquis le Noyau Volcanique !',
+      statistics: statistics,
+      actions: [
+        GameOverAction(
+          label: 'Continuer en mode libre',
+          onPressed: onContinue,
+          primary: true,
         ),
-      ),
-    );
-  }
-}
-
-class _StatisticsCard extends StatelessWidget {
-  final GameStatistics statistics;
-
-  const _StatisticsCard({required this.statistics});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            _StatRow(
-              icon: Icons.timer,
-              label: 'Tours joues: ${statistics.turnsPlayed}',
-            ),
-            _StatRow(
-              icon: Icons.dangerous,
-              label: 'Monstres vaincus: ${statistics.monstersDefeated}',
-            ),
-            _StatRow(
-              icon: Icons.flag,
-              label: 'Bases capturees: ${statistics.basesCaptured}',
-            ),
-            _StatRow(
-              icon: Icons.inventory,
-              label: 'Ressources collectees: '
-                  '${statistics.totalResourcesCollected}',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _StatRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  const _StatRow({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          children: [
-            Icon(icon, size: 20, color: AbyssColors.biolumCyan),
-            const SizedBox(width: 12),
-            Text(label, style: Theme.of(context).textTheme.bodyMedium),
-          ],
-        ),
-      );
-}
-
-class _ActionButtons extends StatelessWidget {
-  final VoidCallback onContinue;
-  final VoidCallback onReturnToMenu;
-
-  const _ActionButtons({
-    required this.onContinue,
-    required this.onReturnToMenu,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: onContinue,
-            child: const Text('Continuer en mode libre'),
-          ),
-        ),
-        const SizedBox(height: 12),
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton(
-            onPressed: onReturnToMenu,
-            child: const Text('Retour au menu'),
-          ),
-        ),
+        GameOverAction(label: 'Retour au menu', onPressed: onReturnToMenu),
       ],
     );
   }

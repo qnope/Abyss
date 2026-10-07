@@ -2,6 +2,7 @@ import '../../../domain/building/building.dart';
 import '../../../domain/building/building_deactivator.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/consumption_calculator.dart';
+import '../../../domain/game/defeat_checker.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
 import '../../../domain/raid/raid_battle.dart';
@@ -75,5 +76,9 @@ RaidDueWarning? raidDueWarning(Game game, Player player) {
   final defenders = RaidBattle.defendersOf(player)
       .values
       .fold<int>(0, (sum, count) => sum + count);
-  return RaidDueWarning(wave: state.incoming!, defenderCount: defenders);
+  return RaidDueWarning(
+    wave: state.incoming!,
+    defenderCount: defenders,
+    lastChance: DefeatChecker.isLastChance(game),
+  );
 }

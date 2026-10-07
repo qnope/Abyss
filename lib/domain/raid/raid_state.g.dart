@@ -22,13 +22,15 @@ class RaidStateAdapter extends TypeAdapter<RaidState> {
       incoming: fields[2] as MonsterLair?,
       arrivalTurn: (fields[3] as num?)?.toInt(),
       lostInARow: fields[4] == null ? 0 : (fields[4] as num).toInt(),
+      raidsRepelled: fields[5] == null ? 0 : (fields[5] as num).toInt(),
+      raidsLost: fields[6] == null ? 0 : (fields[6] as num).toInt(),
     );
   }
 
   @override
   void write(BinaryWriter writer, RaidState obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.noise)
       ..writeByte(1)
@@ -38,7 +40,11 @@ class RaidStateAdapter extends TypeAdapter<RaidState> {
       ..writeByte(3)
       ..write(obj.arrivalTurn)
       ..writeByte(4)
-      ..write(obj.lostInARow);
+      ..write(obj.lostInARow)
+      ..writeByte(5)
+      ..write(obj.raidsRepelled)
+      ..writeByte(6)
+      ..write(obj.raidsLost);
   }
 
   @override

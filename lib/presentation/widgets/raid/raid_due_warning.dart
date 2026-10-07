@@ -10,10 +10,14 @@ class RaidDueWarning extends StatelessWidget {
   final MonsterLair wave;
   final int defenderCount;
 
+  /// Whether losing this raid ends the game.
+  final bool lastChance;
+
   const RaidDueWarning({
     super.key,
     required this.wave,
     required this.defenderCount,
+    this.lastChance = false,
   });
 
   @override
@@ -35,6 +39,17 @@ class RaidDueWarning extends StatelessWidget {
             ),
           ),
         ]),
+        if (lastChance)
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Text(
+              'Si ce raid est perdu, la partie est terminée.',
+              style: TextStyle(
+                color: AbyssColors.error,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
       ],
     );
   }

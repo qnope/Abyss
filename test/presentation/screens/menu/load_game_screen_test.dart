@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/presentation/screens/menu/load_game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/test_svg_helper.dart';
 
 void main() {
   group('LoadGameScreen', () {
@@ -94,6 +96,26 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Alice'), findsOneWidget);
+    });
+
+    testWidgets('a lost game is marked and reopens on the defeat screen',
+        (tester) async {
+      mockSvgAssets();
+      addTearDown(clearSvgMocks);
+      final alice = Player(name: 'Alice');
+      repository.addGame(Game(
+        humanPlayerId: alice.id,
+        players: {alice.id: alice},
+        turn: 27,
+        status: GameStatus.defeat,
+      ));
+
+      await tester.pumpWidget(createApp());
+      expect(find.text('Défaite au tour 26'), findsOneWidget);
+
+      await tester.tap(find.text('Alice'));
+      await tester.pumpAndSettle();
+      expect(find.text('DÉFAITE'), findsOneWidget);
     });
   });
 }

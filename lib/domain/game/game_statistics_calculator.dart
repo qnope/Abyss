@@ -33,6 +33,8 @@ class GameStatisticsCalculator {
       monstersDefeated: monstersDefeated,
       basesCaptured: basesCaptured,
       totalResourcesCollected: collectedResources + currentResources,
+      raidsRepelled: game.humanPlayer.raidState.raidsRepelled,
+      raidsLost: game.humanPlayer.raidState.raidsLost,
     );
   }
 }

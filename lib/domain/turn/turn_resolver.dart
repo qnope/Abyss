@@ -1,3 +1,4 @@
+import '../game/defeat_checker.dart';
 import '../game/game.dart';
 import '../map/exploration_resolver.dart';
 import '../map/reinforcement_resolver.dart';
@@ -29,6 +30,7 @@ class TurnResolver {
     final explorations = ExplorationResolver.resolve(game);
     final reinforcements = ReinforcementResolver.resolve(game);
     game.turn++;
+    game.status = DefeatChecker.check(game) ?? game.status;
 
     final human = humanResult!;
     return TurnResult(

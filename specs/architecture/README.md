@@ -64,6 +64,7 @@ Pure Dart business logic with no Flutter dependency. Split into 10 submodules:
 | `map` | Multi-level grid, terrain, transition bases (per-player fog lives on `Player`) |
 | `resource` | 5 resource types |
 | `tech` | Technology branches |
+| `script` | Headless scripted games for balancing (`bin/simulate.dart`) |
 | `turn` | Turn processing |
 | `unit` | Unit types and state |
 

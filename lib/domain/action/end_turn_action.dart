@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../game/game.dart';
 import '../game/player.dart';
 import '../history/entries/turn_end_entry_factory.dart';
@@ -12,6 +14,11 @@ import 'end_turn_action_result.dart';
 /// [Action] + [ActionExecutor] pipeline, which then auto-appends the
 /// resulting [TurnEndEntry] via [makeHistoryEntry].
 class EndTurnAction extends Action {
+  /// Drives the raid fights; `null` keeps them unseeded.
+  final Random? random;
+
+  EndTurnAction({this.random});
+
   @override
   ActionType get type => ActionType.endTurn;
 
@@ -24,7 +31,7 @@ class EndTurnAction extends Action {
 
   @override
   ActionResult execute(Game game, Player player) {
-    final result = TurnResolver().resolve(game);
+    final result = TurnResolver().resolve(game, random: random);
     return EndTurnActionResult.success(turnResult: result);
   }
 

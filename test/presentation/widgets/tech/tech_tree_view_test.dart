@@ -59,19 +59,37 @@ void main() {
       await t.pumpAndSettle();
     }
 
+    testWidgets('nothing is selected by default', (t) async {
+      await pump(t, build(militaryAt(2), 3));
+      expect(find.text('Touchez une branche ou un niveau'), findsOneWidget);
+      expect(find.byType(ElevatedButton), findsNothing);
+    });
+
     testWidgets('lab not built: unlocking is blocked', (t) async {
       await pump(t, build(militaryAt(null), 0));
+      await t.tap(find.textContaining('Militaire'));
+      await t.pump();
       expect(find.text('Laboratoire niveau 1 requis'), findsOneWidget);
       final button = t.widget<ElevatedButton>(find.byType(ElevatedButton));
       expect(button.onPressed, isNull);
     });
 
-    testWidgets('selects next research by default and researches it',
-        (t) async {
+    testWidgets('tapping a node selects it and researches it', (t) async {
       await pump(t, build(militaryAt(2), 3));
+      await t.tap(find.text('3').first);
+      await t.pump();
       expect(find.text('Militaire · Niveau 3'), findsOneWidget);
       await t.tap(find.text('Rechercher'));
       expect(researched, TechBranch.military);
+    });
+
+    testWidgets('tapping the selected node again clears it', (t) async {
+      await pump(t, build(militaryAt(2), 3));
+      await t.tap(find.text('3').first);
+      await t.pump();
+      await t.tap(find.text('3').first);
+      await t.pump();
+      expect(find.text('Touchez une branche ou un niveau'), findsOneWidget);
     });
 
     testWidgets('tapping a branch selects it for unlocking', (t) async {
@@ -84,6 +102,8 @@ void main() {
 
     testWidgets('node above lab level shows the requirement', (t) async {
       await pump(t, build(militaryAt(3), 3));
+      await t.tap(find.text('4').first);
+      await t.pump();
       expect(find.text('Laboratoire niveau 4 requis'), findsOneWidget);
     });
 
@@ -92,7 +112,7 @@ void main() {
       await t.tap(find.text('1').first);
       await t.pump();
       expect(find.text('Militaire · Niveau 1'), findsOneWidget);
-      expect(find.text('Acquis ✓'), findsOneWidget);
+      expect(find.text('Acquis \u2713'), findsOneWidget);
       expect(find.byType(ElevatedButton), findsNothing);
     });
   });

@@ -18,7 +18,7 @@ import 'tech_selection.dart';
 class TechReef extends StatelessWidget {
   final Map<TechBranch, TechBranchState> techBranches;
   final int labLevel;
-  final TechSelection selection;
+  final TechSelection? selection;
   final ValueChanged<TechSelection> onSelect;
 
   const TechReef({

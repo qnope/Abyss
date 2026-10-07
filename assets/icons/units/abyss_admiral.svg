@@ -1,16 +1,151 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M8 64 Q8 44 32 42 Q56 44 56 64 Z" fill="#6A1B9A"/>
-  <path d="M32 42 Q56 44 56 64 H32 Z" fill="#4A148C"/>
-  <path d="M6 48 Q8 42 16 42 H22 L20 48 Z M58 48 Q56 42 48 42 H42 L44 48 Z" fill="#FFD740"/>
-  <path d="M7 50 V54 M11 50 V55 M15 50 V54 M49 50 V54 M53 50 V55 M57 50 V54" stroke="#FFD740" stroke-width="1.5"/>
-  <path d="M28 42 H36 L34 64 H30 Z" fill="#FFD740"/>
-  <circle cx="32" cy="28" r="14" fill="#7B1FA2"/>
-  <path d="M32 14 A14 14 0 0 1 32 42 Z" fill="#6A1B9A"/>
-  <path d="M18 18 L22 6 L27 13 L32 3 L37 13 L42 6 L46 18 Z" fill="#FFD740"/>
-  <path d="M32 3 L37 13 L42 6 L46 18 H32 Z" fill="#FFB300"/>
-  <circle cx="32" cy="12" r="2" fill="#B388FF"/>
-  <rect x="21" y="25" width="22" height="9" rx="4.5" fill="#0A0E1A"/>
-  <circle cx="27" cy="29.5" r="2.5" fill="#B388FF"/>
-  <circle cx="37" cy="29.5" r="2.5" fill="#B388FF"/>
-  <circle cx="20" cy="56" r="2.5" fill="#FFD740"/>
+  <defs>
+    <radialGradient id="aaGlow" cx="32" cy="26" r="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B388FF" stop-opacity="0.34"/>
+      <stop offset="0.6" stop-color="#B388FF" stop-opacity="0.09"/>
+      <stop offset="1" stop-color="#B388FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="aaCoat" x1="12" y1="42" x2="52" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9C4DCC"/>
+      <stop offset="0.45" stop-color="#6A1B9A"/>
+      <stop offset="1" stop-color="#2A0845"/>
+    </linearGradient>
+    <radialGradient id="aaHelm" cx="32" cy="28" r="15" fx="25" fy="19" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#CE93D8"/>
+      <stop offset="0.4" stop-color="#7B1FA2"/>
+      <stop offset="1" stop-color="#2A0845"/>
+    </radialGradient>
+    <linearGradient id="aaGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF59D"/>
+      <stop offset="0.45" stop-color="#FFD740"/>
+      <stop offset="1" stop-color="#B26A00"/>
+    </linearGradient>
+    <linearGradient id="aaCrown" x1="18" y1="3" x2="46" y2="19" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF8E1"/>
+      <stop offset="0.35" stop-color="#FFD740"/>
+      <stop offset="1" stop-color="#C77800"/>
+    </linearGradient>
+    <radialGradient id="aaGem" cx="0.4" cy="0.35" r="0.7">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.4" stop-color="#B388FF"/>
+      <stop offset="1" stop-color="#4A148C"/>
+    </radialGradient>
+    <linearGradient id="aaVisor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1A1030"/>
+      <stop offset="1" stop-color="#0A0E1A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background glow -->
+  <circle cx="32" cy="28" r="28" fill="url(#aaGlow)"/>
+
+  <!-- coat -->
+  <g>
+    <path d="M8 64 Q8 46 20 43.2 Q26 42 32 42 Q38 42 44 43.2 Q56 46 56 64 Z" fill="url(#aaCoat)" stroke="#1A0430" stroke-width="0.6" stroke-opacity="0.8"/>
+    <path d="M14 62 Q17 54 22 50 M50 62 Q47 55 42 51 M24 64 Q25 58 27 54" fill="none" stroke="#2A0845" stroke-width="0.7" stroke-opacity="0.7" stroke-linecap="round"/>
+    <path d="M14.8 61 Q17.6 54 22.4 50.6" fill="none" stroke="#E1BEE7" stroke-width="0.45" stroke-opacity="0.45" stroke-linecap="round"/>
+    <path d="M10 60 Q11 50 19 45.4" fill="none" stroke="#E1BEE7" stroke-width="1" stroke-opacity="0.3" stroke-linecap="round"/>
+    <path d="M55.6 62 Q55 52 50 48" fill="none" stroke="#00E5FF" stroke-width="0.6" stroke-opacity="0.5" stroke-linecap="round"/>
+    <!-- lapels -->
+    <path d="M24 43 L32 52 L30 64 H26 Q25 52 24 43 Z" fill="#4A148C" stroke="#1A0430" stroke-width="0.4"/>
+    <path d="M40 43 L32 52 L34 64 H38 Q39 52 40 43 Z" fill="#38006B" stroke="#1A0430" stroke-width="0.4"/>
+    <!-- gold placket -->
+    <path d="M28 42 H36 L34 64 H30 Z" fill="url(#aaGold)" stroke="#6D4C00" stroke-width="0.5"/>
+    <path d="M29 43 L30.6 63" stroke="#FFFDE7" stroke-width="0.5" stroke-opacity="0.8"/>
+    <circle cx="32" cy="47" r="0.8" fill="#FFF8E1" stroke="#6D4C00" stroke-width="0.3"/>
+    <circle cx="32" cy="52" r="0.8" fill="#FFF8E1" stroke="#6D4C00" stroke-width="0.3"/>
+    <circle cx="32" cy="57" r="0.8" fill="#FFF8E1" stroke="#6D4C00" stroke-width="0.3"/>
+    <circle cx="32" cy="62" r="0.8" fill="#FFF8E1" stroke="#6D4C00" stroke-width="0.3"/>
+  </g>
+
+  <!-- epaulettes with fringe -->
+  <g>
+    <path d="M6 48 Q8 42 16 42 H22 L20 48 Z" fill="url(#aaGold)" stroke="#6D4C00" stroke-width="0.5"/>
+    <path d="M58 48 Q56 42 48 42 H42 L44 48 Z" fill="url(#aaGold)" stroke="#6D4C00" stroke-width="0.5"/>
+    <path d="M7.6 46 Q9.6 43.2 16 43.2 H20.6 M56.4 46 Q54.4 43.2 48 43.2" fill="none" stroke="#FFFDE7" stroke-width="0.6" stroke-opacity="0.8" stroke-linecap="round"/>
+    <path d="M7 48.6 V54 M9.4 48.6 V55 M11.8 48.6 V54.6 M14.2 48.6 V55 M16.6 48.6 V54.4 M19 48.6 V53.6" stroke="#B26A00" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M7 48.6 V54 M9.4 48.6 V55 M11.8 48.6 V54.6 M14.2 48.6 V55 M16.6 48.6 V54.4 M19 48.6 V53.6" stroke="#FFD740" stroke-width="0.8" stroke-linecap="round"/>
+    <path d="M45 48.6 V53.6 M47.4 48.6 V54.4 M49.8 48.6 V55 M52.2 48.6 V54.6 M54.6 48.6 V55 M57 48.6 V54" stroke="#8A5200" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M45 48.6 V53.6 M47.4 48.6 V54.4 M49.8 48.6 V55 M52.2 48.6 V54.6 M54.6 48.6 V55 M57 48.6 V54" stroke="#E6B800" stroke-width="0.8" stroke-linecap="round"/>
+    <circle cx="14" cy="45" r="1.1" fill="url(#aaGem)"/>
+    <circle cx="50" cy="45" r="1.1" fill="url(#aaGem)"/>
+  </g>
+
+  <!-- medals -->
+  <g>
+    <path d="M18.6 52 L20 56 M21.4 52 L20 56" stroke="#00E5FF" stroke-width="1"/>
+    <circle cx="20" cy="57" r="2.6" fill="url(#aaGold)" stroke="#6D4C00" stroke-width="0.5"/>
+    <path d="M20 55.2 L20.6 56.6 L22 56.8 L20.9 57.7 L21.2 59.1 L20 58.4 L18.8 59.1 L19.1 57.7 L18 56.8 L19.4 56.6 Z" fill="#FFF8E1" fill-opacity="0.85"/>
+    <rect x="40" y="53" width="6" height="1.6" rx="0.4" fill="#B388FF" stroke="#1A0430" stroke-width="0.3"/>
+    <rect x="40" y="55.2" width="6" height="1.6" rx="0.4" fill="#FF80AB" stroke="#1A0430" stroke-width="0.3"/>
+    <rect x="40" y="57.4" width="6" height="1.6" rx="0.4" fill="#1DE9B6" stroke="#1A0430" stroke-width="0.3"/>
+  </g>
+
+  <!-- collar ring -->
+  <ellipse cx="32" cy="42" rx="10" ry="2.6" fill="url(#aaGold)" stroke="#6D4C00" stroke-width="0.5"/>
+
+  <!-- helmet -->
+  <g>
+    <circle cx="32" cy="28" r="14" fill="url(#aaHelm)" stroke="#1A0430" stroke-width="0.7"/>
+    <path d="M19.6 24 Q21.6 17 28 15" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-opacity="0.45" stroke-linecap="round"/>
+    <path d="M45.4 31 Q43.6 39 35 41.6" fill="none" stroke="#B388FF" stroke-width="0.9" stroke-opacity="0.85" stroke-linecap="round"/>
+    <path d="M19.4 36 Q32 42 44.6 36" fill="none" stroke="#FFD740" stroke-width="0.8"/>
+    <circle cx="23" cy="38.4" r="0.55" fill="#FFF59D"/>
+    <circle cx="32" cy="40.6" r="0.55" fill="#FFF59D"/>
+    <circle cx="41" cy="38.4" r="0.55" fill="#FFD740"/>
+    <path d="M39 18 L41 20 M21 33 L23 34" stroke="#1A0430" stroke-width="0.35" stroke-opacity="0.8"/>
+    <!-- visor -->
+    <rect x="20.6" y="24.4" width="22.8" height="10.2" rx="5.1" fill="url(#aaGold)" stroke="#6D4C00" stroke-width="0.4"/>
+    <rect x="21.6" y="25.4" width="20.8" height="8.2" rx="4.1" fill="url(#aaVisor)"/>
+    <circle cx="27" cy="29.5" r="3.8" fill="#B388FF" fill-opacity="0.22"/>
+    <circle cx="37" cy="29.5" r="3.8" fill="#B388FF" fill-opacity="0.22"/>
+    <circle cx="27" cy="29.5" r="2.4" fill="#B388FF"/>
+    <circle cx="37" cy="29.5" r="2.4" fill="#B388FF"/>
+    <circle cx="27" cy="29.5" r="1.1" fill="#F3E5F5"/>
+    <circle cx="37" cy="29.5" r="1.1" fill="#F3E5F5"/>
+    <path d="M24 27 L29.6 27.8 M40 27 L34.4 27.8" stroke="#E1BEE7" stroke-width="0.6" stroke-linecap="round"/>
+    <path d="M23.4 26.6 Q26 25.8 29 26" fill="none" stroke="#FFFFFF" stroke-width="0.5" stroke-opacity="0.4" stroke-linecap="round"/>
+  </g>
+
+  <!-- crown -->
+  <g>
+    <path d="M18 18 L22 6 L27 13 L32 3 L37 13 L42 6 L46 18 Z" fill="url(#aaCrown)" stroke="#6D4C00" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M32 3 L37 13 L42 6 L46 18 H32 Z" fill="#B26A00" fill-opacity="0.35"/>
+    <path d="M18 18 Q32 15 46 18 L45.4 20.4 Q32 17.6 18.6 20.4 Z" fill="url(#aaGold)" stroke="#6D4C00" stroke-width="0.5"/>
+    <path d="M19.6 16.6 L22.2 8.4 M27 13 L31.4 5" stroke="#FFFDE7" stroke-width="0.6" stroke-opacity="0.8" stroke-linecap="round"/>
+    <circle cx="22" cy="6" r="1.1" fill="#FFF8E1" stroke="#6D4C00" stroke-width="0.3"/>
+    <circle cx="32" cy="3" r="1.2" fill="#FFF8E1" stroke="#6D4C00" stroke-width="0.3"/>
+    <circle cx="42" cy="6" r="1.1" fill="#FFF8E1" stroke="#6D4C00" stroke-width="0.3"/>
+    <circle cx="32" cy="12.4" r="3.6" fill="#B388FF" fill-opacity="0.3"/>
+    <circle cx="32" cy="12.4" r="2.3" fill="url(#aaGem)" stroke="#4A148C" stroke-width="0.4"/>
+    <circle cx="31.3" cy="11.6" r="0.6" fill="#FFFFFF"/>
+    <circle cx="24.6" cy="16" r="1" fill="#FF80AB" stroke="#880E4F" stroke-width="0.3"/>
+    <circle cx="39.4" cy="16" r="1" fill="#1DE9B6" stroke="#004D40" stroke-width="0.3"/>
+    <circle cx="24.3" cy="15.7" r="0.3" fill="#FFFFFF"/>
+    <circle cx="39.1" cy="15.7" r="0.3" fill="#FFFFFF"/>
+  </g>
+
+  <!-- bioluminescent plankton -->
+  <g fill="#B388FF">
+    <circle cx="5" cy="8" r="1.4" fill-opacity="0.15"/>
+    <circle cx="5" cy="8" r="0.45" fill-opacity="0.9"/>
+    <circle cx="59" cy="6" r="1.4" fill-opacity="0.15"/>
+    <circle cx="59" cy="6" r="0.45" fill-opacity="0.9"/>
+    <circle cx="3" cy="24" r="1.4" fill-opacity="0.15"/>
+    <circle cx="3" cy="24" r="0.45" fill-opacity="0.9"/>
+    <circle cx="61" cy="26" r="1.4" fill-opacity="0.15"/>
+    <circle cx="61" cy="26" r="0.45" fill-opacity="0.9"/>
+    <circle cx="58" cy="60" r="1.4" fill-opacity="0.15"/>
+    <circle cx="58" cy="60" r="0.45" fill-opacity="0.9"/>
+    <circle cx="4" cy="40" r="1.4" fill-opacity="0.15"/>
+    <circle cx="4" cy="40" r="0.45" fill-opacity="0.9"/>
+  </g>
+
+  <!-- bubbles -->
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.4" stroke-opacity="0.7">
+    <circle cx="52" cy="12" r="1.4"/>
+    <circle cx="55" cy="18" r="0.9"/>
+    <circle cx="10" cy="14" r="1"/>
+  </g>
+  <circle cx="51.6" cy="11.6" r="0.4" fill="#FFFFFF"/>
 </svg>

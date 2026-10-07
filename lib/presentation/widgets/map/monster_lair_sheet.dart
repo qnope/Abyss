@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../domain/fight/monster_unit_stats.dart';
 import '../../../domain/map/monster_lair.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
 
 void showMonsterLairSheet(
   BuildContext context, {
@@ -45,7 +45,7 @@ class _MonsterLairSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(lair.difficulty.svgPath, width: 64, height: 64),
+          RasterSvg(assetPath: lair.difficulty.svgPath, size: 64),
           const SizedBox(height: 12),
           Text(
             'Monstre ($targetX, $targetY)',

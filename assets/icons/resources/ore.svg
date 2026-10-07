@@ -1,10 +1,105 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M32 4 L46 18 L40 56 H24 L18 18 Z" fill="#1E88E5"/>
-  <path d="M32 4 L46 18 L40 56 H32 Z" fill="#1565C0"/>
-  <path d="M32 4 L18 18 H46 Z" fill="#90CAF9"/>
-  <path d="M32 4 L32 18 H46 Z" fill="#64B5F6"/>
-  <path d="M14 34 L22 28 L26 56 H14 Z" fill="#42A5F5"/>
-  <path d="M50 34 L42 30 L38 56 H50 Z" fill="#1976D2"/>
-  <path d="M24 22 L28 22 L26 40 Z" fill="#E3F2FD"/>
-  <path d="M10 56 H54 L50 60 H14 Z" fill="#24405E"/>
+  <defs>
+    <linearGradient id="oreLa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#90CAF9"/>
+      <stop offset="0.5" stop-color="#42A5F5"/>
+      <stop offset="1" stop-color="#1E88E5"/>
+    </linearGradient>
+    <linearGradient id="oreLb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#64B5F6"/>
+      <stop offset="1" stop-color="#1976D2"/>
+    </linearGradient>
+    <linearGradient id="oreR" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1E88E5"/>
+      <stop offset="0.6" stop-color="#1565C0"/>
+      <stop offset="1" stop-color="#0D3B85"/>
+    </linearGradient>
+    <radialGradient id="oreGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#42A5F5" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#42A5F5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="oreRock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A6A8E"/>
+      <stop offset="1" stop-color="#1A2D47"/>
+    </linearGradient>
+  </defs>
+  <!-- inner glow -->
+  <ellipse cx="32" cy="34" rx="27" ry="27" fill="url(#oreGlow)"/>
+  <!-- rock base -->
+  <path d="M9 58 Q10 53 16 52.4 Q24 50.6 32 51.6 Q42 50.6 49 52.6 Q55 53.6 55 58 Q50 61 32 61 Q14 61 9 58 Z" fill="url(#oreRock)" stroke="#0A0E1A" stroke-opacity="0.75" stroke-width="0.6"/>
+  <path d="M11.6 55 Q16 53 22 52.6" fill="none" stroke="#A8C4E0" stroke-opacity="0.5" stroke-width="0.6" stroke-linecap="round"/>
+  <path d="M44 60 Q51 59.4 54.4 57.4" fill="none" stroke="#1DE9B6" stroke-opacity="0.4" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- back right crystal -->
+  <g transform="translate(46 55) rotate(18)">
+    <path d="M-2.53 0 L-4.6 -18 L0.45999999999999996 -16.62 L0.45999999999999996 0 Z" fill="url(#oreLb)"/>
+    <path d="M0.45999999999999996 0 L0.45999999999999996 -16.62 L4.6 -18 L2.53 0 Z" fill="url(#oreR)"/>
+    <path d="M0 -23 L-4.6 -18 L0.45999999999999996 -16.62 Z" fill="#CFE8FF"/>
+    <path d="M0 -23 L0.45999999999999996 -16.62 L4.6 -18 Z" fill="#64B5F6"/>
+    <path d="M-2.53 0 L-4.6 -18 L0 -23 L4.6 -18 L2.53 0 Z" fill="none" stroke="#0A1F44" stroke-opacity="0.85" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M0.45999999999999996 0 L0.45999999999999996 -16.62 L0 -23 M-4.6 -18 L0.45999999999999996 -16.62 L4.6 -18" fill="none" stroke="#0D47A1" stroke-opacity="0.55" stroke-width="0.4" stroke-linejoin="round"/>
+    <path d="M-2.85 -15.30 L-1.90 -2.16" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.55" stroke-linecap="round"/>
+    <path d="M-1.38 -12.60 L-0.69 -8.10 M2.30 -10.80 L1.61 -5.40" fill="none" stroke="#E3F2FD" stroke-opacity="0.45" stroke-width="0.35" stroke-linecap="round"/>
+    <path d="M4.51 -17.10 L2.58 -0.6" fill="none" stroke="#00E5FF" stroke-opacity="0.8" stroke-width="0.5" stroke-linecap="round"/>
+    <circle cx="-2.07" cy="-18.50" r="0.46" fill="#FFFFFF"/>
+  </g>
+  <!-- back left crystal -->
+  <g transform="translate(18 55) rotate(-22)">
+    <path d="M-2.4200000000000004 0 L-4.4 -16 L0.44000000000000006 -14.68 L0.44000000000000006 0 Z" fill="url(#oreLb)"/>
+    <path d="M0.44000000000000006 0 L0.44000000000000006 -14.68 L4.4 -16 L2.4200000000000004 0 Z" fill="url(#oreR)"/>
+    <path d="M0 -21 L-4.4 -16 L0.44000000000000006 -14.68 Z" fill="#CFE8FF"/>
+    <path d="M0 -21 L0.44000000000000006 -14.68 L4.4 -16 Z" fill="#64B5F6"/>
+    <path d="M-2.4200000000000004 0 L-4.4 -16 L0 -21 L4.4 -16 L2.4200000000000004 0 Z" fill="none" stroke="#0A1F44" stroke-opacity="0.85" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M0.44000000000000006 0 L0.44000000000000006 -14.68 L0 -21 M-4.4 -16 L0.44000000000000006 -14.68 L4.4 -16" fill="none" stroke="#0D47A1" stroke-opacity="0.55" stroke-width="0.4" stroke-linejoin="round"/>
+    <path d="M-2.73 -13.60 L-1.82 -1.92" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.53" stroke-linecap="round"/>
+    <path d="M-1.32 -11.20 L-0.66 -7.20 M2.20 -9.60 L1.54 -4.80" fill="none" stroke="#E3F2FD" stroke-opacity="0.45" stroke-width="0.35" stroke-linecap="round"/>
+    <path d="M4.31 -15.20 L2.47 -0.6" fill="none" stroke="#00E5FF" stroke-opacity="0.8" stroke-width="0.5" stroke-linecap="round"/>
+    <circle cx="-1.98" cy="-16.50" r="0.44" fill="#FFFFFF"/>
+  </g>
+  <!-- main crystal -->
+  <g transform="translate(32 56) rotate(0)">
+    <path d="M-4.4 0 L-8 -34 L0.8 -31.6 L0.8 0 Z" fill="url(#oreLa)"/>
+    <path d="M0.8 0 L0.8 -31.6 L8 -34 L4.4 0 Z" fill="url(#oreR)"/>
+    <path d="M0 -47 L-8 -34 L0.8 -31.6 Z" fill="#CFE8FF"/>
+    <path d="M0 -47 L0.8 -31.6 L8 -34 Z" fill="#64B5F6"/>
+    <path d="M-4.4 0 L-8 -34 L0 -47 L8 -34 L4.4 0 Z" fill="none" stroke="#0A1F44" stroke-opacity="0.85" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M0.8 0 L0.8 -31.6 L0 -47 M-8 -34 L0.8 -31.6 L8 -34" fill="none" stroke="#0D47A1" stroke-opacity="0.55" stroke-width="0.4" stroke-linejoin="round"/>
+    <path d="M-4.96 -28.90 L-3.30 -4.08" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.96" stroke-linecap="round"/>
+    <path d="M-2.40 -23.80 L-1.20 -15.30 M4.00 -20.40 L2.80 -10.20" fill="none" stroke="#E3F2FD" stroke-opacity="0.45" stroke-width="0.35" stroke-linecap="round"/>
+    <path d="M7.84 -32.30 L4.49 -0.6" fill="none" stroke="#00E5FF" stroke-opacity="0.8" stroke-width="0.5" stroke-linecap="round"/>
+    <circle cx="-3.60" cy="-35.30" r="0.80" fill="#FFFFFF"/>
+  </g>
+  <!-- front left shard -->
+  <g transform="translate(24 58) rotate(-35)">
+    <path d="M-1.4300000000000002 0 L-2.6 -7 L0.26 -6.22 L0.26 0 Z" fill="url(#oreLa)"/>
+    <path d="M0.26 0 L0.26 -6.22 L2.6 -7 L1.4300000000000002 0 Z" fill="url(#oreR)"/>
+    <path d="M0 -10 L-2.6 -7 L0.26 -6.22 Z" fill="#CFE8FF"/>
+    <path d="M0 -10 L0.26 -6.22 L2.6 -7 Z" fill="#64B5F6"/>
+    <path d="M-1.4300000000000002 0 L-2.6 -7 L0 -10 L2.6 -7 L1.4300000000000002 0 Z" fill="none" stroke="#0A1F44" stroke-opacity="0.85" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M0.26 0 L0.26 -6.22 L0 -10 M-2.6 -7 L0.26 -6.22 L2.6 -7" fill="none" stroke="#0D47A1" stroke-opacity="0.55" stroke-width="0.4" stroke-linejoin="round"/>
+    <path d="M-1.61 -5.95 L-1.07 -0.84" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.31" stroke-linecap="round"/>
+    <path d="M-0.78 -4.90 L-0.39 -3.15 M1.30 -4.20 L0.91 -2.10" fill="none" stroke="#E3F2FD" stroke-opacity="0.45" stroke-width="0.35" stroke-linecap="round"/>
+    <path d="M2.55 -6.65 L1.46 -0.6" fill="none" stroke="#00E5FF" stroke-opacity="0.8" stroke-width="0.5" stroke-linecap="round"/>
+    <circle cx="-1.17" cy="-7.30" r="0.26" fill="#FFFFFF"/>
+  </g>
+  <!-- front right shard -->
+  <g transform="translate(40 58.4) rotate(30)">
+    <path d="M-1.32 0 L-2.4 -6 L0.24 -5.28 L0.24 0 Z" fill="url(#oreLb)"/>
+    <path d="M0.24 0 L0.24 -5.28 L2.4 -6 L1.32 0 Z" fill="url(#oreR)"/>
+    <path d="M0 -8.6 L-2.4 -6 L0.24 -5.28 Z" fill="#CFE8FF"/>
+    <path d="M0 -8.6 L0.24 -5.28 L2.4 -6 Z" fill="#64B5F6"/>
+    <path d="M-1.32 0 L-2.4 -6 L0 -8.6 L2.4 -6 L1.32 0 Z" fill="none" stroke="#0A1F44" stroke-opacity="0.85" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M0.24 0 L0.24 -5.28 L0 -8.6 M-2.4 -6 L0.24 -5.28 L2.4 -6" fill="none" stroke="#0D47A1" stroke-opacity="0.55" stroke-width="0.4" stroke-linejoin="round"/>
+    <path d="M-1.49 -5.10 L-0.99 -0.72" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.29" stroke-linecap="round"/>
+    <path d="M-0.72 -4.20 L-0.36 -2.70 M1.20 -3.60 L0.84 -1.80" fill="none" stroke="#E3F2FD" stroke-opacity="0.45" stroke-width="0.35" stroke-linecap="round"/>
+    <path d="M2.35 -5.70 L1.35 -0.6" fill="none" stroke="#00E5FF" stroke-opacity="0.8" stroke-width="0.5" stroke-linecap="round"/>
+    <circle cx="-1.08" cy="-6.26" r="0.24" fill="#FFFFFF"/>
+  </g>
+  <!-- loose ore chips -->
+  <path d="M13 58 L15 56.6 L16.6 58.2 L14.6 59.4 Z M50 58.6 L51.6 57.4 L53 58.8 Z" fill="#42A5F5" stroke="#0A1F44" stroke-opacity="0.7" stroke-width="0.35"/>
+  <!-- sparkles -->
+  <path d="M25 11.4 L25.572 13.428 L27.6 14 L25.572 14.572 L25 16.6 L24.428 14.572 L22.4 14 L24.428 13.428 Z" fill="#FFFFFF"/>
+  <path d="M52 28.2 L52.396 29.604 L53.8 30 L52.396 30.396 L52 31.8 L51.604 30.396 L50.2 30 L51.604 29.604 Z" fill="#FFFFFF"/>
+  <path d="M12 32.6 L12.308 33.692 L13.4 34 L12.308 34.308 L12 35.4 L11.692 34.308 L10.6 34 L11.692 33.692 Z" fill="#FFFFFF"/>
+  <circle cx="44" cy="10" r="0.6" fill="#E3F2FD" fill-opacity="0.8"/>
+  <circle cx="20" cy="24" r="0.5" fill="#E3F2FD" fill-opacity="0.7"/>
 </svg>

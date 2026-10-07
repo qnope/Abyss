@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../domain/map/cell_content_type.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
 
 void showTreasureSheet(
   BuildContext context, {
@@ -46,7 +46,7 @@ class _TreasureSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (svgPath != null)
-            SvgPicture.asset(svgPath, width: 64, height: 64),
+            RasterSvg(assetPath: svgPath, size: 64),
           const SizedBox(height: 12),
           Text(
             'Trésor ($targetX, $targetY)',

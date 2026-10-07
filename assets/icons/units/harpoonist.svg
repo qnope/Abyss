@@ -1,14 +1,165 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M8 64 Q8 44 32 42 Q56 44 56 64 Z" fill="#D84315"/>
-  <path d="M32 42 Q56 44 56 64 H32 Z" fill="#BF360C"/>
-  <path d="M4 60 L58 14" stroke="#8D6E63" stroke-width="3" stroke-linecap="round"/>
-  <path d="M56 8 L62 10 L60 17 L57 20 L53 15 Z" fill="#CFD8DC"/>
-  <path d="M53 15 L49 14 L54 19 Z" fill="#90A4AE"/>
-  <circle cx="30" cy="27" r="15" fill="#78909C"/>
-  <path d="M30 12 A15 15 0 0 1 30 42 Z" fill="#546E7A"/>
-  <circle cx="30" cy="27" r="9" fill="#0A0E1A"/>
-  <circle cx="30" cy="27" r="7" fill="#FF9100"/>
-  <circle cx="27.5" cy="24.5" r="2" fill="#FFE0B2"/>
-  <path d="M15 27 H18 M42 27 H45 M30 12 V15" stroke="#37474F" stroke-width="2.5"/>
-  <rect x="14" y="48" width="10" height="5" rx="1" fill="#FF9100"/>
+  <defs>
+    <radialGradient id="hpGlow" cx="30" cy="28" r="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF9100" stop-opacity="0.32"/>
+      <stop offset="0.6" stop-color="#00E5FF" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hpSuit" x1="12" y1="42" x2="52" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF7043"/>
+      <stop offset="0.45" stop-color="#D84315"/>
+      <stop offset="1" stop-color="#7F1D06"/>
+    </linearGradient>
+    <radialGradient id="hpHelm" cx="30" cy="27" r="16" fx="23" fy="19" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#CFD8DC"/>
+      <stop offset="0.45" stop-color="#78909C"/>
+      <stop offset="1" stop-color="#2E3B42"/>
+    </radialGradient>
+    <linearGradient id="hpBrass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFE082"/>
+      <stop offset="0.5" stop-color="#C79100"/>
+      <stop offset="1" stop-color="#6D4C00"/>
+    </linearGradient>
+    <radialGradient id="hpPort" cx="30" cy="27" r="7" fx="27" fy="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFE0B2"/>
+      <stop offset="0.35" stop-color="#FFAB40"/>
+      <stop offset="0.8" stop-color="#E65100"/>
+      <stop offset="1" stop-color="#5D1A00"/>
+    </radialGradient>
+    <linearGradient id="hpWood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#BCAAA4"/>
+      <stop offset="0.5" stop-color="#8D6E63"/>
+      <stop offset="1" stop-color="#4E342E"/>
+    </linearGradient>
+    <linearGradient id="hpTip" x1="54" y1="8" x2="60" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#B0BEC5"/>
+      <stop offset="1" stop-color="#546E7A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background glow -->
+  <circle cx="30" cy="30" r="28" fill="url(#hpGlow)"/>
+
+  <!-- torso / suit -->
+  <g>
+    <path d="M7 64 Q7 47 19 43.5 Q25 41.8 30 41.8 Q37 41.8 44 43.8 Q56 47 56 64 Z" fill="url(#hpSuit)" stroke="#3E0E02" stroke-width="0.6" stroke-opacity="0.7"/>
+    <path d="M12 58 Q16 52 22 50 M40 50 Q46 52 50 60 M26 57 Q30 54 34 57 M17 63 Q19 58 22 56" fill="none" stroke="#5D1400" stroke-width="0.7" stroke-opacity="0.6" stroke-linecap="round"/>
+    <path d="M12.6 56.6 Q16.4 51 22 49.2 M40.6 49.2 Q46.6 51.4 50.6 58.8" fill="none" stroke="#FFAB91" stroke-width="0.5" stroke-opacity="0.45" stroke-linecap="round"/>
+    <path d="M9 60 Q10 50 18 45.5" fill="none" stroke="#FFCCBC" stroke-width="1" stroke-opacity="0.35" stroke-linecap="round"/>
+    <path d="M55.6 62 Q55 50 46 45.4" fill="none" stroke="#1DE9B6" stroke-width="0.6" stroke-opacity="0.55" stroke-linecap="round"/>
+  </g>
+
+  <!-- shoulder pauldron (left) with rivets -->
+  <g>
+    <path d="M6.5 53 Q7 44.5 16 43 L22 43 Q22.5 48 19 51 Q13 51 6.5 53 Z" fill="#78909C" stroke="#1C262B" stroke-width="0.5"/>
+    <path d="M7.5 50 Q9 45 16 44 L20 44" fill="none" stroke="#ECEFF1" stroke-width="0.7" stroke-opacity="0.6" stroke-linecap="round"/>
+    <circle cx="10" cy="49" r="0.6" fill="#ECEFF1"/>
+    <circle cx="14" cy="47" r="0.6" fill="#ECEFF1"/>
+    <circle cx="18.5" cy="46.5" r="0.6" fill="#ECEFF1"/>
+    <path d="M11 51 L13 49.6" stroke="#263238" stroke-width="0.3" stroke-opacity="0.7"/>
+  </g>
+
+  <!-- rank badge -->
+  <g>
+    <rect x="35.5" y="50" width="10" height="5.5" rx="1" fill="url(#hpBrass)" stroke="#3E2723" stroke-width="0.5"/>
+    <path d="M37 52.8 L40.6 51.4 L44 52.8" fill="none" stroke="#5D1A00" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M36.2 50.8 H44.6" stroke="#FFF8E1" stroke-width="0.4" stroke-opacity="0.7"/>
+    <circle cx="30" cy="56" r="1.1" fill="url(#hpBrass)" stroke="#3E2723" stroke-width="0.3"/>
+    <circle cx="30" cy="60.5" r="1.1" fill="url(#hpBrass)" stroke="#3E2723" stroke-width="0.3"/>
+  </g>
+
+  <!-- neck ring / breastplate collar -->
+  <g>
+    <ellipse cx="30" cy="41.8" rx="12" ry="3.4" fill="url(#hpBrass)" stroke="#3E2723" stroke-width="0.5"/>
+    <path d="M19 41 Q30 37.6 41 41" fill="none" stroke="#FFF8E1" stroke-width="0.5" stroke-opacity="0.6"/>
+    <circle cx="20.5" cy="42.6" r="0.6" fill="#3E2723"/>
+    <circle cx="25" cy="44.4" r="0.6" fill="#3E2723"/>
+    <circle cx="30" cy="45" r="0.6" fill="#3E2723"/>
+    <circle cx="35" cy="44.4" r="0.6" fill="#3E2723"/>
+    <circle cx="39.5" cy="42.6" r="0.6" fill="#3E2723"/>
+  </g>
+
+  <!-- harpoon (held across the chest) -->
+  <g>
+    <path d="M5 60 L56 15" stroke="#3E2723" stroke-width="3.6" stroke-linecap="round"/>
+    <path d="M5 60 L56 15" stroke="url(#hpWood)" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M6 58.6 L55 15.4" stroke="#D7CCC8" stroke-width="0.5" stroke-opacity="0.6" stroke-linecap="round"/>
+    <path d="M44.5 25.2 L46.5 27.4 M47 23 L49 25.2" stroke="#3E2723" stroke-width="1.2"/>
+    <path d="M44.5 25.2 L46.5 27.4 M47 23 L49 25.2" stroke="#FFB300" stroke-width="0.6"/>
+    <path d="M52 16.5 L54.5 19.3" stroke="#455A64" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M56 8 L62 10 L60.5 16.5 L57.5 19.5 L53.5 15.5 Z" fill="url(#hpTip)" stroke="#263238" stroke-width="0.5" stroke-linejoin="round"/>
+    <path d="M56 8 L62 10 L57.5 13.5 Z" fill="#FFFFFF" fill-opacity="0.45"/>
+    <path d="M53.5 15.5 L49 13.6 L52.6 17.6 Z M57.5 19.5 L58.6 24 L55 20.2 Z" fill="#90A4AE" stroke="#263238" stroke-width="0.4" stroke-linejoin="round"/>
+    <path d="M60.5 16.5 L57.5 19.5" stroke="#00E5FF" stroke-width="0.5" stroke-opacity="0.8"/>
+    <circle cx="58.4" cy="11.4" r="0.6" fill="#FFFFFF"/>
+    <!-- gloved hand gripping the shaft -->
+    <path d="M10.6 50.4 Q12.6 47.6 16 48.4 Q19 49.4 18.4 52.4 Q17.4 55.6 14 55.4 Q10.6 54.6 10.6 50.4 Z" fill="#37474F" stroke="#11181C" stroke-width="0.5"/>
+    <path d="M12.4 49.6 L16.6 54.2 M14.2 48.8 L18 53" stroke="#11181C" stroke-width="0.5" stroke-opacity="0.8"/>
+    <path d="M11.6 50 Q13 48.4 15.2 48.6" fill="none" stroke="#B0BEC5" stroke-width="0.6" stroke-opacity="0.6" stroke-linecap="round"/>
+    <path d="M9 56 Q8 52 10.8 51" fill="none" stroke="#263238" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+
+  <!-- air hose -->
+  <path d="M42 34 Q48 38 47 46" fill="none" stroke="#263238" stroke-width="3" stroke-linecap="round"/>
+  <path d="M42 34 Q48 38 47 46" fill="none" stroke="#546E7A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M44 35.6 L45.6 34.4 M45.6 38 L47.4 37.4 M46.4 41 L48.2 41" stroke="#1C262B" stroke-width="0.5"/>
+
+  <!-- helmet -->
+  <g>
+    <circle cx="30" cy="27" r="15" fill="url(#hpHelm)" stroke="#11181C" stroke-width="0.7"/>
+    <path d="M17 22 Q20 14 28 12.4" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-opacity="0.45" stroke-linecap="round"/>
+    <path d="M44.4 30 Q42 39 33 41.8" fill="none" stroke="#00E5FF" stroke-width="0.8" stroke-opacity="0.7" stroke-linecap="round"/>
+    <path d="M20 35 L22.5 33.5 M38 17 L40 16.4 M36.5 37 L38 35" stroke="#263238" stroke-width="0.35" stroke-opacity="0.8"/>
+    <!-- side bolts -->
+    <rect x="13.6" y="25" width="4.4" height="4" rx="1" fill="#37474F" stroke="#11181C" stroke-width="0.4"/>
+    <rect x="42" y="25" width="4.4" height="4" rx="1" fill="#263238" stroke="#11181C" stroke-width="0.4"/>
+    <rect x="28" y="11.2" width="4" height="4" rx="1" fill="#37474F" stroke="#11181C" stroke-width="0.4"/>
+    <path d="M14.4 26 H17 M29 12 V14.4" stroke="#B0BEC5" stroke-width="0.5" stroke-linecap="round"/>
+    <!-- porthole brass ring -->
+    <circle cx="30" cy="27" r="9.6" fill="url(#hpBrass)" stroke="#3E2723" stroke-width="0.6"/>
+    <circle cx="30" cy="27" r="8.2" fill="#1A0A00"/>
+    <circle cx="30" cy="18.3" r="0.55" fill="#4E342E"/>
+    <circle cx="38.7" cy="27" r="0.55" fill="#4E342E"/>
+    <circle cx="30" cy="35.7" r="0.55" fill="#4E342E"/>
+    <circle cx="21.3" cy="27" r="0.55" fill="#4E342E"/>
+    <circle cx="23.8" cy="20.8" r="0.55" fill="#4E342E"/>
+    <circle cx="36.2" cy="20.8" r="0.55" fill="#4E342E"/>
+    <circle cx="36.2" cy="33.2" r="0.55" fill="#4E342E"/>
+    <circle cx="23.8" cy="33.2" r="0.55" fill="#4E342E"/>
+    <!-- glowing glass with face -->
+    <circle cx="30" cy="27" r="7.2" fill="url(#hpPort)"/>
+    <path d="M24.6 30.4 Q30 35.4 35.4 30.4 Q34 27.4 30 27.6 Q26 27.4 24.6 30.4 Z" fill="#5D1A00" fill-opacity="0.45"/>
+    <path d="M25.6 25.6 L28.6 26.4 M34.4 25.6 L31.4 26.4" stroke="#3E1000" stroke-width="0.8" stroke-linecap="round"/>
+    <ellipse cx="27.2" cy="27.4" rx="1.1" ry="0.8" fill="#FFF8E1"/>
+    <ellipse cx="32.8" cy="27.4" rx="1.1" ry="0.8" fill="#FFF8E1"/>
+    <path d="M28 31.4 Q30 32.4 32 31.4" fill="none" stroke="#3E1000" stroke-width="0.5" stroke-linecap="round"/>
+    <path d="M24.4 23.6 Q26.4 20.8 30 20.4" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.7" stroke-linecap="round"/>
+    <circle cx="25.6" cy="22.6" r="0.6" fill="#FFFFFF"/>
+    <path d="M22.8 27 H37.2 M30 19.8 V34.2" stroke="#3E2723" stroke-width="0.5" stroke-opacity="0.5"/>
+  </g>
+
+  <!-- bioluminescent plankton -->
+  <g fill="#FFAB40">
+    <circle cx="5" cy="8" r="1.4" fill-opacity="0.15"/>
+    <circle cx="5" cy="8" r="0.45" fill-opacity="0.9"/>
+    <circle cx="59" cy="6" r="1.4" fill-opacity="0.15"/>
+    <circle cx="59" cy="6" r="0.45" fill-opacity="0.9"/>
+    <circle cx="3" cy="24" r="1.4" fill-opacity="0.15"/>
+    <circle cx="3" cy="24" r="0.45" fill-opacity="0.9"/>
+    <circle cx="61" cy="26" r="1.4" fill-opacity="0.15"/>
+    <circle cx="61" cy="26" r="0.45" fill-opacity="0.9"/>
+    <circle cx="58" cy="60" r="1.4" fill-opacity="0.15"/>
+    <circle cx="58" cy="60" r="0.45" fill-opacity="0.9"/>
+    <circle cx="4" cy="40" r="1.4" fill-opacity="0.15"/>
+    <circle cx="4" cy="40" r="0.45" fill-opacity="0.9"/>
+  </g>
+
+  <!-- bubbles -->
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.4" stroke-opacity="0.7">
+    <circle cx="13" cy="12" r="1.5"/>
+    <circle cx="9.5" cy="17" r="1"/>
+    <circle cx="15" cy="6" r="0.8"/>
+  </g>
+  <circle cx="12.5" cy="11.5" r="0.4" fill="#FFFFFF"/>
 </svg>

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../domain/fight/monster_unit_stats.dart';
 import '../../../domain/map/monster_lair.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
 
 class MonsterPreview extends StatelessWidget {
   final MonsterLair lair;
@@ -23,11 +23,7 @@ class MonsterPreview extends StatelessWidget {
           children: [
             Row(
               children: [
-                SvgPicture.asset(
-                  lair.difficulty.svgPath,
-                  width: 40,
-                  height: 40,
-                ),
+                RasterSvg(assetPath: lair.difficulty.svgPath, size: 40),
                 const SizedBox(width: 12),
                 Text(
                   lair.difficulty.label,

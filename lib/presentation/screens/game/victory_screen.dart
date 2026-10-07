@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../domain/game/game_statistics.dart';
 import '../../theme/abyss_colors.dart';
+import '../../widgets/common/raster_svg.dart';
 
 class VictoryScreen extends StatelessWidget {
   final GameStatistics statistics;
@@ -25,10 +25,9 @@ class VictoryScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SvgPicture.asset(
-                'assets/icons/terrain/volcanic_kernel.svg',
-                width: 96,
-                height: 96,
+              RasterSvg(
+                assetPath: 'assets/icons/terrain/volcanic_kernel.svg',
+                size: 96,
               ),
               const SizedBox(height: 16),
               Text(

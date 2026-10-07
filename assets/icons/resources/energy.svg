@@ -1,6 +1,83 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M32 2 L58 17 V47 L32 62 L6 47 V17 Z" fill="#3A3010"/>
-  <path d="M32 7 L54 20 V44 L32 57 L10 44 V20 Z" fill="#5C4A0E"/>
-  <path d="M36 10 L18 36 H30 L26 54 L46 26 H34 Z" fill="#FFD740"/>
-  <path d="M36 10 L30 26 H34 Z M30 36 L26 54 L34 36 Z" fill="#FFF3C4"/>
+  <defs>
+    <radialGradient id="enFace" cx="0.45" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#8A6D12"/>
+      <stop offset="0.6" stop-color="#4A3B0C"/>
+      <stop offset="1" stop-color="#241C05"/>
+    </radialGradient>
+    <radialGradient id="enGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFD740" stop-opacity="0.6"/>
+      <stop offset="0.5" stop-color="#FFAB00" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#FFAB00" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="enBolt" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFDE7"/>
+      <stop offset="0.35" stop-color="#FFE57F"/>
+      <stop offset="0.7" stop-color="#FFD740"/>
+      <stop offset="1" stop-color="#FFAB00"/>
+    </linearGradient>
+  </defs>
+  <!-- outer frame outline -->
+  <path d="M32 1.6 L58.4 16.8 V47.2 L32 62.4 L5.6 47.2 V16.8 Z" fill="#1A1405"/>
+  <!-- bevel faces (lit from top-left) -->
+  <g stroke="#1A1405" stroke-opacity="0.6" stroke-width="0.35" stroke-linejoin="round">
+    <path d="M6 17 L32 2 L32 7 L10 20 Z" fill="#E0BC4A"/>
+    <path d="M32 2 L58 17 L54 20 L32 7 Z" fill="#B08A22"/>
+    <path d="M58 17 V47 L54 44 V20 Z" fill="#7A5E14"/>
+    <path d="M58 47 L32 62 V57 L54 44 Z" fill="#4A3909"/>
+    <path d="M32 62 L6 47 L10 44 L32 57 Z" fill="#634C0E"/>
+    <path d="M6 47 V17 L10 20 V44 Z" fill="#C49C2E"/>
+  </g>
+  <!-- bevel highlights and cyan rim light -->
+  <path d="M7 17.4 L32 3" fill="none" stroke="#FFF8D6" stroke-opacity="0.8" stroke-width="0.6" stroke-linecap="round"/>
+  <path d="M6.6 45 V19" fill="none" stroke="#FFF8D6" stroke-opacity="0.45" stroke-width="0.5" stroke-linecap="round"/>
+  <path d="M57.4 20 V46.6 L33 60.8" fill="none" stroke="#00E5FF" stroke-opacity="0.6" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- rivets -->
+  <g fill="#6B5214" stroke="#1A1405" stroke-opacity="0.7" stroke-width="0.3">
+    <circle cx="32" cy="4.6" r="1"/>
+    <circle cx="55.6" cy="18.4" r="1"/>
+    <circle cx="55.6" cy="45.6" r="1"/>
+    <circle cx="32" cy="59.4" r="1"/>
+    <circle cx="8.4" cy="45.6" r="1"/>
+    <circle cx="8.4" cy="18.4" r="1"/>
+  </g>
+  <g fill="#FFF3C4" fill-opacity="0.9">
+    <circle cx="31.7" cy="4.3" r="0.35"/>
+    <circle cx="55.3" cy="18.1" r="0.35"/>
+    <circle cx="55.3" cy="45.3" r="0.35"/>
+    <circle cx="31.7" cy="59.1" r="0.35"/>
+    <circle cx="8.1" cy="45.3" r="0.35"/>
+    <circle cx="8.1" cy="18.1" r="0.35"/>
+  </g>
+  <!-- inner face with circuit traces -->
+  <path d="M32 7 L54 20 V44 L32 57 L10 44 V20 Z" fill="url(#enFace)" stroke="#120E03" stroke-opacity="0.9" stroke-width="0.6"/>
+  <path d="M32 8.4 L11.2 20.6 V43" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="1"/>
+  <g fill="none" stroke="#FFD740" stroke-opacity="0.22" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 24 H18 L21 27 M13 40 H17 L20 37 M51 24 H46 L43 21 M51 40 H47 L44 43 M24 52 L26 49 H29 M40 12 L38 15 H35"/>
+  </g>
+  <g fill="#FFD740" fill-opacity="0.4">
+    <circle cx="21" cy="27" r="0.6"/>
+    <circle cx="20" cy="37" r="0.6"/>
+    <circle cx="43" cy="21" r="0.6"/>
+    <circle cx="44" cy="43" r="0.6"/>
+    <circle cx="29" cy="49" r="0.6"/>
+    <circle cx="35" cy="15" r="0.6"/>
+  </g>
+  <!-- energy glow -->
+  <circle cx="32" cy="32" r="21" fill="url(#enGlow)"/>
+  <!-- lightning bolt -->
+  <g stroke-linejoin="round">
+    <path d="M36 10 L18 36 H30 L26 54 L46 26 H34 Z" fill="none" stroke="#FFD740" stroke-opacity="0.3" stroke-width="3.4"/>
+    <path d="M36 10 L18 36 H30 L26 54 L46 26 H34 Z" fill="url(#enBolt)" stroke="#5C3D00" stroke-width="0.8"/>
+    <path d="M34 26 H46 L26 54 L30 36 Z" fill="#E09600" fill-opacity="0.45"/>
+    <path d="M35 12.6 L20.4 34.6 H22.6 Z" fill="#FFFFFF" fill-opacity="0.8"/>
+    <path d="M30.6 37 L27.8 49.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.6" stroke-linecap="round"/>
+    <path d="M44.4 27.4 L28.4 50" fill="none" stroke="#00E5FF" stroke-opacity="0.5" stroke-width="0.5" stroke-linecap="round"/>
+  </g>
+  <!-- sparks -->
+  <g fill="none" stroke="#FFF3C4" stroke-width="0.6" stroke-linecap="round">
+    <path d="M15 30 L13 28.6 M16 33 L13.4 33.4 M48 31 L50.4 30 M47 35 L49 36.4 M40 11 L41.4 9"/>
+  </g>
+  <circle cx="17" cy="47" r="0.5" fill="#FFF3C4" fill-opacity="0.7"/>
+  <circle cx="48" cy="17" r="0.5" fill="#FFF3C4" fill-opacity="0.7"/>
 </svg>

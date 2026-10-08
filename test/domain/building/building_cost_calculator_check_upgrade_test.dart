@@ -51,7 +51,7 @@ void main() {
       );
 
       expect(result.canUpgrade, isFalse);
-      expect(result.missingResources[ResourceType.coral], 20);
+      expect(result.missingResources[ResourceType.coral], 50);
     });
 
     test('cannot upgrade when ore insufficient', () {
@@ -69,7 +69,7 @@ void main() {
       );
 
       expect(result.canUpgrade, isFalse);
-      expect(result.missingResources[ResourceType.ore], 15);
+      expect(result.missingResources[ResourceType.ore], 35);
     });
 
     test('cannot upgrade at max level (isMaxLevel=true)', () {
@@ -102,8 +102,8 @@ void main() {
       );
 
       expect(result.canUpgrade, isFalse);
-      expect(result.missingResources[ResourceType.coral], 30);
-      expect(result.missingResources[ResourceType.ore], 20);
+      expect(result.missingResources[ResourceType.coral], 60);
+      expect(result.missingResources[ResourceType.ore], 40);
     });
 
     test('cannot upgrade algaeFarm when HQ prerequisite not met', () {

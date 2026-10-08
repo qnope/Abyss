@@ -19,17 +19,17 @@ class PlayerDefaults {
       ),
       ResourceType.coral: Resource(
         type: ResourceType.coral,
-        amount: 80,
+        amount: 300,
         maxStorage: 5000,
       ),
       ResourceType.ore: Resource(
         type: ResourceType.ore,
-        amount: 50,
+        amount: 150,
         maxStorage: 5000,
       ),
       ResourceType.energy: Resource(
         type: ResourceType.energy,
-        amount: 60,
+        amount: 100,
         maxStorage: 1000,
       ),
       ResourceType.pearl: Resource(

@@ -91,8 +91,8 @@ void main() {
       final result = action.execute(s.game, s.player);
       expect(result.isSuccess, isTrue);
       // military level 1 costs ore: 40, energy: 25
-      expect(s.player.resources[ResourceType.ore]!.amount, 460);
-      expect(s.player.resources[ResourceType.energy]!.amount, 475);
+      expect(s.player.resources[ResourceType.ore]!.amount, 420);
+      expect(s.player.resources[ResourceType.energy]!.amount, 450);
       expect(s.player.techBranches[TechBranch.military]!.researchLevel, 1);
     });
 

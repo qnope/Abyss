@@ -50,8 +50,8 @@ void main() {
       final result = executor.execute(action, s.game, s.player);
 
       expect(result.isSuccess, true);
-      expect(s.player.resources[ResourceType.coral]!.amount, 50);
-      expect(s.player.resources[ResourceType.ore]!.amount, 30);
+      expect(s.player.resources[ResourceType.coral]!.amount, 20);
+      expect(s.player.resources[ResourceType.ore]!.amount, 10);
       expect(s.player.buildings[BuildingType.headquarters]!.level, 1);
     });
 
@@ -95,8 +95,8 @@ void main() {
       final result = executor.execute(action, s.game, s.player);
 
       expect(result.isSuccess, true);
-      expect(s.player.resources[ResourceType.coral]!.amount, 50);
-      expect(s.player.resources[ResourceType.ore]!.amount, 30);
+      expect(s.player.resources[ResourceType.coral]!.amount, 20);
+      expect(s.player.resources[ResourceType.ore]!.amount, 10);
       expect(s.player.buildings[BuildingType.headquarters]!.level, 1);
       expect(s.player.resources[ResourceType.algae]!.amount, 100);
       expect(s.player.resources[ResourceType.energy]!.amount, 60);

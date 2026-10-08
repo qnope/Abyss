@@ -13,43 +13,43 @@ void main() {
   });
 
   group('upgradeCost', () {
-    test('HQ level 0->1: coral=30, ore=20', () {
+    test('HQ level 0->1: coral=60, ore=40', () {
       final cost = calculator.upgradeCost(BuildingType.headquarters, 0);
-      expect(cost[ResourceType.coral], 30);
-      expect(cost[ResourceType.ore], 20);
-    });
-
-    test('HQ level 1->2: coral=60, ore=40', () {
-      final cost = calculator.upgradeCost(BuildingType.headquarters, 1);
       expect(cost[ResourceType.coral], 60);
       expect(cost[ResourceType.ore], 40);
     });
 
-    test('HQ level 5->6: coral=780, ore=520', () {
+    test('HQ level 1->2: coral=96, ore=64', () {
+      final cost = calculator.upgradeCost(BuildingType.headquarters, 1);
+      expect(cost[ResourceType.coral], 96);
+      expect(cost[ResourceType.ore], 64);
+    });
+
+    test('HQ level 5->6: coral=629, ore=419', () {
       final cost = calculator.upgradeCost(BuildingType.headquarters, 5);
-      expect(cost[ResourceType.coral], 780);
-      expect(cost[ResourceType.ore], 520);
+      expect(cost[ResourceType.coral], 629);
+      expect(cost[ResourceType.ore], 419);
     });
 
-    test('HQ level 9->10: coral=2460, ore=1640', () {
+    test('HQ level 9->10: coral=4123, ore=2749', () {
       final cost = calculator.upgradeCost(BuildingType.headquarters, 9);
-      expect(cost[ResourceType.coral], 2460);
-      expect(cost[ResourceType.ore], 1640);
+      expect(cost[ResourceType.coral], 4123);
+      expect(cost[ResourceType.ore], 2749);
     });
 
-    test('HQ at max level (10): returns empty map', () {
+    test('HQ at max level 10: empty', () {
       final cost = calculator.upgradeCost(BuildingType.headquarters, 10);
       expect(cost, isEmpty);
     });
 
-    test('algaeFarm level 0->1: coral=20', () {
+    test('algaeFarm level 0->1: coral=80', () {
       final cost = calculator.upgradeCost(BuildingType.algaeFarm, 0);
-      expect(cost[ResourceType.coral], 20);
+      expect(cost[ResourceType.coral], 80);
     });
 
-    test('algaeFarm level 2->3: coral=100', () {
+    test('algaeFarm level 2->3: coral=205', () {
       final cost = calculator.upgradeCost(BuildingType.algaeFarm, 2);
-      expect(cost[ResourceType.coral], 100);
+      expect(cost[ResourceType.coral], 205);
     });
 
     test('algaeFarm at max level 5: empty', () {
@@ -57,44 +57,44 @@ void main() {
       expect(cost, isEmpty);
     });
 
-    test('coralMine level 0->1: ore=15', () {
+    test('coralMine level 0->1: ore=60', () {
       final cost = calculator.upgradeCost(BuildingType.coralMine, 0);
-      expect(cost[ResourceType.ore], 15);
+      expect(cost[ResourceType.ore], 60);
     });
 
-    test('coralMine level 3->4: ore=150', () {
+    test('coralMine level 3->4: ore=246', () {
       final cost = calculator.upgradeCost(BuildingType.coralMine, 3);
-      expect(cost[ResourceType.ore], 150);
+      expect(cost[ResourceType.ore], 246);
     });
 
-    test('oreExtractor level 0->1: coral=25, energy=15', () {
+    test('oreExtractor level 0->1: coral=75, energy=45', () {
       final cost = calculator.upgradeCost(BuildingType.oreExtractor, 0);
-      expect(cost[ResourceType.coral], 25);
-      expect(cost[ResourceType.energy], 15);
+      expect(cost[ResourceType.coral], 75);
+      expect(cost[ResourceType.energy], 45);
     });
 
-    test('oreExtractor level 1->2: coral=50, energy=30', () {
+    test('oreExtractor level 1->2: coral=120, energy=72', () {
       final cost = calculator.upgradeCost(BuildingType.oreExtractor, 1);
-      expect(cost[ResourceType.coral], 50);
-      expect(cost[ResourceType.energy], 30);
+      expect(cost[ResourceType.coral], 120);
+      expect(cost[ResourceType.energy], 72);
     });
 
-    test('solarPanel level 0->1: coral=20, ore=15', () {
+    test('solarPanel level 0->1: coral=60, ore=45', () {
       final cost = calculator.upgradeCost(BuildingType.solarPanel, 0);
-      expect(cost[ResourceType.coral], 20);
-      expect(cost[ResourceType.ore], 15);
+      expect(cost[ResourceType.coral], 60);
+      expect(cost[ResourceType.ore], 45);
     });
 
-    test('solarPanel level 4->5: coral=340, ore=255', () {
+    test('solarPanel level 4->5: coral=393, ore=295', () {
       final cost = calculator.upgradeCost(BuildingType.solarPanel, 4);
-      expect(cost[ResourceType.coral], 340);
-      expect(cost[ResourceType.ore], 255);
+      expect(cost[ResourceType.coral], 393);
+      expect(cost[ResourceType.ore], 295);
     });
 
-    test('laboratory level 0->1: coral=25, ore=20', () {
+    test('laboratory level 0->1: coral=75, ore=60', () {
       final cost = calculator.upgradeCost(BuildingType.laboratory, 0);
-      expect(cost[ResourceType.coral], 25);
-      expect(cost[ResourceType.ore], 20);
+      expect(cost[ResourceType.coral], 75);
+      expect(cost[ResourceType.ore], 60);
     });
 
     test('laboratory at max level 5: empty', () {
@@ -102,57 +102,71 @@ void main() {
       expect(cost, isEmpty);
     });
 
-    test('barracks level 0->1: coral=20, ore=25, energy=10', () {
+    test('barracks level 0->1: coral=60, ore=75, energy=30', () {
       final cost = calculator.upgradeCost(BuildingType.barracks, 0);
-      expect(cost[ResourceType.coral], 20);
-      expect(cost[ResourceType.ore], 25);
-      expect(cost[ResourceType.energy], 10);
+      expect(cost[ResourceType.coral], 60);
+      expect(cost[ResourceType.ore], 75);
+      expect(cost[ResourceType.energy], 30);
     });
 
     test('barracks at max level 5: empty', () {
       final cost = calculator.upgradeCost(BuildingType.barracks, 5);
       expect(cost, isEmpty);
     });
+
+    test('every level costs 1.6 times the previous one', () {
+      for (var level = 1; level < 5; level++) {
+        final previous = calculator.upgradeCost(
+          BuildingType.coralMine,
+          level - 1,
+        );
+        final cost = calculator.upgradeCost(BuildingType.coralMine, level);
+        expect(
+          cost[ResourceType.ore]! / previous[ResourceType.ore]!,
+          closeTo(1.6, 0.02),
+        );
+      }
+    });
   });
 
   group('coralCitadel', () {
-    test('level 0->1: coral=120, ore=120, energy=60, pearl=5', () {
+    test('level 0->1: coral=250, ore=250, energy=125, pearl=5', () {
       final cost = calculator.upgradeCost(BuildingType.coralCitadel, 0);
-      expect(cost[ResourceType.coral], 120);
-      expect(cost[ResourceType.ore], 120);
-      expect(cost[ResourceType.energy], 60);
+      expect(cost[ResourceType.coral], 250);
+      expect(cost[ResourceType.ore], 250);
+      expect(cost[ResourceType.energy], 125);
       expect(cost[ResourceType.pearl], 5);
     });
 
-    test('level 1->2: coral=240, ore=240, energy=120, pearl=10', () {
+    test('level 1->2: coral=400, ore=400, energy=200, pearl=10', () {
       final cost = calculator.upgradeCost(BuildingType.coralCitadel, 1);
-      expect(cost[ResourceType.coral], 240);
-      expect(cost[ResourceType.ore], 240);
-      expect(cost[ResourceType.energy], 120);
+      expect(cost[ResourceType.coral], 400);
+      expect(cost[ResourceType.ore], 400);
+      expect(cost[ResourceType.energy], 200);
       expect(cost[ResourceType.pearl], 10);
     });
 
-    test('level 2->3: coral=500, ore=500, energy=250, pearl=20', () {
+    test('level 2->3: coral=640, ore=640, energy=320, pearl=20', () {
       final cost = calculator.upgradeCost(BuildingType.coralCitadel, 2);
-      expect(cost[ResourceType.coral], 500);
-      expect(cost[ResourceType.ore], 500);
-      expect(cost[ResourceType.energy], 250);
+      expect(cost[ResourceType.coral], 640);
+      expect(cost[ResourceType.ore], 640);
+      expect(cost[ResourceType.energy], 320);
       expect(cost[ResourceType.pearl], 20);
     });
 
-    test('level 3->4: coral=850, ore=850, energy=425, pearl=35', () {
+    test('level 3->4: coral=1024, ore=1024, energy=512, pearl=35', () {
       final cost = calculator.upgradeCost(BuildingType.coralCitadel, 3);
-      expect(cost[ResourceType.coral], 850);
-      expect(cost[ResourceType.ore], 850);
-      expect(cost[ResourceType.energy], 425);
+      expect(cost[ResourceType.coral], 1024);
+      expect(cost[ResourceType.ore], 1024);
+      expect(cost[ResourceType.energy], 512);
       expect(cost[ResourceType.pearl], 35);
     });
 
-    test('level 4->5: coral=1300, ore=1300, energy=650, pearl=60', () {
+    test('level 4->5: coral=1638, ore=1638, energy=819, pearl=60', () {
       final cost = calculator.upgradeCost(BuildingType.coralCitadel, 4);
-      expect(cost[ResourceType.coral], 1300);
-      expect(cost[ResourceType.ore], 1300);
-      expect(cost[ResourceType.energy], 650);
+      expect(cost[ResourceType.coral], 1638);
+      expect(cost[ResourceType.ore], 1638);
+      expect(cost[ResourceType.energy], 819);
       expect(cost[ResourceType.pearl], 60);
     });
 
@@ -243,10 +257,7 @@ void main() {
     });
 
     test('prerequisites: HQ level 8', () {
-      final prereqs = calculator.prerequisites(
-        BuildingType.pressureCapsule,
-        1,
-      );
+      final prereqs = calculator.prerequisites(BuildingType.pressureCapsule, 1);
       expect(prereqs, {BuildingType.headquarters: 8});
     });
   });
@@ -266,45 +277,39 @@ void main() {
     });
 
     test('prerequisites at level 1: HQ 10', () {
-      final prereqs = calculator.prerequisites(
-        BuildingType.volcanicKernel,
-        1,
-      );
+      final prereqs = calculator.prerequisites(BuildingType.volcanicKernel, 1);
       expect(prereqs, {BuildingType.headquarters: 10});
     });
 
     test('prerequisites at level 5: HQ 10', () {
-      final prereqs = calculator.prerequisites(
-        BuildingType.volcanicKernel,
-        5,
-      );
+      final prereqs = calculator.prerequisites(BuildingType.volcanicKernel, 5);
       expect(prereqs, {BuildingType.headquarters: 10});
     });
   });
 
   group('requiresCapturedKernel', () {
     test('true for volcanicKernel', () {
-      expect(calculator.requiresCapturedKernel(BuildingType.volcanicKernel),
-          isTrue);
+      expect(
+        calculator.requiresCapturedKernel(BuildingType.volcanicKernel),
+        isTrue,
+      );
     });
 
     test('false for headquarters', () {
-      expect(calculator.requiresCapturedKernel(BuildingType.headquarters),
-          isFalse);
+      expect(
+        calculator.requiresCapturedKernel(BuildingType.headquarters),
+        isFalse,
+      );
     });
   });
 
   group('checkUpgrade volcanicKernel', () {
     Map<ResourceType, Resource> abundant() => {
-          ResourceType.coral: Resource(
-              type: ResourceType.coral, amount: 99999),
-          ResourceType.ore: Resource(
-              type: ResourceType.ore, amount: 99999),
-          ResourceType.energy: Resource(
-              type: ResourceType.energy, amount: 99999),
-          ResourceType.pearl: Resource(
-              type: ResourceType.pearl, amount: 99999),
-        };
+      ResourceType.coral: Resource(type: ResourceType.coral, amount: 99999),
+      ResourceType.ore: Resource(type: ResourceType.ore, amount: 99999),
+      ResourceType.energy: Resource(type: ResourceType.energy, amount: 99999),
+      ResourceType.pearl: Resource(type: ResourceType.pearl, amount: 99999),
+    };
 
     test('kernel not captured returns canUpgrade false', () {
       final result = calculator.checkUpgrade(
@@ -312,8 +317,10 @@ void main() {
         currentLevel: 0,
         resources: abundant(),
         allBuildings: {
-          BuildingType.headquarters:
-              Building(type: BuildingType.headquarters, level: 10),
+          BuildingType.headquarters: Building(
+            type: BuildingType.headquarters,
+            level: 10,
+          ),
         },
         isVolcanicKernelCaptured: false,
       );
@@ -327,8 +334,10 @@ void main() {
         currentLevel: 0,
         resources: abundant(),
         allBuildings: {
-          BuildingType.headquarters:
-              Building(type: BuildingType.headquarters, level: 10),
+          BuildingType.headquarters: Building(
+            type: BuildingType.headquarters,
+            level: 10,
+          ),
         },
         isVolcanicKernelCaptured: true,
       );
@@ -342,8 +351,10 @@ void main() {
         currentLevel: 0,
         resources: abundant(),
         allBuildings: {
-          BuildingType.headquarters:
-              Building(type: BuildingType.headquarters, level: 9),
+          BuildingType.headquarters: Building(
+            type: BuildingType.headquarters,
+            level: 9,
+          ),
         },
         isVolcanicKernelCaptured: true,
       );

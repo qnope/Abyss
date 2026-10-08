@@ -1,5 +1,6 @@
 import '../building/building.dart';
 import '../building/building_type.dart';
+import '../resource/exponential_cost.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
 import 'tech_branch.dart';
@@ -115,19 +116,13 @@ class TechCostCalculator {
     ResourceType secondary,
     int level,
   ) {
-    final (p, s, pearl) = switch (level) {
-      1 => (40, 25, 0),
-      2 => (80, 50, 0),
-      3 => (150, 90, 0),
-      4 => (250, 150, 5),
-      5 => (400, 250, 10),
-      _ => (0, 0, 0),
-    };
-    if (p == 0) return {};
+    if (level < 1 || level > maxResearchLevel) return {};
+    final pearl = _researchPearls[level - 1];
     return {
-      primary: p,
-      secondary: s,
+      ...exponentialCost({primary: 80, secondary: 50}, level - 1),
       if (pearl > 0) ResourceType.pearl: pearl,
     };
   }
+
+  static const _researchPearls = [0, 0, 0, 5, 10];
 }

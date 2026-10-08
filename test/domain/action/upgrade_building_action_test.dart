@@ -87,8 +87,8 @@ void main() {
       final s = makeScenario();
       final result = action.execute(s.game, s.player);
       expect(result.isSuccess, isTrue);
-      expect(s.player.resources[ResourceType.coral]!.amount, 50);
-      expect(s.player.resources[ResourceType.ore]!.amount, 30);
+      expect(s.player.resources[ResourceType.coral]!.amount, 20);
+      expect(s.player.resources[ResourceType.ore]!.amount, 10);
       expect(s.player.buildings[BuildingType.headquarters]!.level, 1);
     });
 

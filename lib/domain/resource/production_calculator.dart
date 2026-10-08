@@ -6,6 +6,14 @@ import '../tech/tech_branch.dart';
 import '../tech/tech_branch_state.dart';
 
 class ProductionCalculator {
+  /// Flat income of a built HQ, whatever its level. Coral pays for the
+  /// Ore Extractor and ore for the Coral Mine, so without it a base that
+  /// spent its stock on anything else could never build either again.
+  static const Map<ResourceType, int> headquartersIncome = {
+    ResourceType.coral: 15,
+    ResourceType.ore: 10,
+  };
+
   static Map<ResourceType, int> fromBuildings(
     Map<BuildingType, Building> buildings, {
     Map<TechBranch, TechBranchState>? techBranches,
@@ -17,6 +25,11 @@ class ProductionCalculator {
         final amount = formula.compute(building.level);
         result[formula.resourceType] =
             (result[formula.resourceType] ?? 0) + amount;
+      }
+    }
+    if ((buildings[BuildingType.headquarters]?.level ?? 0) > 0) {
+      for (final entry in headquartersIncome.entries) {
+        result[entry.key] = (result[entry.key] ?? 0) + entry.value;
       }
     }
     final resourcesLevel =

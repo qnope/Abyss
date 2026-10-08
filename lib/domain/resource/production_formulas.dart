@@ -21,7 +21,9 @@ const Map<BuildingType, ProductionFormula> productionFormulas = {
   ),
 };
 
-int _algaeFarmProduction(int level) => 30 * level * level + 20;
-int _coralMineProduction(int level) => 20 * level * level + 20;
-int _oreExtractorProduction(int level) => 20 * level * level + 10;
-int _solarPanelProduction(int level) => 12 * level * level + 6;
+// Linear production: every level adds the same amount, so the
+// exponential upgrade costs take longer and longer to pay back.
+int _algaeFarmProduction(int level) => 90 * level - 40;
+int _coralMineProduction(int level) => 60 * level - 20;
+int _oreExtractorProduction(int level) => 60 * level - 30;
+int _solarPanelProduction(int level) => 36 * level - 18;

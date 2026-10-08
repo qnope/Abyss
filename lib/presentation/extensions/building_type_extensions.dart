@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../domain/building/building_type.dart';
+import '../../domain/resource/production_calculator.dart';
+import '../../domain/resource/resource_type.dart';
 import '../theme/abyss_colors.dart';
 
 extension BuildingTypeColor on BuildingType {
@@ -36,7 +38,9 @@ extension BuildingTypeInfo on BuildingType {
   String get description => switch (this) {
     BuildingType.headquarters =>
       'Centre de commandement de votre base sous-marine. '
-      'Son niveau détermine les capacités de votre colonie.',
+      'Son niveau détermine les capacités de votre colonie. '
+      'Une fois bâti, il fournit ${_hqIncome(ResourceType.coral)} corail '
+      'et ${_hqIncome(ResourceType.ore)} minerai par tour.',
     BuildingType.algaeFarm =>
       'Cultive des algues pour nourrir votre colonie sous-marine.',
     BuildingType.coralMine =>
@@ -76,3 +80,6 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.volcanicKernel => 'assets/icons/terrain/volcanic_kernel.svg',
   };
 }
+
+int _hqIncome(ResourceType type) =>
+    ProductionCalculator.headquartersIncome[type] ?? 0;

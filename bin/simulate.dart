@@ -17,8 +17,20 @@
 //   --turns <n>         turn limit per game (default 60)
 //   --verbose           one line per game, plus the action log of game 1
 //   --json              print the whole batch as JSON
+//
+// Variants of a replay (the plan of the human, moved away from the game):
+//   --replay <file>     exported replay to vary
+//   --new-map           a new map per seed; map actions aim at what is
+//                       revealed there instead of the original cells
+//   --new-dice          the seed rolls fights, loot and raids
+//   --army <f>          recruits of fighters × f (default 1)
+//   --jitter <n>        each turn of the plan played 0 to n turns late
+//   --stretch <f>       turn t of the plan played at turn t × f
+//   --patience <n>      turns a failed step is tried again (default 6)
+//   --defends           recruits for every announced raid, as conquest does
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:abyss/domain/script/batch_report.dart';
 import 'package:abyss/domain/script/batch_runner.dart';
@@ -27,13 +39,19 @@ import 'package:abyss/domain/script/scenario_parser.dart';
 import 'package:abyss/domain/script/script_library.dart';
 import 'package:abyss/domain/script/script_run_report.dart';
 import 'package:abyss/domain/script/script_runner.dart';
+import 'package:abyss/domain/script/variant/plan_script.dart';
+import 'package:abyss/domain/script/variant/replay_variant.dart';
 
 void main(List<String> args) {
   final Map<String, String> options = _parse(args);
   final String? scenario = options['scenario'];
-  final GameScript Function() build = scenario != null
-      ? () => ScenarioParser.parse(File(scenario).readAsStringSync())
-      : () => ScriptLibrary.byName(options['strategy'] ?? 'balanced');
+  final String? replay = options['replay'];
+  final GameScript Function() build =
+      replay != null
+          ? _variantOf(File(replay).readAsStringSync(), options)
+          : scenario != null
+          ? () => ScenarioParser.parse(File(scenario).readAsStringSync())
+          : () => ScriptLibrary.byName(options['strategy'] ?? 'balanced');
   final BatchReport report = BatchRunner(
     runner: ScriptRunner(maxTurns: int.parse(options['turns'] ?? '60')),
   ).run(
@@ -42,14 +60,30 @@ void main(List<String> args) {
     firstSeed: int.parse(options['seed'] ?? '1'),
   );
   if (options.containsKey('json')) {
-    stdout.writeln(const JsonEncoder.withIndent('  ').convert(<String, Object>{
-      'summary': report.toJson(),
-      'runs': report.runs.map((r) => r.toJson()).toList(),
-    }));
+    stdout.writeln(
+      const JsonEncoder.withIndent('  ').convert(<String, Object>{
+        'summary': report.toJson(),
+        'runs': report.runs.map((r) => r.toJson()).toList(),
+      }),
+    );
     return;
   }
   if (options.containsKey('verbose')) _printRuns(report);
   _printSummary(build().name, report);
+}
+
+GameScript Function() _variantOf(String source, Map<String, String> o) {
+  final ReplayVariant variant = ReplayVariant(
+    sameMap: !o.containsKey('new-map'),
+    sameDice: !o.containsKey('new-dice'),
+    army: double.parse(o['army'] ?? '1'),
+    jitter: int.parse(o['jitter'] ?? '0'),
+    stretch: double.parse(o['stretch'] ?? '1'),
+    patience: int.parse(o['patience'] ?? '6'),
+    defends: o.containsKey('defends'),
+  );
+  int game = int.parse(o['seed'] ?? '1');
+  return () => PlanScript.fromReplay(source, variant, random: Random(game++));
 }
 
 Map<String, String> _parse(List<String> args) {
@@ -65,9 +99,11 @@ Map<String, String> _parse(List<String> args) {
 
 void _printRuns(BatchReport report) {
   for (final run in report.runs) {
-    stdout.writeln('seed ${run.seed}: ${run.status.name} au tour '
-        '${run.turnsPlayed}, raids ${run.raidsRepelled} repoussés / '
-        '${run.raidsLost} perdus, bruit ${run.totalNoise}');
+    stdout.writeln(
+      'seed ${run.seed}: ${run.status.name} au tour '
+      '${run.turnsPlayed}, raids ${run.raidsRepelled} repoussés / '
+      '${run.raidsLost} perdus, bruit ${run.totalNoise}',
+    );
   }
   if (report.runs.isNotEmpty) {
     stdout.writeln('\nJournal de la partie seed ${report.runs.first.seed} :');
@@ -81,19 +117,29 @@ void _printSummary(String name, BatchReport report) {
   String avg(double v) => v.toStringAsFixed(1);
   stdout
     ..writeln('Stratégie : $name, ${report.games} parties')
-    ..writeln('Survie : ${pct(report.survivalRate)} '
-        '(${report.defeats} défaites, ${report.victories} victoires)')
+    ..writeln(
+      'Survie : ${pct(report.survivalRate)} '
+      '(${report.defeats} défaites, ${report.victories} victoires)',
+    )
     ..writeln('Tours joués en moyenne : ${avg(report.averageTurns)}')
-    ..writeln('Raids repoussés / perdus en moyenne : '
-        '${avg(report.averageRaidsRepelled)} / ${avg(report.averageRaidsLost)}')
+    ..writeln(
+      'Raids repoussés / perdus en moyenne : '
+      '${avg(report.averageRaidsRepelled)} / ${avg(report.averageRaidsLost)}',
+    )
     ..writeln('Bruit total moyen : ${avg(report.averageNoise)}')
     ..writeln('Première défaite : tour ${report.earliestDefeat ?? '-'}');
   _printMilestone(report, 'Faille prise', (r) => r.milestones.failleCaptured);
   _printMilestone(
-      report, 'Cheminée prise', (r) => r.milestones.chemineeCaptured);
+    report,
+    'Cheminée prise',
+    (r) => r.milestones.chemineeCaptured,
+  );
   _printMilestone(report, 'Noyau pris', (r) => r.milestones.kernelCaptured);
   _printMilestone(
-      report, 'Victoire', (r) => r.isVictory ? r.turnsPlayed : null);
+    report,
+    'Victoire',
+    (r) => r.isVictory ? r.turnsPlayed : null,
+  );
 }
 
 void _printMilestone(
@@ -103,6 +149,8 @@ void _printMilestone(
 ) {
   final m = report.milestone(turnOf);
   if (m.games == 0) return;
-  stdout.writeln('$label : ${m.games}/${report.games} parties, '
-      'tour ${m.averageTurn!.toStringAsFixed(1)} en moyenne');
+  stdout.writeln(
+    '$label : ${m.games}/${report.games} parties, '
+    'tour ${m.averageTurn!.toStringAsFixed(1)} en moyenne',
+  );
 }

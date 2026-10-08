@@ -54,6 +54,16 @@ void main() {
     }
   });
 
+  test('draws the delays from the game dice when given none', () {
+    final script =
+        PlanScript.fromReplay(upgrades, const ReplayVariant(jitter: 2));
+
+    expect(script.pending.map((s) => s.turn), <int>[1, 4]);
+    ScriptRunner(maxTurns: 1).run(script, seed: 5);
+    final int late = script.pending.last.turn - 4;
+    expect(late, inInclusiveRange(0, 2));
+  });
+
   test('pins the map and raids only while it keeps the dice', () {
     final source = jsonEncode(<String, Object?>{
       'mapSeed': 42,

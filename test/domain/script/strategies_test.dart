@@ -47,8 +47,8 @@ void main() {
   // The 15 % target is measured on a human plan (calibration_test.dart);
   // against it, the careful script loses nearly every game.
   test('the careful script no longer wins', () {
-    final run = ScriptRunner(maxTurns: 100)
-        .run(const ConquestStrategy(), seed: 13);
+    final run =
+        ScriptRunner(maxTurns: 100).run(const ConquestStrategy(), seed: 13);
 
     expect(run.isVictory, isFalse);
   }, timeout: const Timeout(Duration(minutes: 5)));

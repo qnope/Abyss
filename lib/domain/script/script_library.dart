@@ -3,8 +3,10 @@ import 'idle_script.dart';
 import 'strategies/balanced_strategy.dart';
 import 'strategies/conquest_strategy.dart';
 import 'strategies/economy_strategy.dart';
+import 'variant/plan_library.dart';
 
-/// Built-in strategies, by the name a scenario or the command line uses.
+/// Built-in strategies, by the name a scenario or the command line uses,
+/// with the human plans of [PlanLibrary] (`plan85`, `plan85-newmap`...).
 abstract final class ScriptLibrary {
   static final Map<String, GameScript Function()> _builders =
       <String, GameScript Function()>{
@@ -13,6 +15,7 @@ abstract final class ScriptLibrary {
     'idle': () => const IdleScript(),
     'conquest': () => const ConquestStrategy(),
     'rush': () => const ConquestStrategy(defends: false, name: 'rush'),
+    ...PlanLibrary.builders,
   };
 
   static Iterable<String> get names => _builders.keys;

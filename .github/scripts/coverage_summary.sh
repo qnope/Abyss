@@ -59,7 +59,7 @@ echo
 echo "| File | Lines | Covered | Coverage |"
 echo "|---|---:|---:|---:|"
 echo "$per_file" | awk '{ printf "%.4f %s\n", $1 == 0 ? 100 : 100 * $2 / $1, $0 }' |
-  sort -n -k1,1 -k2,2nr | head -n 20 |
+  sort -n -k1,1 -k2,2nr | awk 'NR <= 20' |
   while read -r _ f h name; do row "$name" "$f" "$h"; done
 echo
 echo "</details>"

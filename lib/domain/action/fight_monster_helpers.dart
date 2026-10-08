@@ -10,8 +10,8 @@ import '../history/history_entry.dart';
 import '../map/monster_lair.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
-import '../tech/tech_branch.dart';
-import '../tech/tech_branch_state.dart';
+import '../fight/unit_boost.dart';
+import '../tech/tech_effects.dart';
 import '../unit/unit_type.dart';
 import 'fight_casualty_breakdown.dart';
 import 'fight_monster_result.dart';
@@ -19,13 +19,15 @@ import 'fight_monster_result.dart';
 class FightMonsterHelpers {
   const FightMonsterHelpers._();
 
-  /// Returns the player's military research level, or `0` if the branch is
-  /// missing or still locked.
-  static int militaryResearchLevelOf(Player player) {
-    final TechBranchState? state = player.techBranches[TechBranch.military];
-    if (state == null || !state.unlocked) return 0;
-    return state.researchLevel;
-  }
+  /// Stat boosts the player's research grants its units, when they
+  /// attack or when they guard the base against a raid.
+  static UnitBoost unitBoostOf(
+    Player player, {
+    bool attacking = false,
+    bool defendingBase = false,
+  }) =>
+      TechEffects(player.techBranches)
+          .unitBoost(attacking: attacking, defendingBase: defendingBase);
 
   /// Guarded pct lost calculator.
   static double computePctLost(List<Combatant> initial, List<Combatant> finalC) {

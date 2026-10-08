@@ -4,11 +4,11 @@ import 'package:abyss/domain/map/reveal_area_calculator.dart';
 
 GridPosition _pos(int x, int y) => GridPosition(x: x, y: y);
 
-List<GridPosition> _reveal(int tx, int ty, int level, {int size = 20}) {
+List<GridPosition> _reveal(int tx, int ty, int side, {int size = 20}) {
   return RevealAreaCalculator.cellsToReveal(
     targetX: tx,
     targetY: ty,
-    explorerLevel: level,
+    side: side,
     mapWidth: size,
     mapHeight: size,
   );
@@ -25,8 +25,8 @@ void _assertCentered(List<GridPosition> positions, GridPosition target) {
 
 void main() {
   group('cellsToReveal - odd squares (target at center)', () {
-    test('level 0 (3x3) at (5,5) reveals 9 cells, range (4,4)..(6,6)', () {
-      final positions = _reveal(5, 5, 0);
+    test('side 3 at (5,5) reveals 9 cells, range (4,4)..(6,6)', () {
+      final positions = _reveal(5, 5, 3);
       expect(positions.length, 9);
       for (var x = 4; x <= 6; x++) {
         for (var y = 4; y <= 6; y++) {
@@ -36,9 +36,9 @@ void main() {
       expect(positions, contains(_pos(5, 5)));
     });
 
-    test('level 2 (5x5) at (10,10) reveals 25 cells, range (8,8)..(12,12)',
+    test('side 5 at (10,10) reveals 25 cells, range (8,8)..(12,12)',
         () {
-      final positions = _reveal(10, 10, 2);
+      final positions = _reveal(10, 10, 5);
       expect(positions.length, 25);
       for (var x = 8; x <= 12; x++) {
         for (var y = 8; y <= 12; y++) {
@@ -48,9 +48,9 @@ void main() {
       expect(positions, contains(_pos(10, 10)));
     });
 
-    test('level 4 (7x7) at (10,10) reveals 49 cells, range (7,7)..(13,13)',
+    test('side 7 at (10,10) reveals 49 cells, range (7,7)..(13,13)',
         () {
-      final positions = _reveal(10, 10, 4);
+      final positions = _reveal(10, 10, 7);
       expect(positions.length, 49);
       for (var x = 7; x <= 13; x++) {
         for (var y = 7; y <= 13; y++) {
@@ -60,9 +60,9 @@ void main() {
       expect(positions, contains(_pos(10, 10)));
     });
 
-    test('level 5 (9x9) at (10,10) reveals 81 cells, range (6,6)..(14,14)',
+    test('side 9 at (10,10) reveals 81 cells, range (6,6)..(14,14)',
         () {
-      final positions = _reveal(10, 10, 5);
+      final positions = _reveal(10, 10, 9);
       expect(positions.length, 81);
       for (var x = 6; x <= 14; x++) {
         for (var y = 6; y <= 14; y++) {
@@ -74,18 +74,18 @@ void main() {
   });
 
   group('cellsToReveal - strict centering', () {
-    for (final level in const [0, 2, 4, 5]) {
-      test('level $level is strictly centered on target', () {
+    for (final side in const [3, 5, 7, 9]) {
+      test('side $side is strictly centered on target', () {
         final target = _pos(10, 10);
-        final positions = _reveal(target.x, target.y, level);
+        final positions = _reveal(target.x, target.y, side);
         _assertCentered(positions, target);
       });
     }
   });
 
   group('cellsToReveal - boundary handling', () {
-    test('corner (0,0) level 0 reveals 4 cells', () {
-      final positions = _reveal(0, 0, 0);
+    test('corner (0,0) side 3 reveals 4 cells', () {
+      final positions = _reveal(0, 0, 3);
       expect(positions.length, 4);
       expect(
         positions,
@@ -93,8 +93,8 @@ void main() {
       );
     });
 
-    test('right edge (19,10) level 1 reveals 6 cells', () {
-      final positions = _reveal(19, 10, 1);
+    test('right edge (19,10) side 3 reveals 6 cells', () {
+      final positions = _reveal(19, 10, 3);
       expect(positions.length, 6);
       for (var x = 18; x <= 19; x++) {
         for (var y = 9; y <= 11; y++) {
@@ -104,8 +104,8 @@ void main() {
       expect(positions, contains(_pos(19, 10)));
     });
 
-    test('far corner (19,19) level 0 reveals 4 cells', () {
-      final positions = _reveal(19, 19, 0);
+    test('far corner (19,19) side 3 reveals 4 cells', () {
+      final positions = _reveal(19, 19, 3);
       expect(positions.length, 4);
       expect(
         positions,
@@ -116,10 +116,10 @@ void main() {
 
   group('cellsToReveal - total cell count on open map', () {
     const center = 10;
-    final expected = {0: 9, 1: 9, 2: 25, 3: 25, 4: 49, 5: 81};
+    final expected = {3: 9, 5: 25, 7: 49, 9: 81, 11: 121};
 
     for (final entry in expected.entries) {
-      test('level ${entry.key} reveals ${entry.value} cells', () {
+      test('side ${entry.key} reveals ${entry.value} cells', () {
         final positions = _reveal(center, center, entry.key);
         expect(positions.length, entry.value);
         expect(positions, contains(_pos(center, center)));

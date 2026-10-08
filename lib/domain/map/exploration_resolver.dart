@@ -1,5 +1,5 @@
 import '../game/game.dart';
-import '../tech/tech_branch.dart';
+import '../tech/tech_effects.dart';
 import 'cell_content_type.dart';
 import 'exploration_result.dart';
 import 'reveal_area_calculator.dart';
@@ -11,8 +11,7 @@ class ExplorationResolver {
     for (final player in game.players.values) {
       if (player.pendingExplorations.isEmpty) continue;
 
-      final explorerLevel =
-          player.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
+      final revealSide = TechEffects(player.techBranches).revealSide;
 
       for (final order in player.pendingExplorations) {
         final map = game.levels[order.level];
@@ -21,7 +20,7 @@ class ExplorationResolver {
         final positions = RevealAreaCalculator.cellsToReveal(
           targetX: order.target.x,
           targetY: order.target.y,
-          explorerLevel: explorerLevel,
+          side: revealSide,
           mapWidth: map.width,
           mapHeight: map.height,
         );

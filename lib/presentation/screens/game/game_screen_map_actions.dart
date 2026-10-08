@@ -12,7 +12,7 @@ import '../../../domain/map/cell_eligibility_checker.dart';
 import '../../../domain/map/grid_position.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../../domain/map/transition_base_type.dart';
-import '../../../domain/tech/tech_branch.dart';
+import '../../../domain/tech/tech_effects.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../../domain/replay/seeded_random.dart';
 import '../../theme/abyss_colors.dart';
@@ -162,8 +162,7 @@ void _showExplorationFlow(
 ) {
   final human = game.humanPlayer;
   final scoutCount = human.unitsOnLevel(level)[UnitType.scout]?.count ?? 0;
-  final explorerLevel =
-      human.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
+  final revealSide = TechEffects(human.techBranches).revealSide;
   final isEligible =
       CellEligibilityChecker.isEligible(
         game.levels[level]!, human, x, y, level: level,
@@ -174,7 +173,7 @@ void _showExplorationFlow(
     targetX: x,
     targetY: y,
     scoutCount: scoutCount,
-    explorerLevel: explorerLevel,
+    revealSide: revealSide,
     isEligible: isEligible,
     onConfirm: () {
       final action = ExploreAction(

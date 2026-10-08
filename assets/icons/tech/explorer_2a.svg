@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="ex2aGlow" cx="32" cy="44" r="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF" stop-opacity="0.35"/>
+      <stop offset="0.55" stop-color="#448AFF" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#448AFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ex2aSweep" cx="32" cy="44" r="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ex2aSand" x1="0" y1="52" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3A5A80"/>
+      <stop offset="1" stop-color="#101E38"/>
+    </linearGradient>
+    <linearGradient id="ex2aBase" x1="20" y1="46" x2="44" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#90CAF9"/>
+      <stop offset="0.35" stop-color="#1E88E5"/>
+      <stop offset="1" stop-color="#0A2A66"/>
+    </linearGradient>
+    <radialGradient id="ex2aDome" cx="32" cy="44" r="9" fx="28.6" fy="39" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.25" stop-color="#E0F7FA"/>
+      <stop offset="0.6" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#00838F"/>
+    </radialGradient>
+    <linearGradient id="ex2aMast" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#BBDEFB"/>
+      <stop offset="0.5" stop-color="#448AFF"/>
+      <stop offset="1" stop-color="#0D3A80"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="32" cy="40" r="30" fill="url(#ex2aGlow)"/>
+
+  <!-- sweep wedge -->
+  <path d="M32 44 L8 18 A30 30 0 0 1 24 15.2 Z" fill="url(#ex2aSweep)" fill-opacity="0.6"/>
+  <path d="M32 44 L24 15.2" stroke="#E0F7FA" stroke-width="0.6" stroke-opacity="0.8" stroke-linecap="round"/>
+
+  <!-- expanding pulse rings -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M4 44 A28 28 0 0 1 60 44" stroke="#448AFF" stroke-width="1.2" stroke-opacity="0.35"/>
+    <path d="M10 44 A22 22 0 0 1 54 44" stroke="#448AFF" stroke-width="1.6" stroke-opacity="0.55"/>
+    <path d="M16 44 A16 16 0 0 1 48 44" stroke="#00E5FF" stroke-width="2" stroke-opacity="0.75"/>
+    <path d="M21.4 44 A10.6 10.6 0 0 1 42.6 44" stroke="#00E5FF" stroke-width="2.2"/>
+    <!-- inner bright cores -->
+    <path d="M16 44 A16 16 0 0 1 48 44" stroke="#E0F7FA" stroke-width="0.5" stroke-opacity="0.8"/>
+    <path d="M21.4 44 A10.6 10.6 0 0 1 42.6 44" stroke="#FFFFFF" stroke-width="0.6" stroke-opacity="0.9"/>
+    <path d="M10 44 A22 22 0 0 1 54 44" stroke="#82B1FF" stroke-width="0.4" stroke-opacity="0.7"/>
+    <path d="M4 44 A28 28 0 0 1 60 44" stroke="#B388FF" stroke-width="0.4" stroke-opacity="0.5" stroke-dasharray="1.4 2"/>
+  </g>
+  <!-- range ticks -->
+  <g stroke="#E0F7FA" stroke-width="0.5" stroke-opacity="0.6" stroke-linecap="round">
+    <path d="M32 14 V12.4"/>
+    <path d="M32 20 V18.6"/>
+    <path d="M17.4 23.6 L16.4 22.6"/>
+    <path d="M46.6 23.6 L47.6 22.6"/>
+  </g>
+
+  <!-- detected contacts -->
+  <g>
+    <circle cx="14" cy="27" r="2.6" fill="#00E5FF" fill-opacity="0.2"/>
+    <circle cx="14" cy="27" r="1" fill="#E0F7FA"/>
+    <circle cx="47" cy="19" r="2.4" fill="#B388FF" fill-opacity="0.22"/>
+    <circle cx="47" cy="19" r="0.9" fill="#E1CCFF"/>
+    <circle cx="51" cy="35" r="1.8" fill="#00E5FF" fill-opacity="0.18"/>
+    <circle cx="51" cy="35" r="0.6" fill="#E0F7FA"/>
+  </g>
+
+  <!-- seabed -->
+  <ellipse cx="32" cy="58" rx="28" ry="4" fill="#000" fill-opacity="0.35"/>
+  <path d="M2 64 Q4 55 16 54 H48 Q60 55 62 64 Z" fill="url(#ex2aSand)" stroke="#0A0E1A" stroke-width="0.5" stroke-opacity="0.7"/>
+  <path d="M8 58 Q12 56.6 16 57.4 M46 57 Q51 56.2 55 58" fill="none" stroke="#5B84AC" stroke-width="0.5" stroke-opacity="0.6" stroke-linecap="round"/>
+
+  <!-- emitter base -->
+  <g>
+    <path d="M18 57 L21 48 H43 L46 57 Z" fill="url(#ex2aBase)" stroke="#06183A" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M21.6 48.8 H42.4" stroke="#E3F2FD" stroke-width="0.6" stroke-opacity="0.7"/>
+    <path d="M19.6 54 H44.4" stroke="#0A2A66" stroke-width="0.5" stroke-opacity="0.8"/>
+    <path d="M26 49 L25 56.6 M38 49 L39 56.6" stroke="#0A2A66" stroke-width="0.4" stroke-opacity="0.7"/>
+    <g fill="#00E5FF">
+      <circle cx="22.6" cy="51.4" r="0.6"/>
+      <circle cx="41.4" cy="51.4" r="0.6"/>
+      <circle cx="32" cy="55.4" r="0.5" fill="#B388FF"/>
+    </g>
+    <rect x="29" y="51.4" width="6" height="2" rx="0.6" fill="#0A0E1A" stroke="#448AFF" stroke-width="0.3"/>
+    <path d="M30 52.4 H31 M32 52.4 H33.6" stroke="#00E5FF" stroke-width="0.6"/>
+    <!-- side fins -->
+    <path d="M18.6 52 L13 55.6 L18 56.4 Z M45.4 52 L51 55.6 L46 56.4 Z" fill="#0D47A1" stroke="#06183A" stroke-width="0.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- transducer dome -->
+  <g>
+    <circle cx="32" cy="44" r="12" fill="#00E5FF" fill-opacity="0.12"/>
+    <path d="M23 48 A9 9 0 0 1 41 48 Z" fill="url(#ex2aDome)" stroke="#006C80" stroke-width="0.6"/>
+    <path d="M24.4 46.4 Q25.2 40.6 31 39.2" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.85" stroke-linecap="round"/>
+    <path d="M27 48 A5 5 0 0 1 37 48" fill="none" stroke="#006C80" stroke-width="0.5" stroke-opacity="0.7"/>
+    <path d="M39.6 46 Q39.2 43 37.4 41.2" fill="none" stroke="#B388FF" stroke-width="0.6" stroke-opacity="0.7" stroke-linecap="round"/>
+    <!-- antenna -->
+    <rect x="31.2" y="33" width="1.6" height="6.4" rx="0.6" fill="url(#ex2aMast)" stroke="#06183A" stroke-width="0.35"/>
+    <circle cx="32" cy="32.4" r="2.2" fill="#00E5FF" fill-opacity="0.3"/>
+    <circle cx="32" cy="32.4" r="1.1" fill="#E0F7FA" stroke="#006C80" stroke-width="0.3"/>
+    <circle cx="31.7" cy="32.1" r="0.35" fill="#FFFFFF"/>
+  </g>
+
+  <!-- plankton & bubbles -->
+  <g fill="#00E5FF">
+    <circle cx="5" cy="8" r="1.4" fill-opacity="0.15"/>
+    <circle cx="5" cy="8" r="0.45"/>
+    <circle cx="59" cy="9" r="1.4" fill-opacity="0.15"/>
+    <circle cx="59" cy="9" r="0.45"/>
+  </g>
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.4" stroke-opacity="0.7">
+    <circle cx="56" cy="47" r="1.4"/>
+    <circle cx="58.6" cy="43" r="0.8"/>
+    <circle cx="8" cy="46" r="1"/>
+  </g>
+  <circle cx="55.6" cy="46.6" r="0.4" fill="#FFFFFF"/>
+</svg>

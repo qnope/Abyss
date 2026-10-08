@@ -4,6 +4,7 @@ import 'production_formulas.dart';
 import 'resource_type.dart';
 import '../tech/tech_branch.dart';
 import '../tech/tech_branch_state.dart';
+import '../tech/tech_effects.dart';
 
 class ProductionCalculator {
   /// Flat income of a built HQ, whatever its level. Coral pays for the
@@ -32,13 +33,10 @@ class ProductionCalculator {
         result[entry.key] = (result[entry.key] ?? 0) + entry.value;
       }
     }
-    final resourcesLevel =
-        techBranches?[TechBranch.resources]?.researchLevel ?? 0;
-    if (resourcesLevel > 0) {
-      final multiplier = 1.0 + (0.2 * resourcesLevel);
-      for (final type in result.keys.toList()) {
-        result[type] = (result[type]! * multiplier).floor();
-      }
+    if (techBranches == null) return result;
+    final tech = TechEffects(techBranches);
+    for (final type in result.keys.toList()) {
+      result[type] = result[type]! * (100 + tech.productionPercent(type)) ~/ 100;
     }
     return result;
   }

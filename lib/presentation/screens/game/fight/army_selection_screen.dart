@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../domain/fight/unit_boost.dart';
 import '../../../../data/game_repository.dart';
 import '../../../../domain/action/action_executor.dart';
 import '../../../../domain/action/fight_monster_action.dart';
@@ -52,12 +53,11 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
   int get _totalSelected =>
       _selected.values.fold<int>(0, (int sum, int v) => sum + v);
 
-  int get _militaryLevel =>
-      _summary.militaryLevelOf(widget.game.humanPlayer);
+  UnitBoost get _boost => _summary.boostOf(widget.game.humanPlayer);
 
-  int get _totalAtk => _summary.totalAtk(_selected, _militaryLevel);
+  int get _totalAtk => _summary.totalAtk(_selected, _boost);
 
-  int get _totalDef => _summary.totalDef(_selected, _militaryLevel);
+  int get _totalDef => _summary.totalDef(_selected, _boost);
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
         SelectionSummaryCard(
           totalAtk: _totalAtk,
           totalDef: _totalDef,
-          militaryLevel: _militaryLevel,
+          boost: _boost,
         ),
         const SizedBox(height: 16),
         Row(

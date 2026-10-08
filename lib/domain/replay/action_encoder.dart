@@ -12,6 +12,7 @@ import '../action/research_tech_action.dart';
 import '../action/send_reinforcements_action.dart';
 import '../action/unlock_branch_action.dart';
 import '../action/upgrade_building_action.dart';
+import '../tech/tech_option.dart';
 import '../unit/unit_type.dart';
 import 'seeded_random.dart';
 
@@ -29,7 +30,11 @@ abstract final class ActionEncoder {
         'building': a.buildingType.name,
       },
       UnlockBranchAction a => {'do': 'unlock', 'branch': a.branch.name},
-      ResearchTechAction a => {'do': 'research', 'branch': a.branch.name},
+      ResearchTechAction a => {
+        'do': 'research',
+        'branch': a.branch.name,
+        if (a.option != TechOption.a) 'option': a.option.name,
+      },
       RecruitUnitAction a => {
         'do': 'recruit',
         'unit': a.unitType.name,

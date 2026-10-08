@@ -2,9 +2,12 @@ import 'dart:math';
 
 import 'package:abyss/domain/action/fight_monster_action.dart';
 import 'package:abyss/domain/action/recruit_unit_action.dart';
+import 'package:abyss/domain/action/research_tech_action.dart';
 import 'package:abyss/domain/action/upgrade_building_action.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/script/action_codec.dart';
+import 'package:abyss/domain/tech/tech_branch.dart';
+import 'package:abyss/domain/tech/tech_option.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -43,6 +46,36 @@ void main() {
       expect(action.random, same(random));
       expect(action.level, 1);
       expect(action.selectedUnits, <UnitType, int>{UnitType.harpoonist: 5});
+    });
+
+    test('reads the option of a research', () {
+      final action = ActionCodec.decode(<String, Object?>{
+        'do': 'research',
+        'branch': 'explorer',
+        'option': 'b',
+      })(Random(1)) as ResearchTechAction;
+
+      expect(action.branch, TechBranch.explorer);
+      expect(action.option, TechOption.b);
+    });
+
+    test('a research without option takes option A', () {
+      final action = ActionCodec.decode(
+        <String, Object?>{'do': 'research', 'branch': 'military'},
+      )(Random(1)) as ResearchTechAction;
+
+      expect(action.option, TechOption.a);
+    });
+
+    test('rejects an unknown research option', () {
+      expect(
+        () => ActionCodec.decode(<String, Object?>{
+          'do': 'research',
+          'branch': 'military',
+          'option': 'c',
+        })(Random(1)),
+        throwsFormatException,
+      );
     });
 
     test('rejects an unknown verb or value right away', () {

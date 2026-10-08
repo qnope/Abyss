@@ -1,6 +1,7 @@
 import '../../action/recruit_unit_action.dart';
 import '../../building/building_type.dart';
 import '../../fight/combatant.dart';
+import '../../fight/unit_boost.dart';
 import '../../resource/consumption_calculator.dart';
 import '../../resource/production_calculator.dart';
 import '../../resource/resource_type.dart';
@@ -78,7 +79,7 @@ extension RecruitMoves on ScriptTurn {
     required List<Combatant> Function() enemy,
     required List<Map<UnitType, int>> mixes,
     required ArmyPlanner planner,
-    required int militaryLevel,
+    required UnitBoost boost,
     List<Combatant> Function()? allies,
     bool needsAdmiral = false,
     double share = 1,
@@ -92,7 +93,7 @@ extension RecruitMoves on ScriptTurn {
     for (final Map<UnitType, int> mix in usable) {
       final int? k = planner.smallestWinning(
           affordable(mix, share: share), (int k) => plus(mix, k), enemy,
-          militaryLevel: militaryLevel,
+          boost: boost,
           allies: allies,
           needsAdmiral: needsAdmiral);
       if (k == null) continue;

@@ -3,6 +3,7 @@ import 'dart:math';
 import '../game/player.dart';
 import '../history/history_entry.dart';
 import '../map/monster_lair.dart';
+import '../tech/tech_effects.dart';
 import 'noise_rules.dart';
 import 'raid_battle.dart';
 import 'raid_report.dart';
@@ -48,7 +49,8 @@ abstract final class RaidResolver {
     }
     final MonsterLair wave = RaidWaveFactory.fromTotalNoise(state.totalNoise);
     final int arrival =
-        max(endedTurn + NoiseRules.warningTurns, NoiseRules.firstRaidTurn);
+        max(endedTurn + TechEffects(player.techBranches).raidWarningTurns,
+            NoiseRules.firstRaidTurn);
     state.announce(wave, arrival);
     return RaidTurnOutcome(
       report: report,

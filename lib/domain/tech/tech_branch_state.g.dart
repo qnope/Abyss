@@ -20,19 +20,22 @@ class TechBranchStateAdapter extends TypeAdapter<TechBranchState> {
       branch: fields[0] as TechBranch,
       unlocked: fields[1] == null ? false : fields[1] as bool,
       researchLevel: fields[2] == null ? 0 : (fields[2] as num).toInt(),
+      choices: (fields[3] as List?)?.cast<int>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, TechBranchState obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.branch)
       ..writeByte(1)
       ..write(obj.unlocked)
       ..writeByte(2)
-      ..write(obj.researchLevel);
+      ..write(obj.researchLevel)
+      ..writeByte(3)
+      ..write(obj.choices);
   }
 
   @override

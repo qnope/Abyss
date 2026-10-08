@@ -7,20 +7,25 @@ import '../../../domain/tech/tech_branch.dart';
 import '../../../domain/tech/tech_branch_state.dart';
 import '../../../domain/tech/tech_check.dart';
 import '../../../domain/tech/tech_cost_calculator.dart';
+import '../../../domain/tech/tech_option.dart';
+import '../../../domain/tech/tech_tree.dart';
 import '../../extensions/tech_branch_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import 'tech_choice_row.dart';
 import 'tech_cost_row.dart';
 import 'tech_target.dart';
+import 'tech_target_header.dart';
 
 /// Content of the popup opened from the reef: the tapped branch or node,
-/// its bonus, cost or blocker, and the button to unlock or research it.
+/// its effect, cost or blocker, and the button to unlock or research it.
+/// A choice node shows its two options side by side.
 class TechTargetPanel extends StatelessWidget {
   final TechTarget target;
   final Map<TechBranch, TechBranchState> techBranches;
   final Map<BuildingType, Building> buildings;
   final Map<ResourceType, Resource> resources;
   final bool researchDone;
-  final VoidCallback onAct;
+  final ValueChanged<TechOption> onAct;
 
   const TechTargetPanel({
     super.key,
@@ -35,6 +40,7 @@ class TechTargetPanel extends StatelessWidget {
   TechBranch get _branch => target.branch;
   int? get _level => target.level;
   TechBranchState? get _state => techBranches[_branch];
+  int get _opened => TechCostCalculator.openedBranches(techBranches);
   bool get _done => _level == null
       ? _state?.unlocked ?? false
       : _level! <= (_state?.researchLevel ?? 0);
@@ -47,50 +53,39 @@ class TechTargetPanel extends StatelessWidget {
           targetLevel: _level!, resources: resources, buildings: buildings,
           techBranches: techBranches);
 
+  bool get _canAct => !_done && _check.canAct && _blocker == null;
+
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
-    final color = _branch.color;
+    final level = _level;
+    final choice = level != null && TechTree.isChoiceLevel(level);
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 12, 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: AbyssColors.surfaceLight,
-        border: Border.all(color: color.withValues(alpha: 0.4)),
+        border: Border.all(color: _branch.color.withValues(alpha: 0.4)),
       ),
-      child: Row(children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(_title,
-                style: text.titleMedium?.copyWith(
-                  color: color, fontWeight: FontWeight.w700)),
-              const SizedBox(height: 2),
-              Text(_subtitle,
-                style: text.bodySmall?.copyWith(
-                  color: AbyssColors.onSurfaceDim)),
-              const SizedBox(height: 6),
-              _status(text),
-            ],
-          ),
-        ),
-        const SizedBox(width: 8),
-        if (!_done) ElevatedButton(
-          onPressed: _check.canAct && _blocker == null ? onAct : null,
-          child: Text(_level == null ? 'Débloquer' : 'Rechercher'),
-        ),
-      ]),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TechTargetHeader(branch: _branch, level: level,
+            onAct: choice || _done ? null : () => onAct(TechOption.a),
+            canAct: _canAct),
+          if (choice) ...[
+            const SizedBox(height: 10),
+            TechChoiceRow(branch: _branch, level: level,
+              taken: _state?.optionAt(level),
+              onChoose: _canAct ? onAct : null),
+          ],
+          const SizedBox(height: 8),
+          _status(text),
+        ],
+      ),
     );
   }
-
-  String get _title => _level == null
-      ? _branch.displayName
-      : '${_branch.displayName} · Niveau $_level';
-
-  String get _subtitle => _level == null
-      ? _branch.description
-      : '+${_branch.bonusPercent(_level!)}% ${_branch.shortEffect}';
 
   Widget _status(TextTheme text) {
     final reason = _blocker;
@@ -100,9 +95,26 @@ class TechTargetPanel extends StatelessWidget {
           color: _done ? AbyssColors.success : AbyssColors.warning));
     }
     final costs = _level == null
-        ? TechCostCalculator.unlockCost(_branch)
-        : TechCostCalculator.researchCost(_branch, _level!);
-    return TechCostRow(costs: costs, resources: resources);
+        ? TechCostCalculator.unlockCost(_branch, opened: _opened)
+        : TechCostCalculator.researchCost(_branch, _level!, opened: _opened);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TechCostRow(costs: costs, resources: resources),
+        if (_level == null && _opened > 0) ...[
+          const SizedBox(height: 6),
+          Text(_surcharge,
+            style: text.bodySmall?.copyWith(color: AbyssColors.warning)),
+        ],
+      ],
+    );
+  }
+
+  String get _surcharge {
+    final factor = TechCostCalculator.costPercent(_opened + 1) / 100;
+    final shown = factor.toStringAsFixed(1).replaceAll('.', ',');
+    return 'Toutes les recherches coûteront ×$shown une fois '
+        'cette branche ouverte.';
   }
 
   String? get _blocker {

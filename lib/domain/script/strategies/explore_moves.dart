@@ -5,7 +5,7 @@ import '../../map/game_map.dart';
 import '../../map/grid_position.dart';
 import '../../map/map_cell.dart';
 import '../../map/reveal_area_calculator.dart';
-import '../../tech/tech_branch.dart';
+import '../../tech/tech_effects.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
 
@@ -45,8 +45,7 @@ extension ExploreMoves on ScriptTurn {
     if (map == null) return;
     final Set<GridPosition> revealed = player.revealedCellsSetOnLevel(level);
     final Set<GridPosition> known = <GridPosition>{...revealed};
-    final int explorer =
-        player.techBranches[TechBranch.explorer]?.researchLevel ?? 0;
+    final int side = TechEffects(player.techBranches).revealSide;
     for (int i = 0; i < count; i++) {
       if ((player.unitsOnLevel(level)[UnitType.scout]?.count ?? 0) <= 0) {
         return;
@@ -55,7 +54,7 @@ extension ExploreMoves on ScriptTurn {
       double bestScore = 0;
       for (final GridPosition p in _frontier(map, revealed)) {
         if (known.contains(p)) continue;
-        final List<GridPosition> area = _area(map, p, explorer);
+        final List<GridPosition> area = _area(map, p, side);
         final int fresh = area.where((a) => !known.contains(a)).length;
         if (fresh == 0) continue;
         final double score = fresh + bias(p);
@@ -68,7 +67,7 @@ extension ExploreMoves on ScriptTurn {
       final ExploreAction action =
           ExploreAction(targetX: best.x, targetY: best.y, level: level);
       if (!tryPerform(action)) return;
-      known.addAll(_area(map, best, explorer));
+      known.addAll(_area(map, best, side));
     }
   }
 
@@ -80,11 +79,11 @@ extension ExploreMoves on ScriptTurn {
         map.width * map.height;
   }
 
-  static List<GridPosition> _area(GameMap map, GridPosition p, int level) =>
+  static List<GridPosition> _area(GameMap map, GridPosition p, int side) =>
       RevealAreaCalculator.cellsToReveal(
         targetX: p.x,
         targetY: p.y,
-        explorerLevel: level,
+        side: side,
         mapWidth: map.width,
         mapHeight: map.height,
       );

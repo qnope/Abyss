@@ -96,7 +96,7 @@ extension ConquestMoves on ScriptTurn {
                     t: (part(k)[t] ?? 0) + (below[t] ?? 0),
                 },
             _enemyOf(type),
-            militaryLevel: militaryLevel,
+            boost: attackBoost,
             needsAdmiral: true) ??
         20;
     return part(k);
@@ -118,7 +118,7 @@ extension ConquestMoves on ScriptTurn {
       enemy: _enemyOf(type),
       mixes: assaultMixes,
       planner: planner,
-      militaryLevel: militaryLevel,
+      boost: attackBoost,
       needsAdmiral: true,
       share: share,
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/fight/unit_boost.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/fight/selection_summary_card.dart';
 
@@ -21,7 +22,7 @@ void main() {
           const SelectionSummaryCard(
             totalAtk: 12,
             totalDef: 7,
-            militaryLevel: 0,
+            boost: UnitBoost.none,
           ),
         ),
       );
@@ -29,33 +30,46 @@ void main() {
       expect(find.text('7'), findsOneWidget);
     });
 
-    testWidgets('shows "aucun" when level is 0', (tester) async {
+    testWidgets('shows "aucun" without any boost', (tester) async {
       await tester.pumpWidget(
         wrap(
           const SelectionSummaryCard(
             totalAtk: 0,
             totalDef: 0,
-            militaryLevel: 0,
+            boost: UnitBoost.none,
           ),
         ),
       );
       expect(find.text('Bonus militaire : aucun'), findsOneWidget);
     });
 
-    testWidgets('shows percent and level when > 0', (tester) async {
+    testWidgets('lists every non-zero boost', (tester) async {
       await tester.pumpWidget(
         wrap(
           const SelectionSummaryCard(
             totalAtk: 0,
             totalDef: 0,
-            militaryLevel: 3,
+            boost: UnitBoost(atkPercent: 30, defPercent: 10, hpPercent: 20),
           ),
         ),
       );
       expect(
-        find.text('Bonus militaire : +60% ATK et DEF (niveau 3)'),
+        find.text('Bonus militaire : +30% ATK, +10% DEF, +20% PV'),
         findsOneWidget,
       );
+    });
+
+    testWidgets('omits zero boosts', (tester) async {
+      await tester.pumpWidget(
+        wrap(
+          const SelectionSummaryCard(
+            totalAtk: 0,
+            totalDef: 0,
+            boost: UnitBoost(defPercent: 30),
+          ),
+        ),
+      );
+      expect(find.text('Bonus militaire : +30% DEF'), findsOneWidget);
     });
 
     testWidgets('updates when totals change', (tester) async {
@@ -64,7 +78,7 @@ void main() {
           const SelectionSummaryCard(
             totalAtk: 4,
             totalDef: 2,
-            militaryLevel: 0,
+            boost: UnitBoost.none,
           ),
         ),
       );
@@ -74,7 +88,7 @@ void main() {
           const SelectionSummaryCard(
             totalAtk: 9,
             totalDef: 5,
-            militaryLevel: 0,
+            boost: UnitBoost.none,
           ),
         ),
       );

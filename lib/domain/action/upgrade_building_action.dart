@@ -7,11 +7,17 @@ import '../game/game.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
 import '../raid/noise_rules.dart';
+import '../tech/tech_effects.dart';
 
 class UpgradeBuildingAction extends Action {
   final BuildingType buildingType;
 
   UpgradeBuildingAction({required this.buildingType});
+
+  static BuildingCostCalculator _calculator(Player player) =>
+      BuildingCostCalculator(
+        discountPercent:
+            TechEffects(player.techBranches).upgradeDiscountPercent);
 
   @override
   ActionType get type => ActionType.upgradeBuilding;
@@ -25,7 +31,7 @@ class UpgradeBuildingAction extends Action {
     if (building == null) {
       return ActionResult.failure('Batiment introuvable');
     }
-    final check = BuildingCostCalculator().checkUpgrade(
+    final check = _calculator(player).checkUpgrade(
       type: buildingType,
       currentLevel: building.level,
       resources: player.resources,
@@ -52,7 +58,7 @@ class UpgradeBuildingAction extends Action {
   ActionResult execute(Game game, Player player) {
     final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
-    final costs = BuildingCostCalculator()
+    final costs = _calculator(player)
         .upgradeCost(buildingType, player.buildings[buildingType]!.level);
     for (final entry in costs.entries) {
       player.resources[entry.key]!.amount -= entry.value;

@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="r4aGlow" cx="32" cy="34" r="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#69F0AE" stop-opacity="0.3"/>
+      <stop offset="0.6" stop-color="#00BFA5" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#00BFA5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="r4aWood" x1="0" y1="30" x2="0" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2E7D6B"/>
+      <stop offset="0.5" stop-color="#1A4F45"/>
+      <stop offset="1" stop-color="#0B2420"/>
+    </linearGradient>
+    <linearGradient id="r4aLid" x1="0" y1="12" x2="0" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4DB6A0"/>
+      <stop offset="0.45" stop-color="#25735F"/>
+      <stop offset="1" stop-color="#103A30"/>
+    </linearGradient>
+    <linearGradient id="r4aBand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#37474F"/>
+      <stop offset="0.35" stop-color="#ECEFF1"/>
+      <stop offset="0.6" stop-color="#90A4AE"/>
+      <stop offset="1" stop-color="#263238"/>
+    </linearGradient>
+    <linearGradient id="r4aRim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ECEFF1"/>
+      <stop offset="0.5" stop-color="#90A4AE"/>
+      <stop offset="1" stop-color="#37474F"/>
+    </linearGradient>
+    <linearGradient id="r4aLock" x1="26" y1="28" x2="38" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF8E1"/>
+      <stop offset="0.4" stop-color="#FFD740"/>
+      <stop offset="1" stop-color="#E65100"/>
+    </linearGradient>
+    <radialGradient id="r4aLockGlow" cx="32" cy="37" r="11" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#69F0AE" stop-opacity="0.65"/>
+      <stop offset="0.5" stop-color="#69F0AE" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#69F0AE" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="r4aGem" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.4" stop-color="#B9F6CA"/>
+      <stop offset="1" stop-color="#00BFA5"/>
+    </radialGradient>
+  </defs>
+
+  <!-- background glow -->
+  <circle cx="32" cy="34" r="30" fill="url(#r4aGlow)"/>
+
+  <!-- seabed shadow -->
+  <ellipse cx="32" cy="57" rx="27" ry="3.4" fill="#000000" fill-opacity="0.42"/>
+  <path d="M5 57 Q32 53 59 57" fill="none" stroke="#1DE9B6" stroke-opacity="0.3" stroke-width="0.5"/>
+
+  <!-- chest body -->
+  <g>
+    <rect x="9" y="29" width="46" height="26" rx="2" fill="url(#r4aWood)" stroke="#0A0E1A" stroke-width="0.8"/>
+    <path d="M10 36 H54 M10 43 H54 M10 50 H54" stroke="#06140F" stroke-width="0.6"/>
+    <path d="M10 36.6 H54 M10 43.6 H54 M10 50.6 H54" stroke="#69F0AE" stroke-opacity="0.18" stroke-width="0.35"/>
+    <path d="M10.4 30.6 V53.6" stroke="#B9F6CA" stroke-opacity="0.35" stroke-width="0.6" stroke-linecap="round"/>
+    <path d="M53.6 30.6 V53.6" stroke="#1DE9B6" stroke-opacity="0.5" stroke-width="0.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- lid (domed) -->
+  <g>
+    <path d="M8 30 V22 C8 14 18 11 32 11 C46 11 56 14 56 22 V30 Z" fill="url(#r4aLid)" stroke="#0A0E1A" stroke-width="0.8" stroke-linejoin="round"/>
+    <path d="M10 22 C10 16 19 13 32 13" fill="none" stroke="#E0F7FA" stroke-opacity="0.55" stroke-width="0.8" stroke-linecap="round"/>
+    <path d="M9 19.6 C14 17.6 22 16.8 32 16.8 C42 16.8 50 17.6 55 19.6 M8.4 24.8 H55.6" fill="none" stroke="#06140F" stroke-width="0.55"/>
+    <rect x="7" y="28" width="50" height="3.4" rx="1" fill="url(#r4aRim)" stroke="#0A0E1A" stroke-width="0.5"/>
+    <path d="M8 28.7 H56" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.35"/>
+  </g>
+
+  <!-- metal bands with rivets -->
+  <g>
+    <path d="M14 11.8 C13.4 14 13 17 13 22 V55 H18 V22 C18 17 18.4 13.6 19 11.6 Z" fill="url(#r4aBand)" stroke="#0A0E1A" stroke-width="0.5"/>
+    <path d="M45 11.6 C45.6 13.6 46 17 46 22 V55 H51 V22 C51 17 50.6 14 50 11.8 Z" fill="url(#r4aBand)" stroke="#0A0E1A" stroke-width="0.5"/>
+    <path d="M9 52 H55 V55 H9 Z" fill="url(#r4aRim)" stroke="#0A0E1A" stroke-width="0.4"/>
+  </g>
+  <g fill="#ECEFF1" stroke="#263238" stroke-width="0.3">
+    <circle cx="15.5" cy="16" r="0.65"/>
+    <circle cx="15.5" cy="22" r="0.65"/>
+    <circle cx="15.5" cy="34" r="0.65"/>
+    <circle cx="15.5" cy="40" r="0.65"/>
+    <circle cx="15.5" cy="46" r="0.65"/>
+    <circle cx="48.5" cy="16" r="0.65"/>
+    <circle cx="48.5" cy="22" r="0.65"/>
+    <circle cx="48.5" cy="34" r="0.65"/>
+    <circle cx="48.5" cy="40" r="0.65"/>
+    <circle cx="48.5" cy="46" r="0.65"/>
+    <circle cx="12" cy="53.5" r="0.55"/>
+    <circle cx="24" cy="53.5" r="0.55"/>
+    <circle cx="40" cy="53.5" r="0.55"/>
+    <circle cx="52" cy="53.5" r="0.55"/>
+    <circle cx="11" cy="29.7" r="0.5"/>
+    <circle cx="53" cy="29.7" r="0.5"/>
+  </g>
+
+  <!-- seal seam welds -->
+  <path d="M20 31.6 H27 M37 31.6 H44" stroke="#69F0AE" stroke-width="0.6" stroke-dasharray="1 0.8" stroke-opacity="0.85"/>
+
+  <!-- glowing lock -->
+  <g>
+    <circle cx="32" cy="37" r="11" fill="url(#r4aLockGlow)"/>
+    <path d="M28 31 V28.4 A4 4 0 0 1 36 28.4 V31" fill="none" stroke="#0A0E1A" stroke-width="2.6"/>
+    <path d="M28 31 V28.4 A4 4 0 0 1 36 28.4 V31" fill="none" stroke="url(#r4aRim)" stroke-width="1.5"/>
+    <rect x="25.4" y="30.4" width="13.2" height="12" rx="2.2" fill="url(#r4aLock)" stroke="#3E2000" stroke-width="0.7"/>
+    <path d="M26.6 32 H37.4" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.5" stroke-linecap="round"/>
+    <circle cx="32" cy="35.6" r="2.2" fill="#0A0E1A"/>
+    <circle cx="32" cy="35.6" r="1.4" fill="url(#r4aGem)"/>
+    <path d="M31 37 L30.4 40.6 H33.6 L33 37 Z" fill="#0A0E1A"/>
+    <path d="M31.5 37.6 L31.3 39.8 H32.7 L32.5 37.6 Z" fill="#69F0AE"/>
+    <circle cx="26.8" cy="41" r="0.4" fill="#5D3A00"/>
+    <circle cx="37.2" cy="41" r="0.4" fill="#5D3A00"/>
+    <circle cx="31.4" cy="35" r="0.4" fill="#FFFFFF"/>
+  </g>
+
+  <!-- treasure peeking: pearl glints at seam -->
+  <g>
+    <circle cx="22.6" cy="31.6" r="1.6" fill="#E0F7FA" fill-opacity="0.2"/>
+    <circle cx="41.4" cy="31.6" r="1.6" fill="#E0F7FA" fill-opacity="0.2"/>
+  </g>
+
+  <!-- shield sparkles -->
+  <g stroke="#B9F6CA" stroke-linecap="round" stroke-width="0.7">
+    <path d="M58 12 V18 M55 15 H61"/>
+    <path d="M6 10 V14 M4 12 H8"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="58" cy="15" r="0.6"/>
+    <circle cx="6" cy="12" r="0.45"/>
+  </g>
+
+  <!-- barnacles / seaweed on chest -->
+  <g>
+    <circle cx="52" cy="48" r="1" fill="#B0BEC5" stroke="#37474F" stroke-width="0.3"/>
+    <circle cx="52" cy="48" r="0.35" fill="#263238"/>
+    <circle cx="53.6" cy="46.6" r="0.6" fill="#B0BEC5" stroke="#37474F" stroke-width="0.3"/>
+    <path d="M8 56 C7 51 9.6 48 8.4 44 M9 52 C10.4 50.6 10.6 49 10.2 47.6" fill="none" stroke="#69F0AE" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M57 56 C58 52 56 50 57.2 46.6" fill="none" stroke="#FF6E91" stroke-width="0.8" stroke-linecap="round"/>
+  </g>
+
+  <!-- plankton & bubbles -->
+  <g fill="#69F0AE">
+    <circle cx="4" cy="30" r="1.3" fill-opacity="0.15"/>
+    <circle cx="4" cy="30" r="0.45" fill-opacity="0.9"/>
+    <circle cx="61" cy="34" r="1.3" fill-opacity="0.15"/>
+    <circle cx="61" cy="34" r="0.45" fill-opacity="0.9"/>
+  </g>
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.35" stroke-opacity="0.75">
+    <circle cx="44" cy="6" r="1.3"/>
+    <circle cx="47.4" cy="3" r="0.7"/>
+    <circle cx="22" cy="5" r="0.8"/>
+  </g>
+  <circle cx="43.6" cy="5.6" r="0.4" fill="#FFFFFF"/>
+</svg>

@@ -1,6 +1,7 @@
 import 'dart:math';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../tech/tech_effects.dart';
 import '../history/history_entry.dart';
 import '../map/cell_content_type.dart';
 import '../map/grid_position.dart';
@@ -92,8 +93,9 @@ class CollectTreasureAction extends Action {
   int _addResource(Player player, ResourceType type, int amount) {
     final resource = player.resources[type]!;
     final before = resource.amount;
+    final boosted = amount * TechEffects(player.techBranches).lootPercent ~/ 100;
     resource.amount =
-        (resource.amount + amount).clamp(0, resource.maxStorage);
+        (resource.amount + boosted).clamp(0, resource.maxStorage);
     return resource.amount - before;
   }
 

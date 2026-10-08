@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/tech/tech_node_state.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 import 'package:abyss/presentation/widgets/tech/dashed_ring_painter.dart';
 import 'package:abyss/presentation/widgets/tech/tech_node_widget.dart';
 
+import '../../../helpers/test_svg_helper.dart';
+
+const _icon = 'assets/icons/tech/military_2a.svg';
+
 void main() {
   group('TechNodeWidget', () {
+    setUp(mockSvgAssets);
+    tearDown(clearSvgMocks);
+
     Widget build(TechNodeState state, {VoidCallback? onTap}) {
       return MaterialApp(
         theme: AbyssTheme.create(),
@@ -15,7 +23,7 @@ void main() {
             child: TechNodeWidget(
               color: Colors.pink,
               state: state,
-              label: '2',
+              iconPath: _icon,
               onTap: onTap,
             ),
           ),
@@ -23,16 +31,23 @@ void main() {
       );
     }
 
-    Finder dashedRing() => find.byWidgetPredicate((w) =>
-        w is CustomPaint && w.foregroundPainter is DashedRingPainter);
+    Finder painted(bool Function(CustomPainter?) test) => find.descendant(
+        of: find.byType(TechNodeWidget),
+        matching: find.byWidgetPredicate(
+            (w) => w is CustomPaint && test(w.foregroundPainter)));
+
+    Finder dashedRing() => painted((p) => p is DashedRingPainter);
 
     BoxDecoration decoration(WidgetTester t) =>
         t.widget<Container>(find.byType(Container).first).decoration!
             as BoxDecoration;
 
-    testWidgets('displays its label', (t) async {
+    RasterSvg icon(WidgetTester t) => t.widget<RasterSvg>(find.byType(RasterSvg));
+
+    testWidgets('displays its icon', (t) async {
       await t.pumpWidget(build(TechNodeState.researched));
-      expect(find.text('2'), findsOneWidget);
+      expect(icon(t).assetPath, _icon);
+      expect(icon(t).color, isNull);
     });
 
     testWidgets('accessible node is ringed with dashes', (t) async {
@@ -48,16 +63,24 @@ void main() {
       expect(dashedRing(), findsNothing);
     });
 
-    testWidgets('researched node is filled with its colour', (t) async {
+    testWidgets('discarded node is struck through and greyed', (t) async {
+      await t.pumpWidget(build(TechNodeState.discarded));
+      expect(dashedRing(), findsNothing);
+      expect(painted((p) => p != null && p is! DashedRingPainter),
+          findsOneWidget);
+      expect(icon(t).color, isNotNull);
+    });
+
+    testWidgets('researched node glows with its colour', (t) async {
       await t.pumpWidget(build(TechNodeState.researched));
-      expect(decoration(t).color, Colors.pink);
+      expect((decoration(t).border! as Border).top.color, Colors.pink);
     });
 
     testWidgets('onTap callback fires', (t) async {
       var tapped = false;
       await t.pumpWidget(
         build(TechNodeState.locked, onTap: () => tapped = true));
-      await t.tap(find.text('2'));
+      await t.tap(find.byType(TechNodeWidget));
       expect(tapped, isTrue);
     });
   });

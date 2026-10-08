@@ -48,7 +48,7 @@ void main() {
       final expected = RevealAreaCalculator.cellsToReveal(
         targetX: 3,
         targetY: 3,
-        explorerLevel: 0,
+        side: 3,
         mapWidth: map.width,
         mapHeight: map.height,
       ).toSet();

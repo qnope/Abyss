@@ -142,7 +142,7 @@ void main() {
       expect(production, {ResourceType.algae: 50});
     });
 
-    test('resources branch level 1 applies 1.2x multiplier', () {
+    test('resources branch level 1 (one tier) applies +20%', () {
       final branches = {
         TechBranch.resources: TechBranchState(
           branch: TechBranch.resources,
@@ -158,7 +158,7 @@ void main() {
       expect(production, {ResourceType.algae: 60});
     });
 
-    test('resources branch level 5 applies 2.0x multiplier', () {
+    test('level 5 with Culture intensive applies +95% on algae', () {
       final branches = {
         TechBranch.resources: TechBranchState(
           branch: TechBranch.resources,
@@ -170,8 +170,9 @@ void main() {
         buildings,
         techBranches: branches,
       );
-      // 50 * 2.0 = 100
-      expect(production, {ResourceType.algae: 100});
+      // 3 tiers (+60%) + Culture intensive (+35%), option A by default:
+      // 50 * 1.95 = 97
+      expect(production, {ResourceType.algae: 97});
     });
 
     test('military branch level 3 has no effect on production', () {

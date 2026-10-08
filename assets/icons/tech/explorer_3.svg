@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="ex3Glow" cx="32" cy="32" r="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF" stop-opacity="0.3"/>
+      <stop offset="0.6" stop-color="#448AFF" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#448AFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ex3Paper" x1="12" y1="12" x2="50" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E0F7FA"/>
+      <stop offset="0.5" stop-color="#A9D8EA"/>
+      <stop offset="1" stop-color="#6FA6C8"/>
+    </linearGradient>
+    <linearGradient id="ex3Roll" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0A2A66"/>
+      <stop offset="0.35" stop-color="#448AFF"/>
+      <stop offset="0.6" stop-color="#90CAF9"/>
+      <stop offset="1" stop-color="#0D3A80"/>
+    </linearGradient>
+    <linearGradient id="ex3Land" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4DB6AC"/>
+      <stop offset="1" stop-color="#1F6F78"/>
+    </linearGradient>
+    <radialGradient id="ex3Deep" cx="38" cy="22" r="10" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0D3A80" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#0D3A80" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ex3Star" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E0F7FA"/>
+      <stop offset="0.5" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#0091EA"/>
+    </linearGradient>
+    <radialGradient id="ex3Disc" cx="44" cy="40" r="9" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0D3A80"/>
+      <stop offset="1" stop-color="#06183A"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="32" cy="32" r="30" fill="url(#ex3Glow)"/>
+  <ellipse cx="32" cy="56" rx="26" ry="3.4" fill="#000" fill-opacity="0.35"/>
+
+  <!-- unrolled chart -->
+  <path d="M10 14 Q21 11.6 32 14 Q43 16.4 54 14 V50 Q43 52.4 32 50 Q21 47.6 10 50 Z" fill="url(#ex3Paper)" stroke="#06183A" stroke-width="0.7" stroke-linejoin="round"/>
+  <path d="M11 15.6 Q21 13.2 32 15.6 Q43 18 53 15.6" fill="none" stroke="#FFFFFF" stroke-width="0.6" stroke-opacity="0.8"/>
+  <path d="M11.6 48.2 Q21 46 32 48.2 Q43 50.6 52.4 48.2" fill="none" stroke="#0D3A80" stroke-width="0.5" stroke-opacity="0.4"/>
+  <!-- grid -->
+  <g stroke="#1565C0" stroke-width="0.3" stroke-opacity="0.35">
+    <path d="M21 13 V48.6 M32 14 V50 M43 15.6 V51"/>
+    <path d="M10 26 Q21 23.6 32 26 Q43 28.4 54 26 M10 38 Q21 35.6 32 38 Q43 40.4 54 38"/>
+  </g>
+  <!-- deep trench -->
+  <ellipse cx="38" cy="22" rx="10" ry="6" fill="url(#ex3Deep)"/>
+  <g fill="none" stroke="#0D3A80" stroke-width="0.35" stroke-opacity="0.6">
+    <ellipse cx="38" cy="22" rx="7" ry="3.8"/>
+    <ellipse cx="38" cy="22" rx="4" ry="2"/>
+  </g>
+  <!-- islands with contour -->
+  <path d="M14 29 Q16 25.6 20 26.4 Q24 26 24.6 29.4 Q25 33 21 33.6 Q16 34.4 14.4 32 Z" fill="none" stroke="#1F6F78" stroke-width="0.4" stroke-opacity="0.6" transform="translate(-0.4 -0.4) scale(1.02)"/>
+  <path d="M15 29.4 Q16.6 26.6 20 27.2 Q23.4 27 23.8 29.6 Q24 32.4 20.8 32.8 Q16.6 33.4 15.4 31.6 Z" fill="url(#ex3Land)" stroke="#06183A" stroke-width="0.5"/>
+  <path d="M16.4 29 Q18 27.6 20.6 28" fill="none" stroke="#B2DFDB" stroke-width="0.5" stroke-linecap="round"/>
+  <path d="M27 42.6 Q28.4 40.6 31 41.2 Q33 41.6 32.6 43.6 Q31.4 45.2 28.6 44.8 Z" fill="url(#ex3Land)" stroke="#06183A" stroke-width="0.45"/>
+
+  <!-- current arrows -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13.6 21 Q20 16.4 27 19.6 Q31 21.6 34.4 19.4" stroke="#06183A" stroke-width="2.4"/>
+    <path d="M13.6 21 Q20 16.4 27 19.6 Q31 21.6 34.4 19.4" stroke="#00B8D4" stroke-width="1.4"/>
+    <path d="M14.6 20 Q20 17 25 18.6" stroke="#E0F7FA" stroke-width="0.4"/>
+    <path d="M27.6 30 Q31 34 36 31.4" stroke="#06183A" stroke-width="2.2"/>
+    <path d="M27.6 30 Q31 34 36 31.4" stroke="#448AFF" stroke-width="1.2"/>
+    <path d="M13 44 Q18 38.6 24 41.4" stroke="#06183A" stroke-width="2.2"/>
+    <path d="M13 44 Q18 38.6 24 41.4" stroke="#00B8D4" stroke-width="1.2"/>
+  </g>
+  <g stroke="#06183A" stroke-width="0.5" stroke-linejoin="round">
+    <path d="M37.6 17.6 L33 17 L35 21.6 Z" fill="#00E5FF"/>
+    <path d="M38.8 29.4 L34.4 29.2 L36.4 33.4 Z" fill="#82B1FF"/>
+    <path d="M27 42.4 L23.2 39.2 L22.6 43.4 Z" fill="#00E5FF"/>
+  </g>
+  <!-- dashed route & mark -->
+  <path d="M20 30 Q24 36 28.6 37 Q34 38 36.6 44" fill="none" stroke="#7C4DFF" stroke-width="0.6" stroke-dasharray="1.2 1.1" stroke-linecap="round"/>
+  <path d="M45 22.6 L47.6 25.2 M47.6 22.6 L45 25.2" stroke="#7C4DFF" stroke-width="0.9" stroke-linecap="round"/>
+
+  <!-- compass rose -->
+  <g>
+    <circle cx="44" cy="40" r="9.6" fill="#00E5FF" fill-opacity="0.18"/>
+    <circle cx="44" cy="40" r="7.8" fill="url(#ex3Disc)" stroke="#06183A" stroke-width="0.6"/>
+    <circle cx="44" cy="40" r="7" fill="none" stroke="#82B1FF" stroke-width="0.4" stroke-opacity="0.8"/>
+    <circle cx="44" cy="40" r="5.6" fill="none" stroke="#448AFF" stroke-width="0.3" stroke-dasharray="0.6 0.8"/>
+    <path d="M44 34 L45 39 L50 40 L45 41 L44 46 L43 41 L38 40 L43 39 Z" fill="#448AFF" stroke="#06183A" stroke-width="0.3" transform="rotate(45 44 40)" fill-opacity="0.8"/>
+    <path d="M44 32.2 L45.4 40 L44 47.8 L42.6 40 Z" fill="url(#ex3Star)" stroke="#06183A" stroke-width="0.35"/>
+    <path d="M36.2 40 L44 38.6 L51.8 40 L44 41.4 Z" fill="url(#ex3Star)" stroke="#06183A" stroke-width="0.35"/>
+    <path d="M44 32.2 L45.4 40 L44 40 Z" fill="#FFFFFF" fill-opacity="0.8"/>
+    <path d="M44 32.2 L42.6 40 L44 40 Z" fill="#B388FF"/>
+    <circle cx="44" cy="40" r="1" fill="#E0F7FA" stroke="#06183A" stroke-width="0.3"/>
+  </g>
+
+  <!-- scroll rolls -->
+  <g>
+    <rect x="6" y="11.6" width="6" height="40.8" rx="3" fill="url(#ex3Roll)" stroke="#06183A" stroke-width="0.6"/>
+    <path d="M8.4 13.6 V50.4" stroke="#E3F2FD" stroke-width="0.6" stroke-opacity="0.7" stroke-linecap="round"/>
+    <ellipse cx="9" cy="11.6" rx="3" ry="1.2" fill="#0D47A1" stroke="#06183A" stroke-width="0.5"/>
+    <ellipse cx="9" cy="11.6" rx="1.2" ry="0.5" fill="#00E5FF"/>
+    <rect x="52" y="11.6" width="6" height="40.8" rx="3" fill="url(#ex3Roll)" stroke="#06183A" stroke-width="0.6"/>
+    <path d="M54.4 13.6 V50.4" stroke="#E3F2FD" stroke-width="0.6" stroke-opacity="0.7" stroke-linecap="round"/>
+    <ellipse cx="55" cy="52.4" rx="3" ry="1.2" fill="#0D47A1" stroke="#06183A" stroke-width="0.5"/>
+    <ellipse cx="55" cy="52.4" rx="1.2" ry="0.5" fill="#00E5FF"/>
+    <path d="M57.2 20 V44" stroke="#00E5FF" stroke-width="0.5" stroke-opacity="0.6"/>
+  </g>
+
+  <!-- plankton & bubbles -->
+  <g fill="#00E5FF">
+    <circle cx="4" cy="6" r="1.4" fill-opacity="0.15"/>
+    <circle cx="4" cy="6" r="0.45"/>
+    <circle cx="60" cy="58" r="1.4" fill-opacity="0.15"/>
+    <circle cx="60" cy="58" r="0.45"/>
+  </g>
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.4" stroke-opacity="0.7">
+    <circle cx="58" cy="6" r="1.4"/>
+    <circle cx="61" cy="9.6" r="0.8"/>
+  </g>
+  <circle cx="57.6" cy="5.6" r="0.4" fill="#FFFFFF"/>
+</svg>

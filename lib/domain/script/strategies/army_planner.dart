@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../../fight/combatant.dart';
 import '../../fight/combatant_builder.dart';
+import '../../fight/unit_boost.dart';
 import '../../fight/damage_calculator.dart';
 import '../../fight/fight_engine.dart';
 import '../../unit/unit_type.dart';
@@ -25,7 +26,7 @@ class ArmyPlanner {
   double winRate(
     Map<UnitType, int> army,
     List<Combatant> Function() enemy, {
-    int militaryLevel = 0,
+    UnitBoost boost = UnitBoost.none,
     List<Combatant> Function()? allies,
     bool needsAdmiral = false,
   }) {
@@ -35,7 +36,7 @@ class ArmyPlanner {
       final List<Combatant> side = <Combatant>[
         ...CombatantBuilder.playerCombatantsFrom(
           army,
-          militaryResearchLevel: militaryLevel,
+          boost: boost,
         ),
         ...?allies?.call(),
       ];
@@ -58,12 +59,12 @@ class ArmyPlanner {
   bool wins(
     Map<UnitType, int> army,
     List<Combatant> Function() enemy, {
-    int militaryLevel = 0,
+    UnitBoost boost = UnitBoost.none,
     List<Combatant> Function()? allies,
     bool needsAdmiral = false,
   }) =>
       winRate(army, enemy,
-          militaryLevel: militaryLevel,
+          boost: boost,
           allies: allies,
           needsAdmiral: needsAdmiral) >=
       confidence;
@@ -74,17 +75,17 @@ class ArmyPlanner {
     int maxK,
     Map<UnitType, int> Function(int k) armyOf,
     List<Combatant> Function() enemy, {
-    int militaryLevel = 0,
+    UnitBoost boost = UnitBoost.none,
     List<Combatant> Function()? allies,
     bool needsAdmiral = false,
   }) {
     bool ok(int k) => wins(armyOf(k), enemy,
-        militaryLevel: militaryLevel,
+        boost: boost,
         allies: allies,
         needsAdmiral: needsAdmiral);
     if (maxK < 0) return null;
     if (ok(0)) return 0;
-    if (_hopeless(armyOf(maxK), enemy, militaryLevel, allies)) return null;
+    if (_hopeless(armyOf(maxK), enemy, boost, allies)) return null;
     // Galloping first: large armies are slow to rehearse, so try them last.
     int low = 0;
     int high = 1;
@@ -108,11 +109,11 @@ class ArmyPlanner {
   /// Whether even [army] is far too weak for [enemy], judged without
   /// replaying the fight.
   static bool _hopeless(Map<UnitType, int> army,
-      List<Combatant> Function() enemy, int militaryLevel,
+      List<Combatant> Function() enemy, UnitBoost boost,
       List<Combatant> Function()? allies) {
     final List<Combatant> side = <Combatant>[
       ...CombatantBuilder.playerCombatantsFrom(army,
-          militaryResearchLevel: militaryLevel),
+          boost: boost),
       ...?allies?.call(),
     ];
     final List<Combatant> foes = enemy();

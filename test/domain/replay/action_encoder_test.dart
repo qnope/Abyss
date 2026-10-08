@@ -3,9 +3,12 @@ import 'dart:math';
 import 'package:abyss/domain/action/descend_action.dart';
 import 'package:abyss/domain/action/end_turn_action.dart';
 import 'package:abyss/domain/action/fight_monster_action.dart';
+import 'package:abyss/domain/action/research_tech_action.dart';
 import 'package:abyss/domain/replay/action_encoder.dart';
 import 'package:abyss/domain/replay/seeded_random.dart';
 import 'package:abyss/domain/script/action_codec.dart';
+import 'package:abyss/domain/tech/tech_branch.dart';
+import 'package:abyss/domain/tech/tech_option.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -14,6 +17,7 @@ const List<Map<String, Object?>> _scenarioActions = <Map<String, Object?>>[
   {'do': 'upgrade', 'building': 'algaeFarm'},
   {'do': 'unlock', 'branch': 'military'},
   {'do': 'research', 'branch': 'explorer'},
+  {'do': 'research', 'branch': 'military', 'option': 'b'},
   {'do': 'recruit', 'unit': 'guardian', 'count': 4},
   {'do': 'explore', 'x': 3, 'y': 4},
   {'do': 'collect', 'x': 3, 'y': 4, 'level': 2, 'seed': 11},
@@ -103,6 +107,14 @@ void main() {
 
       expect(ActionEncoder.encode(action), isNot(contains('seed')));
       expect(ActionEncoder.isExact(action), isFalse);
+    });
+
+    test('writes option A of a research as no option at all', () {
+      final action =
+          ResearchTechAction(branch: TechBranch.resources, option: TechOption.a);
+
+      expect(ActionEncoder.encode(action),
+          {'do': 'research', 'branch': 'resources'});
     });
 
     test('does not write the end of a turn as a move', () {

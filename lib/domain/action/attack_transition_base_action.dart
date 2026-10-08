@@ -7,6 +7,7 @@ import '../fight/fight_result.dart';
 import '../fight/guardian_factory.dart';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../tech/tech_effects.dart';
 import '../map/cell_content_type.dart';
 import '../map/map_cell.dart';
 import '../map/transition_base.dart';
@@ -77,10 +78,10 @@ class AttackTransitionBaseAction extends Action {
     final MapCell cell = game.levels[level]!.cellAt(targetX, targetY);
     final TransitionBase base = cell.transitionBase!;
 
-    final int milLevel = FightMonsterHelpers.militaryResearchLevelOf(player);
     final List<Combatant> playerCombatants =
         CombatantBuilder.playerCombatantsFrom(
-      selectedUnits, militaryResearchLevel: milLevel,
+      selectedUnits,
+      boost: FightMonsterHelpers.unitBoostOf(player, attacking: true),
     );
     final List<Combatant> guardians = GuardianFactory.forType(base.type);
 
@@ -146,5 +147,6 @@ class AttackTransitionBaseAction extends Action {
   }
 
   @override
-  int noiseMade(Player player) => NoiseRules.perFight;
+  int noiseMade(Player player) =>
+      TechEffects(player.techBranches).muffle(NoiseRules.perFight);
 }

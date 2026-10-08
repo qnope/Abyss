@@ -41,7 +41,7 @@ extension BattleMoves on ScriptTurn {
           : () => <Combatant>[CoralCitadelRampart.combatantFor(rampartLevel)!],
       mixes: defenceMixes,
       planner: planner,
-      militaryLevel: militaryLevel,
+      boost: defenceBoost,
       share: share,
     );
   }
@@ -65,7 +65,7 @@ extension BattleMoves on ScriptTurn {
           };
       final int? k = planner.smallestWinning(
           20, share, () => CombatantBuilder.monsterCombatantsFrom(lair),
-          militaryLevel: militaryLevel);
+          boost: attackBoost);
       if (k == null) continue;
       tryPerform(FightMonsterAction(
         targetX: p.x,

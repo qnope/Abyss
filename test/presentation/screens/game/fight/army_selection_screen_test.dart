@@ -184,7 +184,8 @@ void main() {
       final SelectionSummaryCard card = findSummaryCard(tester);
       expect(card.totalAtk, 0);
       expect(card.totalDef, 0);
-      expect(card.militaryLevel, 0);
+      expect(card.boost.atkPercent, 0);
+      expect(card.boost.defPercent, 0);
     });
 
     testWidgets('incrementing scout updates ATK total', (tester) async {
@@ -216,8 +217,9 @@ void main() {
       await tester.tap(find.byIcon(Icons.add).first);
       await tester.pump();
 
+      // 3 tiers (+60%) + Lames de corail (+35%): 5 * 1.95 = 9.75 -> 10.
       expect(findSummaryCard(tester).totalAtk, 10);
-      expect(findSummaryCard(tester).militaryLevel, 5);
+      expect(findSummaryCard(tester).boost.atkPercent, 95);
     });
 
     testWidgets('shows "Bonus militaire : aucun" with no military tech',
@@ -231,7 +233,7 @@ void main() {
       expect(find.text('Bonus militaire : aucun'), findsOneWidget);
     });
 
-    testWidgets('shows formatted bonus label when level > 0',
+    testWidgets('shows formatted bonus label with military research',
         (tester) async {
       await tester.pumpWidget(buildApp(
         repository: FakeGameRepository(),
@@ -241,7 +243,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Bonus militaire : +60% ATK et DEF (niveau 3)'),
+        find.text('Bonus militaire : +75% ATK, +40% DEF'),
         findsOneWidget,
       );
     });

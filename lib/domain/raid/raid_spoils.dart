@@ -20,15 +20,15 @@ abstract final class RaidSpoils {
     return full.map((ResourceType t, int v) => MapEntry(t, v ~/ 2));
   }
 
-  /// Removes [pillageRate] of every stock but pearls and returns what was
-  /// taken.
+  /// Removes [rate] of every stock but pearls and returns what was taken.
   static Map<ResourceType, int> pillage(
-    Map<ResourceType, Resource> resources,
-  ) {
+    Map<ResourceType, Resource> resources, {
+    double rate = pillageRate,
+  }) {
     final Map<ResourceType, int> taken = <ResourceType, int>{};
     for (final MapEntry<ResourceType, Resource> e in resources.entries) {
       if (e.key == ResourceType.pearl) continue;
-      final int amount = (e.value.amount * pillageRate).floor();
+      final int amount = (e.value.amount * rate).floor();
       if (amount <= 0) continue;
       e.value.amount -= amount;
       taken[e.key] = amount;

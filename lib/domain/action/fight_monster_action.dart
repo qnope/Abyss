@@ -7,6 +7,7 @@ import '../fight/fight_result.dart';
 import '../fight/loot_calculator.dart';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../tech/tech_effects.dart';
 import '../history/history_entry.dart';
 import '../map/cell_content_type.dart';
 import '../map/map_cell.dart';
@@ -83,10 +84,9 @@ class FightMonsterAction extends Action {
     final MapCell cell = game.levels[level]!.cellAt(targetX, targetY);
     final MonsterLair lair = cell.lair!;
     _capturedLair = lair;
-    final int militaryLevel =
-        FightMonsterHelpers.militaryResearchLevelOf(player);
-    final List<Combatant> playerCombatants = CombatantBuilder
-        .playerCombatantsFrom(selectedUnits, militaryResearchLevel: militaryLevel);
+    final List<Combatant> playerCombatants =
+        CombatantBuilder.playerCombatantsFrom(selectedUnits,
+            boost: FightMonsterHelpers.unitBoostOf(player, attacking: true));
     final List<Combatant> monsterCombatants =
         CombatantBuilder.monsterCombatantsFrom(lair);
 
@@ -113,8 +113,8 @@ class FightMonsterAction extends Action {
 
     Map<ResourceType, int> loot = const <ResourceType, int>{};
     if (fightResult.isVictory) {
-      final Map<ResourceType, int> rolled =
-          LootCalculator(random: random).compute(lair.difficulty);
+      final Map<ResourceType, int> rolled = TechEffects(player.techBranches)
+          .boostLoot(LootCalculator(random: random).compute(lair.difficulty));
       loot = FightMonsterHelpers.applyLoot(player, rolled);
       game.levels[level]!.setCell(
         targetX,
@@ -152,5 +152,6 @@ class FightMonsterAction extends Action {
   }
 
   @override
-  int noiseMade(Player player) => NoiseRules.perFight;
+  int noiseMade(Player player) =>
+      TechEffects(player.techBranches).muffle(NoiseRules.perFight);
 }

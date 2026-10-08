@@ -21,6 +21,7 @@ void showBuildingDetailSheet(
   required Worksite worksite,
   Set<TransitionBaseType> capturedBaseTypes = const {},
   bool isVolcanicKernelCaptured = false,
+  int upgradeDiscountPercent = 0,
   required VoidCallback onUpgrade,
 }) {
   showModalBottomSheet<void>(
@@ -33,6 +34,7 @@ void showBuildingDetailSheet(
       worksite: worksite,
       capturedBaseTypes: capturedBaseTypes,
       isVolcanicKernelCaptured: isVolcanicKernelCaptured,
+      upgradeDiscountPercent: upgradeDiscountPercent,
       onUpgrade: onUpgrade,
     ),
   );
@@ -45,6 +47,7 @@ class _BuildingDetailSheet extends StatelessWidget {
   final Worksite worksite;
   final Set<TransitionBaseType> capturedBaseTypes;
   final bool isVolcanicKernelCaptured;
+  final int upgradeDiscountPercent;
   final VoidCallback onUpgrade;
 
   const _BuildingDetailSheet({
@@ -54,6 +57,7 @@ class _BuildingDetailSheet extends StatelessWidget {
     required this.worksite,
     this.capturedBaseTypes = const {},
     this.isVolcanicKernelCaptured = false,
+    this.upgradeDiscountPercent = 0,
     required this.onUpgrade,
   });
 
@@ -112,6 +116,7 @@ class _BuildingDetailSheet extends StatelessWidget {
             worksite: worksite,
             capturedBaseTypes: capturedBaseTypes,
             isVolcanicKernelCaptured: isVolcanicKernelCaptured,
+            discountPercent: upgradeDiscountPercent,
             onUpgrade: onUpgrade,
           ),
         ],

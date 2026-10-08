@@ -1,4 +1,3 @@
-import '../../action/research_tech_action.dart';
 import '../../action/unlock_branch_action.dart';
 import '../../building/building_type.dart';
 import '../../tech/tech_branch.dart';
@@ -6,6 +5,7 @@ import '../../unit/unit_type.dart';
 import '../game_script.dart';
 import '../script_turn.dart';
 import 'economy_strategy.dart';
+import 'growth_moves.dart';
 import 'script_turn_moves.dart';
 
 /// "Équilibrée": spends part of each turn on defence (barracks, Coral
@@ -47,7 +47,7 @@ class BalancedStrategy extends GameScript {
       turn.recruitShare(UnitType.harpoonist, share);
     }
     turn.tryPerform(UnlockBranchAction(branch: TechBranch.military));
-    turn.tryPerform(ResearchTechAction(branch: TechBranch.military));
+    turn.tryPerform(turn.researchNext(TechBranch.military));
     turn.upgradeInOrder(buildOrder);
   }
 }

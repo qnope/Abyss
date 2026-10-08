@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="ex2bGlow" cx="20" cy="34" r="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF" stop-opacity="0.28"/>
+      <stop offset="0.6" stop-color="#448AFF" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#448AFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ex2bDark" cx="54" cy="36" r="20" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0A0E1A" stop-opacity="0.6"/>
+      <stop offset="0.6" stop-color="#0A0E1A" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#0A0E1A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ex2bBody" x1="4" y1="0" x2="60" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3D7BD6"/>
+      <stop offset="0.3" stop-color="#1A4A94" stop-opacity="0.95"/>
+      <stop offset="0.65" stop-color="#0D2A66" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#0D2A66" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="ex2bEdge" x1="4" y1="0" x2="60" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#06183A"/>
+      <stop offset="0.55" stop-color="#06183A" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#06183A" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ex2bRim" x1="4" y1="0" x2="50" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E0F7FA"/>
+      <stop offset="0.35" stop-color="#00E5FF" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#00E5FF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ex2bBelly" x1="0" y1="34" x2="0" y2="41" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#90CAF9" stop-opacity="0"/>
+      <stop offset="1" stop-color="#90CAF9" stop-opacity="0.35"/>
+    </linearGradient>
+    <radialGradient id="ex2bEye" cx="12" cy="32" r="2.2" fx="11.4" fy="31.4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#006C80"/>
+    </radialGradient>
+    <radialGradient id="ex2bMute" cx="47" cy="14" r="10" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B388FF" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#B388FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="22" cy="34" r="28" fill="url(#ex2bGlow)"/>
+
+  <!-- silent wake lines -->
+  <g stroke-linecap="round" fill="none">
+    <path d="M30 46 Q40 47.4 52 46" stroke="#448AFF" stroke-width="0.7" stroke-opacity="0.35" stroke-dasharray="2 2.4"/>
+    <path d="M36 50 Q44 51 54 50" stroke="#448AFF" stroke-width="0.6" stroke-opacity="0.25" stroke-dasharray="1.6 2.6"/>
+    <path d="M34 21 Q42 20 50 22" stroke="#448AFF" stroke-width="0.6" stroke-opacity="0.25" stroke-dasharray="1.6 2.6"/>
+  </g>
+
+  <!-- sleek stealth fish -->
+  <g>
+    <!-- tail -->
+    <path d="M50 33 L61 22.4 Q58.4 32 61.6 43 Z" fill="url(#ex2bBody)" stroke="url(#ex2bEdge)" stroke-width="0.6" stroke-linejoin="round"/>
+    <!-- dorsal fin -->
+    <path d="M21 26.4 L29.4 17 Q30.4 22 33.6 26 Z" fill="#1A4A94" stroke="#06183A" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M23 25.6 L28.8 19" stroke="#82B1FF" stroke-width="0.5" stroke-opacity="0.8" stroke-linecap="round"/>
+    <!-- pelvic fin -->
+    <path d="M22 40 L18 46.6 Q23 44.4 27 40.4 Z" fill="#14408A" stroke="#06183A" stroke-width="0.5" stroke-linejoin="round"/>
+    <path d="M38 39 L37 43 Q40 41.4 42 38.4 Z" fill="#0D2A66" fill-opacity="0.5" stroke="#06183A" stroke-width="0.4" stroke-opacity="0.4"/>
+    <!-- body -->
+    <path d="M3 33.6 Q8 27.4 20 26 Q36 24.8 52 31 Q55 33 52 35.6 Q36 41 20 41 Q8 40 3 33.6 Z" fill="url(#ex2bBody)" stroke="url(#ex2bEdge)" stroke-width="0.7"/>
+    <path d="M6 35.4 Q14 40 26 40.4 Q38 40 50 35.2" fill="none" stroke="url(#ex2bBelly)" stroke-width="2"/>
+    <path d="M5 35 Q16 39.6 30 39.6" fill="url(#ex2bBelly)"/>
+    <!-- rim light -->
+    <path d="M5 32 Q10 27.8 20 26.8 Q34 25.8 48 30" fill="none" stroke="url(#ex2bRim)" stroke-width="0.8" stroke-linecap="round"/>
+    <!-- lateral line -->
+    <path d="M16 33.6 Q30 32.4 46 33.4" fill="none" stroke="#00E5FF" stroke-width="0.5" stroke-opacity="0.55" stroke-dasharray="1.2 1.4"/>
+    <!-- gills -->
+    <path d="M16 29.6 Q14.6 33.4 16 37.6 M18.2 29.2 Q16.8 33.4 18.2 37.8" fill="none" stroke="#06183A" stroke-width="0.6" stroke-linecap="round"/>
+    <path d="M16.6 29.8 Q15.4 33.4 16.6 37" fill="none" stroke="#82B1FF" stroke-width="0.3" stroke-opacity="0.7"/>
+    <!-- pectoral fin -->
+    <path d="M18 36 Q22 37 25.6 41.6 Q20.6 40.6 17 38 Z" fill="#2A62BC" stroke="#06183A" stroke-width="0.45" stroke-linejoin="round"/>
+    <!-- mouth -->
+    <path d="M3.6 34 Q7 35.4 10 35" fill="none" stroke="#06183A" stroke-width="0.6" stroke-linecap="round"/>
+    <!-- eye -->
+    <circle cx="12" cy="32" r="3.2" fill="#00E5FF" fill-opacity="0.2"/>
+    <circle cx="12" cy="32" r="2.1" fill="#0A0E1A"/>
+    <circle cx="12" cy="32" r="1.6" fill="url(#ex2bEye)"/>
+    <ellipse cx="12.2" cy="32" rx="0.4" ry="1.1" fill="#0A0E1A"/>
+    <circle cx="11.4" cy="31.3" r="0.35" fill="#FFFFFF"/>
+  </g>
+
+  <!-- dissolving into darkness -->
+  <ellipse cx="54" cy="35" rx="16" ry="18" fill="url(#ex2bDark)"/>
+  <g fill="#448AFF" fill-opacity="0.5">
+    <circle cx="44" cy="28" r="0.5"/>
+    <circle cx="48" cy="38" r="0.4"/>
+    <circle cx="52" cy="30" r="0.35"/>
+    <circle cx="56" cy="40" r="0.3"/>
+    <circle cx="58" cy="26" r="0.3"/>
+  </g>
+
+  <!-- muted sound wave, crossed out -->
+  <g>
+    <circle cx="47" cy="14" r="10" fill="url(#ex2bMute)"/>
+    <circle cx="47" cy="14" r="7.6" fill="#0A0E1A" fill-opacity="0.75"/>
+    <g fill="none" stroke-linecap="round">
+      <path d="M41.6 14 L42.8 11.6 L44.2 16.4 L45.6 10 L47 18 L48.4 11 L49.8 16 L51 12.6 L52.4 14" stroke="#00E5FF" stroke-width="0.8" stroke-opacity="0.45" stroke-linejoin="round"/>
+    </g>
+    <circle cx="47" cy="14" r="7.6" fill="none" stroke="#06183A" stroke-width="2.4"/>
+    <circle cx="47" cy="14" r="7.6" fill="none" stroke="#B388FF" stroke-width="1.4"/>
+    <path d="M41.6 8.6 L52.4 19.4" stroke="#06183A" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M41.6 8.6 L52.4 19.4" stroke="#B388FF" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M42.4 8.2 Q44.2 6.8 46.6 6.6" fill="none" stroke="#E1CCFF" stroke-width="0.5" stroke-linecap="round"/>
+    <path d="M42.2 9.2 L45 12" stroke="#E1CCFF" stroke-width="0.4" stroke-linecap="round"/>
+  </g>
+
+  <!-- plankton -->
+  <g fill="#00E5FF">
+    <circle cx="6" cy="10" r="1.4" fill-opacity="0.15"/>
+    <circle cx="6" cy="10" r="0.45"/>
+    <circle cx="8" cy="54" r="1.4" fill-opacity="0.15"/>
+    <circle cx="8" cy="54" r="0.45"/>
+    <circle cx="24" cy="56" r="0.4" fill-opacity="0.7"/>
+  </g>
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.35" stroke-opacity="0.5">
+    <circle cx="20" cy="14" r="1.1"/>
+    <circle cx="23" cy="10" r="0.7"/>
+  </g>
+</svg>

@@ -9,6 +9,8 @@ import 'package:abyss/domain/resource/resource_type.dart';
 import 'collect_treasure_action_helper.dart';
 
 void main() {
+  const m = CollectTreasureAction.rewardMultiplier;
+
   group('CollectTreasureAction execute', () {
     test('resourceBonus adds algae, coral and ore', () {
       final scenario =
@@ -22,9 +24,9 @@ void main() {
           as CollectTreasureResult;
       expect(result.isSuccess, isTrue);
       // Random(42): nextInt(51)=7, nextInt(21)=15, nextInt(21)=12
-      expect(result.deltas[ResourceType.algae], 50 + 7);
-      expect(result.deltas[ResourceType.coral], 30 + 15);
-      expect(result.deltas[ResourceType.ore], 30 + 12);
+      expect(result.deltas[ResourceType.algae], (50 + 7) * m);
+      expect(result.deltas[ResourceType.coral], (30 + 15) * m);
+      expect(result.deltas[ResourceType.ore], (30 + 12) * m);
       expect(result.deltas.containsKey(ResourceType.pearl), isFalse);
     });
 
@@ -39,10 +41,10 @@ void main() {
           as CollectTreasureResult;
       expect(result.isSuccess, isTrue);
       // Random(42): nextInt(101)=5, nextInt(26)=8, nextInt(26)=6, nextInt(3)=1
-      expect(result.deltas[ResourceType.algae], 5);
-      expect(result.deltas[ResourceType.coral], 8);
-      expect(result.deltas[ResourceType.ore], 6);
-      expect(result.deltas[ResourceType.pearl], 1);
+      expect(result.deltas[ResourceType.algae], 5 * m);
+      expect(result.deltas[ResourceType.coral], 8 * m);
+      expect(result.deltas[ResourceType.ore], 6 * m);
+      expect(result.deltas[ResourceType.pearl], 1 * m);
     });
 
     test('resourceBonus amounts stay within configured ranges', () {
@@ -54,11 +56,11 @@ void main() {
           targetY: 1,
           random: Random(seed),
         ).execute(scenario.game, scenario.player) as CollectTreasureResult;
-        expect(result.deltas[ResourceType.algae], inInclusiveRange(50, 100),
+        expect(result.deltas[ResourceType.algae], inInclusiveRange(50 * m, 100 * m),
             reason: 'seed=$seed');
-        expect(result.deltas[ResourceType.coral], inInclusiveRange(30, 50),
+        expect(result.deltas[ResourceType.coral], inInclusiveRange(30 * m, 50 * m),
             reason: 'seed=$seed');
-        expect(result.deltas[ResourceType.ore], inInclusiveRange(30, 50),
+        expect(result.deltas[ResourceType.ore], inInclusiveRange(30 * m, 50 * m),
             reason: 'seed=$seed');
       }
     });
@@ -71,13 +73,13 @@ void main() {
           targetY: 1,
           random: Random(seed),
         ).execute(scenario.game, scenario.player) as CollectTreasureResult;
-        expect(result.deltas[ResourceType.algae], inInclusiveRange(0, 100),
+        expect(result.deltas[ResourceType.algae], inInclusiveRange(0, 100 * m),
             reason: 'seed=$seed');
-        expect(result.deltas[ResourceType.coral], inInclusiveRange(0, 25),
+        expect(result.deltas[ResourceType.coral], inInclusiveRange(0, 25 * m),
             reason: 'seed=$seed');
-        expect(result.deltas[ResourceType.ore], inInclusiveRange(0, 25),
+        expect(result.deltas[ResourceType.ore], inInclusiveRange(0, 25 * m),
             reason: 'seed=$seed');
-        expect(result.deltas[ResourceType.pearl], inInclusiveRange(0, 2),
+        expect(result.deltas[ResourceType.pearl], inInclusiveRange(0, 2 * m),
             reason: 'seed=$seed');
       }
     });

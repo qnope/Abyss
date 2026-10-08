@@ -39,7 +39,9 @@ void main() {
         expect(game.levels[1]!.cellAt(1, 1).collectedBy, isNull);
       });
 
-      test('ruin pearls on level $level stay within 0..${level + 1}', () {
+      test('ruin pearls on level $level stay within 0..${level + 1} '
+          'times the multiplier', () {
+        const m = CollectTreasureAction.rewardMultiplier;
         final seen = <int>{};
         for (var seed = 0; seed < 200; seed++) {
           final game = _deepGame(level);
@@ -48,7 +50,7 @@ void main() {
           ).execute(game, game.humanPlayer) as CollectTreasureResult;
           seen.add(result.deltas[ResourceType.pearl]!);
         }
-        expect(seen, {for (var i = 0; i <= level + 1; i++) i});
+        expect(seen, {for (var i = 0; i <= level + 1; i++) i * m});
       });
     }
 

@@ -87,13 +87,18 @@ class CollectTreasureAction extends Action {
     return CollectTreasureResult.success(deltas);
   }
 
-  /// Deeper ruins hold more pearls: 0-2 on level 1, 0-3 on 2, 0-4 on 3.
+  /// Treasures and ruins are rarer, so each one is worth more.
+  static const rewardMultiplier = 3;
+
+  /// Deeper ruins hold more pearls: base 0-2 on level 1, 0-3 on 2, 0-4
+  /// on 3, before [rewardMultiplier].
   int _ruinPearls() => random.nextInt(level + 2);
 
-  int _addResource(Player player, ResourceType type, int amount) {
+  int _addResource(Player player, ResourceType type, int baseAmount) {
     final resource = player.resources[type]!;
     final before = resource.amount;
-    final boosted = amount * TechEffects(player.techBranches).lootPercent ~/ 100;
+    final boosted = baseAmount * rewardMultiplier *
+        TechEffects(player.techBranches).lootPercent ~/ 100;
     resource.amount =
         (resource.amount + boosted).clamp(0, resource.maxStorage);
     return resource.amount - before;

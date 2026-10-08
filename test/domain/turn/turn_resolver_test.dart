@@ -100,7 +100,8 @@ void main() {
       final oreBefore = p.resources[ResourceType.ore]!.amount;
       final result = resolver.resolve(_singleGame(p));
       expect(result.deactivatedBuildings, contains(BuildingType.oreExtractor));
-      expect(p.resources[ResourceType.ore]!.amount, oreBefore);
+      // Only the HQ's flat income comes in.
+      expect(p.resources[ResourceType.ore]!.amount, oreBefore + 10);
     });
   });
 

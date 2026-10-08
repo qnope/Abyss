@@ -40,6 +40,11 @@ void main() {
         BuildingType.solarPanel: _b(BuildingType.solarPanel, 1),
         BuildingType.barracks: _b(BuildingType.barracks, 5),
       },
+      resources: {
+        ...PlayerDefaults.resources(),
+        ResourceType.energy: Resource(
+            type: ResourceType.energy, amount: 60, maxStorage: 1000),
+      },
       unitsPerLevel: {1: {
         ...PlayerDefaults.unitsPerLevel()[1]!,
         UnitType.scout: Unit(type: UnitType.scout, count: 10),

@@ -1,3 +1,5 @@
+import '../building/building_type.dart';
+
 /// Tuning of the noise gauge that draws raids onto the base.
 ///
 /// Every noisy action fills the gauge; once it reaches [threshold] a raid
@@ -24,6 +26,14 @@ abstract final class NoiseRules {
   /// No raid may hit the base before the end of this turn.
   static const int firstRaidTurn = 10;
 
-  /// Noise of upgrading a building to [reachedLevel].
-  static int forUpgrade(int reachedLevel) => reachedLevel;
+  /// The volcanic kernel wakes the deep: each of its levels makes this
+  /// many times the noise of another building, so waiting for the pearls
+  /// of the last levels is no quiet time.
+  static const int kernelUpgradeFactor = 4;
+
+  /// Noise of upgrading a building of [type] to [reachedLevel].
+  static int forUpgrade(BuildingType type, int reachedLevel) =>
+      type == BuildingType.volcanicKernel
+          ? reachedLevel * kernelUpgradeFactor
+          : reachedLevel;
 }

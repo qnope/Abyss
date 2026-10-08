@@ -46,10 +46,9 @@ void main(List<String> args) {
   final Map<String, String> options = _parse(args);
   final String? scenario = options['scenario'];
   final String? replay = options['replay'];
-  final GameScript Function() build =
-      replay != null
-          ? _variantOf(File(replay).readAsStringSync(), options)
-          : scenario != null
+  final GameScript Function() build = replay != null
+      ? _variantOf(File(replay).readAsStringSync(), options)
+      : scenario != null
           ? () => ScenarioParser.parse(File(scenario).readAsStringSync())
           : () => ScriptLibrary.byName(options['strategy'] ?? 'balanced');
   final BatchReport report = BatchRunner(
@@ -60,12 +59,10 @@ void main(List<String> args) {
     firstSeed: int.parse(options['seed'] ?? '1'),
   );
   if (options.containsKey('json')) {
-    stdout.writeln(
-      const JsonEncoder.withIndent('  ').convert(<String, Object>{
-        'summary': report.toJson(),
-        'runs': report.runs.map((r) => r.toJson()).toList(),
-      }),
-    );
+    stdout.writeln(const JsonEncoder.withIndent('  ').convert(<String, Object>{
+      'summary': report.toJson(),
+      'runs': report.runs.map((r) => r.toJson()).toList(),
+    }));
     return;
   }
   if (options.containsKey('verbose')) _printRuns(report);
@@ -99,11 +96,9 @@ Map<String, String> _parse(List<String> args) {
 
 void _printRuns(BatchReport report) {
   for (final run in report.runs) {
-    stdout.writeln(
-      'seed ${run.seed}: ${run.status.name} au tour '
-      '${run.turnsPlayed}, raids ${run.raidsRepelled} repoussés / '
-      '${run.raidsLost} perdus, bruit ${run.totalNoise}',
-    );
+    stdout.writeln('seed ${run.seed}: ${run.status.name} au tour '
+        '${run.turnsPlayed}, raids ${run.raidsRepelled} repoussés / '
+        '${run.raidsLost} perdus, bruit ${run.totalNoise}');
   }
   if (report.runs.isNotEmpty) {
     stdout.writeln('\nJournal de la partie seed ${report.runs.first.seed} :');
@@ -117,29 +112,19 @@ void _printSummary(String name, BatchReport report) {
   String avg(double v) => v.toStringAsFixed(1);
   stdout
     ..writeln('Stratégie : $name, ${report.games} parties')
-    ..writeln(
-      'Survie : ${pct(report.survivalRate)} '
-      '(${report.defeats} défaites, ${report.victories} victoires)',
-    )
+    ..writeln('Survie : ${pct(report.survivalRate)} '
+        '(${report.defeats} défaites, ${report.victories} victoires)')
     ..writeln('Tours joués en moyenne : ${avg(report.averageTurns)}')
-    ..writeln(
-      'Raids repoussés / perdus en moyenne : '
-      '${avg(report.averageRaidsRepelled)} / ${avg(report.averageRaidsLost)}',
-    )
+    ..writeln('Raids repoussés / perdus en moyenne : '
+        '${avg(report.averageRaidsRepelled)} / ${avg(report.averageRaidsLost)}')
     ..writeln('Bruit total moyen : ${avg(report.averageNoise)}')
     ..writeln('Première défaite : tour ${report.earliestDefeat ?? '-'}');
   _printMilestone(report, 'Faille prise', (r) => r.milestones.failleCaptured);
   _printMilestone(
-    report,
-    'Cheminée prise',
-    (r) => r.milestones.chemineeCaptured,
-  );
+      report, 'Cheminée prise', (r) => r.milestones.chemineeCaptured);
   _printMilestone(report, 'Noyau pris', (r) => r.milestones.kernelCaptured);
   _printMilestone(
-    report,
-    'Victoire',
-    (r) => r.isVictory ? r.turnsPlayed : null,
-  );
+      report, 'Victoire', (r) => r.isVictory ? r.turnsPlayed : null);
 }
 
 void _printMilestone(
@@ -149,8 +134,6 @@ void _printMilestone(
 ) {
   final m = report.milestone(turnOf);
   if (m.games == 0) return;
-  stdout.writeln(
-    '$label : ${m.games}/${report.games} parties, '
-    'tour ${m.averageTurn!.toStringAsFixed(1)} en moyenne',
-  );
+  stdout.writeln('$label : ${m.games}/${report.games} parties, '
+      'tour ${m.averageTurn!.toStringAsFixed(1)} en moyenne');
 }

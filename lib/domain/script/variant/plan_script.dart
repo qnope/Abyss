@@ -51,8 +51,7 @@ class PlanScript extends GameScript {
     final List<int> order = turns.keys.map(int.parse).toList()..sort();
     final List<PlanStep> steps = <PlanStep>[];
     for (final int t in order) {
-      final int due =
-          (t * variant.stretch).round() +
+      final int due = (t * variant.stretch).round() +
           (variant.jitter > 0 ? draw.nextInt(variant.jitter + 1) : 0);
       for (final Object? action in turns['$t'] as List<Object?>) {
         steps.add(
@@ -100,9 +99,10 @@ class PlanScript extends GameScript {
     if (variant.defends && turn.player.raidState.isIncoming) {
       turn.defendBase(const ArmyPlanner());
     }
-    final List<PlanStep> due =
-        _pending.where((PlanStep s) => s.turn <= turn.number).toList()
-          ..sort((PlanStep a, PlanStep b) => a.rank.compareTo(b.rank));
+    final List<PlanStep> due = _pending
+        .where((PlanStep s) => s.turn <= turn.number)
+        .toList()
+      ..sort((PlanStep a, PlanStep b) => a.rank.compareTo(b.rank));
     for (final PlanStep step in due) {
       if (turn.isOver) return;
       final bool done = turn.playStep(step, variant);

@@ -54,11 +54,11 @@ class ReplayVariant {
 
   /// Short label for reports, such as `carte+dés, armée ×0.8, retard 2`.
   String get label => <String>[
-    sameMap ? 'même carte' : 'autre carte',
-    sameDice ? 'mêmes dés' : 'autres dés',
-    if (army != 1) 'armée ×$army',
-    if (jitter > 0) 'retard 0-$jitter',
-    if (stretch != 1) 'tempo ×$stretch',
-    if (defends) 'défense prudente',
-  ].join(', ');
+        sameMap ? 'même carte' : 'autre carte',
+        sameDice ? 'mêmes dés' : 'autres dés',
+        if (army != 1) 'armée ×$army',
+        if (jitter > 0) 'retard 0-$jitter',
+        if (stretch != 1) 'tempo ×$stretch',
+        if (defends) 'défense prudente',
+      ].join(', ');
 }

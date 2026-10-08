@@ -71,7 +71,8 @@ class UpgradeSection extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         ...costs.entries.map((e) => _costRow(e.key, e.value, textTheme)),
-        NoiseCostRow(noise: NoiseRules.forUpgrade(building.level + 1)),
+        NoiseCostRow(
+            noise: NoiseRules.forUpgrade(building.type, building.level + 1)),
         ...prereqs.entries.map((e) => _prereqRow(e.key, e.value, textTheme)),
         if (check.missingCapturedBase != null)
           _capturedBaseRow(check.missingCapturedBase!, textTheme),

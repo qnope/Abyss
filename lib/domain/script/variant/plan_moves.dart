@@ -41,17 +41,17 @@ extension PlanMoves on ScriptTurn {
   }
 
   Map<UnitType, int> _unitsOn(PlanStep step) => <UnitType, int>{
-    for (final e in player.unitsOnLevel(step.level).entries)
-      e.key: e.value.count,
-  };
+        for (final e in player.unitsOnLevel(step.level).entries)
+          e.key: e.value.count,
+      };
 
   GridPosition? _targetOf(PlanStep step) => switch (step.verb) {
-    'attackBase' => openBase(step.level),
-    'attackKernel' => openKernel(),
-    'descend' || 'reinforce' => ownBase(step.level),
-    'fight' => _weakestLair(step.level),
-    _ => null,
-  };
+        'attackBase' => openBase(step.level),
+        'attackKernel' => openKernel(),
+        'descend' || 'reinforce' => ownBase(step.level),
+        'fight' => _weakestLair(step.level),
+        _ => null,
+      };
 
   GridPosition? _weakestLair(int level) {
     GridPosition? best;

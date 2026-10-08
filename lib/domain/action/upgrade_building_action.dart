@@ -78,5 +78,6 @@ class UpgradeBuildingAction extends Action {
 
   @override
   int noiseMade(Player player) =>
-      NoiseRules.forUpgrade(player.buildings[buildingType]!.level);
+      NoiseRules.forUpgrade(
+          buildingType, player.buildings[buildingType]!.level);
 }

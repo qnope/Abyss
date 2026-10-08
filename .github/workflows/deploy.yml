@@ -40,7 +40,19 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
-      - run: flutter test
+      - run: flutter test --coverage
+      - name: Coverage report
+        run: |
+          .github/scripts/coverage_summary.sh coverage/lcov.info coverage/badge.json >> "$GITHUB_STEP_SUMMARY"
+          sudo apt-get update -qq && sudo apt-get install -y -qq lcov
+          lcov --remove coverage/lcov.info '*.g.dart' -o coverage/lcov.info --ignore-errors unused
+          genhtml coverage/lcov.info -o coverage/html --quiet
+          cp coverage/badge.json coverage/html/badge.json
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: coverage/html
 
   build:
     name: Build Web
@@ -56,6 +68,11 @@ jobs:
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
       - run: flutter build web --release --base-href /Abyss/
+      - name: Add coverage report to the site
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-html
+          path: build/web/coverage
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

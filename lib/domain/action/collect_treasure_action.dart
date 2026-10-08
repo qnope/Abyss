@@ -14,14 +14,14 @@ class CollectTreasureAction extends Action {
   final int targetX;
   final int targetY;
   final int level;
-  final Random _random;
+  final Random random;
 
   CollectTreasureAction({
     required this.targetX,
     required this.targetY,
     this.level = 1,
     Random? random,
-  }) : _random = random ?? Random();
+  }) : random = random ?? Random();
 
   @override
   ActionType get type => ActionType.collectTreasure;
@@ -62,18 +62,18 @@ class CollectTreasureAction extends Action {
 
     if (cell.content == CellContentType.resourceBonus) {
       deltas[ResourceType.algae] =
-          _addResource(player, ResourceType.algae, 50 + _random.nextInt(51));
+          _addResource(player, ResourceType.algae, 50 + random.nextInt(51));
       deltas[ResourceType.coral] =
-          _addResource(player, ResourceType.coral, 30 + _random.nextInt(21));
+          _addResource(player, ResourceType.coral, 30 + random.nextInt(21));
       deltas[ResourceType.ore] =
-          _addResource(player, ResourceType.ore, 30 + _random.nextInt(21));
+          _addResource(player, ResourceType.ore, 30 + random.nextInt(21));
     } else if (cell.content == CellContentType.ruins) {
       deltas[ResourceType.algae] =
-          _addResource(player, ResourceType.algae, _random.nextInt(101));
+          _addResource(player, ResourceType.algae, random.nextInt(101));
       deltas[ResourceType.coral] =
-          _addResource(player, ResourceType.coral, _random.nextInt(26));
+          _addResource(player, ResourceType.coral, random.nextInt(26));
       deltas[ResourceType.ore] =
-          _addResource(player, ResourceType.ore, _random.nextInt(26));
+          _addResource(player, ResourceType.ore, random.nextInt(26));
       deltas[ResourceType.pearl] =
           _addResource(player, ResourceType.pearl, _ruinPearls());
     }
@@ -87,7 +87,7 @@ class CollectTreasureAction extends Action {
   }
 
   /// Deeper ruins hold more pearls: 0-2 on level 1, 0-3 on 2, 0-4 on 3.
-  int _ruinPearls() => _random.nextInt(level + 2);
+  int _ruinPearls() => random.nextInt(level + 2);
 
   int _addResource(Player player, ResourceType type, int amount) {
     final resource = player.resources[type]!;

@@ -7,6 +7,7 @@ import '../../../domain/action/send_reinforcements_action.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../../domain/unit/unit_type.dart';
+import '../../../domain/replay/seeded_random.dart';
 import 'descent_dialog.dart';
 import 'fight/transition_army_selection_screen.dart';
 import 'reinforcement_dialog.dart';
@@ -81,6 +82,7 @@ void _executeDescent(
     transitionY: y,
     fromLevel: fromLevel,
     selectedUnits: selected,
+    random: SeededRandom.fresh(),
   );
   final result = ActionExecutor().execute(action, game, game.humanPlayer);
   if (!result.isSuccess) return;

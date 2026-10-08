@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/game_statistics_calculator.dart';
+import '../../widgets/common/replay_export_dialog.dart';
 import '../menu/main_menu_screen.dart';
 import 'defeat_screen.dart';
 
@@ -13,6 +14,7 @@ Route<void> defeatRoute(Game game, GameRepository repository) {
     builder: (context) => DefeatScreen(
       statistics: const GameStatisticsCalculator().compute(game),
       fallTurn: game.turn - 1,
+      onExport: () => showReplayExportDialog(context, game),
       onReturnToMenu: () => Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute<void>(
           builder: (_) => MainMenuScreen(repository: repository),

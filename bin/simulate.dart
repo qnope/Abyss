@@ -2,6 +2,12 @@
 //
 //   dart run bin/simulate.dart --strategy balanced --games 100
 //   dart run bin/simulate.dart --scenario scenarios/rush.json --verbose
+//   dart run bin/simulate.dart --scenario replay-qnope-tour-42.json \
+//       --games 1 --verbose
+//
+// A replay exported from the game ("Exporter la partie") is a scenario that
+// pins the map, the player and every die: it plays that very game again,
+// up to the turn it was exported on, whatever --seed and --turns say.
 //
 // Options:
 //   --strategy <name>   built-in strategy (economy, balanced, idle, conquest)

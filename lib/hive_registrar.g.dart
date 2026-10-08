@@ -26,6 +26,7 @@ import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/raid/raid_state.dart';
+import 'package:abyss/domain/replay/replay_journal.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
@@ -65,6 +66,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(RecruitEntryAdapter());
     registerAdapter(ReinforcementEntryAdapter());
     registerAdapter(ReinforcementOrderAdapter());
+    registerAdapter(ReplayJournalAdapter());
     registerAdapter(ResearchEntryAdapter());
     registerAdapter(ResourceAdapter());
     registerAdapter(ResourceTypeAdapter());
@@ -111,6 +113,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(RecruitEntryAdapter());
     registerAdapter(ReinforcementEntryAdapter());
     registerAdapter(ReinforcementOrderAdapter());
+    registerAdapter(ReplayJournalAdapter());
     registerAdapter(ResearchEntryAdapter());
     registerAdapter(ResourceAdapter());
     registerAdapter(ResourceTypeAdapter());

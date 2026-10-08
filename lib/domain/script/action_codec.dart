@@ -12,6 +12,7 @@ import '../action/send_reinforcements_action.dart';
 import '../action/unlock_branch_action.dart';
 import '../action/upgrade_building_action.dart';
 import '../building/building_type.dart';
+import '../replay/seeded_random.dart';
 import '../tech/tech_branch.dart';
 import '../unit/unit_type.dart';
 import 'action_spec.dart';
@@ -20,7 +21,9 @@ import 'action_spec.dart';
 /// `{"do": "recruit", "unit": "guardian", "count": 5}`.
 ///
 /// Every player action of the game has a verb; enum values use their Dart
-/// names (`algaeFarm`, `military`, `harpoonist`...).
+/// names (`algaeFarm`, `military`, `harpoonist`...). An action that rolls
+/// dice may carry a `seed`, written by an exported replay, to roll the
+/// same dice as the game it comes from.
 abstract final class ActionCodec {
   /// Throws a [FormatException] right away when the action is malformed,
   /// rather than in the middle of a game.
@@ -47,31 +50,31 @@ abstract final class ActionCodec {
           targetX: f.integer('x'),
           targetY: f.integer('y'),
           level: f.level,
-          random: r),
+          random: f.rng(r)),
       'fight' => (r) => FightMonsterAction(
           targetX: f.integer('x'),
           targetY: f.integer('y'),
           level: f.level,
           selectedUnits: f.units,
-          random: r),
+          random: f.rng(r)),
       'attackBase' => (r) => AttackTransitionBaseAction(
           targetX: f.integer('x'),
           targetY: f.integer('y'),
           level: f.level,
           selectedUnits: f.units,
-          random: r),
+          random: f.rng(r)),
       'attackKernel' => (r) => AttackVolcanicKernelAction(
           targetX: f.integer('x'),
           targetY: f.integer('y'),
           level: f.level,
           selectedUnits: f.units,
-          random: r),
+          random: f.rng(r)),
       'descend' => (r) => DescendAction(
           transitionX: f.integer('x'),
           transitionY: f.integer('y'),
           fromLevel: f.level,
           selectedUnits: f.units,
-          random: r),
+          random: f.rng(r)),
       'reinforce' => (_) => SendReinforcementsAction(
           transitionX: f.integer('x'),
           transitionY: f.integer('y'),
@@ -86,6 +89,12 @@ class _Fields {
   final Map<String, Object?> json;
 
   const _Fields(this.json);
+
+  /// The action's own generator when the JSON names its seed.
+  Random rng(Random fallback) {
+    final Object? seed = json['seed'];
+    return seed is int ? SeededRandom(seed) : fallback;
+  }
 
   int get level => json.containsKey('level') ? integer('level') : 1;
 

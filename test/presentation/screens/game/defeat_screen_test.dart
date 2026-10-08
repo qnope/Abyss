@@ -19,12 +19,13 @@ void main() {
     raidsLost: 4,
   );
 
-  Widget build({VoidCallback? onMenu}) => MaterialApp(
+  Widget build({VoidCallback? onMenu, VoidCallback? onExport}) => MaterialApp(
         theme: AbyssTheme.create(),
         home: DefeatScreen(
           statistics: statistics,
           fallTurn: 26,
           onReturnToMenu: onMenu ?? () {},
+          onExport: onExport,
         ),
       );
 
@@ -53,5 +54,19 @@ void main() {
     expect(find.text('Continuer en mode libre'), findsNothing);
     await tester.tap(find.text('Retour au menu'));
     expect(called, isTrue);
+  });
+
+  testWidgets('offers to export the lost game', (tester) async {
+    var exported = false;
+    await tester.pumpWidget(build(onExport: () => exported = true));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Exporter la partie'));
+    expect(exported, isTrue);
+  });
+
+  testWidgets('hides the export without a way to export', (tester) async {
+    await tester.pumpWidget(build());
+    await tester.pumpAndSettle();
+    expect(find.text('Exporter la partie'), findsNothing);
   });
 }

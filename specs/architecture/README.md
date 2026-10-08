@@ -65,6 +65,7 @@ Pure Dart business logic with no Flutter dependency. Split into 10 submodules:
 | `resource` | 5 resource types |
 | `tech` | Technology branches |
 | `script` | Headless scripted games for balancing (`bin/simulate.dart`) |
+| `replay` | Journal of every move, exported as a scenario that replays the game |
 | `turn` | Turn processing |
 | `unit` | Unit types and state |
 

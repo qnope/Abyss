@@ -14,6 +14,7 @@ import '../../../domain/map/transition_base.dart';
 import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/tech/tech_branch.dart';
 import '../../../domain/unit/unit_type.dart';
+import '../../../domain/replay/seeded_random.dart';
 import '../../theme/abyss_colors.dart';
 import '../../widgets/map/cell_info_sheet.dart';
 import '../../widgets/map/exploration_sheet.dart';
@@ -187,7 +188,8 @@ void _showExplorationFlow(
 
 void _collectTreasure(BuildContext context, Game game, int x, int y,
     int level, CellContentType content, VoidCallback onChanged) {
-  final action = CollectTreasureAction(targetX: x, targetY: y, level: level);
+  final action = CollectTreasureAction(
+      targetX: x, targetY: y, level: level, random: SeededRandom.fresh());
   final result = ActionExecutor().execute(action, game, game.humanPlayer);
   if (!result.isSuccess) return;
   onChanged();

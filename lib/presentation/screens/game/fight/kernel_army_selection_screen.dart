@@ -5,6 +5,7 @@ import '../../../../domain/action/attack_volcanic_kernel_action.dart';
 import '../../../../domain/action/attack_volcanic_kernel_result.dart';
 import '../../../../domain/game/game.dart';
 import '../../../../domain/unit/unit_type.dart';
+import '../../../../domain/replay/seeded_random.dart';
 import '../../../widgets/fight/selection_summary_card.dart';
 import '../../../widgets/fight/unit_quantity_row.dart';
 import 'army_selection_summary.dart';
@@ -123,6 +124,7 @@ class _KernelArmySelectionScreenState
       targetY: widget.targetY,
       level: widget.level,
       selectedUnits: nonZero,
+      random: SeededRandom.fresh(),
     );
     final result = ActionExecutor().execute(
       action, widget.game, widget.game.humanPlayer,

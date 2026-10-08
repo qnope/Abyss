@@ -10,16 +10,16 @@ web=$(present web/index.html)
 
 # flutter_launcher_icons fails on a missing platform folder, and CI creates
 # one platform per job: only enable the platforms present.
-config=$(mktemp --suffix=.yaml)
+# Adaptive icon settings alone would make it write Android files.
+drop_android=$([ "$android" = true ] && echo '' || echo '/(adaptive_icon|min_sdk_android)/d')
+# Portable between GNU (Linux runners) and BSD (macOS runner) tools.
+config=$(mktemp "${TMPDIR:-/tmp}/launcher_icons.XXXXXX")
 trap 'rm -f "$config"' EXIT
-sed -e "s/^  android: true/  android: $android/" \
+sed -E -e "s/^  android: true/  android: $android/" \
     -e "s/^  ios: true/  ios: $ios/" \
     -e "s/^    generate: true/    generate: $web/" \
+    -e "$drop_android" \
     flutter_launcher_icons.yaml > "$config"
-if [ "$android" = false ]; then
-  # Adaptive icon settings alone would make it write Android files.
-  sed -i -e '/adaptive_icon/d' -e '/min_sdk_android/d' "$config"
-fi
 dart run flutter_launcher_icons -f "$config"
 
 # The full icon is unreadable at 16 px: the favicon is a tighter crop.

@@ -28,6 +28,9 @@ class ResearchTechAction extends Action {
     if (!state.unlocked) {
       return ActionResult.failure('Branche verrouillee');
     }
+    if (!player.worksite.canResearch) {
+      return ActionResult.failure('Recherche deja lancee ce tour');
+    }
     final targetLevel = state.researchLevel + 1;
     if (targetLevel > TechCostCalculator.maxResearchLevel) {
       return ActionResult.failure('Niveau maximum atteint');
@@ -56,6 +59,7 @@ class ResearchTechAction extends Action {
       player.resources[entry.key]!.amount -= entry.value;
     }
     player.techBranches[branch]!.researchLevel = targetLevel;
+    player.worksite.research++;
     return ActionResult.success();
   }
 

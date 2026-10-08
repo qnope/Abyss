@@ -34,6 +34,11 @@ class UpgradeBuildingAction extends Action {
       isVolcanicKernelCaptured:
           game.isVolcanicKernelCapturedBy(player.id),
     );
+    final int hqLevel =
+        player.buildings[BuildingType.headquarters]?.level ?? 0;
+    if (player.worksite.freeBuildSites(hqLevel) <= 0) {
+      return ActionResult.failure('Chantiers occupes ce tour');
+    }
     if (check.isMaxLevel) {
       return ActionResult.failure('Niveau maximum atteint');
     }
@@ -53,6 +58,7 @@ class UpgradeBuildingAction extends Action {
       player.resources[entry.key]!.amount -= entry.value;
     }
     player.buildings[buildingType]!.level++;
+    player.worksite.upgrades++;
     return ActionResult.success();
   }
 

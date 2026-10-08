@@ -9,6 +9,7 @@ import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/raid/raid_state.dart';
+import 'package:abyss/domain/worksite/worksite.dart';
 import 'package:abyss/domain/game/player_defaults.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/exploration_order.dart';
@@ -49,6 +50,7 @@ void _registerAdapters() {
   Hive.registerAdapter(GameAdapter());
   Hive.registerAdapter(GameStatusAdapter());
   Hive.registerAdapter(RaidStateAdapter());
+  Hive.registerAdapter(WorksiteAdapter());
 }
 
 void main() {

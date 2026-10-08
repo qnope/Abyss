@@ -5,6 +5,7 @@ import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
+import 'package:abyss/domain/worksite/worksite.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/building/building_detail_sheet.dart';
 
@@ -15,6 +16,7 @@ Widget buildSheetApp({
   Map<ResourceType, Resource>? resources,
   Map<BuildingType, Building>? allBuildings,
   bool isVolcanicKernelCaptured = false,
+  Worksite? worksite,
   VoidCallback? onUpgrade,
 }) {
   return MaterialApp(
@@ -27,6 +29,7 @@ Widget buildSheetApp({
             building: building,
             resources: resources ?? defaultPlayer.resources,
             allBuildings: allBuildings ?? {building.type: building},
+            worksite: worksite ?? Worksite(),
             isVolcanicKernelCaptured: isVolcanicKernelCaptured,
             onUpgrade: onUpgrade ?? () {},
           ),

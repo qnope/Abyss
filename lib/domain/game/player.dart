@@ -16,6 +16,7 @@ import '../tech/tech_branch.dart';
 import '../tech/tech_branch_state.dart';
 import '../unit/unit.dart';
 import '../unit/unit_type.dart';
+import '../worksite/worksite.dart';
 import 'player_defaults.dart';
 
 part 'player.g.dart';
@@ -64,6 +65,9 @@ class Player extends HiveObject {
   @HiveField(14)
   final RaidState raidState;
 
+  @HiveField(15)
+  final Worksite worksite;
+
   Player({
     required this.name,
     String? id,
@@ -79,6 +83,7 @@ class Player extends HiveObject {
     List<HistoryEntry>? historyEntries,
     List<ReinforcementOrder>? pendingReinforcements,
     RaidState? raidState,
+    Worksite? worksite,
   })  : id = id ?? const Uuid().v4(),
         resources = resources ?? PlayerDefaults.resources(),
         buildings = buildings ?? PlayerDefaults.buildings(),
@@ -89,7 +94,8 @@ class Player extends HiveObject {
         revealedCellsPerLevel = revealedCellsPerLevel ?? {},
         historyEntries = historyEntries ?? <HistoryEntry>[],
         pendingReinforcements = pendingReinforcements ?? [],
-        raidState = raidState ?? RaidState();
+        raidState = raidState ?? RaidState(),
+        worksite = worksite ?? Worksite();
 
   Player.withBase({
     required String name,

@@ -27,6 +27,7 @@ void showBuildingDetailAction(
     building: building,
     resources: human.resources,
     allBuildings: human.buildings,
+    worksite: human.worksite,
     capturedBaseTypes: game.capturedBaseTypesOf(human.id),
     isVolcanicKernelCaptured: game.isVolcanicKernelCapturedBy(human.id),
     onUpgrade: () {

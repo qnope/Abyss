@@ -24,6 +24,7 @@ void main() {
           body: BuildingListView(
             buildings: buildings,
             resources: defaultPlayer.resources,
+            worksite: defaultPlayer.worksite,
             onBuildingTap: onBuildingTap ?? (_) {},
           ),
         ),

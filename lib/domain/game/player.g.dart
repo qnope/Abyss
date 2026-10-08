@@ -37,13 +37,14 @@ class PlayerAdapter extends TypeAdapter<Player> {
       historyEntries: (fields[11] as List?)?.cast<HistoryEntry>(),
       pendingReinforcements: (fields[13] as List?)?.cast<ReinforcementOrder>(),
       raidState: fields[14] as RaidState?,
+      worksite: fields[15] as Worksite?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Player obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -71,7 +72,9 @@ class PlayerAdapter extends TypeAdapter<Player> {
       ..writeByte(13)
       ..write(obj.pendingReinforcements)
       ..writeByte(14)
-      ..write(obj.raidState);
+      ..write(obj.raidState)
+      ..writeByte(15)
+      ..write(obj.worksite);
   }
 
   @override

@@ -19,6 +19,7 @@ class TechTreeView extends StatelessWidget {
   final Map<TechBranch, TechBranchState> techBranches;
   final Map<BuildingType, Building> buildings;
   final Map<ResourceType, Resource> resources;
+  final bool researchDone;
   final void Function(TechBranch branch) onUnlock;
   final void Function(TechBranch branch) onResearch;
 
@@ -27,6 +28,7 @@ class TechTreeView extends StatelessWidget {
     required this.techBranches,
     required this.buildings,
     required this.resources,
+    this.researchDone = false,
     required this.onUnlock,
     required this.onResearch,
   });
@@ -61,6 +63,7 @@ class TechTreeView extends StatelessWidget {
             techBranches: techBranches,
             buildings: buildings,
             resources: resources,
+            researchDone: researchDone,
             onAct: () {
               _act(target);
               Navigator.pop(sheetContext);

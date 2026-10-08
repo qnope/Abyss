@@ -76,6 +76,7 @@ class PlayerTurnResolver {
     );
 
     player.recruitedUnitTypes.clear();
+    player.worksite.clear();
 
     return TurnResult(
       changes: changes,

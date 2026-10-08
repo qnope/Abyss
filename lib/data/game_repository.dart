@@ -29,6 +29,7 @@ import '../domain/map/terrain_type.dart';
 import '../domain/turn/turn_result.dart';
 import '../domain/unit/unit.dart';
 import '../domain/unit/unit_type.dart';
+import '../domain/worksite/worksite.dart';
 
 class GameRepository {
   static const _boxName = 'games';
@@ -75,6 +76,7 @@ class GameRepository {
     Hive.registerAdapter(GameStatusAdapter());
     Hive.registerAdapter(RaidStateAdapter());
     Hive.registerAdapter(RaidEntryAdapter());
+    Hive.registerAdapter(WorksiteAdapter());
     try {
       await Hive.openBox<Game>(_boxName);
     } catch (_) {

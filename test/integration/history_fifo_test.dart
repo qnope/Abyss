@@ -84,6 +84,7 @@ void main() {
       player.resources[ResourceType.ore]!.amount = 99999;
       player.resources[ResourceType.energy]!.amount = 99999;
       player.resources[ResourceType.pearl]!.amount = 99999;
+      player.worksite.clear();
       game.turn = i + 1;
 
       final result = executor.execute(action, game, player);

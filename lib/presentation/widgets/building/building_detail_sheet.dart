@@ -9,13 +9,16 @@ import '../../theme/abyss_colors.dart';
 import 'base_shield_badge.dart';
 import 'building_icon.dart';
 import 'coral_citadel_info_section.dart';
+import '../../../domain/worksite/worksite.dart';
 import 'upgrade_section.dart';
+import 'worksite_badge.dart';
 
 void showBuildingDetailSheet(
   BuildContext context, {
   required Building building,
   required Map<ResourceType, Resource> resources,
   required Map<BuildingType, Building> allBuildings,
+  required Worksite worksite,
   Set<TransitionBaseType> capturedBaseTypes = const {},
   bool isVolcanicKernelCaptured = false,
   required VoidCallback onUpgrade,
@@ -27,6 +30,7 @@ void showBuildingDetailSheet(
       building: building,
       resources: resources,
       allBuildings: allBuildings,
+      worksite: worksite,
       capturedBaseTypes: capturedBaseTypes,
       isVolcanicKernelCaptured: isVolcanicKernelCaptured,
       onUpgrade: onUpgrade,
@@ -38,6 +42,7 @@ class _BuildingDetailSheet extends StatelessWidget {
   final Building building;
   final Map<ResourceType, Resource> resources;
   final Map<BuildingType, Building> allBuildings;
+  final Worksite worksite;
   final Set<TransitionBaseType> capturedBaseTypes;
   final bool isVolcanicKernelCaptured;
   final VoidCallback onUpgrade;
@@ -46,6 +51,7 @@ class _BuildingDetailSheet extends StatelessWidget {
     required this.building,
     required this.resources,
     required this.allBuildings,
+    required this.worksite,
     this.capturedBaseTypes = const {},
     this.isVolcanicKernelCaptured = false,
     required this.onUpgrade,
@@ -92,12 +98,18 @@ class _BuildingDetailSheet extends StatelessWidget {
           if (building.type == BuildingType.headquarters) ...[
             const SizedBox(height: 8),
             BaseShieldBadge(buildings: allBuildings),
+            WorksiteBadge(
+              worksite: worksite,
+              buildings: allBuildings,
+              showNext: true,
+            ),
           ],
           const Divider(height: 24),
           UpgradeSection(
             building: building,
             resources: resources,
             allBuildings: allBuildings,
+            worksite: worksite,
             capturedBaseTypes: capturedBaseTypes,
             isVolcanicKernelCaptured: isVolcanicKernelCaptured,
             onUpgrade: onUpgrade,

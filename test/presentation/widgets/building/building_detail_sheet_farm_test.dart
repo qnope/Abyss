@@ -19,7 +19,7 @@ void main() {
         allBuildings: {farm.type: farm, BuildingType.headquarters: hq(1)},
       ));
       await openSheet(t);
-      expect(find.text('80/20'), findsOneWidget);
+      expect(find.text('300/80'), findsOneWidget);
     });
 
     testWidgets('shows HQ prerequisite for algaeFarm when HQ not built',

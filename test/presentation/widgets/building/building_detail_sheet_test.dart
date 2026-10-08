@@ -33,8 +33,8 @@ void main() {
       useTallSurface(t);
       await t.pumpWidget(buildSheetApp(building: hq()));
       await openSheet(t);
-      expect(find.text('80/30'), findsOneWidget);
-      expect(find.text('50/20'), findsOneWidget);
+      expect(find.text('300/60'), findsOneWidget);
+      expect(find.text('150/40'), findsOneWidget);
     });
 
     testWidgets('upgrade button enabled with sufficient resources',

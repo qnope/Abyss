@@ -38,9 +38,9 @@ void main() {
     final firstResult = action.execute(game, player);
     expect(firstResult.isSuccess, isTrue);
     expect(player.buildings[BuildingType.coralCitadel]!.level, 1);
-    expect(player.resources[ResourceType.coral]!.amount, coralBefore - 120);
-    expect(player.resources[ResourceType.ore]!.amount, oreBefore - 120);
-    expect(player.resources[ResourceType.energy]!.amount, energyBefore - 60);
+    expect(player.resources[ResourceType.coral]!.amount, coralBefore - 250);
+    expect(player.resources[ResourceType.ore]!.amount, oreBefore - 250);
+    expect(player.resources[ResourceType.energy]!.amount, energyBefore - 125);
     expect(player.resources[ResourceType.pearl]!.amount, pearlBefore - 5);
 
     // Bump HQ to 5 to allow level 2.
@@ -54,9 +54,9 @@ void main() {
     final secondResult = action.execute(game, player);
     expect(secondResult.isSuccess, isTrue);
     expect(player.buildings[BuildingType.coralCitadel]!.level, 2);
-    expect(player.resources[ResourceType.coral]!.amount, coralBefore2 - 240);
-    expect(player.resources[ResourceType.ore]!.amount, oreBefore2 - 240);
-    expect(player.resources[ResourceType.energy]!.amount, energyBefore2 - 120);
+    expect(player.resources[ResourceType.coral]!.amount, coralBefore2 - 400);
+    expect(player.resources[ResourceType.ore]!.amount, oreBefore2 - 400);
+    expect(player.resources[ResourceType.energy]!.amount, energyBefore2 - 200);
     expect(player.resources[ResourceType.pearl]!.amount, pearlBefore2 - 10);
 
     // Level 3 requires HQ 7, still at 5 — must fail, no state change.

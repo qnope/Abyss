@@ -38,10 +38,9 @@ void main() {
     testWidgets('shows resource amounts', (tester) async {
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();
-      expect(find.text('100'), findsOneWidget);
-      expect(find.text('80'), findsOneWidget);
-      expect(find.text('50'), findsOneWidget);
-      expect(find.text('60'), findsOneWidget);
+      expect(find.text('100'), findsNWidgets(2));
+      expect(find.text('300'), findsOneWidget);
+      expect(find.text('150'), findsOneWidget);
       expect(find.text('5'), findsOneWidget);
     });
 

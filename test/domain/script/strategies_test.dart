@@ -44,19 +44,20 @@ void main() {
     expect(report.victories, 0);
   });
 
-  // About 20 % of the games are won on 100 seeds; seed 2 is one of them,
-  // seed 69 falls the earliest.
+  // With the building sites of step 7, about 11 % of the games are won
+  // on 100 seeds; seed 24 is one of them, seed 38 falls the earliest of
+  // the first 40.
   test('a careful player can take the volcano and win', () {
     final run = ScriptRunner(maxTurns: 100)
-        .run(const ConquestStrategy(), seed: 2);
+        .run(const ConquestStrategy(), seed: 24);
 
     expect(run.isVictory, isTrue);
     expect(run.milestones.kernelCaptured, lessThan(run.turnsPlayed));
   }, timeout: const Timeout(Duration(minutes: 5)));
 
   test('a careful player can also fall to the raids', () {
-    final run = ScriptRunner(maxTurns: 80)
-        .run(const ConquestStrategy(), seed: 69);
+    final run = ScriptRunner(maxTurns: 100)
+        .run(const ConquestStrategy(), seed: 38);
 
     expect(run.isDefeat, isTrue);
   }, timeout: const Timeout(Duration(minutes: 5)));

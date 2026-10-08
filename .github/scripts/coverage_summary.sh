@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # Writes a Markdown coverage report from an lcov file.
-# Usage: coverage_summary.sh <lcov.info>
+# Usage: coverage_summary.sh <lcov.info> [badge.json]
+# When badge.json is given, also writes a shields.io endpoint badge there.
 set -euo pipefail
 
 lcov_file="${1:-coverage/lcov.info}"
+badge_file="${2:-}"
 
 # One "found hit file" line per source file, paths relative to lib/.
 # Generated files (*.g.dart) are left out.
@@ -29,6 +31,15 @@ read -r total_found total_hit files < <(
 )
 total_pct=$(awk -v f="$total_found" -v h="$total_hit" \
   'BEGIN { printf "%.1f", f == 0 ? 100 : 100 * h / f }')
+
+if [[ -n "$badge_file" ]]; then
+  color=$(awk -v p="$total_pct" 'BEGIN {
+    p += 0
+    print (p >= 80 ? "brightgreen" : (p >= 50 ? "yellow" : "red"))
+  }')
+  printf '{"schemaVersion":1,"label":"coverage","message":"%s%%","color":"%s"}\n' \
+    "$total_pct" "$color" > "$badge_file"
+fi
 
 echo "## Code coverage: ${total_pct}%"
 echo

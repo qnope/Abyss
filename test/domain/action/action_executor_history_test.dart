@@ -145,6 +145,7 @@ void main() {
         player.resources[ResourceType.energy]!.amount = 1000;
         player.resources[ResourceType.pearl]!.amount = 1000;
         player.buildings[BuildingType.headquarters]!.level = 0;
+        player.worksite.clear();
         game.turn = i + 1;
 
         final result = executor.execute(action, game, player);

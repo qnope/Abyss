@@ -81,6 +81,7 @@ class _GameScreenState extends State<GameScreen> {
       0 => BuildingListView(
         buildings: human.buildings,
         resources: human.resources,
+        worksite: human.worksite,
         onBuildingTap: (b) => showBuildingDetailAction(
           context, g, widget.repository, b, () => setState(() {})),
       ),
@@ -105,6 +106,7 @@ class _GameScreenState extends State<GameScreen> {
         techBranches: human.techBranches,
         buildings: human.buildings,
         resources: human.resources,
+        researchDone: !human.worksite.canResearch,
         onUnlock: (branch) =>
           unlockBranch(g, branch, () => setState(() {})),
         onResearch: (branch) =>

@@ -64,6 +64,7 @@ void main() {
     );
 
     for (var i = 0; i < 10; i++) {
+      s.player.worksite.clear();
       final result = action.execute(s.game, s.player);
       expect(result.isSuccess, isTrue, reason: 'upgrade $i failed');
     }

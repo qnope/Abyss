@@ -9,6 +9,7 @@ import '../../../domain/resource/resource_type.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
 import '../../extensions/transition_base_type_extensions.dart';
+import '../../../domain/worksite/worksite.dart';
 import '../../theme/abyss_colors.dart';
 import '../raid/noise_cost_row.dart';
 import '../resource/resource_icon.dart';
@@ -17,6 +18,7 @@ class UpgradeSection extends StatelessWidget {
   final Building building;
   final Map<ResourceType, Resource> resources;
   final Map<BuildingType, Building> allBuildings;
+  final Worksite worksite;
   final Set<TransitionBaseType> capturedBaseTypes;
   final bool isVolcanicKernelCaptured;
   final VoidCallback onUpgrade;
@@ -26,6 +28,7 @@ class UpgradeSection extends StatelessWidget {
     required this.building,
     required this.resources,
     required this.allBuildings,
+    required this.worksite,
     this.capturedBaseTypes = const {},
     this.isVolcanicKernelCaptured = false,
     required this.onUpgrade,
@@ -43,6 +46,8 @@ class UpgradeSection extends StatelessWidget {
       isVolcanicKernelCaptured: isVolcanicKernelCaptured,
     );
     final textTheme = Theme.of(context).textTheme;
+    final hqLevel = allBuildings[BuildingType.headquarters]?.level ?? 0;
+    final siteFree = worksite.freeBuildSites(hqLevel) > 0;
 
     if (check.isMaxLevel) {
       return Text(
@@ -72,9 +77,10 @@ class UpgradeSection extends StatelessWidget {
           _capturedBaseRow(check.missingCapturedBase!, textTheme),
         if (check.missingCapturedKernel)
           _capturedKernelRow(textTheme),
+        if (!siteFree) _lockedRow('Chantiers occupés ce tour'),
         const SizedBox(height: 12),
         ElevatedButton(
-          onPressed: check.canUpgrade ? onUpgrade : null,
+          onPressed: check.canUpgrade && siteFree ? onUpgrade : null,
           child: Text(building.level == 0 ? 'Construire' : 'Améliorer'),
         ),
       ],

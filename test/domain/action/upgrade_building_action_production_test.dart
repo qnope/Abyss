@@ -93,6 +93,7 @@ void main() {
       final action =
           UpgradeBuildingAction(buildingType: BuildingType.algaeFarm);
       action.execute(s.game, s.player);
+      s.player.worksite.clear();
       action.execute(s.game, s.player);
       final production =
           ProductionCalculator.fromBuildings(s.player.buildings);

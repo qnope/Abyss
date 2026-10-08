@@ -19,6 +19,7 @@ class TechTargetPanel extends StatelessWidget {
   final Map<TechBranch, TechBranchState> techBranches;
   final Map<BuildingType, Building> buildings;
   final Map<ResourceType, Resource> resources;
+  final bool researchDone;
   final VoidCallback onAct;
 
   const TechTargetPanel({
@@ -27,6 +28,7 @@ class TechTargetPanel extends StatelessWidget {
     required this.techBranches,
     required this.buildings,
     required this.resources,
+    this.researchDone = false,
     required this.onAct,
   });
 
@@ -75,7 +77,7 @@ class TechTargetPanel extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         if (!_done) ElevatedButton(
-          onPressed: _check.canAct ? onAct : null,
+          onPressed: _check.canAct && _blocker == null ? onAct : null,
           child: Text(_level == null ? 'Débloquer' : 'Rechercher'),
         ),
       ]),
@@ -111,6 +113,9 @@ class TechTargetPanel extends StatelessWidget {
     }
     if (check.currentLabLevel < check.requiredLabLevel) {
       return 'Laboratoire niveau ${check.requiredLabLevel} requis';
+    }
+    if (_level != null && researchDone) {
+      return 'Une recherche par tour : attendez le prochain tour';
     }
     return null;
   }

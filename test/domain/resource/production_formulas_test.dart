@@ -9,36 +9,36 @@ void main() {
       final formula = productionFormulas[BuildingType.algaeFarm]!;
       expect(formula.compute(1), 50);
       expect(formula.compute(2), 140);
-      expect(formula.compute(3), 290);
-      expect(formula.compute(4), 500);
-      expect(formula.compute(5), 770);
+      expect(formula.compute(3), 230);
+      expect(formula.compute(4), 320);
+      expect(formula.compute(5), 410);
     });
 
     test('coralMine returns expected values for levels 1-5', () {
       final formula = productionFormulas[BuildingType.coralMine]!;
       expect(formula.compute(1), 40);
       expect(formula.compute(2), 100);
-      expect(formula.compute(3), 200);
-      expect(formula.compute(4), 340);
-      expect(formula.compute(5), 520);
+      expect(formula.compute(3), 160);
+      expect(formula.compute(4), 220);
+      expect(formula.compute(5), 280);
     });
 
     test('oreExtractor returns expected values for levels 1-5', () {
       final formula = productionFormulas[BuildingType.oreExtractor]!;
       expect(formula.compute(1), 30);
       expect(formula.compute(2), 90);
-      expect(formula.compute(3), 190);
-      expect(formula.compute(4), 330);
-      expect(formula.compute(5), 510);
+      expect(formula.compute(3), 150);
+      expect(formula.compute(4), 210);
+      expect(formula.compute(5), 270);
     });
 
     test('solarPanel returns expected values for levels 1-5', () {
       final formula = productionFormulas[BuildingType.solarPanel]!;
       expect(formula.compute(1), 18);
       expect(formula.compute(2), 54);
-      expect(formula.compute(3), 114);
-      expect(formula.compute(4), 198);
-      expect(formula.compute(5), 306);
+      expect(formula.compute(3), 90);
+      expect(formula.compute(4), 126);
+      expect(formula.compute(5), 162);
     });
 
     test('headquarters is not in the map', () {

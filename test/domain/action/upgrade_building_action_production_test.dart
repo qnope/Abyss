@@ -9,7 +9,7 @@ import 'package:abyss/domain/resource/production_calculator.dart';
 import 'package:abyss/domain/action/upgrade_building_action.dart';
 
 ({Game game, Player player}) makeProductionScenario({
-  int coral = 200,
+  int coral = 400,
   int ore = 200,
   int energy = 200,
   int algae = 200,
@@ -74,7 +74,7 @@ void main() {
         buildingType: BuildingType.algaeFarm,
       );
       action.execute(s.game, s.player);
-      expect(s.player.resources[ResourceType.coral]!.amount, 180);
+      expect(s.player.resources[ResourceType.coral]!.amount, 320);
       expect(s.player.buildings[BuildingType.algaeFarm]!.level, 1);
     });
 

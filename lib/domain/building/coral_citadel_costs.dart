@@ -1,21 +1,19 @@
 import 'building_type.dart';
+import '../resource/exponential_cost.dart';
 import '../resource/resource_type.dart';
 
+const _citadelBaseCost = {
+  ResourceType.coral: 250,
+  ResourceType.ore: 250,
+  ResourceType.energy: 125,
+};
+const _citadelPearls = [5, 10, 20, 35, 60];
+
 Map<ResourceType, int> coralCitadelCost(int currentLevel) {
-  const table = {
-    0: [120, 120, 60, 5],
-    1: [240, 240, 120, 10],
-    2: [500, 500, 250, 20],
-    3: [850, 850, 425, 35],
-    4: [1300, 1300, 650, 60],
-  };
-  final row = table[currentLevel];
-  if (row == null) return {};
+  if (currentLevel < 0 || currentLevel >= _citadelPearls.length) return {};
   return {
-    ResourceType.coral: row[0],
-    ResourceType.ore: row[1],
-    ResourceType.energy: row[2],
-    ResourceType.pearl: row[3],
+    ...exponentialCost(_citadelBaseCost, currentLevel),
+    ResourceType.pearl: _citadelPearls[currentLevel],
   };
 }
 

@@ -21,7 +21,7 @@ void main() {
       expect(production, isEmpty);
     });
 
-    test('algaeFarm at level 3 produces 290 algae', () {
+    test('algaeFarm at level 3 produces 230 algae', () {
       final buildings = {
         BuildingType.algaeFarm: Building(
           type: BuildingType.algaeFarm,
@@ -29,7 +29,7 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.algae: 290});
+      expect(production, {ResourceType.algae: 230});
     });
 
     test('coralMine at level 2 produces 100 coral', () {
@@ -54,7 +54,7 @@ void main() {
       expect(production, {ResourceType.ore: 30});
     });
 
-    test('solarPanel at level 4 produces 198 energy', () {
+    test('solarPanel at level 4 produces 126 energy', () {
       final buildings = {
         BuildingType.solarPanel: Building(
           type: BuildingType.solarPanel,
@@ -62,7 +62,7 @@ void main() {
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, {ResourceType.energy: 198});
+      expect(production, {ResourceType.energy: 126});
     });
 
     test('multiple buildings cumulate correctly', () {
@@ -87,21 +87,38 @@ void main() {
       final production = ProductionCalculator.fromBuildings(buildings);
       expect(production, {
         ResourceType.algae: 140,
-        ResourceType.coral: 200,
+        ResourceType.coral: 160,
         ResourceType.ore: 30,
         ResourceType.energy: 54,
       });
     });
 
-    test('headquarters produces nothing regardless of level', () {
+    test('a built headquarters gives the same flat income at any level', () {
+      for (final level in [1, 5, 10]) {
+        final buildings = {
+          BuildingType.headquarters: Building(
+            type: BuildingType.headquarters,
+            level: level,
+          ),
+        };
+        final production = ProductionCalculator.fromBuildings(buildings);
+        expect(production, {ResourceType.coral: 15, ResourceType.ore: 10});
+      }
+    });
+
+    test('headquarters income adds to the buildings production', () {
       final buildings = {
         BuildingType.headquarters: Building(
           type: BuildingType.headquarters,
-          level: 5,
+          level: 2,
+        ),
+        BuildingType.coralMine: Building(
+          type: BuildingType.coralMine,
+          level: 1,
         ),
       };
       final production = ProductionCalculator.fromBuildings(buildings);
-      expect(production, isEmpty);
+      expect(production, {ResourceType.coral: 55, ResourceType.ore: 10});
     });
 
     test('pearl is never in the result', () {
@@ -118,7 +135,7 @@ void main() {
         level: 1,
       ),
     };
-    // algaeFarm level 1 = 30*1 + 20 = 50
+    // algaeFarm level 1 = 90*1 - 40 = 50
 
     test('no tech branches (null) returns same as before', () {
       final production = ProductionCalculator.fromBuildings(buildings);

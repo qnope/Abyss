@@ -139,7 +139,7 @@ void main() {
     expect(loadedPlayer.baseY, 9);
     expect(loadedPlayer.resources[ResourceType.algae]!.amount, 777);
     expect(loadedPlayer.resources[ResourceType.pearl]!.amount, 42);
-    expect(loadedPlayer.resources[ResourceType.coral]!.amount, 80);
+    expect(loadedPlayer.resources[ResourceType.coral]!.amount, 300);
     expect(loadedPlayer.revealedCells, originalRevealed);
     expect(loadedPlayer.revealedCells, isNotEmpty);
     expect(loaded.turn, original.turn);

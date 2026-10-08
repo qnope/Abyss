@@ -1,9 +1,11 @@
 import 'building.dart';
+import 'building_base_costs.dart';
 import 'building_type.dart';
 import 'coral_citadel_costs.dart';
 import 'descent_costs.dart';
 import 'volcanic_kernel_costs.dart';
 import '../map/transition_base_type.dart';
+import '../resource/exponential_cost.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
 import 'upgrade_check.dart';
@@ -11,38 +13,14 @@ import 'upgrade_check.dart';
 class BuildingCostCalculator {
   Map<ResourceType, int> upgradeCost(BuildingType type, int currentLevel) {
     if (currentLevel >= maxLevel(type)) return {};
+    final base = buildingBaseCosts[type];
+    if (base != null) return exponentialCost(base, currentLevel);
     return switch (type) {
-      BuildingType.headquarters => {
-        ResourceType.coral: 30 * (currentLevel * currentLevel + 1),
-        ResourceType.ore: 20 * (currentLevel * currentLevel + 1),
-      },
-      BuildingType.algaeFarm => {
-        ResourceType.coral: 20 * (currentLevel * currentLevel + 1),
-      },
-      BuildingType.coralMine => {
-        ResourceType.ore: 15 * (currentLevel * currentLevel + 1),
-      },
-      BuildingType.oreExtractor => {
-        ResourceType.coral: 25 * (currentLevel * currentLevel + 1),
-        ResourceType.energy: 15 * (currentLevel * currentLevel + 1),
-      },
-      BuildingType.solarPanel => {
-        ResourceType.coral: 20 * (currentLevel * currentLevel + 1),
-        ResourceType.ore: 15 * (currentLevel * currentLevel + 1),
-      },
-      BuildingType.laboratory => {
-        ResourceType.coral: 25 * (currentLevel * currentLevel + 1),
-        ResourceType.ore: 20 * (currentLevel * currentLevel + 1),
-      },
-      BuildingType.barracks => {
-        ResourceType.coral: 20 * (currentLevel * currentLevel + 1),
-        ResourceType.ore: 25 * (currentLevel * currentLevel + 1),
-        ResourceType.energy: 10 * (currentLevel * currentLevel + 1),
-      },
       BuildingType.coralCitadel => coralCitadelCost(currentLevel),
       BuildingType.descentModule => descentModuleCost(),
       BuildingType.pressureCapsule => pressureCapsuleCost(),
       BuildingType.volcanicKernel => volcanicKernelCost(currentLevel),
+      _ => {},
     };
   }
 
@@ -135,7 +113,8 @@ class BuildingCostCalculator {
         requiresCapturedKernel(type) && !isVolcanicKernelCaptured;
 
     return UpgradeCheck(
-      canUpgrade: missingResources.isEmpty &&
+      canUpgrade:
+          missingResources.isEmpty &&
           missingPrereqs.isEmpty &&
           missingBase == null &&
           !missingKernel,

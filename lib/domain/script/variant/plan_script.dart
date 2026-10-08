@@ -24,7 +24,11 @@ class PlanScript extends GameScript {
   final String player;
   final int? replayMapSeed;
   final Map<int, int> endTurnSeeds;
-  final List<PlanStep> _pending;
+  List<PlanStep> _pending;
+
+  /// Whether the delays of the variant are still to be drawn, from the
+  /// game's own dice on the first turn.
+  bool _undrawn;
 
   @override
   final String name;
@@ -36,23 +40,29 @@ class PlanScript extends GameScript {
     required this.replayMapSeed,
     required this.endTurnSeeds,
     required List<PlanStep> steps,
-  }) : _pending = steps;
+    required bool undrawn,
+  })  : _pending = steps,
+        _undrawn = undrawn;
 
-  /// Reads an exported replay; [random] draws the delays of [variant].
+  /// Reads an exported replay; [random] draws the delays of [variant],
+  /// or the game's dice on the first turn when it is left out.
   factory PlanScript.fromReplay(
     String source,
     ReplayVariant variant, {
     Random? random,
+    String? name,
   }) {
     final Map<String, Object?> json =
         jsonDecode(source) as Map<String, Object?>;
-    final Random draw = random ?? Random(0);
+    final String? label = name;
     final Map<String, Object?> turns = json['turns'] as Map<String, Object?>;
     final List<int> order = turns.keys.map(int.parse).toList()..sort();
     final List<PlanStep> steps = <PlanStep>[];
     for (final int t in order) {
       final int due = (t * variant.stretch).round() +
-          (variant.jitter > 0 ? draw.nextInt(variant.jitter + 1) : 0);
+          (variant.jitter > 0 && random != null
+              ? random.nextInt(variant.jitter + 1)
+              : 0);
       for (final Object? action in turns['$t'] as List<Object?>) {
         steps.add(
           PlanStep(
@@ -65,7 +75,7 @@ class PlanScript extends GameScript {
     }
     final Object? seeds = json['endTurnSeeds'];
     return PlanScript._(
-      name: '${json['name'] ?? 'replay'} (${variant.label})',
+      name: label ?? '${json['name'] ?? 'replay'} (${variant.label})',
       variant: variant,
       player: json['player'] as String? ?? 'replay',
       replayMapSeed: json['mapSeed'] as int?,
@@ -75,6 +85,7 @@ class PlanScript extends GameScript {
             int.parse(e.key.toString()): e.value as int,
       },
       steps: steps,
+      undrawn: random == null && variant.jitter > 0,
     );
   }
 
@@ -96,6 +107,7 @@ class PlanScript extends GameScript {
 
   @override
   void playTurn(ScriptTurn turn) {
+    if (_undrawn) _draw(turn.random);
     if (variant.defends && turn.player.raidState.isIncoming) {
       turn.defendBase(const ArmyPlanner());
     }
@@ -111,5 +123,20 @@ class PlanScript extends GameScript {
         _pending.remove(step);
       }
     }
+  }
+
+  void _draw(Random random) {
+    _undrawn = false;
+    final Map<int, int> delays = <int, int>{};
+    _pending = <PlanStep>[
+      for (final PlanStep s in _pending)
+        PlanStep(
+          turn: s.turn +
+              delays.putIfAbsent(
+                  s.turn, () => random.nextInt(variant.jitter + 1)),
+          rank: s.rank,
+          json: s.json,
+        ),
+    ];
   }
 }

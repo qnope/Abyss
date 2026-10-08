@@ -10,7 +10,10 @@
 // up to the turn it was exported on, whatever --seed and --turns say.
 //
 // Options:
-//   --strategy <name>   built-in strategy (economy, balanced, idle, conquest)
+//   --strategy <name>   built-in strategy (economy, balanced, idle, conquest,
+//                       rush) or human plan (plan85, plan85-newmap,
+//                       plan85-nodefence, plan85-army120, plan85-army90,
+//                       plan85-late, plan85-slow; see PlanLibrary)
 //   --scenario <file>   JSON scenario (see ScenarioParser)
 //   --games <n>         number of games, seeds seed..seed+n-1 (default 20)
 //   --seed <n>          first seed (default 1)

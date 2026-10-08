@@ -58,7 +58,11 @@ void main() {
     final report = BatchReport([
       _run(status: GameStatus.defeat, turns: 12, noise: 30, raidsLost: 2),
       _run(status: GameStatus.defeat, turns: 8, noise: 10, raidsLost: 1),
-      _run(status: GameStatus.victory, turns: 40, noise: 50, faille: 10,
+      _run(
+          status: GameStatus.victory,
+          turns: 40,
+          noise: 50,
+          faille: 10,
           raidsRepelled: 3),
       _run(turns: 20, noise: 10, faille: 20, raidsRepelled: 1),
     ]);

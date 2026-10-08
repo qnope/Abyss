@@ -12,13 +12,13 @@ void main() {
   group('AttackVolcanicKernelAction makeHistoryEntry', () {
     test('returns CaptureEntry when captured', () {
       final scenario = createKernelScenario(
-        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 80},
+        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 240},
       );
       final action = AttackVolcanicKernelAction(
         targetX: 1, targetY: 1, level: 3,
         selectedUnits: {
           UnitType.abyssAdmiral: 1,
-          UnitType.domeBreaker: 80,
+          UnitType.domeBreaker: 240,
         },
         random: Random(0),
       );

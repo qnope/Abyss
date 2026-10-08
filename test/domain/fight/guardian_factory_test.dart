@@ -77,9 +77,9 @@ void main() {
     });
 
     group('forVolcanicKernel', () {
-      test('returns 11 combatants with exactly 1 boss', () {
+      test('returns 31 combatants with exactly 1 boss', () {
         final combatants = GuardianFactory.forVolcanicKernel();
-        expect(combatants, hasLength(11));
+        expect(combatants, hasLength(31));
         expect(combatants.where((c) => c.isBoss), hasLength(1));
       });
 
@@ -87,7 +87,7 @@ void main() {
         final boss = GuardianFactory.forVolcanicKernel()
             .firstWhere((c) => c.isBoss);
         expect(boss.typeKey, 'seigneurNoyau');
-        expect(boss.maxHp, 350);
+        expect(boss.maxHp, 1050);
         expect(boss.atk, 35);
         expect(boss.def, 20);
         expect(boss.side, CombatSide.monster);
@@ -96,7 +96,7 @@ void main() {
       test('all minions have correct stats', () {
         final minions = GuardianFactory.forVolcanicKernel()
             .where((c) => !c.isBoss).toList();
-        expect(minions, hasLength(10));
+        expect(minions, hasLength(30));
         for (final m in minions) {
           expect(m.typeKey, 'sentinelleNoyau');
           expect(m.maxHp, 80);

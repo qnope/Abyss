@@ -9,21 +9,24 @@ void main() {
     expect(wave.unitCount, 5);
   });
 
-  test('one level 1 monster per 5 noise below 150 noise', () {
-    final wave = RaidWaveFactory.fromTotalNoise(100);
+  test('37 power per 100 noise, one level 1 monster per power below 30',
+      () {
+    final wave = RaidWaveFactory.fromTotalNoise(50);
     expect(wave.difficulty, MonsterDifficulty.easy);
-    expect(wave.unitCount, 20);
+    expect(wave.unitCount, 18);
   });
 
-  test('level 2 monsters from 150 noise, costing 2 power each', () {
+  test('level 2 monsters from 30 power, costing 2 power each', () {
+    expect(RaidWaveFactory.fromTotalNoise(81).difficulty,
+        MonsterDifficulty.easy);
     final wave = RaidWaveFactory.fromTotalNoise(200);
     expect(wave.difficulty, MonsterDifficulty.medium);
-    expect(wave.unitCount, 20);
+    expect(wave.unitCount, 37);
   });
 
-  test('level 3 monsters from 400 noise, costing 4 power each', () {
+  test('level 3 monsters from 80 power, costing 4 power each', () {
     final wave = RaidWaveFactory.fromTotalNoise(400);
     expect(wave.difficulty, MonsterDifficulty.hard);
-    expect(wave.unitCount, 20);
+    expect(wave.unitCount, 37);
   });
 }

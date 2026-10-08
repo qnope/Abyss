@@ -1,12 +1,15 @@
 import 'dart:math';
 
 import '../action/action_executor.dart';
+import '../action/action_result.dart';
 import '../action/end_turn_action.dart';
+import '../action/end_turn_action_result.dart';
 import '../game/game.dart';
 import '../game/game_factory.dart';
 import '../game/game_status.dart';
 import 'game_script.dart';
 import 'script_log_entry.dart';
+import 'script_milestones.dart';
 import 'script_run_report.dart';
 import 'script_turn.dart';
 
@@ -30,6 +33,7 @@ class ScriptRunner {
       mapSeed: random.nextInt(0x7FFFFFFF),
     );
     final List<ScriptLogEntry> log = <ScriptLogEntry>[];
+    final ScriptMilestones milestones = ScriptMilestones();
     while (game.status == GameStatus.playing && game.turn <= maxTurns) {
       final ScriptTurn turn = ScriptTurn(
         game: game,
@@ -38,14 +42,19 @@ class ScriptRunner {
         executor: _executor,
       );
       script.playTurn(turn);
+      milestones.observe(game, game.turn);
       if (turn.isOver) break;
-      _executor.execute(EndTurnAction(random: random), game, game.humanPlayer);
+      final ActionResult end = _executor.execute(
+          EndTurnAction(random: random), game, game.humanPlayer);
+      final raid = end is EndTurnActionResult ? end.turnResult?.raid : null;
+      if (raid != null) milestones.raids.add(ScriptRaid.of(raid));
     }
     return ScriptRunReport.of(
       game,
       scriptName: script.name,
       seed: seed,
       log: log,
+      milestones: milestones,
     );
   }
 }

@@ -6,6 +6,7 @@ import '../game/game_status.dart';
 import '../resource/resource_type.dart';
 import '../unit/unit_type.dart';
 import 'script_log_entry.dart';
+import 'script_milestones.dart';
 
 /// How one scripted game ended.
 class ScriptRunReport {
@@ -24,6 +25,7 @@ class ScriptRunReport {
   final Map<UnitType, int> baseUnits;
   final Map<ResourceType, int> resources;
   final List<ScriptLogEntry> log;
+  final ScriptMilestones milestones;
 
   const ScriptRunReport({
     required this.scriptName,
@@ -36,6 +38,7 @@ class ScriptRunReport {
     required this.baseUnits,
     required this.resources,
     required this.log,
+    required this.milestones,
   });
 
   factory ScriptRunReport.of(
@@ -43,6 +46,7 @@ class ScriptRunReport {
     required String scriptName,
     required int seed,
     required List<ScriptLogEntry> log,
+    ScriptMilestones? milestones,
   }) {
     final player = game.humanPlayer;
     return ScriptRunReport(
@@ -57,6 +61,7 @@ class ScriptRunReport {
       baseUnits: player.unitsOnLevel(1).map((t, u) => MapEntry(t, u.count)),
       resources: player.resources.map((t, r) => MapEntry(t, r.amount)),
       log: List<ScriptLogEntry>.unmodifiable(log),
+      milestones: milestones ?? ScriptMilestones(),
     );
   }
 
@@ -66,7 +71,7 @@ class ScriptRunReport {
   int get raidsLost => statistics.raidsLost;
   int get failedActions => log.where((e) => !e.success).length;
 
-  Map<String, Object> toJson() => <String, Object>{
+  Map<String, Object?> toJson() => <String, Object?>{
         'script': scriptName,
         'seed': seed,
         'status': status.name,
@@ -79,6 +84,7 @@ class ScriptRunReport {
         'buildings': _byName(buildings),
         'baseUnits': _byName(baseUnits),
         'resources': _byName(resources),
+        ...milestones.toJson(),
       };
 
   static Map<String, int> _byName<T extends Enum>(Map<T, int> values) =>

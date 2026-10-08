@@ -11,13 +11,13 @@ void main() {
   group('AttackVolcanicKernelAction execute', () {
     test('victory with admiral alive captures the kernel', () {
       final scenario = createKernelScenario(
-        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 80},
+        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 240},
       );
       final action = AttackVolcanicKernelAction(
         targetX: 1, targetY: 1, level: 3,
         selectedUnits: {
           UnitType.abyssAdmiral: 1,
-          UnitType.domeBreaker: 80,
+          UnitType.domeBreaker: 240,
         },
         random: Random(0),
       );
@@ -34,15 +34,15 @@ void main() {
 
     test('victory with admiral dead does not capture', () {
       final scenario = createKernelScenario(
-        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 40},
+        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 120},
       );
       final action = AttackVolcanicKernelAction(
         targetX: 1, targetY: 1, level: 3,
         selectedUnits: {
           UnitType.abyssAdmiral: 1,
-          UnitType.domeBreaker: 40,
+          UnitType.domeBreaker: 120,
         },
-        random: Random(36),
+        random: Random(52),
       );
       final result = action.execute(scenario.game, scenario.player);
       final r = result as AttackVolcanicKernelResult;
@@ -77,13 +77,13 @@ void main() {
 
     test('casualties are properly resolved', () {
       final scenario = createKernelScenario(
-        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 80},
+        stock: {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 240},
       );
       final action = AttackVolcanicKernelAction(
         targetX: 1, targetY: 1, level: 3,
         selectedUnits: {
           UnitType.abyssAdmiral: 1,
-          UnitType.domeBreaker: 80,
+          UnitType.domeBreaker: 240,
         },
         random: Random(0),
       );

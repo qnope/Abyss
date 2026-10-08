@@ -11,13 +11,26 @@ Plays whole games without the UI, to balance the game on tens or hundreds of gam
 | `game_script.dart` | `GameScript`: plays one turn through a `ScriptTurn` |
 | `script_turn.dart` | What a script sees and does during a turn (`perform`, `tryPerform`, `allows`) |
 | `script_runner.dart` | Plays one game from a seed until defeat, victory or the turn limit |
-| `script_run_report.dart` | How one game ended (status, raids, noise, buildings, units, action log) |
-| `batch_runner.dart` / `batch_report.dart` | Same script on many seeds, with survival rate and averages |
+| `script_run_report.dart` | How one game ended (status, raids, noise, buildings, units, action log, milestones) |
+| `script_milestones.dart` | First turn the Faille, the Cheminée and the kernel were taken, and every raid fought |
+| `batch_runner.dart` / `batch_report.dart` | Same script on many seeds, with survival rate, averages and milestones reached |
 | `timeline_script.dart` | Scenario written in advance: actions per turn, plus a fallback script |
 | `action_spec.dart` / `action_codec.dart` | JSON action → `Action` built with the game's seeded `Random` |
 | `scenario_parser.dart` | JSON scenario file → `TimelineScript` |
-| `script_library.dart` | Built-in scripts by name: `idle`, `economy`, `balanced` |
+| `script_library.dart` | Built-in scripts by name: `idle`, `economy`, `balanced`, `conquest`, `rush` |
 | `strategies/` | Built-in strategies and the moves they are made of |
+
+## Strategies
+
+| Name | Plays | Expected (step 6 calibration) |
+|------|-------|-------------------------------|
+| `idle` | Nothing | Falls between turns 40 and 50 |
+| `economy` | Production buildings only, never a defender | Falls before turn 40 |
+| `balanced` | Production, barracks, Citadel, Military research, a share of each turn in Gardiens and Harponneurs | Holds at least 50 turns, then falls |
+| `conquest` | A careful whole game: holds every announced raid, clears the lairs it surely beats, explores, takes a Faille, a Cheminée and the volcanic kernel, then raises the kernel to level 10 | Wins about 15 % of the games |
+| `rush` | `conquest` without recruiting for raids | Never wins |
+
+`conquest` is made of moves in `strategies/`: `growth_moves` (buildings with an energy guard, research plan), `recruit_moves` (unit mixes, top-ups), `battle_moves` (raid defence, lairs), `explore_moves` (frontier scouting, treasures), `expedition_moves` and `conquest_moves` (assaults and descents). It sizes every fight with `ArmyPlanner`, which replays the fight a few times with the real `FightEngine` and its own seeded `Random`, so planning never changes the game's dice.
 
 ## Reproducibility
 
@@ -29,6 +42,7 @@ Pure Dart, no Flutter UI: it runs with the Dart SDK shipped with Flutter after `
 
 ```
 dart run bin/simulate.dart --strategy balanced --games 100
+dart run bin/simulate.dart --strategy conquest --games 100 --turns 150
 dart run bin/simulate.dart --scenario scenarios/rush-caserne.json --verbose
 dart run bin/simulate.dart --strategy economy --games 50 --turns 80 --json
 ```

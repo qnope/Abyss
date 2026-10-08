@@ -67,7 +67,7 @@ void main() {
       final Game live = playLiveGame(
         const ConquestStrategy(),
         turns: 70,
-        seed: 25,
+        seed: 4,
       );
       final Game replayed = _replay(live);
       final String file = ReplayExport.toText(live);

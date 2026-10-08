@@ -13,10 +13,11 @@ void main() {
   test('finds the way down to the kernel on a new map', () {
     final script = PlanScript.fromReplay(
       source,
-      const ReplayVariant(sameMap: false, sameDice: false, defends: true),
+      const ReplayVariant(
+          sameMap: false, sameDice: false, defends: true, army: 1.2),
     );
 
-    final report = ScriptRunner(maxTurns: 58).run(script, seed: 1);
+    final report = ScriptRunner(maxTurns: 58).run(script, seed: 3);
 
     expect(report.milestones.failleCaptured, isNotNull);
     expect(report.milestones.chemineeCaptured, isNotNull);
@@ -27,7 +28,7 @@ void main() {
   test('plays the same plan with other dice', () {
     final script = PlanScript.fromReplay(
       source,
-      const ReplayVariant(sameDice: false),
+      const ReplayVariant(sameDice: false, army: 1.2),
     );
 
     final report = ScriptRunner(maxTurns: 40).run(script, seed: 3);

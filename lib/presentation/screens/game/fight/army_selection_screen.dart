@@ -6,6 +6,7 @@ import '../../../../domain/action/fight_monster_result.dart';
 import '../../../../domain/game/game.dart';
 import '../../../../domain/map/monster_lair.dart';
 import '../../../../domain/unit/unit_type.dart';
+import '../../../../domain/replay/seeded_random.dart';
 import '../../../widgets/fight/monster_preview.dart';
 import '../../../widgets/fight/selection_summary_card.dart';
 import '../../../widgets/fight/unit_quantity_row.dart';
@@ -124,6 +125,7 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
       targetY: widget.targetY,
       level: widget.level,
       selectedUnits: nonZero,
+      random: SeededRandom.fresh(),
     );
     final result = ActionExecutor().execute(
       action,

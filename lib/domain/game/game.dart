@@ -3,6 +3,7 @@ import 'package:hive_ce/hive.dart';
 import '../map/cell_content_type.dart';
 import '../map/game_map.dart';
 import '../map/transition_base_type.dart';
+import '../replay/replay_journal.dart';
 import 'game_status.dart';
 import 'player.dart';
 
@@ -28,6 +29,11 @@ class Game extends HiveObject {
   @HiveField(5)
   GameStatus status;
 
+  /// Every move played so far, to export the game as a replay; `null` for
+  /// games saved before the journal existed.
+  @HiveField(6)
+  ReplayJournal? replay;
+
   Game({
     required this.humanPlayerId,
     required this.players,
@@ -35,6 +41,7 @@ class Game extends HiveObject {
     DateTime? createdAt,
     this.levels = const {},
     this.status = GameStatus.playing,
+    this.replay,
   }) : createdAt = createdAt ?? DateTime.now();
 
   factory Game.singlePlayer(Player human) => Game(

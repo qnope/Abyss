@@ -7,12 +7,14 @@ import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/game_status.dart';
 import '../../../domain/game/player.dart';
+import '../../../domain/replay/seeded_random.dart';
 import '../../widgets/unit/army_list_view.dart';
 import '../../widgets/turn/turn_confirmation_dialog.dart';
 import '../../widgets/turn/turn_summary_dialog.dart';
 import '../../widgets/building/building_list_view.dart';
 import '../../widgets/common/game_bottom_bar.dart';
 import '../../widgets/resource/resource_bar.dart';
+import '../../widgets/common/replay_export_dialog.dart';
 import '../../widgets/common/settings_dialog.dart';
 import '../../widgets/history/history_sheet.dart';
 import '../../widgets/raid/raid_status_bar.dart';
@@ -130,7 +132,7 @@ class _GameScreenState extends State<GameScreen> {
       raidWarning: raidDueWarning(widget.game, human));
     if (!confirmed || !mounted) return;
     final result = (ActionExecutor().execute(
-      EndTurnAction(), widget.game, _human) as EndTurnActionResult)
+      EndTurnAction(random: SeededRandom.fresh()), widget.game, _human) as EndTurnActionResult)
         .turnResult!;
     await widget.repository.save(widget.game);
     setState(() {});
@@ -149,6 +151,8 @@ class _GameScreenState extends State<GameScreen> {
       case SettingsDialogResult.cancel: return;
       case SettingsDialogResult.openHistory:
         await showHistorySheet(context, player: _human);
+      case SettingsDialogResult.exportReplay:
+        await showReplayExportDialog(context, widget.game);
       case SettingsDialogResult.saveAndQuit:
         await widget.repository.save(widget.game);
         if (!mounted) return;

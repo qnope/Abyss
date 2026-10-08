@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum SettingsDialogResult { cancel, saveAndQuit, openHistory }
+enum SettingsDialogResult { cancel, saveAndQuit, openHistory, exportReplay }
 
 Future<SettingsDialogResult> showSettingsDialog(BuildContext context) async {
   final result = await showDialog<SettingsDialogResult>(
@@ -18,6 +18,11 @@ Future<SettingsDialogResult> showSettingsDialog(BuildContext context) async {
           onPressed: () =>
               Navigator.pop(ctx, SettingsDialogResult.openHistory),
           child: const Text('Voir l\'historique'),
+        ),
+        TextButton(
+          onPressed: () =>
+              Navigator.pop(ctx, SettingsDialogResult.exportReplay),
+          child: const Text('Exporter la partie'),
         ),
         ElevatedButton(
           onPressed: () =>

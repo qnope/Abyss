@@ -13,11 +13,15 @@ class DefeatScreen extends StatelessWidget {
   final int fallTurn;
   final VoidCallback onReturnToMenu;
 
+  /// Shares the lost game as a replay; hidden when `null`.
+  final VoidCallback? onExport;
+
   const DefeatScreen({
     super.key,
     required this.statistics,
     required this.fallTurn,
     required this.onReturnToMenu,
+    this.onExport,
   });
 
   @override
@@ -35,6 +39,8 @@ class DefeatScreen extends StatelessWidget {
           onPressed: onReturnToMenu,
           primary: true,
         ),
+        if (onExport != null)
+          GameOverAction(label: 'Exporter la partie', onPressed: onExport!),
       ],
     );
   }

@@ -36,6 +36,12 @@ Plays whole games without the UI, to balance the game on tens or hundreds of gam
 
 One seed drives everything: `ScriptRunner` draws the map seed from it and hands the same `Random` to `EndTurnAction` (raids), to every action that rolls dice, and to `DescendAction` (maps of deeper levels). The same script and seed always replay the same game.
 
+A replay exported from the game (see `../replay/README.md`) pins its own map seed, player, end-of-turn seeds and per-action seeds instead, and stops on its `lastTurn`:
+
+```
+dart run bin/simulate.dart --scenario replay-qnope-tour-42.json --games 1 --verbose
+```
+
 ## Command line
 
 Pure Dart, no Flutter UI: it runs with the Dart SDK shipped with Flutter after `flutter pub get`.

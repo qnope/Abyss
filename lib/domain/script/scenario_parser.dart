@@ -19,6 +19,9 @@ import 'timeline_script.dart';
 /// ```
 ///
 /// `otherwise` names a built-in strategy that plays the turns left out.
+///
+/// A replay exported from the game (see `ReplayExport`) adds `player`,
+/// `mapSeed`, `lastTurn` and `endTurnSeeds`, which replay that very game.
 abstract final class ScenarioParser {
   static TimelineScript parse(String source) {
     final Object? json = jsonDecode(source);
@@ -37,7 +40,22 @@ abstract final class ScenarioParser {
           _turnOf(e.key): _actionsOf(e.value),
       },
       otherwise: otherwise is String ? ScriptLibrary.byName(otherwise) : null,
+      player: json['player'] as String?,
+      mapSeed: json['mapSeed'] as int?,
+      lastTurn: json['lastTurn'] as int?,
+      endTurnSeeds: _seedsOf(json['endTurnSeeds']),
     );
+  }
+
+  static Map<int, int> _seedsOf(Object? value) {
+    if (value == null) return const <int, int>{};
+    if (value is! Map<String, Object?>) {
+      throw const FormatException('"endTurnSeeds" doit être un objet');
+    }
+    return <int, int>{
+      for (final MapEntry<String, Object?> e in value.entries)
+        _turnOf(e.key): e.value as int,
+    };
   }
 
   static int _turnOf(String key) {

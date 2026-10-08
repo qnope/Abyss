@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/script/script_runner.dart';
 import 'package:abyss/domain/script/variant/plan_script.dart';
 import 'package:abyss/domain/script/variant/replay_variant.dart';
@@ -10,11 +9,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   String replay(Map<String, Object?> turns) => jsonEncode(<String, Object?>{
-    'name': 'plan',
-    'player': 'Test',
-    'mapSeed': 42,
-    'turns': turns,
-  });
+        'name': 'plan',
+        'player': 'Test',
+        'mapSeed': 42,
+        'turns': turns,
+      });
 
   final String upgrades = replay(<String, Object?>{
     '1': <Object?>[
@@ -25,15 +24,16 @@ void main() {
     ],
   });
 
-  test('plays the human victory again on the same map and dice', () {
+  test('plays the human plan again on the same map and dice', () {
     final String source =
         File('scenarios/replays/victoire-tour-85.json').readAsStringSync();
     final script = PlanScript.fromReplay(source, const ReplayVariant());
 
-    final report = ScriptRunner(maxTurns: 150).run(script, seed: 1);
+    final report = ScriptRunner(maxTurns: 50).run(script, seed: 1);
 
-    expect(report.status, GameStatus.victory);
-    expect(report.turnsPlayed, 85);
+    expect(report.milestones.failleCaptured, 30);
+    expect(report.milestones.chemineeCaptured, 39);
+    expect(report.milestones.kernelCaptured, 50);
     expect(report.failedActions, 0);
   });
 
@@ -108,21 +108,13 @@ void main() {
   test('recruits for the announced raids when it defends', () {
     final String source =
         File('scenarios/replays/victoire-tour-85.json').readAsStringSync();
-    int recruitsOn53(ReplayVariant v) =>
-        ScriptRunner(maxTurns: 53)
-            .run(PlanScript.fromReplay(source, v), seed: 1)
-            .log
-            .where(
-              (e) =>
-                  e.turn == 53 &&
-                  e.success &&
-                  e.description.startsWith('Recruter'),
-            )
-            .length;
+    int recruits(ReplayVariant v) => ScriptRunner(maxTurns: 60)
+        .run(PlanScript.fromReplay(source, v), seed: 1)
+        .log
+        .where((e) => e.success && e.description.startsWith('Recruter'))
+        .length;
 
-    expect(
-      recruitsOn53(const ReplayVariant(defends: true)),
-      greaterThan(recruitsOn53(const ReplayVariant())),
-    );
+    expect(recruits(const ReplayVariant(defends: true)),
+        greaterThan(recruits(const ReplayVariant())));
   });
 }

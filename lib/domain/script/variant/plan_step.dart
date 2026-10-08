@@ -42,10 +42,9 @@ class PlanStep {
     if (verb == 'recruit') {
       final String unit = json['unit'] as String;
       final int count = json['count'] as int;
-      out['count'] =
-          _fixed.contains(unit)
-              ? count
-              : (count * variant.army).round().clamp(1, count * 4);
+      out['count'] = _fixed.contains(unit)
+          ? count
+          : (count * variant.army).round().clamp(1, count * 4);
     }
     final Object? units = json['units'];
     if (units is Map) {

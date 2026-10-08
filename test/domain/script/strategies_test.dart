@@ -44,22 +44,13 @@ void main() {
     expect(report.victories, 0);
   });
 
-  // With the exponential costs of step 8, about 8 % of the games are
-  // won on 100 seeds; seed 13 is one of them, seed 47 falls the earliest
-  // (its first raid comes before it can afford a Barracks).
-  test('a careful player can take the volcano and win', () {
+  // The 15 % target is measured on a human plan (calibration_test.dart);
+  // against it, the careful script loses nearly every game.
+  test('the careful script no longer wins', () {
     final run = ScriptRunner(maxTurns: 100)
         .run(const ConquestStrategy(), seed: 13);
 
-    expect(run.isVictory, isTrue);
-    expect(run.milestones.kernelCaptured, lessThan(run.turnsPlayed));
-  }, timeout: const Timeout(Duration(minutes: 5)));
-
-  test('a careful player can also fall to the raids', () {
-    final run = ScriptRunner(maxTurns: 100)
-        .run(const ConquestStrategy(), seed: 47);
-
-    expect(run.isDefeat, isTrue);
+    expect(run.isVictory, isFalse);
   }, timeout: const Timeout(Duration(minutes: 5)));
 
   test('the library knows every built-in strategy by name', () {

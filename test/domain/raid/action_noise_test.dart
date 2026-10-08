@@ -4,6 +4,7 @@ import 'package:abyss/domain/action/upgrade_building_action.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/raid/noise_rules.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -34,6 +35,11 @@ void main() {
       player,
     );
     expect(player.raidState.noise, 3);
+  });
+
+  test('each kernel level makes four times the noise of its level', () {
+    expect(NoiseRules.forUpgrade(BuildingType.volcanicKernel, 3), 12);
+    expect(NoiseRules.forUpgrade(BuildingType.headquarters, 3), 3);
   });
 
   test('a failed action makes no noise', () {

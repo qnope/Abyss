@@ -11,8 +11,7 @@ void main() {
 
   test('scales the recruits of fighters, not scouts nor admirals', () {
     const variant = ReplayVariant(army: 0.8);
-    Object? countOf(String unit) =>
-        step(<String, Object?>{
+    Object? countOf(String unit) => step(<String, Object?>{
           'do': 'recruit',
           'unit': unit,
           'count': 10,

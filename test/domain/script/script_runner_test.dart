@@ -7,7 +7,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('ScriptRunner', () {
     test('stops at the turn limit when nothing ends the game', () {
-      final report = ScriptRunner(maxTurns: 5).run(const IdleScript(), seed: 1);
+      final report =
+          ScriptRunner(maxTurns: 5).run(const IdleScript(), seed: 1);
 
       expect(report.status, GameStatus.playing);
       expect(report.turnsPlayed, 5);

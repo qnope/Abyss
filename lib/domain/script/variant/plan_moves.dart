@@ -22,18 +22,17 @@ extension PlanMoves on ScriptTurn {
   /// Plays [step]; returns whether it succeeded, so a failed step can be
   /// tried again on a later turn.
   bool playStep(PlanStep step, ReplayVariant variant) {
+    final bool moved = !variant.sameMap && step.onMap;
+    if (moved && step.verb == 'explore') return _exploreOne(step.level);
+    if (moved && step.verb == 'collect') {
+      collectRevealed(step.level);
+      return true;
+    }
+    final GridPosition? target = moved ? _targetOf(step) : null;
+    if (moved && target == null) return _searchFor(step);
     final Map<String, Object?>? json = step.adapt(variant, _unitsOn(step));
     if (json == null) return false;
-    if (!variant.sameMap && step.onMap) {
-      switch (step.verb) {
-        case 'explore':
-          return _exploreOne(step.level);
-        case 'collect':
-          collectRevealed(step.level);
-          return true;
-      }
-      final GridPosition? target = _targetOf(step);
-      if (target == null) return _searchFor(step);
+    if (target != null) {
       json['x'] = target.x;
       json['y'] = target.y;
     }

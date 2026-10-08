@@ -5,6 +5,15 @@ import 'monster_difficulty.dart';
 import 'monster_lair.dart';
 
 class ContentPlacer {
+  // Treasures (20 %) and ruins (10 %) are a third as frequent as they
+  // used to be; the freed share stays empty. Monster lairs keep their
+  // 10 % band (rolls >= _ruinsBelow).
+  static const _ruinsBelow = 0.90;
+  static const _ruinsShare = 0.10 / 3;
+  static const _resourceShare = 0.20 / 3;
+  static const _resourceBelow = _ruinsBelow - _ruinsShare;
+  static const _emptyBelow = _resourceBelow - _resourceShare;
+
   static void place({
     required List<MapCell> cells,
     required int width,
@@ -24,11 +33,11 @@ class ContentPlacer {
 
     for (final i in eligible) {
       final roll = random.nextDouble();
-      if (roll < 0.60) continue;
+      if (roll < _emptyBelow) continue;
       final x = i % width, y = i ~/ width;
-      if (roll < 0.80) {
+      if (roll < _resourceBelow) {
         _placeResource(cells, i);
-      } else if (roll < 0.90) {
+      } else if (roll < _ruinsBelow) {
         cells[i] = cells[i].copyWith(content: CellContentType.ruins);
       } else {
         _placeMonster(cells, i, x, y, baseX, baseY, random);

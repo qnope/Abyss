@@ -11,6 +11,7 @@ import 'collect_treasure_action_helper.dart';
 void main() {
   group('CollectTreasureAction ranges', () {
     test('ruins min and max are reachable', () {
+      const m = CollectTreasureAction.rewardMultiplier;
       final maxes = <ResourceType, int>{};
       final mins = <ResourceType, int>{};
       for (var seed = 0; seed < 200; seed++) {
@@ -32,10 +33,10 @@ void main() {
                   : entry.value;
         }
       }
-      expect(maxes[ResourceType.algae], 100);
-      expect(maxes[ResourceType.coral], 25);
-      expect(maxes[ResourceType.ore], 25);
-      expect(maxes[ResourceType.pearl], 2);
+      expect(maxes[ResourceType.algae], 100 * m);
+      expect(maxes[ResourceType.coral], 25 * m);
+      expect(maxes[ResourceType.ore], 25 * m);
+      expect(maxes[ResourceType.pearl], 2 * m);
       expect(mins[ResourceType.algae], 0);
       expect(mins[ResourceType.coral], 0);
       expect(mins[ResourceType.ore], 0);

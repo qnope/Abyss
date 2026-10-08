@@ -28,6 +28,15 @@ Two GitHub Actions workflows live in `.github/workflows/`.
 builds the web version and publishes it to GitHub Pages, together with the
 coverage report.
 
+### App icon
+
+The platform folders (`web/`, `android/`, `ios/`) are not versioned: each
+build job runs `flutter create`, then `.github/scripts/generate_app_icons.sh`
+replaces the default Flutter icon with the Abyss one. The sources live in
+`assets/app_icon/` (SVG, with the rendered PNGs next to them), and
+`flutter_launcher_icons.yaml` maps them to each platform. Run the script
+after `flutter create` to get the icon in a local build too.
+
 ### Code coverage
 
 Generated `*.g.dart` files are left out of the numbers.

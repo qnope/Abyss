@@ -1,0 +1,18 @@
+# App icon for every platform. The platform folders are not versioned:
+# CI runs `flutter create` then `.github/scripts/generate_app_icons.sh`.
+# Sources (SVG) and rendered PNGs live in assets/app_icon/.
+flutter_launcher_icons:
+  image_path: "assets/app_icon/app_icon.png"
+  android: true
+  min_sdk_android: 21
+  # Android crops adaptive icons to a circle or squircle: the background
+  # carries the whole artwork shrunk into the safe zone.
+  adaptive_icon_background: "assets/app_icon/app_icon_adaptive.png"
+  adaptive_icon_foreground: "assets/app_icon/app_icon_foreground.png"
+  ios: true
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "assets/app_icon/app_icon.png"
+    background_color: "#0D1B2A"
+    theme_color: "#0D1B2A"

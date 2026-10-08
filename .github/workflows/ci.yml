@@ -84,6 +84,7 @@ jobs:
           cache: true
       - run: flutter create . --platforms=web
       - run: flutter pub get
+      - run: .github/scripts/generate_app_icons.sh
       - run: dart run build_runner build --delete-conflicting-outputs
       - run: flutter build web --release --base-href /Abyss/
       - name: Upload web artifact
@@ -109,6 +110,7 @@ jobs:
           cache: true
       - run: flutter create . --platforms=android
       - run: flutter pub get
+      - run: .github/scripts/generate_app_icons.sh
       - run: dart run build_runner build --delete-conflicting-outputs
       - run: flutter build apk --release
       - name: Upload APK
@@ -130,6 +132,7 @@ jobs:
           cache: true
       - run: flutter create . --platforms=ios
       - run: flutter pub get
+      - run: .github/scripts/generate_app_icons.sh
       - run: dart run build_runner build --delete-conflicting-outputs
       - run: flutter build ios --release --no-codesign
       - name: Upload iOS build

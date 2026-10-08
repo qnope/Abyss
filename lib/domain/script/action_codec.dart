@@ -14,6 +14,7 @@ import '../action/upgrade_building_action.dart';
 import '../building/building_type.dart';
 import '../replay/seeded_random.dart';
 import '../tech/tech_branch.dart';
+import '../tech/tech_option.dart';
 import '../unit/unit_type.dart';
 import 'action_spec.dart';
 
@@ -39,8 +40,11 @@ abstract final class ActionCodec {
             buildingType: f.enumOf(BuildingType.values, 'building')),
       'unlock' => (_) =>
           UnlockBranchAction(branch: f.enumOf(TechBranch.values, 'branch')),
-      'research' => (_) =>
-          ResearchTechAction(branch: f.enumOf(TechBranch.values, 'branch')),
+      'research' => (_) => ResearchTechAction(
+          branch: f.enumOf(TechBranch.values, 'branch'),
+          option: f.json.containsKey('option')
+              ? f.enumOf(TechOption.values, 'option')
+              : TechOption.a),
       'recruit' => (_) => RecruitUnitAction(
           unitType: f.enumOf(UnitType.values, 'unit'),
           quantity: f.integer('count')),

@@ -21,6 +21,7 @@ class UpgradeSection extends StatelessWidget {
   final Worksite worksite;
   final Set<TransitionBaseType> capturedBaseTypes;
   final bool isVolcanicKernelCaptured;
+  final int discountPercent;
   final VoidCallback onUpgrade;
 
   const UpgradeSection({
@@ -31,12 +32,14 @@ class UpgradeSection extends StatelessWidget {
     required this.worksite,
     this.capturedBaseTypes = const {},
     this.isVolcanicKernelCaptured = false,
+    this.discountPercent = 0,
     required this.onUpgrade,
   });
 
   @override
   Widget build(BuildContext context) {
-    final calculator = BuildingCostCalculator();
+    final calculator =
+        BuildingCostCalculator(discountPercent: discountPercent);
     final check = calculator.checkUpgrade(
       type: building.type,
       currentLevel: building.level,

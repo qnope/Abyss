@@ -111,8 +111,8 @@ class _GameScreenState extends State<GameScreen> {
         researchDone: !human.worksite.canResearch,
         onUnlock: (branch) =>
           unlockBranch(g, branch, () => setState(() {})),
-        onResearch: (branch) =>
-          researchTech(g, branch, () => setState(() {})),
+        onResearch: (branch, option) =>
+          researchTech(g, branch, option, () => setState(() {})),
       ),
       _ => const SizedBox.shrink(),
     };

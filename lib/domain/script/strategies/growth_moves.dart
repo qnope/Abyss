@@ -6,6 +6,8 @@ import '../../resource/consumption_calculator.dart';
 import '../../resource/production_calculator.dart';
 import '../../resource/resource_type.dart';
 import '../../tech/tech_branch.dart';
+import '../../tech/tech_option.dart';
+import '../../tech/tech_tree.dart';
 import '../script_turn.dart';
 
 /// Growth moves of a player who watches the energy balance and follows a
@@ -37,8 +39,24 @@ extension GrowthMoves on ScriptTurn {
           !tryPerform(UnlockBranchAction(branch: branch))) {
         return;
       }
-      if (!tryPerform(ResearchTechAction(branch: branch))) return;
+      if (!tryPerform(researchNext(branch))) return;
     }
+  }
+
+  /// Options a defensive player takes at the choice nodes 2 and 4.
+  static const Map<TechBranch, List<TechOption>> picks = {
+    TechBranch.military: [TechOption.b, TechOption.a],
+    TechBranch.resources: [TechOption.a, TechOption.a],
+    TechBranch.explorer: [TechOption.b, TechOption.b],
+  };
+
+  /// Research of the next node of [branch], with the option of [picks].
+  ResearchTechAction researchNext(TechBranch branch) {
+    final int level = player.techBranches[branch]!.researchLevel + 1;
+    final TechOption option = TechTree.isChoiceLevel(level)
+        ? picks[branch]![TechTree.choiceIndex(level)]
+        : TechOption.a;
+    return ResearchTechAction(branch: branch, option: option);
   }
 
   /// Energy produced minus energy the buildings use each turn.

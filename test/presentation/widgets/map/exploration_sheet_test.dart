@@ -7,7 +7,7 @@ void main() {
   Future<void> openSheet(
     WidgetTester tester, {
     int scoutCount = 2,
-    int explorerLevel = 0,
+    int revealSide = 3,
     bool isEligible = true,
     VoidCallback? onConfirm,
   }) async {
@@ -21,7 +21,7 @@ void main() {
               targetX: 3,
               targetY: 8,
               scoutCount: scoutCount,
-              explorerLevel: explorerLevel,
+              revealSide: revealSide,
               isEligible: isEligible,
               onConfirm: onConfirm ?? () {},
             ),
@@ -39,7 +39,7 @@ void main() {
 
   testWidgets('shows target, cost, scouts and revealed area',
       (tester) async {
-    await openSheet(tester, scoutCount: 4, explorerLevel: 2);
+    await openSheet(tester, scoutCount: 4, revealSide: 5);
 
     expect(find.text('Explorer (3, 8)'), findsOneWidget);
     expect(find.text('1 éclaireur'), findsOneWidget);

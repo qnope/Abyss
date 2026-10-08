@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import '../../../domain/fight/unit_boost.dart';
 import '../../theme/abyss_colors.dart';
 
 class SelectionSummaryCard extends StatelessWidget {
   final int totalAtk;
   final int totalDef;
-  final int militaryLevel;
+  final UnitBoost boost;
 
   const SelectionSummaryCard({
     super.key,
     required this.totalAtk,
     required this.totalDef,
-    required this.militaryLevel,
+    required this.boost,
   });
 
   String get _bonusLabel {
-    if (militaryLevel <= 0) return 'Bonus militaire : aucun';
-    final int pct = militaryLevel * 20;
-    return 'Bonus militaire : +$pct% ATK et DEF (niveau $militaryLevel)';
+    final parts = [
+      if (boost.atkPercent > 0) '+${boost.atkPercent}% ATK',
+      if (boost.defPercent > 0) '+${boost.defPercent}% DEF',
+      if (boost.hpPercent > 0) '+${boost.hpPercent}% PV',
+    ];
+    if (parts.isEmpty) return 'Bonus militaire : aucun';
+    return 'Bonus militaire : ${parts.join(', ')}';
   }
 
   @override

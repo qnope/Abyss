@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/map/reveal_area_calculator.dart';
 import '../../theme/abyss_colors.dart';
 
 void showExplorationSheet(
@@ -8,7 +7,7 @@ void showExplorationSheet(
   required int targetX,
   required int targetY,
   required int scoutCount,
-  required int explorerLevel,
+  required int revealSide,
   required bool isEligible,
   required VoidCallback onConfirm,
 }) {
@@ -19,7 +18,7 @@ void showExplorationSheet(
       targetX: targetX,
       targetY: targetY,
       scoutCount: scoutCount,
-      explorerLevel: explorerLevel,
+      revealSide: revealSide,
       isEligible: isEligible,
       onConfirm: onConfirm,
     ),
@@ -30,7 +29,7 @@ class _ExplorationSheet extends StatelessWidget {
   final int targetX;
   final int targetY;
   final int scoutCount;
-  final int explorerLevel;
+  final int revealSide;
   final bool isEligible;
   final VoidCallback onConfirm;
 
@@ -38,7 +37,7 @@ class _ExplorationSheet extends StatelessWidget {
     required this.targetX,
     required this.targetY,
     required this.scoutCount,
-    required this.explorerLevel,
+    required this.revealSide,
     required this.isEligible,
     required this.onConfirm,
   });
@@ -46,7 +45,7 @@ class _ExplorationSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final side = RevealAreaCalculator.squareSideForLevel(explorerLevel);
+    final side = revealSide;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),

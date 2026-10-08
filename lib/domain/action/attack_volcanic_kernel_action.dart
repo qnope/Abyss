@@ -7,6 +7,7 @@ import '../fight/fight_result.dart';
 import '../fight/guardian_factory.dart';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../tech/tech_effects.dart';
 import '../map/cell_content_type.dart';
 import '../map/map_cell.dart';
 import '../unit/unit_type.dart';
@@ -69,10 +70,10 @@ class AttackVolcanicKernelAction extends Action {
     final ActionResult validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
-    final int milLevel = FightMonsterHelpers.militaryResearchLevelOf(player);
     final List<Combatant> playerCombatants =
         CombatantBuilder.playerCombatantsFrom(
-      selectedUnits, militaryResearchLevel: milLevel,
+      selectedUnits,
+      boost: FightMonsterHelpers.unitBoostOf(player, attacking: true),
     );
     final List<Combatant> guardians = GuardianFactory.forVolcanicKernel();
 
@@ -127,5 +128,6 @@ class AttackVolcanicKernelAction extends Action {
   }
 
   @override
-  int noiseMade(Player player) => NoiseRules.perFight;
+  int noiseMade(Player player) =>
+      TechEffects(player.techBranches).muffle(NoiseRules.perFight);
 }

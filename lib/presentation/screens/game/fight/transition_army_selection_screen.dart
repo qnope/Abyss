@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../domain/fight/unit_boost.dart';
 import '../../../../data/game_repository.dart';
 import '../../../../domain/action/action_executor.dart';
 import '../../../../domain/action/attack_transition_base_action.dart';
@@ -57,8 +58,7 @@ class _TransitionArmySelectionScreenState
   bool get _hasAdmiral =>
       (_selected[UnitType.abyssAdmiral] ?? 0) > 0;
 
-  int get _militaryLevel =>
-      _summary.militaryLevelOf(widget.game.humanPlayer);
+  UnitBoost get _boost => _summary.boostOf(widget.game.humanPlayer);
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +88,9 @@ class _TransitionArmySelectionScreenState
         ...rows,
         const SizedBox(height: 12),
         SelectionSummaryCard(
-          totalAtk: _summary.totalAtk(_selected, _militaryLevel),
-          totalDef: _summary.totalDef(_selected, _militaryLevel),
-          militaryLevel: _militaryLevel,
+          totalAtk: _summary.totalAtk(_selected, _boost),
+          totalDef: _summary.totalDef(_selected, _boost),
+          boost: _boost,
         ),
         if (!_hasAdmiral) ...[
           const SizedBox(height: 8),

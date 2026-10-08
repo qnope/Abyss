@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import '../building/building.dart';
 import '../building/building_type.dart';
 import '../resource/exponential_cost.dart';
@@ -6,26 +8,49 @@ import '../resource/resource_type.dart';
 import 'tech_branch.dart';
 import 'tech_branch_state.dart';
 import 'tech_check.dart';
+import 'tech_tree.dart';
 
 class TechCostCalculator {
-  static const maxResearchLevel = 5;
+  static const maxResearchLevel = TechTree.maxLevel;
 
-  static Map<ResourceType, int> unlockCost(TechBranch branch) {
-    return switch (branch) {
+  /// Extra cost of every unlock and research per branch opened beyond
+  /// the first, in percent.
+  static const int perOpenedBranchPercent = 50;
+
+  /// Branches already unlocked in [techBranches].
+  static int openedBranches(Map<TechBranch, TechBranchState> techBranches) =>
+      techBranches.values.where((s) => s.unlocked).length;
+
+  /// Cost multiplier, in percent, once [opened] branches are unlocked.
+  static int costPercent(int opened) =>
+      100 + perOpenedBranchPercent * math.max(0, opened - 1);
+
+  /// Cost to unlock [branch] when [opened] branches already are.
+  static Map<ResourceType, int> unlockCost(TechBranch branch,
+      {int opened = 0}) {
+    return _scale(switch (branch) {
       TechBranch.military => {ResourceType.ore: 30, ResourceType.energy: 20},
       TechBranch.resources => {ResourceType.coral: 30, ResourceType.algae: 20},
       TechBranch.explorer => {ResourceType.energy: 30, ResourceType.ore: 20},
-    };
+    }, opened + 1);
   }
 
-  static Map<ResourceType, int> researchCost(TechBranch branch, int level) {
+  /// Cost of research [level] of [branch] with [opened] branches unlocked.
+  static Map<ResourceType, int> researchCost(TechBranch branch, int level,
+      {int opened = 1}) {
     final (primary, secondary) = switch (branch) {
       TechBranch.military => (ResourceType.ore, ResourceType.energy),
       TechBranch.resources => (ResourceType.coral, ResourceType.algae),
       TechBranch.explorer => (ResourceType.energy, ResourceType.ore),
     };
-    return _scaledCost(primary, secondary, level);
+    return _scale(_scaledCost(primary, secondary, level), opened);
   }
+
+  /// Pearls are rare: only resources grow with the opened branches.
+  static Map<ResourceType, int> _scale(
+          Map<ResourceType, int> cost, int opened) =>
+      cost.map((t, v) => MapEntry(
+          t, t == ResourceType.pearl ? v : v * costPercent(opened) ~/ 100));
 
   static int requiredLabLevel(int researchLevel) => researchLevel;
 
@@ -49,7 +74,7 @@ class TechCostCalculator {
       );
     }
 
-    final costs = unlockCost(branch);
+    final costs = unlockCost(branch, opened: openedBranches(techBranches));
     final missing = _missingResources(costs, resources);
     return TechCheck(
       canAct: missing.isEmpty,
@@ -87,7 +112,8 @@ class TechCostCalculator {
       );
     }
 
-    final costs = researchCost(branch, targetLevel);
+    final costs = researchCost(branch, targetLevel,
+        opened: openedBranches(techBranches));
     final missing = _missingResources(costs, resources);
     return TechCheck(
       canAct: missing.isEmpty,

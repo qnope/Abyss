@@ -107,7 +107,7 @@ class DescendAction extends Action {
     final revealed = RevealAreaCalculator.cellsToReveal(
       targetX: transitionX,
       targetY: transitionY,
-      explorerLevel: 2,
+      side: 5,
       mapWidth: result.map.width,
       mapHeight: result.map.height,
     );

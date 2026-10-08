@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="r4bGlow" cx="32" cy="32" r="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#69F0AE" stop-opacity="0.28"/>
+      <stop offset="0.6" stop-color="#42A5F5" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#42A5F5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="r4bPaper" x1="8" y1="14" x2="50" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2E6FB8"/>
+      <stop offset="0.5" stop-color="#1A4F8F"/>
+      <stop offset="1" stop-color="#0B2A57"/>
+    </linearGradient>
+    <linearGradient id="r4bRoll" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0D3A80"/>
+      <stop offset="0.4" stop-color="#64B5F6"/>
+      <stop offset="1" stop-color="#0D3A80"/>
+    </linearGradient>
+    <linearGradient id="r4bSteel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ECEFF1"/>
+      <stop offset="0.45" stop-color="#90A4AE"/>
+      <stop offset="1" stop-color="#37474F"/>
+    </linearGradient>
+    <linearGradient id="r4bGrip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#B9F6CA"/>
+      <stop offset="0.4" stop-color="#2FBF7F"/>
+      <stop offset="1" stop-color="#0B3D2A"/>
+    </linearGradient>
+    <linearGradient id="r4bHandle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A1887F"/>
+      <stop offset="0.5" stop-color="#6D4C41"/>
+      <stop offset="1" stop-color="#3E2723"/>
+    </linearGradient>
+    <linearGradient id="r4bArrow" x1="50" y1="34" x2="50" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B9F6CA"/>
+      <stop offset="0.5" stop-color="#69F0AE"/>
+      <stop offset="1" stop-color="#00897B"/>
+    </linearGradient>
+    <radialGradient id="r4bArrowGlow" cx="50" cy="48" r="11" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#69F0AE" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#69F0AE" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- background glow -->
+  <circle cx="32" cy="32" r="30" fill="url(#r4bGlow)"/>
+
+  <!-- blueprint sheet -->
+  <g>
+    <path d="M7 15 L47 11 L52 52 L11 57 Z" fill="#000000" fill-opacity="0.35" transform="translate(1.2 1.6)"/>
+    <path d="M7 15 L47 11 L52 52 L11 57 Z" fill="url(#r4bPaper)" stroke="#06183A" stroke-width="0.7" stroke-linejoin="round"/>
+    <!-- grid -->
+    <path d="M8.2 24.6 L48.2 20.6 M9.3 34 L49.3 30 M10.4 43.4 L50.4 39.4 M17 14 L21 55.8 M27 13 L31 54.6 M37 12 L41 53.4" stroke="#64B5F6" stroke-opacity="0.35" stroke-width="0.35"/>
+    <path d="M7.6 16 L46.6 12.2" stroke="#BBDEFB" stroke-opacity="0.6" stroke-width="0.5" stroke-linecap="round"/>
+    <!-- building plan (dome) -->
+    <path d="M15 44 L14 34 Q16 24 26 23 Q36 22 39.6 31 L40.6 41 Z" fill="none" stroke="#E3F2FD" stroke-width="0.8" stroke-linejoin="round"/>
+    <path d="M14.5 39 L40.1 36.2 M27 22.9 L28.6 42.6 M20.4 26 L21.8 43.4 M33.8 24.6 L35 41.6" fill="none" stroke="#E3F2FD" stroke-opacity="0.6" stroke-width="0.45"/>
+    <path d="M13 47 L42 44" stroke="#E3F2FD" stroke-width="0.5" stroke-dasharray="1.2 0.8"/>
+    <path d="M13 46 V48 M42 43 V45" stroke="#E3F2FD" stroke-width="0.5"/>
+    <circle cx="41.6" cy="17.6" r="2.4" fill="none" stroke="#E3F2FD" stroke-opacity="0.7" stroke-width="0.45"/>
+    <path d="M40.2 17.8 H43 M41.6 16.2 V19" stroke="#E3F2FD" stroke-opacity="0.7" stroke-width="0.4"/>
+    <!-- curled corner roll -->
+    <path d="M45.6 10.6 L48 10.4 Q50.4 12 49 14 L47.4 13.4 Z" fill="url(#r4bRoll)" stroke="#06183A" stroke-width="0.4"/>
+  </g>
+
+  <!-- hammer (behind) -->
+  <g>
+    <path d="M14 46.6 L36.6 19.4 L39 21.4 L16.6 48.8 Z" fill="url(#r4bHandle)" stroke="#1B0F0C" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M15 46.6 L36.6 20.6" stroke="#D7CCC8" stroke-opacity="0.55" stroke-width="0.45" stroke-linecap="round"/>
+    <path d="M13.4 45.8 L17.4 49.2 L15 52 Q13 53 11.4 51.6 Q10.2 50 11 48.6 Z" fill="url(#r4bGrip)" stroke="#06261C" stroke-width="0.5"/>
+    <g transform="translate(37.8 20.4) rotate(40)">
+      <rect x="-9" y="-3.2" width="16" height="6.4" rx="1" fill="url(#r4bSteel)" stroke="#0A0E1A" stroke-width="0.6"/>
+      <path d="M-9 -3.2 L-12 -1.8 V1.8 L-9 3.2 Z" fill="url(#r4bSteel)" stroke="#0A0E1A" stroke-width="0.5"/>
+      <path d="M-8 -2.2 H6" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.5" stroke-linecap="round"/>
+      <rect x="-2" y="-3.2" width="3" height="6.4" fill="#263238" fill-opacity="0.5"/>
+      <rect x="7" y="-2.6" width="2.4" height="5.2" rx="0.6" fill="url(#r4bSteel)" stroke="#0A0E1A" stroke-width="0.5"/>
+    </g>
+  </g>
+
+  <!-- wrench (front) -->
+  <g>
+    <path d="M18.6 21.6 L40 46 L37.4 48.4 L16 24 Z" fill="url(#r4bSteel)" stroke="#0A0E1A" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M18.8 23 L39 46" stroke="#FFFFFF" stroke-opacity="0.65" stroke-width="0.45" stroke-linecap="round"/>
+    <path d="M24 30 L34 41.4 L32.6 42.6 L22.6 31.2 Z" fill="url(#r4bGrip)" stroke="#06261C" stroke-width="0.4"/>
+    <!-- open jaw head -->
+    <path d="M12.4 13.6 Q10 17.6 12.8 21.8 Q15.6 25.4 20 24.4 L21.6 22.8 L17.8 19.2 L18.6 15.8 L22 15.6 L23.6 14 Q22.4 10 18.4 9.6 L16.6 12.8 Z" fill="url(#r4bSteel)" stroke="#0A0E1A" stroke-width="0.6" stroke-linejoin="round"/>
+    <path d="M12.6 16 Q12.6 20.4 16 22.4" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.45" stroke-linecap="round"/>
+    <!-- ring end -->
+    <circle cx="40.6" cy="48.4" r="4.2" fill="url(#r4bSteel)" stroke="#0A0E1A" stroke-width="0.6"/>
+    <circle cx="40.6" cy="48.4" r="2" fill="#0B2A57" stroke="#0A0E1A" stroke-width="0.4"/>
+    <path d="M37.4 46.6 Q38.4 44.8 40.6 44.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.65" stroke-width="0.45" stroke-linecap="round"/>
+  </g>
+
+  <!-- discount arrow -->
+  <g>
+    <circle cx="50" cy="48" r="11" fill="url(#r4bArrowGlow)"/>
+    <path d="M46.6 35 H53.4 V46 H58 L50 57.6 L42 46 H46.6 Z" fill="#06261C" transform="translate(0.8 0.8)" fill-opacity="0.6"/>
+    <path d="M46.6 35 H53.4 V46 H58 L50 57.6 L42 46 H46.6 Z" fill="url(#r4bArrow)" stroke="#06261C" stroke-width="0.7" stroke-linejoin="round"/>
+    <path d="M47.6 36 V46.4 H44.2" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M52.4 37 V46" stroke="#00695C" stroke-opacity="0.6" stroke-width="0.5"/>
+    <path d="M46 49 L50 54.6 L54 49" fill="none" stroke="#E0F7FA" stroke-opacity="0.5" stroke-width="0.4"/>
+  </g>
+
+  <!-- coin chips falling (savings) -->
+  <g>
+    <ellipse cx="58" cy="30" rx="2.2" ry="1.4" fill="#FFD740" stroke="#5D3A00" stroke-width="0.4"/>
+    <path d="M56.6 29.6 Q58 28.8 59.4 29.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.35"/>
+    <ellipse cx="60" cy="38" rx="1.6" ry="1" fill="#FFD740" stroke="#5D3A00" stroke-width="0.35"/>
+  </g>
+
+  <!-- plankton & bubbles -->
+  <g fill="#69F0AE">
+    <circle cx="4" cy="6" r="1.3" fill-opacity="0.15"/>
+    <circle cx="4" cy="6" r="0.45" fill-opacity="0.9"/>
+    <circle cx="4" cy="36" r="1.3" fill-opacity="0.15"/>
+    <circle cx="4" cy="36" r="0.45" fill-opacity="0.9"/>
+    <circle cx="30" cy="61" r="1.2" fill-opacity="0.15"/>
+    <circle cx="30" cy="61" r="0.4" fill-opacity="0.9"/>
+  </g>
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.35" stroke-opacity="0.75">
+    <circle cx="56" cy="8" r="1.4"/>
+    <circle cx="59.4" cy="4" r="0.8"/>
+    <circle cx="53" cy="3.4" r="0.6"/>
+  </g>
+  <circle cx="55.6" cy="7.6" r="0.4" fill="#FFFFFF"/>
+</svg>

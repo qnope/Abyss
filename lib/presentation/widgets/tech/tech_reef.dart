@@ -4,7 +4,10 @@ import '../../../domain/tech/tech_branch.dart';
 import '../../../domain/tech/tech_branch_state.dart';
 import '../../../domain/tech/tech_cost_calculator.dart';
 import '../../../domain/tech/tech_node_state.dart';
+import '../../../domain/tech/tech_option.dart';
+import '../../../domain/tech/tech_tree.dart';
 import '../../extensions/tech_branch_extensions.dart';
+import '../../extensions/tech_node_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../building/building_icon.dart';
 import 'tech_branch_medallion.dart';
@@ -37,8 +40,12 @@ class TechReef extends StatelessWidget {
             techBranches: techBranches, labLevel: labLevel))),
         _at(g.center, _lab()),
         for (final branch in TechBranch.values) ...[
-          for (var l = 1; l <= TechCostCalculator.maxResearchLevel; l++)
-            _at(g.node(branch, l), _node(branch, l, g.nodeSize)),
+          for (var l = 1; l <= TechTree.maxLevel; l++)
+            if (TechTree.isChoiceLevel(l))
+              for (final o in TechOption.values)
+                _at(g.twin(branch, l, o), _node(branch, l, g.nodeSize, o))
+            else
+              _at(g.node(branch, l), _node(branch, l, g.nodeSize)),
           _medallion(g, branch),
         ],
       ]);
@@ -67,11 +74,12 @@ class TechReef extends StatelessWidget {
       type: BuildingType.laboratory, size: 40, greyscale: labLevel == 0),
   );
 
-  Widget _node(TechBranch branch, int level, double size) {
+  Widget _node(TechBranch branch, int level, double size,
+      [TechOption? option]) {
     return TechNodeWidget(
       color: branch.color,
-      state: nodeState(branch, level),
-      label: '$level',
+      state: nodeState(branch, level, option),
+      iconPath: branch.nodeIconPath(level, option),
       size: size,
       onTap: () => onTap(TechTarget(branch, level)),
     );
@@ -88,7 +96,7 @@ class TechReef extends StatelessWidget {
       TechBranchMedallion(
         iconPath: branch.iconPath,
         label: branch.displayName,
-        detail: unlocked ? '+${branch.bonusPercent(level)}%' : null,
+        detail: unlocked ? 'Niv. $level' : null,
         color: branch.color,
         unlocked: unlocked,
         labelAbove: above,
@@ -98,10 +106,15 @@ class TechReef extends StatelessWidget {
     );
   }
 
-  TechNodeState nodeState(TechBranch branch, int level) {
+  TechNodeState nodeState(TechBranch branch, int level,
+      [TechOption? option]) {
     final s = techBranches[branch];
     if (s == null || !s.unlocked) return TechNodeState.locked;
-    if (level <= s.researchLevel) return TechNodeState.researched;
+    if (level <= s.researchLevel) {
+      return option == null || s.optionAt(level) == option
+          ? TechNodeState.researched
+          : TechNodeState.discarded;
+    }
     final reqLab = TechCostCalculator.requiredLabLevel(level);
     if (level == s.researchLevel + 1 && labLevel >= reqLab) {
       return TechNodeState.accessible;

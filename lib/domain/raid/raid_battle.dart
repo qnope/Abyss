@@ -10,6 +10,7 @@ import '../fight/fight_result.dart';
 import '../game/player.dart';
 import '../map/monster_lair.dart';
 import '../resource/resource_type.dart';
+import '../tech/tech_effects.dart';
 import '../unit/unit_type.dart';
 import 'raid_report.dart';
 import 'raid_spoils.dart';
@@ -31,8 +32,7 @@ abstract final class RaidBattle {
     final List<Combatant> playerSide = <Combatant>[
       ...CombatantBuilder.playerCombatantsFrom(
         defenders,
-        militaryResearchLevel:
-            FightMonsterHelpers.militaryResearchLevelOf(player),
+        boost: FightMonsterHelpers.unitBoostOf(player, defendingBase: true),
       ),
       if (rampart != null) rampart,
     ];
@@ -51,6 +51,7 @@ abstract final class RaidBattle {
       random: random,
     );
     final bool victory = result.isVictory;
+    final TechEffects tech = TechEffects(player.techBranches);
     return RaidReport(
       turn: turn,
       victory: victory,
@@ -62,12 +63,12 @@ abstract final class RaidBattle {
       wounded: breakdown.wounded,
       dead: breakdown.dead,
       loot: victory
-          ? FightMonsterHelpers.applyLoot(
-              player, RaidSpoils.loot(wave.difficulty, random: random))
+          ? FightMonsterHelpers.applyLoot(player, tech.boostLoot(
+              RaidSpoils.loot(wave.difficulty, random: random)))
           : const <ResourceType, int>{},
       pillaged: victory
           ? const <ResourceType, int>{}
-          : RaidSpoils.pillage(player.resources),
+          : RaidSpoils.pillage(player.resources, rate: tech.pillageRate),
     );
   }
 

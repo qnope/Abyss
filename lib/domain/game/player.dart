@@ -154,7 +154,7 @@ class Player extends HiveObject {
     return RevealAreaCalculator.cellsToReveal(
       targetX: baseX,
       targetY: baseY,
-      explorerLevel: 2,
+      side: 5,
       mapWidth: mapWidth,
       mapHeight: mapHeight,
     );

@@ -7,7 +7,8 @@ import '../../map/cell_content_type.dart';
 import '../../map/grid_position.dart';
 import '../../map/map_cell.dart';
 import '../../map/transition_base_type.dart';
-import '../../tech/tech_branch.dart';
+import '../../fight/unit_boost.dart';
+import '../../tech/tech_effects.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
 import 'army_planner.dart';
@@ -16,10 +17,11 @@ import 'explore_moves.dart';
 /// Moves of the conquest: assaulting transition bases and the volcanic
 /// kernel, and taking the army down through captured bases.
 extension ExpeditionMoves on ScriptTurn {
-  int get militaryLevel {
-    final state = player.techBranches[TechBranch.military];
-    return state == null || !state.unlocked ? 0 : state.researchLevel;
-  }
+  /// Boost of the army when it attacks, and when it guards the base.
+  UnitBoost get attackBoost =>
+      TechEffects(player.techBranches).unitBoost(attacking: true);
+  UnitBoost get defenceBoost =>
+      TechEffects(player.techBranches).unitBoost(defendingBase: true);
 
   /// Revealed transition base of [level] not captured yet, if any.
   GridPosition? openBase(int level) => _first(revealedWhere(
@@ -61,7 +63,7 @@ extension ExpeditionMoves on ScriptTurn {
                 : (e.value * k / 20).ceil(),
         };
     final int? k = planner.smallestWinning(20, share, enemy,
-        militaryLevel: militaryLevel, needsAdmiral: true);
+        boost: attackBoost, needsAdmiral: true);
     if (k == null) return false;
     final Map<UnitType, int> army = share(k);
     return tryPerform(kernel
@@ -91,7 +93,7 @@ extension ExpeditionMoves on ScriptTurn {
       type == null
           ? GuardianFactory.forVolcanicKernel
           : () => GuardianFactory.forType(type),
-      militaryLevel: militaryLevel,
+      boost: attackBoost,
       needsAdmiral: true,
     );
   }

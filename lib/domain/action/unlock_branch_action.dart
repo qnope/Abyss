@@ -32,7 +32,8 @@ class UnlockBranchAction extends Action {
     if (labLevel < 1) {
       return ActionResult.failure('Laboratoire requis');
     }
-    final costs = TechCostCalculator.unlockCost(branch);
+    final costs = TechCostCalculator.unlockCost(branch,
+        opened: TechCostCalculator.openedBranches(player.techBranches));
     for (final entry in costs.entries) {
       final available = player.resources[entry.key]?.amount ?? 0;
       if (available < entry.value) {
@@ -46,7 +47,8 @@ class UnlockBranchAction extends Action {
   ActionResult execute(Game game, Player player) {
     final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
-    final costs = TechCostCalculator.unlockCost(branch);
+    final costs = TechCostCalculator.unlockCost(branch,
+        opened: TechCostCalculator.openedBranches(player.techBranches));
     for (final entry in costs.entries) {
       player.resources[entry.key]!.amount -= entry.value;
     }

@@ -4,6 +4,7 @@ import '../../../domain/action/research_tech_action.dart';
 import '../../../domain/action/unlock_branch_action.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/tech/tech_branch.dart';
+import '../../../domain/tech/tech_option.dart';
 
 void unlockBranch(Game game, TechBranch branch, VoidCallback onChanged) {
   final action = UnlockBranchAction(branch: branch);
@@ -11,8 +12,13 @@ void unlockBranch(Game game, TechBranch branch, VoidCallback onChanged) {
   if (result.isSuccess) onChanged();
 }
 
-void researchTech(Game game, TechBranch branch, VoidCallback onChanged) {
-  final action = ResearchTechAction(branch: branch);
+void researchTech(
+  Game game,
+  TechBranch branch,
+  TechOption option,
+  VoidCallback onChanged,
+) {
+  final action = ResearchTechAction(branch: branch, option: option);
   final result = ActionExecutor().execute(action, game, game.humanPlayer);
   if (result.isSuccess) onChanged();
 }

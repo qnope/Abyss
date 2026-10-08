@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="r3Glow" cx="32" cy="32" r="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#69F0AE" stop-opacity="0.35"/>
+      <stop offset="0.55" stop-color="#1DE9B6" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#00BFA5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="r3CurA" x1="6" y1="10" x2="58" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B9F6CA"/>
+      <stop offset="0.45" stop-color="#69F0AE"/>
+      <stop offset="1" stop-color="#00897B"/>
+    </linearGradient>
+    <linearGradient id="r3CurB" x1="58" y1="10" x2="6" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A7FFEB"/>
+      <stop offset="0.5" stop-color="#1DE9B6"/>
+      <stop offset="1" stop-color="#00695C"/>
+    </linearGradient>
+    <linearGradient id="r3CurC" x1="10" y1="54" x2="54" y2="10" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#004D40"/>
+      <stop offset="0.5" stop-color="#26A69A"/>
+      <stop offset="1" stop-color="#E0F7FA"/>
+    </linearGradient>
+    <radialGradient id="r3Core" cx="32" cy="32" r="8" fx="29.6" fy="29.4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.3" stop-color="#B9F6CA"/>
+      <stop offset="0.7" stop-color="#1DE9B6"/>
+      <stop offset="1" stop-color="#00695C"/>
+    </radialGradient>
+    <radialGradient id="r3CoreHalo" cx="32" cy="32" r="13" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B9F6CA" stop-opacity="0.6"/>
+      <stop offset="0.5" stop-color="#69F0AE" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#69F0AE" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="r3Mote" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#B9F6CA"/>
+      <stop offset="1" stop-color="#00BFA5"/>
+    </radialGradient>
+    <radialGradient id="r3MoteGold" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FFE57F"/>
+      <stop offset="1" stop-color="#FF8F00"/>
+    </radialGradient>
+    <radialGradient id="r3MotePink" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FF9EB5"/>
+      <stop offset="1" stop-color="#C2185B"/>
+    </radialGradient>
+  </defs>
+
+  <!-- background glow -->
+  <circle cx="32" cy="32" r="30" fill="url(#r3Glow)"/>
+
+  <!-- outer current band (tapered swirl) -->
+  <g stroke-linejoin="round">
+    <path d="M6 30 C6 14 20 5 34 6 C48 7 58 18 57 31 C56.4 38 52 43 46 44.6 C51 40 52.6 33 50 26 C46.4 17 36 12.4 26 14.6 C16 17 9.6 24 6 30 Z" fill="url(#r3CurA)" stroke="#06261C" stroke-width="0.7"/>
+    <path d="M8.6 25 C12 14 23 7.6 34 8 C44 8.6 52 14.6 55 23" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.7" stroke-linecap="round"/>
+    <path d="M14 19 C20 13 30 11 38 12.6 M46.4 18 C50 21.6 51.6 26 51.6 30" fill="none" stroke="#00695C" stroke-opacity="0.55" stroke-width="0.5" stroke-linecap="round"/>
+  </g>
+  <g stroke-linejoin="round" transform="rotate(40 32 32)">
+    <path d="M58 34 C58 50 44 59 30 58 C16 57 6 46 7 33 C7.6 26 12 21 18 19.4 C13 24 11.4 31 14 38 C17.6 47 28 51.6 38 49.4 C48 47 54.4 40 58 34 Z" fill="url(#r3CurB)" stroke="#06261C" stroke-width="0.7"/>
+    <path d="M55.4 39 C52 50 41 56.4 30 56 C22 55.6 15 51.6 11 45.6" fill="none" stroke="#E0F7FA" stroke-opacity="0.55" stroke-width="0.7" stroke-linecap="round"/>
+    <path d="M50 45 C44 51 34 53 26 51.4 M17.6 46 C14 42.4 12.4 38 12.4 34" fill="none" stroke="#004D40" stroke-opacity="0.55" stroke-width="0.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- inner swirl -->
+  <g stroke-linejoin="round">
+    <path d="M20 28 C21 21 28 17 35 18.4 C42 20 46 26.6 44.6 33 C44.2 35 43 37 41.6 38 C42.4 33 40.6 27.6 35.6 25 C30 22.4 23.6 24.2 20 28 Z" fill="url(#r3CurC)" stroke="#06261C" stroke-width="0.6"/>
+    <path d="M44 36 C43 43 36 47 29 45.6 C22 44 18 37.4 19.4 31 C19.8 29 21 27 22.4 26 C21.6 31 23.4 36.4 28.4 39 C34 41.6 40.4 39.8 44 36 Z" fill="url(#r3CurC)" stroke="#06261C" stroke-width="0.6"/>
+    <path d="M22 26 C24 21.6 29 19.4 34 20" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="0.5" stroke-linecap="round"/>
+    <path d="M42 38 C40 42.4 35 44.6 30 44" fill="none" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="0.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- nutrient core -->
+  <g>
+    <circle cx="32" cy="32" r="13" fill="url(#r3CoreHalo)"/>
+    <circle cx="32" cy="32" r="5.6" fill="url(#r3Core)" stroke="#004D40" stroke-width="0.6"/>
+    <path d="M28.6 30 Q29.6 27.8 32 27.4" fill="none" stroke="#FFFFFF" stroke-width="0.8" stroke-opacity="0.9" stroke-linecap="round"/>
+    <path d="M30.4 33.4 l1.6 -1.6 l1.6 1.6 l-1.6 1.6 Z" fill="#E0F7FA" fill-opacity="0.85"/>
+  </g>
+
+  <!-- particles riding the currents -->
+  <g>
+    <circle cx="20" cy="9.6" r="2.6" fill="#69F0AE" fill-opacity="0.2"/>
+    <circle cx="20" cy="9.6" r="1.3" fill="url(#r3Mote)" stroke="#004D40" stroke-width="0.3"/>
+    <circle cx="54.6" cy="20" r="2.4" fill="#FFD740" fill-opacity="0.2"/>
+    <circle cx="54.6" cy="20" r="1.2" fill="url(#r3MoteGold)" stroke="#5D3A00" stroke-width="0.3"/>
+    <circle cx="44" cy="54.6" r="2.6" fill="#69F0AE" fill-opacity="0.2"/>
+    <circle cx="44" cy="54.6" r="1.3" fill="url(#r3Mote)" stroke="#004D40" stroke-width="0.3"/>
+    <circle cx="9.4" cy="44" r="2.4" fill="#FF6E91" fill-opacity="0.2"/>
+    <circle cx="9.4" cy="44" r="1.2" fill="url(#r3MotePink)" stroke="#4A0A22" stroke-width="0.3"/>
+    <circle cx="40.6" cy="21.4" r="0.9" fill="url(#r3Mote)"/>
+    <circle cx="23.4" cy="42.6" r="0.9" fill="url(#r3Mote)"/>
+    <circle cx="47.6" cy="32" r="0.8" fill="url(#r3MoteGold)"/>
+    <circle cx="16.4" cy="32" r="0.8" fill="url(#r3Mote)"/>
+    <circle cx="30" cy="10" r="0.7" fill="#E0F7FA"/>
+    <circle cx="34" cy="54" r="0.7" fill="#E0F7FA"/>
+  </g>
+
+  <!-- motion trails -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M14 13 Q17 10.4 18.6 10" stroke="#B9F6CA" stroke-opacity="0.7" stroke-width="0.6"/>
+    <path d="M51 13.6 Q53.6 16.4 54 18.6" stroke="#FFE57F" stroke-opacity="0.7" stroke-width="0.6"/>
+    <path d="M50 51 Q47 53.6 45.4 54.4" stroke="#B9F6CA" stroke-opacity="0.7" stroke-width="0.6"/>
+    <path d="M13 50.4 Q10.6 47.6 10 45.4" stroke="#FF9EB5" stroke-opacity="0.7" stroke-width="0.6"/>
+    <path d="M2 18 Q5 14 8 13 M62 46 Q59 50 56 51" stroke="#1DE9B6" stroke-opacity="0.5" stroke-width="0.8"/>
+  </g>
+
+  <!-- plankton & bubbles -->
+  <g fill="#69F0AE">
+    <circle cx="4" cy="6" r="1.3" fill-opacity="0.15"/>
+    <circle cx="4" cy="6" r="0.45" fill-opacity="0.9"/>
+    <circle cx="60" cy="58" r="1.3" fill-opacity="0.15"/>
+    <circle cx="60" cy="58" r="0.45" fill-opacity="0.9"/>
+    <circle cx="3" cy="58" r="1.2" fill-opacity="0.15"/>
+    <circle cx="3" cy="58" r="0.4" fill-opacity="0.9"/>
+  </g>
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.35" stroke-opacity="0.75">
+    <circle cx="58" cy="6" r="1.4"/>
+    <circle cx="61" cy="10.6" r="0.8"/>
+    <circle cx="54.4" cy="3" r="0.6"/>
+  </g>
+  <circle cx="57.6" cy="5.6" r="0.4" fill="#FFFFFF"/>
+</svg>

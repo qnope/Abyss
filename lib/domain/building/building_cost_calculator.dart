@@ -11,7 +11,16 @@ import '../resource/resource_type.dart';
 import 'upgrade_check.dart';
 
 class BuildingCostCalculator {
-  Map<ResourceType, int> upgradeCost(BuildingType type, int currentLevel) {
+  /// Discount on every upgrade, in percent (Chantiers économes).
+  final int discountPercent;
+
+  const BuildingCostCalculator({this.discountPercent = 0});
+
+  Map<ResourceType, int> upgradeCost(BuildingType type, int currentLevel) =>
+      _fullCost(type, currentLevel).map((t, v) =>
+          MapEntry(t, v * (100 - discountPercent) ~/ 100));
+
+  Map<ResourceType, int> _fullCost(BuildingType type, int currentLevel) {
     if (currentLevel >= maxLevel(type)) return {};
     final base = buildingBaseCosts[type];
     if (base != null) return exponentialCost(base, currentLevel);

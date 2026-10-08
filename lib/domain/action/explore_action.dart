@@ -1,5 +1,6 @@
 import '../game/game.dart';
 import '../game/player.dart';
+import '../tech/tech_effects.dart';
 import '../history/history_entry.dart';
 import '../map/cell_eligibility_checker.dart';
 import '../map/exploration_order.dart';
@@ -80,5 +81,6 @@ class ExploreAction extends Action {
   }
 
   @override
-  int noiseMade(Player player) => NoiseRules.perExploration;
+  int noiseMade(Player player) =>
+      TechEffects(player.techBranches).muffle(NoiseRules.perExploration);
 }

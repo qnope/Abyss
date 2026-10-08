@@ -3,6 +3,7 @@ import 'package:abyss/domain/fight/combat_side.dart';
 import 'package:abyss/domain/fight/combatant.dart';
 import 'package:abyss/domain/fight/combatant_builder.dart';
 import 'package:abyss/domain/fight/monster_unit_stats.dart';
+import 'package:abyss/domain/fight/unit_boost.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/unit/unit_stats.dart';
@@ -112,36 +113,26 @@ void main() {
       );
     });
 
-    test('level 3 multiplies by 1.6', () {
+    test('+30% ATK boost is applied and rounded', () {
       final List<Combatant> combatants = CombatantBuilder.playerCombatantsFrom(
         <UnitType, int>{UnitType.harpoonist: 1},
-        militaryResearchLevel: 3,
+        boost: const UnitBoost(atkPercent: 30),
       );
       expect(
         combatants.first.atk,
-        (UnitStats.forType(UnitType.harpoonist).atk * 1.6).round(),
+        (UnitStats.forType(UnitType.harpoonist).atk * 1.3).round(),
       );
     });
 
-    test('level 5 multiplies by 2.0', () {
-      final List<Combatant> combatants = CombatantBuilder.playerCombatantsFrom(
-        <UnitType, int>{UnitType.harpoonist: 1},
-        militaryResearchLevel: 5,
-      );
-      expect(
-        combatants.first.atk,
-        UnitStats.forType(UnitType.harpoonist).atk * 2,
-      );
-    });
-
-    test('bonus boosts def but not hp', () {
+    test('boost applies DEF and HP independently', () {
       final List<Combatant> combatants = CombatantBuilder.playerCombatantsFrom(
         <UnitType, int>{UnitType.guardian: 1},
-        militaryResearchLevel: 3,
+        boost: const UnitBoost(defPercent: 60, hpPercent: 20),
       );
-      // 6 * 1.6 = 9.6 -> 10
+      // 6 * 1.6 = 9.6 -> 10 ; 25 * 1.2 = 30
       expect(combatants.first.def, 10);
-      expect(combatants.first.maxHp, 25);
+      expect(combatants.first.maxHp, 30);
+      expect(combatants.first.atk, UnitStats.forType(UnitType.guardian).atk);
     });
 
     test('bonus does not affect monster combatants', () {

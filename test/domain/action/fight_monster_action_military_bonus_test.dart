@@ -9,6 +9,7 @@ import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/domain/tech/tech_branch_state.dart';
+import 'package:abyss/domain/tech/tech_option.dart';
 import 'package:abyss/domain/unit/unit_stats.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -34,11 +35,36 @@ void main() {
       ).execute(scenario.game, scenario.player) as FightMonsterResult;
 
       final int baseAtk = UnitStats.forType(UnitType.harpoonist).atk;
-      final int expectedAtk = (baseAtk * 1.6).round();
+      // 2 tiers (+40%) + Lames de corail (+35%, option A by default).
+      final int expectedAtk = (baseAtk * 1.75).round();
       expect(
         result.fight!.initialPlayerCombatants.first.atk,
         expectedAtk,
       );
+    });
+
+    test('Carapace de nacre and Assaut boost HP and attacking ATK', () {
+      final scenario = createFightScenario(
+        stock: {UnitType.harpoonist: 1},
+        militaryResearchLevel: 4,
+      );
+      scenario.player.techBranches[TechBranch.military]!.choices = [
+        TechOption.b.index, TechOption.b.index,
+      ];
+
+      final result = FightMonsterAction(
+        targetX: 1,
+        targetY: 1,
+        level: 1,
+        selectedUnits: {UnitType.harpoonist: 1},
+        random: Random(0),
+      ).execute(scenario.game, scenario.player) as FightMonsterResult;
+
+      final Combatant unit = result.fight!.initialPlayerCombatants.first;
+      final UnitStats base = UnitStats.forType(UnitType.harpoonist);
+      expect(unit.atk, (base.atk * 1.75).round()); // 40% tiers + 35% Assaut
+      expect(unit.maxHp, (base.hp * 1.35).round());
+      expect(unit.def, (base.def * 1.4).round());
     });
 
     test('level 0 leaves atk unchanged', () {

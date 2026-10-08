@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="r5Glow" cx="40" cy="36" r="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF8E1" stop-opacity="0.45"/>
+      <stop offset="0.3" stop-color="#69F0AE" stop-opacity="0.28"/>
+      <stop offset="0.7" stop-color="#1DE9B6" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#1DE9B6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="r5Ray" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFF8E1" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#69F0AE" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="r5Shell" x1="6" y1="10" x2="50" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F1FFF8"/>
+      <stop offset="0.3" stop-color="#B9F6CA"/>
+      <stop offset="0.65" stop-color="#2FBF7F"/>
+      <stop offset="1" stop-color="#0B4A33"/>
+    </linearGradient>
+    <linearGradient id="r5Band" x1="6" y1="10" x2="50" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E0F7FA"/>
+      <stop offset="1" stop-color="#004D40"/>
+    </linearGradient>
+    <radialGradient id="r5Mouth" cx="45" cy="40" r="14" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF3E0"/>
+      <stop offset="0.35" stop-color="#FFAB91"/>
+      <stop offset="0.75" stop-color="#E91E63"/>
+      <stop offset="1" stop-color="#4A0A22"/>
+    </radialGradient>
+    <radialGradient id="r5Pearl" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#E0F7FA"/>
+      <stop offset="0.85" stop-color="#90CAF9"/>
+      <stop offset="1" stop-color="#5C6BC0"/>
+    </radialGradient>
+    <linearGradient id="r5Coral" x1="0" y1="34" x2="0" y2="6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#AD1457"/>
+      <stop offset="0.55" stop-color="#FF6E91"/>
+      <stop offset="1" stop-color="#FFCDD2"/>
+    </linearGradient>
+    <linearGradient id="r5Algae" x1="0" y1="36" x2="0" y2="8" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0E6B45"/>
+      <stop offset="0.55" stop-color="#3DDC97"/>
+      <stop offset="1" stop-color="#B9F6CA"/>
+    </linearGradient>
+    <linearGradient id="r5Ore" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E3F2FD"/>
+      <stop offset="0.4" stop-color="#42A5F5"/>
+      <stop offset="1" stop-color="#0D47A1"/>
+    </linearGradient>
+    <linearGradient id="r5Bolt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFDE7"/>
+      <stop offset="0.5" stop-color="#FFD740"/>
+      <stop offset="1" stop-color="#FF8F00"/>
+    </linearGradient>
+  </defs>
+
+  <!-- radiant background -->
+  <circle cx="40" cy="36" r="32" fill="url(#r5Glow)"/>
+  <g transform="translate(44 36)">
+    <path d="M0 -1.2 L26 -4 L26 4 L0 1.2 Z" fill="url(#r5Ray)" transform="rotate(-90)"/>
+    <path d="M0 -1.2 L26 -4 L26 4 L0 1.2 Z" fill="url(#r5Ray)" transform="rotate(-50)"/>
+    <path d="M0 -1.2 L26 -4 L26 4 L0 1.2 Z" fill="url(#r5Ray)" transform="rotate(-130)"/>
+    <path d="M0 -1.2 L22 -3 L22 3 L0 1.2 Z" fill="url(#r5Ray)" transform="rotate(-15)"/>
+    <path d="M0 -1.2 L22 -3 L22 3 L0 1.2 Z" fill="url(#r5Ray)" transform="rotate(-165)"/>
+    <path d="M0 -1.2 L20 -3 L20 3 L0 1.2 Z" fill="url(#r5Ray)" transform="rotate(25)"/>
+  </g>
+
+  <!-- seabed shadow -->
+  <ellipse cx="34" cy="58.4" rx="27" ry="3.2" fill="#000000" fill-opacity="0.4"/>
+
+  <!-- shell body (curved horn) -->
+  <g>
+    <path d="M40.7 27.4 C30 18 14 14 8 20 C8 34 26 50 53.3 54.6 Z" fill="url(#r5Shell)" stroke="#06261C" stroke-width="0.8" stroke-linejoin="round"/>
+    <!-- banded stripes -->
+    <path d="M14.1 17.3 Q16.6 24 11.3 30.7 M22.6 17.9 Q26 30 20.4 40.8 M31.9 21.4 Q37.4 36 34.7 49.2" fill="none" stroke="url(#r5Band)" stroke-opacity="0.55" stroke-width="3.2"/>
+    <path d="M14.1 17.3 Q16.6 24 11.3 30.7 M22.6 17.9 Q26 30 20.4 40.8 M31.9 21.4 Q37.4 36 34.7 49.2" fill="none" stroke="#06261C" stroke-opacity="0.75" stroke-width="0.6" stroke-linecap="round"/>
+    <path d="M15 17.6 Q17.4 24 12.4 30.4 M23.5 18.2 Q26.9 30 21.4 40.6 M32.8 21.8 Q38.2 36 35.6 49" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.4" stroke-linecap="round"/>
+    <!-- top edge highlight -->
+    <path d="M10 18.6 C16 15.6 28 18 38.6 25.8" fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M10.4 30 C14 40 28 50 48 53.8" fill="none" stroke="#06261C" stroke-opacity="0.4" stroke-width="0.6" stroke-linecap="round"/>
+    <!-- knobs along top -->
+    <g fill="#E0F7FA" stroke="#06261C" stroke-width="0.45" stroke-linejoin="round">
+      <path d="M12.6 17.8 L13.6 14.4 L16 17.4 Z"/>
+      <path d="M21 17.6 L22.6 14 L24.8 18 Z"/>
+      <path d="M30.2 20.4 L32.4 17 L34 21.8 Z"/>
+    </g>
+    <!-- spire spiral -->
+    <circle cx="8" cy="21" r="3.6" fill="url(#r5Shell)" stroke="#06261C" stroke-width="0.7"/>
+    <path d="M8 21 Q6.4 20 7.4 18.8 Q9.4 18 10 20.4 Q10 23.4 7 23.4 Q4.6 23 4.8 20.4" fill="none" stroke="#06261C" stroke-width="0.55" stroke-linecap="round"/>
+    <path d="M5.6 19 Q6.6 17.6 8.4 17.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="0.4" stroke-linecap="round"/>
+  </g>
+
+  <!-- mouth -->
+  <g>
+    <ellipse cx="47" cy="41" rx="8" ry="15" transform="rotate(-25 47 41)" fill="#FFF3F5" stroke="#06261C" stroke-width="0.8"/>
+    <ellipse cx="47.6" cy="41" rx="6" ry="12.4" transform="rotate(-25 47.6 41)" fill="url(#r5Mouth)"/>
+    <path d="M40.6 29.4 Q44.2 27.6 48 30" fill="none" stroke="#FFFFFF" stroke-width="0.7" stroke-linecap="round"/>
+  </g>
+
+  <!-- coral branch spilling up -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M44 34 L42 24 L37.6 18 M42 24 L44.6 15 L43 9.6 M44.6 15 L48 11.6" stroke="#4A0A22" stroke-width="3"/>
+    <path d="M44 34 L42 24 L37.6 18 M42 24 L44.6 15 L43 9.6 M44.6 15 L48 11.6" stroke="url(#r5Coral)" stroke-width="1.9"/>
+    <path d="M43.4 32 L41.6 24.6 L44 15.4" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="0.4"/>
+  </g>
+  <g fill="#FFCDD2" stroke="#4A0A22" stroke-width="0.35">
+    <circle cx="37.4" cy="17.6" r="1.1"/>
+    <circle cx="43" cy="9.2" r="1.2"/>
+    <circle cx="48.2" cy="11.2" r="1"/>
+  </g>
+
+  <!-- algae fronds -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M49 34 C52 26 48 20 52.6 11 M51 35 C55.6 30 54 24 58.6 19" stroke="#06261C" stroke-width="2.6"/>
+    <path d="M49 34 C52 26 48 20 52.6 11 M51 35 C55.6 30 54 24 58.6 19" stroke="url(#r5Algae)" stroke-width="1.6"/>
+  </g>
+  <g stroke="#06261C" stroke-width="0.3">
+    <path d="M0 0 Q2.6 -1.8 5.2 0 Q2.6 1.8 0 0 Z" fill="#69F0AE" transform="translate(50.4 22) rotate(-20)"/>
+    <path d="M0 0 Q2.4 -1.6 4.8 0 Q2.4 1.6 0 0 Z" fill="#3DDC97" transform="translate(49.8 17) rotate(205)"/>
+    <path d="M0 0 Q2.4 -1.6 4.8 0 Q2.4 1.6 0 0 Z" fill="#69F0AE" transform="translate(55.4 26) rotate(-40)"/>
+  </g>
+  <circle cx="52.6" cy="10.6" r="2.4" fill="#69F0AE" fill-opacity="0.25"/>
+  <circle cx="52.6" cy="10.6" r="1" fill="#E0F7FA"/>
+  <circle cx="58.8" cy="18.6" r="0.8" fill="#E0F7FA"/>
+
+  <!-- ore crystal -->
+  <g>
+    <circle cx="57" cy="36" r="5" fill="#42A5F5" fill-opacity="0.2"/>
+    <path d="M53.4 40 L55 31.4 L58.4 30 L61 36.6 L57.6 41 Z" fill="url(#r5Ore)" stroke="#06183A" stroke-width="0.55" stroke-linejoin="round"/>
+    <path d="M55 31.4 L57.4 36 L61 36.6 M57.4 36 L57.6 41" fill="none" stroke="#06183A" stroke-opacity="0.55" stroke-width="0.35"/>
+    <path d="M55.6 32.4 L54.6 38" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="0.45" stroke-linecap="round"/>
+  </g>
+
+  <!-- energy spark -->
+  <g>
+    <circle cx="35" cy="29" r="4" fill="#FFD740" fill-opacity="0.25"/>
+    <path d="M36 24.6 L32.6 29.6 H35 L33.6 33.6 L37.6 28 H35.2 Z" fill="url(#r5Bolt)" stroke="#5D3A00" stroke-width="0.45" stroke-linejoin="round"/>
+  </g>
+
+  <!-- pearls overflowing -->
+  <g stroke="#1A237E" stroke-width="0.4" stroke-opacity="0.7">
+    <circle cx="48" cy="40" r="3" fill="url(#r5Pearl)"/>
+    <circle cx="44" cy="44.6" r="2.6" fill="url(#r5Pearl)"/>
+    <circle cx="51.6" cy="45.4" r="2.8" fill="url(#r5Pearl)"/>
+    <circle cx="48.4" cy="49.6" r="2.4" fill="url(#r5Pearl)"/>
+    <circle cx="55.4" cy="50.6" r="2.4" fill="url(#r5Pearl)"/>
+    <circle cx="59.4" cy="55" r="2" fill="url(#r5Pearl)"/>
+    <circle cx="53.4" cy="56" r="1.8" fill="url(#r5Pearl)"/>
+    <circle cx="46" cy="57.2" r="1.5" fill="url(#r5Pearl)"/>
+    <circle cx="60" cy="46" r="1.4" fill="url(#r5Pearl)"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="47" cy="38.8" r="0.8"/>
+    <circle cx="43.2" cy="43.6" r="0.65"/>
+    <circle cx="50.7" cy="44.3" r="0.7"/>
+    <circle cx="47.6" cy="48.6" r="0.6"/>
+    <circle cx="54.6" cy="49.6" r="0.6"/>
+    <circle cx="58.8" cy="54.2" r="0.5"/>
+    <circle cx="52.8" cy="55.3" r="0.45"/>
+  </g>
+
+  <!-- sparkles -->
+  <g stroke="#FFF8E1" stroke-linecap="round" stroke-width="0.7">
+    <path d="M26 5 V11 M23 8 H29"/>
+    <path d="M60 4 V8 M58 6 H62"/>
+    <path d="M18 40 V44 M16 42 H20"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="26" cy="8" r="0.7"/>
+    <circle cx="60" cy="6" r="0.5"/>
+    <circle cx="18" cy="42" r="0.5"/>
+  </g>
+
+  <!-- plankton & bubbles -->
+  <g fill="#69F0AE">
+    <circle cx="4" cy="30" r="1.3" fill-opacity="0.15"/>
+    <circle cx="4" cy="30" r="0.45" fill-opacity="0.9"/>
+    <circle cx="8" cy="52" r="1.3" fill-opacity="0.15"/>
+    <circle cx="8" cy="52" r="0.45" fill-opacity="0.9"/>
+  </g>
+  <g fill="#E0F7FA" fill-opacity="0.12" stroke="#E0F7FA" stroke-width="0.35" stroke-opacity="0.75">
+    <circle cx="33" cy="6" r="1.2"/>
+    <circle cx="36" cy="2.6" r="0.7"/>
+  </g>
+</svg>

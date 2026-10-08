@@ -26,15 +26,6 @@ extension TechBranchInfo on TechBranch {
       'Améliore la portée d\'exploration de la carte.',
   };
 
-  /// Bonus granted once [level] research nodes are completed, in percent.
-  int bonusPercent(int level) => level * 20;
-
-  String get shortEffect => switch (this) {
-    TechBranch.military => 'attaque et défense',
-    TechBranch.resources => 'production de ressources',
-    TechBranch.explorer => 'portée d\'exploration',
-  };
-
   String get iconPath => switch (this) {
     TechBranch.military => 'assets/icons/buildings/barracks.svg',
     TechBranch.resources => 'assets/icons/resources/algae.svg',

@@ -8,6 +8,8 @@ A deep-sea turn-based strategy game built with Flutter.
 
 Play it in the browser: https://qnope.github.io/Abyss/
 
+See `ABYSS.md` for the full game design.
+
 ## Continuous integration
 
 Two GitHub Actions workflows live in `.github/workflows/`.
@@ -38,8 +40,6 @@ Generated `*.g.dart` files are left out of the numbers.
   `coverage` artifact holds `lcov.info` and the HTML report.
 - **Locally**: `flutter test --coverage`, then
   `.github/scripts/coverage_summary.sh coverage/lcov.info`.
-
-See `ABYSS.md` for the full game design.
 
 ## Migration
 

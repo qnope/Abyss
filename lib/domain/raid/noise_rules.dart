@@ -7,7 +7,7 @@ abstract final class NoiseRules {
   static const int threshold = 40;
 
   /// Noise the base makes every turn, whatever the player does.
-  static const int perTurn = 2;
+  static const int perTurn = 3;
 
   /// Noise per recruited unit.
   static const int perRecruit = 1;

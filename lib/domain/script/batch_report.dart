@@ -29,6 +29,21 @@ class BatchReport {
     return turns.reduce((a, b) => a < b ? a : b);
   }
 
+  /// Games that reached a milestone, and the mean turn they reached it.
+  ({int games, double? averageTurn}) milestone(
+    int? Function(ScriptRunReport) turnOf,
+  ) {
+    final List<int> turns = <int>[
+      for (final r in runs)
+        if (turnOf(r) != null) turnOf(r)!,
+    ];
+    return (
+      games: turns.length,
+      averageTurn:
+          turns.isEmpty ? null : turns.reduce((a, b) => a + b) / turns.length,
+    );
+  }
+
   double _average(num Function(ScriptRunReport) of) =>
       games == 0 ? 0 : runs.map(of).fold<num>(0, (a, b) => a + b) / games;
 

@@ -59,6 +59,8 @@ class MapGenerator {
       reservedIndices: reservedIndices,
     );
 
+    _clearBaseContent(cells, baseX, baseY);
+    // Placed after the base is cleared, which may sit on the centre.
     if (level == 3) {
       VolcanicKernelPlacer.place(
         cells: cells,
@@ -66,8 +68,6 @@ class MapGenerator {
         height: _size,
       );
     }
-
-    _clearBaseContent(cells, baseX, baseY);
     _markPassages(cells, baseX, baseY, reservedPassages);
 
     return MapGenerationResult(

@@ -4,7 +4,7 @@
 //   dart run bin/simulate.dart --scenario scenarios/rush.json --verbose
 //
 // Options:
-//   --strategy <name>   built-in strategy (economy, balanced, idle)
+//   --strategy <name>   built-in strategy (economy, balanced, idle, conquest)
 //   --scenario <file>   JSON scenario (see ScenarioParser)
 //   --games <n>         number of games, seeds seed..seed+n-1 (default 20)
 //   --seed <n>          first seed (default 1)
@@ -19,6 +19,7 @@ import 'package:abyss/domain/script/batch_runner.dart';
 import 'package:abyss/domain/script/game_script.dart';
 import 'package:abyss/domain/script/scenario_parser.dart';
 import 'package:abyss/domain/script/script_library.dart';
+import 'package:abyss/domain/script/script_run_report.dart';
 import 'package:abyss/domain/script/script_runner.dart';
 
 void main(List<String> args) {
@@ -81,4 +82,21 @@ void _printSummary(String name, BatchReport report) {
         '${avg(report.averageRaidsRepelled)} / ${avg(report.averageRaidsLost)}')
     ..writeln('Bruit total moyen : ${avg(report.averageNoise)}')
     ..writeln('Première défaite : tour ${report.earliestDefeat ?? '-'}');
+  _printMilestone(report, 'Faille prise', (r) => r.milestones.failleCaptured);
+  _printMilestone(
+      report, 'Cheminée prise', (r) => r.milestones.chemineeCaptured);
+  _printMilestone(report, 'Noyau pris', (r) => r.milestones.kernelCaptured);
+  _printMilestone(
+      report, 'Victoire', (r) => r.isVictory ? r.turnsPlayed : null);
+}
+
+void _printMilestone(
+  BatchReport report,
+  String label,
+  int? Function(ScriptRunReport) turnOf,
+) {
+  final m = report.milestone(turnOf);
+  if (m.games == 0) return;
+  stdout.writeln('$label : ${m.games}/${report.games} parties, '
+      'tour ${m.averageTurn!.toStringAsFixed(1)} en moyenne');
 }

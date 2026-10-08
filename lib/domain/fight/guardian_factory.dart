@@ -45,17 +45,19 @@ class GuardianFactory {
         ),
       ];
 
+  /// The final fight: about 130 units without Military research, 80 with
+  /// all of it (see the conquest simulation).
   static List<Combatant> forVolcanicKernel() => [
         Combatant(
           side: CombatSide.monster,
           typeKey: 'seigneurNoyau',
-          maxHp: 350,
+          maxHp: 1050,
           atk: 35,
           def: 20,
           isBoss: true,
         ),
         ...List.generate(
-          10,
+          30,
           (_) => Combatant(
             side: CombatSide.monster,
             typeKey: 'sentinelleNoyau',

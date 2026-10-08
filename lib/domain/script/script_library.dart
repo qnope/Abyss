@@ -1,6 +1,7 @@
 import 'game_script.dart';
 import 'idle_script.dart';
 import 'strategies/balanced_strategy.dart';
+import 'strategies/conquest_strategy.dart';
 import 'strategies/economy_strategy.dart';
 
 /// Built-in strategies, by the name a scenario or the command line uses.
@@ -10,6 +11,8 @@ abstract final class ScriptLibrary {
     'economy': () => const EconomyStrategy(),
     'balanced': () => const BalancedStrategy(),
     'idle': () => const IdleScript(),
+    'conquest': () => const ConquestStrategy(),
+    'rush': () => const ConquestStrategy(defends: false, name: 'rush'),
   };
 
   static Iterable<String> get names => _builders.keys;

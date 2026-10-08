@@ -55,6 +55,8 @@ void main() {
 
     // Turns 2-20: energy drains by 3 each turn
     for (var i = 0; i < 19; i++) {
+      // Keep raids out of this energy scenario: a pillage would drain it.
+      player.raidState.noise = 0;
       result = resolver.resolve(game);
       expect(result.deactivatedBuildings, isEmpty);
     }

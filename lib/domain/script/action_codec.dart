@@ -8,6 +8,7 @@ import '../action/explore_action.dart';
 import '../action/fight_monster_action.dart';
 import '../action/recruit_unit_action.dart';
 import '../action/research_tech_action.dart';
+import '../action/garrison_kernel_action.dart';
 import '../action/send_reinforcements_action.dart';
 import '../action/unlock_branch_action.dart';
 import '../action/upgrade_building_action.dart';
@@ -84,6 +85,9 @@ abstract final class ActionCodec {
           transitionY: f.integer('y'),
           fromLevel: f.level,
           selectedUnits: f.units),
+      'garrison' => (_) => GarrisonKernelAction(selectedUnits: f.units),
+      'withdraw' => (_) =>
+          GarrisonKernelAction(selectedUnits: f.units, withdraw: true),
       final String verb => throw FormatException('Action inconnue : $verb'),
     };
   }

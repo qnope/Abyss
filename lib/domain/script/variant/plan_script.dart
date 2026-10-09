@@ -5,6 +5,7 @@ import '../../replay/seeded_random.dart';
 import '../game_script.dart';
 import '../script_turn.dart';
 import '../strategies/army_planner.dart';
+import '../strategies/kernel_guard_moves.dart';
 import '../strategies/battle_moves.dart';
 import 'plan_moves.dart';
 import 'plan_step.dart';
@@ -122,6 +123,9 @@ class PlanScript extends GameScript {
       if (done || late && !step.persistent) {
         _pending.remove(step);
       }
+    }
+    if (variant.defends && !turn.isOver) {
+      turn.guardKernel(const ArmyPlanner());
     }
   }
 

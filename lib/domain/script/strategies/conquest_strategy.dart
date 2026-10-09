@@ -13,6 +13,7 @@ import 'conquest_moves.dart';
 import 'expedition_moves.dart';
 import 'explore_moves.dart';
 import 'growth_moves.dart';
+import 'kernel_guard_moves.dart';
 
 /// "Conquête": plays a whole game the way a careful player would, from
 /// the first building to the volcanic kernel at level 10.
@@ -50,6 +51,9 @@ class ConquestStrategy extends GameScript {
   /// the expedition force waiting at home defends the base.
   final bool defends;
 
+  /// Whether it keeps a garrison able to beat the kraken waves.
+  final bool guardsKernel;
+
   @override
   final String name;
 
@@ -58,6 +62,7 @@ class ConquestStrategy extends GameScript {
     this.conquestShare = 0.5,
     this.huntsLairs = true,
     this.defends = true,
+    this.guardsKernel = true,
     this.name = 'conquest',
   });
 
@@ -71,6 +76,7 @@ class ConquestStrategy extends GameScript {
     for (final BuildingType goal in goals) {
       turn.tryPerform(UpgradeBuildingAction(buildingType: goal));
     }
+    if (guardsKernel) turn.guardKernel(planner);
     turn.research();
     if (!alert) {
       turn.advanceConquest(planner, share: conquestShare);

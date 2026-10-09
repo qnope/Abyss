@@ -40,7 +40,7 @@ class CombatantBuilder {
   }
 
   /// One combatant per monster of [lair], family by family; colossi
-  /// fight as bosses.
+  /// and krakens fight as bosses.
   static List<Combatant> monsterCombatantsFrom(MonsterLair lair) {
     final int level = lair.level;
     final List<Combatant> combatants = <Combatant>[];
@@ -54,7 +54,7 @@ class CombatantBuilder {
           maxHp: stats.hp,
           atk: stats.atk,
           def: stats.def,
-          isBoss: family == MonsterFamily.colossus,
+          isBoss: family?.isBoss ?? false,
         ));
       }
     });

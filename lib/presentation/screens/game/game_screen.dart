@@ -18,6 +18,7 @@ import '../../widgets/common/replay_export_dialog.dart';
 import '../../widgets/common/settings_dialog.dart';
 import '../../widgets/history/history_sheet.dart';
 import '../../widgets/raid/raid_status_bar.dart';
+import '../../widgets/volcano/volcano_status_bar.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import 'game_screen_actions.dart';
 import 'game_screen_defeat_actions.dart';
@@ -25,6 +26,7 @@ import 'game_screen_map_actions.dart';
 import 'game_screen_tech_actions.dart';
 import 'game_screen_turn_helpers.dart';
 import 'raid/raid_summary_screen.dart';
+import 'volcano/volcano_summary_screen.dart';
 import '../menu/main_menu_screen.dart';
 
 class GameScreen extends StatefulWidget {
@@ -63,6 +65,7 @@ class _GameScreenState extends State<GameScreen> {
           ),
           RaidStatusBar(
             state: _human.raidState, currentTurn: widget.game.turn),
+          VolcanoStatusBar(player: _human),
           Expanded(child: _buildTabContent()),
         ],
       ),
@@ -129,7 +132,7 @@ class _GameScreenState extends State<GameScreen> {
       buildingsToDeactivate: deactivated,
       unitsToLose: computeUnitsToLose(human, deactivated),
       pendingExplorationCount: human.pendingExplorations.length,
-      raidWarning: raidDueWarning(widget.game, human));
+      raidWarning: dueWarnings(widget.game, human));
     if (!confirmed || !mounted) return;
     final result = (ActionExecutor().execute(
       EndTurnAction(random: SeededRandom.fresh()), widget.game, _human) as EndTurnActionResult)
@@ -139,6 +142,10 @@ class _GameScreenState extends State<GameScreen> {
     if (mounted) await showTurnSummaryDialog(context, result: result);
     final raid = result.raid;
     if (raid != null && mounted) await RaidSummaryScreen.open(context, raid);
+    final wave = result.volcano;
+    if (wave != null && !wave.victory && mounted) {
+      await VolcanoSummaryScreen.open(context, wave);
+    }
     if (widget.game.status == GameStatus.defeat && mounted) {
       await showDefeatScreen(context, widget.game, widget.repository);
     }

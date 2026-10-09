@@ -1,3 +1,4 @@
+import 'package:abyss/domain/volcano/volcano_state.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/fight/combat_side.dart';
@@ -63,8 +64,10 @@ void registerFightPersistenceAdapters() {
   Hive.registerAdapter(TurnResourceChangeAdapter());
   Hive.registerAdapter(GameStatusAdapter());
   Hive.registerAdapter(RaidStateAdapter());
+  Hive.registerAdapter(VolcanoStateAdapter());
   Hive.registerAdapter(WorksiteAdapter());
   Hive.registerAdapter(RaidEntryAdapter());
+  Hive.registerAdapter(VolcanoEntryAdapter());
 }
 
 GameMap buildFightPersistenceMap() {

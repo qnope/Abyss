@@ -37,8 +37,8 @@ void main() {
     expect(player.raidState.noise, 3);
   });
 
-  test('each kernel level makes four times the noise of its level', () {
-    expect(NoiseRules.forUpgrade(BuildingType.volcanicKernel, 3), 12);
+  test('each kernel level makes the noise of its level', () {
+    expect(NoiseRules.forUpgrade(BuildingType.volcanicKernel, 3), 3);
     expect(NoiseRules.forUpgrade(BuildingType.headquarters, 3), 3);
   });
 

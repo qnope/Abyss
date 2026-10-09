@@ -4,6 +4,7 @@ import '../map/exploration_result.dart';
 import '../map/monster_lair.dart';
 import '../map/reinforcement_order.dart';
 import '../raid/raid_report.dart';
+import '../volcano/volcano_report.dart';
 import '../resource/resource_type.dart';
 import '../unit/unit_type.dart';
 
@@ -57,6 +58,13 @@ class TurnResult {
   final MonsterLair? announcedRaid;
   final int? announcedRaidTurn;
 
+  /// Kraken wave fought on the kernel at the end of this turn, if any.
+  final VolcanoReport? volcano;
+
+  /// Kraken wave announced at the end of this turn; it hits the kernel at
+  /// the end of the next one.
+  final MonsterLair? announcedWave;
+
   const TurnResult({
     required this.changes,
     required this.previousTurn,
@@ -69,5 +77,7 @@ class TurnResult {
     this.raid,
     this.announcedRaid,
     this.announcedRaidTurn,
+    this.volcano,
+    this.announcedWave,
   });
 }

@@ -58,7 +58,7 @@ void main() {
       expect(wave.secondFamily, isNot(wave.family));
       seen.addAll(wave.groups.keys.whereType<MonsterFamily>());
     }
-    expect(seen, MonsterFamily.values.toSet());
+    expect(seen, MonsterFamily.availableAt(3).toSet());
   });
 
   test('colossi never come with level 1 waves', () {

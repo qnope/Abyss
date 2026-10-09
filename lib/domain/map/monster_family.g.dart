@@ -21,6 +21,8 @@ class MonsterFamilyAdapter extends TypeAdapter<MonsterFamily> {
         return MonsterFamily.hunter;
       case 3:
         return MonsterFamily.colossus;
+      case 4:
+        return MonsterFamily.kraken;
       default:
         return MonsterFamily.swarm;
     }
@@ -37,6 +39,8 @@ class MonsterFamilyAdapter extends TypeAdapter<MonsterFamily> {
         writer.writeByte(2);
       case MonsterFamily.colossus:
         writer.writeByte(3);
+      case MonsterFamily.kraken:
+        writer.writeByte(4);
     }
   }
 

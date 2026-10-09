@@ -9,6 +9,7 @@ import '../action/explore_action.dart';
 import '../action/fight_monster_action.dart';
 import '../action/recruit_unit_action.dart';
 import '../action/research_tech_action.dart';
+import '../action/garrison_kernel_action.dart';
 import '../action/send_reinforcements_action.dart';
 import '../action/unlock_branch_action.dart';
 import '../action/upgrade_building_action.dart';
@@ -87,9 +88,19 @@ abstract final class ActionEncoder {
         a.fromLevel,
         units: a.selectedUnits,
       ),
+      GarrisonKernelAction a => {
+        'do': a.withdraw ? 'withdraw' : 'garrison',
+        'units': _unitsOf(a.selectedUnits),
+      },
       _ => null,
     };
   }
+
+  static Map<String, int> _unitsOf(Map<UnitType, int> units) =>
+      <String, int>{
+        for (final MapEntry<UnitType, int> e in units.entries)
+          if (e.value > 0) e.key.name: e.value,
+      };
 
   /// Whether replaying [action] rolls the same dice as playing it did.
   static bool isExact(Action action) => switch (action) {
@@ -114,11 +125,7 @@ abstract final class ActionEncoder {
       'x': x,
       'y': y,
       if (level != 1) 'level': level,
-      if (units != null)
-        'units': <String, int>{
-          for (final MapEntry<UnitType, int> e in units.entries)
-            if (e.value > 0) e.key.name: e.value,
-        },
+      if (units != null) 'units': _unitsOf(units),
       if (random is SeededRandom) 'seed': random.seed,
     };
   }

@@ -21,6 +21,7 @@ import '../domain/map/transition_base.dart';
 import '../domain/map/transition_base_type.dart';
 import '../domain/game/player.dart';
 import '../domain/raid/raid_state.dart';
+import '../domain/volcano/volcano_state.dart';
 import '../domain/replay/replay_journal.dart';
 import '../domain/resource/resource.dart';
 import '../domain/resource/resource_type.dart';
@@ -77,6 +78,8 @@ class GameRepository {
     Hive.registerAdapter(GameStatusAdapter());
     Hive.registerAdapter(RaidStateAdapter());
     Hive.registerAdapter(RaidEntryAdapter());
+    Hive.registerAdapter(VolcanoStateAdapter());
+    Hive.registerAdapter(VolcanoEntryAdapter());
     Hive.registerAdapter(WorksiteAdapter());
     Hive.registerAdapter(ReplayJournalAdapter());
     try {

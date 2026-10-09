@@ -30,7 +30,8 @@ List<HistoryEntry> applyHistoryFilter(
     HistoryFilter.combat => entries
         .where((e) =>
             e.category == HistoryEntryCategory.combat ||
-            e.category == HistoryEntryCategory.raid)
+            e.category == HistoryEntryCategory.raid ||
+            e.category == HistoryEntryCategory.volcano)
         .toList(),
     HistoryFilter.building => entries
         .where((e) => e.category == HistoryEntryCategory.building)

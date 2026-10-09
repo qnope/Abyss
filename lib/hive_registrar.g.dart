@@ -35,6 +35,7 @@ import 'package:abyss/domain/tech/tech_branch_state.dart';
 import 'package:abyss/domain/turn/turn_result.dart';
 import 'package:abyss/domain/unit/unit.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
+import 'package:abyss/domain/volcano/volcano_state.dart';
 import 'package:abyss/domain/worksite/worksite.dart';
 
 extension HiveRegistrar on HiveInterface {
@@ -81,6 +82,8 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(TurnResourceChangeAdapter());
     registerAdapter(UnitAdapter());
     registerAdapter(UnitTypeAdapter());
+    registerAdapter(VolcanoEntryAdapter());
+    registerAdapter(VolcanoStateAdapter());
     registerAdapter(WorksiteAdapter());
   }
 }
@@ -129,6 +132,8 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(TurnResourceChangeAdapter());
     registerAdapter(UnitAdapter());
     registerAdapter(UnitTypeAdapter());
+    registerAdapter(VolcanoEntryAdapter());
+    registerAdapter(VolcanoStateAdapter());
     registerAdapter(WorksiteAdapter());
   }
 }

@@ -145,9 +145,14 @@ void _showCellAction(BuildContext context, Game game,
       showVolcanicKernelSheet(
         context,
         isCaptured: isCaptured,
+        player: human,
         onAttack: () => handleAttackVolcanicKernel(
           context, game, repository, x, y, level, onChanged,
         ),
+        onGarrison: () =>
+            handleGarrisonKernel(context, game, repository, onChanged),
+        onWithdraw: () => handleGarrisonKernel(
+          context, game, repository, onChanged, withdraw: true),
       );
   }
 }

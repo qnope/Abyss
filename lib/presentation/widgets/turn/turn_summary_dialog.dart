@@ -6,6 +6,7 @@ import '../../extensions/unit_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../resource/resource_icon.dart';
 import '../raid/raid_turn_section.dart';
+import '../volcano/volcano_turn_section.dart';
 import 'exploration_summary_section.dart';
 
 Future<void> showTurnSummaryDialog(
@@ -46,9 +47,10 @@ class _TurnSummaryDialog extends StatelessWidget {
     final showArmy = result.hadRecruitedUnits;
     final hasExplorations = result.explorations.isNotEmpty;
     final hasRaid = RaidTurnSection.hasContent(result);
+    final hasVolcano = VolcanoTurnSection.hasContent(result);
 
     if (!hasChanges && !hasWarnings && !hasLosses && !showArmy &&
-        !hasExplorations && !hasRaid) {
+        !hasExplorations && !hasRaid && !hasVolcano) {
       return const Text('Aucun changement ce tour.');
     }
 
@@ -63,6 +65,7 @@ class _TurnSummaryDialog extends StatelessWidget {
         if (hasExplorations)
           ExplorationSummarySection(explorations: result.explorations),
         if (hasRaid) RaidTurnSection(result: result),
+        if (hasVolcano) VolcanoTurnSection(result: result),
         if (showArmy) ...[
           if (hasChanges || hasWarnings || hasLosses || hasExplorations)
             const Divider(),

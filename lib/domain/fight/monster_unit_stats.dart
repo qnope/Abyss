@@ -56,6 +56,11 @@ class MonsterUnitStats {
       MonsterUnitStats(hp: 140, atk: 17, def: 6),
       MonsterUnitStats(hp: 245, atk: 27, def: 7),
     ],
+    MonsterFamily.kraken: [
+      MonsterUnitStats(hp: 40, atk: 5, def: 3),
+      MonsterUnitStats(hp: 80, atk: 8, def: 4),
+      MonsterUnitStats(hp: 140, atk: 12, def: 5),
+    ],
   };
 
   /// Monsters of [family] that stand for 100 generic ones of the same
@@ -66,6 +71,7 @@ class MonsterUnitStats {
     MonsterFamily.armoured => 70,
     MonsterFamily.hunter => 80,
     MonsterFamily.colossus => 17,
+    MonsterFamily.kraken => 10,
   };
 
   /// [genericCount] generic monsters turned into monsters of [family],

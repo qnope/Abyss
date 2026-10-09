@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:hive_ce/hive.dart';
 
 import '../resource/resource_type.dart';
@@ -10,27 +8,34 @@ part 'difficulty.g.dart';
 ///
 /// Two levers: the production of the buildings and the size of the
 /// monster waves (raids on the base and krakens on the volcanic kernel).
-/// Calibrated with the simulator on two reference players, the plan of a
-/// human win played again with other dice and the careful script
-/// (conquest): about 50 % of wins in easy, 15 % in normal, 5 % in hard.
+/// Calibrated with the simulator (160 games per player, 120 turns) on two
+/// reference players, the plan of a human win played again with other
+/// dice and a careful defence (plan85) and the careful script (conquest):
+///
+/// | Difficulty | plan85 | conquest | Mean |
+/// |------------|--------|----------|------|
+/// | easy       | 47 %   | 54 %     | 51 % |
+/// | normal     | 14 %   | 17 %     | 15 % |
+/// | hard       | 9 %    | 1 %      | 5 %  |
 @HiveType(typeId: 49)
 enum Difficulty {
   @HiveField(0)
-  easy(resourcePercent: 125, monsterPercent: 80),
+  easy(resourcePercent: 110, monsterPercent: 88),
   @HiveField(1)
-  normal(resourcePercent: 100, monsterPercent: 100),
+  normal(resourcePercent: 100, monsterPercent: 94),
   @HiveField(2)
-  hard(resourcePercent: 85, monsterPercent: 110);
+  hard(resourcePercent: 95, monsterPercent: 106);
 
   const Difficulty({
     required this.resourcePercent,
     required this.monsterPercent,
   });
 
-  /// Production of algae, coral and ore, in percent of the normal one.
+  /// Production of algae, coral and ore, in percent of the buildings' own.
   final int resourcePercent;
 
-  /// Monsters of a raid or a kraken wave, in percent of the normal one.
+  /// Power of a raid and krakens of a volcano wave, in percent of the
+  /// base waves (`RaidWaveFactory`, `VolcanoWaveFactory`).
   final int monsterPercent;
 
   /// The resources scaled by the difficulty; energy and pearls are not.
@@ -50,7 +55,4 @@ enum Difficulty {
     }
     return production;
   }
-
-  /// [count] monsters of the normal game, scaled; at least one.
-  int monsters(int count) => max(1, count * monsterPercent ~/ 100);
 }

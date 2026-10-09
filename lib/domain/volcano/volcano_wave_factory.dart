@@ -1,4 +1,5 @@
-import '../game/difficulty.dart';
+import 'dart:math';
+
 import '../map/monster_difficulty.dart';
 import '../map/monster_family.dart';
 import '../map/monster_lair.dart';
@@ -15,19 +16,21 @@ abstract final class VolcanoWaveFactory {
   /// level 5 and 50 at level 9.
   static const int krakensPerThreeLevels = 4;
 
-  static int krakensFor(
-    int kernelLevel, {
-    Difficulty difficulty = Difficulty.normal,
-  }) => difficulty.monsters(
-    baseKrakens + krakensPerThreeLevels * kernelLevel ~/ 3,
+  /// Krakens of a wave on a kernel of [kernelLevel], scaled by
+  /// [monsterPercent] (see `Difficulty.monsterPercent`); at least one.
+  static int krakensFor(int kernelLevel, {int monsterPercent = 100}) => max(
+    1,
+    (baseKrakens + krakensPerThreeLevels * kernelLevel ~/ 3) *
+        monsterPercent ~/
+        100,
   );
 
   static MonsterLair fromKernelLevel(
     int kernelLevel, {
-    Difficulty difficulty = Difficulty.normal,
+    int monsterPercent = 100,
   }) => MonsterLair(
     difficulty: MonsterDifficulty.hard,
     family: MonsterFamily.kraken,
-    unitCount: krakensFor(kernelLevel, difficulty: difficulty),
+    unitCount: krakensFor(kernelLevel, monsterPercent: monsterPercent),
   );
 }

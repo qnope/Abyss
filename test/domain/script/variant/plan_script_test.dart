@@ -39,10 +39,11 @@ void main() {
     // The map now holds a third of the treasures it was played with:
     // collects on cells left empty fail, and the loot comes at other
     // turns, so a few more actions than the 21 above lack resources. The
-    // monster families change the lair fights and the raid waves too, so
-    // the stocks run short a few more times.
+    // monster families change the lair fights and the raid waves too, and
+    // the normal difficulty makes the raid waves 6 % smaller, so the
+    // stocks run short a few more times than the 21 above.
     final failures = report.log.where((e) => !e.success);
-    expect(failures.where((e) => e.reason != 'Rien à collecter').length, 29);
+    expect(failures.where((e) => e.reason != 'Rien à collecter').length, 25);
   });
 
   test('plays each turn later with a stretch and a jitter', () {
@@ -132,7 +133,9 @@ void main() {
         .where((e) => e.success && e.description.startsWith('Recruter'))
         .length;
 
-    expect(recruits(const ReplayVariant(defends: true)),
-        greaterThan(recruits(const ReplayVariant())));
+    // With the original dice, the plan's own army beats every raid of the
+    // normal difficulty; other dice bring raids it has to answer.
+    expect(recruits(const ReplayVariant(defends: true, sameDice: false)),
+        greaterThan(recruits(const ReplayVariant(sameDice: false))));
   });
 }

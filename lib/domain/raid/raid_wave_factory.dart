@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import '../fight/monster_unit_stats.dart';
-import '../game/difficulty.dart';
 import '../map/monster_difficulty.dart';
 import '../map/monster_family.dart';
 import '../map/monster_lair.dart';
@@ -13,28 +12,21 @@ import '../map/monster_lair.dart';
 /// fewer, tougher monsters. The power is shared between two families
 /// drawn at random, each turned into its own number of monsters.
 abstract final class RaidWaveFactory {
-  /// Wave power earned by every 100 points of noise. Calibrated on the
-  /// plan of a human win (`scenarios/replays/victoire-tour-85.json`)
-  /// played again with other dice and a careful defence: with the noise
-  /// of the kernel levels, the research choices and the monster
-  /// families, it wins 5 of 40 games, and the careful script (conquest)
-  /// 3 of 20.
+  /// Wave power earned by every 100 points of noise, before the
+  /// difficulty scales it (see `Difficulty.monsterPercent`).
   static const int powerPer100Noise = 36;
   static const int minMonsters = 5;
   static const int mediumFromPower = 30;
   static const int hardFromPower = 80;
 
-  /// The [difficulty] scales the power, so a harder game also switches
+  /// [monsterPercent] scales the power, so a harder game also switches
   /// sooner to tougher monsters.
   static MonsterLair fromTotalNoise(
     int totalNoise, {
     Random? random,
-    Difficulty difficulty = Difficulty.normal,
+    int monsterPercent = 100,
   }) {
-    final int power = totalNoise *
-        powerPer100Noise *
-        difficulty.monsterPercent ~/
-        10000;
+    final int power = totalNoise * powerPer100Noise * monsterPercent ~/ 10000;
     final MonsterDifficulty level =
         power >= hardFromPower
             ? MonsterDifficulty.hard

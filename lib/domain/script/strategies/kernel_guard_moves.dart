@@ -31,7 +31,7 @@ extension KernelGuardMoves on ScriptTurn {
     _garrisonVolcanoFighters();
     final MonsterLair wave = VolcanoWaveFactory.fromKernelLevel(
       level,
-      difficulty: game.difficulty,
+      monsterPercent: game.difficulty.monsterPercent,
     );
     final Map<UnitType, int> before = _homeCounts();
     topUp(

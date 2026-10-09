@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/game/difficulty.dart';
 import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/domain/map/monster_family.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -24,7 +25,10 @@ void main() {
     final player = volcanoPlayer(kernelLevel: 3);
     final outcome = VolcanoResolver.resolve(player, 40);
     expect(outcome.announced!.family, MonsterFamily.kraken);
-    expect(outcome.announced!.unitCount, VolcanoWaveFactory.krakensFor(3));
+    expect(outcome.announced!.unitCount, VolcanoWaveFactory.krakensFor(
+      3,
+      monsterPercent: Difficulty.normal.monsterPercent,
+    ));
     expect(player.volcanoState.arrivalTurn, 41);
   });
 
@@ -41,7 +45,10 @@ void main() {
     expect(kernelLevel(player), 3);
     expect(player.volcanoState.levelsLost, 1);
     expect(player.historyEntries.last, isA<VolcanoEntry>());
-    expect(outcome.announced!.unitCount, VolcanoWaveFactory.krakensFor(3));
+    expect(outcome.announced!.unitCount, VolcanoWaveFactory.krakensFor(
+      3,
+      monsterPercent: Difficulty.normal.monsterPercent,
+    ));
   });
 
   test('a strong garrison holds the kernel', () {

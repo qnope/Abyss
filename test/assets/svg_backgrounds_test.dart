@@ -28,6 +28,7 @@ enum SvgFrame {
 const _frames = {
   'buildings/': SvgFrame.vignette,
   'tech/explorer_': SvgFrame.medallion,
+  'tech/resources_': SvgFrame.medallion,
   'resources/': SvgFrame.transparent,
   'map_content/': SvgFrame.transparent,
   'terrain/plain.svg': SvgFrame.tile,

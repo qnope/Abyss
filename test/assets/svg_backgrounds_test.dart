@@ -56,11 +56,10 @@ void main() {
             expect(alpha.corners, everyElement(0), reason: 'corner drawn');
             expect(alpha.clearBorder, greaterThan(0.5), reason: 'border');
           case SvgFrame.vignette:
-            expect(alpha.corners, everyElement(0), reason: 'square corner');
-            expect(alpha.at(1, 1), 0, reason: 'corner not rounded');
+            expect(alpha.outside(_inVignette), 0, reason: 'drawn outside');
             expect(alpha.edgeMiddles, everyElement(255), reason: 'no water');
           case SvgFrame.medallion:
-            expect(alpha.cornerBlocks, everyElement(0), reason: 'corner');
+            expect(alpha.outside(_inDisc), 0, reason: 'drawn outside');
             expect(alpha.disc, everyElement(255), reason: 'disc not full');
           case SvgFrame.tile:
             expect(alpha.corners, everyElement(255), reason: 'tile not full');
@@ -92,6 +91,17 @@ Future<ui.Image> _rasterize(String content) async {
   return picture.toImage(_size, _size).whenComplete(picture.dispose);
 }
 
+/// Inside the medallion disc of radius 31, plus a pixel of antialiasing.
+bool _inDisc(double x, double y) => sqrt(pow(x - 32, 2) + pow(y - 32, 2)) < 32.2;
+
+/// Inside the vignette (62 px square, radius 12, at 1 px from the edges),
+/// plus a pixel of antialiasing.
+bool _inVignette(double x, double y) {
+  final cx = x.clamp(13.0, 51.0);
+  final cy = y.clamp(13.0, 51.0);
+  return sqrt(pow(x - cx, 2) + pow(y - cy, 2)) < 13.2;
+}
+
 class _AlphaMap {
   final ByteData _bytes;
 
@@ -105,11 +115,17 @@ class _AlphaMap {
   /// The four corner pixels, hidden by any rounded frame.
   List<int> get corners => [at(0, 0), at(63, 0), at(0, 63), at(63, 63)];
 
-  /// Every pixel of the 4x4 block in each corner, all outside a medallion.
-  List<int> get cornerBlocks => [
-        for (final x in [0, 1, 2, 3, 60, 61, 62, 63])
-          for (final y in [0, 1, 2, 3, 60, 61, 62, 63]) at(x, y),
-      ];
+  /// Pixels drawn although their center lies outside [frame], allowing a
+  /// pixel of antialiasing around its edge.
+  int outside(bool Function(double x, double y) frame) {
+    var drawn = 0;
+    for (var y = 0; y < _size; y++) {
+      for (var x = 0; x < _size; x++) {
+        if (!frame(x + 0.5, y + 0.5) && at(x, y) > 0) drawn++;
+      }
+    }
+    return drawn;
+  }
 
   /// The middle pixel of each edge, inside a vignette.
   List<int> get edgeMiddles => [at(32, 1), at(32, 62), at(1, 32), at(62, 32)];

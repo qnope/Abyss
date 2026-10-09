@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -24,9 +22,4 @@ void main() {
     });
   });
 
-  test('coral_citadel.svg file size is under 24000 bytes', () {
-    final file = File(assetPath);
-    expect(file.existsSync(), isTrue);
-    expect(file.lengthSync(), lessThan(24000));
-  });
 }

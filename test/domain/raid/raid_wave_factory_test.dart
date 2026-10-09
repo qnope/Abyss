@@ -25,30 +25,30 @@ void main() {
     expectShared(wave, 5);
   });
 
-  test('42 power per 100 noise, one level 1 monster per power below 30', () {
+  test('36 power per 100 noise, one level 1 monster per power below 30', () {
     final wave = RaidWaveFactory.fromTotalNoise(50, random: Random(1));
     expect(wave.difficulty, MonsterDifficulty.easy);
-    expectShared(wave, 21);
+    expectShared(wave, 18);
   });
 
   test('level 2 monsters from 30 power, costing 2 power each', () {
     expect(
-      RaidWaveFactory.fromTotalNoise(71).difficulty,
+      RaidWaveFactory.fromTotalNoise(83).difficulty,
       MonsterDifficulty.easy,
     );
     expect(
-      RaidWaveFactory.fromTotalNoise(72).difficulty,
+      RaidWaveFactory.fromTotalNoise(84).difficulty,
       MonsterDifficulty.medium,
     );
     final wave = RaidWaveFactory.fromTotalNoise(150, random: Random(1));
     expect(wave.difficulty, MonsterDifficulty.medium);
-    expectShared(wave, 31);
+    expectShared(wave, 27);
   });
 
   test('level 3 monsters from 80 power, costing 4 power each', () {
     final wave = RaidWaveFactory.fromTotalNoise(400, random: Random(1));
     expect(wave.difficulty, MonsterDifficulty.hard);
-    expectShared(wave, 42);
+    expectShared(wave, 36);
   });
 
   test('a wave mixes two different families drawn at random', () {

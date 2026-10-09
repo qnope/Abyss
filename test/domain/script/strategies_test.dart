@@ -45,8 +45,8 @@ void main() {
   });
 
   // The 15 % target is measured on a human plan (calibration_test.dart);
-  // against it, the careful script loses nearly every game.
-  test('the careful script no longer wins', () {
+  // the careful script wins about as rarely (3 of 20), seed 13 is a loss.
+  test('the careful script loses most games', () {
     final run =
         ScriptRunner(maxTurns: 100).run(const ConquestStrategy(), seed: 13);
 

@@ -5,6 +5,7 @@ import '../action/action_result.dart';
 import '../action/end_turn_action.dart';
 import '../action/end_turn_action_result.dart';
 import '../game/cheat_codes.dart';
+import '../game/difficulty.dart';
 import '../game/game.dart';
 import '../game/game_factory.dart';
 import '../game/game_status.dart';
@@ -23,9 +24,16 @@ class ScriptRunner {
   /// replay stops on its own last turn instead.
   final int maxTurns;
 
+  /// Difficulty of the games, unless the script pins its own.
+  final Difficulty difficulty;
+
   final ActionExecutor _executor;
 
-  ScriptRunner({this.maxTurns = 60, ActionExecutor? executor})
+  ScriptRunner({
+    this.maxTurns = 60,
+    this.difficulty = Difficulty.normal,
+    ActionExecutor? executor,
+  })
       : _executor = executor ?? ActionExecutor();
 
   ScriptRunReport run(GameScript script, {required int seed}) {
@@ -34,6 +42,7 @@ class ScriptRunner {
     final Game game = GameFactory.newSinglePlayer(
       playerName: script.playerName,
       mapSeed: script.mapSeed ?? drawnSeed,
+      difficulty: script.difficulty ?? difficulty,
     );
     CheatCodes.apply(game.humanPlayer);
     final List<ScriptLogEntry> log = <ScriptLogEntry>[];

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../game/difficulty.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
 import '../map/monster_lair.dart';
@@ -30,6 +31,7 @@ abstract final class VolcanoResolver {
     Player player,
     int endedTurn, {
     Random? random,
+    Difficulty difficulty = Difficulty.normal,
   }) {
     final VolcanoState state = player.volcanoState;
     VolcanoReport? report;
@@ -48,7 +50,7 @@ abstract final class VolcanoResolver {
     if (state.isIncoming || level < 1 || level >= winLevel) {
       return VolcanoTurnOutcome(report: report);
     }
-    final MonsterLair wave = VolcanoWaveFactory.fromKernelLevel(level);
+    final MonsterLair wave = VolcanoWaveFactory.fromKernelLevel(level, difficulty: difficulty);
     state.announce(wave, endedTurn + 1);
     return VolcanoTurnOutcome(report: report, announced: wave);
   }

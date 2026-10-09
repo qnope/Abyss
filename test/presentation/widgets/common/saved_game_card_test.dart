@@ -42,7 +42,7 @@ void main() {
 
     testWidgets('displays turn number', (tester) async {
       await tester.pumpWidget(createApp());
-      expect(find.text('Tour 7'), findsOneWidget);
+      expect(find.text('Tour 7 · Normal'), findsOneWidget);
     });
 
     testWidgets('displays formatted date', (tester) async {

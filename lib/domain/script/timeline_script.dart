@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../game/difficulty.dart';
 import '../replay/seeded_random.dart';
 import 'action_spec.dart';
 import 'game_script.dart';
@@ -25,6 +26,9 @@ class TimelineScript extends GameScript {
   final int? mapSeed;
 
   @override
+  final Difficulty? difficulty;
+
+  @override
   final int? lastTurn;
 
   final Map<int, int> endTurnSeeds;
@@ -35,6 +39,7 @@ class TimelineScript extends GameScript {
     this.otherwise,
     this.player,
     this.mapSeed,
+    this.difficulty,
     this.lastTurn,
     this.endTurnSeeds = const <int, int>{},
   });

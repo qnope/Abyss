@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'run_concurrently.dart';
+
 /// Bitmaps of SVG assets, rasterized once per asset.
 ///
 /// Detailed SVGs hold hundreds of shapes: replaying them every frame is
@@ -35,17 +37,19 @@ abstract final class SvgRasterCache {
     );
   }
 
+  /// SVGs rasterized at the same time while preloading: enough to parse
+  /// on several cores, few enough to keep the screen shown meanwhile
+  /// responsive.
+  static const preloadWorkers = 3;
+
   /// Rasterizes every SVG asset of the app, so no screen ever waits for
-  /// one. Meant to run once at startup: assets go one at a time so the
-  /// screen shown meanwhile stays responsive.
+  /// one. Meant to run once at startup.
   static Future<void> preloadAll([AssetBundle? bundle]) async {
     final manifest = await AssetManifest.loadFromAssetBundle(
       bundle ?? rootBundle,
     );
     final paths = manifest.listAssets().where((p) => p.endsWith('.svg'));
-    for (final path in paths) {
-      await load(path);
-    }
+    await runConcurrently(paths, preloadWorkers, load);
   }
 
   static Future<ui.Image> _rasterize(String path) async {

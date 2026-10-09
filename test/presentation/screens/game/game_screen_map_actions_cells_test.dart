@@ -90,7 +90,7 @@ void main() {
         ),
       ),
     );
-    expect(find.text('Monstre (2, 2)'), findsOneWidget);
+    expect(find.text('Rôdeurs (2, 2)'), findsOneWidget);
 
     await tester.tap(find.text('Préparer le combat'));
     await tester.pumpAndSettle();

@@ -1,4 +1,5 @@
 import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_family.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/raid/raid_state.dart';
 import 'package:abyss/presentation/widgets/raid/raid_status_bar.dart';
@@ -28,6 +29,30 @@ void main() {
       find.text('Raid à la fin du tour 14 : 22 monstres niv. 1'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('names both families of the wave and what answers them',
+      (tester) async {
+    final state = RaidState()
+      ..announce(
+        const MonsterLair(
+          difficulty: MonsterDifficulty.medium,
+          unitCount: 40,
+          family: MonsterFamily.swarm,
+          secondFamily: MonsterFamily.colossus,
+          secondCount: 2,
+        ),
+        14,
+      );
+    await tester.pumpWidget(
+        _wrap(RaidStatusBar(state: state, currentTurn: 13)));
+    expect(
+      find.text('Raid à la fin du tour 14 : '
+          '40 Dents-de-verre et 2 Requins dormeurs niv. 2'),
+      findsOneWidget,
+    );
+    expect(find.text('Faibles contre : Harponneurs, Briseurs de dôme'),
+        findsOneWidget);
   });
 
   testWidgets('says the raid hits this turn on its arrival turn',

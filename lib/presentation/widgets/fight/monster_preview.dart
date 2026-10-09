@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../domain/fight/monster_unit_stats.dart';
 import '../../../domain/map/monster_lair.dart';
 import '../../extensions/cell_content_type_extensions.dart';
+import '../../extensions/monster_family_extensions.dart';
+import '../../extensions/monster_lair_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
+import 'monster_family_traits.dart';
 
 class MonsterPreview extends StatelessWidget {
   final MonsterLair lair;
@@ -13,7 +16,7 @@ class MonsterPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final stats = MonsterUnitStats.forLevel(lair.level);
+    final stats = MonsterUnitStats.of(lair.family, lair.level);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -23,10 +26,10 @@ class MonsterPreview extends StatelessWidget {
           children: [
             Row(
               children: [
-                RasterSvg(assetPath: lair.difficulty.svgPath, size: 40),
+                RasterSvg(assetPath: lair.svgPath, size: 40),
                 const SizedBox(width: 12),
                 Text(
-                  lair.difficulty.label,
+                  '${lair.family.label} · ${lair.difficulty.label}',
                   style: textTheme.titleLarge?.copyWith(
                     color: AbyssColors.biolumCyan,
                   ),
@@ -44,7 +47,7 @@ class MonsterPreview extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 Text(
-                  'Unités: ${lair.unitCount}',
+                  lair.family.monsters(lair.unitCount),
                   style: textTheme.bodyMedium?.copyWith(
                     color: AbyssColors.onSurfaceDim,
                   ),
@@ -61,6 +64,10 @@ class MonsterPreview extends StatelessWidget {
                 _StatChip(label: 'DEF', value: stats.def),
               ],
             ),
+            if (lair.family != null) ...[
+              const SizedBox(height: 12),
+              MonsterFamilyTraits(family: lair.family),
+            ],
           ],
         ),
       ),

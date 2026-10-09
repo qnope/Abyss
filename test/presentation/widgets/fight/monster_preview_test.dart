@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_family.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/presentation/widgets/fight/monster_preview.dart';
 
@@ -24,9 +25,9 @@ void main() {
       await tester.pumpWidget(wrap(const MonsterPreview(lair: lair)));
       await tester.pumpAndSettle();
 
-      expect(find.text('Moyen'), findsOneWidget);
+      expect(find.text('Rôdeurs · Moyen'), findsOneWidget);
       expect(find.text('Niveau 2'), findsOneWidget);
-      expect(find.text('Unités: 3'), findsOneWidget);
+      expect(find.text('3 monstres'), findsOneWidget);
     });
 
     testWidgets('renders per-level stats for medium difficulty',
@@ -52,10 +53,26 @@ void main() {
       await tester.pumpWidget(wrap(const MonsterPreview(lair: lair)));
       await tester.pumpAndSettle();
 
-      expect(find.text('Facile'), findsOneWidget);
+      expect(find.text('Rôdeurs · Facile'), findsOneWidget);
       expect(find.text('PV: 10'), findsOneWidget);
       expect(find.text('ATK: 3'), findsOneWidget);
       expect(find.text('DEF: 1'), findsOneWidget);
+    });
+
+    testWidgets('shows the family, its stats, rule and weakness',
+        (tester) async {
+      const lair = MonsterLair(
+        difficulty: MonsterDifficulty.easy,
+        unitCount: 14,
+        family: MonsterFamily.armoured,
+      );
+      await tester.pumpWidget(wrap(const MonsterPreview(lair: lair)));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Carapaces · Facile'), findsOneWidget);
+      expect(find.text('14 Isopodes cuirassés'), findsOneWidget);
+      expect(find.text('DEF: 20'), findsOneWidget);
+      expect(find.text('Faible contre : Saboteurs'), findsOneWidget);
     });
   });
 }

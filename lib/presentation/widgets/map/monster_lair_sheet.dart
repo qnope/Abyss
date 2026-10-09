@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../domain/fight/monster_unit_stats.dart';
 import '../../../domain/map/monster_lair.dart';
 import '../../extensions/cell_content_type_extensions.dart';
+import '../../extensions/monster_family_extensions.dart';
+import '../../extensions/monster_lair_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
+import '../fight/monster_family_traits.dart';
 
 void showMonsterLairSheet(
   BuildContext context, {
@@ -45,16 +48,20 @@ class _MonsterLairSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          RasterSvg(assetPath: lair.difficulty.svgPath, size: 64),
+          RasterSvg(assetPath: lair.svgPath, size: 64),
           const SizedBox(height: 12),
           Text(
-            'Monstre ($targetX, $targetY)',
+            '${lair.family.label} ($targetX, $targetY)',
             style: textTheme.headlineSmall?.copyWith(
               color: AbyssColors.biolumCyan,
             ),
           ),
           const SizedBox(height: 16),
           _LairInfoSection(lair: lair),
+          if (lair.family != null) ...[
+            const SizedBox(height: 12),
+            MonsterFamilyTraits(family: lair.family),
+          ],
           const Divider(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -91,14 +98,14 @@ class _LairInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final stats = MonsterUnitStats.forLevel(lair.level);
+    final stats = MonsterUnitStats.of(lair.family, lair.level);
     return Column(
       children: [
         _infoRow(textTheme, 'Difficulté', lair.difficulty.label),
         const SizedBox(height: 6),
         _infoRow(textTheme, 'Niveau', '${lair.level}'),
         const SizedBox(height: 6),
-        _infoRow(textTheme, 'Unités', '${lair.unitCount}'),
+        _infoRow(textTheme, 'Unités', lair.family.monsters(lair.unitCount)),
         const SizedBox(height: 6),
         _infoRow(
           textTheme,

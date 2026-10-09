@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="flRock" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5E6B78"/>
+      <stop offset="0.55" stop-color="#36404C"/>
+      <stop offset="1" stop-color="#151B24"/>
+    </linearGradient>
+    <radialGradient id="flCave" cx="0.5" cy="0.85" r="0.8">
+      <stop offset="0" stop-color="#1B2A3A"/>
+      <stop offset="0.6" stop-color="#0A1018"/>
+      <stop offset="1" stop-color="#03050A"/>
+    </radialGradient>
+    <radialGradient id="coSkin" cx="0.4" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#90A4AE"/>
+      <stop offset="0.5" stop-color="#455A64"/>
+      <stop offset="1" stop-color="#1C262B"/>
+    </radialGradient>
+    <linearGradient id="coMouth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1A0606"/>
+      <stop offset="1" stop-color="#5D1A24"/>
+    </linearGradient>
+    <linearGradient id="mmBadge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE57F"/>
+      <stop offset="0.45" stop-color="#D4A800"/>
+      <stop offset="1" stop-color="#8D6E00"/>
+    </linearGradient>
+    <linearGradient id="mmStar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFDE7"/>
+      <stop offset="0.5" stop-color="#FFD740"/>
+      <stop offset="1" stop-color="#FFA000"/>
+    </linearGradient>
+  </defs>
+
+  <!-- contact shadow -->
+  <ellipse cx="32" cy="59" rx="29" ry="3.8" fill="#000" fill-opacity="0.4"/>
+  <!-- rock lair -->
+  <path d="M3.5 59 Q4 47 9.5 40 Q13 34.5 19 32.5 Q24 28 31 28 Q38 27.5 44 30.5 Q51 33.5 55 39.5 Q59.5 46 60.5 59 Z" fill="url(#flRock)" stroke="#0A0E1A" stroke-width="0.7" stroke-opacity="0.85"/>
+  <path d="M9.5 40 Q13 34.5 19 32.5 Q17.5 37.5 12.5 41.5 Z M24 29.6 Q31 27.4 38 28.4 Q32 30.6 26 31.4 Z" fill="#8FA0B0" fill-opacity="0.35"/>
+  <path d="M55 39.5 Q59.5 46 60.5 59 H54.5 Q55 47 50 38 Z" fill="#0A0E14" fill-opacity="0.5"/>
+  <g fill="none" stroke="#0A0E1A" stroke-width="0.45" stroke-opacity="0.7" stroke-linecap="round">
+    <path d="M12.5 41.5 Q10 47 9 53"/><path d="M44 30.5 L46 35.5"/><path d="M53 43 L55.5 48.5"/>
+  </g>
+  <g fill="#B0BEC5" fill-opacity="0.55" stroke="#263238" stroke-width="0.3">
+    <circle cx="11" cy="47" r="1.1"/><circle cx="13" cy="49.5" r="0.8"/><circle cx="52" cy="45" r="1"/>
+  </g>
+  <!-- cave mouth -->
+  <path d="M15 59 Q15.5 46 21.5 40.5 Q26.5 36 32 36 Q37.5 36 42.5 40.5 Q48.5 46 49 59 Z" fill="url(#flCave)" stroke="#05070D" stroke-width="0.6"/>
+  <path d="M21.5 40.5 L23 43.5 L24.5 40 M38.5 39.5 L40 43 L41.6 40.6" fill="#36404C" stroke="#0A0E1A" stroke-width="0.35"/>
+
+  <!-- seabed -->
+  <path d="M3.5 59 Q18 56.5 32 57.5 Q46 56.5 60.5 59 Z" fill="#1E2833"/>
+  <g fill="#2E7D32" fill-opacity="0.85">
+    <path d="M6 59 Q5 54 7.5 50.5 Q7 54.5 8 59 Z"/><path d="M57 59 Q58.5 54.5 56.5 51 Q58.8 54 59.2 59 Z"/>
+  </g>
+
+  <!-- huge sleeper shark head filling the cave -->
+  <path d="M7 59 Q6.5 44 15 36.5 Q22.5 29.5 32 29.5 Q41.5 29.5 49 36.5 Q57.5 44 57 59 Z" fill="url(#coSkin)" stroke="#0A0E1A" stroke-width="0.7"/>
+  <g fill="#CFD8DC" fill-opacity="0.25">
+    <circle cx="22" cy="36" r="1"/><circle cx="26" cy="33.5" r="0.8"/><circle cx="38" cy="33.5" r="0.9"/><circle cx="43" cy="36.5" r="1.1"/><circle cx="18" cy="41" r="0.7"/><circle cx="46" cy="42" r="0.8"/>
+  </g>
+  <path d="M17 36 Q24 30.6 32 30.6" fill="none" stroke="#ECEFF1" stroke-width="0.8" stroke-opacity="0.45" stroke-linecap="round"/>
+  <!-- small cold eyes -->
+  <circle cx="20.5" cy="42.5" r="1.7" fill="#0A0E1A"/><circle cx="43.5" cy="42.5" r="1.7" fill="#0A0E1A"/>
+  <circle cx="20.1" cy="42.1" r="0.5" fill="#B2EBF2"/><circle cx="43.1" cy="42.1" r="0.5" fill="#B2EBF2"/>
+  <!-- gill slits -->
+  <path d="M10.5 47 Q12 50 11.5 54 M13 46 Q14.5 49.5 14 53.5 M53.5 47 Q52 50 52.5 54 M51 46 Q49.5 49.5 50 53.5" fill="none" stroke="#151D22" stroke-width="0.7" stroke-linecap="round"/>
+  <!-- wide jaws -->
+  <path d="M17 49 Q32 44.5 47 49 Q45 58 32 58.6 Q19 58 17 49 Z" fill="url(#coMouth)" stroke="#0A0E1A" stroke-width="0.6"/>
+  <path d="M18.5 49.4 L20.2 52.6 L22 48.4 L23.8 51.8 L25.6 47.8 L27.4 51.2 L29.2 47.4 L31 50.9 L32.8 47.3 L34.6 50.9 L36.4 47.5 L38.2 51.2 L40 47.9 L41.8 51.8 L43.6 48.5 L45.4 52.4 L46.4 49.6" fill="#ECEFF1" stroke="#455A64" stroke-width="0.3" stroke-linejoin="round"/>
+  <path d="M21 56.6 L22.4 54 L24 57.4 L25.8 54.6 L27.6 58 L29.6 55 L31.6 58.3 L33.6 55 L35.6 58.2 L37.6 54.8 L39.6 57.8 L41.4 54.4 L43 57.2" fill="#CFD8DC" stroke="#455A64" stroke-width="0.3" stroke-linejoin="round"/>
+
+  <!-- difficulty badge: medium, two stars -->
+  <g>
+    <rect x="14.5" y="2" width="35" height="21" rx="10.5" fill="#FFD740" fill-opacity="0.15"/>
+    <rect x="16.5" y="3.5" width="31" height="18" rx="9" fill="#5C4700" stroke="#0A0E1A" stroke-width="0.6"/>
+    <rect x="17.6" y="4.6" width="28.8" height="15.8" rx="7.9" fill="url(#mmBadge)" stroke="#FFF59D" stroke-width="0.5"/>
+    <path d="M21 9 Q22 6.2 26 6 H38" fill="none" stroke="#FFFDE7" stroke-width="0.9" stroke-linecap="round" stroke-opacity="0.6"/>
+    <g transform="translate(25 12.6)">
+      <path d="M0 -5 L1.5 -1.6 L5.2 -1.2 L2.4 1.3 L3.2 4.9 L0 3 L-3.2 4.9 L-2.4 1.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="url(#mmStar)" stroke="#5C4700" stroke-width="0.5" stroke-linejoin="round"/>
+      <path d="M0 -5 L0 0.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="#fff" fill-opacity="0.35"/>
+      <circle cx="-0.8" cy="-2" r="0.45" fill="#fff"/>
+    </g>
+    <g transform="translate(39 12.6)">
+      <path d="M0 -5 L1.5 -1.6 L5.2 -1.2 L2.4 1.3 L3.2 4.9 L0 3 L-3.2 4.9 L-2.4 1.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="url(#mmStar)" stroke="#5C4700" stroke-width="0.5" stroke-linejoin="round"/>
+      <path d="M0 -5 L0 0.3 L-5.2 -1.2 L-1.5 -1.6 Z" fill="#fff" fill-opacity="0.35"/>
+      <circle cx="-0.8" cy="-2" r="0.45" fill="#fff"/>
+    </g>
+  </g>
+</svg>

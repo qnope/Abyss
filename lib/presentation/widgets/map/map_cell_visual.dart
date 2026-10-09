@@ -1,6 +1,7 @@
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/map_cell.dart';
 import '../../extensions/cell_content_type_extensions.dart';
+import '../../extensions/monster_lair_extensions.dart';
 import '../../extensions/terrain_type_extensions.dart';
 
 const playerBaseSvgPath = 'assets/icons/map_content/player_base.svg';
@@ -58,7 +59,7 @@ class MapCellVisual {
     }
     if (isBase) return playerBaseSvgPath;
     if (cell.content == CellContentType.monsterLair) {
-      return cell.lair?.difficulty.svgPath;
+      return cell.lair?.svgPath;
     }
     return cell.content.svgPath;
   }

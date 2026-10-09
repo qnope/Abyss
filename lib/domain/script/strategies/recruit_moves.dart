@@ -53,8 +53,10 @@ extension RecruitMoves on ScriptTurn {
 
   /// Algae produced minus algae eaten each turn, all levels together.
   int get algaeMargin {
-    final int produced = ProductionCalculator.fromBuildings(player.buildings,
-            techBranches: player.techBranches)[ResourceType.algae] ??
+    final int produced = game.difficulty.scaleProduction(
+          ProductionCalculator.fromBuildings(player.buildings,
+              techBranches: player.techBranches),
+        )[ResourceType.algae] ??
         0;
     return produced -
         ConsumptionCalculator.totalUnitConsumptionAllLevels(

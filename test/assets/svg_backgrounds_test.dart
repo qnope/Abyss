@@ -26,6 +26,7 @@ enum SvgFrame {
 /// Frame of each icon, by the longest matching prefix of its path under
 /// assets/icons. An icon matching no prefix is not checked yet.
 const _frames = {
+  'buildings/': SvgFrame.vignette,
   'resources/': SvgFrame.transparent,
   'map_content/': SvgFrame.transparent,
   'terrain/plain.svg': SvgFrame.tile,

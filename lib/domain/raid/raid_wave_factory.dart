@@ -4,15 +4,14 @@ import '../map/monster_lair.dart';
 /// Builds the monster wave of a raid from the noise made so far.
 ///
 /// The wave power is `totalNoise × powerPer100Noise / 100` (about noise
-/// ÷ 1.8). Weak waves are made of level 1 monsters; stronger ones switch to
+/// ÷ 2.4). Weak waves are made of level 1 monsters; stronger ones switch to
 /// fewer, tougher monsters.
 abstract final class RaidWaveFactory {
   /// Wave power earned by every 100 points of noise. Calibrated on the
   /// plan of a human win (`scenarios/replays/victoire-tour-85.json`)
-  /// played again with other dice, a careful defence and 20 % more
-  /// fighters, its strongest nearby plan: with the noise of the kernel
-  /// levels, it wins about 13 % of the games.
-  static const int powerPer100Noise = 56;
+  /// played again with other dice and a careful defence: with the noise
+  /// of the kernel levels, it wins about 15 % of the games.
+  static const int powerPer100Noise = 42;
   static const int minMonsters = 5;
   static const int mediumFromPower = 30;
   static const int hardFromPower = 80;

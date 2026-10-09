@@ -5,14 +5,22 @@ import 'monster_difficulty.dart';
 import 'monster_lair.dart';
 
 class ContentPlacer {
-  // Treasures (20 %) and ruins (10 %) are a third as frequent as they
-  // used to be; the freed share stays empty. Monster lairs keep their
-  // 10 % band (rolls >= _ruinsBelow).
-  static const _ruinsBelow = 0.90;
-  static const _ruinsShare = 0.10 / 3;
-  static const _resourceShare = 0.20 / 3;
-  static const _resourceBelow = _ruinsBelow - _ruinsShare;
-  static const _emptyBelow = _resourceBelow - _resourceShare;
+  // A roll in [0.60, 0.80) used to place a treasure and one in
+  // [0.80, 0.90) ruins. Only the first third of each band still does, so
+  // a seed keeps a subset of the treasures it used to place and replays
+  // of older games still find them. Monster lairs keep [0.90, 1).
+  static const _resourceFrom = 0.60;
+  static const _ruinsFrom = 0.80;
+  static const _monsterFrom = 0.90;
+  static const _keptShare = 1 / 3;
+
+  static CellContentType? _treasureFor(double roll) {
+    bool keeps(double from, double to) =>
+        roll >= from && roll < from + (to - from) * _keptShare;
+    if (keeps(_resourceFrom, _ruinsFrom)) return CellContentType.resourceBonus;
+    if (keeps(_ruinsFrom, _monsterFrom)) return CellContentType.ruins;
+    return null;
+  }
 
   static void place({
     required List<MapCell> cells,
@@ -33,13 +41,11 @@ class ContentPlacer {
 
     for (final i in eligible) {
       final roll = random.nextDouble();
-      if (roll < _emptyBelow) continue;
-      final x = i % width, y = i ~/ width;
-      if (roll < _resourceBelow) {
-        _placeResource(cells, i);
-      } else if (roll < _ruinsBelow) {
-        cells[i] = cells[i].copyWith(content: CellContentType.ruins);
+      if (roll < _monsterFrom) {
+        final treasure = _treasureFor(roll);
+        if (treasure != null) cells[i] = cells[i].copyWith(content: treasure);
       } else {
+        final x = i % width, y = i ~/ width;
         _placeMonster(cells, i, x, y, baseX, baseY, random);
         monsterCount++;
         monsterIndices.add(i);
@@ -69,12 +75,6 @@ class ContentPlacer {
       }
     }
     return result;
-  }
-
-  static void _placeResource(List<MapCell> cells, int i) {
-    cells[i] = cells[i].copyWith(
-      content: CellContentType.resourceBonus,
-    );
   }
 
   static void _placeMonster(

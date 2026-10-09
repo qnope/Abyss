@@ -1,3 +1,4 @@
+import '../map/monster_family.dart';
 import '../map/monster_lair.dart';
 import '../unit/unit_stats.dart';
 import '../unit/unit_type.dart';
@@ -38,20 +39,26 @@ class CombatantBuilder {
     return combatants;
   }
 
+  /// One combatant per monster of [lair], family by family; colossi
+  /// fight as bosses.
   static List<Combatant> monsterCombatantsFrom(MonsterLair lair) {
     final int level = lair.level;
-    final MonsterUnitStats stats = MonsterUnitStats.forLevel(level);
-    final String typeKey = 'monsterL$level';
-    return List<Combatant>.generate(
-      lair.unitCount,
-      (_) => Combatant(
-        side: CombatSide.monster,
-        typeKey: typeKey,
-        maxHp: stats.hp,
-        atk: stats.atk,
-        def: stats.def,
-      ),
-    );
+    final List<Combatant> combatants = <Combatant>[];
+    lair.groups.forEach((MonsterFamily? family, int count) {
+      final MonsterUnitStats stats = MonsterUnitStats.of(family, level);
+      final String typeKey = MonsterFamily.typeKeyOf(family, level);
+      for (int i = 0; i < count; i++) {
+        combatants.add(Combatant(
+          side: CombatSide.monster,
+          typeKey: typeKey,
+          maxHp: stats.hp,
+          atk: stats.atk,
+          def: stats.def,
+          isBoss: family == MonsterFamily.colossus,
+        ));
+      }
+    });
+    return combatants;
   }
 
   static UnitType? unitTypeFromKey(String key) {

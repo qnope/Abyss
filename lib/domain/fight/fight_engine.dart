@@ -6,6 +6,7 @@ import 'attack_damage.dart';
 import 'crit_roller.dart';
 import 'fight_result.dart';
 import 'fight_turn_summary.dart';
+import 'monster_rules.dart';
 import 'target_picker.dart';
 import 'turn_order.dart';
 
@@ -79,7 +80,7 @@ class FightEngine {
       }
       final List<Combatant> pool =
           attacker.side == CombatSide.player ? monsterSide : playerSide;
-      final Combatant? target = TargetPicker.pick(pool, _random);
+      final Combatant? target = TargetPicker.pick(pool, _random, attacker: attacker);
       if (target == null) {
         break;
       }
@@ -92,7 +93,13 @@ class FightEngine {
         target: target,
         crit: crit,
       );
-      final int applied = target.applyDamage(dmg);
+      int applied = target.applyDamage(dmg);
+      final Combatant? swept =
+          MonsterRules.sweepTarget(attacker, target, pool, _random);
+      if (swept != null) {
+        applied += swept.applyDamage(
+            AttackDamage.compute(attacker: attacker, target: swept));
+      }
       stats.attacks += 1;
       if (attacker.side == CombatSide.player) {
         stats.dmgPlayer += applied;

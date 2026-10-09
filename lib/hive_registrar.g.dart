@@ -20,6 +20,7 @@ import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_family.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/map/reinforcement_order.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
@@ -59,6 +60,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(HistoryEntryCategoryAdapter());
     registerAdapter(MapCellAdapter());
     registerAdapter(MonsterDifficultyAdapter());
+    registerAdapter(MonsterFamilyAdapter());
     registerAdapter(MonsterLairAdapter());
     registerAdapter(PlayerAdapter());
     registerAdapter(RaidEntryAdapter());
@@ -106,6 +108,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(HistoryEntryCategoryAdapter());
     registerAdapter(MapCellAdapter());
     registerAdapter(MonsterDifficultyAdapter());
+    registerAdapter(MonsterFamilyAdapter());
     registerAdapter(MonsterLairAdapter());
     registerAdapter(PlayerAdapter());
     registerAdapter(RaidEntryAdapter());

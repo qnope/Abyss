@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/cheat_codes.dart';
+import '../../../domain/game/difficulty.dart';
 import '../../../domain/game/game_factory.dart';
+import '../../widgets/common/difficulty_picker.dart';
 import '../game/game_screen.dart';
 
 class NewGameScreen extends StatefulWidget {
@@ -16,6 +18,7 @@ class NewGameScreen extends StatefulWidget {
 class _NewGameScreenState extends State<NewGameScreen> {
   final _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  Difficulty _difficulty = Difficulty.normal;
 
   @override
   void dispose() {
@@ -30,7 +33,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Nouvelle Partie')),
       body: Center(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Form(
             key: _formKey,
@@ -52,6 +55,11 @@ class _NewGameScreenState extends State<NewGameScreen> {
                   ),
                   validator: _validateName,
                   onFieldSubmitted: (_) => _submit(),
+                ),
+                const SizedBox(height: 24),
+                DifficultyPicker(
+                  current: _difficulty,
+                  onChanged: (d) => setState(() => _difficulty = d),
                 ),
                 const SizedBox(height: 32),
                 SizedBox(
@@ -83,7 +91,10 @@ class _NewGameScreenState extends State<NewGameScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final name = _controller.text.trim();
-    final game = GameFactory.newSinglePlayer(playerName: name);
+    final game = GameFactory.newSinglePlayer(
+      playerName: name,
+      difficulty: _difficulty,
+    );
     CheatCodes.apply(game.humanPlayer);
     await widget.repository.save(game);
 

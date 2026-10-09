@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../map/map_generator.dart';
+import 'difficulty.dart';
 import 'game.dart';
 import '../replay/replay_journal.dart';
 import 'player.dart';
@@ -9,7 +10,11 @@ import 'player.dart';
 /// player standing on its base.
 abstract final class GameFactory {
   /// [mapSeed] makes the first level reproducible; `null` draws one.
-  static Game newSinglePlayer({required String playerName, int? mapSeed}) {
+  static Game newSinglePlayer({
+    required String playerName,
+    int? mapSeed,
+    Difficulty difficulty = Difficulty.normal,
+  }) {
     final int seed = mapSeed ?? Random().nextInt(0x7FFFFFFF);
     final generation = MapGenerator.generate(seed: seed);
     final player = Player.withBase(
@@ -19,7 +24,7 @@ abstract final class GameFactory {
       mapWidth: generation.map.width,
       mapHeight: generation.map.height,
     );
-    return Game.singlePlayer(player)
+    return Game.singlePlayer(player, difficulty: difficulty)
       ..levels = {1: generation.map}
       ..replay = ReplayJournal(mapSeed: seed, playerName: playerName);
   }

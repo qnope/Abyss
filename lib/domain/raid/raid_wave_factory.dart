@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../fight/monster_unit_stats.dart';
+import '../game/difficulty.dart';
 import '../map/monster_difficulty.dart';
 import '../map/monster_family.dart';
 import '../map/monster_lair.dart';
@@ -23,21 +24,30 @@ abstract final class RaidWaveFactory {
   static const int mediumFromPower = 30;
   static const int hardFromPower = 80;
 
-  static MonsterLair fromTotalNoise(int totalNoise, {Random? random}) {
-    final int power = totalNoise * powerPer100Noise ~/ 100;
-    final MonsterDifficulty difficulty =
+  /// The [difficulty] scales the power, so a harder game also switches
+  /// sooner to tougher monsters.
+  static MonsterLair fromTotalNoise(
+    int totalNoise, {
+    Random? random,
+    Difficulty difficulty = Difficulty.normal,
+  }) {
+    final int power = totalNoise *
+        powerPer100Noise *
+        difficulty.monsterPercent ~/
+        10000;
+    final MonsterDifficulty level =
         power >= hardFromPower
             ? MonsterDifficulty.hard
             : power >= mediumFromPower
             ? MonsterDifficulty.medium
             : MonsterDifficulty.easy;
-    final int generic = max(power ~/ _costOf(difficulty), minMonsters);
+    final int generic = max(power ~/ _costOf(level), minMonsters);
     final List<MonsterFamily> families = List<MonsterFamily>.of(
-      MonsterFamily.availableAt(MonsterUnitStats.levelFor(difficulty)),
+      MonsterFamily.availableAt(MonsterUnitStats.levelFor(level)),
     )..shuffle(random ?? Random());
     final int firstShare = (generic + 1) ~/ 2;
     return MonsterLair(
-      difficulty: difficulty,
+      difficulty: level,
       family: families[0],
       unitCount: MonsterUnitStats.countFor(families[0], firstShare),
       secondFamily: families[1],

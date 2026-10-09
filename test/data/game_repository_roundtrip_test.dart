@@ -9,6 +9,7 @@ import 'package:abyss/domain/fight/combat_side.dart';
 import 'package:abyss/domain/fight/combatant.dart';
 import 'package:abyss/domain/fight/fight_result.dart';
 import 'package:abyss/domain/fight/fight_turn_summary.dart';
+import 'package:abyss/domain/game/difficulty.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
@@ -54,6 +55,7 @@ void _registerAdapters() {
   Hive.registerAdapter(GridPositionAdapter());
   Hive.registerAdapter(ExplorationOrderAdapter());
   Hive.registerAdapter(GameAdapter());
+  Hive.registerAdapter(DifficultyAdapter());
   Hive.registerAdapter(HistoryEntryCategoryAdapter());
   Hive.registerAdapter(BuildingEntryAdapter());
   Hive.registerAdapter(ResearchEntryAdapter());

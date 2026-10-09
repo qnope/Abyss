@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../game/difficulty.dart';
 import 'script_turn.dart';
 
 /// A way to play a whole game without the UI.
@@ -20,6 +21,9 @@ abstract class GameScript {
 
   /// Seed of the first level; `null` lets the runner's seed pick it.
   int? get mapSeed => null;
+
+  /// Difficulty the game was played in; `null` lets the runner pick it.
+  Difficulty? get difficulty => null;
 
   /// The turn the game stops on, before ending it; `null` plays on.
   int? get lastTurn => null;

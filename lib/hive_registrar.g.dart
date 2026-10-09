@@ -9,6 +9,7 @@ import 'package:abyss/domain/fight/combat_side.dart';
 import 'package:abyss/domain/fight/combatant.dart';
 import 'package:abyss/domain/fight/fight_result.dart';
 import 'package:abyss/domain/fight/fight_turn_summary.dart';
+import 'package:abyss/domain/game/difficulty.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
@@ -50,6 +51,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(CombatSideAdapter());
     registerAdapter(CombatantAdapter());
     registerAdapter(DescentEntryAdapter());
+    registerAdapter(DifficultyAdapter());
     registerAdapter(ExplorationOrderAdapter());
     registerAdapter(ExploreEntryAdapter());
     registerAdapter(FightResultAdapter());
@@ -100,6 +102,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(CombatSideAdapter());
     registerAdapter(CombatantAdapter());
     registerAdapter(DescentEntryAdapter());
+    registerAdapter(DifficultyAdapter());
     registerAdapter(ExplorationOrderAdapter());
     registerAdapter(ExploreEntryAdapter());
     registerAdapter(FightResultAdapter());

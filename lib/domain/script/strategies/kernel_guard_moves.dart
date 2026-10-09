@@ -29,7 +29,10 @@ extension KernelGuardMoves on ScriptTurn {
     final int level = KernelGarrison.kernelLevelOf(player);
     if (level < 1) return;
     _garrisonVolcanoFighters();
-    final MonsterLair wave = VolcanoWaveFactory.fromKernelLevel(level);
+    final MonsterLair wave = VolcanoWaveFactory.fromKernelLevel(
+      level,
+      difficulty: game.difficulty,
+    );
     final Map<UnitType, int> before = _homeCounts();
     topUp(
       base: KernelGarrison.of(player),

@@ -6,6 +6,7 @@ import 'package:abyss/data/game_repository.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/building/coral_citadel_rampart.dart';
+import 'package:abyss/domain/game/difficulty.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
@@ -49,6 +50,7 @@ void _registerAdapters() {
   Hive.registerAdapter(GridPositionAdapter());
   Hive.registerAdapter(ExplorationOrderAdapter());
   Hive.registerAdapter(GameAdapter());
+  Hive.registerAdapter(DifficultyAdapter());
   Hive.registerAdapter(GameStatusAdapter());
   Hive.registerAdapter(RaidStateAdapter());
   Hive.registerAdapter(VolcanoStateAdapter());

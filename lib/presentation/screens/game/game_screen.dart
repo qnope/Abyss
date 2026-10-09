@@ -130,7 +130,7 @@ class _GameScreenState extends State<GameScreen> {
       currentTurn: widget.game.turn,
       production: production, consumption: consumption,
       buildingsToDeactivate: deactivated,
-      unitsToLose: computeUnitsToLose(human, deactivated),
+      unitsToLose: computeUnitsToLose(widget.game, human, deactivated),
       pendingExplorationCount: human.pendingExplorations.length,
       raidWarning: dueWarnings(widget.game, human));
     if (!confirmed || !mounted) return;

@@ -29,6 +29,7 @@ abstract final class ReplayExport {
       'name': fileName(game).replaceAll('.json', ''),
       'player': journal.playerName,
       'mapSeed': journal.mapSeed,
+      'difficulty': game.difficulty.name,
       'lastTurn': game.turn,
       'exact': journal.exact,
       'status': game.status.name,

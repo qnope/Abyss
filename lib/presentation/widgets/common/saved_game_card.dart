@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/game_status.dart';
+import '../../extensions/difficulty_extensions.dart';
 import '../../theme/abyss_colors.dart';
 
 class SavedGameCard extends StatelessWidget {
@@ -67,7 +68,7 @@ class SavedGameCard extends StatelessWidget {
         Text(
           game.status == GameStatus.defeat
               ? 'Défaite au tour ${game.turn - 1}'
-              : 'Tour ${game.turn}',
+              : 'Tour ${game.turn} · ${game.difficulty.displayName}',
           style: textTheme.bodyMedium?.copyWith(
             color: game.status == GameStatus.defeat
                 ? AbyssColors.error

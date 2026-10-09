@@ -4,6 +4,7 @@ import '../map/cell_content_type.dart';
 import '../map/game_map.dart';
 import '../map/transition_base_type.dart';
 import '../replay/replay_journal.dart';
+import 'difficulty.dart';
 import 'game_status.dart';
 import 'player.dart';
 
@@ -34,6 +35,11 @@ class Game extends HiveObject {
   @HiveField(6)
   ReplayJournal? replay;
 
+  /// Picked when the game started; `null` for games saved before the
+  /// difficulty existed, which play in normal.
+  @HiveField(7)
+  Difficulty? savedDifficulty;
+
   Game({
     required this.humanPlayerId,
     required this.players,
@@ -42,12 +48,20 @@ class Game extends HiveObject {
     this.levels = const {},
     this.status = GameStatus.playing,
     this.replay,
-  }) : createdAt = createdAt ?? DateTime.now();
+    Difficulty difficulty = Difficulty.normal,
+  }) : savedDifficulty = difficulty,
+       createdAt = createdAt ?? DateTime.now();
 
-  factory Game.singlePlayer(Player human) => Game(
+  factory Game.singlePlayer(
+    Player human, {
+    Difficulty difficulty = Difficulty.normal,
+  }) => Game(
         humanPlayerId: human.id,
         players: {human.id: human},
+        difficulty: difficulty,
       );
+
+  Difficulty get difficulty => savedDifficulty ?? Difficulty.normal;
 
   Player get humanPlayer => players[humanPlayerId]!;
 

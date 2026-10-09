@@ -27,13 +27,13 @@ class GameAdapter extends TypeAdapter<Game> {
               : (fields[4] as Map).cast<int, GameMap>(),
       status: fields[5] == null ? GameStatus.playing : fields[5] as GameStatus,
       replay: fields[6] as ReplayJournal?,
-    );
+    )..savedDifficulty = fields[7] as Difficulty?;
   }
 
   @override
   void write(BinaryWriter writer, Game obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.players)
       ..writeByte(1)
@@ -47,7 +47,9 @@ class GameAdapter extends TypeAdapter<Game> {
       ..writeByte(5)
       ..write(obj.status)
       ..writeByte(6)
-      ..write(obj.replay);
+      ..write(obj.replay)
+      ..writeByte(7)
+      ..write(obj.savedDifficulty);
   }
 
   @override

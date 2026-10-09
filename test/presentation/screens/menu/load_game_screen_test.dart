@@ -49,10 +49,10 @@ void main() {
       await tester.pumpWidget(createApp());
 
       expect(find.text('Alice'), findsOneWidget);
-      expect(find.text('Tour 5'), findsOneWidget);
+      expect(find.text('Tour 5 · Normal'), findsOneWidget);
       expect(find.text('15/03/2026 14:30'), findsOneWidget);
       expect(find.text('Bob'), findsOneWidget);
-      expect(find.text('Tour 12'), findsOneWidget);
+      expect(find.text('Tour 12 · Normal'), findsOneWidget);
       expect(find.text('20/03/2026 09:00'), findsOneWidget);
     });
 

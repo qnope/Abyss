@@ -1,5 +1,6 @@
 import '../building/building.dart';
 import '../building/building_deactivator.dart';
+import '../game/difficulty.dart';
 import '../game/player.dart';
 import '../resource/consumption_calculator.dart';
 import '../resource/production_calculator.dart';
@@ -12,15 +13,16 @@ class PlayerTurnResolver {
     Player player,
     int previousTurn, {
     Map<ResourceType, int> extraProduction = const {},
+    Difficulty difficulty = Difficulty.normal,
   }) {
     final hadRecruitedUnits = player.recruitedUnitTypes.isNotEmpty;
 
     // Step 1: Calculate initial production
     var production = _withExtra(
-      ProductionCalculator.fromBuildings(
+      difficulty.scaleProduction(ProductionCalculator.fromBuildings(
         player.buildings,
         techBranches: player.techBranches,
-      ),
+      )),
       extraProduction,
     );
 
@@ -40,10 +42,10 @@ class PlayerTurnResolver {
         activeBuildings[type] = Building(type: type, level: 0);
       }
       production = _withExtra(
-        ProductionCalculator.fromBuildings(
+        difficulty.scaleProduction(ProductionCalculator.fromBuildings(
           activeBuildings,
           techBranches: player.techBranches,
-        ),
+        )),
         extraProduction,
       );
     }

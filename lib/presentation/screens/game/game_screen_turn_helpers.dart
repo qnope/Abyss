@@ -17,8 +17,9 @@ import '../../widgets/raid/raid_due_warning.dart';
 import '../../widgets/volcano/volcano_due_warning.dart';
 
 Map<ResourceType, int> computeProduction(Game game, Player player) {
-  final production = ProductionCalculator.fromBuildings(
-    player.buildings, techBranches: player.techBranches);
+  final production = game.difficulty.scaleProduction(
+    ProductionCalculator.fromBuildings(
+      player.buildings, techBranches: player.techBranches));
   final pearls = PearlIncome.of(game, player.id);
   if (pearls > 0) {
     production[ResourceType.pearl] =
@@ -52,6 +53,7 @@ List<BuildingType> computeBuildingsToDeactivate(
 }
 
 Map<UnitType, int> computeUnitsToLose(
+  Game game,
   Player player,
   List<BuildingType> deactivated,
 ) {
@@ -59,9 +61,11 @@ Map<UnitType, int> computeUnitsToLose(
   for (final type in deactivated) {
     activeBuildings[type] = Building(type: type, level: 0);
   }
-  final prod = ProductionCalculator.fromBuildings(
-    activeBuildings,
-    techBranches: player.techBranches,
+  final prod = game.difficulty.scaleProduction(
+    ProductionCalculator.fromBuildings(
+      activeBuildings,
+      techBranches: player.techBranches,
+    ),
   );
   final algaeProd = prod[ResourceType.algae] ?? 0;
   final algaeStock = player.resources[ResourceType.algae]?.amount ?? 0;

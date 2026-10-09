@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../game/difficulty.dart';
 import 'action_codec.dart';
 import 'action_spec.dart';
 import 'script_library.dart';
@@ -42,9 +43,18 @@ abstract final class ScenarioParser {
       otherwise: otherwise is String ? ScriptLibrary.byName(otherwise) : null,
       player: json['player'] as String?,
       mapSeed: json['mapSeed'] as int?,
+      difficulty: _difficultyOf(json['difficulty']),
       lastTurn: json['lastTurn'] as int?,
       endTurnSeeds: _seedsOf(json['endTurnSeeds']),
     );
+  }
+
+  static Difficulty? _difficultyOf(Object? value) {
+    if (value == null) return null;
+    for (final Difficulty d in Difficulty.values) {
+      if (d.name == value) return d;
+    }
+    throw FormatException('Difficulté inconnue : $value');
   }
 
   static Map<int, int> _seedsOf(Object? value) {

@@ -25,16 +25,19 @@ class TurnResolver {
         player,
         previousTurn,
         extraProduction: PearlIncome.asProduction(game, player.id),
+        difficulty: game.difficulty,
       );
       final outcome = RaidResolver.resolve(
         player,
         previousTurn,
         random: random,
+        difficulty: game.difficulty,
       );
       final volcanoOutcome = VolcanoResolver.resolve(
         player,
         previousTurn,
         random: random,
+        difficulty: game.difficulty,
       );
       if (player.id == humanId) {
         humanResult = result;

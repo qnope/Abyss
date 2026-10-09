@@ -22,6 +22,7 @@
 //                       the number of processor cores)
 //   --verbose           one line per game, plus the action log of game 1
 //   --json              print the whole batch as JSON
+//   --difficulty <d>    easy, normal (default) or hard
 //
 // Variants of a replay (the plan of the human, moved away from the game):
 //   --replay <file>     exported replay to vary
@@ -37,6 +38,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:abyss/domain/game/difficulty.dart';
 import 'package:abyss/domain/script/batch_report.dart';
 import 'package:abyss/domain/script/batch_runner.dart';
 import 'package:abyss/domain/script/game_script.dart';
@@ -58,7 +60,10 @@ Future<void> main(List<String> args) async {
           : (_) => ScriptLibrary.byName(options['strategy'] ?? 'balanced');
   final int firstSeed = int.parse(options['seed'] ?? '1');
   final BatchReport report = await BatchRunner(
-    runner: ScriptRunner(maxTurns: int.parse(options['turns'] ?? '60')),
+    runner: ScriptRunner(
+      maxTurns: int.parse(options['turns'] ?? '60'),
+      difficulty: Difficulty.values.byName(options['difficulty'] ?? 'normal'),
+    ),
     workers: int.parse(options['workers'] ?? '${Platform.numberOfProcessors}'),
   ).run(
     build,

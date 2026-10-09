@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../game/difficulty.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
 import '../map/monster_lair.dart';
@@ -29,6 +30,7 @@ abstract final class RaidResolver {
     Player player,
     int endedTurn, {
     Random? random,
+    Difficulty difficulty = Difficulty.normal,
   }) {
     final RaidState state = player.raidState;
     RaidReport? report;
@@ -48,7 +50,8 @@ abstract final class RaidResolver {
       return RaidTurnOutcome(report: report);
     }
     final MonsterLair wave =
-        RaidWaveFactory.fromTotalNoise(state.totalNoise, random: random);
+        RaidWaveFactory.fromTotalNoise(state.totalNoise,
+            random: random, difficulty: difficulty);
     final int arrival =
         max(endedTurn + TechEffects(player.techBranches).raidWarningTurns,
             NoiseRules.firstRaidTurn);

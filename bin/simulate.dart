@@ -22,7 +22,8 @@
 //                       the number of processor cores)
 //   --verbose           one line per game, plus the action log of game 1
 //   --json              print the whole batch as JSON
-//   --difficulty <d>    easy, normal (default) or hard
+//   --difficulty <d>    easy, normal (default) or hard; an exported
+//                       --scenario keeps the difficulty it was played in
 //
 // Variants of a replay (the plan of the human, moved away from the game):
 //   --replay <file>     exported replay to vary

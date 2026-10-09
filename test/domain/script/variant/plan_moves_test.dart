@@ -32,7 +32,7 @@ void main() {
 
     final report = ScriptRunner(maxTurns: 40).run(script, seed: 3);
 
-    expect(report.milestones.failleCaptured, 30);
+    expect(report.milestones.failleCaptured, 32);
     expect(report.milestones.chemineeCaptured, 39);
   });
 

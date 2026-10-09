@@ -11,6 +11,30 @@ FenwickTree _withOnes(int size, List<int> ones) {
   return tree;
 }
 
+/// A tree built with one `add` per non-zero entry of [counts].
+FenwickTree _added(List<int> counts) {
+  final FenwickTree tree = FenwickTree(counts.length);
+  for (int position = 0; position < counts.length; position++) {
+    if (counts[position] != 0) tree.add(position, counts[position]);
+  }
+  return tree;
+}
+
+/// Checks [a] and [b] agree on every read.
+void _expectSame(FenwickTree a, FenwickTree b) {
+  expect(a.size, b.size);
+  expect(a.total, b.total);
+  for (int end = 0; end <= a.size; end++) {
+    expect(a.prefix(end), b.prefix(end), reason: 'prefix($end)');
+  }
+  for (int position = 0; position < a.size; position++) {
+    expect(a.at(position), b.at(position), reason: 'at($position)');
+  }
+  for (int n = 0; n < a.total; n++) {
+    expect(a.positionOfNth(n), b.positionOfNth(n), reason: 'nth($n)');
+  }
+}
+
 void main() {
   group('FenwickTree', () {
     test('starts empty', () {
@@ -78,6 +102,46 @@ void main() {
       expect(tree.positionOfNth(1), 0);
       expect(tree.positionOfNth(2), 2);
       expect(tree.positionOfNth(4), 2);
+    });
+  });
+
+  group('FenwickTree.fromCounts', () {
+    const List<int> gapped = <int>[0, 1, 0, 1, 1, 0, 0, 1];
+    const List<int> odd = <int>[1, 0, 2, 1, 0, 0, 1, 1, 0, 3, 0, 1, 1];
+
+    test('equals a tree built with add on a gapped pattern', () {
+      _expectSame(FenwickTree.fromCounts(gapped), _added(gapped));
+    });
+
+    test('equals a tree built with add on a size that is not a power of two',
+        () {
+      _expectSame(FenwickTree.fromCounts(odd), _added(odd));
+    });
+
+    test('keeps accepting updates', () {
+      final FenwickTree built = FenwickTree.fromCounts(odd);
+      final FenwickTree added = _added(odd);
+      built.add(9, -2);
+      added.add(9, -2);
+      built.add(4, 1);
+      added.add(4, 1);
+
+      _expectSame(built, added);
+    });
+
+    test('does not share the counts it was given', () {
+      final List<int> counts = <int>[1, 1];
+      final FenwickTree tree = FenwickTree.fromCounts(counts);
+      counts[0] = 5;
+
+      expect(tree.at(0), 1);
+      expect(tree.total, 2);
+    });
+
+    test('handles no positions', () {
+      final FenwickTree tree = FenwickTree.fromCounts(const <int>[]);
+      expect(tree.size, 0);
+      expect(tree.total, 0);
     });
   });
 }

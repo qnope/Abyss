@@ -16,17 +16,41 @@ class AliveIndex {
   final FenwickTree _alive;
   final FenwickTree _taunting;
   final FenwickTree _swarm;
-  final HashMap<Combatant, int> _positions = HashMap<Combatant, int>.identity();
+  final HashMap<Combatant, int> _positions;
 
-  AliveIndex(this.pool)
-      : _alive = FenwickTree(pool.length),
-        _taunting = FenwickTree(pool.length),
-        _swarm = FenwickTree(pool.length) {
-    for (int i = 0; i < pool.length; i++) {
-      _positions[pool[i]] = i;
-      if (pool[i].isAlive) _mark(pool[i], i, 1);
+  /// Indexes [pool] in one pass: one count per position for each set,
+  /// then a linear tree build instead of a point update per combatant.
+  factory AliveIndex(List<Combatant> pool) {
+    final int size = pool.length;
+    final List<int> alive = List<int>.filled(size, 0);
+    final List<int> taunting = List<int>.filled(size, 0);
+    final List<int> swarm = List<int>.filled(size, 0);
+    final HashMap<Combatant, int> positions =
+        HashMap<Combatant, int>.identity();
+    for (int i = 0; i < size; i++) {
+      final Combatant c = pool[i];
+      positions[c] = i;
+      if (!c.isAlive) continue;
+      alive[i] = 1;
+      if (_taunts(c)) taunting[i] = 1;
+      if (_swarms(c)) swarm[i] = 1;
     }
+    return AliveIndex._(
+      pool,
+      FenwickTree.fromCounts(alive),
+      FenwickTree.fromCounts(taunting),
+      FenwickTree.fromCounts(swarm),
+      positions,
+    );
   }
+
+  AliveIndex._(
+    this.pool,
+    this._alive,
+    this._taunting,
+    this._swarm,
+    this._positions,
+  );
 
   int get alive => _alive.total;
   int get taunting => _taunting.total;
@@ -52,14 +76,13 @@ class AliveIndex {
   void bury(Combatant c) {
     final int? position = _positions[c];
     if (position == null || _alive.at(position) == 0) return;
-    _mark(c, position, -1);
+    _alive.add(position, -1);
+    if (_taunts(c)) _taunting.add(position, -1);
+    if (_swarms(c)) _swarm.add(position, -1);
   }
 
-  void _mark(Combatant c, int position, int delta) {
-    _alive.add(position, delta);
-    if (c.role == CombatRole.taunt) _taunting.add(position, delta);
-    if (c.family == MonsterFamily.swarm) _swarm.add(position, delta);
-  }
+  static bool _taunts(Combatant c) => c.role == CombatRole.taunt;
+  static bool _swarms(Combatant c) => c.family == MonsterFamily.swarm;
 
   /// Count [tree] holds for [c]: `0` when it is out or not in [pool].
   int _weight(FenwickTree tree, Combatant c) {

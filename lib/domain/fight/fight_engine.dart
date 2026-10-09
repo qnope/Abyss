@@ -33,13 +33,19 @@ class FightEngine {
     final int initialMonsterCount = monsterSide.length;
     final AliveIndex players = AliveIndex(playerSide);
     final AliveIndex monsters = AliveIndex(monsterSide);
+    // Running HP totals: every point of damage goes through [_hit], whose
+    // applied amount is what the turn stats accumulate for the other side.
+    int playerHp = _sumHp(playerSide);
+    int monsterHp = _sumHp(monsterSide);
 
     final List<FightTurnSummary> summaries = <FightTurnSummary>[];
     int turnNumber = 0;
 
-    while (_anyAlive(playerSide) && _anyAlive(monsterSide)) {
+    while (players.alive > 0 && monsters.alive > 0) {
       turnNumber += 1;
       final FightTurnStats stats = _runTurn(players, monsters);
+      playerHp -= stats.dmgMonster;
+      monsterHp -= stats.dmgPlayer;
       summaries.add(
         FightTurnSummary(
           turnNumber: turnNumber,
@@ -47,26 +53,22 @@ class FightEngine {
           critCount: stats.crits,
           damageDealtByPlayer: stats.dmgPlayer,
           damageDealtByMonster: stats.dmgMonster,
-          playerAliveAtEnd: _countAlive(playerSide),
-          monsterAliveAtEnd: _countAlive(monsterSide),
-          playerHpAtEnd: _sumHp(playerSide),
-          monsterHpAtEnd: _sumHp(monsterSide),
+          playerAliveAtEnd: players.alive,
+          monsterAliveAtEnd: monsters.alive,
+          playerHpAtEnd: playerHp,
+          monsterHpAtEnd: monsterHp,
         ),
       );
     }
 
-    final CombatSide winner =
-        _anyAlive(playerSide) ? CombatSide.player : CombatSide.monster;
-    final int finalMonsterCount = _countAlive(monsterSide);
-
     return FightResult(
-      winner: winner,
+      winner: players.alive > 0 ? CombatSide.player : CombatSide.monster,
       turnCount: turnNumber,
       turnSummaries: summaries,
       initialPlayerCombatants: initialPlayerCombatants,
       finalPlayerCombatants: playerSide,
       initialMonsterCount: initialMonsterCount,
-      finalMonsterCount: finalMonsterCount,
+      finalMonsterCount: monsters.alive,
     );
   }
 
@@ -132,12 +134,6 @@ class FightEngine {
       isBoss: c.isBoss,
     );
   }
-
-  static bool _anyAlive(List<Combatant> list) =>
-      list.any((Combatant c) => c.isAlive);
-
-  static int _countAlive(List<Combatant> list) =>
-      list.where((Combatant c) => c.isAlive).length;
 
   static int _sumHp(List<Combatant> list) =>
       list.fold<int>(0, (int acc, Combatant c) => acc + c.currentHp);

@@ -19,6 +19,7 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
     HistoryEntryCategory.descent => Icons.arrow_downward,
     HistoryEntryCategory.reinforcement => Icons.groups,
     HistoryEntryCategory.raid => Icons.warning_amber,
+    HistoryEntryCategory.volcano => Icons.volcano,
   };
 
   /// Background / accent color for this category, sourced from the
@@ -38,6 +39,7 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
       HistoryEntryCategory.descent => AbyssColors.biolumPurple,
       HistoryEntryCategory.reinforcement => AbyssColors.biolumTeal,
       HistoryEntryCategory.raid => AbyssColors.warning,
+      HistoryEntryCategory.volcano => AbyssColors.coralPink,
     };
   }
 
@@ -54,5 +56,6 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
     HistoryEntryCategory.descent => 'Descente',
     HistoryEntryCategory.reinforcement => 'Renfort',
     HistoryEntryCategory.raid => 'Raid',
+    HistoryEntryCategory.volcano => 'Volcan',
   };
 }

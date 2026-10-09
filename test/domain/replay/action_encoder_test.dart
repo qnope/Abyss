@@ -20,6 +20,14 @@ const List<Map<String, Object?>> _scenarioActions = <Map<String, Object?>>[
   {'do': 'research', 'branch': 'military', 'option': 'b'},
   {'do': 'recruit', 'unit': 'guardian', 'count': 4},
   {'do': 'explore', 'x': 3, 'y': 4},
+  {
+    'do': 'garrison',
+    'units': {'domeBreaker': 4, 'guardian': 2},
+  },
+  {
+    'do': 'withdraw',
+    'units': {'guardian': 1},
+  },
   {'do': 'collect', 'x': 3, 'y': 4, 'level': 2, 'seed': 11},
   {
     'do': 'fight',

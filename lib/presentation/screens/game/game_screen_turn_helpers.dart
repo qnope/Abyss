@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_deactivator.dart';
 import '../../../domain/building/building_type.dart';
@@ -12,6 +14,7 @@ import '../../../domain/resource/resource_type.dart';
 import '../../../domain/unit/unit_loss_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../widgets/raid/raid_due_warning.dart';
+import '../../widgets/volcano/volcano_due_warning.dart';
 
 Map<ResourceType, int> computeProduction(Game game, Player player) {
   final production = ProductionCalculator.fromBuildings(
@@ -80,5 +83,22 @@ RaidDueWarning? raidDueWarning(Game game, Player player) {
     wave: state.incoming!,
     defenderCount: defenders,
     lastChance: DefeatChecker.isLastChance(game),
+  );
+}
+
+/// Warnings for the end-of-turn confirmation: the raid on the base and
+/// the kraken wave on an unguarded kernel, `null` when neither hits.
+Widget? dueWarnings(Game game, Player player) {
+  final Widget? raid = raidDueWarning(game, player);
+  final Widget? volcano = VolcanoDueWarning.of(game, player);
+  final List<Widget> warnings = <Widget>[
+    if (raid != null) raid,
+    if (volcano != null) volcano,
+  ];
+  if (warnings.isEmpty) return null;
+  if (warnings.length == 1) return warnings.single;
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: warnings,
   );
 }

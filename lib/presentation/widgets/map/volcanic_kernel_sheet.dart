@@ -1,29 +1,45 @@
 import 'package:flutter/material.dart';
+import '../../../domain/game/player.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
+import '../volcano/kernel_garrison_panel.dart';
 
+/// [player] is the human player; the garrison panel only shows once the
+/// kernel is captured.
 void showVolcanicKernelSheet(
   BuildContext context, {
   required bool isCaptured,
+  required Player player,
   required VoidCallback onAttack,
+  required VoidCallback onGarrison,
+  required VoidCallback onWithdraw,
 }) {
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     builder: (_) => _VolcanicKernelSheet(
       isCaptured: isCaptured,
+      player: player,
       onAttack: onAttack,
+      onGarrison: onGarrison,
+      onWithdraw: onWithdraw,
     ),
   );
 }
 
 class _VolcanicKernelSheet extends StatelessWidget {
   final bool isCaptured;
+  final Player player;
   final VoidCallback onAttack;
+  final VoidCallback onGarrison;
+  final VoidCallback onWithdraw;
 
   const _VolcanicKernelSheet({
     required this.isCaptured,
+    required this.player,
     required this.onAttack,
+    required this.onGarrison,
+    required this.onWithdraw,
   });
 
   @override
@@ -54,12 +70,15 @@ class _VolcanicKernelSheet extends StatelessWidget {
             ),
           ),
           const Divider(height: 24),
-          if (!isCaptured)
+          if (isCaptured)
+            KernelGarrisonPanel(
+              player: player,
+              onGarrison: () => _closeThen(context, onGarrison),
+              onWithdraw: () => _closeThen(context, onWithdraw),
+            )
+          else
             FilledButton(
-              onPressed: () {
-                Navigator.pop(context);
-                onAttack();
-              },
+              onPressed: () => _closeThen(context, onAttack),
               child: const Text("Lancer l'assaut"),
             ),
         ],
@@ -67,10 +86,16 @@ class _VolcanicKernelSheet extends StatelessWidget {
     );
   }
 
+  static void _closeThen(BuildContext context, VoidCallback action) {
+    Navigator.pop(context);
+    action();
+  }
+
   static const _uncapturedDescription =
       'Le coeur brulant des abysses est garde par de puissants gardiens.';
 
   static const _capturedDescription =
-      'Vous avez capture le Noyau Volcanique. '
-      'Construisez le batiment pour remporter la victoire.';
+      'Vous avez capturé le Noyau Volcanique. Montez-le au niveau 10 pour '
+      'remporter la victoire. Dès le niveau 1, le Kraken vient le reprendre '
+      'chaque tour : une vague gagnée lui retire un niveau.';
 }

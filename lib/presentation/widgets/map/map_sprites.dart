@@ -52,7 +52,7 @@ class MapSprites {
           if (content.svgPath != null) content.svgPath!,
         for (final difficulty in MonsterDifficulty.values) ...[
           difficulty.svgPath,
-          for (final family in MonsterFamily.values)
+          for (final family in MonsterFamily.availableAt(3))
             family.svgPathAt(difficulty),
         ],
         playerBaseSvgPath,

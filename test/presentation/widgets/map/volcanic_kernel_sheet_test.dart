@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/presentation/widgets/map/volcanic_kernel_sheet.dart';
 
 void main() {
   Widget buildOpener({
     required bool isCaptured,
     VoidCallback? onAttack,
+    VoidCallback? onGarrison,
   }) {
     return MaterialApp(
       home: Scaffold(
@@ -14,7 +16,10 @@ void main() {
             onPressed: () => showVolcanicKernelSheet(
               context,
               isCaptured: isCaptured,
+              player: Player(name: 'Nemo'),
               onAttack: onAttack ?? () {},
+              onGarrison: onGarrison ?? () {},
+              onWithdraw: () {},
             ),
             child: const Text('Open'),
           ),
@@ -74,9 +79,22 @@ void main() {
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
       expect(
-        find.textContaining('Vous avez capture le Noyau Volcanique'),
+        find.textContaining('Vous avez capturé le Noyau Volcanique'),
         findsOneWidget,
       );
+    });
+
+    testWidgets('when captured shows the garrison', (tester) async {
+      var called = false;
+      await tester.pumpWidget(
+        buildOpener(isCaptured: true, onGarrison: () => called = true),
+      );
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      expect(find.text('Garnison : 0 unités'), findsOneWidget);
+      await tester.tap(find.text('Mettre en garnison'));
+      await tester.pumpAndSettle();
+      expect(called, isTrue);
     });
   });
 }

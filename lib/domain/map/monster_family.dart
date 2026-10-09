@@ -21,14 +21,24 @@ enum MonsterFamily {
 
   /// Requins dormeurs: a few giants, all bosses, that Briseurs hit twice.
   @HiveField(3)
-  colossus;
+  colossus,
 
-  /// Families that can make up a group of [level] monsters: colossi only
-  /// show up from level 2.
+  /// Le terrifiant Kraken: it only rises from the volcano to take the
+  /// kernel back. A boss whose tentacles strike two defenders at once.
+  @HiveField(4)
+  kraken;
+
+  /// Families that can make up a lair or a raid of [level] monsters:
+  /// colossi only show up from level 2, the kraken never leaves the
+  /// volcano.
   static List<MonsterFamily> availableAt(int level) =>
       level < 2
           ? const <MonsterFamily>[swarm, armoured, hunter]
-          : MonsterFamily.values;
+          : const <MonsterFamily>[swarm, armoured, hunter, colossus];
+
+  /// Whether the monsters of this family fight as bosses, that Briseurs
+  /// hit twice.
+  bool get isBoss => this == colossus || this == kraken;
 
   /// Combatant key of a monster of [family] at [level]; the generic
   /// monsters of older games keep their `monsterL<level>` key.

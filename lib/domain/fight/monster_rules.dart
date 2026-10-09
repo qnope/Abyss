@@ -56,4 +56,30 @@ abstract final class MonsterRules {
     if (others.isEmpty) return null;
     return others[random.nextInt(others.length)];
   }
+
+  /// Étreinte: a kraken's tentacles also strike another defender, picked
+  /// at random. `null` when [attacker] is no kraken or no one else stands.
+  static Combatant? embraceTarget(
+    Combatant attacker,
+    Combatant target,
+    List<Combatant> pool,
+    Random random,
+  ) {
+    if (familyOf(attacker) != MonsterFamily.kraken) return null;
+    final List<Combatant> others =
+        pool.where((Combatant c) => c.isAlive && !identical(c, target)).toList();
+    if (others.isEmpty) return null;
+    return others[random.nextInt(others.length)];
+  }
+
+  /// Second combatant [attacker]'s hit on [target] strikes, by the
+  /// Essaim or Étreinte rule, or `null`.
+  static Combatant? secondTarget(
+    Combatant attacker,
+    Combatant target,
+    List<Combatant> pool,
+    Random random,
+  ) =>
+      sweepTarget(attacker, target, pool, random) ??
+      embraceTarget(attacker, target, pool, random);
 }

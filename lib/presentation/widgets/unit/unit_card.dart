@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../domain/volcano/kernel_garrison.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/unit_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
@@ -37,13 +38,16 @@ class UnitCard extends StatelessWidget {
     );
   }
 
+  static String _placeOf(int key) =>
+      key == KernelGarrison.stockKey ? 'Noyau' : 'Niv $key';
+
   String get _subtitle {
     final nonEmpty = countsPerLevel.entries
         .where((e) => e.value > 0)
         .toList();
     if (nonEmpty.length <= 1) return '$_totalCount unites';
     return nonEmpty
-        .map((e) => 'Niv ${e.key}: ${e.value}')
+        .map((e) => '${_placeOf(e.key)}: ${e.value}')
         .join(' · ');
   }
 

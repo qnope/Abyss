@@ -4,6 +4,7 @@ import '../../../domain/history/history_entry.dart';
 import 'history_entry_card.dart';
 import 'history_fight_launcher.dart';
 import 'history_raid_launcher.dart';
+import 'history_volcano_launcher.dart';
 import 'history_filter.dart';
 import 'history_filter_chips.dart';
 
@@ -97,6 +98,8 @@ class _HistorySheetBodyState extends State<HistorySheetBody> {
           onTap: switch (entry) {
             CombatEntry() => () => openFightSummaryFromEntry(context, entry),
             RaidEntry() => () => openRaidSummaryFromEntry(context, entry),
+            VolcanoEntry() =>
+              () => openVolcanoSummaryFromEntry(context, entry),
             _ => null,
           },
         );

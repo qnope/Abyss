@@ -26,10 +26,10 @@ abstract final class NoiseRules {
   /// No raid may hit the base before the end of this turn.
   static const int firstRaidTurn = 10;
 
-  /// The volcanic kernel wakes the deep: each of its levels makes this
-  /// many times the noise of another building, so waiting for the pearls
-  /// of the last levels is no quiet time.
-  static const int kernelUpgradeFactor = 4;
+  /// Each level of the volcanic kernel makes this many times the noise of
+  /// another building. Back to 1 since the kraken waves keep the end of
+  /// the game busy on their own.
+  static const int kernelUpgradeFactor = 1;
 
   /// Noise of upgrading a building of [type] to [reachedLevel].
   static int forUpgrade(BuildingType type, int reachedLevel) =>

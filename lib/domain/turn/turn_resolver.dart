@@ -5,6 +5,7 @@ import '../game/game.dart';
 import '../map/exploration_resolver.dart';
 import '../map/reinforcement_resolver.dart';
 import '../raid/raid_resolver.dart';
+import '../volcano/volcano_resolver.dart';
 import '../resource/pearl_income.dart';
 import 'player_turn_resolver.dart';
 import 'turn_result.dart';
@@ -17,6 +18,7 @@ class TurnResolver {
     final humanId = game.humanPlayer.id;
     TurnResult? humanResult;
     RaidTurnOutcome raid = const RaidTurnOutcome();
+    VolcanoTurnOutcome volcano = const VolcanoTurnOutcome();
 
     for (final player in game.players.values) {
       final result = PlayerTurnResolver.resolve(
@@ -29,9 +31,15 @@ class TurnResolver {
         previousTurn,
         random: random,
       );
+      final volcanoOutcome = VolcanoResolver.resolve(
+        player,
+        previousTurn,
+        random: random,
+      );
       if (player.id == humanId) {
         humanResult = result;
         raid = outcome;
+        volcano = volcanoOutcome;
       }
     }
 
@@ -53,6 +61,8 @@ class TurnResolver {
       raid: raid.report,
       announcedRaid: raid.announced,
       announcedRaidTurn: raid.announcedTurn,
+      volcano: volcano.report,
+      announcedWave: volcano.announced,
     );
   }
 }

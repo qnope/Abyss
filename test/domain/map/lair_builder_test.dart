@@ -13,7 +13,7 @@ void main() {
     final families = {
       for (int cell = 0; cell < 60; cell++) LairBuilder.familyFor(7, cell, 2),
     };
-    expect(families, MonsterFamily.values.toSet());
+    expect(families, MonsterFamily.availableAt(2).toSet());
   });
 
   test('level 1 lairs are never colossi', () {

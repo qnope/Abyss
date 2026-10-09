@@ -13,7 +13,9 @@ extension HistoryEntryDisplay on HistoryEntry {
   /// losses glow red; every other category delegates to
   /// [HistoryEntryCategoryDisplay.backgroundColor].
   Color accentColor(ThemeData theme) => switch (this) {
-    CombatEntry(:final victory) || RaidEntry(:final victory) =>
+    CombatEntry(:final victory) ||
+    RaidEntry(:final victory) ||
+    VolcanoEntry(:final victory) =>
       victory ? AbyssColors.success : theme.colorScheme.error,
     CaptureEntry() => AbyssColors.energyYellow,
     BuildingEntry() ||
@@ -31,7 +33,10 @@ extension HistoryEntryDisplay on HistoryEntry {
   /// Only combat entries currently carry enough data (the full
   /// [FightResult]) to be replayable, so only they are tappable.
   bool get isTappable => switch (this) {
-    CombatEntry() || CaptureEntry() || RaidEntry() => true,
+    CombatEntry() ||
+    CaptureEntry() ||
+    RaidEntry() ||
+    VolcanoEntry() => true,
     BuildingEntry() ||
     ResearchEntry() ||
     RecruitEntry() ||

@@ -10,6 +10,7 @@ import '../map/grid_position.dart';
 import '../map/reinforcement_order.dart';
 import '../map/reveal_area_calculator.dart';
 import '../raid/raid_state.dart';
+import '../volcano/volcano_state.dart';
 import '../resource/resource.dart';
 import '../resource/resource_type.dart';
 import '../tech/tech_branch.dart';
@@ -68,6 +69,9 @@ class Player extends HiveObject {
   @HiveField(15)
   final Worksite worksite;
 
+  @HiveField(16)
+  final VolcanoState volcanoState;
+
   Player({
     required this.name,
     String? id,
@@ -83,6 +87,7 @@ class Player extends HiveObject {
     List<HistoryEntry>? historyEntries,
     List<ReinforcementOrder>? pendingReinforcements,
     RaidState? raidState,
+    VolcanoState? volcanoState,
     Worksite? worksite,
   })  : id = id ?? const Uuid().v4(),
         resources = resources ?? PlayerDefaults.resources(),
@@ -95,6 +100,7 @@ class Player extends HiveObject {
         historyEntries = historyEntries ?? <HistoryEntry>[],
         pendingReinforcements = pendingReinforcements ?? [],
         raidState = raidState ?? RaidState(),
+        volcanoState = volcanoState ?? VolcanoState(),
         worksite = worksite ?? Worksite();
 
   Player.withBase({

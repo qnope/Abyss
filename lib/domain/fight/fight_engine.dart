@@ -95,7 +95,7 @@ class FightEngine {
       );
       int applied = target.applyDamage(dmg);
       final Combatant? swept =
-          MonsterRules.sweepTarget(attacker, target, pool, _random);
+          MonsterRules.secondTarget(attacker, target, pool, _random);
       if (swept != null) {
         applied += swept.applyDamage(
             AttackDamage.compute(attacker: attacker, target: swept));

@@ -535,3 +535,64 @@ class RaidEntryAdapter extends TypeAdapter<RaidEntry> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class VolcanoEntryAdapter extends TypeAdapter<VolcanoEntry> {
+  @override
+  final typeId = 48;
+
+  @override
+  VolcanoEntry read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return VolcanoEntry(
+      turn: (fields[0] as num).toInt(),
+      victory: fields[4] as bool,
+      wave: fields[5] as MonsterLair,
+      fightResult: fields[6] as FightResult,
+      kernelLevel: (fields[7] as num).toInt(),
+      defenders: (fields[8] as Map).cast<UnitType, int>(),
+      survivorsIntact: (fields[9] as Map).cast<UnitType, int>(),
+      wounded: (fields[10] as Map).cast<UnitType, int>(),
+      dead: (fields[11] as Map).cast<UnitType, int>(),
+      subtitle: fields[3] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, VolcanoEntry obj) {
+    writer
+      ..writeByte(10)
+      ..writeByte(0)
+      ..write(obj.turn)
+      ..writeByte(3)
+      ..write(obj.subtitle)
+      ..writeByte(4)
+      ..write(obj.victory)
+      ..writeByte(5)
+      ..write(obj.wave)
+      ..writeByte(6)
+      ..write(obj.fightResult)
+      ..writeByte(7)
+      ..write(obj.kernelLevel)
+      ..writeByte(8)
+      ..write(obj.defenders)
+      ..writeByte(9)
+      ..write(obj.survivorsIntact)
+      ..writeByte(10)
+      ..write(obj.wounded)
+      ..writeByte(11)
+      ..write(obj.dead);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is VolcanoEntryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

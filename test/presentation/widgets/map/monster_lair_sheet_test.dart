@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_family.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/presentation/widgets/map/monster_lair_sheet.dart';
 import '../../../helpers/test_svg_helper.dart';
@@ -47,11 +48,29 @@ void main() {
         onPrepareFight: () {},
       ));
       await openSheet(tester);
-      expect(find.text('Monstre (1, 2)'), findsOneWidget);
+      expect(find.text('Rôdeurs (1, 2)'), findsOneWidget);
       expect(find.text('Moyen'), findsOneWidget);
       expect(find.text('2'), findsOneWidget);
-      expect(find.text('4'), findsOneWidget);
+      expect(find.text('4 monstres'), findsOneWidget);
       expect(find.text('20 / 5 / 2'), findsOneWidget);
+    });
+
+    testWidgets('shows the family, its rule and its weakness',
+        (tester) async {
+      await tester.pumpWidget(buildOpener(
+        lair: const MonsterLair(
+          difficulty: MonsterDifficulty.medium,
+          unitCount: 50,
+          family: MonsterFamily.hunter,
+        ),
+        onPrepareFight: () {},
+      ));
+      await openSheet(tester);
+      expect(find.text('Chasseurs (1, 2)'), findsOneWidget);
+      expect(find.text('50 Calmars-chasseurs'), findsOneWidget);
+      expect(find.text('16 / 10 / 2'), findsOneWidget);
+      expect(find.textContaining('Traque'), findsOneWidget);
+      expect(find.text('Faible contre : Gardiens'), findsOneWidget);
     });
 
     testWidgets('renders stats for hard difficulty', (tester) async {

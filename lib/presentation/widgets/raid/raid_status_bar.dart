@@ -86,17 +86,26 @@ class RaidStatusBar extends StatelessWidget {
     final when = arrival <= currentTurn
         ? 'à la fin de ce tour'
         : 'à la fin du tour $arrival';
+    final style = Theme.of(context).textTheme.bodyMedium;
+    final weakness = state.incoming!.weaknessLabel;
     return Row(
       children: [
         const Icon(Icons.warning_amber, size: 18, color: AbyssColors.error),
         const SizedBox(width: 8),
         Expanded(
-          child: Text(
-            'Raid $when : ${state.incoming!.waveLabel}',
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: AbyssColors.error),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Raid $when : ${state.incoming!.waveLabel}',
+                style: style?.copyWith(color: AbyssColors.error),
+              ),
+              if (weakness != null)
+                Text(
+                  weakness,
+                  style: style?.copyWith(color: AbyssColors.success),
+                ),
+            ],
           ),
         ),
       ],

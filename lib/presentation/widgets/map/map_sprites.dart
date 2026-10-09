@@ -2,8 +2,10 @@ import 'dart:ui' as ui;
 
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/monster_difficulty.dart';
+import '../../../domain/map/monster_family.dart';
 import '../../../domain/map/terrain_type.dart';
 import '../../extensions/cell_content_type_extensions.dart';
+import '../../extensions/monster_family_extensions.dart';
 import '../../extensions/terrain_type_extensions.dart';
 import '../common/svg_raster_cache.dart';
 import 'map_cell_visual.dart';
@@ -48,7 +50,11 @@ class MapSprites {
         for (final terrain in TerrainType.values) terrain.svgPath,
         for (final content in CellContentType.values)
           if (content.svgPath != null) content.svgPath!,
-        for (final difficulty in MonsterDifficulty.values) difficulty.svgPath,
+        for (final difficulty in MonsterDifficulty.values) ...[
+          difficulty.svgPath,
+          for (final family in MonsterFamily.values)
+            family.svgPathAt(difficulty),
+        ],
         playerBaseSvgPath,
       };
 

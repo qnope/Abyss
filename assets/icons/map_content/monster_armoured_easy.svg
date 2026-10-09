@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="flRock" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5E6B78"/>
+      <stop offset="0.55" stop-color="#36404C"/>
+      <stop offset="1" stop-color="#151B24"/>
+    </linearGradient>
+    <radialGradient id="flCave" cx="0.5" cy="0.85" r="0.8">
+      <stop offset="0" stop-color="#1B2A3A"/>
+      <stop offset="0.6" stop-color="#0A1018"/>
+      <stop offset="1" stop-color="#03050A"/>
+    </radialGradient>
+    <radialGradient id="arShell" cx="0.4" cy="0.25" r="0.85">
+      <stop offset="0" stop-color="#B39DDB"/>
+      <stop offset="0.5" stop-color="#5E4B8B"/>
+      <stop offset="1" stop-color="#1F1638"/>
+    </radialGradient>
+    <linearGradient id="arPlate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9575CD"/>
+      <stop offset="1" stop-color="#311B92"/>
+    </linearGradient>
+    <radialGradient id="meBadge" cx="0.38" cy="0.32" r="0.75">
+      <stop offset="0" stop-color="#66BB6A"/>
+      <stop offset="0.6" stop-color="#2E7D32"/>
+      <stop offset="1" stop-color="#1B5E20"/>
+    </radialGradient>
+    <linearGradient id="meStar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E8FFF3"/>
+      <stop offset="0.5" stop-color="#69F0AE"/>
+      <stop offset="1" stop-color="#1DB57A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- contact shadow -->
+  <ellipse cx="32" cy="59" rx="29" ry="3.8" fill="#000" fill-opacity="0.4"/>
+  <!-- rock lair -->
+  <path d="M3.5 59 Q4 47 9.5 40 Q13 34.5 19 32.5 Q24 28 31 28 Q38 27.5 44 30.5 Q51 33.5 55 39.5 Q59.5 46 60.5 59 Z" fill="url(#flRock)" stroke="#0A0E1A" stroke-width="0.7" stroke-opacity="0.85"/>
+  <path d="M9.5 40 Q13 34.5 19 32.5 Q17.5 37.5 12.5 41.5 Z M24 29.6 Q31 27.4 38 28.4 Q32 30.6 26 31.4 Z" fill="#8FA0B0" fill-opacity="0.35"/>
+  <path d="M55 39.5 Q59.5 46 60.5 59 H54.5 Q55 47 50 38 Z" fill="#0A0E14" fill-opacity="0.5"/>
+  <g fill="none" stroke="#0A0E1A" stroke-width="0.45" stroke-opacity="0.7" stroke-linecap="round">
+    <path d="M12.5 41.5 Q10 47 9 53"/><path d="M44 30.5 L46 35.5"/><path d="M53 43 L55.5 48.5"/>
+  </g>
+  <g fill="#B0BEC5" fill-opacity="0.55" stroke="#263238" stroke-width="0.3">
+    <circle cx="11" cy="47" r="1.1"/><circle cx="13" cy="49.5" r="0.8"/><circle cx="52" cy="45" r="1"/>
+  </g>
+  <!-- cave mouth -->
+  <path d="M15 59 Q15.5 46 21.5 40.5 Q26.5 36 32 36 Q37.5 36 42.5 40.5 Q48.5 46 49 59 Z" fill="url(#flCave)" stroke="#05070D" stroke-width="0.6"/>
+  <path d="M21.5 40.5 L23 43.5 L24.5 40 M38.5 39.5 L40 43 L41.6 40.6" fill="#36404C" stroke="#0A0E1A" stroke-width="0.35"/>
+
+  <!-- seabed -->
+  <path d="M3.5 59 Q18 56.5 32 57.5 Q46 56.5 60.5 59 Z" fill="#1E2833"/>
+  <g fill="#2E7D32" fill-opacity="0.85">
+    <path d="M6 59 Q5 54 7.5 50.5 Q7 54.5 8 59 Z"/><path d="M57 59 Q58.5 54.5 56.5 51 Q58.8 54 59.2 59 Z"/>
+  </g>
+
+  <!-- giant armoured isopod crawling out of the cave -->
+  <g fill="none" stroke="#4527A0" stroke-width="0.9" stroke-linecap="round">
+    <path d="M19.5 43 L14.5 46.5 L13 50"/><path d="M19 48 L13.5 51.5 L12.5 55.5"/><path d="M20 53 L15 56 L15 59"/>
+    <path d="M44.5 43 L49.5 46.5 L51 50"/><path d="M45 48 L50.5 51.5 L51.5 55.5"/><path d="M44 53 L49 56 L49 59"/>
+  </g>
+  <path d="M18.5 57.5 Q17.5 42 24 36.5 Q32 31.5 40 36.5 Q46.5 42 45.5 57.5 Z" fill="url(#arShell)" stroke="#0A0E1A" stroke-width="0.7"/>
+    <path d="M23 39.2 Q32 34.4 41 39.2 Q32 37.6 23 39.2 Z" fill="url(#arPlate)" stroke="#0A0E1A" stroke-width="0.5"/>
+    <path d="M25 37.9 Q32 35.2 39 37.9" fill="none" stroke="#E1BEE7" stroke-width="0.45" stroke-opacity="0.6"/>
+    <path d="M20.5 42.7 Q32 37.9 43.5 42.7 Q32 41.1 20.5 42.7 Z" fill="url(#arPlate)" stroke="#0A0E1A" stroke-width="0.5"/>
+    <path d="M22.5 41.4 Q32 38.7 41.5 41.4" fill="none" stroke="#E1BEE7" stroke-width="0.45" stroke-opacity="0.6"/>
+    <path d="M19 46.2 Q32 41.4 45 46.2 Q32 44.6 19 46.2 Z" fill="url(#arPlate)" stroke="#0A0E1A" stroke-width="0.5"/>
+    <path d="M21 44.9 Q32 42.2 43 44.9" fill="none" stroke="#E1BEE7" stroke-width="0.45" stroke-opacity="0.6"/>
+    <path d="M18.5 49.7 Q32 44.9 45.5 49.7 Q32 48.1 18.5 49.7 Z" fill="url(#arPlate)" stroke="#0A0E1A" stroke-width="0.5"/>
+    <path d="M20.5 48.4 Q32 45.7 43.5 48.4" fill="none" stroke="#E1BEE7" stroke-width="0.45" stroke-opacity="0.6"/>
+    <path d="M19 53.2 Q32 48.4 45 53.2 Q32 51.6 19 53.2 Z" fill="url(#arPlate)" stroke="#0A0E1A" stroke-width="0.5"/>
+    <path d="M21 51.9 Q32 49.2 43 51.9" fill="none" stroke="#E1BEE7" stroke-width="0.45" stroke-opacity="0.6"/>
+    <path d="M20.5 56.7 Q32 51.9 43.5 56.7 Q32 55.1 20.5 56.7 Z" fill="url(#arPlate)" stroke="#0A0E1A" stroke-width="0.5"/>
+    <path d="M22.5 55.4 Q32 52.7 41.5 55.4" fill="none" stroke="#E1BEE7" stroke-width="0.45" stroke-opacity="0.6"/>
+  <!-- head shield, eyes and antennae -->
+  <path d="M24 37.5 Q32 30 40 37.5 Q32 35.5 24 37.5 Z" fill="#7E57C2" stroke="#0A0E1A" stroke-width="0.5"/>
+  <path d="M27 33.6 Q20 28 15 29.5 M37 33.6 Q44 28 49 29.5" fill="none" stroke="#311B92" stroke-width="1.1" stroke-linecap="round"/>
+  <path d="M27 33.6 Q20 28 15 29.5 M37 33.6 Q44 28 49 29.5" fill="none" stroke="#B39DDB" stroke-width="0.35" stroke-linecap="round"/>
+  <ellipse cx="27.3" cy="35.6" rx="1.8" ry="1.1" fill="#FFD740" stroke="#0A0E1A" stroke-width="0.35"/>
+  <ellipse cx="36.7" cy="35.6" rx="1.8" ry="1.1" fill="#FFD740" stroke="#0A0E1A" stroke-width="0.35"/>
+  <circle cx="27.6" cy="35.6" r="0.55" fill="#0A0E1A"/><circle cx="36.4" cy="35.6" r="0.55" fill="#0A0E1A"/>
+  <!-- glint on the armour -->
+  <path d="M25 41 Q28 38.5 31 38.4" fill="none" stroke="#FFFFFF" stroke-width="0.8" stroke-opacity="0.5" stroke-linecap="round"/>
+
+  <!-- difficulty badge: easy, one star -->
+  <g>
+    <circle cx="32" cy="13" r="11" fill="#69F0AE" fill-opacity="0.15"/>
+    <circle cx="32" cy="13" r="9.2" fill="#0A3D14" stroke="#0A0E1A" stroke-width="0.6"/>
+    <circle cx="32" cy="13" r="8.2" fill="url(#meBadge)" stroke="#A5D6A7" stroke-width="0.6"/>
+    <path d="M25.5 10.5 A7 7 0 0 1 34 6.2" fill="none" stroke="#E8F5E9" stroke-width="0.9" stroke-linecap="round" stroke-opacity="0.55"/>
+    <g transform="translate(32 13.2)">
+      <path d="M0 -5.4 L1.6 -1.7 L5.6 -1.3 L2.6 1.4 L3.5 5.3 L0 3.3 L-3.5 5.3 L-2.6 1.4 L-5.6 -1.3 L-1.6 -1.7 Z" fill="url(#meStar)" stroke="#0B3A27" stroke-width="0.5" stroke-linejoin="round"/>
+      <path d="M0 -5.4 L0 0.3 L-5.6 -1.3 L-1.6 -1.7 Z" fill="#fff" fill-opacity="0.35"/>
+      <circle cx="-0.8" cy="-2.2" r="0.5" fill="#fff"/>
+    </g>
+  </g>
+</svg>

@@ -8,13 +8,13 @@ import 'package:abyss/domain/volcano/volcano_wave_factory.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('normal changes nothing', () {
+  test('normal is the calibrated game: same resources, smaller waves', () {
     final production = <ResourceType, int>{ResourceType.coral: 120};
     expect(
       Difficulty.normal.scaleProduction(production)[ResourceType.coral],
       120,
     );
-    expect(Difficulty.normal.monsters(40), 40);
+    expect(Difficulty.normal.monsterPercent, 94);
   });
 
   test('easy gives more resources and fewer monsters than hard', () {
@@ -52,8 +52,8 @@ void main() {
     expect(production[ResourceType.pearl], 5);
   });
 
-  test('a scaled wave keeps at least one monster', () {
-    expect(Difficulty.easy.monsters(1), 1);
+  test('a scaled kraken wave keeps at least one kraken', () {
+    expect(VolcanoWaveFactory.krakensFor(0, monsterPercent: 1), 1);
   });
 
   test('raid waves grow with the difficulty', () {
@@ -61,7 +61,7 @@ void main() {
       final wave = RaidWaveFactory.fromTotalNoise(
         200,
         random: Random(3),
-        difficulty: d,
+        monsterPercent: d.monsterPercent,
       );
       return wave.unitCount + wave.secondCount;
     }
@@ -78,7 +78,10 @@ void main() {
 
   test('kraken waves grow with the difficulty', () {
     int krakens(Difficulty d) =>
-        VolcanoWaveFactory.fromKernelLevel(9, difficulty: d).unitCount;
+        VolcanoWaveFactory.fromKernelLevel(
+          9,
+          monsterPercent: d.monsterPercent,
+        ).unitCount;
     expect(krakens(Difficulty.easy), lessThan(krakens(Difficulty.normal)));
     expect(krakens(Difficulty.hard), greaterThan(krakens(Difficulty.normal)));
   });

@@ -50,7 +50,10 @@ abstract final class VolcanoResolver {
     if (state.isIncoming || level < 1 || level >= winLevel) {
       return VolcanoTurnOutcome(report: report);
     }
-    final MonsterLair wave = VolcanoWaveFactory.fromKernelLevel(level, difficulty: difficulty);
+    final MonsterLair wave = VolcanoWaveFactory.fromKernelLevel(
+      level,
+      monsterPercent: difficulty.monsterPercent,
+    );
     state.announce(wave, endedTurn + 1);
     return VolcanoTurnOutcome(report: report, announced: wave);
   }

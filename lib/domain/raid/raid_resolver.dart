@@ -49,12 +49,15 @@ abstract final class RaidResolver {
     if (state.isIncoming || state.noise < NoiseRules.threshold) {
       return RaidTurnOutcome(report: report);
     }
-    final MonsterLair wave =
-        RaidWaveFactory.fromTotalNoise(state.totalNoise,
-            random: random, difficulty: difficulty);
-    final int arrival =
-        max(endedTurn + TechEffects(player.techBranches).raidWarningTurns,
-            NoiseRules.firstRaidTurn);
+    final MonsterLair wave = RaidWaveFactory.fromTotalNoise(
+      state.totalNoise,
+      random: random,
+      monsterPercent: difficulty.monsterPercent,
+    );
+    final int arrival = max(
+      endedTurn + TechEffects(player.techBranches).raidWarningTurns,
+      NoiseRules.firstRaidTurn,
+    );
     state.announce(wave, arrival);
     return RaidTurnOutcome(
       report: report,

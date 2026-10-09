@@ -38,6 +38,36 @@ void main() {
     expect(target.x + target.y, lessThan(base.x + base.y));
   });
 
+  // ---------------------------------------------------------------------
+  // Golden targets: recorded from the previous implementation, which walked
+  // the whole map again for every scout. The one-pass frontier must pick
+  // the same cells in the same order.
+  // ---------------------------------------------------------------------
+  test('picks the same cells as the previous implementation', () {
+    final turn = _turn(scouts: 3);
+    turn.explore(1, 2, (_) => 0);
+
+    final targets =
+        turn.player.pendingExplorations.map((o) => o.target).toList();
+    expect(targets, <GridPosition>[
+      GridPosition(x: 8, y: 5),
+      GridPosition(x: 14, y: 5),
+    ]);
+  });
+
+  test('picks the same biased cells as the previous implementation', () {
+    final turn = _turn(scouts: 3);
+    turn.explore(1, 3, (GridPosition p) => -10.0 * (p.x + p.y));
+
+    final targets =
+        turn.player.pendingExplorations.map((o) => o.target).toList();
+    expect(targets, <GridPosition>[
+      GridPosition(x: 8, y: 5),
+      GridPosition(x: 10, y: 5),
+      GridPosition(x: 8, y: 7),
+    ]);
+  });
+
   test('does nothing without scouts', () {
     final turn = _turn();
     turn.explore(1, 2, (_) => 0);

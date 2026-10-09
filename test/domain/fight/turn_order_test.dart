@@ -93,5 +93,33 @@ void main() {
 
       expect(keysFor(), equals(keysFor()));
     });
+
+    test('matches the reference: alive players, then alive monsters, shuffled',
+        () {
+      final List<Combatant> players = <Combatant>[
+        _alive('p1', CombatSide.player),
+        _dead('pDead', CombatSide.player),
+        _alive('p2', CombatSide.player),
+        _alive('p3', CombatSide.player),
+      ];
+      final List<Combatant> monsters = <Combatant>[
+        _dead('mDead', CombatSide.monster),
+        _alive('m1', CombatSide.monster),
+        _alive('m2', CombatSide.monster),
+      ];
+
+      for (int seed = 0; seed < 25; seed++) {
+        final List<Combatant> reference = <Combatant>[
+          ...players.where((Combatant c) => c.isAlive),
+          ...monsters.where((Combatant c) => c.isAlive),
+        ]..shuffle(Random(seed));
+
+        expect(
+          TurnOrder.shuffle(players, monsters, Random(seed)),
+          equals(reference),
+          reason: 'seed $seed',
+        );
+      }
+    });
   });
 }

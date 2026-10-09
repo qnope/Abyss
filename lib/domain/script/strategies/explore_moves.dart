@@ -1,6 +1,7 @@
 import '../../action/collect_treasure_action.dart';
 import '../../action/explore_action.dart';
 import '../../map/cell_content_type.dart';
+import '../../map/cell_mask.dart';
 import '../../map/game_map.dart';
 import '../../map/grid_position.dart';
 import '../../map/map_cell.dart';
@@ -43,16 +44,18 @@ extension ExploreMoves on ScriptTurn {
   void explore(int level, int count, double Function(GridPosition) bias) {
     final GameMap? map = game.levels[level];
     if (map == null) return;
-    final Set<GridPosition> revealed = player.revealedCellsSetOnLevel(level);
+    final List<GridPosition> revealed = player.revealedCellsOnLevel(level);
     final Set<GridPosition> known = <GridPosition>{...revealed};
     final int side = TechEffects(player.techBranches).revealSide;
+    // Orders only queue explorations: the frontier holds for every scout.
+    final List<GridPosition> frontier = _frontier(map, revealed);
     for (int i = 0; i < count; i++) {
       if ((player.unitsOnLevel(level)[UnitType.scout]?.count ?? 0) <= 0) {
         return;
       }
       GridPosition? best;
       double bestScore = 0;
-      for (final GridPosition p in _frontier(map, revealed)) {
+      for (final GridPosition p in frontier) {
         if (known.contains(p)) continue;
         final List<GridPosition> area = _area(map, p, side);
         final int fresh = area.where((a) => !known.contains(a)).length;
@@ -88,25 +91,17 @@ extension ExploreMoves on ScriptTurn {
         mapHeight: map.height,
       );
 
-  static Iterable<GridPosition> _frontier(
+  /// Unrevealed cells of [map] touching a revealed one, in row-major order.
+  static List<GridPosition> _frontier(
     GameMap map,
-    Set<GridPosition> known,
-  ) sync* {
-    for (int y = 0; y < map.height; y++) {
-      for (int x = 0; x < map.width; x++) {
-        final GridPosition p = GridPosition(x: x, y: y);
-        if (known.contains(p)) continue;
-        if (_touches(known, x, y)) yield p;
-      }
-    }
-  }
-
-  static bool _touches(Set<GridPosition> known, int x, int y) {
-    for (int dy = -1; dy <= 1; dy++) {
-      for (int dx = -1; dx <= 1; dx++) {
-        if (known.contains(GridPosition(x: x + dx, y: y + dy))) return true;
-      }
-    }
-    return false;
+    Iterable<GridPosition> revealed,
+  ) {
+    final CellMask mask = CellMask(map.width, map.height, revealed);
+    return <GridPosition>[
+      for (int y = 0; y < map.height; y++)
+        for (int x = 0; x < map.width; x++)
+          if (!mask.contains(x, y) && mask.touches(x, y))
+            GridPosition(x: x, y: y),
+    ];
   }
 }

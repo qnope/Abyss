@@ -27,8 +27,9 @@ function listSvgs(dir) {
   return files.sort();
 }
 
-const files = fs.statSync(root).isDirectory() ? listSvgs(root) : root.split(',');
-const base = fs.statSync(root).isDirectory() ? root : path.dirname(files[0]);
+const isDir = fs.existsSync(root) && fs.statSync(root).isDirectory();
+const files = isDir ? listSvgs(root) : root.split(',');
+const base = isDir ? root : path.dirname(files[0]);
 
 const tiles = files.map((file) => {
   const svg = fs

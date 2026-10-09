@@ -1,19 +1,21 @@
 import 'dart:math';
 
-import 'combat_role.dart';
+import 'alive_index.dart';
 import 'combatant.dart';
 import 'monster_rules.dart';
 
 class TargetPicker {
   const TargetPicker._();
 
-  static Combatant? pickRandom(List<Combatant> pool, Random random) {
-    final List<Combatant> alive =
-        pool.where((Combatant c) => c.isAlive).toList();
-    if (alive.isEmpty) {
+  static Combatant? pickRandom(List<Combatant> pool, Random random) =>
+      pickRandomFrom(AliveIndex(pool), random);
+
+  /// A random alive combatant of [index], `null` when none stands.
+  static Combatant? pickRandomFrom(AliveIndex index, Random random) {
+    if (index.alive == 0) {
       return null;
     }
-    return alive[random.nextInt(alive.length)];
+    return index.nthAlive(random.nextInt(index.alive));
   }
 
   /// Picks a random alive target, restricted to taunting combatants when
@@ -23,16 +25,21 @@ class TargetPicker {
     List<Combatant> pool,
     Random random, {
     Combatant? attacker,
+  }) =>
+      pickFrom(AliveIndex(pool), random, attacker: attacker);
+
+  /// [pick] through an [AliveIndex] the caller keeps up to date.
+  static Combatant? pickFrom(
+    AliveIndex index,
+    Random random, {
+    Combatant? attacker,
   }) {
-    final List<Combatant> taunting = pool
-        .where((Combatant c) => c.isAlive && c.role == CombatRole.taunt)
-        .toList();
-    if (taunting.isNotEmpty) {
-      return taunting[random.nextInt(taunting.length)];
+    if (index.taunting > 0) {
+      return index.nthTaunting(random.nextInt(index.taunting));
     }
     if (attacker != null && MonsterRules.hunts(attacker)) {
-      return MonsterRules.frailest(pool);
+      return MonsterRules.frailest(index.pool);
     }
-    return pickRandom(pool, random);
+    return pickRandomFrom(index, random);
   }
 }

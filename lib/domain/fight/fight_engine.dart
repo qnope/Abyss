@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'alive_index.dart';
 import 'combat_side.dart';
 import 'combatant.dart';
 import 'attack_damage.dart';
 import 'crit_roller.dart';
 import 'fight_result.dart';
+import 'fight_turn_stats.dart';
 import 'fight_turn_summary.dart';
 import 'monster_rules.dart';
 import 'target_picker.dart';
@@ -29,13 +31,15 @@ class FightEngine {
     final List<Combatant> initialPlayerCombatants =
         playerSide.map(_cloneFresh).toList();
     final int initialMonsterCount = monsterSide.length;
+    final AliveIndex players = AliveIndex(playerSide);
+    final AliveIndex monsters = AliveIndex(monsterSide);
 
     final List<FightTurnSummary> summaries = <FightTurnSummary>[];
     int turnNumber = 0;
 
     while (_anyAlive(playerSide) && _anyAlive(monsterSide)) {
       turnNumber += 1;
-      final _TurnStats stats = _runTurn(playerSide, monsterSide);
+      final FightTurnStats stats = _runTurn(players, monsters);
       summaries.add(
         FightTurnSummary(
           turnNumber: turnNumber,
@@ -66,21 +70,19 @@ class FightEngine {
     );
   }
 
-  _TurnStats _runTurn(
-    List<Combatant> playerSide,
-    List<Combatant> monsterSide,
-  ) {
-    final _TurnStats stats = _TurnStats();
+  FightTurnStats _runTurn(AliveIndex players, AliveIndex monsters) {
+    final FightTurnStats stats = FightTurnStats();
     final List<Combatant> order =
-        TurnOrder.shuffle(playerSide, monsterSide, _random);
+        TurnOrder.shuffle(players.pool, monsters.pool, _random);
 
     for (final Combatant attacker in order) {
       if (!attacker.isAlive) {
         continue;
       }
-      final List<Combatant> pool =
-          attacker.side == CombatSide.player ? monsterSide : playerSide;
-      final Combatant? target = TargetPicker.pick(pool, _random, attacker: attacker);
+      final AliveIndex pool =
+          attacker.side == CombatSide.player ? monsters : players;
+      final Combatant? target =
+          TargetPicker.pickFrom(pool, _random, attacker: attacker);
       if (target == null) {
         break;
       }
@@ -93,12 +95,12 @@ class FightEngine {
         target: target,
         crit: crit,
       );
-      int applied = target.applyDamage(dmg);
+      int applied = _hit(target, dmg, pool);
       final Combatant? swept =
-          MonsterRules.secondTarget(attacker, target, pool, _random);
+          MonsterRules.secondTargetIn(attacker, target, pool, _random);
       if (swept != null) {
-        applied += swept.applyDamage(
-            AttackDamage.compute(attacker: attacker, target: swept));
+        applied += _hit(
+            swept, AttackDamage.compute(attacker: attacker, target: swept), pool);
       }
       stats.attacks += 1;
       if (attacker.side == CombatSide.player) {
@@ -108,6 +110,15 @@ class FightEngine {
       }
     }
     return stats;
+  }
+
+  /// Deals [damage] to [target] and buries it in [pool] if it falls.
+  static int _hit(Combatant target, int damage, AliveIndex pool) {
+    final int applied = target.applyDamage(damage);
+    if (!target.isAlive) {
+      pool.bury(target);
+    }
+    return applied;
   }
 
   static Combatant _cloneFresh(Combatant c) {
@@ -130,11 +141,4 @@ class FightEngine {
 
   static int _sumHp(List<Combatant> list) =>
       list.fold<int>(0, (int acc, Combatant c) => acc + c.currentHp);
-}
-
-class _TurnStats {
-  int attacks = 0;
-  int crits = 0;
-  int dmgPlayer = 0;
-  int dmgMonster = 0;
 }

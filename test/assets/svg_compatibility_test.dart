@@ -19,12 +19,13 @@ const _forbidden = [
 ];
 
 void main() {
-  final svgFiles = Directory('assets/icons')
-      .listSync(recursive: true)
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.svg'))
-      .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+  final svgFiles =
+      Directory('assets/icons')
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.svg'))
+          .toList()
+        ..sort((a, b) => a.path.compareTo(b.path));
   final gradientId = RegExp(r'<(?:linear|radial)Gradient[^>]*\bid="([^"]+)"');
   final gradientUse = RegExp(r'url\(#([^)]+)\)');
 

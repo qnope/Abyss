@@ -1,4 +1,6 @@
 import 'package:hive_ce/hive.dart';
+import '../map/monster_family.dart';
+import 'combat_role.dart';
 import 'combat_side.dart';
 
 part 'combatant.g.dart';
@@ -35,6 +37,12 @@ class Combatant {
     int? currentHp,
     this.isBoss = false,
   }) : currentHp = currentHp ?? maxHp;
+
+  /// Combat role, computed once since [side] and [typeKey] never change.
+  late final CombatRole role = CombatRole.of(this);
+
+  /// Monster family of [typeKey], computed once (`null` for player units).
+  late final MonsterFamily? family = MonsterFamily.ofTypeKey(typeKey);
 
   bool get isAlive => currentHp > 0;
 

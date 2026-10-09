@@ -25,8 +25,7 @@ class TargetPicker {
     Combatant? attacker,
   }) {
     final List<Combatant> taunting = pool
-        .where((Combatant c) =>
-            c.isAlive && CombatRole.of(c) == CombatRole.taunt)
+        .where((Combatant c) => c.isAlive && c.role == CombatRole.taunt)
         .toList();
     if (taunting.isNotEmpty) {
       return taunting[random.nextInt(taunting.length)];

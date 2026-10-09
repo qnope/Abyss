@@ -22,6 +22,9 @@ enum CombatRole {
   /// Type key of the Coral Citadel rampart (see `CoralCitadelRampart`).
   static const String rampartKey = 'rampart';
 
+  /// Unit types by name, built once: [of] runs on every attack.
+  static final Map<String, UnitType> _unitTypes = UnitType.values.asNameMap();
+
   static CombatRole forUnit(UnitType type) => switch (type) {
         UnitType.guardian => CombatRole.taunt,
         UnitType.domeBreaker => CombatRole.bossBreaker,
@@ -35,7 +38,7 @@ enum CombatRole {
   static CombatRole of(Combatant combatant) {
     if (combatant.side != CombatSide.player) return CombatRole.none;
     if (combatant.typeKey == rampartKey) return CombatRole.taunt;
-    final UnitType? type = UnitType.values.asNameMap()[combatant.typeKey];
+    final UnitType? type = _unitTypes[combatant.typeKey];
     return type == null ? CombatRole.none : forUnit(type);
   }
 }

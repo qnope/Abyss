@@ -27,7 +27,7 @@ class CasualtyCalculator {
     final List<Combatant> wounded = <Combatant>[];
     final List<Combatant> dead = <Combatant>[];
     for (final Combatant combatant in killedPlayerCombatants) {
-      if (CombatRole.of(combatant) == CombatRole.evasive) {
+      if (combatant.role == CombatRole.evasive) {
         wounded.add(combatant);
       } else if (random.nextDouble() < p) {
         wounded.add(combatant);

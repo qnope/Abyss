@@ -34,9 +34,9 @@ void main() {
     expect(raids.every((r) => !r.victory && r.monsters > 0), isTrue);
   });
 
-  test('a batch tells how many games reached a milestone, and when', () {
-    final report = BatchRunner(runner: ScriptRunner(maxTurns: 60))
-        .run(() => const IdleScript(), games: 2);
+  test('a batch tells how many games reached a milestone, and when', () async {
+    final report = await BatchRunner(runner: ScriptRunner(maxTurns: 60))
+        .run((_) => const IdleScript(), games: 2);
 
     final fall = report.milestone((r) => r.isDefeat ? r.turnsPlayed : null);
     expect(fall.games, 2);

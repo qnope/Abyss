@@ -18,6 +18,8 @@
 //   --games <n>         number of games, seeds seed..seed+n-1 (default 20)
 //   --seed <n>          first seed (default 1)
 //   --turns <n>         turn limit per game (default 60)
+//   --workers <n>       games played at once, one isolate each (default:
+//                       the number of processor cores)
 //   --verbose           one line per game, plus the action log of game 1
 //   --json              print the whole batch as JSON
 //
@@ -45,21 +47,23 @@ import 'package:abyss/domain/script/script_runner.dart';
 import 'package:abyss/domain/script/variant/plan_script.dart';
 import 'package:abyss/domain/script/variant/replay_variant.dart';
 
-void main(List<String> args) {
+Future<void> main(List<String> args) async {
   final Map<String, String> options = _parse(args);
   final String? scenario = options['scenario'];
   final String? replay = options['replay'];
-  final GameScript Function() build = replay != null
+  final GameScript Function(int seed) build = replay != null
       ? _variantOf(File(replay).readAsStringSync(), options)
       : scenario != null
-          ? () => ScenarioParser.parse(File(scenario).readAsStringSync())
-          : () => ScriptLibrary.byName(options['strategy'] ?? 'balanced');
-  final BatchReport report = BatchRunner(
+          ? (_) => ScenarioParser.parse(File(scenario).readAsStringSync())
+          : (_) => ScriptLibrary.byName(options['strategy'] ?? 'balanced');
+  final int firstSeed = int.parse(options['seed'] ?? '1');
+  final BatchReport report = await BatchRunner(
     runner: ScriptRunner(maxTurns: int.parse(options['turns'] ?? '60')),
+    workers: int.parse(options['workers'] ?? '${Platform.numberOfProcessors}'),
   ).run(
     build,
     games: int.parse(options['games'] ?? '20'),
-    firstSeed: int.parse(options['seed'] ?? '1'),
+    firstSeed: firstSeed,
   );
   if (options.containsKey('json')) {
     stdout.writeln(const JsonEncoder.withIndent('  ').convert(<String, Object>{
@@ -69,10 +73,10 @@ void main(List<String> args) {
     return;
   }
   if (options.containsKey('verbose')) _printRuns(report);
-  _printSummary(build().name, report);
+  _printSummary(build(firstSeed).name, report);
 }
 
-GameScript Function() _variantOf(String source, Map<String, String> o) {
+GameScript Function(int) _variantOf(String source, Map<String, String> o) {
   final ReplayVariant variant = ReplayVariant(
     sameMap: !o.containsKey('new-map'),
     sameDice: !o.containsKey('new-dice'),
@@ -82,8 +86,8 @@ GameScript Function() _variantOf(String source, Map<String, String> o) {
     patience: int.parse(o['patience'] ?? '6'),
     defends: o.containsKey('defends'),
   );
-  int game = int.parse(o['seed'] ?? '1');
-  return () => PlanScript.fromReplay(source, variant, random: Random(game++));
+  return (int seed) =>
+      PlanScript.fromReplay(source, variant, random: Random(seed));
 }
 
 Map<String, String> _parse(List<String> args) {

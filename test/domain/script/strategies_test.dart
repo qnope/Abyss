@@ -12,31 +12,31 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   final batch = BatchRunner(runner: ScriptRunner(maxTurns: 100));
 
-  test('an all-economy base falls to the raids', () {
-    final report = batch.run(() => const EconomyStrategy(), games: 3);
+  test('an all-economy base falls to the raids', () async {
+    final report = await batch.run((_) => const EconomyStrategy(), games: 3);
 
     expect(report.defeats, report.games);
     expect(report.earliestDefeat, lessThan(40));
   });
 
-  test('a base that does nothing falls too, only later', () {
-    final report = batch.run(() => const IdleScript(), games: 2);
+  test('a base that does nothing falls too, only later', () async {
+    final report = await batch.run((_) => const IdleScript(), games: 2);
 
     expect(report.defeats, report.games);
     expect(report.earliestDefeat, inInclusiveRange(40, 50));
   });
 
   test('a balanced base holds at least 50 turns, twice the all-economy one',
-      () {
-    final report = batch.run(() => const BalancedStrategy(), games: 3);
+      () async {
+    final report = await batch.run((_) => const BalancedStrategy(), games: 3);
 
     expect(report.earliestDefeat ?? 100, greaterThanOrEqualTo(50));
     expect(report.averageRaidsRepelled, greaterThan(10));
   });
 
-  test('rushing the volcano without defending loses the base', () {
-    final report = batch.run(
-      () => const ConquestStrategy(defends: false, name: 'rush'),
+  test('rushing the volcano without defending loses the base', () async {
+    final report = await batch.run(
+      (_) => const ConquestStrategy(defends: false, name: 'rush'),
       games: 2,
     );
 

@@ -1,7 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:abyss/domain/fight/combat_role.dart';
 import 'package:abyss/domain/fight/combat_side.dart';
 import 'package:abyss/domain/fight/combatant.dart';
+import 'package:abyss/domain/map/monster_family.dart';
+
+Combatant _c(String key, CombatSide side) =>
+    Combatant(side: side, typeKey: key, maxHp: 10, atk: 1, def: 1);
 
 void main() {
   group('Combatant', () {
@@ -88,6 +93,22 @@ void main() {
 
       expect(c.currentHp, 0);
       expect(c.isAlive, isFalse);
+    });
+
+    test('role is the combat role of its type key', () {
+      expect(_c('guardian', CombatSide.player).role, CombatRole.taunt);
+      expect(
+        _c(CombatRole.rampartKey, CombatSide.player).role,
+        CombatRole.taunt,
+      );
+      expect(_c('guardian', CombatSide.monster).role, CombatRole.none);
+      expect(_c('hunterL2', CombatSide.monster).role, CombatRole.none);
+    });
+
+    test('family is the monster family of its type key', () {
+      expect(_c('hunterL2', CombatSide.monster).family, MonsterFamily.hunter);
+      expect(_c('monsterL1', CombatSide.monster).family, isNull);
+      expect(_c('guardian', CombatSide.player).family, isNull);
     });
   });
 }

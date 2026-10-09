@@ -10,8 +10,7 @@ abstract final class MonsterRules {
   /// Damage multiplier of a hunter against a unit that does not taunt.
   static const int huntMultiplier = 2;
 
-  static MonsterFamily? familyOf(Combatant c) =>
-      MonsterFamily.ofTypeKey(c.typeKey);
+  static MonsterFamily? familyOf(Combatant c) => c.family;
 
   /// Traque: hunters go for the frailest unit.
   static bool hunts(Combatant attacker) =>
@@ -19,9 +18,7 @@ abstract final class MonsterRules {
 
   /// Damage multiplier the family rules give [attacker] against [target].
   static int multiplier(Combatant attacker, Combatant target) =>
-      hunts(attacker) && CombatRole.of(target) != CombatRole.taunt
-          ? huntMultiplier
-          : 1;
+      hunts(attacker) && target.role != CombatRole.taunt ? huntMultiplier : 1;
 
   /// The frailest alive combatant of [pool], `null` when none stands.
   static Combatant? frailest(List<Combatant> pool) {

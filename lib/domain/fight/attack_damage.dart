@@ -15,7 +15,7 @@ class AttackDamage {
     required Combatant target,
     bool crit = false,
   }) {
-    final CombatRole role = CombatRole.of(attacker);
+    final CombatRole role = attacker.role;
     final bool bossHit = role == CombatRole.bossBreaker && target.isBoss;
     return DamageCalculator.compute(
       atk: attacker.atk,

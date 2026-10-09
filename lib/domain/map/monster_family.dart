@@ -28,6 +28,10 @@ enum MonsterFamily {
   @HiveField(4)
   kraken;
 
+  /// Families by name, built once: [ofTypeKey] runs on every attack.
+  static final Map<String, MonsterFamily> _byName =
+      MonsterFamily.values.asNameMap();
+
   /// Families that can make up a lair or a raid of [level] monsters:
   /// colossi only show up from level 2, the kraken never leaves the
   /// volcano.
@@ -50,6 +54,6 @@ enum MonsterFamily {
   static MonsterFamily? ofTypeKey(String typeKey) {
     final int cut = typeKey.lastIndexOf('L');
     if (cut <= 0) return null;
-    return MonsterFamily.values.asNameMap()[typeKey.substring(0, cut)];
+    return _byName[typeKey.substring(0, cut)];
   }
 }

@@ -1,8 +1,10 @@
 import 'combat_role.dart';
 import 'combatant.dart';
 import 'damage_calculator.dart';
+import 'monster_rules.dart';
 
-/// Damage of one attack between two combatants, role rules included.
+/// Damage of one attack between two combatants, unit roles and monster
+/// family rules included.
 class AttackDamage {
   const AttackDamage._();
 
@@ -20,7 +22,8 @@ class AttackDamage {
       def: target.def,
       crit: crit,
       ignoreDef: role == CombatRole.armourPiercer,
-      multiplier: bossHit ? bossMultiplier : 1,
+      multiplier: (bossHit ? bossMultiplier : 1) *
+          MonsterRules.multiplier(attacker, target),
     );
   }
 }

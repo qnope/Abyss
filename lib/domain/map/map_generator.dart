@@ -46,6 +46,7 @@ class MapGenerator {
       baseY: baseY,
       random: random,
       reservedIndices: reservedIndices,
+      familySeed: actualSeed + level,
     );
 
     TransitionBasePlacer.place(

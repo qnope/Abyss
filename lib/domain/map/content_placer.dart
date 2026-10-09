@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'cell_content_type.dart';
 import 'map_cell.dart';
+import 'lair_builder.dart';
 import 'monster_difficulty.dart';
-import 'monster_lair.dart';
 
 class ContentPlacer {
   // A roll in [0.60, 0.80) used to place a treasure and one in
@@ -30,6 +30,7 @@ class ContentPlacer {
     required int baseY,
     required Random random,
     Set<int> reservedIndices = const {},
+    int familySeed = 0,
   }) {
     final eligible = _buildEligibleIndices(
       cells, width, height, baseX, baseY, reservedIndices,
@@ -46,7 +47,7 @@ class ContentPlacer {
         if (treasure != null) cells[i] = cells[i].copyWith(content: treasure);
       } else {
         final x = i % width, y = i ~/ width;
-        _placeMonster(cells, i, x, y, baseX, baseY, random);
+        _placeMonster(cells, i, x, y, baseX, baseY, random, familySeed);
         monsterCount++;
         monsterIndices.add(i);
       }
@@ -54,7 +55,7 @@ class ContentPlacer {
 
     _adjustMonsterCount(
       cells, eligible, monsterIndices, monsterCount,
-      width, baseX, baseY, random,
+      width, baseX, baseY, random, familySeed,
     );
   }
 
@@ -80,7 +81,7 @@ class ContentPlacer {
   static void _placeMonster(
     List<MapCell> cells, int i,
     int x, int y, int baseX, int baseY,
-    Random random,
+    Random random, int familySeed,
   ) {
     final dist = max((x - baseX).abs(), (y - baseY).abs());
     final farFromBase = dist > 7;
@@ -103,22 +104,15 @@ class ContentPlacer {
         difficulty = MonsterDifficulty.hard;
       }
     }
-    final unitCount = _rollUnitCount(difficulty, random);
     cells[i] = cells[i].copyWith(
       content: CellContentType.monsterLair,
-      lair: MonsterLair(difficulty: difficulty, unitCount: unitCount),
+      lair: LairBuilder.build(
+        difficulty: difficulty,
+        random: random,
+        familySeed: familySeed,
+        cellIndex: i,
+      ),
     );
-  }
-
-  static int _rollUnitCount(
-    MonsterDifficulty difficulty,
-    Random random,
-  ) {
-    return switch (difficulty) {
-      MonsterDifficulty.easy => 20 + random.nextInt(31),
-      MonsterDifficulty.medium => 60 + random.nextInt(41),
-      MonsterDifficulty.hard => 120 + random.nextInt(81),
-    };
   }
 
   static void _adjustMonsterCount(
@@ -127,7 +121,7 @@ class ContentPlacer {
     List<int> monsterIndices,
     int monsterCount,
     int width, int baseX, int baseY,
-    Random random,
+    Random random, int familySeed,
   ) {
     while (monsterCount < 5) {
       final empty = eligible.where(
@@ -136,7 +130,7 @@ class ContentPlacer {
       if (empty.isEmpty) break;
       final i = empty[random.nextInt(empty.length)];
       final x = i % width, y = i ~/ width;
-      _placeMonster(cells, i, x, y, baseX, baseY, random);
+      _placeMonster(cells, i, x, y, baseX, baseY, random, familySeed);
       monsterCount++;
     }
     while (monsterCount > 10) {

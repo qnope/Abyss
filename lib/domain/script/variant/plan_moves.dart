@@ -63,7 +63,7 @@ extension PlanMoves on ScriptTurn {
           c.lair != null,
     )) {
       final lair = game.levels[level]!.cellAt(p.x, p.y).lair!;
-      final int power = lair.unitCount * lair.level * lair.level;
+      final int power = lair.totalCount * lair.level * lair.level;
       if (power < bestPower) {
         best = p;
         bestPower = power;

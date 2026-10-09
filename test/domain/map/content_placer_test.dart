@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/fight/monster_unit_stats.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/content_placer.dart';
 import 'package:abyss/domain/map/map_cell.dart';
@@ -29,11 +30,17 @@ void main() {
     final count = lair.unitCount;
     switch (lair.difficulty) {
       case MonsterDifficulty.easy:
-        expect(count, inInclusiveRange(20, 50), reason: 'seed=$seed');
+        expect(count, inInclusiveRange(
+            MonsterUnitStats.countFor(lair.family, 20),
+            MonsterUnitStats.countFor(lair.family, 50)), reason: 'seed=$seed');
       case MonsterDifficulty.medium:
-        expect(count, inInclusiveRange(60, 100), reason: 'seed=$seed');
+        expect(count, inInclusiveRange(
+            MonsterUnitStats.countFor(lair.family, 60),
+            MonsterUnitStats.countFor(lair.family, 100)), reason: 'seed=$seed');
       case MonsterDifficulty.hard:
-        expect(count, inInclusiveRange(120, 200), reason: 'seed=$seed');
+        expect(count, inInclusiveRange(
+            MonsterUnitStats.countFor(lair.family, 120),
+            MonsterUnitStats.countFor(lair.family, 200)), reason: 'seed=$seed');
     }
   }
 

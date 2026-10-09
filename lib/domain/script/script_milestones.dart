@@ -18,7 +18,7 @@ class ScriptRaid {
 
   factory ScriptRaid.of(RaidReport report) => ScriptRaid(
         turn: report.turn,
-        monsters: report.wave.unitCount,
+        monsters: report.wave.totalCount,
         monsterLevel: report.wave.level,
         victory: report.victory,
       );

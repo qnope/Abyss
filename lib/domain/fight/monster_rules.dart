@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../map/monster_family.dart';
 import '../unit/unit_type.dart';
+import 'alive_index.dart';
 import 'combat_role.dart';
 import 'combatant.dart';
 
@@ -38,20 +39,21 @@ abstract final class MonsterRules {
     Combatant target,
     List<Combatant> pool,
     Random random,
+  ) =>
+      sweepTargetIn(attacker, target, AliveIndex(pool), random);
+
+  /// [sweepTarget] through the [AliveIndex] of the pool.
+  static Combatant? sweepTargetIn(
+    Combatant attacker,
+    Combatant target,
+    AliveIndex pool,
+    Random random,
   ) {
     if (attacker.typeKey != UnitType.harpoonist.name) return null;
     if (familyOf(target) != MonsterFamily.swarm) return null;
-    final List<Combatant> others =
-        pool
-            .where(
-              (Combatant c) =>
-                  c.isAlive &&
-                  !identical(c, target) &&
-                  familyOf(c) == MonsterFamily.swarm,
-            )
-            .toList();
-    if (others.isEmpty) return null;
-    return others[random.nextInt(others.length)];
+    final int others = pool.swarmExcept(target);
+    if (others == 0) return null;
+    return pool.nthSwarmExcept(random.nextInt(others), target);
   }
 
   /// Étreinte: a kraken's tentacles also strike another defender, picked
@@ -61,12 +63,20 @@ abstract final class MonsterRules {
     Combatant target,
     List<Combatant> pool,
     Random random,
+  ) =>
+      embraceTargetIn(attacker, target, AliveIndex(pool), random);
+
+  /// [embraceTarget] through the [AliveIndex] of the pool.
+  static Combatant? embraceTargetIn(
+    Combatant attacker,
+    Combatant target,
+    AliveIndex pool,
+    Random random,
   ) {
     if (familyOf(attacker) != MonsterFamily.kraken) return null;
-    final List<Combatant> others =
-        pool.where((Combatant c) => c.isAlive && !identical(c, target)).toList();
-    if (others.isEmpty) return null;
-    return others[random.nextInt(others.length)];
+    final int others = pool.aliveExcept(target);
+    if (others == 0) return null;
+    return pool.nthAliveExcept(random.nextInt(others), target);
   }
 
   /// Second combatant [attacker]'s hit on [target] strikes, by the
@@ -77,6 +87,15 @@ abstract final class MonsterRules {
     List<Combatant> pool,
     Random random,
   ) =>
-      sweepTarget(attacker, target, pool, random) ??
-      embraceTarget(attacker, target, pool, random);
+      secondTargetIn(attacker, target, AliveIndex(pool), random);
+
+  /// [secondTarget] through the [AliveIndex] of the pool.
+  static Combatant? secondTargetIn(
+    Combatant attacker,
+    Combatant target,
+    AliveIndex pool,
+    Random random,
+  ) =>
+      sweepTargetIn(attacker, target, pool, random) ??
+      embraceTargetIn(attacker, target, pool, random);
 }

@@ -36,10 +36,11 @@ void main() {
     expect(report.milestones.failleCaptured, 32);
     expect(report.milestones.chemineeCaptured, 39);
     expect(report.milestones.kernelCaptured, 50);
-    // The map now holds a third of the treasures it was played with, so
-    // collects on cells left empty fail on top of the research above.
+    // The map now holds a third of the treasures it was played with:
+    // collects on cells left empty fail, and the loot comes at other
+    // turns, so a few more actions than the 21 above lack resources.
     final failures = report.log.where((e) => !e.success);
-    expect(failures.where((e) => e.reason != 'Rien à collecter').length, 21);
+    expect(failures.where((e) => e.reason != 'Rien à collecter').length, 25);
   });
 
   test('plays each turn later with a stretch and a jitter', () {

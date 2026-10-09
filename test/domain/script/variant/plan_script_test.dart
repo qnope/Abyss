@@ -38,9 +38,11 @@ void main() {
     expect(report.milestones.kernelCaptured, 50);
     // The map now holds a third of the treasures it was played with:
     // collects on cells left empty fail, and the loot comes at other
-    // turns, so a few more actions than the 21 above lack resources.
+    // turns, so a few more actions than the 21 above lack resources. The
+    // monster families change the lair fights and the raid waves too, so
+    // the stocks run short a few more times.
     final failures = report.log.where((e) => !e.success);
-    expect(failures.where((e) => e.reason != 'Rien à collecter').length, 25);
+    expect(failures.where((e) => e.reason != 'Rien à collecter').length, 29);
   });
 
   test('plays each turn later with a stretch and a jitter', () {

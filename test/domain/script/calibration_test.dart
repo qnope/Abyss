@@ -3,22 +3,22 @@ import 'package:abyss/domain/script/script_runner.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The raid calibration target: the human plan `plan85` (a win, played
-/// again with other dice and a careful defence) won about 15 % of the
-/// games (16 on 100 seeds) before the research choices of step 9. It
-/// opens all three branches, so its research now costs twice as much and
-/// it wins none of 100 seeds; the raids are to be recalibrated on it.
-/// Seed 23 was one of the wins, seed 37 falls the earliest.
+/// again with other dice and a careful defence) wins at most about 15 %
+/// of the games. With the research choices of step 9 and the monster
+/// families of step 10, it wins 5 of 40 seeds (12.5 %), and the careful
+/// script 3 of 20 (15 %). Seed 11 is one of the wins, seed 27 falls the
+/// earliest.
 void main() {
-  test('the human plan no longer wins with its three branches', () {
+  test('the human plan still wins some games', () {
     final run = ScriptRunner(maxTurns: 120)
-        .run(ScriptLibrary.byName('plan85'), seed: 23);
+        .run(ScriptLibrary.byName('plan85'), seed: 11);
 
-    expect(run.isVictory, isFalse);
+    expect(run.isVictory, isTrue);
   }, timeout: const Timeout(Duration(minutes: 5)));
 
   test('the human plan can also fall to the raids', () {
     final run = ScriptRunner(maxTurns: 120)
-        .run(ScriptLibrary.byName('plan85'), seed: 37);
+        .run(ScriptLibrary.byName('plan85'), seed: 27);
 
     expect(run.isDefeat, isTrue);
     expect(run.turnsPlayed, lessThan(60));

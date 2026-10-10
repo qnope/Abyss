@@ -49,3 +49,12 @@ TipText volcanoWaveTip(AppLocalizations l10n) => (
     l10n.tipVolcanoWaveLine3,
   ],
 );
+
+TipText factionAttackTip(AppLocalizations l10n) => (
+  title: l10n.tipFactionAttackTitle,
+  lines: [
+    l10n.tipFactionAttackLine1,
+    l10n.tipFactionAttackLine2,
+    l10n.tipFactionAttackLine3,
+  ],
+);

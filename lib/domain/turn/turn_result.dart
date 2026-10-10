@@ -1,6 +1,7 @@
 import 'package:hive_ce/hive.dart';
 import '../building/building_type.dart';
 import '../event/random_event_type.dart';
+import '../faction/faction_attack_report.dart';
 import '../map/exploration_result.dart';
 import '../map/monster_lair.dart';
 import '../map/reinforcement_order.dart';
@@ -88,6 +89,10 @@ class TurnResult {
   /// predators fought at its end.
   final List<TemporaryObjectiveEnd> temporaryObjectives;
 
+  /// Attacks of factions on the base fought at the end of this turn, in
+  /// the order they were announced. A turn result is never saved.
+  final List<FactionAttackReport> attacks;
+
   const TurnResult({
     required this.changes,
     required this.previousTurn,
@@ -107,5 +112,6 @@ class TurnResult {
     this.predators,
     this.objectives = const [],
     this.temporaryObjectives = const [],
+    this.attacks = const [],
   });
 }

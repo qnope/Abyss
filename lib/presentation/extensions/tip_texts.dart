@@ -35,6 +35,7 @@ extension TipIdText on TipId {
     TipId.lastChance => lastChanceTip(l10n),
     TipId.monsterFamilies => monsterFamiliesTip(l10n),
     TipId.volcanoWave => volcanoWaveTip(l10n),
+    TipId.factionAttack => factionAttackTip(l10n),
     TipId.lair => lairTip(l10n),
     TipId.chestAndRuins => chestAndRuinsTip(l10n),
     TipId.transitionBase => transitionBaseTip(l10n),

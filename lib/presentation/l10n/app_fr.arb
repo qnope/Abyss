@@ -1021,5 +1021,26 @@
   "@assaultHeadquarters": {
     "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } }
   },
-  "assaultBaseIntact": "La base tient bon"
+  "assaultBaseIntact": "La base tient bon",
+  "factionAttackBanner": "{faction} attaque : fin du tour {turn}, {remaining, plural, =0{ce tour} one{dans {remaining} tour} other{dans {remaining} tours}}",
+  "@factionAttackBanner": { "placeholders": { "faction": { "type": "String" }, "turn": { "type": "int" }, "remaining": { "type": "int" } } },
+  "factionAttackArmy": "Armée : {units}",
+  "@factionAttackArmy": { "placeholders": { "units": { "type": "String" } } },
+  "factionAttackSheetTitle": "Attaque de {faction}",
+  "@factionAttackSheetTitle": { "placeholders": { "faction": { "type": "String" } } },
+  "factionAttackSheetArrival": "Frappe la base à la fin du tour {turn}",
+  "@factionAttackSheetArrival": { "placeholders": { "turn": { "type": "int" } } },
+  "factionAttackSheetArmy": "Armée envoyée",
+  "factionAttackSheetHint": "Les unités du niveau 1 et le rempart défendront la base.",
+  "factionAttackRepelled": "{faction} a attaqué : attaque repoussée",
+  "@factionAttackRepelled": { "placeholders": { "faction": { "type": "String" } } },
+  "factionAttackDamaged": "{faction} a attaqué : base endommagée",
+  "@factionAttackDamaged": { "placeholders": { "faction": { "type": "String" } } },
+  "factionAttackPillaged": "{faction} a attaqué : base pillée",
+  "@factionAttackPillaged": { "placeholders": { "faction": { "type": "String" } } },
+  "factionAttackReport": "Voir le rapport",
+  "tipFactionAttackTitle": "Une faction t'attaque",
+  "tipFactionAttackLine1": "Une faction rivale a envoyé son armée : elle frappera ta base à la date annoncée.",
+  "tipFactionAttackLine2": "Touche le bandeau pour voir sa composition exacte et prépare tes défenseurs du niveau 1.",
+  "tipFactionAttackLine3": "Si elle gagne, le rempart (ou le QG) baisse et une part de tes ressources est pillée."
 }

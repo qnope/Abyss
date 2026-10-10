@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../faction/faction_attack_report.dart';
 import '../faction/faction_turns.dart';
 import '../game/game.dart';
 import '../game/player.dart';
@@ -41,8 +42,14 @@ class EndTurnAction extends Action {
   @override
   ActionResult execute(Game game, Player player) {
     if (playFactions) FactionTurns.playAll(game);
-    AnnouncedAttackResolver.resolve(game);
-    final result = TurnResolver().resolve(game, random: random);
+    final attacks = <FactionAttackReport>[
+      for (final fought in AnnouncedAttackResolver.fight(game)) fought.report,
+    ];
+    final result = TurnResolver().resolve(
+      game,
+      random: random,
+      attacks: attacks,
+    );
     return EndTurnActionResult.success(turnResult: result);
   }
 

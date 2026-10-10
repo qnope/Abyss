@@ -12,8 +12,12 @@ import 'two_player_game.dart';
 
 /// A two-player game at turn 12 where the human has seen the rival's
 /// base and both have a headquarters at level 5.
-TwoPlayerGame assaultGame({int turn = 12, bool revealed = true}) {
-  final two = TwoPlayerGame.create(rivalId: 'rival-1');
+TwoPlayerGame assaultGame({
+  int turn = 12,
+  bool revealed = true,
+  String rivalId = 'rival-1',
+}) {
+  final two = TwoPlayerGame.create(rivalId: rivalId);
   two.game.turn = turn;
   for (final p in [two.human, two.rival]) {
     setLevel(p, BuildingType.headquarters, 5);

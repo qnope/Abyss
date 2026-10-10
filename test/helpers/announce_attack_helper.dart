@@ -12,8 +12,8 @@ const Map<UnitType, int> raiders = {UnitType.harpoonist: 40};
 
 /// A two-player game at turn 12, the tutorial of the human over, the rival
 /// holding [raiders] on its base.
-TwoPlayerGame announceGame({int turn = 12}) {
-  final two = assaultGame(turn: turn);
+TwoPlayerGame announceGame({int turn = 12, String rivalId = 'rival-1'}) {
+  final two = assaultGame(turn: turn, rivalId: rivalId);
   ObjectiveMigration.stateOf(two.game, two.human).tutorialEnabled = false;
   station(two.rival, raiders);
   return two;

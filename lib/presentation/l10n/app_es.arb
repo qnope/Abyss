@@ -754,5 +754,19 @@
   "@assaultHeadquarters": {
     "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } }
   },
-  "assaultBaseIntact": "La base ha resistido"
+  "assaultBaseIntact": "La base ha resistido",
+  "factionAttackBanner": "{faction} ataca: final del turno {turn}, {remaining, plural, =0{este turno} one{en {remaining} turno} other{en {remaining} turnos}}",
+  "factionAttackArmy": "Ejército: {units}",
+  "factionAttackSheetTitle": "Ataque de {faction}",
+  "factionAttackSheetArrival": "Golpea la base al final del turno {turn}",
+  "factionAttackSheetArmy": "Ejército enviado",
+  "factionAttackSheetHint": "Las unidades del nivel 1 y la muralla defenderán la base.",
+  "factionAttackRepelled": "{faction} atacó: ataque rechazado",
+  "factionAttackDamaged": "{faction} atacó: base dañada",
+  "factionAttackPillaged": "{faction} atacó: base saqueada",
+  "factionAttackReport": "Ver el informe",
+  "tipFactionAttackTitle": "Una facción te ataca",
+  "tipFactionAttackLine1": "Una facción rival envió su ejército: golpeará tu base en la fecha anunciada.",
+  "tipFactionAttackLine2": "Toca el banner para ver su composición exacta y prepara a tus defensores del nivel 1.",
+  "tipFactionAttackLine3": "Si gana, la muralla (o el cuartel general) baja y se saquea parte de tus recursos."
 }

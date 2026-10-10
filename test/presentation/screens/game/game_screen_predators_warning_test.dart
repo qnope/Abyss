@@ -4,6 +4,7 @@ import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/extensions/monster_lair_extensions.dart';
 import 'package:abyss/presentation/screens/game/game_screen_turn_helpers.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/widgets/event/event_pending_warning.dart';
 import 'package:abyss/presentation/widgets/raid/raid_due_warning.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -54,10 +55,27 @@ void main() {
     expect(find.text(_lastChance), findsNothing);
   });
 
-  testWidgets('no warning while the predators wait for a choice', (
+  testWidgets('predators waiting for a choice warn of the prudent option', (
     tester,
   ) async {
     final game = _game(faced: false);
+    final warning = dueWarnings(game, game.humanPlayer);
+    expect(warning, isA<EventPendingWarning>());
+    await _show(tester, warning);
+    expect(
+      find.text(
+        "Banc de prédateurs : sans choix, l'option prudente s'appliquera",
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('ce tour :'), findsNothing);
+  });
+
+  testWidgets('no warning once nothing waits nor strikes', (tester) async {
+    final game = _game(faced: false);
+    game.humanPlayer.eventState
+      ..clearPending()
+      ..clearPredators();
     expect(dueWarnings(game, game.humanPlayer), isNull);
   });
 

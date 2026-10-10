@@ -20,9 +20,25 @@ extension EventStateDisplay on EventState {
     final until = wreckUntilTurn;
     if (at == null || until == null || level != WreckSites.level) return null;
     if (at.x != x || at.y != y) return null;
-    return countdownText(
-      RandomEventType.wreck.label,
-      turnsLeft(until, turn),
-    );
+    return wreckCountdown(turn);
+  }
+
+  /// « Épave : encore N tours » while a wreck lies on the map.
+  String? wreckCountdown(int turn) {
+    final until = wreckUntilTurn;
+    if (wreckPosition == null || until == null) return null;
+    return countdownText(RandomEventType.wreck.label, turnsLeft(until, turn));
+  }
+
+  /// Countdown of the effect lasting during [turn], e.g. « Tempête :
+  /// encore 2 tours », `null` when none applies.
+  String? effectCountdown(int turn) {
+    final type = active;
+    final until = activeUntilTurn;
+    if (type == null || until == null || !isActive(type, turn)) return null;
+    final name = type == RandomEventType.coldCurrent && heating
+        ? '${type.label} (serres chauffées)'
+        : type.label;
+    return countdownText(name, turnsLeft(until, turn));
   }
 }

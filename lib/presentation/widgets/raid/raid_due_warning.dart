@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/game/player.dart';
 import '../../../domain/map/monster_lair.dart';
+import '../../../domain/raid/raid_battle.dart';
 import '../../extensions/monster_lair_extensions.dart';
 import '../../theme/abyss_colors.dart';
 
@@ -24,11 +26,19 @@ class RaidDueWarning extends StatelessWidget {
     this.lastChance = false,
   });
 
+  /// Units of [player] that defend the base level against a raid.
+  static int defenderCountOf(Player player) => RaidBattle.defendersOf(player)
+      .values
+      .fold<int>(0, (sum, count) => sum + count);
+
+  /// e.g. « aucun défenseur », « 3 défenseurs ».
+  static String defendersLabel(int count) => count == 0
+      ? 'aucun défenseur'
+      : '$count ${count > 1 ? 'défenseurs' : 'défenseur'}';
+
   @override
   Widget build(BuildContext context) {
-    final defenders = defenderCount == 0
-        ? 'aucun défenseur'
-        : '$defenderCount ${defenderCount > 1 ? 'défenseurs' : 'défenseur'}';
+    final defenders = defendersLabel(defenderCount);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

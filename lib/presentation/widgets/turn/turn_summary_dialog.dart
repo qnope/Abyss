@@ -7,7 +7,9 @@ import '../../theme/abyss_colors.dart';
 import '../resource/resource_icon.dart';
 import '../raid/raid_turn_section.dart';
 import '../volcano/volcano_turn_section.dart';
+import 'event_turn_section.dart';
 import 'exploration_summary_section.dart';
+import 'summary_line.dart';
 
 Future<void> showTurnSummaryDialog(
   BuildContext context, {
@@ -48,9 +50,10 @@ class _TurnSummaryDialog extends StatelessWidget {
     final hasExplorations = result.explorations.isNotEmpty;
     final hasRaid = RaidTurnSection.hasContent(result);
     final hasVolcano = VolcanoTurnSection.hasContent(result);
+    final hasEvent = EventTurnSection.hasContent(result);
 
     if (!hasChanges && !hasWarnings && !hasLosses && !showArmy &&
-        !hasExplorations && !hasRaid && !hasVolcano) {
+        !hasExplorations && !hasRaid && !hasVolcano && !hasEvent) {
       return const Text('Aucun changement ce tour.');
     }
 
@@ -66,6 +69,7 @@ class _TurnSummaryDialog extends StatelessWidget {
           ExplorationSummarySection(explorations: result.explorations),
         if (hasRaid) RaidTurnSection(result: result),
         if (hasVolcano) VolcanoTurnSection(result: result),
+        if (hasEvent) EventTurnSection(result: result),
         if (showArmy) ...[
           if (hasChanges || hasWarnings || hasLosses || hasExplorations)
             const Divider(),
@@ -133,16 +137,6 @@ class _TurnSummaryDialog extends StatelessWidget {
               style: TextStyle(color: AbyssColors.error)),
       ];
 
-  Widget _buildArmySection() {
-    return const Row(
-      children: [
-        Icon(Icons.shield, color: AbyssColors.success, size: 20),
-        SizedBox(width: 8),
-        Text(
-          'Recrutement disponible',
-          style: TextStyle(color: AbyssColors.success),
-        ),
-      ],
-    );
-  }
+  Widget _buildArmySection() => const SummaryLine(
+      Icons.shield, 'Recrutement disponible', AbyssColors.success);
 }

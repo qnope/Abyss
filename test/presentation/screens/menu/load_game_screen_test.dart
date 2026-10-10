@@ -32,6 +32,14 @@ void main() {
     expect(backdrop.dimmed, isTrue);
   });
 
+  testWidgets('keeps the veiled backdrop still', (tester) async {
+    await tester.pumpWidget(loadGameApp(repository));
+
+    final backdrop = tester.widget<AbyssBackdrop>(find.byType(AbyssBackdrop));
+    // Barely visible under the veil, moving snow would only cost frames.
+    expect(backdrop.animate, isFalse);
+  });
+
   testWidgets('groups games in progress above finished ones, latest first', (
     tester,
   ) async {
@@ -42,9 +50,14 @@ void main() {
       ..addGame(savedGame('Gagne', status: GameStatus.victory, hoursAgo: 2));
     await tester.pumpWidget(loadGameApp(repository));
 
-    final order = ['EN COURS', 'Recent', 'Ancien', 'TERMINÉES', 'Gagne']
-        .map((text) => topOf(tester, text))
-        .toList();
+    final order =
+        [
+          'EN COURS',
+          'Recent',
+          'Ancien',
+          'TERMINÉES',
+          'Gagne',
+        ].map((text) => topOf(tester, text)).toList();
     expect(order, orderedEquals([...order]..sort()));
     expect(topOf(tester, 'Perdu'), greaterThan(topOf(tester, 'Gagne')));
   });

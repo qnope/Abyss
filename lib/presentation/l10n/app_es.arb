@@ -222,6 +222,8 @@
   "actionFailurePlayerFallen": "Esa base ha caído",
   "actionFailureBaseNotRevealed": "Base no localizada: explora hasta ella",
   "actionFailureAttackTooEarly": "Demasiado pronto para atacar una base",
+  "actionFailureAttackAlreadyAnnounced": "Ya hay un ataque de esta facción anunciado",
+  "actionFailureRaidSameTurn": "Ya hay un ataque anunciado para ese turno: una incursión de monstruos golpea entonces",
   "actionFailureNoPendingEvent": "Ningún evento pendiente",
   "actionFailureNotThisChoiceTurn": "Esta elección corresponde a otro turno",
   "actionFailureNotEnoughStockToTrade": "Reservas insuficientes para comerciar",

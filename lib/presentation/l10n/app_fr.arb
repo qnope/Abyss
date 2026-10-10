@@ -285,6 +285,8 @@
   "actionFailurePlayerFallen": "Cette base est tombée",
   "actionFailureBaseNotRevealed": "Base non repérée : explorez jusqu'à elle",
   "actionFailureAttackTooEarly": "Trop tôt pour attaquer une base",
+  "actionFailureAttackAlreadyAnnounced": "Une attaque de cette faction est déjà annoncée",
+  "actionFailureRaidSameTurn": "Une attaque est déjà annoncée pour ce tour : un raid de monstres frappe alors",
   "actionFailureNoPendingEvent": "Aucun événement en attente",
   "actionFailureNotThisChoiceTurn": "Ce n'est pas le tour de ce choix",
   "actionFailureNotEnoughStockToTrade": "Stock insuffisant pour échanger",

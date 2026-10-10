@@ -33,6 +33,7 @@ import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/objective/objective_state.dart';
 import 'package:abyss/domain/objective/tip/tip_id.dart';
+import 'package:abyss/domain/raid/announced_attack.dart';
 import 'package:abyss/domain/raid/raid_state.dart';
 import 'package:abyss/domain/replay/replay_journal.dart';
 import 'package:abyss/domain/resource/resource.dart';
@@ -47,6 +48,7 @@ import 'package:abyss/domain/worksite/worksite.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
+    registerAdapter(AnnouncedAttackAdapter());
     registerAdapter(BaseAssaultEntryAdapter());
     registerAdapter(BuildingAdapter());
     registerAdapter(BuildingEntryAdapter());
@@ -106,6 +108,7 @@ extension HiveRegistrar on HiveInterface {
 
 extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
+    registerAdapter(AnnouncedAttackAdapter());
     registerAdapter(BaseAssaultEntryAdapter());
     registerAdapter(BuildingAdapter());
     registerAdapter(BuildingEntryAdapter());

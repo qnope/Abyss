@@ -53,10 +53,14 @@ abstract final class RaidResolver {
       random: random,
       monsterPercent: difficulty.monsterPercent,
     );
-    final int arrival = max(
+    int arrival = max(
       endedTurn + TechEffects.of(player).raidWarningTurns,
       NoiseRules.firstRaidTurn,
     );
+    // A turn an attack of a faction is announced for is already taken.
+    while (state.isAttackedOn(arrival)) {
+      arrival++;
+    }
     state.announce(wave, arrival);
     return RaidTurnOutcome(
       report: report,

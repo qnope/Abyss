@@ -6,9 +6,11 @@ import '../script/strategies/balanced_strategy.dart';
 import '../script/strategies/explore_moves.dart';
 import '../unit/unit_type.dart';
 import 'faction_personality.dart';
+import 'faction_war.dart';
 
 /// What a faction plays for now: a balanced economy that also scouts the
-/// level 1 and picks up what it finds. It never attacks anybody.
+/// level 1 and picks up what it finds, and now and then a conservative
+/// attack on the weakest base it knows ([FactionWar]).
 ///
 /// Every personality shares it until its own brain exists; it only uses
 /// the actions of the game, with their costs and checks.
@@ -24,6 +26,7 @@ class FactionBrain extends GameScript {
 
   @override
   void playTurn(ScriptTurn turn) {
+    FactionWar.play(turn, personality);
     turn.collectRevealed(1);
     final bool hasScout =
         (turn.player.unitsOnLevel(1)[UnitType.scout]?.count ?? 0) > 0;

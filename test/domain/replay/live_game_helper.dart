@@ -77,6 +77,10 @@ Map<String, Object?> snapshotOf(Game game, {Player? of}) {
         },
     },
     'noise': player.raidState.totalNoise,
+    'attacks': [
+      for (final a in player.raidState.attacks)
+        '${a.attackerId} ${a.arrivalTurn} ${a.seed} ${a.units}',
+    ],
     'history': [for (final e in player.historyEntries) '${e.turn} ${e.category.name}'],
   };
 }

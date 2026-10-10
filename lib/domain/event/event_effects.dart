@@ -43,6 +43,13 @@ abstract final class EventEffects {
   }) =>
       of(type).apply(game, player, accept: accept, turn: turn, random: random);
 
+  /// Runs [EventEffect.onAnyTurnEnd] of every event at the end of [turn].
+  static void endTurn(Game game, Player player, {required int turn}) {
+    for (final RandomEventType type in RandomEventType.values) {
+      of(type).onAnyTurnEnd(game, player, turn: turn);
+    }
+  }
+
   /// The effect of [type].
   static EventEffect of(RandomEventType type) => switch (type) {
     RandomEventType.warmCurrent => const CurrentEffect(

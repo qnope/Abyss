@@ -99,6 +99,7 @@ void _showCellAction(BuildContext context, Game game,
   switch (cell.content) {
     case CellContentType.resourceBonus:
     case CellContentType.ruins:
+    case CellContentType.wreck:
       showTreasureSheet(context, targetX: x, targetY: y,
         contentType: cell.content,
         onCollect: () =>

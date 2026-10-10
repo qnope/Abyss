@@ -65,7 +65,7 @@ void main() {
     final player =
         eventPlayer()
           ..eventState.schedule(12)
-          ..eventState.setPending(RandomEventType.wreck, 13);
+          ..eventState.setPending(RandomEventType.caravan, 13);
     final outcome = EventResolver.resolve(
       eventGame(player, turn: 12),
       player,
@@ -73,7 +73,7 @@ void main() {
       random: Random(1),
     );
     expect(outcome.drawn, isNull);
-    expect(player.eventState.pending, RandomEventType.wreck);
+    expect(player.eventState.pending, RandomEventType.caravan);
     expect(player.eventState.nextDrawTurn, 13);
   });
 

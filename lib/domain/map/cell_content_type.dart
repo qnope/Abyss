@@ -11,4 +11,7 @@ enum CellContentType {
   @HiveField(4) transitionBase,
   @HiveField(5) passage,
   @HiveField(6) volcanicKernel,
+
+  /// Sunk by a random event for a few turns, never by the map generator.
+  @HiveField(7) wreck,
 }

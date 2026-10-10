@@ -32,6 +32,11 @@ void main() {
       }
     });
 
+    test('a wreck is shown with the ruins until it has its own art', () {
+      expect(CellContentType.wreck.label, 'Épave');
+      expect(CellContentType.wreck.svgPath, CellContentType.ruins.svgPath);
+    });
+
     test('volcanicKernel has correct label', () {
       expect(CellContentType.volcanicKernel.label, 'Noyau Volcanique');
     });

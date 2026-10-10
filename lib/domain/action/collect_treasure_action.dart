@@ -1,4 +1,6 @@
 import 'dart:math';
+import '../event/effects/wreck_effect.dart';
+import '../event/event_rules.dart';
 import '../game/game.dart';
 import '../game/player.dart';
 import '../tech/tech_effects.dart';
@@ -10,6 +12,7 @@ import 'action.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import 'collect_treasure_result.dart';
+import 'treasure_loot.dart';
 
 class CollectTreasureAction extends Action {
   final int targetX;
@@ -23,6 +26,16 @@ class CollectTreasureAction extends Action {
     this.level = 1,
     Random? random,
   }) : random = random ?? Random();
+
+  /// What was searched, once executed: it decides the [noiseMade].
+  CellContentType? _searched;
+
+  /// What may be collected; anything else has nothing to give.
+  static const Set<CellContentType> collectable = <CellContentType>{
+    CellContentType.resourceBonus,
+    CellContentType.ruins,
+    CellContentType.wreck,
+  };
 
   @override
   ActionType get type => ActionType.collectTreasure;
@@ -45,8 +58,7 @@ class CollectTreasureAction extends Action {
     if (cell.collectedBy != null) {
       return const CollectTreasureResult.failure('Déjà collecté');
     }
-    if (cell.content != CellContentType.resourceBonus &&
-        cell.content != CellContentType.ruins) {
+    if (!collectable.contains(cell.content)) {
       return const CollectTreasureResult.failure('Rien à collecter');
     }
     return CollectTreasureResult.success(const {});
@@ -59,48 +71,34 @@ class CollectTreasureAction extends Action {
 
     final map = game.levels[level]!;
     final cell = map.cellAt(targetX, targetY);
-    final deltas = <ResourceType, int>{};
-
-    if (cell.content == CellContentType.resourceBonus) {
-      deltas[ResourceType.algae] =
-          _addResource(player, ResourceType.algae, 50 + random.nextInt(51));
-      deltas[ResourceType.coral] =
-          _addResource(player, ResourceType.coral, 30 + random.nextInt(21));
-      deltas[ResourceType.ore] =
-          _addResource(player, ResourceType.ore, 30 + random.nextInt(21));
-    } else if (cell.content == CellContentType.ruins) {
-      deltas[ResourceType.algae] =
-          _addResource(player, ResourceType.algae, random.nextInt(101));
-      deltas[ResourceType.coral] =
-          _addResource(player, ResourceType.coral, random.nextInt(26));
-      deltas[ResourceType.ore] =
-          _addResource(player, ResourceType.ore, random.nextInt(26));
-      deltas[ResourceType.pearl] =
-          _addResource(player, ResourceType.pearl, _ruinPearls());
-    }
+    final percent = TechEffects(player.techBranches).lootPercent;
+    final loot = TreasureLoot.of(cell.content, random, level);
+    final deltas = <ResourceType, int>{
+      for (final MapEntry(:key, :value) in loot.entries)
+        key: _addResource(player, key, value * percent ~/ 100),
+    };
 
     map.setCell(
       targetX,
       targetY,
       cell.copyWith(collectedBy: player.id),
     );
+    _searched = cell.content;
+    if (cell.content == CellContentType.wreck) {
+      WreckEffect.searched(player, GridPosition(x: targetX, y: targetY));
+    }
     return CollectTreasureResult.success(deltas);
   }
 
   /// Treasures and ruins are rarer, so each one is worth more.
-  static const rewardMultiplier = 3;
+  static const rewardMultiplier = TreasureLoot.rewardMultiplier;
 
-  /// Deeper ruins hold more pearls: base 0-2 on level 1, 0-3 on 2, 0-4
-  /// on 3, before [rewardMultiplier].
-  int _ruinPearls() => random.nextInt(level + 2);
-
-  int _addResource(Player player, ResourceType type, int baseAmount) {
+  /// Adds [amount] of [type] up to the storage cap; returns what was added.
+  int _addResource(Player player, ResourceType type, int amount) {
     final resource = player.resources[type]!;
     final before = resource.amount;
-    final boosted = baseAmount * rewardMultiplier *
-        TechEffects(player.techBranches).lootPercent ~/ 100;
     resource.amount =
-        (resource.amount + boosted).clamp(0, resource.maxStorage);
+        (resource.amount + amount).clamp(0, resource.maxStorage);
     return resource.amount - before;
   }
 
@@ -118,4 +116,9 @@ class CollectTreasureAction extends Action {
       gains: (result as CollectTreasureResult).deltas,
     );
   }
+
+  /// Searching a wreck is loud; treasures and ruins are silent.
+  @override
+  int noiseMade(Player player) =>
+      _searched == CellContentType.wreck ? EventRules.wreckNoise : 0;
 }

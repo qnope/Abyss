@@ -42,4 +42,9 @@ abstract class EventEffect {
   /// Upkeep of the event's lasting effect at the end of [turn], one of
   /// the turns it covers.
   void onTurnEnd(Game game, Player player, {required int turn}) {}
+
+  /// Runs at the end of every turn [turn], after the lasting effects end
+  /// and before the next draw, whether the event lasts or not: for what
+  /// it left on the map.
+  void onAnyTurnEnd(Game game, Player player, {required int turn}) {}
 }

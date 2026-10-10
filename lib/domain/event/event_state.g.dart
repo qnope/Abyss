@@ -30,13 +30,15 @@ class EventStateAdapter extends TypeAdapter<EventState> {
       tradeTo: fields[10] as ResourceType?,
       predatorWave: fields[11] as MonsterLair?,
       predatorsTurn: (fields[12] as num?)?.toInt(),
+      wreckPosition: fields[13] as GridPosition?,
+      wreckUntilTurn: (fields[14] as num?)?.toInt(),
     );
   }
 
   @override
   void write(BinaryWriter writer, EventState obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.nextDrawTurn)
       ..writeByte(1)
@@ -62,7 +64,11 @@ class EventStateAdapter extends TypeAdapter<EventState> {
       ..writeByte(11)
       ..write(obj.predatorWave)
       ..writeByte(12)
-      ..write(obj.predatorsTurn);
+      ..write(obj.predatorsTurn)
+      ..writeByte(13)
+      ..write(obj.wreckPosition)
+      ..writeByte(14)
+      ..write(obj.wreckUntilTurn);
   }
 
   @override

@@ -20,7 +20,7 @@ List<EventEntry> eventEntriesOf(Player player) =>
 /// Every event that waits for a choice.
 List<RandomEventType> get choiceEvents => [
   for (final type in RandomEventType.values)
-    if (type != RandomEventType.storm) type,
+    if (type != RandomEventType.storm && type != RandomEventType.wreck) type,
 ];
 
 /// Player of [id] whose farms, mines and panels all produce, with room

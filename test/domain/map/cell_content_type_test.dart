@@ -3,8 +3,8 @@ import 'package:abyss/domain/map/cell_content_type.dart';
 
 void main() {
   group('CellContentType', () {
-    test('has all 7 values', () {
-      expect(CellContentType.values.length, 7);
+    test('has all 8 values', () {
+      expect(CellContentType.values.length, 8);
       expect(CellContentType.values, contains(CellContentType.empty));
       expect(CellContentType.values, contains(CellContentType.resourceBonus));
       expect(CellContentType.values, contains(CellContentType.ruins));
@@ -30,6 +30,10 @@ void main() {
     test('volcanicKernel exists', () {
       expect(CellContentType.volcanicKernel, isNotNull);
       expect(CellContentType.volcanicKernel.index, 6);
+    });
+
+    test('the wreck comes last, after every saved value', () {
+      expect(CellContentType.wreck.index, 7);
     });
   });
 }

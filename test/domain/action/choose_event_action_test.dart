@@ -58,7 +58,7 @@ void main() {
 
   test('the choice is written in the replay journal', () {
     final player =
-        eventPlayer()..eventState.setPending(RandomEventType.wreck, 12);
+        eventPlayer()..eventState.setPending(RandomEventType.survivors, 12);
     final game = eventGame(player, turn: 12)
       ..replay = ReplayJournal(mapSeed: 1, playerName: 'Test');
 
@@ -72,7 +72,7 @@ void main() {
 
   test('a second choice in the same turn fails', () {
     final player =
-        eventPlayer()..eventState.setPending(RandomEventType.wreck, 12);
+        eventPlayer()..eventState.setPending(RandomEventType.survivors, 12);
     final game = eventGame(player, turn: 12);
     final executor = ActionExecutor();
     executor.execute(ChooseEventAction(accept: true), game, player);

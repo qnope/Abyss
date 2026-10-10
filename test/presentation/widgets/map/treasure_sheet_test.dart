@@ -46,6 +46,15 @@ void main() {
       expect(find.text('Corail, minerai et perles'), findsOneWidget);
     });
 
+    testWidgets('a wreck shows its coral, ore and pearl', (tester) async {
+      await tester.pumpWidget(buildOpener(
+        contentType: CellContentType.wreck,
+      ));
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      expect(find.text('Corail, minerai et une perle'), findsOneWidget);
+    });
+
     testWidgets('displays collect button', (tester) async {
       await tester.pumpWidget(buildOpener(
         contentType: CellContentType.resourceBonus,

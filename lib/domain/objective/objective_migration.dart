@@ -5,7 +5,7 @@ import 'objective_state.dart';
 
 /// Brings the games saved before the objectives to the objectives: what
 /// was already met counts as completed, without its reward, and the
-/// tutorial stays off.
+/// tutorial and the tips stay off.
 abstract final class ObjectiveMigration {
   /// The state of [player] in [game] had it been saved before the
   /// objectives. Pure: [game] is left as is.

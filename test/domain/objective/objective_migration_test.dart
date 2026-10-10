@@ -31,6 +31,7 @@ void main() {
         ObjectiveId.hqLevel2,
       ]);
       expect(state.tutorialEnabled, isFalse);
+      expect(state.tipsEnabled, isFalse);
     });
 
     test('the legacy state is computed without touching the game', () {

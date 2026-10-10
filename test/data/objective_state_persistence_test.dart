@@ -71,7 +71,7 @@ void main() {
   });
 
   test('an ObjectiveState survives its adapter', () {
-    final state = ObjectiveState(tutorialEnabled: true)
+    final state = ObjectiveState(tutorialEnabled: true, tipsEnabled: true)
       ..complete(ObjectiveId.mines)
       ..complete(ObjectiveId.hqLevel1);
     final writer = BinaryWriterImpl(Hive)..write(state);
@@ -81,6 +81,24 @@ void main() {
 
     expect(decoded.completed, [ObjectiveId.mines, ObjectiveId.hqLevel1]);
     expect(decoded.tutorialEnabled, isTrue);
+    expect(decoded.tipsEnabled, isTrue);
+  });
+
+  test('a state saved before the tips decodes with the tips off', () {
+    final writer = BinaryWriterImpl(Hive)
+      ..writeByte(2)
+      ..writeByte(0)
+      ..write([ObjectiveId.hqLevel1])
+      ..writeByte(1)
+      ..write(true);
+
+    final decoded = ObjectiveStateAdapter().read(
+      BinaryReaderImpl(writer.toBytes(), Hive),
+    );
+
+    expect(decoded.completed, [ObjectiveId.hqLevel1]);
+    expect(decoded.tutorialEnabled, isTrue);
+    expect(decoded.tipsEnabled, isFalse);
   });
 
   test('a player carries its objectives through a save and a reload', () async {
@@ -118,5 +136,6 @@ void main() {
 
     expect(loaded.completed, [ObjectiveId.hqLevel1]);
     expect(loaded.tutorialEnabled, isFalse);
+    expect(loaded.tipsEnabled, isFalse);
   });
 }

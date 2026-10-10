@@ -53,6 +53,27 @@ abstract final class AbyssInputTheme {
     );
   }
 
+  /// Glowing cyan when on, a dim trench when off.
+  static SwitchThemeData switchTheme() {
+    return SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? AbyssColors.biolumCyan
+            : AbyssColors.onSurfaceDim,
+      ),
+      trackColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? AbyssColors.biolumCyan.withValues(alpha: 0.3)
+            : AbyssColors.surfaceDim,
+      ),
+      trackOutlineColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? AbyssColors.biolumCyan
+            : AbyssColors.trench,
+      ),
+    );
+  }
+
   static ProgressIndicatorThemeData progressIndicator() {
     return const ProgressIndicatorThemeData(
       color: AbyssColors.biolumCyan,

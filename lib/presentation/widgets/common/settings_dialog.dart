@@ -1,13 +1,37 @@
 import 'package:flutter/material.dart';
+import '../../../data/game_repository.dart';
+import '../../../domain/game/game.dart';
+import '../../theme/abyss_colors.dart';
+import 'guide_settings.dart';
 
 enum SettingsDialogResult { cancel, saveAndQuit, openHistory, exportReplay }
 
-Future<SettingsDialogResult> showSettingsDialog(BuildContext context) async {
+/// The settings of [game]: its guide switches, saved through [repository]
+/// as they change, and the ways out of the game.
+Future<SettingsDialogResult> showSettingsDialog(
+  BuildContext context, {
+  required Game game,
+  required GameRepository repository,
+}) async {
   final result = await showDialog<SettingsDialogResult>(
     context: context,
     builder: (ctx) => AlertDialog(
-      title: const Text('Parametres'),
-      content: const Text('Que souhaitez-vous faire ?'),
+      title: const Text('Paramètres'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Partie en cours',
+              style: Theme.of(ctx).textTheme.labelLarge?.copyWith(
+                color: AbyssColors.onSurfaceDim,
+              ),
+            ),
+            GuideSettings(game: game, repository: repository),
+          ],
+        ),
+      ),
       actions: [
         TextButton(
           onPressed: () =>

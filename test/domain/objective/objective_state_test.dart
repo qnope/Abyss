@@ -5,11 +5,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ObjectiveState', () {
-    test('starts with nothing completed and the tutorial off', () {
+    test('starts with nothing completed, the tutorial and tips off', () {
       final state = ObjectiveState();
 
       expect(state.completed, isEmpty);
       expect(state.tutorialEnabled, isFalse);
+      expect(state.tipsEnabled, isFalse);
       expect(state.isCompleted(ObjectiveId.hqLevel1), isFalse);
     });
 

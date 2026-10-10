@@ -6,7 +6,7 @@
 
 | Screen | Role |
 |--------|------|
-| `MainMenuScreen` | Entry point. Two buttons: new game, load game. Receives `GameRepository`. |
+| `MainMenuScreen` | Entry point. Continue, new game, load game. Receives `GameRepository`. With a `LanguageScope` above it, a gear in the top right corner opens the language settings; the menu switches language as soon as one is picked. |
 | `NewGameScreen` | Player name input and starter kit selection. Creates a `Game` and navigates to `GameScreen`. |
 | `LoadGameScreen` | Lists saved games from `GameRepository`. Tap to resume. |
 

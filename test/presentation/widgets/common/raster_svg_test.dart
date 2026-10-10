@@ -56,5 +56,49 @@ void main() {
       expect(raw.color, Colors.grey);
       expect(raw.colorBlendMode, BlendMode.saturation);
     });
+
+    testWidgets('draws the greyscale bitmap when greyscale', (tester) async {
+      await tester.runAsync(() => SvgRasterCache.loadGrey(_path));
+      await tester.pumpWidget(
+        const Center(child: RasterSvg(assetPath: _path, greyscale: true)),
+      );
+      final raw = tester.widget<RawImage>(find.byType(RawImage));
+      expect(raw.image, same(SvgRasterCache.peekGrey(_path)));
+      expect(raw.image, isNot(same(SvgRasterCache.peek(_path))));
+    });
+
+    testWidgets('draws the colour bitmap by default', (tester) async {
+      await tester.runAsync(() => SvgRasterCache.loadGrey(_path));
+      await tester.pumpWidget(const Center(child: RasterSvg(assetPath: _path)));
+      final raw = tester.widget<RawImage>(find.byType(RawImage));
+      expect(raw.image, same(SvgRasterCache.peek(_path)));
+    });
+
+    testWidgets('switches bitmap when greyscale toggles', (tester) async {
+      await tester.runAsync(() => SvgRasterCache.loadGrey(_path));
+      RawImage raw() => tester.widget<RawImage>(find.byType(RawImage));
+      await tester.pumpWidget(const Center(child: RasterSvg(assetPath: _path)));
+      expect(raw().image, same(SvgRasterCache.peek(_path)));
+      await tester.pumpWidget(
+        const Center(child: RasterSvg(assetPath: _path, greyscale: true)),
+      );
+      expect(raw().image, same(SvgRasterCache.peekGrey(_path)));
+      await tester.pumpWidget(const Center(child: RasterSvg(assetPath: _path)));
+      expect(raw().image, same(SvgRasterCache.peek(_path)));
+    });
+
+    testWidgets('passes the opacity to the image', (tester) async {
+      await tester.pumpWidget(
+        const Center(child: RasterSvg(assetPath: _path, opacity: 0.85)),
+      );
+      final raw = tester.widget<RawImage>(find.byType(RawImage));
+      expect(raw.opacity?.value, 0.85);
+    });
+
+    testWidgets('draws fully opaque without opacity', (tester) async {
+      await tester.pumpWidget(const Center(child: RasterSvg(assetPath: _path)));
+      final raw = tester.widget<RawImage>(find.byType(RawImage));
+      expect(raw.opacity, isNull);
+    });
   });
 }

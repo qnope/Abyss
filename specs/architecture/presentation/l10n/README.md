@@ -27,7 +27,12 @@ Only the first language of the device counts: French gives French, Spanish
 3. Read it with `context.l10n.key` in the widget.
 
 `test/presentation/l10n/arb_files_test.dart` fails when a language misses a
-key, has an extra one, or drops a placeholder.
+key, has an extra one, or drops a placeholder, and
+`no_french_literals_test.dart` fails when a screen writes an accented text
+itself instead of reading it from the translations.
+
+French punctuation keeps its space before `:`, `;`, `!` and `?`
+("Stock : 3"); English and Spanish do not.
 
 ## Tests
 

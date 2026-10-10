@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'data/game_repository.dart';
+import 'presentation/l10n/abyss_locale.dart';
 import 'presentation/screens/menu/main_menu_screen.dart';
 import 'presentation/theme/abyss_theme.dart';
 import 'presentation/widgets/backdrop/backdrop_prewarm.dart';
@@ -27,6 +28,9 @@ class AbyssApp extends StatelessWidget {
     return MaterialApp(
       title: 'ABYSSES',
       theme: AbyssTheme.create(),
+      localizationsDelegates: AbyssLocale.delegates,
+      supportedLocales: AbyssLocale.supported,
+      localeListResolutionCallback: AbyssLocale.resolveList,
       // While the menu shows, every icon and sprite is rasterized and the
       // game screens are pre-drawn out of sight, so none of them waits.
       builder: (context, child) => WarmUpLayer(

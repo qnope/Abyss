@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/game/difficulty.dart';
 import '../../extensions/difficulty_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// One [ChoiceChip] per [Difficulty], with the description of the
@@ -24,7 +25,7 @@ class DifficultyPicker extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('Difficulté', style: textTheme.titleMedium),
+        Text(context.l10n.difficultyTitle, style: textTheme.titleMedium),
         const SizedBox(height: 8),
         Wrap(
           alignment: WrapAlignment.center,
@@ -45,9 +46,7 @@ class DifficultyPicker extends StatelessWidget {
         Text(
           current.description,
           textAlign: TextAlign.center,
-          style: textTheme.bodySmall?.copyWith(
-            color: AbyssColors.onSurfaceDim,
-          ),
+          style: textTheme.bodySmall?.copyWith(color: AbyssColors.onSurfaceDim),
         ),
       ],
     );

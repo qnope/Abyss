@@ -5,11 +5,14 @@ version: 0.1.0
 
 environment:
   sdk: ^3.7.0
-  flutter: ">=3.29.0"
+  flutter: ">=3.32.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
   hive_ce: ^2.19.3
   hive_ce_flutter: ^2.3.4
   flutter_svg: ^2.3.0
@@ -28,6 +31,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
     - assets/icons/resources/
     - assets/icons/buildings/

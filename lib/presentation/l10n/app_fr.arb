@@ -1,0 +1,16 @@
+{
+  "@@locale": "fr",
+
+  "newGameTitle": "Nouvelle Partie",
+  "newGameEnterName": "Entrez votre nom",
+  "newGameNameHint": "Nom du joueur",
+  "newGameNameEmpty": "Veuillez entrer un nom",
+  "newGameNameTooShort": "Le nom doit contenir au moins {min} caractères",
+  "@newGameNameTooShort": {
+    "placeholders": { "min": { "type": "int" } }
+  },
+  "newGameTutorial": "Tutoriel",
+  "newGameTutorialHint": "Un guide t'accompagne sur les premiers tours",
+  "newGameStart": "Commencer",
+  "difficultyTitle": "Difficulté"
+}

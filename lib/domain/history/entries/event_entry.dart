@@ -3,7 +3,8 @@ part of '../history_entry.dart';
 /// History entry recording how a random event played out: the player's
 /// choice, or the prudent option when the turn ended without one.
 ///
-/// The presentation layer titles it after its [type].
+/// The presentation layer titles it after its [type] and words the
+/// choice.
 @HiveType(typeId: 52)
 class EventEntry extends HistoryEntry {
   @HiveField(0)
@@ -14,12 +15,13 @@ class EventEntry extends HistoryEntry {
   @override
   final HistoryEntryCategory category;
 
+  /// Left empty: the presentation titles the entry in the player's
+  /// language. Kept so the Hive layout keeps its field 2.
   @HiveField(2)
-  @override
   final String title;
 
+  /// Always `null`: the presentation words the player's choice.
   @HiveField(3)
-  @override
   final String? subtitle;
 
   @HiveField(4)
@@ -41,12 +43,6 @@ class EventEntry extends HistoryEntry {
     required this.accepted,
     required this.defaulted,
   }) : category = HistoryEntryCategory.event,
-       title = 'Événement',
-       subtitle = _eventChoiceOf(type, accepted, defaulted);
-}
-
-String? _eventChoiceOf(RandomEventType type, bool accepted, bool defaulted) {
-  if (!type.hasChoice) return null;
-  if (defaulted) return 'Option prudente, sans choix';
-  return accepted ? 'Accepté' : 'Refusé';
+       title = '',
+       subtitle = null;
 }

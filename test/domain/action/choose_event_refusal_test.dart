@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:abyss/domain/action/action_failure.dart';
 
 import 'package:abyss/domain/action/action_executor.dart';
 import 'package:abyss/domain/action/choose_event_action.dart';
@@ -40,7 +41,7 @@ void main() {
       s.player,
     );
     expect(result.isSuccess, isFalse);
-    expect(result.reason, 'Stock insuffisant pour échanger');
+    expect(result.reason, ActionFailure.notEnoughStockToTrade);
     expect(s.player.eventState.hasPending, isTrue);
     expect(s.player.eventState.tradeFrom, ResourceType.algae);
     expect(s.player.resources[ResourceType.algae]!.amount, 60);

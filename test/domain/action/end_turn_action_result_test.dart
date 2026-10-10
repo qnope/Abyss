@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action_result.dart';
 import 'package:abyss/domain/action/end_turn_action_result.dart';
 import 'package:abyss/domain/turn/turn_result.dart';
@@ -28,11 +29,11 @@ void main() {
 
     test('failure keeps the reason and drops the turn result', () {
       // Built at runtime (not const) so the constructor body is exercised.
-      final reason = ['Partie', 'terminée'].join(' ');
+      final reason = ActionFailure.values.byName('gameOver');
       final result = EndTurnActionResult.failure(reason);
 
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Partie terminée');
+      expect(result.reason, ActionFailure.gameOver);
       expect(result.turnResult, isNull);
     });
   });

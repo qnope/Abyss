@@ -4,6 +4,7 @@ import '../../../domain/event/random_event_type.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
 import '../../../domain/resource/resource_type.dart';
+import '../../extensions/action_failure_extensions.dart';
 import '../../extensions/event_state_extensions.dart';
 import '../../extensions/monster_lair_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
@@ -66,7 +67,7 @@ class EventCardTexts {
       EventChoice(
         label: labels.$1,
         accept: true,
-        refusal: EventEffects.of(type).refusal(game, player),
+        refusal: EventEffects.of(type).refusal(game, player)?.message(l10n),
       ),
       EventChoice(label: labels.$2, accept: false),
     ];

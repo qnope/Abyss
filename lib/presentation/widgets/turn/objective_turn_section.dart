@@ -4,6 +4,7 @@ import '../../../domain/objective/objective_completion.dart';
 import '../../../domain/objective/temporary/temporary_objective_end.dart';
 import '../../../domain/turn/turn_result.dart';
 import '../../extensions/resource_type_extensions.dart';
+import '../../extensions/temporary_objective_kind_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
@@ -38,10 +39,10 @@ class ObjectiveTurnSection extends StatelessWidget {
           ended.isDone
               ? SummaryLine(
                 Icons.flag,
-                '$_done${ended.objective.title}',
+                '$_done${ended.objective.displayTitle(context.l10n)}',
                 AbyssColors.success,
               )
-              : _missed(ended),
+              : _missed(context.l10n, ended),
       ],
     );
   }
@@ -55,17 +56,18 @@ class ObjectiveTurnSection extends StatelessWidget {
     return gains.isEmpty ? title : '$title ($gains)';
   }
 
-  Widget _missed(TemporaryObjectiveEnd ended) => SummaryLine.rich(
-    Icons.hourglass_disabled,
-    TextSpan(
-      children: [
+  Widget _missed(AppLocalizations l10n, TemporaryObjectiveEnd ended) =>
+      SummaryLine.rich(
+        Icons.hourglass_disabled,
         TextSpan(
-          text: ended.objective.title,
-          style: const TextStyle(decoration: TextDecoration.lineThrough),
+          children: [
+            TextSpan(
+              text: ended.objective.displayTitle(l10n),
+              style: const TextStyle(decoration: TextDecoration.lineThrough),
+            ),
+            const TextSpan(text: ' (raté)'),
+          ],
         ),
-        const TextSpan(text: ' (raté)'),
-      ],
-    ),
-    AbyssColors.warning,
-  );
+        AbyssColors.warning,
+      );
 }

@@ -1,8 +1,8 @@
 /// The event that sets a temporary objective.
 enum TemporaryObjectiveKind {
-  /// « Fouille l'épave d'ici la fin du tour N ».
+  /// Search the wreck by the end of its last turn.
   wreck,
 
-  /// « Repousse le banc de prédateurs ».
+  /// Repel the school of predators.
   predators,
 }

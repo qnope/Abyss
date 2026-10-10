@@ -1,3 +1,5 @@
+import '../action/action_failure.dart';
+
 /// One action a script tried, kept to replay or debug a game.
 class ScriptLogEntry {
   final int turn;
@@ -5,7 +7,7 @@ class ScriptLogEntry {
   final bool success;
 
   /// Why the action failed, if it did.
-  final String? reason;
+  final ActionFailure? reason;
 
   const ScriptLogEntry({
     required this.turn,
@@ -17,5 +19,5 @@ class ScriptLogEntry {
   @override
   String toString() => success
       ? 'T$turn ✓ $description'
-      : 'T$turn ✗ $description ($reason)';
+      : 'T$turn ✗ $description (${reason?.name})';
 }

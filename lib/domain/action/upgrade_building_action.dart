@@ -1,4 +1,5 @@
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import '../building/building_cost_calculator.dart';
@@ -29,7 +30,7 @@ class UpgradeBuildingAction extends Action {
   ActionResult validate(Game game, Player player) {
     final building = player.buildings[buildingType];
     if (building == null) {
-      return ActionResult.failure('Batiment introuvable');
+      return ActionResult.failure(ActionFailure.buildingNotFound);
     }
     final check = _calculator(player).checkUpgrade(
       type: buildingType,
@@ -43,13 +44,13 @@ class UpgradeBuildingAction extends Action {
     final int hqLevel =
         player.buildings[BuildingType.headquarters]?.level ?? 0;
     if (player.worksite.freeBuildSites(hqLevel) <= 0) {
-      return ActionResult.failure('Chantiers occupes ce tour');
+      return ActionResult.failure(ActionFailure.worksitesBusy);
     }
     if (check.isMaxLevel) {
-      return ActionResult.failure('Niveau maximum atteint');
+      return ActionResult.failure(ActionFailure.maxLevelReached);
     }
     if (!check.canUpgrade) {
-      return ActionResult.failure('Ressources insuffisantes');
+      return ActionResult.failure(ActionFailure.notEnoughResources);
     }
     return ActionResult.success();
   }

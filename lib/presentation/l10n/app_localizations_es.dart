@@ -174,6 +174,72 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unitSaboteurRoleEffect => 'Ignora la defensa de su objetivo.';
 
   @override
+  String unitScoutCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count exploradores',
+      one: '$count explorador',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitHarpoonistCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count arponeros',
+      one: '$count arponero',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitGuardianCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count guardianes',
+      one: '$count guardián',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitDomeBreakerCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count rompedores',
+      one: '$count rompedor',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitAbyssAdmiralCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count almirantes del abismo',
+      one: '$count almirante del abismo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitSaboteurCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count saboteadores',
+      one: '$count saboteador',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get resourceAlgaeName => 'Algas';
 
   @override
@@ -576,6 +642,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get temporaryObjectivePredatorsShort => 'Depredadores';
 
   @override
+  String temporaryObjectiveWreckTitle(int turn) {
+    return 'Registra el pecio antes del final del turno $turn';
+  }
+
+  @override
+  String get temporaryObjectivePredatorsTitle =>
+      'Repele el banco de depredadores';
+
+  @override
   String get historyCategoryCombat => 'Combate';
 
   @override
@@ -613,4 +688,266 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get historyCategoryEvent => 'Evento';
+
+  @override
+  String get actionFailureUnknown => 'Acción imposible';
+
+  @override
+  String get actionFailureMapNotGenerated => 'Mapa no generado';
+
+  @override
+  String get actionFailureCellNotRevealed => 'Casilla no revelada';
+
+  @override
+  String get actionFailureCellNotEligible => 'Casilla no elegible';
+
+  @override
+  String get actionFailureAlreadyCollected => 'Ya recogido';
+
+  @override
+  String get actionFailureNothingToCollect => 'Nada que recoger';
+
+  @override
+  String get actionFailureStormBlocksExploration =>
+      'Tormenta: exploración imposible';
+
+  @override
+  String get actionFailureNoScoutAvailable => 'Ningún explorador disponible';
+
+  @override
+  String get actionFailureNoMonsterHere => 'No hay ningún monstruo aquí';
+
+  @override
+  String get actionFailureLairAlreadyDefeated => 'Guarida ya derrotada';
+
+  @override
+  String get actionFailureLairEmpty => 'Guarida vacía';
+
+  @override
+  String get actionFailureNotEnoughUnits => 'Unidades insuficientes';
+
+  @override
+  String get actionFailureNoUnitSelected => 'Ninguna unidad seleccionada';
+
+  @override
+  String get actionFailureAdmiralRequired =>
+      'Se necesita un Almirante del Abismo';
+
+  @override
+  String get actionFailureNoTransitionBaseHere =>
+      'No hay ninguna base de transición aquí';
+
+  @override
+  String get actionFailureBaseNotFound => 'Base no encontrada';
+
+  @override
+  String get actionFailureBaseAlreadyCaptured => 'Base ya capturada';
+
+  @override
+  String get actionFailureBaseNotCaptured => 'Base no capturada';
+
+  @override
+  String get actionFailureTargetLevelNotExplored =>
+      'Nivel de destino no explorado';
+
+  @override
+  String get actionFailureRequiredBuildingMissing =>
+      'Falta el edificio necesario';
+
+  @override
+  String get actionFailureNoVolcanicKernelHere =>
+      'No hay ningún Núcleo Volcánico aquí';
+
+  @override
+  String get actionFailureKernelAlreadyCaptured => 'Núcleo ya capturado';
+
+  @override
+  String get actionFailureKernelNotCaptured => 'Núcleo no capturado';
+
+  @override
+  String get actionFailureNoPendingEvent => 'Ningún evento pendiente';
+
+  @override
+  String get actionFailureNotThisChoiceTurn =>
+      'Esta elección corresponde a otro turno';
+
+  @override
+  String get actionFailureNotEnoughStockToTrade =>
+      'Reservas insuficientes para comerciar';
+
+  @override
+  String get actionFailureBranchNotFound => 'Rama no encontrada';
+
+  @override
+  String get actionFailureBranchLocked => 'Rama bloqueada';
+
+  @override
+  String get actionFailureBranchAlreadyUnlocked => 'Rama ya desbloqueada';
+
+  @override
+  String get actionFailureLaboratoryRequired => 'Se necesita un Laboratorio';
+
+  @override
+  String get actionFailureLaboratoryLevelTooLow =>
+      'Nivel de laboratorio insuficiente';
+
+  @override
+  String get actionFailureResearchAlreadyStarted =>
+      'Investigación ya iniciada este turno';
+
+  @override
+  String get actionFailureBuildingNotFound => 'Edificio no encontrado';
+
+  @override
+  String get actionFailureWorksitesBusy => 'Obras ocupadas este turno';
+
+  @override
+  String get actionFailureMaxLevelReached => 'Nivel máximo alcanzado';
+
+  @override
+  String get actionFailureNotEnoughResources => 'Recursos insuficientes';
+
+  @override
+  String get actionFailureUnitLocked => 'Unidad bloqueada';
+
+  @override
+  String get actionFailureRecruitmentAlreadyDone => 'Ya se reclutó este turno';
+
+  @override
+  String get actionFailureInvalidQuantity => 'Cantidad no válida';
+
+  @override
+  String get actionFailureGameOver => 'Partida terminada';
+
+  @override
+  String historyBuildingTitle(String building, int level) {
+    return '$building niv. $level';
+  }
+
+  @override
+  String historyResearchUnlocked(String branch) {
+    return '$branch desbloqueada';
+  }
+
+  @override
+  String historyResearchLevel(String branch, int level) {
+    return '$branch niv. $level';
+  }
+
+  @override
+  String historyResearchImproved(String branch) {
+    return '$branch mejorada';
+  }
+
+  @override
+  String historyRecruitTitle(int count, String units) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$units reclutados',
+      one: '$units reclutado',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String historyExploreTitle(int x, int y) {
+    return 'Exploración ($x, $y)';
+  }
+
+  @override
+  String historyCollectTitle(int x, int y) {
+    return 'Tesoro recogido ($x, $y)';
+  }
+
+  @override
+  String historyCombatVictory(int level) {
+    return 'Victoria contra Guarida niv. $level';
+  }
+
+  @override
+  String historyCombatDefeat(int level) {
+    return 'Derrota contra Guarida niv. $level';
+  }
+
+  @override
+  String historyTurnEndTitle(int turn) {
+    return 'Turno $turn terminado';
+  }
+
+  @override
+  String historyCaptureTitle(String name) {
+    return 'Captura: $name';
+  }
+
+  @override
+  String historyCaptureVictory(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: 'Victoria en $turns turnos',
+      one: 'Victoria en $turns turno',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String historyDescentTitle(int level) {
+    return 'Descenso al Nivel $level';
+  }
+
+  @override
+  String historyDescentUnits(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unidades enviadas',
+      one: '$count unidad enviada',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String historyReinforcementTitle(int level) {
+    return 'Refuerzos hacia el Nivel $level';
+  }
+
+  @override
+  String historyReinforcementUnits(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unidades en tránsito',
+      one: '$count unidad en tránsito',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get historyRaidRepelled => 'Incursión repelida';
+
+  @override
+  String get historyRaidLost => 'Base saqueada por una incursión';
+
+  @override
+  String get historyPredatorsRepelled => 'Banco de depredadores repelido';
+
+  @override
+  String get historyPredatorsLost =>
+      'Base saqueada por un banco de depredadores';
+
+  @override
+  String get historyVolcanoRepelled => 'Oleada repelida en el Núcleo';
+
+  @override
+  String get historyVolcanoLost => 'El Núcleo perdió un nivel';
+
+  @override
+  String get historyEventAccepted => 'Aceptado';
+
+  @override
+  String get historyEventRefused => 'Rechazado';
+
+  @override
+  String get historyEventDefaulted => 'Opción prudente, sin elección';
 }

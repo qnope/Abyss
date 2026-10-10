@@ -14,12 +14,13 @@ class VolcanoEntry extends HistoryEntry {
   @override
   final HistoryEntryCategory category;
 
+  /// Left empty: the presentation titles the entry in the player's
+  /// language. Kept so the Hive layout keeps its field 2.
   @HiveField(2)
-  @override
   final String title;
 
+  /// Not shown: a French line some older versions saved.
   @HiveField(3)
-  @override
   final String? subtitle;
 
   @HiveField(4)
@@ -58,7 +59,5 @@ class VolcanoEntry extends HistoryEntry {
     required this.dead,
     this.subtitle,
   }) : category = HistoryEntryCategory.volcano,
-       title = victory
-           ? 'Vague repoussée sur le Noyau'
-           : 'Le Noyau a perdu un niveau';
+       title = '';
 }

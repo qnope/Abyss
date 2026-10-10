@@ -4,6 +4,7 @@ import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/presentation/extensions/history_entry_category_extensions.dart';
 import 'package:abyss/presentation/extensions/history_entry_extensions.dart';
+import 'package:abyss/presentation/extensions/history_entry_texts.dart';
 import 'package:abyss/presentation/extensions/random_event_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/common/raster_svg.dart';
@@ -61,9 +62,9 @@ void main() {
     expect(_caravan().displayTitle(en), 'Turtle Caravan');
   });
 
-  test('other entries keep their own title', () {
+  test('other entries are titled from their data', () {
     final entry = ExploreEntry(turn: 1, targetX: 3, targetY: 4);
-    expect(entry.displayTitle(en), entry.title);
+    expect(entry.displayTitle(en), 'Exploration (3, 4)');
   });
 
   test('an event entry takes its category color and is not tappable', () {

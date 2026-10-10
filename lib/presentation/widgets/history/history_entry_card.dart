@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../domain/history/history_entry.dart';
 import '../../extensions/history_entry_category_extensions.dart';
 import '../../extensions/history_entry_extensions.dart';
+import '../../extensions/history_entry_texts.dart';
+import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
 import '../common/raster_svg.dart';
 
@@ -33,10 +35,11 @@ class HistoryEntryCard extends StatelessWidget {
     final accent = entry.accentColor(theme);
     final tappable = entry.isTappable;
 
-    final subtitleText = _buildSubtitle(tappable: tappable);
+    final l10n = context.l10n;
+    final subtitleText = _buildSubtitle(l10n, tappable: tappable);
     final listTile = ListTile(
       leading: _leading(accent),
-      title: Text(entry.displayTitle(context.l10n)),
+      title: Text(entry.displayTitle(l10n)),
       subtitle: subtitleText == null ? null : Text(subtitleText),
       trailing: tappable
           ? const Icon(Icons.chevron_right)
@@ -61,12 +64,12 @@ class HistoryEntryCard extends StatelessWidget {
   static const double illustrationSize = 40;
 
   /// Combat cards prepend `Tour N` to their subtitle so the trailing
-  /// chevron has room; static cards keep the raw subtitle (if any) and
+  /// chevron has room; static cards keep their subtitle (if any) and
   /// let the trailing slot display the turn on its own.
-  String? _buildSubtitle({required bool tappable}) {
-    if (!tappable) return entry.subtitle;
+  String? _buildSubtitle(AppLocalizations l10n, {required bool tappable}) {
+    final extra = entry.displaySubtitle(l10n);
+    if (!tappable) return extra;
     final base = 'Tour ${entry.turn}';
-    final extra = entry.subtitle;
     if (extra == null || extra.isEmpty) return base;
     return '$base \u00B7 $extra';
   }

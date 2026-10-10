@@ -1,3 +1,4 @@
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/explore_action.dart';
 import 'package:abyss/domain/event/effects/storm_effect.dart';
 import 'package:abyss/domain/event/event_resolver.dart';
@@ -20,7 +21,7 @@ void main() {
         turn: game.turn + 1,
       );
 
-      final reasons = <String?>[];
+      final reasons = <ActionFailure?>[];
       for (var turn = 13; turn <= 15; turn++) {
         game.turn = turn;
         reasons.add(
@@ -30,8 +31,8 @@ void main() {
       }
 
       expect(reasons, [
-        'Tempête : exploration impossible',
-        'Tempête : exploration impossible',
+        ActionFailure.stormBlocksExploration,
+        ActionFailure.stormBlocksExploration,
         null,
       ]);
     },

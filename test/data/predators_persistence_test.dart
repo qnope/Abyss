@@ -133,7 +133,7 @@ void main() {
       BinaryReaderImpl(_legacyRaidEntry(_entry()).toBytes(), Hive),
     );
     expect(decoded.surprise, isFalse);
-    expect(decoded.title, 'Raid repoussé');
+    expect(decoded.victory, isTrue);
     expect(decoded.loot, {ResourceType.coral: 40});
   });
 }

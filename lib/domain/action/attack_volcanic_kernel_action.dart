@@ -13,6 +13,7 @@ import '../map/map_cell.dart';
 import '../unit/unit_type.dart';
 import '../history/history_entry.dart';
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import 'attack_transition_base_helpers.dart';
@@ -47,16 +48,20 @@ class AttackVolcanicKernelAction extends Action {
   ActionResult validate(Game game, Player player) {
     final map = game.levels[level];
     if (map == null) {
-      return const AttackVolcanicKernelResult.failure('Carte non générée');
+      return const AttackVolcanicKernelResult.failure(
+        ActionFailure.mapNotGenerated,
+      );
     }
     final MapCell cell = map.cellAt(targetX, targetY);
     if (cell.content != CellContentType.volcanicKernel) {
       return const AttackVolcanicKernelResult.failure(
-        'Pas de noyau volcanique ici',
+        ActionFailure.noVolcanicKernelHere,
       );
     }
     if (cell.isCollected) {
-      return const AttackVolcanicKernelResult.failure('Noyau déjà capturé');
+      return const AttackVolcanicKernelResult.failure(
+        ActionFailure.kernelAlreadyCaptured,
+      );
     }
     final unitErr = AttackVolcanicKernelHelpers.validateUnits(
       player, level, selectedUnits,
@@ -121,9 +126,8 @@ class AttackVolcanicKernelAction extends Action {
     if (!result.captured || result.fight == null) return null;
     return CaptureEntry(
       turn: turn,
-      transitionBaseName: 'Noyau Volcanique',
+      transitionBaseName: CaptureEntry.volcanicKernel,
       fightResult: result.fight!,
-      subtitle: 'Victoire en ${result.fight!.turnCount} tours',
     );
   }
 

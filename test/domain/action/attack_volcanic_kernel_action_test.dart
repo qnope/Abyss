@@ -1,3 +1,4 @@
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/attack_volcanic_kernel_action.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -18,7 +19,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Carte non générée');
+      expect(result.reason, ActionFailure.mapNotGenerated);
     });
 
     test('fails when cell is not volcanic kernel', () {
@@ -32,7 +33,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Pas de noyau volcanique ici');
+      expect(result.reason, ActionFailure.noVolcanicKernelHere);
     });
 
     test('fails when kernel already captured', () {
@@ -46,7 +47,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Noyau déjà capturé');
+      expect(result.reason, ActionFailure.kernelAlreadyCaptured);
     });
 
     test('fails without abyss admiral', () {
@@ -59,7 +60,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Un Amiral des Abysses est requis');
+      expect(result.reason, ActionFailure.admiralRequired);
     });
 
     test('fails when units exceed stock', () {
@@ -72,7 +73,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Unités insuffisantes');
+      expect(result.reason, ActionFailure.notEnoughUnits);
     });
 
     test('succeeds on valid scenario', () {

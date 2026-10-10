@@ -34,7 +34,6 @@ void main() {
       final objective = TemporaryObjectives.activeOf(game, player).single;
 
       expect(objective.kind, TemporaryObjectiveKind.wreck);
-      expect(objective.title, "Fouille l'épave d'ici la fin du tour 17");
       expect(objective.lastTurn, 17);
     });
 
@@ -54,7 +53,6 @@ void main() {
           TemporaryObjectives.activeOf(game, game.humanPlayer).single;
 
       expect(objective.kind, TemporaryObjectiveKind.predators);
-      expect(objective.title, 'Repousse le banc de prédateurs');
       expect(objective.lastTurn, 12);
     });
 

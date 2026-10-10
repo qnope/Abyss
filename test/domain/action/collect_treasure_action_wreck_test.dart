@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:abyss/domain/action/action_failure.dart';
 
 import 'package:abyss/domain/action/action_executor.dart';
 import 'package:abyss/domain/action/collect_treasure_action.dart';
@@ -117,7 +118,7 @@ void main() {
     lateGame.turn = 18;
     final result = _collect(lateGame, late, lost);
     expect(result.isSuccess, isFalse);
-    expect(result.reason, 'Rien à collecter');
+    expect(result.reason, ActionFailure.nothingToCollect);
   });
 
   test('a searched wreck stays searched once its time is over', () {

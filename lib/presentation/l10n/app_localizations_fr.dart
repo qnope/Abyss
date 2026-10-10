@@ -176,6 +176,72 @@ class AppLocalizationsFr extends AppLocalizations {
   String get unitSaboteurRoleEffect => 'Ignore la défense de sa cible.';
 
   @override
+  String unitScoutCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count éclaireurs',
+      one: '$count éclaireur',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitHarpoonistCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count harponneurs',
+      one: '$count harponneur',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitGuardianCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count gardiens',
+      one: '$count gardien',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitDomeBreakerCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count briseurs',
+      one: '$count briseur',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitAbyssAdmiralCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count amiraux des abysses',
+      one: '$count amiral des abysses',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitSaboteurCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count saboteurs',
+      one: '$count saboteur',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get resourceAlgaeName => 'Algues';
 
   @override
@@ -581,6 +647,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get temporaryObjectivePredatorsShort => 'Prédateurs';
 
   @override
+  String temporaryObjectiveWreckTitle(int turn) {
+    return 'Fouille l\'épave d\'ici la fin du tour $turn';
+  }
+
+  @override
+  String get temporaryObjectivePredatorsTitle =>
+      'Repousse le banc de prédateurs';
+
+  @override
   String get historyCategoryCombat => 'Combat';
 
   @override
@@ -618,4 +693,262 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get historyCategoryEvent => 'Événement';
+
+  @override
+  String get actionFailureUnknown => 'Action impossible';
+
+  @override
+  String get actionFailureMapNotGenerated => 'Carte non générée';
+
+  @override
+  String get actionFailureCellNotRevealed => 'Case non révélée';
+
+  @override
+  String get actionFailureCellNotEligible => 'Cellule non éligible';
+
+  @override
+  String get actionFailureAlreadyCollected => 'Déjà collecté';
+
+  @override
+  String get actionFailureNothingToCollect => 'Rien à collecter';
+
+  @override
+  String get actionFailureStormBlocksExploration =>
+      'Tempête : exploration impossible';
+
+  @override
+  String get actionFailureNoScoutAvailable => 'Aucun éclaireur disponible';
+
+  @override
+  String get actionFailureNoMonsterHere => 'Pas de monstre ici';
+
+  @override
+  String get actionFailureLairAlreadyDefeated => 'Repaire déjà vaincu';
+
+  @override
+  String get actionFailureLairEmpty => 'Repaire vide';
+
+  @override
+  String get actionFailureNotEnoughUnits => 'Unités insuffisantes';
+
+  @override
+  String get actionFailureNoUnitSelected => 'Aucune unité sélectionnée';
+
+  @override
+  String get actionFailureAdmiralRequired => 'Un Amiral des Abysses est requis';
+
+  @override
+  String get actionFailureNoTransitionBaseHere =>
+      'Pas de base de transition ici';
+
+  @override
+  String get actionFailureBaseNotFound => 'Base introuvable';
+
+  @override
+  String get actionFailureBaseAlreadyCaptured => 'Base déjà capturée';
+
+  @override
+  String get actionFailureBaseNotCaptured => 'Base non capturée';
+
+  @override
+  String get actionFailureTargetLevelNotExplored => 'Niveau cible non exploré';
+
+  @override
+  String get actionFailureRequiredBuildingMissing => 'Bâtiment requis manquant';
+
+  @override
+  String get actionFailureNoVolcanicKernelHere => 'Pas de noyau volcanique ici';
+
+  @override
+  String get actionFailureKernelAlreadyCaptured => 'Noyau déjà capturé';
+
+  @override
+  String get actionFailureKernelNotCaptured => 'Noyau non capturé';
+
+  @override
+  String get actionFailureNoPendingEvent => 'Aucun événement en attente';
+
+  @override
+  String get actionFailureNotThisChoiceTurn =>
+      'Ce n\'est pas le tour de ce choix';
+
+  @override
+  String get actionFailureNotEnoughStockToTrade =>
+      'Stock insuffisant pour échanger';
+
+  @override
+  String get actionFailureBranchNotFound => 'Branche introuvable';
+
+  @override
+  String get actionFailureBranchLocked => 'Branche verrouillée';
+
+  @override
+  String get actionFailureBranchAlreadyUnlocked => 'Branche déjà débloquée';
+
+  @override
+  String get actionFailureLaboratoryRequired => 'Laboratoire requis';
+
+  @override
+  String get actionFailureLaboratoryLevelTooLow =>
+      'Niveau de laboratoire insuffisant';
+
+  @override
+  String get actionFailureResearchAlreadyStarted =>
+      'Recherche déjà lancée ce tour';
+
+  @override
+  String get actionFailureBuildingNotFound => 'Bâtiment introuvable';
+
+  @override
+  String get actionFailureWorksitesBusy => 'Chantiers occupés ce tour';
+
+  @override
+  String get actionFailureMaxLevelReached => 'Niveau maximum atteint';
+
+  @override
+  String get actionFailureNotEnoughResources => 'Ressources insuffisantes';
+
+  @override
+  String get actionFailureUnitLocked => 'Unité verrouillée';
+
+  @override
+  String get actionFailureRecruitmentAlreadyDone =>
+      'Recrutement déjà effectué ce tour';
+
+  @override
+  String get actionFailureInvalidQuantity => 'Quantité invalide';
+
+  @override
+  String get actionFailureGameOver => 'Partie terminée';
+
+  @override
+  String historyBuildingTitle(String building, int level) {
+    return '$building niv. $level';
+  }
+
+  @override
+  String historyResearchUnlocked(String branch) {
+    return '$branch débloquée';
+  }
+
+  @override
+  String historyResearchLevel(String branch, int level) {
+    return '$branch niv. $level';
+  }
+
+  @override
+  String historyResearchImproved(String branch) {
+    return '$branch améliorée';
+  }
+
+  @override
+  String historyRecruitTitle(int count, String units) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$units recrutés',
+      one: '$units recruté',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String historyExploreTitle(int x, int y) {
+    return 'Exploration ($x, $y)';
+  }
+
+  @override
+  String historyCollectTitle(int x, int y) {
+    return 'Trésor collecté ($x, $y)';
+  }
+
+  @override
+  String historyCombatVictory(int level) {
+    return 'Victoire vs Repaire niv. $level';
+  }
+
+  @override
+  String historyCombatDefeat(int level) {
+    return 'Défaite vs Repaire niv. $level';
+  }
+
+  @override
+  String historyTurnEndTitle(int turn) {
+    return 'Tour $turn terminé';
+  }
+
+  @override
+  String historyCaptureTitle(String name) {
+    return 'Capture : $name';
+  }
+
+  @override
+  String historyCaptureVictory(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: 'Victoire en $turns tours',
+      one: 'Victoire en $turns tour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String historyDescentTitle(int level) {
+    return 'Descente au Niveau $level';
+  }
+
+  @override
+  String historyDescentUnits(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unités envoyées',
+      one: '$count unité envoyée',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String historyReinforcementTitle(int level) {
+    return 'Renforts vers Niveau $level';
+  }
+
+  @override
+  String historyReinforcementUnits(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unités en transit',
+      one: '$count unité en transit',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get historyRaidRepelled => 'Raid repoussé';
+
+  @override
+  String get historyRaidLost => 'Base pillée par un raid';
+
+  @override
+  String get historyPredatorsRepelled => 'Banc de prédateurs repoussé';
+
+  @override
+  String get historyPredatorsLost => 'Base pillée par un banc de prédateurs';
+
+  @override
+  String get historyVolcanoRepelled => 'Vague repoussée sur le Noyau';
+
+  @override
+  String get historyVolcanoLost => 'Le Noyau a perdu un niveau';
+
+  @override
+  String get historyEventAccepted => 'Accepté';
+
+  @override
+  String get historyEventRefused => 'Refusé';
+
+  @override
+  String get historyEventDefaulted => 'Option prudente, sans choix';
 }

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../action/action.dart';
 import '../action/action_executor.dart';
+import '../action/action_failure.dart';
 import '../action/action_result.dart';
 import '../game/game.dart';
 import '../game/game_status.dart';
@@ -45,7 +46,7 @@ class ScriptTurn {
   /// Performs [action] and logs the outcome. A successful action may win
   /// the game, as it does in the game screen.
   ActionResult perform(Action action) {
-    if (isOver) return const ActionResult.failure('Partie terminée');
+    if (isOver) return const ActionResult.failure(ActionFailure.gameOver);
     final ActionResult result = _executor.execute(action, game, player);
     _log.add(ScriptLogEntry(
       turn: number,

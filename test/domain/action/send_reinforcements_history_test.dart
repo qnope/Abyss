@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action_result.dart';
 import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/domain/history/history_entry_category.dart';
@@ -27,7 +28,7 @@ void main() {
       expect(reinf.category, HistoryEntryCategory.reinforcement);
       expect(reinf.targetLevel, 2);
       expect(reinf.unitCount, 3);
-      expect(reinf.subtitle, '3 unites en transit');
+      expect(reinf.subtitle, isNull);
     });
 
     test('returns null on failure', () {
@@ -47,7 +48,7 @@ void main() {
     test('returns null when result is generic failure', () {
       final s = createReinforcementScenario();
       final action = createReinforcementAction();
-      const failResult = ActionResult.failure('test');
+      const failResult = ActionResult.failure(ActionFailure.notEnoughUnits);
       final entry = action.makeHistoryEntry(
         s.game,
         s.player,

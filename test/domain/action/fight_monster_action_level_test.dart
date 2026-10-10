@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:abyss/domain/action/action_failure.dart';
 
 import 'package:abyss/domain/action/fight_monster_action.dart';
 import 'package:abyss/domain/action/fight_monster_result.dart';
@@ -53,7 +54,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Unités insuffisantes');
+      expect(result.reason, ActionFailure.notEnoughUnits);
     });
 
     test('deducts units from correct level on execute', () {
@@ -115,7 +116,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Carte non générée');
+      expect(result.reason, ActionFailure.mapNotGenerated);
     });
   });
 }

@@ -4,6 +4,8 @@ import '../../../domain/action/action_executor.dart';
 import '../../../domain/action/garrison_kernel_action.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/volcano/kernel_garrison.dart';
+import '../../extensions/action_failure_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../widgets/unit/unit_picker_dialog.dart';
 import 'fight/kernel_army_selection_screen.dart';
 
@@ -62,7 +64,7 @@ Future<void> handleGarrisonKernel(
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(result.isSuccess
         ? 'Garnison : ${KernelGarrison.sizeOf(player)} unités'
-        : result.reason ?? 'Action impossible'),
+        : result.failureMessage(context.l10n)),
   ));
   onChanged();
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/action/action_failure.dart';
+import '../../extensions/action_failure_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'sheet_notice.dart';
 import 'sheet_info_row.dart';
@@ -98,12 +101,12 @@ class _ExplorationSheet extends StatelessWidget {
   }
 
   Widget _actionSection(BuildContext context, TextTheme textTheme) {
-    final reason = refusal ??
-        (scoutCount <= 0
-            ? 'Aucun \u00e9claireur disponible'
-            : !isEligible
-                ? 'Cellule non \u00e9ligible'
-                : null);
+    final failure = scoutCount <= 0
+        ? ActionFailure.noScoutAvailable
+        : !isEligible
+            ? ActionFailure.cellNotEligible
+            : null;
+    final reason = refusal ?? failure?.message(context.l10n);
     if (reason != null) return _disabledAction(textTheme, reason);
     return _sendButton(context);
   }

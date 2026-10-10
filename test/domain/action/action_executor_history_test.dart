@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action.dart';
 import 'package:abyss/domain/action/action_executor.dart';
 import 'package:abyss/domain/action/action_result.dart';
@@ -57,7 +58,7 @@ class _FailingExecuteAction extends Action {
 
   @override
   ActionResult execute(Game game, Player player) =>
-      const ActionResult.failure('boom');
+      const ActionResult.failure(ActionFailure.notEnoughResources);
 
   @override
   HistoryEntry? makeHistoryEntry(

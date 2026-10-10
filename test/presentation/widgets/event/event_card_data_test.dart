@@ -86,6 +86,12 @@ void main() {
     final card = _card(RandomEventType.caravan, player);
     expect(card.choices.first.refusal, 'Stock insuffisant pour échanger');
     expect(card.choices.last.refusal, isNull);
+    final english = EventCardData.of(
+      en,
+      Game.singlePlayer(player)..turn = 12,
+      RandomEventType.caravan,
+    );
+    expect(english.choices.first.refusal, 'Not enough stock to trade');
   });
 
   test('the storm only explains its effect', () {

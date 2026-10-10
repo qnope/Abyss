@@ -5,7 +5,7 @@ import 'package:abyss/domain/history/history_entry_category.dart';
 
 void main() {
   group('BuildingEntry', () {
-    test('exposes category building and formatted French title', () {
+    test('exposes category building, building type and level', () {
       final entry = BuildingEntry(
         turn: 3,
         buildingType: BuildingType.barracks,
@@ -14,7 +14,6 @@ void main() {
 
       expect(entry.turn, 3);
       expect(entry.category, HistoryEntryCategory.building);
-      expect(entry.title, 'Caserne niv 2');
       expect(entry.buildingType, BuildingType.barracks);
       expect(entry.newLevel, 2);
       expect(entry.subtitle, isNull);
@@ -29,7 +28,6 @@ void main() {
       );
 
       expect(entry.subtitle, '+5 recherche');
-      expect(entry.title, 'Laboratoire niv 5');
     });
   });
 }

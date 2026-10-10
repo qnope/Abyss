@@ -19,10 +19,11 @@ revealed cells, pending explorations) is always read from the
 
 - `ActionType get type` -- identifies the action kind via the
   `ActionType` enum.
-- `String get description` -- human-readable label.
+- `String get description` -- short French label, read only by the dev
+  scripts' logs (`lib/domain/script`), never shown to the player.
 - `ActionResult validate(Game game, Player player)` -- checks whether
   the action is legal for `player` given `game`. Returns
-  `ActionResult.success()` or `ActionResult.failure(reason)`. Must not
+  `ActionResult.success()` or `ActionResult.failure(ActionFailure)`. Must not
   mutate anything.
 - `ActionResult execute(Game game, Player player)` -- performs the
   action by mutating `player` (and, where unavoidable, shared state
@@ -41,8 +42,11 @@ An enum listing all action kinds: `upgradeBuilding`, `unlockBranch`,
 A simple result object with two named constructors:
 
 - `ActionResult.success()` -- `isSuccess = true`, `reason = null`.
-- `ActionResult.failure(String reason)` -- `isSuccess = false`, carries
-  an explanation.
+- `ActionResult.failure(ActionFailure reason)` -- `isSuccess = false`,
+  carries why, as an `ActionFailure` code (`mapNotGenerated`,
+  `notEnoughUnits`, `lairEmpty`, …). The domain produces no text: the
+  presentation words the code (`action_failure_extensions.dart`). An
+  event's `EventEffect.refusal` returns the same codes.
 
 ### CollectTreasureResult
 

@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action_result.dart';
 
 void main() {
@@ -10,9 +11,9 @@ void main() {
     });
 
     test('failure has isSuccess false and the given reason', () {
-      final result = ActionResult.failure('not enough resources');
+      final result = ActionResult.failure(ActionFailure.notEnoughResources);
       expect(result.isSuccess, false);
-      expect(result.reason, 'not enough resources');
+      expect(result.reason, ActionFailure.notEnoughResources);
     });
   });
 }

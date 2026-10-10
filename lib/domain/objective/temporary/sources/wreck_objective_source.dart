@@ -5,8 +5,8 @@ import '../temporary_objective_end.dart';
 import '../temporary_objective_kind.dart';
 import '../temporary_objective_source.dart';
 
-/// « Fouille l'épave d'ici la fin du tour N » while a wreck lies on the map:
-/// done once searched, expired once sunk.
+/// Search the wreck by its last turn, while it lies on the map: done once
+/// searched, expired once sunk.
 class WreckObjectiveSource extends TemporaryObjectiveSource {
   const WreckObjectiveSource();
 
@@ -34,7 +34,6 @@ class WreckObjectiveSource extends TemporaryObjectiveSource {
 
   static TemporaryObjective _objective(int until) => TemporaryObjective(
     kind: TemporaryObjectiveKind.wreck,
-    title: "Fouille l'épave d'ici la fin du tour $until",
     lastTurn: until,
   );
 }

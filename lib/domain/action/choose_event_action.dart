@@ -3,6 +3,7 @@ import '../game/game.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import 'choose_event_result.dart';
@@ -25,12 +26,12 @@ class ChooseEventAction extends Action {
   ActionResult validate(Game game, Player player) {
     final state = player.eventState;
     if (!state.hasPending) {
-      return const ActionResult.failure('Aucun événement en attente');
+      return const ActionResult.failure(ActionFailure.noPendingEvent);
     }
     if (state.pendingTurn != game.turn) {
-      return const ActionResult.failure("Ce n'est pas le tour de ce choix");
+      return const ActionResult.failure(ActionFailure.notThisChoiceTurn);
     }
-    final String? refusal =
+    final ActionFailure? refusal =
         accept ? EventEffects.of(state.pending!).refusal(game, player) : null;
     if (refusal != null) return ActionResult.failure(refusal);
     return const ActionResult.success();

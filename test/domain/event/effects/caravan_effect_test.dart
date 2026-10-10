@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/event/effects/caravan_effect.dart';
 import 'package:abyss/domain/event/event_effects.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
@@ -107,7 +108,7 @@ void main() {
     final game = eventGame(player, turn: 12);
     expect(_caravan.refusal(game, player), isNull);
     player.resources[ResourceType.algae]!.amount = 99;
-    expect(_caravan.refusal(game, player), 'Stock insuffisant pour échanger');
+    expect(_caravan.refusal(game, player), ActionFailure.notEnoughStockToTrade);
   });
 
   test('without a drawn trade there is nothing to refuse nor to trade', () {

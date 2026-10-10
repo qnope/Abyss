@@ -9,6 +9,7 @@ import '../map/cell_content_type.dart';
 import '../map/grid_position.dart';
 import '../resource/resource_type.dart';
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import 'collect_treasure_result.dart';
@@ -47,19 +48,23 @@ class CollectTreasureAction extends Action {
   ActionResult validate(Game game, Player player) {
     final map = game.levels[level];
     if (map == null) {
-      return const CollectTreasureResult.failure('Carte non générée');
+      return const CollectTreasureResult.failure(ActionFailure.mapNotGenerated);
     }
     final cell = map.cellAt(targetX, targetY);
     if (!player.revealedCellsSetOnLevel(level).contains(
       GridPosition(x: targetX, y: targetY),
     )) {
-      return const CollectTreasureResult.failure('Case non révélée');
+      return const CollectTreasureResult.failure(ActionFailure.cellNotRevealed);
     }
     if (cell.collectedBy != null) {
-      return const CollectTreasureResult.failure('Déjà collecté');
+      return const CollectTreasureResult.failure(
+        ActionFailure.alreadyCollected,
+      );
     }
     if (!collectable.contains(cell.content)) {
-      return const CollectTreasureResult.failure('Rien à collecter');
+      return const CollectTreasureResult.failure(
+        ActionFailure.nothingToCollect,
+      );
     }
     return CollectTreasureResult.success(const {});
   }

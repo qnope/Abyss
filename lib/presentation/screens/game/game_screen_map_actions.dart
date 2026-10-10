@@ -15,6 +15,7 @@ import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/tech/tech_effects.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../../domain/replay/seeded_random.dart';
+import '../../extensions/action_failure_extensions.dart';
 import '../../extensions/event_state_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
@@ -190,7 +191,7 @@ void _showExplorationFlow(
     isEligible: isEligible,
     notice: human.eventState
         .wreckCountdownAt(context.l10n, x, y, level, game.turn),
-    refusal: action.validate(game, human).reason,
+    refusal: action.validate(game, human).reason?.message(context.l10n),
     onConfirm: () {
       final result = ActionExecutor().execute(action, game, human);
       if (result.isSuccess) onChanged();

@@ -172,6 +172,72 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unitSaboteurRoleEffect => 'Ignores its target\'s defense.';
 
   @override
+  String unitScoutCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count scouts',
+      one: '$count scout',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitHarpoonistCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count harpooners',
+      one: '$count harpooner',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitGuardianCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count guardians',
+      one: '$count guardian',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitDomeBreakerCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count breakers',
+      one: '$count breaker',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitAbyssAdmiralCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count abyss admirals',
+      one: '$count abyss admiral',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitSaboteurCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count saboteurs',
+      one: '$count saboteur',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get resourceAlgaeName => 'Algae';
 
   @override
@@ -574,6 +640,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get temporaryObjectivePredatorsShort => 'Predators';
 
   @override
+  String temporaryObjectiveWreckTitle(int turn) {
+    return 'Search the wreck by the end of turn $turn';
+  }
+
+  @override
+  String get temporaryObjectivePredatorsTitle => 'Repel the predator shoal';
+
+  @override
   String get historyCategoryCombat => 'Combat';
 
   @override
@@ -611,4 +685,259 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get historyCategoryEvent => 'Event';
+
+  @override
+  String get actionFailureUnknown => 'Action not possible';
+
+  @override
+  String get actionFailureMapNotGenerated => 'Map not generated';
+
+  @override
+  String get actionFailureCellNotRevealed => 'Cell not revealed';
+
+  @override
+  String get actionFailureCellNotEligible => 'Cell not eligible';
+
+  @override
+  String get actionFailureAlreadyCollected => 'Already collected';
+
+  @override
+  String get actionFailureNothingToCollect => 'Nothing to collect';
+
+  @override
+  String get actionFailureStormBlocksExploration => 'Storm: no exploring';
+
+  @override
+  String get actionFailureNoScoutAvailable => 'No scout available';
+
+  @override
+  String get actionFailureNoMonsterHere => 'No monster here';
+
+  @override
+  String get actionFailureLairAlreadyDefeated => 'Lair already defeated';
+
+  @override
+  String get actionFailureLairEmpty => 'Empty lair';
+
+  @override
+  String get actionFailureNotEnoughUnits => 'Not enough units';
+
+  @override
+  String get actionFailureNoUnitSelected => 'No unit selected';
+
+  @override
+  String get actionFailureAdmiralRequired => 'An Abyss Admiral is required';
+
+  @override
+  String get actionFailureNoTransitionBaseHere => 'No transition base here';
+
+  @override
+  String get actionFailureBaseNotFound => 'Base not found';
+
+  @override
+  String get actionFailureBaseAlreadyCaptured => 'Base already captured';
+
+  @override
+  String get actionFailureBaseNotCaptured => 'Base not captured';
+
+  @override
+  String get actionFailureTargetLevelNotExplored => 'Target level not explored';
+
+  @override
+  String get actionFailureRequiredBuildingMissing =>
+      'Required building missing';
+
+  @override
+  String get actionFailureNoVolcanicKernelHere => 'No Volcanic Core here';
+
+  @override
+  String get actionFailureKernelAlreadyCaptured => 'Core already captured';
+
+  @override
+  String get actionFailureKernelNotCaptured => 'Core not captured';
+
+  @override
+  String get actionFailureNoPendingEvent => 'No pending event';
+
+  @override
+  String get actionFailureNotThisChoiceTurn =>
+      'This choice belongs to another turn';
+
+  @override
+  String get actionFailureNotEnoughStockToTrade => 'Not enough stock to trade';
+
+  @override
+  String get actionFailureBranchNotFound => 'Branch not found';
+
+  @override
+  String get actionFailureBranchLocked => 'Branch locked';
+
+  @override
+  String get actionFailureBranchAlreadyUnlocked => 'Branch already unlocked';
+
+  @override
+  String get actionFailureLaboratoryRequired => 'Laboratory required';
+
+  @override
+  String get actionFailureLaboratoryLevelTooLow => 'Laboratory level too low';
+
+  @override
+  String get actionFailureResearchAlreadyStarted =>
+      'Research already started this turn';
+
+  @override
+  String get actionFailureBuildingNotFound => 'Building not found';
+
+  @override
+  String get actionFailureWorksitesBusy => 'Worksites busy this turn';
+
+  @override
+  String get actionFailureMaxLevelReached => 'Maximum level reached';
+
+  @override
+  String get actionFailureNotEnoughResources => 'Not enough resources';
+
+  @override
+  String get actionFailureUnitLocked => 'Unit locked';
+
+  @override
+  String get actionFailureRecruitmentAlreadyDone =>
+      'Already recruited this turn';
+
+  @override
+  String get actionFailureInvalidQuantity => 'Invalid quantity';
+
+  @override
+  String get actionFailureGameOver => 'Game over';
+
+  @override
+  String historyBuildingTitle(String building, int level) {
+    return '$building lv. $level';
+  }
+
+  @override
+  String historyResearchUnlocked(String branch) {
+    return '$branch unlocked';
+  }
+
+  @override
+  String historyResearchLevel(String branch, int level) {
+    return '$branch lv. $level';
+  }
+
+  @override
+  String historyResearchImproved(String branch) {
+    return '$branch improved';
+  }
+
+  @override
+  String historyRecruitTitle(int count, String units) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$units recruited',
+      one: '$units recruited',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String historyExploreTitle(int x, int y) {
+    return 'Exploration ($x, $y)';
+  }
+
+  @override
+  String historyCollectTitle(int x, int y) {
+    return 'Treasure collected ($x, $y)';
+  }
+
+  @override
+  String historyCombatVictory(int level) {
+    return 'Victory vs Lair lv. $level';
+  }
+
+  @override
+  String historyCombatDefeat(int level) {
+    return 'Defeat vs Lair lv. $level';
+  }
+
+  @override
+  String historyTurnEndTitle(int turn) {
+    return 'Turn $turn ended';
+  }
+
+  @override
+  String historyCaptureTitle(String name) {
+    return 'Capture: $name';
+  }
+
+  @override
+  String historyCaptureVictory(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: 'Victory in $turns turns',
+      one: 'Victory in $turns turn',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String historyDescentTitle(int level) {
+    return 'Descent to Level $level';
+  }
+
+  @override
+  String historyDescentUnits(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count units sent',
+      one: '$count unit sent',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String historyReinforcementTitle(int level) {
+    return 'Reinforcements to Level $level';
+  }
+
+  @override
+  String historyReinforcementUnits(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count units in transit',
+      one: '$count unit in transit',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get historyRaidRepelled => 'Raid repelled';
+
+  @override
+  String get historyRaidLost => 'Base looted by a raid';
+
+  @override
+  String get historyPredatorsRepelled => 'Predator shoal repelled';
+
+  @override
+  String get historyPredatorsLost => 'Base looted by a predator shoal';
+
+  @override
+  String get historyVolcanoRepelled => 'Wave repelled at the Core';
+
+  @override
+  String get historyVolcanoLost => 'The Core lost a level';
+
+  @override
+  String get historyEventAccepted => 'Accepted';
+
+  @override
+  String get historyEventRefused => 'Refused';
+
+  @override
+  String get historyEventDefaulted => 'Cautious option, no choice made';
 }

@@ -8,6 +8,7 @@ import '../map/exploration_order.dart';
 import '../map/grid_position.dart';
 import '../unit/unit_type.dart';
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import '../raid/noise_rules.dart';
@@ -32,17 +33,17 @@ class ExploreAction extends Action {
   @override
   ActionResult validate(Game game, Player player) {
     if (game.levels[level] == null) {
-      return const ActionResult.failure('Carte non générée');
+      return const ActionResult.failure(ActionFailure.mapNotGenerated);
     }
 
     if (player.eventState.isActive(RandomEventType.storm, game.turn)) {
-      return const ActionResult.failure('Tempête : exploration impossible');
+      return const ActionResult.failure(ActionFailure.stormBlocksExploration);
     }
 
     final scoutCount =
         player.unitsOnLevel(level)[UnitType.scout]?.count ?? 0;
     if (scoutCount <= 0) {
-      return const ActionResult.failure('Aucun éclaireur disponible');
+      return const ActionResult.failure(ActionFailure.noScoutAvailable);
     }
 
     if (!CellEligibilityChecker.isEligible(
@@ -52,7 +53,7 @@ class ExploreAction extends Action {
       targetY,
       level: level,
     )) {
-      return const ActionResult.failure('Cellule non éligible');
+      return const ActionResult.failure(ActionFailure.cellNotEligible);
     }
 
     return const ActionResult.success();

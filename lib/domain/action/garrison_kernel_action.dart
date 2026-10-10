@@ -4,6 +4,7 @@ import '../unit/unit.dart';
 import '../unit/unit_type.dart';
 import '../volcano/kernel_garrison.dart';
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 
@@ -25,19 +26,19 @@ class GarrisonKernelAction extends Action {
   @override
   ActionResult validate(Game game, Player player) {
     if (!game.isVolcanicKernelCapturedBy(player.id)) {
-      return const ActionResult.failure('Noyau non capturé');
+      return const ActionResult.failure(ActionFailure.kernelNotCaptured);
     }
     int total = 0;
     final Map<UnitType, Unit> from = _from(player);
     for (final MapEntry<UnitType, int> e in selectedUnits.entries) {
       if (e.value <= 0) continue;
       if (e.value > (from[e.key]?.count ?? 0)) {
-        return const ActionResult.failure('Unités insuffisantes');
+        return const ActionResult.failure(ActionFailure.notEnoughUnits);
       }
       total += e.value;
     }
     if (total <= 0) {
-      return const ActionResult.failure('Aucune unité sélectionnée');
+      return const ActionResult.failure(ActionFailure.noUnitSelected);
     }
     return const ActionResult.success();
   }

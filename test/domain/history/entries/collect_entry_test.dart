@@ -5,7 +5,7 @@ import 'package:abyss/domain/resource/resource_type.dart';
 
 void main() {
   group('CollectEntry', () {
-    test('title contains target coordinates', () {
+    test('keeps the target coordinates', () {
       final entry = CollectEntry(
         turn: 8,
         targetX: 2,
@@ -16,7 +16,6 @@ void main() {
       expect(entry.category, HistoryEntryCategory.collect);
       expect(entry.targetX, 2);
       expect(entry.targetY, 4);
-      expect(entry.title, 'Trésor collecté (2, 4)');
     });
 
     test('gains map preserves all resource types and quantities', () {

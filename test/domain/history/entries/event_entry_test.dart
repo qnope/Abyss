@@ -14,19 +14,17 @@ void main() {
     final entry = _entry();
     expect(entry.turn, 9);
     expect(entry.category, HistoryEntryCategory.event);
-    expect(entry.title, 'Événement');
   });
 
-  test('says which choice the player made', () {
-    expect(_entry(accepted: true).subtitle, 'Accepté');
-    expect(_entry().subtitle, 'Refusé');
-    expect(_entry(defaulted: true).subtitle, 'Option prudente, sans choix');
+  test('records which choice the player made', () {
+    final entry = _entry(accepted: true);
+    expect(entry.type, RandomEventType.caravan);
+    expect(entry.accepted, isTrue);
+    expect(entry.defaulted, isFalse);
+    expect(_entry(defaulted: true).defaulted, isTrue);
   });
 
-  test('an event without a choice says nothing about it', () {
-    expect(
-      _entry(type: RandomEventType.storm, accepted: true).subtitle,
-      isNull,
-    );
+  test('leaves its wording to the presentation', () {
+    expect(_entry(accepted: true).subtitle, isNull);
   });
 }

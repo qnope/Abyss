@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action_result.dart';
 import 'package:abyss/domain/action/fight_monster_result.dart';
 import 'package:abyss/domain/fight/combat_side.dart';
@@ -9,10 +10,10 @@ import 'package:abyss/domain/unit/unit_type.dart';
 void main() {
   group('FightMonsterResult', () {
     test('failure exposes isSuccess false and empty maps', () {
-      const result = FightMonsterResult.failure('reason');
+      const result = FightMonsterResult.failure(ActionFailure.lairEmpty);
 
       expect(result.isSuccess, false);
-      expect(result.reason, 'reason');
+      expect(result.reason, ActionFailure.lairEmpty);
       expect(result.victory, false);
       expect(result.fight, isNull);
       expect(result.loot, isEmpty);
@@ -60,7 +61,9 @@ void main() {
     });
 
     test('is assignable to an ActionResult variable', () {
-      const FightMonsterResult fight = FightMonsterResult.failure('nope');
+      const FightMonsterResult fight = FightMonsterResult.failure(
+        ActionFailure.lairEmpty,
+      );
       const ActionResult result = fight;
 
       expect(result.isSuccess, false);

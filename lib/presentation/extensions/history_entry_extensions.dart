@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../domain/event/random_event_type.dart';
 import '../../domain/history/history_entry.dart';
-import '../l10n/app_localizations.dart';
 import '../theme/abyss_colors.dart';
 import 'history_entry_category_extensions.dart';
 import 'random_event_type_extensions.dart';
 
 /// Display primitives for a concrete [HistoryEntry]. Centralises the
 /// sealed-type switch so widget code (see `HistoryEntryCard`) stays dumb
-/// and purely layout-focused.
+/// and purely layout-focused. The wording lives in [HistoryEntryTexts]
+/// (`history_entry_texts.dart`).
 extension HistoryEntryDisplay on HistoryEntry {
   /// Accent color used to tint the card's leading icon / edge.
   ///
@@ -58,11 +58,5 @@ extension HistoryEntryDisplay on HistoryEntry {
     EventEntry(:final type) => type.illustration,
     RaidEntry(surprise: true) => RandomEventType.predators.illustration,
     _ => null,
-  };
-
-  /// Title shown on the card: an event is named after its type.
-  String displayTitle(AppLocalizations l10n) => switch (this) {
-    EventEntry(:final type) => type.label(l10n),
-    _ => title,
   };
 }

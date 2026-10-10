@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../../action/action_failure.dart';
 import '../../game/game.dart';
 import '../../game/player.dart';
 import '../../resource/resource.dart';
@@ -48,12 +49,12 @@ class CaravanEffect extends EventEffect {
   }
 
   @override
-  String? refusal(Game game, Player player) {
+  ActionFailure? refusal(Game game, Player player) {
     final ResourceType? from = player.eventState.tradeFrom;
     if (from == null || _amount(player, from) >= EventRules.caravanGive) {
       return null;
     }
-    return 'Stock insuffisant pour échanger';
+    return ActionFailure.notEnoughStockToTrade;
   }
 
   /// Trading hands the stock over and fills the scarce one up to its cap.

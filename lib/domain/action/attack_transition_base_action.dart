@@ -14,6 +14,7 @@ import '../map/transition_base.dart';
 import '../unit/unit_type.dart';
 import '../history/history_entry.dart';
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import 'attack_transition_base_helpers.dart';
@@ -48,20 +49,26 @@ class AttackTransitionBaseAction extends Action {
   ActionResult validate(Game game, Player player) {
     final map = game.levels[level];
     if (map == null) {
-      return const AttackTransitionBaseResult.failure('Carte non générée');
+      return const AttackTransitionBaseResult.failure(
+        ActionFailure.mapNotGenerated,
+      );
     }
     final MapCell cell = map.cellAt(targetX, targetY);
     if (cell.content != CellContentType.transitionBase) {
       return const AttackTransitionBaseResult.failure(
-        'Pas de base de transition ici',
+        ActionFailure.noTransitionBaseHere,
       );
     }
     final TransitionBase? base = cell.transitionBase;
     if (base == null) {
-      return const AttackTransitionBaseResult.failure('Base introuvable');
+      return const AttackTransitionBaseResult.failure(
+        ActionFailure.baseNotFound,
+      );
     }
     if (base.isCaptured) {
-      return const AttackTransitionBaseResult.failure('Base déjà capturée');
+      return const AttackTransitionBaseResult.failure(
+        ActionFailure.baseAlreadyCaptured,
+      );
     }
     final unitErr = AttackTransitionBaseHelpers.validateUnits(
       player, level, selectedUnits,
@@ -141,8 +148,6 @@ class AttackTransitionBaseAction extends Action {
       turn: turn,
       transitionBaseName: _capturedBaseName ?? '',
       fightResult: result.fight!,
-      subtitle:
-          'Victoire en ${result.fight!.turnCount} tours',
     );
   }
 

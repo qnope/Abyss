@@ -5,7 +5,7 @@ import 'package:abyss/domain/unit/unit_type.dart';
 
 void main() {
   group('RecruitEntry', () {
-    test('title includes quantity and unit label', () {
+    test('carries the unit type and quantity', () {
       final entry = RecruitEntry(
         turn: 5,
         unitType: UnitType.guardian,
@@ -15,19 +15,6 @@ void main() {
       expect(entry.category, HistoryEntryCategory.recruit);
       expect(entry.quantity, 10);
       expect(entry.unitType, UnitType.guardian);
-      expect(entry.title, contains('10'));
-      expect(entry.title, contains('gardiens'));
-    });
-
-    test('single unit recruitment uses singular form', () {
-      final entry = RecruitEntry(
-        turn: 1,
-        unitType: UnitType.scout,
-        quantity: 1,
-      );
-
-      expect(entry.title, contains('1'));
-      expect(entry.title, contains('éclaireur'));
     });
 
     test('preserves subtitle when provided', () {

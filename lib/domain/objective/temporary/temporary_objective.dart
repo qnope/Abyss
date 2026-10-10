@@ -1,32 +1,25 @@
 import 'temporary_objective_kind.dart';
 
 /// An objective an event sets for a while, outside the catalog and with
-/// no reward of its own: what the event gives is the reward.
+/// no reward of its own: what the event gives is the reward. The
+/// presentation words it after its [kind] and [lastTurn].
 class TemporaryObjective {
   final TemporaryObjectiveKind kind;
-
-  /// Shown to the player, in French.
-  final String title;
 
   /// Last turn, inclusive, the objective can be reached.
   final int lastTurn;
 
-  const TemporaryObjective({
-    required this.kind,
-    required this.title,
-    required this.lastTurn,
-  });
+  const TemporaryObjective({required this.kind, required this.lastTurn});
 
   @override
   bool operator ==(Object other) =>
       other is TemporaryObjective &&
       other.kind == kind &&
-      other.title == title &&
       other.lastTurn == lastTurn;
 
   @override
-  int get hashCode => Object.hash(kind, title, lastTurn);
+  int get hashCode => Object.hash(kind, lastTurn);
 
   @override
-  String toString() => 'TemporaryObjective(${kind.name}, $title, $lastTurn)';
+  String toString() => 'TemporaryObjective(${kind.name}, $lastTurn)';
 }

@@ -29,6 +29,18 @@ void main() {
     }
   });
 
+  test('counts the units, in the plural from two on', () {
+    expect(UnitType.guardian.units(fr, 1), '1 gardien');
+    expect(UnitType.guardian.units(fr, 10), '10 gardiens');
+    expect(UnitType.domeBreaker.units(en, 2), '2 breakers');
+    expect(UnitType.abyssAdmiral.units(es, 3), '3 almirantes del abismo');
+    for (final l10n in [fr, en, es]) {
+      for (final type in UnitType.values) {
+        expect(type.units(l10n, 4), startsWith('4 '));
+      }
+    }
+  });
+
   test('describes the role effects', () {
     expect(UnitType.guardian.roleEffect(fr),
         'Provoque : les monstres le ciblent en priorité.');

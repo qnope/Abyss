@@ -11,12 +11,13 @@ class BuildingEntry extends HistoryEntry {
   @override
   final HistoryEntryCategory category;
 
+  /// Left empty: the presentation titles the entry in the player's
+  /// language. Kept so the Hive layout keeps its field 2.
   @HiveField(2)
-  @override
   final String title;
 
+  /// Not shown: a French line some older versions saved.
   @HiveField(3)
-  @override
   final String? subtitle;
 
   @HiveField(4)
@@ -31,19 +32,5 @@ class BuildingEntry extends HistoryEntry {
     required this.newLevel,
     this.subtitle,
   }) : category = HistoryEntryCategory.building,
-       title = '${_buildingLabel(buildingType)} niv $newLevel';
+       title = '';
 }
-
-String _buildingLabel(BuildingType type) => switch (type) {
-  BuildingType.headquarters => 'Quartier Général',
-  BuildingType.algaeFarm => 'Ferme d\'algues',
-  BuildingType.coralMine => 'Mine de corail',
-  BuildingType.oreExtractor => 'Extracteur de minerai',
-  BuildingType.solarPanel => 'Panneau solaire',
-  BuildingType.laboratory => 'Laboratoire',
-  BuildingType.barracks => 'Caserne',
-  BuildingType.coralCitadel => 'Citadelle corallienne',
-  BuildingType.descentModule => 'Module de Descente',
-  BuildingType.pressureCapsule => 'Capsule Pressurisee',
-  BuildingType.volcanicKernel => 'Noyau Volcanique',
-};

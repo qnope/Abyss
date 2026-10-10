@@ -6,6 +6,7 @@ import '../map/map_cell.dart';
 import '../map/transition_base.dart';
 import '../map/transition_base_type.dart';
 import '../unit/unit_type.dart';
+import 'action_failure.dart';
 import 'descend_result.dart';
 
 class DescendValidator {
@@ -21,17 +22,17 @@ class DescendValidator {
   }) {
     final map = game.levels[fromLevel];
     if (map == null) {
-      return const DescendResult.failure('Carte non generee');
+      return const DescendResult.failure(ActionFailure.mapNotGenerated);
     }
 
     final MapCell cell = map.cellAt(transitionX, transitionY);
     if (cell.content != CellContentType.transitionBase) {
-      return const DescendResult.failure('Pas de base de transition');
+      return const DescendResult.failure(ActionFailure.noTransitionBaseHere);
     }
 
     final TransitionBase? base = cell.transitionBase;
     if (base == null || base.capturedBy != player.id) {
-      return const DescendResult.failure('Base non capturee');
+      return const DescendResult.failure(ActionFailure.baseNotCaptured);
     }
 
     final error = _validateBuilding(player, base.type);
@@ -50,7 +51,7 @@ class DescendValidator {
 
     final level = player.buildings[required]?.level ?? 0;
     if (level <= 0) {
-      return const DescendResult.failure('Batiment requis manquant');
+      return const DescendResult.failure(ActionFailure.requiredBuildingMissing);
     }
     return null;
   }
@@ -65,12 +66,12 @@ class DescendValidator {
       if (entry.value <= 0) continue;
       final stock = player.unitsOnLevel(fromLevel)[entry.key]?.count ?? 0;
       if (entry.value > stock) {
-        return const DescendResult.failure('Unites insuffisantes');
+        return const DescendResult.failure(ActionFailure.notEnoughUnits);
       }
       total += entry.value;
     }
     if (total <= 0) {
-      return const DescendResult.failure('Aucune unite selectionnee');
+      return const DescendResult.failure(ActionFailure.noUnitSelected);
     }
     return const DescendResult.success(targetLevel: 0, unitsSent: {});
   }

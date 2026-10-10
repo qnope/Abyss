@@ -5,7 +5,7 @@ import '../temporary_objective_end.dart';
 import '../temporary_objective_kind.dart';
 import '../temporary_objective_source.dart';
 
-/// « Repousse le banc de prédateurs » once the player chose to face them,
+/// Repel the school of predators once the player chose to face them,
 /// through the turn at whose end they strike: done if the fight is won,
 /// failed if lost. Baited predators set no objective.
 class PredatorsObjectiveSource extends TemporaryObjectiveSource {
@@ -33,7 +33,6 @@ class PredatorsObjectiveSource extends TemporaryObjectiveSource {
 
   static TemporaryObjective _objective(int due) => TemporaryObjective(
     kind: TemporaryObjectiveKind.predators,
-    title: 'Repousse le banc de prédateurs',
     lastTurn: due,
   );
 }

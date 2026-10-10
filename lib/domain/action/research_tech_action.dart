@@ -1,4 +1,5 @@
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import '../building/building_type.dart';
@@ -29,27 +30,27 @@ class ResearchTechAction extends Action {
   ActionResult validate(Game game, Player player) {
     final state = player.techBranches[branch];
     if (state == null) {
-      return ActionResult.failure('Branche introuvable');
+      return ActionResult.failure(ActionFailure.branchNotFound);
     }
     if (!state.unlocked) {
-      return ActionResult.failure('Branche verrouillee');
+      return ActionResult.failure(ActionFailure.branchLocked);
     }
     if (!player.worksite.canResearch) {
-      return ActionResult.failure('Recherche deja lancee ce tour');
+      return ActionResult.failure(ActionFailure.researchAlreadyStarted);
     }
     final targetLevel = state.researchLevel + 1;
     if (targetLevel > TechCostCalculator.maxResearchLevel) {
-      return ActionResult.failure('Niveau maximum atteint');
+      return ActionResult.failure(ActionFailure.maxLevelReached);
     }
     final labLevel = player.buildings[BuildingType.laboratory]?.level ?? 0;
     if (labLevel < TechCostCalculator.requiredLabLevel(targetLevel)) {
-      return ActionResult.failure('Niveau de laboratoire insuffisant');
+      return ActionResult.failure(ActionFailure.laboratoryLevelTooLow);
     }
     final costs = _costs(player, targetLevel);
     for (final entry in costs.entries) {
       final available = player.resources[entry.key]?.amount ?? 0;
       if (available < entry.value) {
-        return ActionResult.failure('Ressources insuffisantes');
+        return ActionResult.failure(ActionFailure.notEnoughResources);
       }
     }
     return ActionResult.success();

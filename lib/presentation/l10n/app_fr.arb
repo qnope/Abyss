@@ -58,6 +58,30 @@
   "unitSaboteurName": "Saboteur",
   "unitSaboteurRole": "Verre-canon",
   "unitSaboteurRoleEffect": "Ignore la défense de sa cible.",
+  "unitScoutCount": "{count, plural, one{{count} éclaireur} other{{count} éclaireurs}}",
+  "@unitScoutCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "unitHarpoonistCount": "{count, plural, one{{count} harponneur} other{{count} harponneurs}}",
+  "@unitHarpoonistCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "unitGuardianCount": "{count, plural, one{{count} gardien} other{{count} gardiens}}",
+  "@unitGuardianCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "unitDomeBreakerCount": "{count, plural, one{{count} briseur} other{{count} briseurs}}",
+  "@unitDomeBreakerCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "unitAbyssAdmiralCount": "{count, plural, one{{count} amiral des abysses} other{{count} amiraux des abysses}}",
+  "@unitAbyssAdmiralCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "unitSaboteurCount": "{count, plural, one{{count} saboteur} other{{count} saboteurs}}",
+  "@unitSaboteurCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
 
   "resourceAlgaeName": "Algues",
   "resourceAlgaeFlavor": "Nourriture cultivée dans les fermes sous-marines pour nourrir vos unités.",
@@ -210,6 +234,11 @@
 
   "temporaryObjectiveWreckShort": "Épave",
   "temporaryObjectivePredatorsShort": "Prédateurs",
+  "temporaryObjectiveWreckTitle": "Fouille l'épave d'ici la fin du tour {turn}",
+  "@temporaryObjectiveWreckTitle": {
+    "placeholders": { "turn": { "type": "int" } }
+  },
+  "temporaryObjectivePredatorsTitle": "Repousse le banc de prédateurs",
 
   "historyCategoryCombat": "Combat",
   "historyCategoryBuilding": "Construction",
@@ -223,5 +252,120 @@
   "historyCategoryReinforcement": "Renfort",
   "historyCategoryRaid": "Raid",
   "historyCategoryVolcano": "Volcan",
-  "historyCategoryEvent": "Événement"
+  "historyCategoryEvent": "Événement",
+
+  "actionFailureUnknown": "Action impossible",
+  "actionFailureMapNotGenerated": "Carte non générée",
+  "actionFailureCellNotRevealed": "Case non révélée",
+  "actionFailureCellNotEligible": "Cellule non éligible",
+  "actionFailureAlreadyCollected": "Déjà collecté",
+  "actionFailureNothingToCollect": "Rien à collecter",
+  "actionFailureStormBlocksExploration": "Tempête : exploration impossible",
+  "actionFailureNoScoutAvailable": "Aucun éclaireur disponible",
+  "actionFailureNoMonsterHere": "Pas de monstre ici",
+  "actionFailureLairAlreadyDefeated": "Repaire déjà vaincu",
+  "actionFailureLairEmpty": "Repaire vide",
+  "actionFailureNotEnoughUnits": "Unités insuffisantes",
+  "actionFailureNoUnitSelected": "Aucune unité sélectionnée",
+  "actionFailureAdmiralRequired": "Un Amiral des Abysses est requis",
+  "actionFailureNoTransitionBaseHere": "Pas de base de transition ici",
+  "actionFailureBaseNotFound": "Base introuvable",
+  "actionFailureBaseAlreadyCaptured": "Base déjà capturée",
+  "actionFailureBaseNotCaptured": "Base non capturée",
+  "actionFailureTargetLevelNotExplored": "Niveau cible non exploré",
+  "actionFailureRequiredBuildingMissing": "Bâtiment requis manquant",
+  "actionFailureNoVolcanicKernelHere": "Pas de noyau volcanique ici",
+  "actionFailureKernelAlreadyCaptured": "Noyau déjà capturé",
+  "actionFailureKernelNotCaptured": "Noyau non capturé",
+  "actionFailureNoPendingEvent": "Aucun événement en attente",
+  "actionFailureNotThisChoiceTurn": "Ce n'est pas le tour de ce choix",
+  "actionFailureNotEnoughStockToTrade": "Stock insuffisant pour échanger",
+  "actionFailureBranchNotFound": "Branche introuvable",
+  "actionFailureBranchLocked": "Branche verrouillée",
+  "actionFailureBranchAlreadyUnlocked": "Branche déjà débloquée",
+  "actionFailureLaboratoryRequired": "Laboratoire requis",
+  "actionFailureLaboratoryLevelTooLow": "Niveau de laboratoire insuffisant",
+  "actionFailureResearchAlreadyStarted": "Recherche déjà lancée ce tour",
+  "actionFailureBuildingNotFound": "Bâtiment introuvable",
+  "actionFailureWorksitesBusy": "Chantiers occupés ce tour",
+  "actionFailureMaxLevelReached": "Niveau maximum atteint",
+  "actionFailureNotEnoughResources": "Ressources insuffisantes",
+  "actionFailureUnitLocked": "Unité verrouillée",
+  "actionFailureRecruitmentAlreadyDone": "Recrutement déjà effectué ce tour",
+  "actionFailureInvalidQuantity": "Quantité invalide",
+  "actionFailureGameOver": "Partie terminée",
+
+  "historyBuildingTitle": "{building} niv. {level}",
+  "@historyBuildingTitle": {
+    "placeholders": { "building": { "type": "String" }, "level": { "type": "int" } }
+  },
+  "historyResearchUnlocked": "{branch} débloquée",
+  "@historyResearchUnlocked": {
+    "placeholders": { "branch": { "type": "String" } }
+  },
+  "historyResearchLevel": "{branch} niv. {level}",
+  "@historyResearchLevel": {
+    "placeholders": { "branch": { "type": "String" }, "level": { "type": "int" } }
+  },
+  "historyResearchImproved": "{branch} améliorée",
+  "@historyResearchImproved": {
+    "placeholders": { "branch": { "type": "String" } }
+  },
+  "historyRecruitTitle": "{count, plural, one{{units} recruté} other{{units} recrutés}}",
+  "@historyRecruitTitle": {
+    "placeholders": { "count": { "type": "int" }, "units": { "type": "String" } }
+  },
+  "historyExploreTitle": "Exploration ({x}, {y})",
+  "@historyExploreTitle": {
+    "placeholders": { "x": { "type": "int" }, "y": { "type": "int" } }
+  },
+  "historyCollectTitle": "Trésor collecté ({x}, {y})",
+  "@historyCollectTitle": {
+    "placeholders": { "x": { "type": "int" }, "y": { "type": "int" } }
+  },
+  "historyCombatVictory": "Victoire vs Repaire niv. {level}",
+  "@historyCombatVictory": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "historyCombatDefeat": "Défaite vs Repaire niv. {level}",
+  "@historyCombatDefeat": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "historyTurnEndTitle": "Tour {turn} terminé",
+  "@historyTurnEndTitle": {
+    "placeholders": { "turn": { "type": "int" } }
+  },
+  "historyCaptureTitle": "Capture : {name}",
+  "@historyCaptureTitle": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "historyCaptureVictory": "{turns, plural, one{Victoire en {turns} tour} other{Victoire en {turns} tours}}",
+  "@historyCaptureVictory": {
+    "placeholders": { "turns": { "type": "int" } }
+  },
+  "historyDescentTitle": "Descente au Niveau {level}",
+  "@historyDescentTitle": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "historyDescentUnits": "{count, plural, one{{count} unité envoyée} other{{count} unités envoyées}}",
+  "@historyDescentUnits": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "historyReinforcementTitle": "Renforts vers Niveau {level}",
+  "@historyReinforcementTitle": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "historyReinforcementUnits": "{count, plural, one{{count} unité en transit} other{{count} unités en transit}}",
+  "@historyReinforcementUnits": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "historyRaidRepelled": "Raid repoussé",
+  "historyRaidLost": "Base pillée par un raid",
+  "historyPredatorsRepelled": "Banc de prédateurs repoussé",
+  "historyPredatorsLost": "Base pillée par un banc de prédateurs",
+  "historyVolcanoRepelled": "Vague repoussée sur le Noyau",
+  "historyVolcanoLost": "Le Noyau a perdu un niveau",
+  "historyEventAccepted": "Accepté",
+  "historyEventRefused": "Refusé",
+  "historyEventDefaulted": "Option prudente, sans choix"
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/game/difficulty.dart';
 import 'package:abyss/domain/game/game_factory.dart';
 import 'package:abyss/domain/script/script_log_entry.dart';
@@ -26,5 +27,15 @@ void main() {
 
     expect(easy, greaterThan(normal));
     expect(hard, lessThan(normal));
+  });
+
+  test('the algae margin counts a cold current endured this turn', () {
+    final ScriptTurn calm = _turn(Difficulty.normal);
+    final ScriptTurn cold = _turn(Difficulty.normal);
+    cold.player.eventState.activate(
+      RandomEventType.coldCurrent,
+      untilTurn: cold.game.turn,
+    );
+    expect(cold.algaeMargin, lessThan(calm.algaeMargin));
   });
 }

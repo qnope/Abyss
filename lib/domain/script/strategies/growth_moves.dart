@@ -8,6 +8,7 @@ import '../../resource/resource_type.dart';
 import '../../tech/tech_branch.dart';
 import '../../tech/tech_option.dart';
 import '../../tech/tech_tree.dart';
+import '../../turn/turn_production.dart';
 import '../script_turn.dart';
 
 /// Growth moves of a player who watches the energy balance and follows a
@@ -59,13 +60,14 @@ extension GrowthMoves on ScriptTurn {
     return ResearchTechAction(branch: branch, option: option);
   }
 
-  /// Energy produced minus energy the buildings use each turn.
+  /// Energy produced minus energy the buildings and the heating of the
+  /// farms use this turn.
   int get energyMargin {
     final int produced = ProductionCalculator.fromBuildings(player.buildings,
             techBranches: player.techBranches)[ResourceType.energy] ??
         0;
     return produced -
-        ConsumptionCalculator.totalBuildingConsumption(player.buildings);
+        TurnProduction.energyConsumption(player, turn: game.turn);
   }
 
   /// Raises the buildings of [order] one level at a time, round after

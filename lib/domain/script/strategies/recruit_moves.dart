@@ -3,8 +3,8 @@ import '../../building/building_type.dart';
 import '../../fight/combatant.dart';
 import '../../fight/unit_boost.dart';
 import '../../resource/consumption_calculator.dart';
-import '../../resource/production_calculator.dart';
 import '../../resource/resource_type.dart';
+import '../../turn/turn_production.dart';
 import '../../unit/unit_cost_calculator.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
@@ -53,9 +53,10 @@ extension RecruitMoves on ScriptTurn {
 
   /// Algae produced minus algae eaten each turn, all levels together.
   int get algaeMargin {
-    final int produced = game.difficulty.scaleProduction(
-          ProductionCalculator.fromBuildings(player.buildings,
-              techBranches: player.techBranches),
+    final int produced = TurnProduction.of(
+          player,
+          turn: game.turn,
+          difficulty: game.difficulty,
         )[ResourceType.algae] ??
         0;
     return produced -

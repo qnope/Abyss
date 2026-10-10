@@ -51,6 +51,8 @@ void main() {
       }},
     );
     final player = game.humanPlayer;
+    // Keep random events out too: a cold current would cut the algae.
+    player.eventState.schedule(1000);
 
     // Turn 1: energy 60->57, algae 100->140
     var result = resolver.resolve(game);

@@ -20,7 +20,11 @@ abstract class EventEffect {
     required Random random,
   }) {}
 
-  /// Plays the event out during [turn]. [accept] is the player's choice,
+  /// Plays the event out from [turn], the first turn whose end it can
+  /// still change: the turn of the choice when the player chooses, the
+  /// next one when it is applied while a turn ends (that turn's
+  /// production is already made). So an effect lasting n turns from
+  /// [turn] always covers n productions. [accept] is the player's choice,
   /// `false` for the prudent option applied when the turn ended without
   /// one, and `true` for an event drawn without a choice.
   void apply(
@@ -30,4 +34,8 @@ abstract class EventEffect {
     required int turn,
     Random? random,
   }) {}
+
+  /// Upkeep of the event's lasting effect at the end of [turn], one of
+  /// the turns it covers.
+  void onTurnEnd(Game game, Player player, {required int turn}) {}
 }

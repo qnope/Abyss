@@ -41,4 +41,8 @@ abstract final class AbyssColors {
   /// color is far cheaper than wrapping the item in an `Opacity` layer.
   static Color dimmed(Color color) =>
       color.withValues(alpha: color.a * 0.5);
+
+  /// Opacity of a faded unavailable illustration, drawn in greyscale.
+  /// Applied on the image paint, never through a compositing layer.
+  static const double unavailableOpacity = 0.85;
 }

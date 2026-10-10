@@ -4,6 +4,7 @@ import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 import 'package:abyss/presentation/widgets/building/building_card.dart';
 import '../../../helpers/test_svg_helper.dart';
 
@@ -53,10 +54,11 @@ void main() {
       await tester.pumpWidget(createApp(building: building));
       await tester.pumpAndSettle();
 
-      // Faded through colors: an Opacity layer is costly while scrolling.
+      // Faded on the paint: an Opacity layer is costly while scrolling.
       expect(find.byType(Opacity), findsNothing);
-      final icon = tester.widget<RawImage>(find.byType(RawImage));
-      expect(icon.color, AbyssColors.dimmed(AbyssColors.disabled));
+      final icon = tester.widget<RasterSvg>(find.byType(RasterSvg));
+      expect(icon.greyscale, isTrue);
+      expect(icon.opacity, AbyssColors.unavailableOpacity);
     });
 
     testWidgets('calls onTap callback when tapped', (tester) async {

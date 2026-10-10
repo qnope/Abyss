@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/widgets/unit/unit_icon.dart';
+import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 
 void main() {
@@ -42,16 +43,25 @@ void main() {
       expect(svg.size, 64);
     });
 
-    test('greyscale mode applies a tint', () {
+    test('greyscale mode draws the greyscale illustration', () {
       const icon = UnitIcon(type: UnitType.scout, greyscale: true);
       final svg = icon.build(_FakeContext()) as RasterSvg;
-      expect(svg.color, isNotNull);
+      expect(svg.greyscale, isTrue);
+      expect(svg.opacity, 1);
     });
 
-    test('non-greyscale has no tint', () {
+    test('faded greyscale icon is drawn translucent', () {
+      const icon = UnitIcon(type: UnitType.scout, greyscale: true, faded: true);
+      final svg = icon.build(_FakeContext()) as RasterSvg;
+      expect(svg.greyscale, isTrue);
+      expect(svg.opacity, AbyssColors.unavailableOpacity);
+    });
+
+    test('default icon is in colour and opaque', () {
       const icon = UnitIcon(type: UnitType.scout);
       final svg = icon.build(_FakeContext()) as RasterSvg;
-      expect(svg.color, isNull);
+      expect(svg.greyscale, isFalse);
+      expect(svg.opacity, 1);
     });
   });
 }

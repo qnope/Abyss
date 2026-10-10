@@ -44,7 +44,7 @@ class TechOptionCard extends StatelessWidget {
         RasterSvg(
           assetPath: iconPath,
           size: 64,
-          color: _discarded ? AbyssColors.disabled : null,
+          greyscale: _discarded,
         ),
         const SizedBox(height: 6),
         Text(name,

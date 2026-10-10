@@ -4,12 +4,17 @@ import '../../extensions/building_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 
+/// Illustration of a building: in colour, or in greyscale while it is
+/// unavailable.
 class BuildingIcon extends StatelessWidget {
   final BuildingType type;
   final double size;
+
+  /// Draws the real illustration in greyscale, e.g. while unbuilt.
   final bool greyscale;
 
-  /// Fades the greyscale icon further, for unavailable list items.
+  /// Draws the greyscale illustration slightly translucent, for
+  /// unavailable list items.
   final bool faded;
 
   const BuildingIcon({
@@ -20,15 +25,13 @@ class BuildingIcon extends StatelessWidget {
     this.faded = false,
   });
 
-  Color get _grey =>
-      faded ? AbyssColors.dimmed(AbyssColors.disabled) : AbyssColors.disabled;
-
   @override
   Widget build(BuildContext context) {
     return RasterSvg(
       assetPath: type.iconPath,
       size: size,
-      color: greyscale ? _grey : null,
+      greyscale: greyscale,
+      opacity: faded ? AbyssColors.unavailableOpacity : 1,
     );
   }
 }

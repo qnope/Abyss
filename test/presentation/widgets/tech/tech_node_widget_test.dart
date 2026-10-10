@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/tech/tech_node_state.dart';
+import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 import 'package:abyss/presentation/widgets/tech/dashed_ring_painter.dart';
@@ -47,7 +48,19 @@ void main() {
     testWidgets('displays its icon', (t) async {
       await t.pumpWidget(build(TechNodeState.researched));
       expect(icon(t).assetPath, _icon);
-      expect(icon(t).color, isNull);
+      expect(icon(t).greyscale, isFalse);
+      expect(icon(t).opacity, 1);
+    });
+
+    testWidgets('accessible node shows its icon in colour', (t) async {
+      await t.pumpWidget(build(TechNodeState.accessible));
+      expect(icon(t).greyscale, isFalse);
+    });
+
+    testWidgets('locked node shows its icon faded in greyscale', (t) async {
+      await t.pumpWidget(build(TechNodeState.locked));
+      expect(icon(t).greyscale, isTrue);
+      expect(icon(t).opacity, AbyssColors.unavailableOpacity);
     });
 
     testWidgets('accessible node is ringed with dashes', (t) async {
@@ -68,7 +81,8 @@ void main() {
       expect(dashedRing(), findsNothing);
       expect(painted((p) => p != null && p is! DashedRingPainter),
           findsOneWidget);
-      expect(icon(t).color, isNotNull);
+      expect(icon(t).greyscale, isTrue);
+      expect(icon(t).opacity, 1);
     });
 
     testWidgets('researched node glows with its colour', (t) async {

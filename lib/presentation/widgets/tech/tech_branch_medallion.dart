@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 
-/// Round emblem of a tech branch, glowing once unlocked and greyed out
+/// Round emblem of a tech branch, glowing once unlocked and in greyscale
 /// with a padlock otherwise. The [label] is drawn above or below it.
 class TechBranchMedallion extends StatelessWidget {
   final String iconPath;
@@ -70,7 +70,7 @@ class TechBranchMedallion extends StatelessWidget {
           child: RasterSvg(
             assetPath: iconPath,
             size: size * 0.6,
-            color: unlocked ? null : AbyssColors.disabled,
+            greyscale: !unlocked,
           ),
         ),
         if (!unlocked) const Positioned(

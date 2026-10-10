@@ -20,18 +20,12 @@ class RasterSvg extends StatefulWidget {
   /// Alpha applied while drawing the bitmap, from 0 (hidden) to 1 (opaque).
   final double opacity;
 
-  /// Optional tint blended over the icon, e.g. a greyed-out silhouette.
-  final Color? color;
-  final BlendMode colorBlendMode;
-
   const RasterSvg({
     super.key,
     required this.assetPath,
     this.size = 24,
     this.greyscale = false,
     this.opacity = 1,
-    this.color,
-    this.colorBlendMode = BlendMode.srcIn,
   });
 
   @override
@@ -82,8 +76,6 @@ class _RasterSvgState extends State<RasterSvg> {
         height: widget.size,
         filterQuality: FilterQuality.medium,
         opacity: opacity < 1 ? AlwaysStoppedAnimation<double>(opacity) : null,
-        color: widget.color,
-        colorBlendMode: widget.colorBlendMode,
       ),
     );
   }

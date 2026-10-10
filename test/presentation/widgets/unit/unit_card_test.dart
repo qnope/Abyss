@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 import 'package:abyss/presentation/widgets/unit/unit_card.dart';
 import '../../../helpers/test_svg_helper.dart';
 
@@ -65,10 +66,11 @@ void main() {
     testWidgets('locked card is faded', (tester) async {
       await tester.pumpWidget(createApp(isUnlocked: false));
       await tester.pumpAndSettle();
-      // Faded through colors: an Opacity layer is costly while scrolling.
+      // Faded on the paint: an Opacity layer is costly while scrolling.
       expect(find.byType(Opacity), findsNothing);
-      final icon = tester.widget<RawImage>(find.byType(RawImage));
-      expect(icon.color, AbyssColors.dimmed(AbyssColors.disabled));
+      final icon = tester.widget<RasterSvg>(find.byType(RasterSvg));
+      expect(icon.greyscale, isTrue);
+      expect(icon.opacity, AbyssColors.unavailableOpacity);
     });
 
     testWidgets('shows per-level breakdown when multiple levels',

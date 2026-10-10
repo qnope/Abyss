@@ -11,15 +11,19 @@ import '../map/map_cell_visual.dart';
 import '../map/map_painter.dart';
 import '../map/map_sprites.dart';
 import '../unit/unit_card.dart';
+import 'greyable_icon_paths.dart';
 
-/// Rasterizes every icon and map sprite: meant to run once at startup.
+/// Rasterizes every icon and map sprite, plus the greyscale bitmap of
+/// every icon that can be greyed: meant to run once at startup.
 Future<void> preloadGameArt() async {
   await SvgRasterCache.preloadAll();
+  await SvgRasterCache.preloadGrey(greyableIconPaths());
   await MapSprites.load();
 }
 
 /// Samples of what the game screens draw, for a [WarmUpLayer]: list
-/// cards in both states, every icon, and a map with every sprite.
+/// cards in both states, every icon in colour and greyscale, and a map
+/// with every sprite.
 final List<WidgetBuilder> gameWarmUpPages = [
   (_) => const _CardsPage(),
   (_) => const _IconsPage(),
@@ -63,16 +67,17 @@ class _IconsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paths = SvgRasterCache.readyPaths.toList();
     return Wrap(
       children: [
-        for (final faded in [false, true])
-          for (final path in paths)
-            RasterSvg(
-              assetPath: path,
-              size: 40,
-              color: faded ? AbyssColors.dimmed(AbyssColors.disabled) : null,
-            ),
+        for (final path in SvgRasterCache.readyPaths.toList())
+          RasterSvg(assetPath: path, size: 40),
+        for (final path in greyableIconPaths())
+          RasterSvg(
+            assetPath: path,
+            size: 40,
+            greyscale: true,
+            opacity: AbyssColors.unavailableOpacity,
+          ),
       ],
     );
   }

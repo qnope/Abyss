@@ -63,7 +63,7 @@ class _UnitDetailSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          UnitIcon(type: unitType, size: 64),
+          UnitIcon(type: unitType, size: 64, greyscale: !isUnlocked),
           const SizedBox(height: 12),
           Text(
             unitType.displayName,

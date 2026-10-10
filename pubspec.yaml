@@ -37,6 +37,8 @@ flutter:
     - assets/icons/tech/
     - assets/icons/events/
     - assets/icons/guide/
+    - assets/illustrations/menu/
+    - assets/illustrations/saves/
   fonts:
     # SIL Open Font License 1.1: see assets/fonts/rajdhani/OFL.txt.
     - family: Rajdhani

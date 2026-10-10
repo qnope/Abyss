@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/volcano/magma_rampart.dart';
 import '../../../../domain/volcano/volcano_report.dart';
+import '../../../extensions/rampart_texts.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../../../theme/abyss_colors.dart';
 import '../../../widgets/fight/fight_kill_count.dart';
@@ -74,7 +74,7 @@ class VolcanoSummaryScreen extends StatelessWidget {
             ? l10n.volcanoKernelHolds(level)
             : l10n.volcanoKernelDrops(report.kernelLevelAfter)),
         subtitle: level > 0
-            ? Text(l10n.volcanoMagmaRampart(MagmaRampart.label(level)))
+            ? Text(l10n.volcanoMagmaRampart(RampartTexts.magma(l10n, level)))
             : null,
       ),
     );

@@ -47,7 +47,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(TransitionArmySelectionScreen), findsOneWidget);
-      expect(find.text('Assaut: Faille Noire'), findsOneWidget);
+      expect(find.text('Assaut : Faille Noire'), findsOneWidget);
     });
 
     testWidgets('a captured chimney requires the pressure capsule',
@@ -72,7 +72,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(DescentDialog), findsOneWidget);
-      expect(find.text('Descente vers Niveau 2'), findsOneWidget);
+      expect(find.text('Descente vers le Niveau 2'), findsOneWidget);
     });
   });
 

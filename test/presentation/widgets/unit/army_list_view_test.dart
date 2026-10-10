@@ -57,19 +57,19 @@ void main() {
       await tester.pumpWidget(createApp(barracksLevel: 1));
       await tester.pumpAndSettle();
       // 4 locked units show Verrouille (guardian, domeBreaker, abyssAdmiral, saboteur)
-      expect(find.text('Verrouille'), findsNWidgets(4));
+      expect(find.text('Verrouillé'), findsNWidgets(4));
     });
 
     testWidgets('barracks level 5 unlocks all units', (tester) async {
       await tester.pumpWidget(createApp(barracksLevel: 5));
       await tester.pumpAndSettle();
-      expect(find.text('Verrouille'), findsNothing);
+      expect(find.text('Verrouillé'), findsNothing);
     });
 
     testWidgets('barracks level 0 locks all units', (tester) async {
       await tester.pumpWidget(createApp(barracksLevel: 0));
       await tester.pumpAndSettle();
-      expect(find.text('Verrouille'), findsNWidgets(6));
+      expect(find.text('Verrouillé'), findsNWidgets(6));
     });
 
     testWidgets('tap fires with correct UnitType', (tester) async {

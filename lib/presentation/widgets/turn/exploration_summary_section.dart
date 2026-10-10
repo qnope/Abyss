@@ -27,7 +27,7 @@ class ExplorationSummarySection extends StatelessWidget {
             Icon(Icons.explore, color: AbyssColors.biolumCyan),
             const SizedBox(width: 8),
             Text(
-              'Exploration : $totalNew nouvelles cellules',
+              context.l10n.turnExplorationTotal(totalNew),
               style: TextStyle(color: AbyssColors.biolumCyan),
             ),
           ],
@@ -51,7 +51,7 @@ class ExplorationSummarySection extends StatelessWidget {
     ExplorationResult exploration,
   ) {
     final coords = '(${exploration.target.x}, ${exploration.target.y})';
-    final cells = '${exploration.newCellsRevealed} cellules';
+    final cells = l10n.turnExplorationCells(exploration.newCellsRevealed);
     if (exploration.notableContent.isEmpty) {
       return '$coords → $cells';
     }

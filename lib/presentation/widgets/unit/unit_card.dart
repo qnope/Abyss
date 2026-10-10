@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/volcano/kernel_garrison.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/unit_type_extensions.dart';
+import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'unit_icon.dart';
@@ -39,16 +40,18 @@ class UnitCard extends StatelessWidget {
     );
   }
 
-  static String _placeOf(int key) =>
-      key == KernelGarrison.stockKey ? 'Noyau' : 'Niv $key';
+  static String _placeOf(AppLocalizations l10n, int key) =>
+      key == KernelGarrison.stockKey
+          ? l10n.unitPlaceKernel
+          : l10n.baseLevelShort(key);
 
-  String get _subtitle {
+  String _subtitle(AppLocalizations l10n) {
     final nonEmpty = countsPerLevel.entries
         .where((e) => e.value > 0)
         .toList();
-    if (nonEmpty.length <= 1) return '$_totalCount unites';
+    if (nonEmpty.length <= 1) return l10n.unitTotalCount(_totalCount);
     return nonEmpty
-        .map((e) => '${_placeOf(e.key)}: ${e.value}')
+        .map((e) => '${_placeOf(l10n, e.key)}: ${e.value}')
         .join(' · ');
   }
 
@@ -75,7 +78,7 @@ class UnitCard extends StatelessWidget {
             ),
             if (isUnlocked)
               Text(
-                _subtitle,
+                _subtitle(context.l10n),
                 style: textTheme.bodySmall?.copyWith(
                   color: AbyssColors.onSurfaceDim,
                 ),
@@ -90,7 +93,7 @@ class UnitCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'Verrouille',
+                    context.l10n.unitLocked,
                     style: textTheme.bodySmall?.copyWith(
                       color: AbyssColors.dimmed(AbyssColors.disabled),
                     ),

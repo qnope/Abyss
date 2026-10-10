@@ -27,8 +27,4 @@ abstract final class MagmaRampart {
       def: defForLevel(level),
     );
   }
-
-  /// Short label such as "200 PV, ATK 14, DEF 8".
-  static String label(int level) => '${hpForLevel(level)} PV, '
-      'ATK ${atkForLevel(level)}, DEF ${defForLevel(level)}';
 }

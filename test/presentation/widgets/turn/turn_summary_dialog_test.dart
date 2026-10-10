@@ -176,7 +176,7 @@ void main() {
         deactivatedBuildings: [BuildingType.coralMine],
       )));
       await _open(t);
-      expect(find.text('Batiments desactives'), findsOneWidget);
+      expect(find.text('Bâtiments désactivés'), findsOneWidget);
       expect(find.text('Mine de corail'), findsOneWidget);
     });
 
@@ -186,15 +186,15 @@ void main() {
         lostUnits: {UnitType.guardian: 3},
       )));
       await _open(t);
-      expect(find.text('Unites perdues'), findsOneWidget);
+      expect(find.text('Unités perdues'), findsOneWidget);
       expect(find.text('Gardien: -3'), findsOneWidget);
     });
 
     testWidgets('no consumption sections when none', (t) async {
       await t.pumpWidget(_app(_result(changes: [_change()])));
       await _open(t);
-      expect(find.text('Batiments desactives'), findsNothing);
-      expect(find.text('Unites perdues'), findsNothing);
+      expect(find.text('Bâtiments désactivés'), findsNothing);
+      expect(find.text('Unités perdues'), findsNothing);
     });
   });
 }

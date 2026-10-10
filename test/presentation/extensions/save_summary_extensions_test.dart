@@ -21,7 +21,7 @@ void main() {
     });
 
     test('shows its resources rather than a footnote', () {
-      expect(summary.footnote, isNull);
+      expect(summary.footnote(fr), isNull);
     });
 
     test('pictures the depth reached', () {
@@ -47,12 +47,12 @@ void main() {
     });
 
     test('tells whether the volcanic kernel was conquered', () {
-      expect(summary.footnote, 'Victoire');
+      expect(summary.footnote(fr), 'Victoire');
       final conquered = summaryOf(
         outcome: SaveOutcome.victory,
         volcanicKernelCaptured: true,
       );
-      expect(conquered.footnote, 'Noyau volcanique conquis');
+      expect(conquered.footnote(fr), 'Noyau Volcanique conquis');
     });
   });
 
@@ -72,7 +72,7 @@ void main() {
     });
 
     test('shows its resources rather than a footnote', () {
-      expect(summary.footnote, isNull);
+      expect(summary.footnote(fr), isNull);
     });
   });
 
@@ -94,12 +94,55 @@ void main() {
     });
 
     test('invites to look at its report', () {
-      expect(summary.footnote, 'Voir le bilan de la partie');
+      expect(summary.footnote(fr), 'Voir le bilan de la partie');
     });
   });
 
   test('names who plays, the turn and the difficulty', () {
     final summary = summaryOf(difficulty: Difficulty.hard);
     expect(summary.resumeLabel(fr), 'Alice · Tour 14 · Difficile');
+  });
+
+  group('in English', () {
+    test('a game in progress', () {
+      final summary = summaryOf(difficulty: Difficulty.easy);
+      expect(summary.badgeLabel(en), 'EASY');
+      expect(summary.resumeLabel(en), 'Alice · Turn 14 · Easy');
+    });
+
+    test('a won game', () {
+      final summary = summaryOf(
+        outcome: SaveOutcome.victory,
+        volcanicKernelCaptured: true,
+      );
+      expect(summary.badgeLabel(en), '★ VICTORY');
+      expect(summary.footnote(en), 'Volcanic Core conquered');
+    });
+
+    test('a lost game', () {
+      final summary = summaryOf(
+        outcome: SaveOutcome.defeat,
+        turn: 27,
+        difficulty: Difficulty.hard,
+      );
+      expect(summary.badgeLabel(en), 'DEFEAT');
+      expect(summary.metaLine(en), startsWith('Fell on turn 27 · '));
+      expect(summary.metaLine(en), endsWith(' · Hard'));
+      expect(summary.footnote(en), 'See the game report');
+    });
+  });
+
+  group('in Spanish', () {
+    test('a game in progress', () {
+      final summary = summaryOf(difficulty: Difficulty.easy);
+      expect(summary.metaLine(es), startsWith('Turno 14 · '));
+      expect(summary.metaLine(es), endsWith(' · CG niv. 3'));
+    });
+
+    test('a won game', () {
+      final summary = summaryOf(outcome: SaveOutcome.victory);
+      expect(summary.badgeLabel(es), '★ VICTORIA');
+      expect(summary.footnote(es), 'Victoria');
+    });
   });
 }

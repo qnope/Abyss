@@ -53,7 +53,7 @@ void main() {
     );
 
     expect(find.text('★ VICTOIRE'), findsOneWidget);
-    expect(find.text('Noyau volcanique conquis'), findsOneWidget);
+    expect(find.text('Noyau Volcanique conquis'), findsOneWidget);
     expect(find.text('5 oct.'), findsOneWidget);
     expect(find.byType(ResourceIcon), findsNothing);
   });

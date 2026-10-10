@@ -95,7 +95,7 @@ void main() {
         await tester.tap(find.text('Tour suivant'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Batiments desactives'), findsOneWidget);
+        expect(find.text('Bâtiments désactivés'), findsOneWidget);
       });
 
       testWidgets('turn summary shows consumption results', (tester) async {

@@ -148,7 +148,7 @@ void main() {
           '1. Instalación',
           '6. El despertar',
           'Sube el Cuartel General al nivel 10',
-          'Construye el Cuartel y recluta 2 Exploradores',
+          'Construye los Barracones y recluta 2 Exploradores',
         ],
       ),
     ]) {

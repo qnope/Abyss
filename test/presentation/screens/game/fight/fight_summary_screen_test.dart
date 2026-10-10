@@ -113,14 +113,14 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Envoyés: 3 / Intactes: 2 / Blessés: 1 / Morts: 0'),
+        find.text('Envoyés : 3 / Intactes : 2 / Blessés : 1 / Morts : 0'),
         findsOneWidget,
       );
       expect(
-        find.text('Envoyés: 2 / Intactes: 1 / Blessés: 0 / Morts: 1'),
+        find.text('Envoyés : 2 / Intactes : 1 / Blessés : 0 / Morts : 1'),
         findsOneWidget,
       );
-      expect(find.text('Ennemis tués: 3/3'), findsOneWidget);
+      expect(find.text('Ennemis tués : 3/3'), findsOneWidget);
     });
 
     testWidgets('Retour à la carte pops the route', (tester) async {
@@ -156,6 +156,8 @@ void main() {
         200,
         scrollable: find.byType(Scrollable).first,
       );
+      await tester.ensureVisible(button);
+      await tester.pumpAndSettle();
       await tester.tap(button);
       await tester.pumpAndSettle();
       expect(find.text('VICTOIRE'), findsNothing);

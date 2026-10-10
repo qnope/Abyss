@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'guide_settings.dart';
 
@@ -16,14 +17,14 @@ Future<SettingsDialogResult> showSettingsDialog(
   final result = await showDialog<SettingsDialogResult>(
     context: context,
     builder: (ctx) => AlertDialog(
-      title: const Text('Paramètres'),
+      title: Text(ctx.l10n.screenSettings),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Partie en cours',
+              ctx.l10n.screenGameInProgress,
               style: Theme.of(ctx).textTheme.labelLarge?.copyWith(
                 color: AbyssColors.onSurfaceDim,
               ),
@@ -36,22 +37,22 @@ Future<SettingsDialogResult> showSettingsDialog(
         TextButton(
           onPressed: () =>
               Navigator.pop(ctx, SettingsDialogResult.cancel),
-          child: const Text('Annuler'),
+          child: Text(ctx.l10n.commonCancel),
         ),
         TextButton(
           onPressed: () =>
               Navigator.pop(ctx, SettingsDialogResult.openHistory),
-          child: const Text('Voir l\'historique'),
+          child: Text(ctx.l10n.screenViewHistory),
         ),
         TextButton(
           onPressed: () =>
               Navigator.pop(ctx, SettingsDialogResult.exportReplay),
-          child: const Text('Exporter la partie'),
+          child: Text(ctx.l10n.screenExportGame),
         ),
         ElevatedButton(
           onPressed: () =>
               Navigator.pop(ctx, SettingsDialogResult.saveAndQuit),
-          child: const Text('Sauvegarder et quitter'),
+          child: Text(ctx.l10n.screenSaveAndQuit),
         ),
       ],
     ),

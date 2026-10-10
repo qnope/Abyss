@@ -6,6 +6,7 @@ import '../../../domain/action/end_turn_action_result.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/replay/seeded_random.dart';
 import '../../../domain/turn/turn_result.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../widgets/turn/turn_confirmation_dialog.dart';
 import 'game_screen_turn_helpers.dart';
 
@@ -30,7 +31,7 @@ Future<TurnResult?> confirmAndEndTurn(
     buildingsToDeactivate: deactivated,
     unitsToLose: computeUnitsToLose(game, human, deactivated),
     pendingExplorationCount: human.pendingExplorations.length,
-    raidWarning: dueWarnings(game, human),
+    raidWarning: dueWarnings(context.l10n, game, human),
   );
   if (!confirmed || !context.mounted) return null;
   final action = EndTurnAction(random: SeededRandom.fresh());

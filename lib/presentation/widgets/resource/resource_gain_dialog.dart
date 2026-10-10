@@ -9,7 +9,7 @@ Future<void> showResourceGainDialog(
   BuildContext context, {
   required String title,
   required Map<ResourceType, int> deltas,
-  String emptyMessage = 'Rien a recuperer ici...',
+  String? emptyMessage,
 }) {
   return showDialog<void>(
     context: context,
@@ -24,12 +24,14 @@ Future<void> showResourceGainDialog(
 class _ResourceGainDialog extends StatelessWidget {
   final String title;
   final Map<ResourceType, int> deltas;
-  final String emptyMessage;
+  /// What the dialog says when nothing was found; "Rien à récupérer ici..."
+  /// by default.
+  final String? emptyMessage;
 
   const _ResourceGainDialog({
     required this.title,
     required this.deltas,
-    required this.emptyMessage,
+    this.emptyMessage,
   });
 
   @override
@@ -41,7 +43,7 @@ class _ResourceGainDialog extends StatelessWidget {
         style: const TextStyle(color: AbyssColors.biolumCyan),
       ),
       content: entries.isEmpty
-          ? Text(emptyMessage)
+          ? Text(emptyMessage ?? context.l10n.screenNothingToCollect)
           : Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +54,7 @@ class _ResourceGainDialog extends StatelessWidget {
       actions: [
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('OK'),
+          child: Text(context.l10n.commonOk),
         ),
       ],
     );

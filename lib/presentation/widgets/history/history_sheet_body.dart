@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/history/history_entry.dart';
+import '../../l10n/l10n_extension.dart';
 import '../common/sheet_drag_handle.dart';
 import 'history_entry_card.dart';
 import 'history_fight_launcher.dart';
@@ -55,10 +56,10 @@ class _HistorySheetBodyState extends State<HistorySheetBody> {
 
   Widget _buildContent(BuildContext context) {
     if (widget.entries.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(24),
-          child: Text('Aucune action enregistrée pour l\'instant.'),
+          padding: const EdgeInsets.all(24),
+          child: Text(context.l10n.historyEmpty),
         ),
       );
     }
@@ -67,10 +68,10 @@ class _HistorySheetBodyState extends State<HistorySheetBody> {
     final filtered = applyHistoryFilter(reversed, _filter);
 
     if (filtered.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(24),
-          child: Text('Aucune action pour ce filtre.'),
+          padding: const EdgeInsets.all(24),
+          child: Text(context.l10n.historyEmptyFilter),
         ),
       );
     }

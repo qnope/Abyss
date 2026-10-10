@@ -5,6 +5,7 @@ import '../../../domain/resource/resource_type.dart';
 import '../../../domain/unit/unit_cost_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/resource_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../raid/noise_cost_row.dart';
 import '../resource/resource_icon.dart';
@@ -33,17 +34,18 @@ class _RecruitmentSectionState extends State<RecruitmentSection> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
 
     if (widget.hasRecruitedThisType) {
       return Text(
-        'Recrutement deja effectue ce tour',
+        l10n.unitRecruitDone,
         style: textTheme.bodyMedium?.copyWith(color: AbyssColors.warning),
       );
     }
 
     if (widget.maxRecruitableCount == 0) {
       return Text(
-        'Ressources insuffisantes',
+        l10n.unitNotEnoughResources,
         style: textTheme.bodyMedium?.copyWith(color: AbyssColors.disabled),
       );
     }
@@ -60,7 +62,7 @@ class _RecruitmentSectionState extends State<RecruitmentSection> {
           value: _sliderValue.toDouble(),
           onChanged: (value) => setState(() => _sliderValue = value.round()),
         ),
-        Text('$_sliderValue unites', style: textTheme.bodyMedium),
+        Text(l10n.unitTotalCount(_sliderValue), style: textTheme.bodyMedium),
         const SizedBox(height: 8),
         ...costs.entries.map((e) => _costRow(e.key, e.value, textTheme)),
         NoiseCostRow(noise: NoiseRules.perRecruit * _sliderValue),
@@ -69,7 +71,7 @@ class _RecruitmentSectionState extends State<RecruitmentSection> {
           onPressed: _sliderValue > 0
               ? () => widget.onRecruit(_sliderValue)
               : null,
-          child: const Text('Recruter'),
+          child: Text(l10n.unitRecruit),
         ),
       ],
     );

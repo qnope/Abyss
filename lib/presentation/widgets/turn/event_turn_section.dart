@@ -23,26 +23,27 @@ class EventTurnSection extends StatelessWidget {
     final predators = result.predators;
     final defaulted = result.defaultedEvent;
     final drawn = result.event;
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Divider(),
         if (predators != null)
           predators.victory
-              ? const SummaryLine(Icons.shield, 'Banc de prédateurs repoussé',
+              ? SummaryLine(Icons.shield, l10n.historyPredatorsRepelled,
                   AbyssColors.success)
-              : const SummaryLine(Icons.dangerous,
-                  'Le banc de prédateurs a pillé la base', AbyssColors.error),
+              : SummaryLine(Icons.dangerous, l10n.turnPredatorsLooted,
+                  AbyssColors.error),
         if (defaulted != null)
           SummaryLine(
             Icons.auto_awesome,
-            '${defaulted.label(context.l10n)} : option prudente appliquée',
+            l10n.turnEventDefaulted(defaulted.label(l10n)),
             AbyssColors.warning,
           ),
         if (drawn != null)
           SummaryLine(
             Icons.auto_awesome,
-            'Événement : ${drawn.label(context.l10n)}',
+            l10n.turnEventDrawn(drawn.label(l10n)),
             AbyssColors.biolumCyan,
           ),
       ],

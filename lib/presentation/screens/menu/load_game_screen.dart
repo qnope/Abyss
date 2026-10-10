@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/save_sections.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../widgets/backdrop/abyss_backdrop.dart';
 import '../../widgets/save/confirm_save_deletion.dart';
 import '../../widgets/save/empty_saves.dart';
@@ -42,7 +43,7 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text('Charger une partie'),
+          title: Text(context.l10n.saveLoadTitle),
           backgroundColor: Colors.transparent,
           scrolledUnderElevation: 0,
         ),

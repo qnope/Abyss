@@ -76,12 +76,12 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Alliés vivants: 3'), findsOneWidget);
-      expect(find.text('PV alliés: 12'), findsOneWidget);
-      expect(find.text('Dégâts infligés: 10'), findsOneWidget);
-      expect(find.text('Ennemis vivants: 2'), findsOneWidget);
-      expect(find.text('PV ennemis: 8'), findsOneWidget);
-      expect(find.text('Dégâts subis: 5'), findsOneWidget);
+      expect(find.text('Alliés vivants : 3'), findsOneWidget);
+      expect(find.text('PV alliés : 12'), findsOneWidget);
+      expect(find.text('Dégâts infligés : 10'), findsOneWidget);
+      expect(find.text('Ennemis vivants : 2'), findsOneWidget);
+      expect(find.text('PV ennemis : 8'), findsOneWidget);
+      expect(find.text('Dégâts subis : 5'), findsOneWidget);
     });
 
     testWidgets('shows crit badge when critCount > 0', (tester) async {
@@ -92,7 +92,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Coups critiques: 2'), findsOneWidget);
+      expect(find.text('Coups critiques : 2'), findsOneWidget);
     });
 
     testWidgets('hides crit badge when critCount is 0', (tester) async {

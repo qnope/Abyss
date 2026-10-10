@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../domain/game/player.dart';
 import '../../../domain/volcano/kernel_garrison.dart';
-import '../../../domain/volcano/magma_rampart.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../extensions/rampart_texts.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
@@ -34,7 +34,7 @@ class KernelGarrisonPanel extends StatelessWidget {
       children: [
         Text(l10n.volcanoKernelLevel(level), style: style),
         if (level > 0)
-          Text(l10n.volcanoMagmaRampart(MagmaRampart.label(level)),
+          Text(l10n.volcanoMagmaRampart(RampartTexts.magma(l10n, level)),
               style: style?.copyWith(color: AbyssColors.coralPink)),
         Text(l10n.volcanoGarrison(size), style: style),
         if (wave != null) ...[

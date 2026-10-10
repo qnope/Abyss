@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 enum _SaveAction { delete }
@@ -16,8 +17,9 @@ class SaveCardMenu extends StatelessWidget {
     final style = Theme.of(
       context,
     ).textTheme.bodyMedium?.copyWith(color: AbyssColors.error);
+    final l10n = context.l10n;
     return PopupMenuButton<_SaveAction>(
-      tooltip: 'Options',
+      tooltip: l10n.saveOptions,
       icon: const Icon(Icons.more_vert, size: 20),
       iconColor: AbyssColors.onSurfaceDim,
       onSelected: (_) => onDelete(),
@@ -29,7 +31,7 @@ class SaveCardMenu extends StatelessWidget {
                 children: [
                   const Icon(Icons.delete_outline, color: AbyssColors.error),
                   const SizedBox(width: 12),
-                  Text('Supprimer', style: style),
+                  Text(l10n.saveDelete, style: style),
                 ],
               ),
             ),

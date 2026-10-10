@@ -77,7 +77,7 @@ void main() {
     final raid = _raid(surprise: false);
     final predators = _raid(surprise: true);
     final entries = <HistoryEntry>[_caravan(), raid, predators];
-    expect(HistoryFilter.event.label, 'Événements');
+    expect(HistoryFilter.event.label(fr), 'Événements');
     expect(applyHistoryFilter(entries, HistoryFilter.event), [
       entries.first,
       predators,

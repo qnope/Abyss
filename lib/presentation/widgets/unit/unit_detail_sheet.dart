@@ -6,6 +6,7 @@ import '../../../domain/unit/unit_cost_calculator.dart';
 import '../../../domain/unit/unit_stats.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/unit_type_extensions.dart';
+import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'recruitment_section.dart';
@@ -81,25 +82,28 @@ class _UnitDetailSheet extends StatelessWidget {
               color: AbyssColors.onSurfaceDim,
             ),
           ),
-          if (!isUnlocked) ..._lockedContent(textTheme),
-          if (isUnlocked) ..._unlockedContent(textTheme),
+          if (!isUnlocked) ..._lockedContent(l10n, textTheme),
+          if (isUnlocked) ..._unlockedContent(l10n, textTheme),
         ],
       ),
     );
   }
 
-  List<Widget> _lockedContent(TextTheme textTheme) {
+  List<Widget> _lockedContent(AppLocalizations l10n, TextTheme textTheme) {
     final level = UnitCostCalculator().unlockLevel(unitType);
     return [
       const SizedBox(height: 16),
       Text(
-        'Caserne niveau $level requise pour debloquer',
+        l10n.unitBarracksRequired(level),
         style: textTheme.bodyMedium?.copyWith(color: AbyssColors.disabled),
       ),
     ];
   }
 
-  List<Widget> _unlockedContent(TextTheme textTheme) {
+  List<Widget> _unlockedContent(
+    AppLocalizations l10n,
+    TextTheme textTheme,
+  ) {
     final stats = UnitStats.forType(unitType);
     final maxCount = UnitCostCalculator().maxRecruitableCount(
       unitType,
@@ -112,16 +116,16 @@ class _UnitDetailSheet extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Chip(label: Text('PV: ${stats.hp}')),
+          Chip(label: Text('${l10n.statHp}: ${stats.hp}')),
           const SizedBox(width: 8),
-          Chip(label: Text('ATQ: ${stats.atk}')),
+          Chip(label: Text('${l10n.statAttack}: ${stats.atk}')),
           const SizedBox(width: 8),
-          Chip(label: Text('DEF: ${stats.def}')),
+          Chip(label: Text('${l10n.statDefense}: ${stats.def}')),
         ],
       ),
       const SizedBox(height: 8),
       Text(
-        'En service: $count',
+        l10n.unitInService(count),
         style: textTheme.bodyMedium?.copyWith(
           color: AbyssColors.onSurfaceDim,
         ),

@@ -1,4 +1,5 @@
 import 'package:hive_ce/hive.dart';
+import 'transition_base_name.dart';
 import 'transition_base_type.dart';
 
 part 'transition_base.g.dart';
@@ -8,6 +9,8 @@ class TransitionBase {
   @HiveField(0)
   final TransitionBaseType type;
 
+  /// The code of its [TransitionBaseName]; the French name itself in
+  /// older saves.
   @HiveField(1)
   final String name;
 
@@ -19,6 +22,9 @@ class TransitionBase {
     required this.name,
     this.capturedBy,
   });
+
+  /// Which base of its type this is, `null` for a name no map generates.
+  TransitionBaseName? get baseName => TransitionBaseName.parse(name);
 
   bool get isCaptured => capturedBy != null;
 

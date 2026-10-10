@@ -32,10 +32,4 @@ abstract final class CoralCitadelRampart {
       def: defForLevel(level),
     );
   }
-
-  /// Short label such as "120 PV, DEF 7"; "aucun" when unbuilt.
-  static String label(int level) {
-    if (level <= 0) return 'aucun';
-    return '${hpForLevel(level)} PV, DEF ${defForLevel(level)}';
-  }
 }

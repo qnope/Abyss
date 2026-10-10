@@ -41,7 +41,7 @@ void main() {
     expect(screen.repository, same(repository));
     expect((screen.targetX, screen.targetY, screen.level), (4, 7, 3));
     expect(screen.onChanged, same(onChanged));
-    expect(find.text('Assaut: Noyau Volcanique'), findsOneWidget);
+    expect(find.text('Assaut : Noyau Volcanique'), findsOneWidget);
 
     await tester.pageBack();
     await tester.pumpAndSettle();

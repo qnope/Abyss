@@ -57,7 +57,7 @@ class UpgradeSection extends StatelessWidget {
 
     if (check.isMaxLevel) {
       return Text(
-        'Niveau maximum atteint',
+        l10n.baseMaxLevel,
         style: textTheme.bodyMedium?.copyWith(color: AbyssColors.disabled),
       );
     }
@@ -72,7 +72,7 @@ class UpgradeSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Niveau ${building.level} → ${building.level + 1}',
+          l10n.baseUpgradeLevels(building.level, building.level + 1),
           style: textTheme.titleSmall,
         ),
         const SizedBox(height: 8),
@@ -83,12 +83,14 @@ class UpgradeSection extends StatelessWidget {
         if (check.missingCapturedBase != null)
           _capturedBaseRow(check.missingCapturedBase!, l10n),
         if (check.missingCapturedKernel)
-          _capturedKernelRow(textTheme),
-        if (!siteFree) _lockedRow('Chantiers occupés ce tour'),
+          _lockedRow(l10n.baseKernelRequired),
+        if (!siteFree) _lockedRow(l10n.baseWorksitesBusy),
         const SizedBox(height: 12),
         ElevatedButton(
           onPressed: check.canUpgrade && siteFree ? onUpgrade : null,
-          child: Text(building.level == 0 ? 'Construire' : 'Améliorer'),
+          child: Text(
+            building.level == 0 ? l10n.baseBuild : l10n.baseUpgrade,
+          ),
         ),
       ],
     );
@@ -96,61 +98,41 @@ class UpgradeSection extends StatelessWidget {
 
   Widget _costRow(ResourceType type, int required, AppLocalizations l10n) {
     final available = resources[type]?.amount ?? 0;
-    final sufficient = available >= required;
-    final color = sufficient ? AbyssColors.onSurface : AbyssColors.error;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        children: [
-          ResourceIcon(type: type, size: 16),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(type.displayName(l10n), style: TextStyle(color: color)),
-          ),
-          Text('$available/$required', style: TextStyle(color: color)),
-        ],
-      ),
-    );
+    return _row(ResourceIcon(type: type, size: 16), type.displayName(l10n),
+        '$available/$required', met: available >= required);
   }
 
   Widget _prereqRow(BuildingType type, int level, AppLocalizations l10n) {
-    final current = allBuildings[type]?.level ?? 0;
-    final met = current >= level;
-    final color = met ? AbyssColors.onSurface : AbyssColors.error;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        children: [
-          Icon(Icons.lock, size: 16, color: color),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(type.displayName(l10n), style: TextStyle(color: color)),
-          ),
-          Text('Niv. $level', style: TextStyle(color: color)),
-        ],
-      ),
-    );
+    final met = (allBuildings[type]?.level ?? 0) >= level;
+    return _row(Icon(Icons.lock, size: 16, color: _color(met)),
+        type.displayName(l10n), l10n.baseLevelShort(level), met: met);
   }
 
   Widget _capturedBaseRow(TransitionBaseType type, AppLocalizations l10n) =>
-      _lockedRow('${type.displayName(l10n)} capturee requise');
+      _lockedRow(l10n.baseCapturedBaseRequired(type.displayName(l10n)));
 
-  Widget _capturedKernelRow(TextTheme textTheme) =>
-      _lockedRow('Noyau Volcanique capture requis');
+  Widget _lockedRow(String label) => _row(
+    const Icon(Icons.lock, size: 16, color: AbyssColors.error),
+    label,
+    null,
+    met: false,
+  );
 
-  Widget _lockedRow(String label) {
+  static Color _color(bool met) =>
+      met ? AbyssColors.onSurface : AbyssColors.error;
+
+  /// A requirement: its icon, its [label] and, at the end, its [amount],
+  /// in red until [met].
+  Widget _row(Widget icon, String label, String? amount, {required bool met}) {
+    final style = TextStyle(color: _color(met));
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         children: [
-          const Icon(Icons.lock, size: 16, color: AbyssColors.error),
+          icon,
           const SizedBox(width: 8),
-          Expanded(
-            child: Text(label,
-                style: const TextStyle(color: AbyssColors.error)),
-          ),
+          Expanded(child: Text(label, style: style)),
+          if (amount != null) Text(amount, style: style),
         ],
       ),
     );

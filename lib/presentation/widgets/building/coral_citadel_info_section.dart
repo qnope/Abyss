@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_cost_calculator.dart';
-import '../../../domain/building/coral_citadel_rampart.dart';
+import '../../extensions/rampart_texts.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 class CoralCitadelInfoSection extends StatelessWidget {
@@ -13,12 +14,10 @@ class CoralCitadelInfoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final level = building.level;
-    final currentLabel = CoralCitadelRampart.label(level);
+    final l10n = context.l10n;
+    final currentLabel = RampartTexts.coral(l10n, level);
     final maxLevel = BuildingCostCalculator().maxLevel(building.type);
     final isMax = level >= maxLevel;
-    final nextLabel = isMax
-        ? null
-        : CoralCitadelRampart.label(level + 1);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -26,7 +25,7 @@ class CoralCitadelInfoSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Rempart actuel : $currentLabel',
+            l10n.baseRampartCurrent(currentLabel),
             style: textTheme.bodyMedium?.copyWith(
               color: level == 0
                   ? AbyssColors.disabled
@@ -36,8 +35,8 @@ class CoralCitadelInfoSection extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             isMax
-                ? 'Rempart à son apogée'
-                : 'Prochain niveau : $nextLabel',
+                ? l10n.baseRampartMax
+                : l10n.baseRampartNext(RampartTexts.coral(l10n, level + 1)),
             style: textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
@@ -52,8 +51,7 @@ class CoralCitadelInfoSection extends StatelessWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  'Pendant un raid, le rempart combat avec les défenseurs '
-                  'du niveau 1 et attire toutes les attaques.',
+                  l10n.baseRampartHint,
                   style: textTheme.bodySmall?.copyWith(
                     color: AbyssColors.onSurfaceDim,
                   ),

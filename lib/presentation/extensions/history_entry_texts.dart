@@ -5,6 +5,7 @@ import '../l10n/app_localizations.dart';
 import 'building_type_extensions.dart';
 import 'random_event_type_extensions.dart';
 import 'tech_branch_extensions.dart';
+import 'transition_base_name_extensions.dart';
 import 'unit_type_extensions.dart';
 
 /// Title and subtitle of a [HistoryEntry], worded in the player's language
@@ -36,7 +37,7 @@ extension HistoryEntryTexts on HistoryEntry {
     final CaptureEntry entry => l10n.historyCaptureTitle(
       entry.isVolcanicKernel
           ? BuildingType.volcanicKernel.displayName(l10n)
-          : entry.transitionBaseName,
+          : baseNameLabel(l10n, entry.transitionBaseName),
     ),
     DescentEntry(:final targetLevel) => l10n.historyDescentTitle(targetLevel),
     ReinforcementEntry(:final targetLevel) => l10n.historyReinforcementTitle(

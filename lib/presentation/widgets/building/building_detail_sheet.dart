@@ -91,7 +91,9 @@ class _BuildingDetailSheet extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            isBuilt ? 'Niveau ${building.level}' : 'Non construit',
+            isBuilt
+                ? context.l10n.baseLevel(building.level)
+                : context.l10n.baseNotBuilt,
             style: textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),

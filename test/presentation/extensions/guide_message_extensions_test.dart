@@ -49,7 +49,7 @@ void main() {
       );
       expect(
         const GuideLesson(ObjectiveId.hqLevel2).text(es),
-        startsWith('El Cuartel General de nivel 2 desbloquea el Cuartel'),
+        startsWith('El Cuartel General de nivel 2 desbloquea los Barracones'),
       );
     });
   });

@@ -30,15 +30,14 @@ class _TurnSummaryDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text(
-        'Tour ${result.previousTurn} \u2192 Tour ${result.newTurn}',
-      ),
-      content: _buildContent(context.l10n),
+      title: Text(l10n.turnTransition(result.previousTurn, result.newTurn)),
+      content: _buildContent(l10n),
       actions: [
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('OK'),
+          child: Text(l10n.commonOk),
         ),
       ],
     );
@@ -58,7 +57,7 @@ class _TurnSummaryDialog extends StatelessWidget {
     if (!hasChanges && !hasWarnings && !hasLosses && !showArmy &&
         !hasExplorations && !hasRaid && !hasVolcano && !hasEvent &&
         !hasObjectives) {
-      return const Text('Aucun changement ce tour.');
+      return Text(l10n.turnNoChange);
     }
 
     return Column(
@@ -79,7 +78,7 @@ class _TurnSummaryDialog extends StatelessWidget {
         if (showArmy) ...[
           if (hasChanges || hasWarnings || hasLosses || hasExplorations)
             const Divider(),
-          _buildArmySection(),
+          _buildArmySection(l10n),
         ],
       ],
     );
@@ -104,7 +103,7 @@ class _TurnSummaryDialog extends StatelessWidget {
           if (change.wasCapped) ...[
             const SizedBox(width: 4),
             Text(
-              '(max atteint)',
+              l10n.turnStorageFull,
               style: TextStyle(color: AbyssColors.warning),
             ),
           ],
@@ -120,6 +119,6 @@ class _TurnSummaryDialog extends StatelessWidget {
     return '+${change.produced}';
   }
 
-  Widget _buildArmySection() => const SummaryLine(
-      Icons.shield, 'Recrutement disponible', AbyssColors.success);
+  Widget _buildArmySection(AppLocalizations l10n) => SummaryLine(
+      Icons.shield, l10n.turnRecruitAvailable, AbyssColors.success);
 }

@@ -43,7 +43,7 @@ class HistoryEntryCard extends StatelessWidget {
       subtitle: subtitleText == null ? null : Text(subtitleText),
       trailing: tappable
           ? const Icon(Icons.chevron_right)
-          : Text('Tour ${entry.turn}'),
+          : Text(l10n.commonTurn(entry.turn)),
       onTap: tappable ? onTap : null,
     );
 
@@ -69,7 +69,7 @@ class HistoryEntryCard extends StatelessWidget {
   String? _buildSubtitle(AppLocalizations l10n, {required bool tappable}) {
     final extra = entry.displaySubtitle(l10n);
     if (!tappable) return extra;
-    final base = 'Tour ${entry.turn}';
+    final base = l10n.commonTurn(entry.turn);
     if (extra == null || extra.isEmpty) return base;
     return '$base \u00B7 $extra';
   }

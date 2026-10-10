@@ -9,6 +9,7 @@ import '../../../domain/tech/tech_check.dart';
 import '../../../domain/tech/tech_cost_calculator.dart';
 import '../../../domain/tech/tech_option.dart';
 import '../../../domain/tech/tech_tree.dart';
+import '../../extensions/decimal_extensions.dart';
 import '../../extensions/tech_branch_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
@@ -117,7 +118,7 @@ class TechTargetPanel extends StatelessWidget {
 
   String _surcharge(AppLocalizations l10n) {
     final factor = TechCostCalculator.costPercent(_opened + 1) / 100;
-    final shown = factor.toStringAsFixed(1).replaceAll('.', ',');
+    final shown = factor.decimal(l10n);
     return l10n.techScreenSurcharge(shown);
   }
 

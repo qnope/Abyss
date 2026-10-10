@@ -47,7 +47,7 @@ void main() {
       (tester) async {
     await tester.pumpWidget(host(const []));
 
-    expect(find.text('Exploration : 0 nouvelles cellules'), findsOneWidget);
+    expect(find.text('Exploration : 0 nouvelle cellule'), findsOneWidget);
     expect(find.textContaining('→'), findsNothing);
   });
 }

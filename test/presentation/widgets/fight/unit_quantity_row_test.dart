@@ -33,7 +33,7 @@ void main() {
       await tester.pumpWidget(createApp(stock: 10));
       await tester.pumpAndSettle();
       expect(find.text('Éclaireur'), findsOneWidget);
-      expect(find.text('Stock: 10'), findsOneWidget);
+      expect(find.text('Stock : 10'), findsOneWidget);
     });
 
     testWidgets('renders current value', (tester) async {

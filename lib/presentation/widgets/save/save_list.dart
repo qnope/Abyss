@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/save_sections.dart';
 import '../../../domain/game/save_summary.dart';
+import '../../l10n/l10n_extension.dart';
 import 'save_card.dart';
 import 'save_section_header.dart';
 
@@ -39,10 +40,11 @@ class SaveList extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final side = math.max(_gutter, (constraints.maxWidth - maxWidth) / 2);
+        final l10n = context.l10n;
         return CustomScrollView(
           slivers: [
-            ..._section('En cours', sections.inProgress, side),
-            ..._section('Terminées', sections.finished, side),
+            ..._section(l10n.saveInProgress, sections.inProgress, side),
+            ..._section(l10n.saveFinished, sections.finished, side),
             SliverPadding(padding: EdgeInsets.only(bottom: bottom)),
           ],
         );

@@ -6,6 +6,8 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../domain/game/game.dart';
 import '../../../domain/replay/replay_export.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// Offers to share the game as a replay file (a JSON scenario that
@@ -25,53 +27,54 @@ class ReplayExportDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool available = ReplayExport.canExport(game);
+    final l10n = context.l10n;
     return AlertDialog(
-      title: const Text('Exporter la partie'),
-      content: Text(available ? _summary() : _unavailable),
+      title: Text(l10n.screenExportGame),
+      content: Text(
+        available ? _summary(l10n) : l10n.screenReplayUnavailable,
+      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Fermer'),
+          child: Text(l10n.commonClose),
         ),
         if (available)
           TextButton(
             onPressed: () => _copy(context),
-            child: const Text('Copier'),
+            child: Text(l10n.screenCopy),
           ),
         if (available)
           ElevatedButton(
             onPressed: () => _share(context),
-            child: const Text('Partager le fichier'),
+            child: Text(l10n.screenShareFile),
           ),
       ],
     );
   }
 
-  static const String _unavailable =
-      'Cette partie a commencé avant l\'enregistrement des replays : '
-      'elle ne peut pas être exportée. Les nouvelles parties le peuvent.';
-
-  String _summary() {
+  String _summary(AppLocalizations l10n) {
     final int actions = game.replay!.actions.values.fold(
       0,
       (int sum, List<String> turn) => sum + turn.length,
     );
     final String exactness =
-        game.replay!.exact
-            ? 'Les combats et les raids seront rejoués à l\'identique.'
-            : 'Certains dés n\'ont pas été enregistrés : le rejeu pourra '
-                'différer sur quelques combats.';
-    return 'Le fichier ${ReplayExport.fileName(game)} contient les '
-        '$actions actions des ${game.turn} tours joués.\n\n$exactness';
+        game.replay!.exact ? l10n.screenReplayExact : l10n.screenReplayInexact;
+    final String content = l10n.screenReplaySummary(
+      ReplayExport.fileName(game),
+      l10n.screenReplayActions(actions),
+      l10n.screenReplayTurns(game.turn),
+    );
+    return '$content\n\n$exactness';
   }
 
   Future<void> _copy(BuildContext context) async {
+    final String copied = context.l10n.screenReplayCopied;
     await Clipboard.setData(ClipboardData(text: ReplayExport.toText(game)));
     if (!context.mounted) return;
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Replay copié dans le presse-papiers'),
+      SnackBar(
+        content: Text(copied),
         backgroundColor: AbyssColors.surfaceBright,
       ),
     );
@@ -87,7 +90,7 @@ class ReplayExportDialog extends StatelessWidget {
           XFile.fromData(bytes, name: name, mimeType: 'application/json'),
         ],
         fileNameOverrides: [name],
-        title: 'Replay Abysses',
+        title: context.l10n.screenReplayShareTitle,
         sharePositionOrigin:
             box == null ? null : box.localToGlobal(Offset.zero) & box.size,
       ),

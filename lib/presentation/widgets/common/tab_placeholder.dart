@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 class TabPlaceholder extends StatelessWidget {
@@ -27,7 +28,7 @@ class TabPlaceholder extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Bientôt disponible',
+            context.l10n.screenComingSoon,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: AbyssColors.disabled,
             ),

@@ -42,16 +42,19 @@ Future<void> handleGarrisonKernel(
   bool withdraw = false,
 }) async {
   final player = game.humanPlayer;
+  final l10n = context.l10n;
   final picked = await showUnitPickerDialog(
     context,
-    title: withdraw ? 'Retirer de la garnison' : 'Mettre en garnison',
+    title: withdraw
+        ? l10n.screenGarrisonWithdrawTitle
+        : l10n.screenGarrisonSendTitle,
     availableUnits: player.unitsOnLevel(
       withdraw ? KernelGarrison.stockKey : KernelGarrison.volcanoLevel,
     ),
-    confirmLabel: withdraw ? 'Retirer' : 'Envoyer',
+    confirmLabel: withdraw ? l10n.screenGarrisonWithdraw : l10n.commonSend,
     info: withdraw
-        ? 'Les unités retirées rejoignent le niveau 3.'
-        : 'Seule la garnison défend le Noyau contre les vagues du Kraken.',
+        ? l10n.screenGarrisonWithdrawInfo
+        : l10n.screenGarrisonSendInfo,
   );
   if (picked == null) return;
   final result = ActionExecutor().execute(
@@ -63,8 +66,8 @@ Future<void> handleGarrisonKernel(
   if (!context.mounted) return;
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(result.isSuccess
-        ? 'Garnison : ${KernelGarrison.sizeOf(player)} unités'
-        : result.failureMessage(context.l10n)),
+        ? l10n.screenGarrisonSize(KernelGarrison.sizeOf(player))
+        : result.failureMessage(l10n)),
   ));
   onChanged();
 }

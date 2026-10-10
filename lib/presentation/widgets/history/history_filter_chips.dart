@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/l10n_extension.dart';
 import 'history_filter.dart';
 
 /// Horizontal row of [ChoiceChip]s, one per [HistoryFilter] value.
@@ -26,7 +27,7 @@ class HistoryFilterChips extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: ChoiceChip(
-                label: Text(filter.label),
+                label: Text(filter.label(context.l10n)),
                 selected: filter == current,
                 onSelected: (selected) {
                   if (selected) {

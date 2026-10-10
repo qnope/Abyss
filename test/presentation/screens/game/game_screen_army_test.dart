@@ -65,7 +65,7 @@ void main() {
 
     testWidgets('locked units shown', (tester) async {
       await goToArmyTab(tester, armyGame());
-      expect(find.text('Verrouille'), findsNWidgets(4));
+      expect(find.text('Verrouillé'), findsNWidgets(4));
     });
 
     testWidgets('tapping unlocked unit shows stats', (tester) async {
@@ -80,7 +80,7 @@ void main() {
       await tester.tap(find.text('Gardien'));
       await tester.pumpAndSettle();
       expect(
-        find.text('Caserne niveau 3 requise pour debloquer'),
+        find.text('Caserne niveau 3 requise pour débloquer'),
         findsOneWidget,
       );
     });

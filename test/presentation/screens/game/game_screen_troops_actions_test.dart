@@ -79,7 +79,7 @@ void main() {
     await tester.tap(find.text('Descendre des troupes par Faille Alpha'));
     await tester.pumpAndSettle();
     expect(find.byType(DescentDialog), findsOneWidget);
-    expect(find.text('Descente vers Niveau 2'), findsOneWidget);
+    expect(find.text('Descente vers le Niveau 2'), findsOneWidget);
   });
 
   testWidgets('a captured kernel shows its garrison panel', (tester) async {

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
+import 'package:abyss/domain/map/transition_base_name.dart';
 import 'package:abyss/domain/map/transition_base_placer.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import '../../helpers/transition_base_helpers.dart';
@@ -45,10 +46,10 @@ void main() {
       final names = transitionBaseIndices(cells)
           .map((i) => cells[i].transitionBase!.name)
           .toSet();
-      expect(names, containsAll([
-        'Faille Alpha', 'Faille Beta',
-        'Faille Gamma', 'Faille Delta',
-      ]));
+      expect(names, {
+        for (final name in TransitionBaseName.allOf(TransitionBaseType.faille))
+          name.code,
+      });
     });
 
     test('base cell never has a transition base', () {
@@ -99,11 +100,11 @@ void main() {
       final names = transitionBaseIndices(cells)
           .map((i) => cells[i].transitionBase!.name)
           .toSet();
-      expect(names, containsAll([
-        'Cheminee Primaire',
-        'Cheminee Secondaire',
-        'Cheminee Tertiaire',
-      ]));
+      expect(names, {
+        for (final name
+            in TransitionBaseName.allOf(TransitionBaseType.cheminee))
+          name.code,
+      });
     });
   });
 

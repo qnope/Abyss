@@ -17,6 +17,7 @@ abstract final class PlanLibrary {
   /// Plans by short name, with their replay file.
   static const Map<String, String> _plans = <String, String>{
     'plan85': 'victoire-tour-85.json',
+    'plan84': 'victoire-tour-84.json',
   };
 
   /// What each strategy of a plan changes from it. Every one rolls new

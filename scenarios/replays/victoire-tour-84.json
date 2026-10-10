@@ -1,0 +1,2055 @@
+{
+  "name": "replay-Test-tour-84",
+  "player": "Test",
+  "mapSeed": 2083200441,
+  "difficulty": "easy",
+  "lastTurn": 84,
+  "exact": true,
+  "status": "victory",
+  "turns": {
+    "1": [
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      }
+    ],
+    "2": [
+      {
+        "do": "upgrade",
+        "building": "algaeFarm"
+      }
+    ],
+    "3": [
+      {
+        "do": "upgrade",
+        "building": "coralMine"
+      }
+    ],
+    "4": [
+      {
+        "do": "upgrade",
+        "building": "oreExtractor"
+      }
+    ],
+    "5": [
+      {
+        "do": "upgrade",
+        "building": "solarPanel"
+      }
+    ],
+    "6": [
+      {
+        "do": "event",
+        "accept": true
+      },
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      }
+    ],
+    "7": [
+      {
+        "do": "upgrade",
+        "building": "barracks"
+      }
+    ],
+    "8": [
+      {
+        "do": "upgrade",
+        "building": "algaeFarm"
+      }
+    ],
+    "9": [
+      {
+        "do": "upgrade",
+        "building": "solarPanel"
+      }
+    ],
+    "11": [
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 6
+      },
+      {
+        "do": "upgrade",
+        "building": "coralMine"
+      }
+    ],
+    "12": [
+      {
+        "do": "upgrade",
+        "building": "oreExtractor"
+      }
+    ],
+    "13": [
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      }
+    ],
+    "14": [
+      {
+        "do": "event",
+        "accept": false
+      }
+    ],
+    "15": [
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      }
+    ],
+    "16": [
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 13
+      }
+    ],
+    "17": [
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 13
+      }
+    ],
+    "18": [
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 13
+      }
+    ],
+    "19": [
+      {
+        "do": "upgrade",
+        "building": "solarPanel"
+      }
+    ],
+    "20": [
+      {
+        "do": "upgrade",
+        "building": "algaeFarm"
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 10
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 3
+      }
+    ],
+    "21": [
+      {
+        "do": "upgrade",
+        "building": "coralMine"
+      }
+    ],
+    "22": [
+      {
+        "do": "upgrade",
+        "building": "oreExtractor"
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 10
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 4
+      },
+      {
+        "do": "explore",
+        "x": 14,
+        "y": 6
+      },
+      {
+        "do": "explore",
+        "x": 8,
+        "y": 6
+      },
+      {
+        "do": "explore",
+        "x": 8,
+        "y": 12
+      },
+      {
+        "do": "explore",
+        "x": 14,
+        "y": 12
+      }
+    ],
+    "23": [
+      {
+        "do": "collect",
+        "x": 9,
+        "y": 6,
+        "seed": 1122207687
+      },
+      {
+        "do": "collect",
+        "x": 9,
+        "y": 12,
+        "seed": 378299417
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 6,
+        "seed": 1364641222
+      },
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      },
+      {
+        "do": "upgrade",
+        "building": "barracks"
+      }
+    ],
+    "24": [
+      {
+        "do": "upgrade",
+        "building": "laboratory"
+      },
+      {
+        "do": "upgrade",
+        "building": "laboratory"
+      },
+      {
+        "do": "recruit",
+        "unit": "abyssAdmiral",
+        "count": 2
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 30
+      },
+      {
+        "do": "unlock",
+        "branch": "explorer"
+      },
+      {
+        "do": "unlock",
+        "branch": "military"
+      },
+      {
+        "do": "research",
+        "branch": "explorer"
+      }
+    ],
+    "25": [
+      {
+        "do": "research",
+        "branch": "military"
+      },
+      {
+        "do": "explore",
+        "x": 14,
+        "y": 9
+      },
+      {
+        "do": "explore",
+        "x": 16,
+        "y": 6
+      },
+      {
+        "do": "explore",
+        "x": 12,
+        "y": 4
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 29
+      },
+      {
+        "do": "explore",
+        "x": 6,
+        "y": 4
+      },
+      {
+        "do": "explore",
+        "x": 6,
+        "y": 8
+      },
+      {
+        "do": "explore",
+        "x": 6,
+        "y": 10
+      }
+    ],
+    "26": [
+      {
+        "do": "explore",
+        "x": 10,
+        "y": 14
+      }
+    ],
+    "27": [
+      {
+        "do": "collect",
+        "x": 10,
+        "y": 14,
+        "seed": 32157397
+      }
+    ],
+    "28": [
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      },
+      {
+        "do": "explore",
+        "x": 9,
+        "y": 1
+      },
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 1
+      },
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 13
+      },
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 7
+      },
+      {
+        "do": "explore",
+        "x": 7,
+        "y": 17
+      },
+      {
+        "do": "fight",
+        "x": 9,
+        "y": 15,
+        "units": {
+          "harpoonist": 88
+        },
+        "seed": 632083119
+      },
+      {
+        "do": "collect",
+        "x": 10,
+        "y": 16,
+        "seed": 2102829812
+      },
+      {
+        "do": "collect",
+        "x": 10,
+        "y": 13,
+        "seed": 1242468156
+      },
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      }
+    ],
+    "29": [
+      {
+        "do": "upgrade",
+        "building": "solarPanel"
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 65
+      },
+      {
+        "do": "upgrade",
+        "building": "coralMine"
+      }
+    ],
+    "30": [
+      {
+        "do": "upgrade",
+        "building": "algaeFarm"
+      },
+      {
+        "do": "unlock",
+        "branch": "resources"
+      },
+      {
+        "do": "research",
+        "branch": "military",
+        "option": "b"
+      }
+    ],
+    "31": [
+      {
+        "do": "event",
+        "accept": true
+      },
+      {
+        "do": "explore",
+        "x": 0,
+        "y": 16
+      },
+      {
+        "do": "explore",
+        "x": 4,
+        "y": 18
+      },
+      {
+        "do": "explore",
+        "x": 13,
+        "y": 17
+      },
+      {
+        "do": "explore",
+        "x": 16,
+        "y": 14
+      },
+      {
+        "do": "explore",
+        "x": 19,
+        "y": 9
+      },
+      {
+        "do": "explore",
+        "x": 15,
+        "y": 1
+      },
+      {
+        "do": "explore",
+        "x": 9,
+        "y": 4
+      },
+      {
+        "do": "explore",
+        "x": 0,
+        "y": 10
+      },
+      {
+        "do": "explore",
+        "x": 0,
+        "y": 4
+      },
+      {
+        "do": "attackBase",
+        "x": 2,
+        "y": 1,
+        "units": {
+          "harpoonist": 144,
+          "abyssAdmiral": 1
+        },
+        "seed": 1662576609
+      }
+    ],
+    "32": [
+      {
+        "do": "upgrade",
+        "building": "coralCitadel"
+      },
+      {
+        "do": "upgrade",
+        "building": "descentModule"
+      }
+    ],
+    "33": [
+      {
+        "do": "upgrade",
+        "building": "laboratory"
+      },
+      {
+        "do": "descend",
+        "x": 2,
+        "y": 1,
+        "units": {
+          "harpoonist": 144,
+          "abyssAdmiral": 2
+        },
+        "seed": 1236317733
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 141
+      },
+      {
+        "do": "research",
+        "branch": "resources"
+      }
+    ],
+    "34": [
+      {
+        "do": "collect",
+        "x": 0,
+        "y": 2,
+        "level": 2,
+        "seed": 1696661151
+      },
+      {
+        "do": "collect",
+        "x": 0,
+        "y": 0,
+        "level": 2,
+        "seed": 797561781
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 111
+      },
+      {
+        "do": "research",
+        "branch": "resources",
+        "option": "b"
+      },
+      {
+        "do": "fight",
+        "x": 6,
+        "y": 7,
+        "units": {
+          "harpoonist": 112
+        },
+        "seed": 1161360563
+      },
+      {
+        "do": "descend",
+        "x": 2,
+        "y": 1,
+        "units": {
+          "scout": 83,
+          "harpoonist": 66
+        },
+        "seed": 1729264077
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 35
+      },
+      {
+        "do": "upgrade",
+        "building": "barracks"
+      },
+      {
+        "do": "recruit",
+        "unit": "guardian",
+        "count": 4
+      }
+    ],
+    "35": [
+      {
+        "do": "explore",
+        "x": 5,
+        "y": 4,
+        "level": 2
+      },
+      {
+        "do": "explore",
+        "x": 1,
+        "y": 4,
+        "level": 2
+      },
+      {
+        "do": "explore",
+        "x": 5,
+        "y": 1,
+        "level": 2
+      }
+    ],
+    "36": [
+      {
+        "do": "attackBase",
+        "x": 0,
+        "y": 4,
+        "level": 2,
+        "units": {
+          "harpoonist": 210,
+          "abyssAdmiral": 2
+        },
+        "seed": 1348019562
+      }
+    ],
+    "37": [
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      }
+    ],
+    "38": [
+      {
+        "do": "event",
+        "accept": true
+      },
+      {
+        "do": "upgrade",
+        "building": "pressureCapsule"
+      },
+      {
+        "do": "research",
+        "branch": "resources"
+      }
+    ],
+    "39": [
+      {
+        "do": "descend",
+        "x": 0,
+        "y": 4,
+        "level": 2,
+        "units": {
+          "harpoonist": 210,
+          "abyssAdmiral": 2
+        },
+        "seed": 1895176164
+      },
+      {
+        "do": "descend",
+        "x": 0,
+        "y": 4,
+        "level": 2,
+        "units": {
+          "scout": 80
+        },
+        "seed": 742297505
+      },
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 1,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 7,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 4,
+        "level": 3
+      }
+    ],
+    "40": [
+      {
+        "do": "explore",
+        "x": 6,
+        "y": 10,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 6,
+        "y": 6,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 6,
+        "y": 1,
+        "level": 3
+      },
+      {
+        "do": "collect",
+        "x": 2,
+        "y": 6,
+        "level": 3,
+        "seed": 966612435
+      },
+      {
+        "do": "collect",
+        "x": 5,
+        "y": 6,
+        "level": 3,
+        "seed": 508827534
+      },
+      {
+        "do": "collect",
+        "x": 2,
+        "y": 5,
+        "level": 3,
+        "seed": 1552291046
+      },
+      {
+        "do": "collect",
+        "x": 2,
+        "y": 2,
+        "level": 3,
+        "seed": 623400221
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 0,
+        "level": 3,
+        "seed": 135476884
+      },
+      {
+        "do": "explore",
+        "x": 0,
+        "y": 10,
+        "level": 3
+      }
+    ],
+    "41": [
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 13,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 9,
+        "y": 13,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 9,
+        "y": 6,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 9,
+        "y": 2,
+        "level": 3
+      },
+      {
+        "do": "research",
+        "branch": "explorer"
+      }
+    ],
+    "42": [
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 10,
+        "level": 3,
+        "seed": 1823375966
+      },
+      {
+        "do": "collect",
+        "x": 9,
+        "y": 12,
+        "level": 3,
+        "seed": 1227718801
+      },
+      {
+        "do": "collect",
+        "x": 10,
+        "y": 13,
+        "level": 3,
+        "seed": 276998206
+      },
+      {
+        "do": "collect",
+        "x": 8,
+        "y": 14,
+        "level": 3,
+        "seed": 1441234928
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 14,
+        "level": 3,
+        "seed": 1237138284
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 14,
+        "level": 3,
+        "seed": 1011306760
+      },
+      {
+        "do": "collect",
+        "x": 5,
+        "y": 14,
+        "level": 3,
+        "seed": 591700090
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 12,
+        "level": 3,
+        "seed": 998011509
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 16,
+        "level": 3,
+        "seed": 293581873
+      },
+      {
+        "do": "collect",
+        "x": 3,
+        "y": 13,
+        "level": 3,
+        "seed": 2032435530
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 1,
+        "level": 3,
+        "seed": 1941262246
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 2,
+        "level": 3,
+        "seed": 2101505221
+      },
+      {
+        "do": "collect",
+        "x": 11,
+        "y": 1,
+        "level": 3,
+        "seed": 152372617
+      },
+      {
+        "do": "collect",
+        "x": 10,
+        "y": 0,
+        "level": 3,
+        "seed": 328938336
+      },
+      {
+        "do": "collect",
+        "x": 1,
+        "y": 11,
+        "level": 3,
+        "seed": 1778398342
+      },
+      {
+        "do": "collect",
+        "x": 2,
+        "y": 1,
+        "level": 3,
+        "seed": 1937187877
+      },
+      {
+        "do": "collect",
+        "x": 1,
+        "y": 0,
+        "level": 3,
+        "seed": 298748637
+      },
+      {
+        "do": "fight",
+        "x": 2,
+        "y": 16,
+        "level": 3,
+        "units": {
+          "harpoonist": 210
+        },
+        "seed": 201375440
+      },
+      {
+        "do": "upgrade",
+        "building": "laboratory"
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 123
+      }
+    ],
+    "43": [
+      {
+        "do": "research",
+        "branch": "military"
+      }
+    ],
+    "44": [
+      {
+        "do": "research",
+        "branch": "resources",
+        "option": "b"
+      }
+    ],
+    "45": [
+      {
+        "do": "upgrade",
+        "building": "barracks"
+      }
+    ],
+    "46": [
+      {
+        "do": "recruit",
+        "unit": "domeBreaker",
+        "count": 50
+      }
+    ],
+    "47": [
+      {
+        "do": "descend",
+        "x": 2,
+        "y": 1,
+        "units": {
+          "harpoonist": 150,
+          "domeBreaker": 50
+        },
+        "seed": 783011802
+      },
+      {
+        "do": "descend",
+        "x": 0,
+        "y": 4,
+        "level": 2,
+        "units": {
+          "harpoonist": 150,
+          "domeBreaker": 50
+        },
+        "seed": 947941742
+      }
+    ],
+    "48": [
+      {
+        "do": "explore",
+        "x": 13,
+        "y": 17,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 13,
+        "y": 12,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 13,
+        "y": 6,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 13,
+        "y": 1,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 17,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 8,
+        "y": 17,
+        "level": 3
+      }
+    ],
+    "49": [
+      {
+        "do": "recruit",
+        "unit": "guardian",
+        "count": 101
+      },
+      {
+        "do": "upgrade",
+        "building": "coralCitadel"
+      }
+    ],
+    "50": [
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 50
+      }
+    ],
+    "51": [
+      {
+        "do": "research",
+        "branch": "military"
+      }
+    ],
+    "52": [
+      {
+        "do": "event",
+        "accept": true
+      }
+    ],
+    "53": [
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 8,
+        "level": 3,
+        "seed": 1954833244
+      },
+      {
+        "do": "collect",
+        "x": 13,
+        "y": 4,
+        "level": 3,
+        "seed": 495662941
+      },
+      {
+        "do": "collect",
+        "x": 10,
+        "y": 4,
+        "level": 3,
+        "seed": 1003204706
+      },
+      {
+        "do": "collect",
+        "x": 16,
+        "y": 5,
+        "level": 3,
+        "seed": 1921816153
+      },
+      {
+        "do": "collect",
+        "x": 16,
+        "y": 1,
+        "level": 3,
+        "seed": 581804287
+      },
+      {
+        "do": "collect",
+        "x": 13,
+        "y": 12,
+        "level": 3,
+        "seed": 1586918135
+      },
+      {
+        "do": "collect",
+        "x": 13,
+        "y": 14,
+        "level": 3,
+        "seed": 765970421
+      },
+      {
+        "do": "collect",
+        "x": 14,
+        "y": 14,
+        "level": 3,
+        "seed": 1072112968
+      },
+      {
+        "do": "collect",
+        "x": 12,
+        "y": 17,
+        "level": 3,
+        "seed": 1297573769
+      },
+      {
+        "do": "collect",
+        "x": 11,
+        "y": 16,
+        "level": 3,
+        "seed": 595591114
+      },
+      {
+        "do": "collect",
+        "x": 14,
+        "y": 19,
+        "level": 3,
+        "seed": 372657040
+      },
+      {
+        "do": "fight",
+        "x": 7,
+        "y": 17,
+        "level": 3,
+        "units": {
+          "harpoonist": 130,
+          "domeBreaker": 34
+        },
+        "seed": 940147424
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 19,
+        "level": 3,
+        "seed": 231016017
+      },
+      {
+        "do": "collect",
+        "x": 5,
+        "y": 18,
+        "level": 3,
+        "seed": 1052279900
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 18,
+        "level": 3,
+        "seed": 1980843602
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 19,
+        "level": 3,
+        "seed": 934574718
+      },
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      },
+      {
+        "do": "upgrade",
+        "building": "coralMine"
+      }
+    ],
+    "54": [
+      {
+        "do": "upgrade",
+        "building": "barracks"
+      },
+      {
+        "do": "upgrade",
+        "building": "laboratory"
+      },
+      {
+        "do": "upgrade",
+        "building": "algaeFarm"
+      }
+    ],
+    "56": [
+      {
+        "do": "research",
+        "branch": "resources"
+      }
+    ],
+    "57": [
+      {
+        "do": "event",
+        "accept": true
+      },
+      {
+        "do": "explore",
+        "x": 17,
+        "y": 16,
+        "level": 3
+      },
+      {
+        "do": "collect",
+        "x": 16,
+        "y": 16,
+        "level": 3,
+        "seed": 783849223
+      },
+      {
+        "do": "explore",
+        "x": 17,
+        "y": 10,
+        "level": 3
+      },
+      {
+        "do": "collect",
+        "x": 16,
+        "y": 10,
+        "level": 3,
+        "seed": 975415259
+      },
+      {
+        "do": "collect",
+        "x": 15,
+        "y": 8,
+        "level": 3,
+        "seed": 1878767748
+      },
+      {
+        "do": "recruit",
+        "unit": "saboteur",
+        "count": 20
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 99
+      },
+      {
+        "do": "recruit",
+        "unit": "guardian",
+        "count": 20
+      }
+    ],
+    "58": [
+      {
+        "do": "upgrade",
+        "building": "coralCitadel"
+      }
+    ],
+    "59": [
+      {
+        "do": "recruit",
+        "unit": "saboteur",
+        "count": 5
+      },
+      {
+        "do": "descend",
+        "x": 2,
+        "y": 1,
+        "units": {
+          "harpoonist": 100,
+          "saboteur": 25
+        },
+        "seed": 1626970658
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 49
+      },
+      {
+        "do": "descend",
+        "x": 0,
+        "y": 4,
+        "level": 2,
+        "units": {
+          "harpoonist": 100,
+          "saboteur": 25
+        },
+        "seed": 240450450
+      },
+      {
+        "do": "attackKernel",
+        "x": 10,
+        "y": 10,
+        "level": 3,
+        "units": {
+          "harpoonist": 230,
+          "domeBreaker": 34,
+          "abyssAdmiral": 1,
+          "saboteur": 25
+        },
+        "seed": 290105269
+      }
+    ],
+    "60": [
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      }
+    ],
+    "61": [
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      },
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      },
+      {
+        "do": "fight",
+        "x": 2,
+        "y": 8,
+        "level": 3,
+        "units": {
+          "harpoonist": 229,
+          "domeBreaker": 34,
+          "saboteur": 24
+        },
+        "seed": 422792695
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 4,
+        "level": 2,
+        "seed": 1728045440
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 4,
+        "level": 2,
+        "seed": 1936369092
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 2,
+        "level": 2,
+        "seed": 1757515934
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 1,
+        "level": 2,
+        "seed": 1882917894
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 0,
+        "level": 2,
+        "seed": 13399574
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 204
+      },
+      {
+        "do": "recruit",
+        "unit": "guardian",
+        "count": 20
+      },
+      {
+        "do": "descend",
+        "x": 2,
+        "y": 1,
+        "units": {
+          "harpoonist": 204,
+          "guardian": 25
+        },
+        "seed": 548815426
+      },
+      {
+        "do": "descend",
+        "x": 0,
+        "y": 4,
+        "level": 2,
+        "units": {
+          "harpoonist": 204,
+          "guardian": 25
+        },
+        "seed": 831087201
+      }
+    ],
+    "62": [
+      {
+        "do": "explore",
+        "x": 19,
+        "y": 14
+      },
+      {
+        "do": "recruit",
+        "unit": "guardian",
+        "count": 21
+      }
+    ],
+    "63": [
+      {
+        "do": "fight",
+        "x": 6,
+        "y": 16,
+        "level": 3,
+        "units": {
+          "scout": 42,
+          "harpoonist": 250,
+          "guardian": 25,
+          "domeBreaker": 6,
+          "saboteur": 2
+        },
+        "seed": 253084398
+      },
+      {
+        "do": "collect",
+        "x": 19,
+        "y": 8,
+        "level": 3,
+        "seed": 1646179534
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 3,
+        "level": 3,
+        "seed": 1654952931
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 165
+      }
+    ],
+    "64": [
+      {
+        "do": "collect",
+        "x": 2,
+        "y": 4,
+        "level": 2,
+        "seed": 950937551
+      },
+      {
+        "do": "collect",
+        "x": 0,
+        "y": 6,
+        "level": 2,
+        "seed": 1778864305
+      },
+      {
+        "do": "collect",
+        "x": 5,
+        "y": 3,
+        "level": 2,
+        "seed": 1593256861
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 4,
+        "seed": 1420457232
+      },
+      {
+        "do": "collect",
+        "x": 1,
+        "y": 3,
+        "seed": 1710004743
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 6,
+        "seed": 2124327952
+      },
+      {
+        "do": "collect",
+        "x": 3,
+        "y": 6,
+        "seed": 1588696872
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 4,
+        "seed": 1704666926
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 4,
+        "seed": 936680698
+      },
+      {
+        "do": "collect",
+        "x": 9,
+        "y": 4,
+        "seed": 1602454573
+      },
+      {
+        "do": "collect",
+        "x": 9,
+        "y": 1,
+        "seed": 1950587621
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 10,
+        "seed": 162139036
+      },
+      {
+        "do": "collect",
+        "x": 1,
+        "y": 10,
+        "seed": 538066014
+      },
+      {
+        "do": "collect",
+        "x": 1,
+        "y": 11,
+        "seed": 415123304
+      },
+      {
+        "do": "collect",
+        "x": 1,
+        "y": 14,
+        "seed": 1836725977
+      },
+      {
+        "do": "recruit",
+        "unit": "guardian",
+        "count": 50
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 94
+      }
+    ],
+    "65": [
+      {
+        "do": "collect",
+        "x": 11,
+        "y": 6,
+        "seed": 794876613
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 9,
+        "seed": 181284450
+      },
+      {
+        "do": "fight",
+        "x": 14,
+        "y": 4,
+        "units": {
+          "harpoonist": 123
+        },
+        "seed": 1401380025
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 162
+      }
+    ],
+    "66": [
+      {
+        "do": "research",
+        "branch": "military"
+      },
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      },
+      {
+        "do": "explore",
+        "x": 17,
+        "y": 6,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 17,
+        "y": 2,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 0,
+        "y": 1,
+        "level": 3
+      },
+      {
+        "do": "explore",
+        "x": 6,
+        "y": 1
+      },
+      {
+        "do": "explore",
+        "x": 1,
+        "y": 19
+      },
+      {
+        "do": "explore",
+        "x": 10,
+        "y": 17
+      },
+      {
+        "do": "explore",
+        "x": 7,
+        "y": 14
+      },
+      {
+        "do": "explore",
+        "x": 18,
+        "y": 18
+      },
+      {
+        "do": "explore",
+        "x": 0,
+        "y": 1
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 1,
+        "seed": 305475572
+      },
+      {
+        "do": "collect",
+        "x": 2,
+        "y": 15,
+        "seed": 1354778330
+      },
+      {
+        "do": "collect",
+        "x": 3,
+        "y": 17,
+        "seed": 894023624
+      },
+      {
+        "do": "fight",
+        "x": 4,
+        "y": 17,
+        "units": {
+          "harpoonist": 231,
+          "guardian": 39
+        },
+        "seed": 513581399
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 19,
+        "seed": 295627306
+      }
+    ],
+    "67": [
+      {
+        "do": "event",
+        "accept": true
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 17,
+        "seed": 769217504
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 15,
+        "seed": 227086183
+      },
+      {
+        "do": "collect",
+        "x": 2,
+        "y": 18,
+        "seed": 666650146
+      },
+      {
+        "do": "fight",
+        "x": 11,
+        "y": 17,
+        "units": {
+          "harpoonist": 231,
+          "guardian": 39
+        },
+        "seed": 180736048
+      },
+      {
+        "do": "collect",
+        "x": 17,
+        "y": 15,
+        "seed": 1812158295
+      },
+      {
+        "do": "collect",
+        "x": 18,
+        "y": 18,
+        "seed": 265098503
+      },
+      {
+        "do": "collect",
+        "x": 18,
+        "y": 19,
+        "seed": 1171361920
+      },
+      {
+        "do": "collect",
+        "x": 17,
+        "y": 19,
+        "seed": 963247507
+      },
+      {
+        "do": "garrison",
+        "units": {
+          "harpoonist": 107,
+          "guardian": 9,
+          "domeBreaker": 2
+        }
+      },
+      {
+        "do": "recruit",
+        "unit": "guardian",
+        "count": 151
+      },
+      {
+        "do": "descend",
+        "x": 2,
+        "y": 1,
+        "units": {
+          "guardian": 89
+        },
+        "seed": 505395055
+      },
+      {
+        "do": "descend",
+        "x": 0,
+        "y": 4,
+        "level": 2,
+        "units": {
+          "guardian": 89
+        },
+        "seed": 1414073605
+      },
+      {
+        "do": "garrison",
+        "units": {
+          "guardian": 89
+        }
+      },
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      },
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      },
+      {
+        "do": "upgrade",
+        "building": "solarPanel"
+      }
+    ],
+    "68": [
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      }
+    ],
+    "69": [
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      }
+    ],
+    "70": [
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      }
+    ],
+    "71": [
+      {
+        "do": "collect",
+        "x": 8,
+        "y": 17,
+        "seed": 387531366
+      }
+    ],
+    "72": [
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      }
+    ],
+    "75": [
+      {
+        "do": "event",
+        "accept": true
+      },
+      {
+        "do": "descend",
+        "x": 2,
+        "y": 1,
+        "units": {
+          "scout": 7
+        },
+        "seed": 45674667
+      },
+      {
+        "do": "explore",
+        "x": 8,
+        "y": 7,
+        "level": 2
+      },
+      {
+        "do": "research",
+        "branch": "explorer"
+      },
+      {
+        "do": "explore",
+        "x": 8,
+        "y": 2,
+        "level": 2
+      },
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 7,
+        "level": 2
+      }
+    ],
+    "76": [
+      {
+        "do": "collect",
+        "x": 5,
+        "y": 9,
+        "level": 2,
+        "seed": 1975080853
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 7,
+        "level": 2,
+        "seed": 1033035002
+      },
+      {
+        "do": "collect",
+        "x": 8,
+        "y": 1,
+        "level": 2,
+        "seed": 1900223821
+      },
+      {
+        "do": "collect",
+        "x": 11,
+        "y": 2,
+        "level": 2,
+        "seed": 1865079913
+      },
+      {
+        "do": "collect",
+        "x": 12,
+        "y": 5,
+        "level": 2,
+        "seed": 131934786
+      },
+      {
+        "do": "collect",
+        "x": 11,
+        "y": 5,
+        "level": 2,
+        "seed": 246944420
+      },
+      {
+        "do": "collect",
+        "x": 12,
+        "y": 3,
+        "level": 2,
+        "seed": 234662464
+      },
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      }
+    ],
+    "79": [
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 10,
+        "level": 2,
+        "seed": 25827929
+      },
+      {
+        "do": "collect",
+        "x": 9,
+        "y": 0,
+        "level": 2,
+        "seed": 981526755
+      },
+      {
+        "do": "explore",
+        "x": 13,
+        "y": 12,
+        "level": 2
+      },
+      {
+        "do": "explore",
+        "x": 13,
+        "y": 5,
+        "level": 2
+      },
+      {
+        "do": "explore",
+        "x": 6,
+        "y": 12,
+        "level": 2
+      }
+    ],
+    "80": [
+      {
+        "do": "event",
+        "accept": true
+      },
+      {
+        "do": "collect",
+        "x": 5,
+        "y": 12,
+        "level": 2,
+        "seed": 1963975888
+      },
+      {
+        "do": "collect",
+        "x": 3,
+        "y": 15,
+        "level": 2,
+        "seed": 623319566
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 14,
+        "level": 2,
+        "seed": 2027325943
+      },
+      {
+        "do": "collect",
+        "x": 8,
+        "y": 14,
+        "level": 2,
+        "seed": 1427782384
+      },
+      {
+        "do": "collect",
+        "x": 9,
+        "y": 14,
+        "level": 2,
+        "seed": 839161455
+      },
+      {
+        "do": "collect",
+        "x": 10,
+        "y": 14,
+        "level": 2,
+        "seed": 870939792
+      },
+      {
+        "do": "collect",
+        "x": 11,
+        "y": 16,
+        "level": 2,
+        "seed": 731393104
+      },
+      {
+        "do": "explore",
+        "x": 18,
+        "y": 17,
+        "level": 2
+      }
+    ],
+    "81": [
+      {
+        "do": "collect",
+        "x": 14,
+        "y": 8,
+        "level": 2,
+        "seed": 1589376158
+      },
+      {
+        "do": "collect",
+        "x": 14,
+        "y": 7,
+        "level": 2,
+        "seed": 158721848
+      },
+      {
+        "do": "collect",
+        "x": 16,
+        "y": 11,
+        "level": 2,
+        "seed": 1597845362
+      }
+    ],
+    "84": [
+      {
+        "do": "upgrade",
+        "building": "volcanicKernel"
+      }
+    ]
+  },
+  "endTurnSeeds": {
+    "1": 1351083159,
+    "2": 1373598899,
+    "3": 9817101,
+    "4": 1777942350,
+    "5": 1082404680,
+    "6": 475205735,
+    "7": 489555983,
+    "8": 21042427,
+    "9": 1978562765,
+    "10": 1050169997,
+    "11": 230269633,
+    "12": 1147501369,
+    "13": 449977530,
+    "14": 1967008432,
+    "15": 2073705551,
+    "16": 186310103,
+    "17": 320381605,
+    "18": 1225503316,
+    "19": 843312343,
+    "20": 1593225953,
+    "21": 894318953,
+    "22": 68232149,
+    "23": 1465224353,
+    "24": 1609448692,
+    "25": 470662509,
+    "26": 1886913051,
+    "27": 853644382,
+    "28": 660596646,
+    "29": 1227695081,
+    "30": 1757442499,
+    "31": 1959293171,
+    "32": 1312407712,
+    "33": 1895539752,
+    "34": 463369004,
+    "35": 1077368223,
+    "36": 445433093,
+    "37": 192625431,
+    "38": 2110942712,
+    "39": 1531689246,
+    "40": 1584909346,
+    "41": 972124168,
+    "42": 837006682,
+    "43": 284645510,
+    "44": 1381709972,
+    "45": 720051150,
+    "46": 1707242066,
+    "47": 477956401,
+    "48": 243605463,
+    "49": 470790766,
+    "50": 825042087,
+    "51": 2064244709,
+    "52": 69085623,
+    "53": 289965508,
+    "54": 2058491879,
+    "55": 22973510,
+    "56": 863454020,
+    "57": 72285441,
+    "58": 359062928,
+    "59": 2050939333,
+    "60": 1279516633,
+    "61": 1695887134,
+    "62": 1676301839,
+    "63": 2105420677,
+    "64": 562394595,
+    "65": 625483380,
+    "66": 934964521,
+    "67": 1552523423,
+    "68": 1929967737,
+    "69": 579834929,
+    "70": 56719104,
+    "71": 1786703075,
+    "72": 1359766553,
+    "73": 1744880662,
+    "74": 1227928182,
+    "75": 662389195,
+    "76": 41674673,
+    "77": 236113147,
+    "78": 1518881300,
+    "79": 872567952,
+    "80": 1547249756,
+    "81": 1420391137,
+    "82": 1121085557,
+    "83": 997067979
+  }
+}

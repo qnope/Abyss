@@ -1,5 +1,6 @@
 import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/presentation/widgets/backdrop/abyss_backdrop.dart';
+import 'package:abyss/presentation/widgets/save/empty_saves.dart';
 import 'package:abyss/presentation/widgets/save/save_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -18,8 +19,8 @@ void main() {
   testWidgets('shows the empty state when there is no save', (tester) async {
     await tester.pumpWidget(loadGameApp(repository));
 
-    expect(find.text('Aucune partie sauvegardée'), findsOneWidget);
-    expect(find.byIcon(Icons.folder_open), findsOneWidget);
+    expect(find.byType(EmptySaves), findsOneWidget);
+    expect(find.byType(SaveCard), findsNothing);
   });
 
   testWidgets('sits on the dimmed backdrop under its title', (tester) async {

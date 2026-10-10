@@ -34,8 +34,11 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // The snow barely shows under the veil: moving it would repaint the
+    // screen every frame for nothing.
     return AbyssBackdrop(
       dimmed: true,
+      animate: false,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(

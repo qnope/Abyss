@@ -153,8 +153,10 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Future<void> _showSettings() async {
-    final result = await showSettingsDialog(context);
+    final result = await showSettingsDialog(context,
+        game: widget.game, repository: widget.repository);
     if (!mounted) return;
+    setState(() {}); // The guide may have been switched on or off.
     switch (result) {
       case SettingsDialogResult.cancel: return;
       case SettingsDialogResult.openHistory:

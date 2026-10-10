@@ -56,7 +56,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.settings));
       await tester.pumpAndSettle();
 
-      expect(find.text('Parametres'), findsOneWidget);
+      expect(find.text('Paramètres'), findsOneWidget);
 
       await tester.tap(find.text('Voir l\'historique'));
       await tester.pumpAndSettle();
@@ -95,7 +95,7 @@ void main() {
       await tester.tap(find.text('Annuler'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Parametres'), findsNothing);
+      expect(find.text('Paramètres'), findsNothing);
       expect(find.byType(HistorySheetBody), findsNothing);
       expect(find.byType(MainMenuScreen), findsNothing);
       expect(repository.saveCallCount, 0);

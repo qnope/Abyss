@@ -23,6 +23,7 @@ abstract final class AbyssTheme {
       iconButtonTheme: AbyssButtonTheme.iconButton(),
       inputDecorationTheme: AbyssInputTheme.inputDecoration(),
       sliderTheme: AbyssInputTheme.slider(),
+      switchTheme: AbyssInputTheme.switchTheme(),
       progressIndicatorTheme: AbyssInputTheme.progressIndicator(),
       dividerColor: AbyssColors.biolumCyan.withValues(alpha: 0.1),
       splashColor: AbyssColors.biolumCyan.withValues(alpha: 0.1),

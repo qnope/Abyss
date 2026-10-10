@@ -11,7 +11,8 @@ import 'player.dart';
 /// player standing on its base.
 abstract final class GameFactory {
   /// [mapSeed] makes the first level reproducible; `null` draws one.
-  /// [tutorial] has the guide lead the player through the first chapter.
+  /// [tutorial] has the guide lead the player through the first chapter,
+  /// with the tip cards.
   static Game newSinglePlayer({
     required String playerName,
     int? mapSeed,
@@ -26,7 +27,10 @@ abstract final class GameFactory {
       baseY: generation.baseY,
       mapWidth: generation.map.width,
       mapHeight: generation.map.height,
-    )..savedObjectiveState = ObjectiveState(tutorialEnabled: tutorial);
+    )..savedObjectiveState = ObjectiveState(
+      tutorialEnabled: tutorial,
+      tipsEnabled: tutorial,
+    );
     return Game.singlePlayer(player, difficulty: difficulty)
       ..levels = {1: generation.map}
       ..replay = ReplayJournal(mapSeed: seed, playerName: playerName);

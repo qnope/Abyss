@@ -3,7 +3,9 @@ import '../../../data/game_repository.dart';
 import '../../../domain/game/cheat_codes.dart';
 import '../../../domain/game/difficulty.dart';
 import '../../../domain/game/game_factory.dart';
+import '../../../domain/objective/tutorial_offer.dart';
 import '../../widgets/common/difficulty_picker.dart';
+import '../../widgets/common/labeled_switch.dart';
 import '../game/game_screen.dart';
 
 class NewGameScreen extends StatefulWidget {
@@ -19,6 +21,9 @@ class _NewGameScreenState extends State<NewGameScreen> {
   final _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   Difficulty _difficulty = Difficulty.normal;
+  late bool _tutorial = TutorialOffer.checkedByDefault(
+    widget.repository.loadAll(),
+  );
 
   @override
   void dispose() {
@@ -61,6 +66,13 @@ class _NewGameScreenState extends State<NewGameScreen> {
                   current: _difficulty,
                   onChanged: (d) => setState(() => _difficulty = d),
                 ),
+                const SizedBox(height: 16),
+                LabeledSwitch(
+                  title: 'Tutoriel',
+                  subtitle: 'Un guide t\'accompagne sur les premiers tours',
+                  value: _tutorial,
+                  onChanged: (on) => setState(() => _tutorial = on),
+                ),
                 const SizedBox(height: 32),
                 SizedBox(
                   width: double.infinity,
@@ -94,6 +106,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
     final game = GameFactory.newSinglePlayer(
       playerName: name,
       difficulty: _difficulty,
+      tutorial: _tutorial,
     );
     CheatCodes.apply(game.humanPlayer);
     await widget.repository.save(game);

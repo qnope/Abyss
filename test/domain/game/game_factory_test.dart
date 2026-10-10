@@ -8,6 +8,7 @@ void main() {
 
       final state = game.humanPlayer.savedObjectiveState!;
       expect(state.tutorialEnabled, isFalse);
+      expect(state.tipsEnabled, isFalse);
       expect(state.completed, isEmpty);
     });
 
@@ -20,6 +21,7 @@ void main() {
 
       final state = game.humanPlayer.savedObjectiveState!;
       expect(state.tutorialEnabled, isTrue);
+      expect(state.tipsEnabled, isTrue);
       expect(state.completed, isEmpty);
     });
   });

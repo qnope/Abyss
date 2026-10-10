@@ -17,5 +17,5 @@ class FakeGameRepository extends GameRepository {
   List<Game> loadAll() => List.of(_games);
 
   @override
-  Future<void> delete(int index) async => _games.removeAt(index);
+  Future<void> deleteGame(Game game) async => _games.remove(game);
 }

@@ -40,6 +40,11 @@ class Game extends HiveObject {
   @HiveField(7)
   Difficulty? savedDifficulty;
 
+  /// Stamped by the repository on every save; `null` for games saved before
+  /// the stamp existed, which were last played when they were created.
+  @HiveField(8)
+  DateTime? savedLastPlayedAt;
+
   Game({
     required this.humanPlayerId,
     required this.players,
@@ -49,7 +54,9 @@ class Game extends HiveObject {
     this.status = GameStatus.playing,
     this.replay,
     Difficulty difficulty = Difficulty.normal,
+    DateTime? lastPlayedAt,
   }) : savedDifficulty = difficulty,
+       savedLastPlayedAt = lastPlayedAt,
        createdAt = createdAt ?? DateTime.now();
 
   factory Game.singlePlayer(
@@ -62,6 +69,8 @@ class Game extends HiveObject {
       );
 
   Difficulty get difficulty => savedDifficulty ?? Difficulty.normal;
+
+  DateTime get lastPlayedAt => savedLastPlayedAt ?? createdAt;
 
   Player get humanPlayer => players[humanPlayerId]!;
 

@@ -84,6 +84,22 @@ void main() {
       expect(find.text('Aucune partie sauvegardée'), findsOneWidget);
     });
 
+    testWidgets('deletes only the game whose card was tapped',
+        (tester) async {
+      repository.addGame(Game.singlePlayer(Player(name: 'Alice')));
+      repository.addGame(Game.singlePlayer(Player(name: 'Bob')));
+
+      await tester.pumpWidget(createApp());
+      await tester.tap(find.byIcon(Icons.delete_outline).last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Supprimer'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Alice'), findsOneWidget);
+      expect(find.text('Bob'), findsNothing);
+      expect(repository.loadAll().single.humanPlayer.name, 'Alice');
+    });
+
     testWidgets('cancel delete keeps game', (tester) async {
       repository.addGame(Game.singlePlayer(Player(name: 'Alice')));
 

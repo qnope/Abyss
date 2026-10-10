@@ -66,7 +66,7 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
         return SavedGameCard(
           game: game,
           onLoad: () => _loadGame(game),
-          onDelete: () => _confirmDelete(index),
+          onDelete: () => _confirmDelete(game),
         );
       },
     );
@@ -88,13 +88,13 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
     );
   }
 
-  Future<void> _confirmDelete(int index) async {
+  Future<void> _confirmDelete(Game game) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Supprimer la partie ?'),
         content: Text(
-          'La partie de ${_games[index].humanPlayer.name} '
+          'La partie de ${game.humanPlayer.name} '
           'sera définitivement supprimée.',
         ),
         actions: [
@@ -114,7 +114,7 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
     );
 
     if (confirmed == true) {
-      await widget.repository.delete(index);
+      await widget.repository.deleteGame(game);
       setState(() => _games = widget.repository.loadAll());
     }
   }

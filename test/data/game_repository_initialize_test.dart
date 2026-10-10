@@ -66,13 +66,14 @@ void main() {
         1234);
   });
 
-  test('delete removes the game at the given index', () async {
+  test('deleteGame removes the given game', () async {
     final repository = GameRepository();
+    final aronnax = _game('Aronnax');
     await repository.save(_game('Nemo'));
-    await repository.save(_game('Aronnax'));
+    await repository.save(aronnax);
     await repository.save(_game('Conseil'));
 
-    await repository.delete(1);
+    await repository.deleteGame(aronnax);
 
     final names = repository.loadAll().map((g) => g.humanPlayer.name);
     expect(names, ['Nemo', 'Conseil']);

@@ -6,6 +6,11 @@ import '../hive_registrar.g.dart';
 class GameRepository {
   static const _boxName = 'games';
 
+  /// Tells the time each save is stamped with.
+  final DateTime Function() _now;
+
+  GameRepository({DateTime Function() now = DateTime.now}) : _now = now;
+
   static Future<void> initialize() async {
     await Hive.initFlutter();
     Hive.registerAdapters();
@@ -19,7 +24,9 @@ class GameRepository {
 
   Box<Game> get _box => Hive.box<Game>(_boxName);
 
+  /// Stores [game], stamping it as last played now.
   Future<void> save(Game game) async {
+    game.savedLastPlayedAt = _now();
     if (game.isInBox) {
       await game.save();
     } else {
@@ -35,7 +42,8 @@ class GameRepository {
     return games;
   }
 
-  Future<void> delete(int index) async {
-    await _box.deleteAt(index);
+  /// Removes [game] from the saves; does nothing if it was never stored.
+  Future<void> deleteGame(Game game) async {
+    if (game.isInBox) await game.delete();
   }
 }

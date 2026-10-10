@@ -17,23 +17,26 @@ class GameAdapter extends TypeAdapter<Game> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Game(
-      humanPlayerId: fields[1] as String,
-      players: (fields[0] as Map).cast<String, Player>(),
-      turn: fields[2] == null ? 1 : (fields[2] as num).toInt(),
-      createdAt: fields[3] as DateTime?,
-      levels:
-          fields[4] == null
-              ? const {}
-              : (fields[4] as Map).cast<int, GameMap>(),
-      status: fields[5] == null ? GameStatus.playing : fields[5] as GameStatus,
-      replay: fields[6] as ReplayJournal?,
-    )..savedDifficulty = fields[7] as Difficulty?;
+        humanPlayerId: fields[1] as String,
+        players: (fields[0] as Map).cast<String, Player>(),
+        turn: fields[2] == null ? 1 : (fields[2] as num).toInt(),
+        createdAt: fields[3] as DateTime?,
+        levels:
+            fields[4] == null
+                ? const {}
+                : (fields[4] as Map).cast<int, GameMap>(),
+        status:
+            fields[5] == null ? GameStatus.playing : fields[5] as GameStatus,
+        replay: fields[6] as ReplayJournal?,
+      )
+      ..savedDifficulty = fields[7] as Difficulty?
+      ..savedLastPlayedAt = fields[8] as DateTime?;
   }
 
   @override
   void write(BinaryWriter writer, Game obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.players)
       ..writeByte(1)
@@ -49,7 +52,9 @@ class GameAdapter extends TypeAdapter<Game> {
       ..writeByte(6)
       ..write(obj.replay)
       ..writeByte(7)
-      ..write(obj.savedDifficulty);
+      ..write(obj.savedDifficulty)
+      ..writeByte(8)
+      ..write(obj.savedLastPlayedAt);
   }
 
   @override

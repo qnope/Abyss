@@ -29,6 +29,7 @@ import 'package:abyss/domain/map/reinforcement_order.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
+import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/raid/raid_state.dart';
 import 'package:abyss/domain/replay/replay_journal.dart';
 import 'package:abyss/domain/resource/resource.dart';
@@ -69,6 +70,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(MonsterDifficultyAdapter());
     registerAdapter(MonsterFamilyAdapter());
     registerAdapter(MonsterLairAdapter());
+    registerAdapter(ObjectiveIdAdapter());
     registerAdapter(PlayerAdapter());
     registerAdapter(RaidEntryAdapter());
     registerAdapter(RaidStateAdapter());
@@ -123,6 +125,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(MonsterDifficultyAdapter());
     registerAdapter(MonsterFamilyAdapter());
     registerAdapter(MonsterLairAdapter());
+    registerAdapter(ObjectiveIdAdapter());
     registerAdapter(PlayerAdapter());
     registerAdapter(RaidEntryAdapter());
     registerAdapter(RaidStateAdapter());

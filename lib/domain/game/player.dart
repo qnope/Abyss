@@ -76,6 +76,9 @@ class Player extends HiveObject {
   @HiveField(17)
   final EventState eventState;
 
+  /// Side of the square revealed around the base when a game starts.
+  static const int initialRevealSide = 5;
+
   Player({
     required this.name,
     String? id,
@@ -166,7 +169,7 @@ class Player extends HiveObject {
     return RevealAreaCalculator.cellsToReveal(
       targetX: baseX,
       targetY: baseY,
-      side: 5,
+      side: initialRevealSide,
       mapWidth: mapWidth,
       mapHeight: mapHeight,
     );

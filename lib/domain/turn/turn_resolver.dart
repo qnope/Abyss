@@ -5,6 +5,7 @@ import '../game/defeat_checker.dart';
 import '../game/game.dart';
 import '../map/exploration_resolver.dart';
 import '../map/reinforcement_resolver.dart';
+import '../objective/objective_resolver.dart';
 import '../raid/raid_resolver.dart';
 import '../volcano/volcano_resolver.dart';
 import '../resource/pearl_income.dart';
@@ -57,6 +58,11 @@ class TurnResolver {
 
     final explorations = ExplorationResolver.resolve(game);
     final reinforcements = ReinforcementResolver.resolve(game);
+    // After the moves, so an exploration or a raid counts the same turn.
+    final objectives = {
+      for (final player in game.players.values)
+        player.id: ObjectiveResolver.resolve(game, player),
+    };
     game.turn++;
     game.status = DefeatChecker.check(game) ?? game.status;
 
@@ -78,6 +84,7 @@ class TurnResolver {
       event: event.drawn,
       defaultedEvent: event.defaulted,
       predators: event.predators,
+      objectives: objectives[humanId]!,
     );
   }
 }

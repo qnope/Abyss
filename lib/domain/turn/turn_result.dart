@@ -4,6 +4,7 @@ import '../event/random_event_type.dart';
 import '../map/exploration_result.dart';
 import '../map/monster_lair.dart';
 import '../map/reinforcement_order.dart';
+import '../objective/objective_completion.dart';
 import '../raid/raid_report.dart';
 import '../volcano/volcano_report.dart';
 import '../resource/resource_type.dart';
@@ -77,6 +78,10 @@ class TurnResult {
   /// School of predators faced this turn and fought at its end, if any.
   final RaidReport? predators;
 
+  /// Objectives completed at the end of this turn, in catalog order, with
+  /// the rewards they credited.
+  final List<ObjectiveCompletion> objectives;
+
   const TurnResult({
     required this.changes,
     required this.previousTurn,
@@ -94,5 +99,6 @@ class TurnResult {
     this.event,
     this.defaultedEvent,
     this.predators,
+    this.objectives = const [],
   });
 }

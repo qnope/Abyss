@@ -82,9 +82,6 @@ class Player extends HiveObject {
   @HiveField(18)
   ObjectiveState? savedObjectiveState;
 
-  /// Side of the square revealed around the base when a game starts.
-  static const int initialRevealSide = 5;
-
   Player({
     required this.name,
     String? id,
@@ -134,7 +131,7 @@ class Player extends HiveObject {
           baseX: baseX,
           baseY: baseY,
           revealedCellsPerLevel: {
-            1: _initialRevealedCells(
+            1: RevealAreaCalculator.aroundBase(
               baseX: baseX,
               baseY: baseY,
               mapWidth: mapWidth,
@@ -166,20 +163,5 @@ class Player extends HiveObject {
     if (cells.contains(pos)) return false;
     cells.add(pos);
     return true;
-  }
-
-  static List<GridPosition> _initialRevealedCells({
-    required int baseX,
-    required int baseY,
-    required int mapWidth,
-    required int mapHeight,
-  }) {
-    return RevealAreaCalculator.cellsToReveal(
-      targetX: baseX,
-      targetY: baseY,
-      side: initialRevealSide,
-      mapWidth: mapWidth,
-      mapHeight: mapHeight,
-    );
   }
 }

@@ -17,10 +17,9 @@ class ExploredAroundBaseGoal extends FlagGoal {
     final map = game.mapForLevel(1);
     if (map == null) return false;
     final Set<GridPosition> start =
-        RevealAreaCalculator.cellsToReveal(
-          targetX: player.baseX,
-          targetY: player.baseY,
-          side: Player.initialRevealSide,
+        RevealAreaCalculator.aroundBase(
+          baseX: player.baseX,
+          baseY: player.baseY,
           mapWidth: map.width,
           mapHeight: map.height,
         ).toSet();

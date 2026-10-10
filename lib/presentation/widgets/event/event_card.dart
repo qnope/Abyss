@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+
+import '../../extensions/random_event_type_extensions.dart';
+import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
+import 'event_card_data.dart';
+import 'event_choice.dart';
+
+/// Opens the card of [data]. Completes with the option chosen, or `null`
+/// when the card is closed without a choice.
+Future<bool?> showEventCard(BuildContext context, EventCardData data) =>
+    showDialog<bool>(
+      context: context,
+      builder: (_) => EventCard(data: data),
+    );
+
+/// Dialog announcing a random event: its illustration, its name, two
+/// lines telling what happens and its options, figures included.
+class EventCard extends StatelessWidget {
+  final EventCardData data;
+
+  const EventCard({super.key, required this.data});
+
+  static const double illustrationSize = 160;
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    return Dialog(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Center(
+              child: RasterSvg(
+                assetPath: data.type.illustration,
+                size: illustrationSize,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              data.type.label,
+              textAlign: TextAlign.center,
+              style: text.headlineSmall?.copyWith(
+                color: AbyssColors.biolumCyan,
+              ),
+            ),
+            const SizedBox(height: 8),
+            for (final line in data.lines)
+              Text(
+                line,
+                textAlign: TextAlign.center,
+                style: text.bodyMedium?.copyWith(
+                  color: AbyssColors.onSurfaceDim,
+                ),
+              ),
+            const SizedBox(height: 16),
+            ..._actions(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _actions(BuildContext context) {
+    if (data.choices.isEmpty) {
+      return [
+        ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Compris'),
+        ),
+      ];
+    }
+    return [
+      for (final choice in data.choices) _ChoiceButton(choice: choice),
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: const Text('Plus tard'),
+      ),
+    ];
+  }
+}
+
+/// One option of the card: the first one filled, the prudent one
+/// outlined, disabled with its reason when closed.
+class _ChoiceButton extends StatelessWidget {
+  final EventChoice choice;
+
+  const _ChoiceButton({required this.choice});
+
+  @override
+  Widget build(BuildContext context) {
+    final refusal = choice.refusal;
+    final VoidCallback? onPressed = refusal == null
+        ? () => Navigator.pop(context, choice.accept)
+        : null;
+    final label = Text(choice.label, textAlign: TextAlign.center);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          choice.accept
+              ? ElevatedButton(onPressed: onPressed, child: label)
+              : OutlinedButton(onPressed: onPressed, child: label),
+          if (refusal != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                refusal,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AbyssColors.warning,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}

@@ -5,12 +5,12 @@ import '../../../domain/resource/consumption_calculator.dart';
 import '../../../domain/game/defeat_checker.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
-import '../../../domain/raid/raid_battle.dart';
 import '../../../domain/resource/pearl_income.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/turn/turn_production.dart';
 import '../../../domain/unit/unit_loss_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
+import '../../widgets/event/event_pending_warning.dart';
 import '../../widgets/raid/raid_due_warning.dart';
 import '../../widgets/volcano/volcano_due_warning.dart';
 
@@ -75,7 +75,7 @@ RaidDueWarning? raidDueWarning(Game game, Player player) {
   if (!state.isIncoming || state.arrivalTurn! > game.turn) return null;
   return RaidDueWarning(
     wave: state.incoming!,
-    defenderCount: _defenderCount(player),
+    defenderCount: RaidDueWarning.defenderCountOf(player),
     lastChance: DefeatChecker.isLastChance(game),
   );
 }
@@ -89,26 +89,24 @@ RaidDueWarning? predatorsDueWarning(Game game, Player player) {
   if (wave == null || due == null || due > game.turn) return null;
   return RaidDueWarning(
     wave: wave,
-    defenderCount: _defenderCount(player),
+    defenderCount: RaidDueWarning.defenderCountOf(player),
     attacker: 'Banc de prédateurs',
   );
 }
 
-int _defenderCount(Player player) => RaidBattle.defendersOf(player)
-    .values
-    .fold<int>(0, (sum, count) => sum + count);
-
 /// Warnings for the end-of-turn confirmation: the raid or the predators
-/// on the base and the kraken wave on an unguarded kernel, `null` when
-/// none hits.
+/// on the base, the kraken wave on an unguarded kernel and the event
+/// still waiting for a choice, `null` when there is none.
 Widget? dueWarnings(Game game, Player player) {
   final Widget? raid = raidDueWarning(game, player);
   final Widget? predators = predatorsDueWarning(game, player);
   final Widget? volcano = VolcanoDueWarning.of(game, player);
+  final Widget? event = EventPendingWarning.of(player);
   final List<Widget> warnings = <Widget>[
     if (raid != null) raid,
     if (predators != null) predators,
     if (volcano != null) volcano,
+    if (event != null) event,
   ];
   if (warnings.isEmpty) return null;
   if (warnings.length == 1) return warnings.single;

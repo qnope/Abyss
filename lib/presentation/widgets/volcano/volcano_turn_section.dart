@@ -4,6 +4,7 @@ import '../../../domain/turn/turn_result.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/monster_lair_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import '../turn/summary_line.dart';
 
 /// Volcano lines of the end-of-turn summary: the kraken wave just fought
 /// on the kernel and the one just announced.
@@ -24,7 +25,7 @@ class VolcanoTurnSection extends StatelessWidget {
       children: [
         const Divider(),
         if (fought != null)
-          _line(
+          SummaryLine(
             fought.victory ? Icons.shield : Icons.volcano,
             fought.victory
                 ? 'Volcan : vague repoussée, ${_losses(fought.wounded, fought.dead)}'
@@ -32,7 +33,7 @@ class VolcanoTurnSection extends StatelessWidget {
             fought.victory ? AbyssColors.success : AbyssColors.error,
           ),
         if (announced != null)
-          _line(
+          SummaryLine(
             Icons.warning_amber,
             'Le Kraken remonte : ${announced.waveLabel} au prochain tour',
             AbyssColors.warning,
@@ -45,16 +46,5 @@ class VolcanoTurnSection extends StatelessWidget {
     final int w = wounded.values.fold<int>(0, (a, b) => a + b);
     final int d = dead.values.fold<int>(0, (a, b) => a + b);
     return '$w ${w > 1 ? 'blessés' : 'blessé'}, $d ${d > 1 ? 'morts' : 'mort'}';
-  }
-
-  Widget _line(IconData icon, String text, Color color) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(children: [
-        Icon(icon, color: color, size: 20),
-        const SizedBox(width: 8),
-        Expanded(child: Text(text, style: TextStyle(color: color))),
-      ]),
-    );
   }
 }

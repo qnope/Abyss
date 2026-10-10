@@ -1,0 +1,13 @@
+{
+  "@@locale": "es",
+
+  "newGameTitle": "Nueva partida",
+  "newGameEnterName": "Escribe tu nombre",
+  "newGameNameHint": "Nombre del jugador",
+  "newGameNameEmpty": "Escribe un nombre",
+  "newGameNameTooShort": "El nombre debe tener al menos {min} caracteres",
+  "newGameTutorial": "Tutorial",
+  "newGameTutorialHint": "Una guía te acompaña en los primeros turnos",
+  "newGameStart": "Empezar",
+  "difficultyTitle": "Dificultad"
+}

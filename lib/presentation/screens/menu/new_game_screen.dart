@@ -4,6 +4,7 @@ import '../../../domain/game/cheat_codes.dart';
 import '../../../domain/game/difficulty.dart';
 import '../../../domain/game/game_factory.dart';
 import '../../../domain/objective/tutorial_offer.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../widgets/common/difficulty_picker.dart';
 import '../../widgets/common/labeled_switch.dart';
 import '../game/game_screen.dart';
@@ -18,6 +19,8 @@ class NewGameScreen extends StatefulWidget {
 }
 
 class _NewGameScreenState extends State<NewGameScreen> {
+  static const _minNameLength = 2;
+
   final _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   Difficulty _difficulty = Difficulty.normal;
@@ -34,9 +37,10 @@ class _NewGameScreenState extends State<NewGameScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Nouvelle Partie')),
+      appBar: AppBar(title: Text(l10n.newGameTitle)),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -45,18 +49,15 @@ class _NewGameScreenState extends State<NewGameScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  'Entrez votre nom',
-                  style: textTheme.headlineMedium,
-                ),
+                Text(l10n.newGameEnterName, style: textTheme.headlineMedium),
                 const SizedBox(height: 24),
                 TextFormField(
                   controller: _controller,
                   autofocus: true,
                   textCapitalization: TextCapitalization.words,
-                  decoration: const InputDecoration(
-                    hintText: 'Nom du joueur',
-                    prefixIcon: Icon(Icons.person),
+                  decoration: InputDecoration(
+                    hintText: l10n.newGameNameHint,
+                    prefixIcon: const Icon(Icons.person),
                   ),
                   validator: _validateName,
                   onFieldSubmitted: (_) => _submit(),
@@ -68,8 +69,8 @@ class _NewGameScreenState extends State<NewGameScreen> {
                 ),
                 const SizedBox(height: 16),
                 LabeledSwitch(
-                  title: 'Tutoriel',
-                  subtitle: 'Un guide t\'accompagne sur les premiers tours',
+                  title: l10n.newGameTutorial,
+                  subtitle: l10n.newGameTutorialHint,
                   value: _tutorial,
                   onChanged: (on) => setState(() => _tutorial = on),
                 ),
@@ -78,7 +79,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: _submit,
-                    child: const Text('Commencer'),
+                    child: Text(l10n.newGameStart),
                   ),
                 ),
               ],
@@ -91,10 +92,10 @@ class _NewGameScreenState extends State<NewGameScreen> {
 
   String? _validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Veuillez entrer un nom';
+      return context.l10n.newGameNameEmpty;
     }
-    if (value.trim().length < 2) {
-      return 'Le nom doit contenir au moins 2 caractères';
+    if (value.trim().length < _minNameLength) {
+      return context.l10n.newGameNameTooShort(_minNameLength);
     }
     return null;
   }
@@ -115,10 +116,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
 
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute<void>(
-        builder: (_) => GameScreen(
-          game: game,
-          repository: widget.repository,
-        ),
+        builder: (_) => GameScreen(game: game, repository: widget.repository),
       ),
       (_) => false,
     );

@@ -10,6 +10,7 @@
 | [screens/](screens/) | Full-page views (game, menus) |
 | [theme/](theme/) | Centralized design system (colors, typography, buttons) |
 | [widgets/](widgets/) | Reusable UI components organized by domain |
+| [l10n/](l10n/) | Texts in French, English and Spanish |
 
 ## Dependency Flow
 
@@ -37,6 +38,6 @@ All state changes go through domain actions (`ActionExecutor`) and turn resoluti
 ## Conventions
 
 - All extensions use `switch` expressions on domain enums
-- UI text is in French (game locale)
+- UI text comes from `context.l10n` (French source, English and Spanish translations)
 - Theme is always accessed via `AbyssTheme` — never hardcode colors or styles
 - Widget files target < 150 lines each

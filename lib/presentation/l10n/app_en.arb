@@ -1,0 +1,13 @@
+{
+  "@@locale": "en",
+
+  "newGameTitle": "New Game",
+  "newGameEnterName": "Enter your name",
+  "newGameNameHint": "Player name",
+  "newGameNameEmpty": "Please enter a name",
+  "newGameNameTooShort": "The name must be at least {min} characters long",
+  "newGameTutorial": "Tutorial",
+  "newGameTutorialHint": "A guide walks you through the first turns",
+  "newGameStart": "Start",
+  "difficultyTitle": "Difficulty"
+}

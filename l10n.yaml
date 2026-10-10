@@ -1,0 +1,6 @@
+# Translations of the game: French is the source, English and Spanish
+# follow it. `flutter pub get` regenerates the Dart code next to the ARB.
+arb-dir: lib/presentation/l10n
+template-arb-file: app_fr.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations

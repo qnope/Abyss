@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../domain/event/random_event_type.dart';
 import '../../domain/history/history_entry.dart';
 import '../theme/abyss_colors.dart';
 import 'history_entry_category_extensions.dart';
@@ -48,6 +49,14 @@ extension HistoryEntryDisplay on HistoryEntry {
     DescentEntry() ||
     ReinforcementEntry() ||
     EventEntry() => false,
+  };
+
+  /// Illustration shown in place of the category icon: the event's, and
+  /// the predators' for the fight of a school. `null` for the others.
+  String? get illustration => switch (this) {
+    EventEntry(:final type) => type.illustration,
+    RaidEntry(surprise: true) => RandomEventType.predators.illustration,
+    _ => null,
   };
 
   /// Title shown on the card: an event is named after its type.

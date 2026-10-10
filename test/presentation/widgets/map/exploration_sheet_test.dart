@@ -9,6 +9,7 @@ void main() {
     int scoutCount = 2,
     int revealSide = 3,
     bool isEligible = true,
+    String? refusal,
     VoidCallback? onConfirm,
   }) async {
     await tester.pumpWidget(MaterialApp(
@@ -23,6 +24,7 @@ void main() {
               scoutCount: scoutCount,
               revealSide: revealSide,
               isEligible: isEligible,
+              refusal: refusal,
               onConfirm: onConfirm ?? () {},
             ),
             child: const Text('open'),
@@ -70,6 +72,15 @@ void main() {
     await openSheet(tester, isEligible: false);
 
     expect(find.text('Cellule non éligible'), findsOneWidget);
+    expect(sendButton(tester).onPressed, isNull);
+  });
+
+  testWidgets('a refusal disables the send button and says why', (
+    tester,
+  ) async {
+    await openSheet(tester, refusal: 'Tempête : exploration impossible');
+
+    expect(find.text('Tempête : exploration impossible'), findsOneWidget);
     expect(sendButton(tester).onPressed, isNull);
   });
 }

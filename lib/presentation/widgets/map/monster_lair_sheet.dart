@@ -7,6 +7,7 @@ import '../../extensions/monster_lair_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 import '../fight/monster_family_traits.dart';
+import 'sheet_info_row.dart';
 
 void showMonsterLairSheet(
   BuildContext context, {
@@ -97,42 +98,17 @@ class _LairInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final stats = MonsterUnitStats.of(lair.family, lair.level);
     return Column(
       children: [
-        _infoRow(textTheme, 'Difficulté', lair.difficulty.label),
+        SheetInfoRow('Difficulté', lair.difficulty.label),
         const SizedBox(height: 6),
-        _infoRow(textTheme, 'Niveau', '${lair.level}'),
+        SheetInfoRow('Niveau', '${lair.level}'),
         const SizedBox(height: 6),
-        _infoRow(textTheme, 'Unités', lair.family.monsters(lair.unitCount)),
+        SheetInfoRow('Unités', lair.family.monsters(lair.unitCount)),
         const SizedBox(height: 6),
-        _infoRow(
-          textTheme,
-          'PV / ATK / DEF',
+        SheetInfoRow('PV / ATK / DEF',
           '${stats.hp} / ${stats.atk} / ${stats.def}',
-        ),
-      ],
-    );
-  }
-
-  Widget _infoRow(TextTheme textTheme, String label, String value) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            label,
-            style: textTheme.bodyMedium?.copyWith(
-              color: AbyssColors.onSurfaceDim,
-            ),
-          ),
-        ),
-        Text(
-          value,
-          style: textTheme.bodyMedium?.copyWith(
-            color: AbyssColors.onSurface,
-            fontWeight: FontWeight.bold,
-          ),
         ),
       ],
     );

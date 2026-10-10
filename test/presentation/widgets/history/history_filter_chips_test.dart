@@ -28,6 +28,7 @@ void main() {
       expect(find.widgetWithText(ChoiceChip, 'Combats'), findsOneWidget);
       expect(find.widgetWithText(ChoiceChip, 'Construction'), findsOneWidget);
       expect(find.widgetWithText(ChoiceChip, 'Recherche'), findsOneWidget);
+      expect(find.widgetWithText(ChoiceChip, 'Événements'), findsOneWidget);
       expect(find.widgetWithText(ChoiceChip, 'Autres'), findsOneWidget);
     });
 
@@ -59,6 +60,8 @@ void main() {
       );
 
       Future<void> tapLabel(String label) async {
+        // The row scrolls: the last chips may start off screen.
+        await tester.ensureVisible(find.widgetWithText(ChoiceChip, label));
         await tester.tap(find.widgetWithText(ChoiceChip, label));
         await tester.pump();
       }
@@ -66,12 +69,14 @@ void main() {
       await tapLabel('Combats');
       await tapLabel('Construction');
       await tapLabel('Recherche');
+      await tapLabel('Événements');
       await tapLabel('Autres');
 
       expect(taps, <HistoryFilter>[
         HistoryFilter.combat,
         HistoryFilter.building,
         HistoryFilter.research,
+        HistoryFilter.event,
         HistoryFilter.other,
       ]);
     });

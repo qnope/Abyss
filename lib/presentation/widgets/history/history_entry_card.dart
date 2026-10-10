@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/history/history_entry.dart';
 import '../../extensions/history_entry_category_extensions.dart';
 import '../../extensions/history_entry_extensions.dart';
+import '../common/raster_svg.dart';
 
 /// Renders a single [HistoryEntry] as a colored [Card] with an icon,
 /// title, optional subtitle and turn number.
@@ -33,7 +34,7 @@ class HistoryEntryCard extends StatelessWidget {
 
     final subtitleText = _buildSubtitle(tappable: tappable);
     final listTile = ListTile(
-      leading: Icon(entry.category.icon, color: accent),
+      leading: _leading(accent),
       title: Text(entry.displayTitle),
       subtitle: subtitleText == null ? null : Text(subtitleText),
       trailing: tappable
@@ -47,6 +48,16 @@ class HistoryEntryCard extends StatelessWidget {
       child: listTile,
     );
   }
+
+  /// The entry's illustration when it has one, else its category icon.
+  Widget _leading(Color accent) {
+    final art = entry.illustration;
+    if (art == null) return Icon(entry.category.icon, color: accent);
+    return RasterSvg(assetPath: art, size: illustrationSize);
+  }
+
+  /// Side of the illustration of an event entry.
+  static const double illustrationSize = 40;
 
   /// Combat cards prepend `Tour N` to their subtitle so the trailing
   /// chevron has room; static cards keep the raw subtitle (if any) and

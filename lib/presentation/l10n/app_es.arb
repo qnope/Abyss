@@ -693,5 +693,18 @@
   "historyEmptyFilter": "Ninguna acción para este filtro.",
   "settingsLanguageTitle": "Idioma",
   "settingsLanguageAutomatic": "Automático",
-  "settingsLanguageAutomaticHint": "Idioma del dispositivo"
+  "settingsLanguageAutomaticHint": "Idioma del dispositivo",
+  "screenViewRanking": "Clasificación",
+  "factionRankingTitle": "Clasificación de las facciones",
+  "factionRankingYou": "Tú",
+  "factionRankingHeadquarters": "CG nivel {level}",
+  "@factionRankingHeadquarters": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "factionRankingDepth": "Profundidad: nivel {level}",
+  "@factionRankingDepth": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "factionRankingKernel": "Controla el Núcleo del Volcán",
+  "factionRankingFallen": "Caída"
 }

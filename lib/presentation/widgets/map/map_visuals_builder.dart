@@ -1,3 +1,5 @@
+import 'package:flutter/painting.dart';
+
 import '../../../domain/map/game_map.dart';
 import '../../../domain/map/grid_position.dart';
 import 'map_cell_visual.dart';
@@ -10,6 +12,7 @@ List<MapCellVisual> buildMapVisuals({
   int? baseX,
   int? baseY,
   Set<(int, int)> pendingTargets = const {},
+  Map<GridPosition, Color> factionBases = const {},
 }) {
   return [
     for (var y = 0; y < gameMap.height; y++)
@@ -22,6 +25,7 @@ List<MapCellVisual> buildMapVisuals({
           isCapturedTransitionBase:
               gameMap.cellAt(x, y).transitionBase?.capturedBy ==
                   humanPlayerId,
+          factionColor: factionBases[GridPosition(x: x, y: y)],
         ),
   ];
 }

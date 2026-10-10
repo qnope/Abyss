@@ -956,5 +956,18 @@
   "historyEmptyFilter": "Aucune action pour ce filtre.",
   "settingsLanguageTitle": "Langue",
   "settingsLanguageAutomatic": "Automatique",
-  "settingsLanguageAutomaticHint": "Langue de l'appareil"
+  "settingsLanguageAutomaticHint": "Langue de l'appareil",
+  "screenViewRanking": "Classement",
+  "factionRankingTitle": "Classement des factions",
+  "factionRankingYou": "Vous",
+  "factionRankingHeadquarters": "QG niveau {level}",
+  "@factionRankingHeadquarters": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "factionRankingDepth": "Profondeur : niveau {level}",
+  "@factionRankingDepth": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "factionRankingKernel": "Tient le Noyau du Volcan",
+  "factionRankingFallen": "Tombée"
 }

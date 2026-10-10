@@ -14,6 +14,9 @@ class GameMapView extends StatefulWidget {
   final void Function(int x, int y)? onCellTap;
   final Set<(int, int)> pendingTargets;
 
+  /// Colour of the faction base standing on each cell, level 1 only.
+  final Map<GridPosition, Color> factionBases;
+
   const GameMapView({
     super.key,
     required this.gameMap,
@@ -23,6 +26,7 @@ class GameMapView extends StatefulWidget {
     required this.humanPlayerId,
     this.onCellTap,
     this.pendingTargets = const {},
+    this.factionBases = const {},
   });
 
   @override
@@ -109,6 +113,7 @@ class _GameMapViewState extends State<GameMapView> {
                 baseX: widget.baseX,
                 baseY: widget.baseY,
                 pendingTargets: widget.pendingTargets,
+                factionBases: widget.factionBases,
               ),
               columns: map.width,
               sprites: _sprites,

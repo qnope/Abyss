@@ -4143,6 +4143,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Langue de l\'appareil'**
   String get settingsLanguageAutomaticHint;
+
+  /// No description provided for @screenViewRanking.
+  ///
+  /// In fr, this message translates to:
+  /// **'Classement'**
+  String get screenViewRanking;
+
+  /// No description provided for @factionRankingTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Classement des factions'**
+  String get factionRankingTitle;
+
+  /// No description provided for @factionRankingYou.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous'**
+  String get factionRankingYou;
+
+  /// No description provided for @factionRankingHeadquarters.
+  ///
+  /// In fr, this message translates to:
+  /// **'QG niveau {level}'**
+  String factionRankingHeadquarters(int level);
+
+  /// No description provided for @factionRankingDepth.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profondeur : niveau {level}'**
+  String factionRankingDepth(int level);
+
+  /// No description provided for @factionRankingKernel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tient le Noyau du Volcan'**
+  String get factionRankingKernel;
+
+  /// No description provided for @factionRankingFallen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tombée'**
+  String get factionRankingFallen;
 }
 
 class _AppLocalizationsDelegate

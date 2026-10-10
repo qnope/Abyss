@@ -62,6 +62,11 @@ class BaseAssaultEntry extends HistoryEntry {
   @HiveField(15)
   final Map<ResourceType, int> loot;
 
+  /// Code of the Faille or Cheminée attacked, `null` for an attack on a
+  /// base.
+  @HiveField(16)
+  final String? postName;
+
   BaseAssaultEntry({
     required this.turn,
     required this.victory,
@@ -78,5 +83,6 @@ class BaseAssaultEntry extends HistoryEntry {
     required this.headquartersAfter,
     required this.pillaged,
     required this.loot,
+    this.postName,
   }) : category = HistoryEntryCategory.assault;
 }

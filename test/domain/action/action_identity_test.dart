@@ -1,6 +1,7 @@
 import 'package:abyss/domain/action/action.dart';
 import 'package:abyss/domain/action/action_type.dart';
 import 'package:abyss/domain/action/attack_base_action.dart';
+import 'package:abyss/domain/action/attack_post_action.dart';
 import 'package:abyss/domain/action/attack_transition_base_action.dart';
 import 'package:abyss/domain/action/attack_volcanic_kernel_action.dart';
 import 'package:abyss/domain/action/collect_treasure_action.dart';
@@ -67,6 +68,12 @@ final List<(Action, ActionType, String)> _actions = [
     AttackBaseAction(targetPlayerId: 'rival', selectedUnits: _units),
     ActionType.attackBase,
     'Attaque base rival',
+  ),
+  (
+    AttackPostAction(
+        targetX: 4, targetY: 5, level: 2, selectedUnits: _units),
+    ActionType.attackPost,
+    'Attaque poste (4, 5)',
   ),
   (
     DescendAction(

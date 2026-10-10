@@ -58,7 +58,10 @@ class DescendAction extends Action {
     final targetLevel = cell.transitionBase!.targetLevel;
 
     if (game.levels[targetLevel] == null) {
-      _generateTargetLevel(game, player, targetLevel);
+      _generateTargetLevel(game, targetLevel);
+    }
+    if (!player.unitsPerLevel.containsKey(targetLevel)) {
+      _arrive(game, player, targetLevel);
     }
 
     _transferUnits(player, targetLevel);
@@ -66,13 +69,10 @@ class DescendAction extends Action {
     final sent = Map<UnitType, int>.from(selectedUnits)
       ..removeWhere((_, int v) => v <= 0);
 
-    return DescendResult.success(
-      targetLevel: targetLevel,
-      unitsSent: sent,
-    );
+    return DescendResult.success(targetLevel: targetLevel, unitsSent: sent);
   }
 
-  void _generateTargetLevel(Game game, Player player, int targetLevel) {
+  void _generateTargetLevel(Game game, int targetLevel) {
     final parentMap = game.levels[fromLevel]!;
     final passages = PassageExtractor.from(parentMap);
     final result = MapGenerator.generate(
@@ -83,19 +83,24 @@ class DescendAction extends Action {
     final levels = Map<int, dynamic>.from(game.levels);
     levels[targetLevel] = result.map;
     game.levels = levels.cast();
+  }
 
+  /// A player's first arrival on a level: an empty stock of units and a
+  /// fog opened around the passage. Games with factions generate every
+  /// level at the start, so the level may exist before anyone comes.
+  void _arrive(Game game, Player player, int targetLevel) {
     player.unitsPerLevel[targetLevel] = {
       for (final t in UnitType.values) t: Unit(type: t),
     };
-
-    final revealed = RevealAreaCalculator.cellsToReveal(
-      targetX: transitionX,
-      targetY: transitionY,
-      side: 5,
-      mapWidth: result.map.width,
-      mapHeight: result.map.height,
-    );
-    player.revealedCellsPerLevel[targetLevel] = revealed;
+    final map = game.levels[targetLevel]!;
+    player.revealedCellsPerLevel[targetLevel] =
+        RevealAreaCalculator.cellsToReveal(
+          targetX: transitionX,
+          targetY: transitionY,
+          side: 5,
+          mapWidth: map.width,
+          mapHeight: map.height,
+        );
   }
 
   void _transferUnits(Player player, int targetLevel) {

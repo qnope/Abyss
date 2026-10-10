@@ -13,6 +13,7 @@ import '../script/script_turn.dart';
 import '../unit/unit.dart';
 import '../unit/unit_type.dart';
 import 'faction_personality.dart';
+import 'faction_post_war.dart';
 
 /// When and whom a faction attacks. One conservative rule that every
 /// personality shares until its own war brain exists (step 11).
@@ -22,6 +23,9 @@ import 'faction_personality.dart';
 /// them in at least [planner]'s confidence of its rehearsals, it attacks:
 /// another faction at once, the human with an announcement two turns
 /// ahead. It never has two attacks of its own pending.
+///
+/// When no base is worth attacking it looks at the posts of the others
+/// ([FactionPostWar]).
 ///
 /// The defence is read from the target itself, for want of spies (step
 /// 10): a base whose army changed in the meantime can still surprise the
@@ -47,10 +51,15 @@ abstract final class FactionWar {
 
   static void play(ScriptTurn turn, FactionPersonality personality) {
     if (!isDue(turn.number, personality)) return;
+    if (turn.game.humanPlayer.raidState.hasAttackFrom(turn.player.id)) return;
+    if (!_raidBases(turn)) FactionPostWar.play(turn);
+  }
+
+  /// Attacks the weakest beatable base; returns whether it attacked.
+  static bool _raidBases(ScriptTurn turn) {
     final Player me = turn.player;
-    if (turn.game.humanPlayer.raidState.hasAttackFrom(me.id)) return;
-    final Map<UnitType, int> army = _fighters(me);
-    if (army.isEmpty) return;
+    final Map<UnitType, int> army = fightersOn(me, RaidBattle.baseLevel);
+    if (army.isEmpty) return false;
     final UnitBoost boost = FightMonsterHelpers.unitBoostOf(
       me,
       attacking: true,
@@ -65,17 +74,20 @@ abstract final class FactionWar {
         () => BaseDefence.of(t.player).side,
         boost: boost,
       )) {
-        return;
+        return false;
       }
-      if (_strike(turn, t.player, army)) return;
+      if (_strike(turn, t.player, army)) return true;
     }
+    return false;
   }
 
-  static Map<UnitType, int> _fighters(Player me) => <UnitType, int>{
-    for (final MapEntry<UnitType, Unit> e
-        in me.unitsOnLevel(RaidBattle.baseLevel).entries)
-      if (!_stayHome.contains(e.key) && e.value.count > 0) e.key: e.value.count,
-  };
+  /// The units of [level] that [me] sends to war.
+  static Map<UnitType, int> fightersOn(Player me, int level) =>
+      <UnitType, int>{
+        for (final MapEntry<UnitType, Unit> e in me.unitsOnLevel(level).entries)
+          if (!_stayHome.contains(e.key) && e.value.count > 0)
+            e.key: e.value.count,
+      };
 
   /// The bases of the fog of [turn]'s player, the weakest defence first.
   static List<_Target> _weakestFirst(ScriptTurn turn, List<Combatant> ours) {

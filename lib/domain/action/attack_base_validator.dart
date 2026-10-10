@@ -18,7 +18,7 @@ abstract final class AttackBaseValidator {
     String targetId,
     Map<UnitType, int> army,
   ) =>
-      refusal(game, player, targetId) ?? _armyFailure(player, army);
+      refusal(game, player, targetId) ?? armyFailure(player, army);
 
   /// Why [player] may not attack [targetId] at all, whatever the army:
   /// the part of [check] a screen can tell before an army is chosen.
@@ -50,11 +50,17 @@ abstract final class AttackBaseValidator {
       .revealedCellsOnLevel(1)
       .contains(GridPosition(x: target.baseX, y: target.baseY));
 
-  static ActionFailure? _armyFailure(Player player, Map<UnitType, int> army) {
+  /// Why [army] cannot leave the units of [level] of [player] (the base
+  /// level by default), `null` if it can.
+  static ActionFailure? armyFailure(
+    Player player,
+    Map<UnitType, int> army, {
+    int level = 1,
+  }) {
     int total = 0;
     for (final MapEntry<UnitType, int> e in army.entries) {
       if (e.value <= 0) continue;
-      if (e.value > (player.unitsOnLevel(1)[e.key]?.count ?? 0)) {
+      if (e.value > (player.unitsOnLevel(level)[e.key]?.count ?? 0)) {
         return ActionFailure.notEnoughUnits;
       }
       total += e.value;

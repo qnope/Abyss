@@ -76,4 +76,43 @@ void main() {
     expect(entry.pillaged, {ResourceType.coral: 90});
     expect(entry.loot, {ResourceType.coral: 80});
   });
+
+  test('the post of an assault on a post survives a reload', () async {
+    final player = Player(id: 'p', name: 'Persist');
+    player.addHistoryEntry(
+      BaseAssaultEntry(
+        turn: 14,
+        victory: true,
+        defending: false,
+        opponentName: 'Nacre',
+        fightResult: buildTestFight(playerWins: true),
+        units: const {UnitType.harpoonist: 6},
+        survivorsIntact: const {UnitType.harpoonist: 6},
+        wounded: const {},
+        dead: const {},
+        rampartBefore: 0,
+        rampartAfter: 0,
+        headquartersBefore: 5,
+        headquartersAfter: 5,
+        pillaged: const {},
+        loot: const {},
+        postName: 'failleAlpha',
+      ),
+    );
+    await GameRepository().save(Game.singlePlayer(player));
+    await Hive.close();
+    Hive.init(tempDir.path);
+    await Hive.openBox<Game>(_boxName);
+
+    final entry =
+        GameRepository()
+            .loadAll()
+            .single
+            .humanPlayer
+            .historyEntries
+            .whereType<BaseAssaultEntry>()
+            .single;
+
+    expect(entry.postName, 'failleAlpha');
+  });
 }

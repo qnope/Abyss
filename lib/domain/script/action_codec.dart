@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../action/announce_attack_action.dart';
 import '../action/attack_base_action.dart';
+import '../action/attack_post_action.dart';
 import '../action/attack_transition_base_action.dart';
 import '../action/attack_volcanic_kernel_action.dart';
 import '../action/choose_event_action.dart';
@@ -73,6 +74,12 @@ abstract final class ActionCodec {
           random: f.rng(r)),
       'attackPlayer' => (r) => AttackBaseAction(
           targetPlayerId: f.text('target'),
+          selectedUnits: f.units,
+          random: f.rng(r)),
+      'attackPost' => (r) => AttackPostAction(
+          targetX: f.integer('x'),
+          targetY: f.integer('y'),
+          level: f.level,
           selectedUnits: f.units,
           random: f.rng(r)),
       'announceAttack' => (r) => AnnounceAttackAction(

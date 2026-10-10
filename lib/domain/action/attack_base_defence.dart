@@ -8,6 +8,7 @@ import '../fight/combatant.dart';
 import '../fight/combatant_builder.dart';
 import '../game/player.dart';
 import '../raid/raid_battle.dart';
+import '../unit/unit.dart';
 import '../unit/unit_type.dart';
 import 'fight_monster_helpers.dart';
 
@@ -43,7 +44,30 @@ class BaseDefence {
   /// The combatants of the fight; the engine wears them down in place.
   final List<Combatant> side;
 
-  BaseDefence._(this.engaged, this.side);
+  /// The level whose units defend, and get the survivors back.
+  final int level;
+
+  BaseDefence._(this.engaged, this.side, this.level);
+
+  /// The defence of a post: every unit [target] has on [level], without
+  /// rampart, as a Faille is held by the level 2 units and a Cheminée by
+  /// the level 3 units (the kernel garrison is kept in a stock of its own).
+  factory BaseDefence.post(Player target, int level) {
+    final Map<UnitType, int> engaged = <UnitType, int>{
+      for (final MapEntry<UnitType, Unit> e
+          in target.unitsOnLevel(level).entries)
+        if (e.value.count > 0) e.key: e.value.count,
+    };
+    return BaseDefence._(
+      engaged,
+      CombatantBuilder.playerCombatantsFrom(
+        engaged,
+        boost: FightMonsterHelpers.unitBoostOf(target),
+        side: CombatSide.monster,
+      ),
+      level,
+    );
+  }
 
   factory BaseDefence.of(Player target) {
     final Map<UnitType, int> engaged = RaidBattle.defendersOf(target);
@@ -57,7 +81,7 @@ class BaseDefence {
         side: CombatSide.monster,
       ),
       if (rampart != null) _onDefendersSide(rampart),
-    ]);
+    ], RaidBattle.baseLevel);
   }
 
   /// A fresh copy of [c] on the defenders' side, at full health.
@@ -82,18 +106,10 @@ class BaseDefence {
       random: random,
     ).partition(fallen, pctLost);
     for (final UnitType type in engaged.keys) {
-      target.unitsOnLevel(RaidBattle.baseLevel)[type]!.count = 0;
+      target.unitsOnLevel(level)[type]!.count = 0;
     }
-    FightMonsterHelpers.restoreToStock(
-      target,
-      alive,
-      level: RaidBattle.baseLevel,
-    );
-    FightMonsterHelpers.restoreToStock(
-      target,
-      split.wounded,
-      level: RaidBattle.baseLevel,
-    );
+    FightMonsterHelpers.restoreToStock(target, alive, level: level);
+    FightMonsterHelpers.restoreToStock(target, split.wounded, level: level);
     return DefenceOutcome(
       engaged: engaged,
       survivorsIntact: FightMonsterHelpers.combatantsByType(alive),

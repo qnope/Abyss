@@ -10,6 +10,7 @@ enum ActionType {
   sendReinforcements,
   attackTransitionBase,
   attackBase,
+  attackPost,
   announceAttack,
   attackVolcanicKernel,
   garrisonKernel,

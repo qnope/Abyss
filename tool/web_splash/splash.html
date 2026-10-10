@@ -1,0 +1,23 @@
+<div id="abyss-splash" role="status" aria-label="ABYSSES">
+  <img class="abyss-splash__icon" alt="" width="160" height="160"
+    src="icons/Icon-192.png"
+    srcset="icons/Icon-192.png 192w, icons/Icon-512.png 512w" sizes="160px">
+  <div class="abyss-splash__title">ABYSSES</div>
+  <div class="abyss-splash__bar" aria-hidden="true"></div>
+  <p class="abyss-splash__text">Descente en cours&hellip;</p>
+</div>
+<script>
+  // The Flutter engine dispatches this event once the app drew its first frame.
+  window.addEventListener('flutter-first-frame', function () {
+    var splash = document.getElementById('abyss-splash');
+    if (!splash) return;
+    var reduce = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      splash.remove();
+      return;
+    }
+    splash.classList.add('abyss-splash--hidden');
+    setTimeout(function () { splash.remove(); }, 400);
+  }, { once: true });
+</script>

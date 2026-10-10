@@ -1,0 +1,100 @@
+/* Splash shown while the web build downloads main.dart.js and CanvasKit.
+   Injected into web/index.html by .github/scripts/apply_web_splash.sh. */
+@font-face {
+  font-family: 'Rajdhani';
+  src: url('assets/assets/fonts/rajdhani/Rajdhani-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #0A0E1A;
+}
+
+#abyss-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  background: radial-gradient(circle at 50% 42%, #123A52 0%, #0A0E1A 70%);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  opacity: 1;
+  transition: opacity 400ms ease;
+}
+
+#abyss-splash.abyss-splash--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.abyss-splash__icon {
+  width: 160px;
+  height: 160px;
+  border-radius: 36px;
+  box-shadow: 0 0 48px rgba(0, 229, 255, 0.35),
+    0 0 0 1px rgba(0, 229, 255, 0.25);
+}
+
+.abyss-splash__title {
+  margin: 40px 0 0;
+  /* Letter spacing trails the last letter: shift back to stay centred. */
+  margin-right: -8px;
+  font-family: 'Rajdhani', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  color: #00E5FF;
+  text-shadow: 0 0 16px rgba(0, 229, 255, 0.6);
+}
+
+.abyss-splash__bar {
+  position: relative;
+  width: 220px;
+  max-width: 60vw;
+  height: 3px;
+  margin-top: 28px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: rgba(123, 156, 192, 0.18);
+}
+
+.abyss-splash__bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #1DE9B6, #00E5FF);
+  animation: abyss-splash-slide 1.4s ease-in-out infinite;
+}
+
+@keyframes abyss-splash-slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+
+.abyss-splash__text {
+  margin: 20px 0 0;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #7B9CC0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #abyss-splash {
+    transition: none;
+  }
+
+  .abyss-splash__bar::before {
+    width: 60%;
+    animation: none;
+  }
+}

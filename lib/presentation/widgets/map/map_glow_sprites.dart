@@ -34,7 +34,7 @@ void _paintGlow(Canvas canvas, MapGlow glow) {
       Shadow.convertRadiusToSigma(_blurRadius),
     );
   canvas.drawCircle(center, radius + _spread, shadow);
-  if (glow == MapGlow.passage) {
+  if (glow == MapGlow.passage || glow == MapGlow.wreck) {
     final core = Paint()..color = color.withValues(alpha: 0.3);
     canvas.drawCircle(center, radius, core);
     return;
@@ -63,6 +63,7 @@ void _paintBolt(Canvas canvas, Offset center, Color color) {
 
 Color _glowColor(MapGlow glow) => switch (glow) {
       MapGlow.passage => AbyssColors.biolumPurple,
+      MapGlow.wreck => AbyssColors.energyYellow,
       MapGlow.capturedBase => AbyssColors.biolumCyan,
       MapGlow.hostileBase || MapGlow.none => AbyssColors.error,
     };

@@ -46,13 +46,9 @@ class MapPainter extends CustomPainter {
       final rect = _cellRect(i);
       _drawSprite(canvas, sprites?.svg(visual.terrainSprite), rect, image,
           fallback: fallback);
-      if (visual.glow != MapGlow.none) {
-        _drawSprite(canvas, sprites?.glow(visual.glow), rect, image);
-      }
-      final content = visual.contentSprite;
-      if (content != null) {
-        _drawSprite(canvas, sprites?.svg(content),
-            rect.deflate(_contentInset), visual.dimmed ? dimmed : image);
+      if (!visual.aboveFog) {
+        _drawContent(canvas, visual, rect, image,
+            visual.dimmed ? dimmed : image);
       }
       if (visual.pending) pending.addRect(rect.deflate(1));
       if (!visual.revealed) fog.addRect(rect);
@@ -68,6 +64,24 @@ class MapPainter extends CustomPainter {
       fog,
       Paint()..color = AbyssColors.abyssBlack.withValues(alpha: 0.7),
     );
+    // A second pass over the few cells seen through the fog (a wreck).
+    for (var i = 0; i < visuals.length; i++) {
+      if (visuals[i].aboveFog) {
+        _drawContent(canvas, visuals[i], _cellRect(i), image, image);
+      }
+    }
+  }
+
+  void _drawContent(Canvas canvas, MapCellVisual visual, Rect rect,
+      Paint glow, Paint content) {
+    if (visual.glow != MapGlow.none) {
+      _drawSprite(canvas, sprites?.glow(visual.glow), rect, glow);
+    }
+    final sprite = visual.contentSprite;
+    if (sprite != null) {
+      _drawSprite(
+          canvas, sprites?.svg(sprite), rect.deflate(_contentInset), content);
+    }
   }
 
   Rect _cellRect(int index) => Rect.fromLTWH(

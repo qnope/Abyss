@@ -7,7 +7,7 @@ import '../../extensions/terrain_type_extensions.dart';
 const playerBaseSvgPath = 'assets/icons/map_content/player_base.svg';
 
 /// Glowing marker drawn under a cell's content.
-enum MapGlow { none, passage, capturedBase, hostileBase }
+enum MapGlow { none, passage, capturedBase, hostileBase, wreck }
 
 /// Everything needed to draw one map cell, decoupled from widgets so the
 /// whole map can be painted in a single pass.
@@ -19,6 +19,10 @@ class MapCellVisual {
   final bool revealed;
   final bool pending;
 
+  /// Whether the content and its glow are drawn over the fog of a hidden
+  /// cell: a wreck must be seen to be explored.
+  final bool aboveFog;
+
   const MapCellVisual({
     required this.terrainSprite,
     this.contentSprite,
@@ -26,6 +30,7 @@ class MapCellVisual {
     this.dimmed = false,
     this.revealed = false,
     this.pending = false,
+    this.aboveFog = false,
   });
 
   factory MapCellVisual.from(
@@ -37,9 +42,13 @@ class MapCellVisual {
   }) {
     final terrain = cell.terrain.svgPath;
     if (!isRevealed) {
+      final beacon = _isBeacon(cell);
       return MapCellVisual(
         terrainSprite: terrain,
+        contentSprite: beacon ? cell.content.svgPath : null,
+        glow: beacon ? MapGlow.wreck : MapGlow.none,
         pending: hasPendingExploration,
+        aboveFog: beacon,
       );
     }
     return MapCellVisual(
@@ -64,7 +73,12 @@ class MapCellVisual {
     return cell.content.svgPath;
   }
 
+  /// Content seen through the fog: a wreck not searched yet.
+  static bool _isBeacon(MapCell cell) =>
+      cell.content == CellContentType.wreck && !cell.isCollected;
+
   static MapGlow _glow(MapCell cell, bool isCaptured) {
+    if (_isBeacon(cell)) return MapGlow.wreck;
     return switch (cell.content) {
       CellContentType.passage => MapGlow.passage,
       CellContentType.transitionBase =>
@@ -81,9 +95,10 @@ class MapCellVisual {
       other.glow == glow &&
       other.dimmed == dimmed &&
       other.revealed == revealed &&
-      other.pending == pending;
+      other.pending == pending &&
+      other.aboveFog == aboveFog;
 
   @override
-  int get hashCode => Object.hash(
-        terrainSprite, contentSprite, glow, dimmed, revealed, pending);
+  int get hashCode => Object.hash(terrainSprite, contentSprite, glow, dimmed,
+        revealed, pending, aboveFog);
 }

@@ -12,4 +12,15 @@ extension RandomEventTypeDisplay on RandomEventType {
     RandomEventType.caravan => 'Caravane de tortues',
     RandomEventType.coldCurrent => 'Courant froid',
   };
+
+  /// Detailed illustration of the event, shown on its card.
+  String get illustration => 'assets/icons/events/${switch (this) {
+    RandomEventType.warmCurrent => 'warm_current',
+    RandomEventType.wreck => 'wreck',
+    RandomEventType.predators => 'predators',
+    RandomEventType.storm => 'storm',
+    RandomEventType.survivors => 'survivors',
+    RandomEventType.caravan => 'caravan',
+    RandomEventType.coldCurrent => 'cold_current',
+  }}.svg';
 }

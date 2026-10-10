@@ -40,6 +40,10 @@ abstract final class ScenarioParser {
         for (final MapEntry<String, Object?> e in turns.entries)
           _turnOf(e.key): _actionsOf(e.value),
       },
+      actors: <int, List<String?>>{
+        for (final MapEntry<String, Object?> e in turns.entries)
+          _turnOf(e.key): _actorsOf(e.value),
+      },
       otherwise: otherwise is String ? ScriptLibrary.byName(otherwise) : null,
       player: json['player'] as String?,
       mapSeed: json['mapSeed'] as int?,
@@ -75,6 +79,11 @@ abstract final class ScenarioParser {
     }
     return turn;
   }
+
+  static List<String?> _actorsOf(Object? value) => <String?>[
+    for (final Object? action in value as List)
+      (action as Map)['player'] as String?,
+  ];
 
   static List<ActionSpec> _actionsOf(Object? value) {
     if (value is! List) {

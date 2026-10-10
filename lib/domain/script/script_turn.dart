@@ -38,6 +38,15 @@ class ScriptTurn {
         _log = log,
         _executor = executor ?? ActionExecutor();
 
+  /// The same turn, played for [other] instead.
+  ScriptTurn asPlayer(Player other) => ScriptTurn(
+    game: game,
+    random: random,
+    log: _log,
+    player: other,
+    executor: _executor,
+  );
+
   /// Number of the turn being played.
   int get number => game.turn;
 

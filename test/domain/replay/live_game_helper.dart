@@ -5,6 +5,7 @@ import 'package:abyss/domain/action/end_turn_action.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_factory.dart';
 import 'package:abyss/domain/game/game_status.dart';
+import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/replay/seeded_random.dart';
 import 'package:abyss/domain/script/game_script.dart';
 import 'package:abyss/domain/script/script_log_entry.dart';
@@ -57,8 +58,8 @@ class SpyExecutor extends ActionExecutor {
 }
 
 /// What a replay must reproduce of [game].
-Map<String, Object?> snapshotOf(Game game) {
-  final player = game.humanPlayer;
+Map<String, Object?> snapshotOf(Game game, {Player? of}) {
+  final player = of ?? game.humanPlayer;
   return <String, Object?>{
     'turn': game.turn,
     'status': game.status.name,

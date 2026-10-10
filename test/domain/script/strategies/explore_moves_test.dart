@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/game/game_factory.dart';
 import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/script/script_log_entry.dart';
@@ -72,6 +73,20 @@ void main() {
     final turn = _turn();
     turn.explore(1, 2, (_) => 0);
     expect(turn.player.pendingExplorations, isEmpty);
+  });
+
+  test('a storm keeps the scouts home without a failed action', () {
+    final turn = _turn(scouts: 3);
+    turn.game.turn = 12;
+    turn.player.eventState.activate(RandomEventType.storm, untilTurn: 13);
+    final log = <ScriptLogEntry>[];
+    final stormy = ScriptTurn(game: turn.game, random: Random(1), log: log);
+
+    stormy.explore(1, 2, (_) => 0);
+
+    expect(stormy.player.pendingExplorations, isEmpty);
+    expect(stormy.player.unitsOnLevel(1)[UnitType.scout]!.count, 3);
+    expect(log, isEmpty);
   });
 
   test('revealedWhere only looks at revealed cells', () {

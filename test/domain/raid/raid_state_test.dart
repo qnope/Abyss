@@ -17,6 +17,20 @@ void main() {
     expect(state.totalNoise, 0);
   });
 
+  test('quiet lowers the gauge but keeps the total', () {
+    final state = RaidState()..addNoise(25);
+    state.quiet(10);
+    expect(state.noise, 15);
+    expect(state.totalNoise, 25);
+  });
+
+  test('quiet never takes the gauge below zero', () {
+    final state = RaidState()..addNoise(4);
+    state.quiet(10);
+    expect(state.noise, 0);
+    expect(state.totalNoise, 4);
+  });
+
   test('announce empties the gauge but keeps the total', () {
     final state = RaidState()..addNoise(42);
     state.announce(wave, 12);

@@ -53,6 +53,12 @@ class RaidState {
     totalNoise += amount;
   }
 
+  /// Takes up to [amount] points off the gauge, never below zero; the
+  /// noise already made still counts in [totalNoise].
+  void quiet(int amount) {
+    noise = noise > amount ? noise - amount : 0;
+  }
+
   void announce(MonsterLair wave, int turn) {
     incoming = wave;
     arrivalTurn = turn;

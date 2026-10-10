@@ -4,9 +4,10 @@ The data layer is the persistence layer of the Abyss project. It lives in `lib/d
 
 ## Overview
 
-This layer contains a single class: `GameRepository`. It is responsible for all persistence operations -- initializing the database, saving games, loading them, and deleting them.
+This layer contains two classes:
 
-**Source:** `lib/data/game_repository.dart`
+- `GameRepository` (`lib/data/game_repository.dart`) -- initializes the database, saves games, loads them and deletes them.
+- `LanguageSettings` (`lib/data/language_settings.dart`) -- the game language picked by the player (see [Language settings](#language-settings)).
 
 ## GameRepository API
 
@@ -62,3 +63,16 @@ await repo.delete(0);
 ## Storage
 
 All games are stored in a single Hive box named `games`, typed as `Box<Game>`. The box is accessed via the private `_box` getter.
+
+## Language settings
+
+`LanguageSettings` keeps the player's `LanguageChoice` (`lib/domain/settings/language_choice.dart`: `automatic`, `french`, `english`, `spanish`) in a `Box<String>` named `settings`, under the key `language`. The stored value is the choice's `code` (`fr`, `en`, `es`); `automatic` is never stored, choosing it deletes the key. An unknown code reads as `automatic`.
+
+| Member | Description |
+|---|---|
+| `static open()` | `Future<LanguageSettings>`. Opens the `settings` box (wiping it and reopening it empty if it cannot be opened) and reads the saved choice. Call it after `GameRepository.initialize()`, which initializes Hive. |
+| `LanguageSettings(Box<String>)` | Builds the settings from an already opened box. |
+| `choice` / `value` | The current `LanguageChoice`. |
+| `choose(LanguageChoice)` | Switches and saves; notifies listeners only when the choice really changes. |
+
+It is a `ChangeNotifier` and a `ValueListenable<LanguageChoice>`, so the app switches language as soon as it changes.

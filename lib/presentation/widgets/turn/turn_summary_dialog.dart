@@ -7,6 +7,7 @@ import '../../theme/abyss_colors.dart';
 import '../resource/resource_icon.dart';
 import '../raid/raid_turn_section.dart';
 import '../volcano/volcano_turn_section.dart';
+import 'attack_turn_section.dart';
 import 'event_turn_section.dart';
 import 'exploration_summary_section.dart';
 import 'objective_turn_section.dart';
@@ -53,10 +54,11 @@ class _TurnSummaryDialog extends StatelessWidget {
     final hasVolcano = VolcanoTurnSection.hasContent(result);
     final hasEvent = EventTurnSection.hasContent(result);
     final hasObjectives = ObjectiveTurnSection.hasContent(result);
+    final hasAttacks = AttackTurnSection.hasContent(result);
 
     if (!hasChanges && !hasWarnings && !hasLosses && !showArmy &&
         !hasExplorations && !hasRaid && !hasVolcano && !hasEvent &&
-        !hasObjectives) {
+        !hasObjectives && !hasAttacks) {
       return Text(l10n.turnNoChange);
     }
 
@@ -72,6 +74,7 @@ class _TurnSummaryDialog extends StatelessWidget {
         if (hasExplorations)
           ExplorationSummarySection(explorations: result.explorations),
         if (hasRaid) RaidTurnSection(result: result),
+        if (hasAttacks) AttackTurnSection(result: result),
         if (hasVolcano) VolcanoTurnSection(result: result),
         if (hasEvent) EventTurnSection(result: result),
         if (hasObjectives) ObjectiveTurnSection(result: result),

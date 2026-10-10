@@ -2999,4 +2999,71 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get assaultBaseIntact => 'La base tient bon';
+
+  @override
+  String factionAttackBanner(String faction, int turn, int remaining) {
+    String _temp0 = intl.Intl.pluralLogic(
+      remaining,
+      locale: localeName,
+      other: 'dans $remaining tours',
+      one: 'dans $remaining tour',
+      zero: 'ce tour',
+    );
+    return '$faction attaque : fin du tour $turn, $_temp0';
+  }
+
+  @override
+  String factionAttackArmy(String units) {
+    return 'Armée : $units';
+  }
+
+  @override
+  String factionAttackSheetTitle(String faction) {
+    return 'Attaque de $faction';
+  }
+
+  @override
+  String factionAttackSheetArrival(int turn) {
+    return 'Frappe la base à la fin du tour $turn';
+  }
+
+  @override
+  String get factionAttackSheetArmy => 'Armée envoyée';
+
+  @override
+  String get factionAttackSheetHint =>
+      'Les unités du niveau 1 et le rempart défendront la base.';
+
+  @override
+  String factionAttackRepelled(String faction) {
+    return '$faction a attaqué : attaque repoussée';
+  }
+
+  @override
+  String factionAttackDamaged(String faction) {
+    return '$faction a attaqué : base endommagée';
+  }
+
+  @override
+  String factionAttackPillaged(String faction) {
+    return '$faction a attaqué : base pillée';
+  }
+
+  @override
+  String get factionAttackReport => 'Voir le rapport';
+
+  @override
+  String get tipFactionAttackTitle => 'Une faction t\'attaque';
+
+  @override
+  String get tipFactionAttackLine1 =>
+      'Une faction rivale a envoyé son armée : elle frappera ta base à la date annoncée.';
+
+  @override
+  String get tipFactionAttackLine2 =>
+      'Touche le bandeau pour voir sa composition exacte et prépare tes défenseurs du niveau 1.';
+
+  @override
+  String get tipFactionAttackLine3 =>
+      'Si elle gagne, le rempart (ou le QG) baisse et une part de tes ressources est pillée.';
 }

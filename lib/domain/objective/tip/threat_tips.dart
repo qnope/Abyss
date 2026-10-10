@@ -4,7 +4,7 @@ import 'tip_id.dart';
 import 'tip_triggers.dart';
 
 /// The tips of the threats: the raids on the base, the monster families
-/// and the waves of the Volcano.
+/// the waves of the Volcano and the attacks of the factions.
 const List<Tip> threatTips = [
   Tip(
     id: TipId.raidAnnounced,
@@ -30,5 +30,10 @@ const List<Tip> threatTips = [
     id: TipId.volcanoWave,
     category: TipCategory.threats,
     trigger: TipTriggers.volcanoWave,
+  ),
+  Tip(
+    id: TipId.factionAttack,
+    category: TipCategory.threats,
+    trigger: TipTriggers.factionAttack,
   ),
 ];

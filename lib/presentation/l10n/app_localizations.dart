@@ -4365,6 +4365,90 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'La base tient bon'**
   String get assaultBaseIntact;
+
+  /// No description provided for @factionAttackBanner.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} attaque : fin du tour {turn}, {remaining, plural, =0{ce tour} one{dans {remaining} tour} other{dans {remaining} tours}}'**
+  String factionAttackBanner(String faction, int turn, int remaining);
+
+  /// No description provided for @factionAttackArmy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Armée : {units}'**
+  String factionAttackArmy(String units);
+
+  /// No description provided for @factionAttackSheetTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Attaque de {faction}'**
+  String factionAttackSheetTitle(String faction);
+
+  /// No description provided for @factionAttackSheetArrival.
+  ///
+  /// In fr, this message translates to:
+  /// **'Frappe la base à la fin du tour {turn}'**
+  String factionAttackSheetArrival(int turn);
+
+  /// No description provided for @factionAttackSheetArmy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Armée envoyée'**
+  String get factionAttackSheetArmy;
+
+  /// No description provided for @factionAttackSheetHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les unités du niveau 1 et le rempart défendront la base.'**
+  String get factionAttackSheetHint;
+
+  /// No description provided for @factionAttackRepelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} a attaqué : attaque repoussée'**
+  String factionAttackRepelled(String faction);
+
+  /// No description provided for @factionAttackDamaged.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} a attaqué : base endommagée'**
+  String factionAttackDamaged(String faction);
+
+  /// No description provided for @factionAttackPillaged.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} a attaqué : base pillée'**
+  String factionAttackPillaged(String faction);
+
+  /// No description provided for @factionAttackReport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le rapport'**
+  String get factionAttackReport;
+
+  /// No description provided for @tipFactionAttackTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une faction t\'attaque'**
+  String get tipFactionAttackTitle;
+
+  /// No description provided for @tipFactionAttackLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une faction rivale a envoyé son armée : elle frappera ta base à la date annoncée.'**
+  String get tipFactionAttackLine1;
+
+  /// No description provided for @tipFactionAttackLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche le bandeau pour voir sa composition exacte et prépare tes défenseurs du niveau 1.'**
+  String get tipFactionAttackLine2;
+
+  /// No description provided for @tipFactionAttackLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si elle gagne, le rempart (ou le QG) baisse et une part de tes ressources est pillée.'**
+  String get tipFactionAttackLine3;
 }
 
 class _AppLocalizationsDelegate

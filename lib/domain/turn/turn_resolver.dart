@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../event/event_resolver.dart';
 import '../faction/faction_fall.dart';
+import '../faction/faction_attack_report.dart';
 import '../game/defeat_checker.dart';
 import '../game/game.dart';
 import '../map/exploration_resolver.dart';
@@ -16,8 +17,13 @@ import 'turn_result.dart';
 
 class TurnResolver {
   /// [random] drives the raid fights and the random events; pass a seeded
-  /// one for a reproducible turn.
-  TurnResult resolve(Game game, {Random? random}) {
+  /// one for a reproducible turn. [attacks] are the attacks on the human
+  /// base fought just before, to report in the result.
+  TurnResult resolve(
+    Game game, {
+    Random? random,
+    List<FactionAttackReport> attacks = const [],
+  }) {
     final previousTurn = game.turn;
     final humanId = game.humanPlayer.id;
     TurnResult? humanResult;
@@ -91,6 +97,7 @@ class TurnResolver {
       predators: event.predators,
       objectives: objectives[humanId]!,
       temporaryObjectives: TemporaryObjectives.endedBy(event),
+      attacks: attacks,
     );
   }
 }

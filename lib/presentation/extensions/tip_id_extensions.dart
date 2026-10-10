@@ -27,6 +27,7 @@ extension TipIdDisplay on TipId {
     TipId.monsterFamilies =>
       MonsterFamily.armoured.svgPathAt(MonsterDifficulty.medium),
     TipId.volcanoWave => krakenSvgPath,
+    TipId.factionAttack => UnitType.guardian.iconPath,
     TipId.chestAndRuins => CellContentType.ruins.svgPath!,
     TipId.transitionBase || TipId.events => GuideBubble.portraitPath,
     TipId.descent => BuildingType.descentModule.iconPath,

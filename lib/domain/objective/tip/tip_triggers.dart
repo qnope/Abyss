@@ -53,6 +53,10 @@ abstract final class TipTriggers {
         cell.lair?.family != null,
   );
 
+  /// A faction announced an attack on the base.
+  static bool factionAttack(Game game, Player player) =>
+      player.raidState.attacks.isNotEmpty;
+
   static bool volcanoWave(Game game, Player player) =>
       player.volcanoState.isIncoming;
 

@@ -754,5 +754,19 @@
   "@assaultHeadquarters": {
     "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } }
   },
-  "assaultBaseIntact": "The base held"
+  "assaultBaseIntact": "The base held",
+  "factionAttackBanner": "{faction} attacks: end of turn {turn}, {remaining, plural, =0{this turn} one{in {remaining} turn} other{in {remaining} turns}}",
+  "factionAttackArmy": "Army: {units}",
+  "factionAttackSheetTitle": "Attack by {faction}",
+  "factionAttackSheetArrival": "Hits the base at the end of turn {turn}",
+  "factionAttackSheetArmy": "Army sent",
+  "factionAttackSheetHint": "The level 1 units and the rampart will defend the base.",
+  "factionAttackRepelled": "{faction} attacked: attack repelled",
+  "factionAttackDamaged": "{faction} attacked: base damaged",
+  "factionAttackPillaged": "{faction} attacked: base pillaged",
+  "factionAttackReport": "View the report",
+  "tipFactionAttackTitle": "A faction is attacking you",
+  "tipFactionAttackLine1": "A rival faction sent its army: it will hit your base on the announced date.",
+  "tipFactionAttackLine2": "Tap the banner to see its exact composition and get your level 1 defenders ready.",
+  "tipFactionAttackLine3": "If it wins, the rampart (or the headquarters) drops and part of your resources is pillaged."
 }

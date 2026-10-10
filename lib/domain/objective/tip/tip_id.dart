@@ -46,4 +46,6 @@ enum TipId {
   caravan,
   @HiveField(19)
   coldCurrent,
+  @HiveField(20)
+  factionAttack,
 }

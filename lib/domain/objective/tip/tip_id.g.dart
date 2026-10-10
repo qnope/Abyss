@@ -53,6 +53,8 @@ class TipIdAdapter extends TypeAdapter<TipId> {
         return TipId.caravan;
       case 19:
         return TipId.coldCurrent;
+      case 20:
+        return TipId.factionAttack;
       default:
         return TipId.noiseGauge;
     }
@@ -101,6 +103,8 @@ class TipIdAdapter extends TypeAdapter<TipId> {
         writer.writeByte(18);
       case TipId.coldCurrent:
         writer.writeByte(19);
+      case TipId.factionAttack:
+        writer.writeByte(20);
     }
   }
 

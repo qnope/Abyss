@@ -1,11 +1,12 @@
 import 'package:hive_ce/hive.dart';
 
 import 'objective_id.dart';
+import 'tip/tip_id.dart';
 
 part 'objective_state.g.dart';
 
 /// Per-player bookkeeping of the objectives: those completed, whether the
-/// tutorial guides the player and whether tip cards show up.
+/// tutorial guides the player, whether tip cards show up and those seen.
 @HiveType(typeId: 54)
 class ObjectiveState {
   /// Objectives completed, in the order they were; a completion stays,
@@ -23,16 +24,30 @@ class ObjectiveState {
   @HiveField(2, defaultValue: false)
   bool tipsEnabled;
 
+  /// Tip cards already opened, in the order they were; none for the games
+  /// saved before the tip cards.
+  @HiveField(3)
+  final List<TipId> seenTips;
+
   ObjectiveState({
     List<ObjectiveId>? completed,
     this.tutorialEnabled = false,
     this.tipsEnabled = false,
-  }) : completed = completed ?? [];
+    List<TipId>? seenTips,
+  }) : completed = completed ?? [],
+       seenTips = seenTips ?? [];
 
   bool isCompleted(ObjectiveId id) => completed.contains(id);
 
   /// Records [id] as completed, once.
   void complete(ObjectiveId id) {
     if (!isCompleted(id)) completed.add(id);
+  }
+
+  bool hasSeen(TipId id) => seenTips.contains(id);
+
+  /// Records the tip [id] as seen, once.
+  void markSeen(TipId id) {
+    if (!hasSeen(id)) seenTips.add(id);
   }
 }

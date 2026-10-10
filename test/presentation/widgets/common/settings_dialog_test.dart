@@ -4,10 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/objective/objective_state.dart';
+import 'package:abyss/domain/objective/tip/tip_id.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/common/settings_dialog.dart';
+import 'package:abyss/presentation/widgets/tip/tip_guide.dart';
 
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/test_svg_helper.dart';
 
 void main() {
   group('showSettingsDialog', () {
@@ -128,6 +131,22 @@ void main() {
       expect(state().tipsEnabled, isTrue);
       expect(state().tutorialEnabled, isTrue);
       expect(repository.saveCallCount, 1);
+    });
+
+    testWidgets('« Revoir les fiches » opens the Guide of the tips seen', (
+      tester,
+    ) async {
+      mockSvgAssets();
+      addTearDown(clearSvgMocks);
+      state().markSeen(TipId.lair);
+      await open(tester);
+
+      await tester.ensureVisible(find.text('Revoir les fiches'));
+      await tester.tap(find.text('Revoir les fiches'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(TipGuide), findsOneWidget);
+      expect(find.text('Les repaires'), findsOneWidget);
     });
   });
 }

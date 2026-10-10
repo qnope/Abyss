@@ -20,6 +20,7 @@ import '../../widgets/guide/guide_bubble.dart';
 import '../../widgets/guide/guide_scope.dart';
 import '../../widgets/history/history_sheet.dart';
 import '../../widgets/tech/tech_tree_view.dart';
+import '../../widgets/tip/tip_presenter.dart';
 import 'game_screen_actions.dart';
 import 'game_screen_event_actions.dart';
 import 'game_screen_map_actions.dart';
@@ -41,6 +42,8 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   int _currentTab = 0;
   int _currentLevel = 1;
+  late final TipPresenter _tips =
+      TipPresenter(game: widget.game, repository: widget.repository);
   Player get _human => widget.game.humanPlayer;
   Set<int> get _unlockedLevels => widget.game.levels.keys.toSet();
 
@@ -48,6 +51,12 @@ class _GameScreenState extends State<GameScreen> {
     if (widget.game.levels.containsKey(level)) {
       setState(() => _currentLevel = level);
     }
+  }
+
+  /// Redraws after a player's action, then opens the tip it may call for.
+  void _changed() {
+    setState(() {});
+    _tips.showAfterAction(context);
   }
 
   @override
@@ -88,7 +97,7 @@ class _GameScreenState extends State<GameScreen> {
         resources: human.resources,
         worksite: human.worksite,
         onBuildingTap: (b) => showBuildingDetailAction(
-          context, g, widget.repository, b, () => setState(() {})),
+          context, g, widget.repository, b, _changed),
       ),
       1 => buildMapTab(
         context,
@@ -97,14 +106,14 @@ class _GameScreenState extends State<GameScreen> {
         currentLevel: _currentLevel,
         unlockedLevels: _unlockedLevels,
         onLevelSelected: _selectLevel,
-        onChanged: () => setState(() {}),
+        onChanged: _changed,
       ),
       2 => ArmyListView(
         unitsPerLevel: human.unitsPerLevel,
         barracksLevel: human.buildings[BuildingType.barracks]!.level,
         buildings: human.buildings,
         onUnitTap: (t) => showUnitDetailAction(
-          context, g, t, () => setState(() {}),
+          context, g, t, _changed,
           level: _currentLevel),
       ),
       3 => TechTreeView(
@@ -113,9 +122,9 @@ class _GameScreenState extends State<GameScreen> {
         resources: human.resources,
         researchDone: !human.worksite.canResearch,
         onUnlock: (branch) =>
-          unlockBranch(g, branch, () => setState(() {})),
+          unlockBranch(g, branch, _changed),
         onResearch: (branch, option) =>
-          researchTech(g, branch, option, () => setState(() {})),
+          researchTech(g, branch, option, _changed),
       ),
       _ => const SizedBox.shrink(),
     };
@@ -142,14 +151,14 @@ class _GameScreenState extends State<GameScreen> {
     setState(() {});
     if (!mounted) return;
     await showTurnOutcome(context, widget.game, widget.repository, result,
-        () => setState(() {}));
+        _changed, tips: _tips);
   }
 
   void _openPendingEvent() {
     final pending = _human.eventState.pending;
     if (pending == null) return;
     openEventCard(context, widget.game, widget.repository, pending,
-        () => setState(() {}));
+        _changed);
   }
 
   Future<void> _showSettings() async {

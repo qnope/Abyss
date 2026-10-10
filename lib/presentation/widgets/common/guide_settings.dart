@@ -3,10 +3,13 @@ import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/objective/objective_migration.dart';
 import '../../../domain/objective/objective_state.dart';
+import '../../theme/abyss_colors.dart';
+import '../tip/tip_guide.dart';
 import 'labeled_switch.dart';
 
-/// The guide and tip switches of the human player of [game]; each change
-/// is saved with the game through [repository] right away.
+/// The guide and tip switches of the human player of [game], each change
+/// saved with the game through [repository] right away, and the way to
+/// the Guide of the tips already seen.
 class GuideSettings extends StatefulWidget {
   const GuideSettings({
     super.key,
@@ -43,9 +46,15 @@ class _GuideSettingsState extends State<GuideSettings> {
         ),
         LabeledSwitch(
           title: 'Conseils',
-          subtitle: 'Une fiche présente chaque écran la première fois',
+          subtitle: 'Une fiche explique chaque nouveauté à sa première apparition',
           value: _state.tipsEnabled,
           onChanged: (on) => _change((state) => state.tipsEnabled = on),
+        ),
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(Icons.menu_book, color: AbyssColors.biolumCyan),
+          title: const Text('Revoir les fiches'),
+          onTap: () => showTipGuide(context, _state),
         ),
       ],
     );

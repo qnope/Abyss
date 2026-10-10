@@ -20,19 +20,22 @@ class ObjectiveStateAdapter extends TypeAdapter<ObjectiveState> {
       completed: (fields[0] as List?)?.cast<ObjectiveId>(),
       tutorialEnabled: fields[1] == null ? false : fields[1] as bool,
       tipsEnabled: fields[2] == null ? false : fields[2] as bool,
+      seenTips: (fields[3] as List?)?.cast<TipId>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, ObjectiveState obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.completed)
       ..writeByte(1)
       ..write(obj.tutorialEnabled)
       ..writeByte(2)
-      ..write(obj.tipsEnabled);
+      ..write(obj.tipsEnabled)
+      ..writeByte(3)
+      ..write(obj.seenTips);
   }
 
   @override

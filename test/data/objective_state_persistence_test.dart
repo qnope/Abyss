@@ -7,6 +7,7 @@ import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/objective/objective_state.dart';
+import 'package:abyss/domain/objective/tip/tip_id.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:hive_ce/src/binary/binary_reader_impl.dart';
@@ -73,7 +74,9 @@ void main() {
   test('an ObjectiveState survives its adapter', () {
     final state = ObjectiveState(tutorialEnabled: true, tipsEnabled: true)
       ..complete(ObjectiveId.mines)
-      ..complete(ObjectiveId.hqLevel1);
+      ..complete(ObjectiveId.hqLevel1)
+      ..markSeen(TipId.raidAnnounced)
+      ..markSeen(TipId.noiseGauge);
     final writer = BinaryWriterImpl(Hive)..write(state);
 
     final decoded =
@@ -82,6 +85,28 @@ void main() {
     expect(decoded.completed, [ObjectiveId.mines, ObjectiveId.hqLevel1]);
     expect(decoded.tutorialEnabled, isTrue);
     expect(decoded.tipsEnabled, isTrue);
+    expect(decoded.seenTips, [TipId.raidAnnounced, TipId.noiseGauge]);
+  });
+
+  test('a state saved before the tip cards decodes with none seen', () {
+    final writer = BinaryWriterImpl(Hive)
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write([ObjectiveId.hqLevel1])
+      ..writeByte(1)
+      ..write(true)
+      ..writeByte(2)
+      ..write(true);
+
+    final decoded = ObjectiveStateAdapter().read(
+      BinaryReaderImpl(writer.toBytes(), Hive),
+    );
+
+    expect(decoded.tipsEnabled, isTrue);
+    expect(decoded.seenTips, isEmpty);
+    expect(decoded.hasSeen(TipId.noiseGauge), isFalse);
+    decoded.markSeen(TipId.noiseGauge);
+    expect(decoded.seenTips, [TipId.noiseGauge]);
   });
 
   test('a state saved before the tips decodes with the tips off', () {
@@ -104,7 +129,8 @@ void main() {
   test('a player carries its objectives through a save and a reload', () async {
     final player = Player(name: 'Nemo', id: 'nemo-id')
       ..savedObjectiveState = (ObjectiveState(tutorialEnabled: true)
-        ..complete(ObjectiveId.hqLevel1));
+        ..complete(ObjectiveId.hqLevel1)
+        ..markSeen(TipId.lair));
 
     final loaded = (await _reload(tempDir, Game.singlePlayer(player)))
         .humanPlayer
@@ -112,6 +138,7 @@ void main() {
 
     expect(loaded.completed, [ObjectiveId.hqLevel1]);
     expect(loaded.tutorialEnabled, isTrue);
+    expect(loaded.seenTips, [TipId.lair]);
   });
 
   test('a player saved before the objectives decodes without state', () {

@@ -1,3 +1,4 @@
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/raid/noise_rules.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/game/game.dart';
@@ -5,6 +6,7 @@ import 'package:abyss/domain/objective/objective_state.dart';
 import 'package:abyss/domain/objective/tip/event_tips.dart';
 import 'package:abyss/domain/objective/tip/tip_catalog.dart';
 import 'package:abyss/domain/objective/tip/tip_id.dart';
+import 'package:abyss/presentation/extensions/building_type_extensions.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/objective_helpers.dart';
@@ -22,6 +24,18 @@ void main() {
   group('TipCatalog', () {
     test('holds one tip per id, in the order of the ids', () {
       expect(TipCatalog.all.map((tip) => tip.id), TipId.values);
+    });
+
+    test('names the buildings as the base shows them', () {
+      String text(TipId id) => TipCatalog.byId(id).lines.join(' ');
+      expect(
+        text(TipId.raidAnnounced),
+        contains(BuildingType.coralCitadel.displayName),
+      );
+      expect(
+        text(TipId.descent),
+        contains(BuildingType.descentModule.displayName),
+      );
     });
 
     test('every tip has a title and 2 or 3 short lines', () {

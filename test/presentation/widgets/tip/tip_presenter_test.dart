@@ -118,11 +118,16 @@ void main() {
     expect(repository.saveCallCount, 0);
   });
 
-  testWidgets('nothing opens once the game is over', (tester) async {
+  testWidgets('nothing opens once the game is over, unless play goes on', (
+    tester,
+  ) async {
     game.status = GameStatus.victory;
     await pump(tester);
     await tap(tester, 'next');
     expect(find.byType(TipCard), findsNothing);
+    game.status = GameStatus.freePlay;
+    await tap(tester, 'next');
+    expect(find.text('La jauge de bruit'), findsOneWidget);
   });
 
   testWidgets('after an action, opens once the frame is drawn', (tester) async {

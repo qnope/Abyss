@@ -45,7 +45,7 @@ const List<Tip> mapTips = [
     category: TipCategory.map,
     title: 'La descente',
     lines: [
-      'Ton Module de descente envoie des unités au niveau inférieur, par '
+      'Ton Module de Descente envoie des unités au niveau inférieur, par '
           'la Faille.',
       'Attention : une unité descendue ne remonte plus.',
       'En bas t\'attendent d\'autres repaires, et la route du Noyau.',

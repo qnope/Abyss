@@ -101,5 +101,10 @@ void main() {
       setBuilding(player(), BuildingType.descentModule, 1);
       expect(applies(TipId.descent), isTrue);
     });
+
+    test('descent: not for a save older than the descent module', () {
+      player().buildings.remove(BuildingType.descentModule);
+      expect(applies(TipId.descent), isFalse);
+    });
   });
 }

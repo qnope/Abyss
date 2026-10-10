@@ -16,7 +16,7 @@ const List<Tip> threatTips = [
       'Ton bruit a attiré des monstres : ils frapperont ta base dans '
           '${NoiseRules.warningTurns} tours.',
       'Recrute des défenseurs, les Harponneurs sont faits pour ça.',
-      'Le rempart de la Citadelle de corail t\'aidera aussi à tenir.',
+      'Le rempart de la Citadelle corallienne t\'aidera aussi à tenir.',
     ],
     trigger: TipTriggers.raidAnnounced,
   ),

@@ -21,9 +21,9 @@ class TipPresenter {
 
   /// Opens the next tip, if any; completes once it is closed. Does
   /// nothing while a tip is open, when the tips are off or once the game
-  /// is over.
+  /// is over (won or lost, unless the play goes on after the victory).
   Future<void> showNext(BuildContext context) async {
-    if (_showing || game.status != GameStatus.playing) return;
+    if (_showing || !_inPlay) return;
     final player = game.humanPlayer;
     final tip = TipCatalog.nextFor(game, player);
     if (tip == null) return;
@@ -36,6 +36,9 @@ class TipPresenter {
       _showing = false;
     }
   }
+
+  bool get _inPlay =>
+      game.status == GameStatus.playing || game.status == GameStatus.freePlay;
 
   /// Opens the next tip once the frame after a player's action is drawn,
   /// unless another page, sheet or dialog (a fight, a report) covers the

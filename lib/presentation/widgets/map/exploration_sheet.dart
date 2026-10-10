@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/abyss_colors.dart';
+import 'sheet_notice.dart';
 
 void showExplorationSheet(
   BuildContext context, {
@@ -10,6 +11,7 @@ void showExplorationSheet(
   required int revealSide,
   required bool isEligible,
   required VoidCallback onConfirm,
+  String? notice,
 }) {
   showModalBottomSheet<void>(
     context: context,
@@ -21,6 +23,7 @@ void showExplorationSheet(
       revealSide: revealSide,
       isEligible: isEligible,
       onConfirm: onConfirm,
+      notice: notice,
     ),
   );
 }
@@ -33,6 +36,9 @@ class _ExplorationSheet extends StatelessWidget {
   final bool isEligible;
   final VoidCallback onConfirm;
 
+  /// Timed notice about the target, e.g. the countdown of a wreck.
+  final String? notice;
+
   const _ExplorationSheet({
     required this.targetX,
     required this.targetY,
@@ -40,6 +46,7 @@ class _ExplorationSheet extends StatelessWidget {
     required this.revealSide,
     required this.isEligible,
     required this.onConfirm,
+    this.notice,
   });
 
   @override
@@ -64,6 +71,7 @@ class _ExplorationSheet extends StatelessWidget {
               color: AbyssColors.biolumCyan,
             ),
           ),
+          if (notice != null) SheetNotice(notice!),
           const SizedBox(height: 16),
           _infoRow(textTheme, 'Co\u00fbt', '1 \u00e9claireur'),
           const SizedBox(height: 8),

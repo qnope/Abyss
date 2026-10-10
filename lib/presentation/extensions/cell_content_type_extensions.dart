@@ -1,5 +1,7 @@
+import '../../domain/event/random_event_type.dart';
 import '../../domain/map/cell_content_type.dart';
 import '../../domain/map/monster_difficulty.dart';
+import 'random_event_type_extensions.dart';
 
 extension CellContentTypeExtensions on CellContentType {
   String get label => switch (this) {
@@ -23,8 +25,7 @@ extension CellContentTypeExtensions on CellContentType {
     CellContentType.passage => null,
     CellContentType.volcanicKernel =>
       'assets/icons/terrain/volcanic_kernel.svg',
-    // Shown as ruins until the wreck has its own art.
-    CellContentType.wreck => 'assets/icons/map_content/ruins.svg',
+    CellContentType.wreck => RandomEventType.wreck.illustration,
   };
 }
 

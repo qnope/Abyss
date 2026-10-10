@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
@@ -6,6 +7,7 @@ import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
+import 'package:abyss/presentation/extensions/random_event_type_extensions.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 
 void main() {
@@ -89,6 +91,45 @@ void main() {
       );
       expect(hostile.glow, MapGlow.hostileBase);
       expect(captured.glow, MapGlow.capturedBase);
+    });
+
+    test('a hidden wreck shows through the fog with its halo', () {
+      final v = MapCellVisual.from(
+        cellWith(CellContentType.wreck),
+        isRevealed: false,
+      );
+      expect(v.revealed, isFalse);
+      expect(v.contentSprite, RandomEventType.wreck.illustration);
+      expect(v.glow, MapGlow.wreck);
+      expect(v.aboveFog, isTrue);
+    });
+
+    test('a revealed wreck keeps its sprite and halo, under no fog', () {
+      final v = MapCellVisual.from(
+        cellWith(CellContentType.wreck),
+        isRevealed: true,
+      );
+      expect(v.contentSprite, RandomEventType.wreck.illustration);
+      expect(v.glow, MapGlow.wreck);
+      expect(v.aboveFog, isFalse);
+    });
+
+    test('a searched wreck is dimmed and loses its halo', () {
+      final v = MapCellVisual.from(
+        cellWith(CellContentType.wreck, collectedBy: 'someone'),
+        isRevealed: true,
+      );
+      expect(v.dimmed, isTrue);
+      expect(v.glow, MapGlow.none);
+    });
+
+    test('other hidden contents never show through the fog', () {
+      for (final content in CellContentType.values) {
+        if (content == CellContentType.wreck) continue;
+        final v = MapCellVisual.from(cellWith(content), isRevealed: false);
+        expect(v.aboveFog, isFalse, reason: content.name);
+        expect(v.contentSprite, isNull, reason: content.name);
+      }
     });
 
     test('equal inputs give equal visuals', () {

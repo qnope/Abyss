@@ -92,6 +92,8 @@ class _MapPage extends StatelessWidget {
         MapCellVisual(terrainSprite: paths.last, glow: glow, dimmed: true,
             contentSprite: paths.first, revealed: true, pending: true),
       MapCellVisual(terrainSprite: paths.first),
+      MapCellVisual(terrainSprite: paths.first, contentSprite: paths.last,
+          glow: MapGlow.wreck, aboveFog: true),
     ];
     const columns = 8;
     final rows = (visuals.length / columns).ceil();

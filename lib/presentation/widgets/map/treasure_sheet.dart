@@ -3,6 +3,7 @@ import '../../../domain/map/cell_content_type.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
+import 'sheet_notice.dart';
 
 void showTreasureSheet(
   BuildContext context, {
@@ -10,6 +11,7 @@ void showTreasureSheet(
   required int targetY,
   required CellContentType contentType,
   required VoidCallback onCollect,
+  String? notice,
 }) {
   showModalBottomSheet<void>(
     context: context,
@@ -19,6 +21,7 @@ void showTreasureSheet(
       targetY: targetY,
       contentType: contentType,
       onCollect: onCollect,
+      notice: notice,
     ),
   );
 }
@@ -29,11 +32,15 @@ class _TreasureSheet extends StatelessWidget {
   final CellContentType contentType;
   final VoidCallback onCollect;
 
+  /// Timed notice under the description, e.g. the wreck's countdown.
+  final String? notice;
+
   const _TreasureSheet({
     required this.targetX,
     required this.targetY,
     required this.contentType,
     required this.onCollect,
+    this.notice,
   });
 
   @override
@@ -62,6 +69,7 @@ class _TreasureSheet extends StatelessWidget {
               color: AbyssColors.onSurfaceDim,
             ),
           ),
+          if (notice != null) SheetNotice(notice!),
           const Divider(height: 24),
           FilledButton(
             onPressed: () {

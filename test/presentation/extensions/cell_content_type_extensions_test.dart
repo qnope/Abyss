@@ -1,7 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/presentation/extensions/cell_content_type_extensions.dart';
+import 'package:abyss/presentation/extensions/random_event_type_extensions.dart';
 
 void main() {
   group('CellContentTypeExtensions', () {
@@ -32,9 +34,12 @@ void main() {
       }
     });
 
-    test('a wreck is shown with the ruins until it has its own art', () {
+    test('a wreck is drawn with the wreck event illustration', () {
       expect(CellContentType.wreck.label, 'Épave');
-      expect(CellContentType.wreck.svgPath, CellContentType.ruins.svgPath);
+      expect(
+        CellContentType.wreck.svgPath,
+        RandomEventType.wreck.illustration,
+      );
     });
 
     test('volcanicKernel has correct label', () {

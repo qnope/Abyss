@@ -13,6 +13,7 @@ class CombatantBuilder {
   static List<Combatant> playerCombatantsFrom(
     Map<UnitType, int> selectedUnits, {
     UnitBoost boost = UnitBoost.none,
+    CombatSide side = CombatSide.player,
   }) {
     final List<Combatant> combatants = <Combatant>[];
     for (final MapEntry<UnitType, int> entry in selectedUnits.entries) {
@@ -27,7 +28,7 @@ class CombatantBuilder {
       for (int i = 0; i < count; i++) {
         combatants.add(
           Combatant(
-            side: CombatSide.player,
+            side: side,
             typeKey: entry.key.name,
             maxHp: hp,
             atk: atk,

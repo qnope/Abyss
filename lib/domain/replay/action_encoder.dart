@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../action/action.dart';
+import '../action/attack_base_action.dart';
 import '../action/attack_transition_base_action.dart';
 import '../action/attack_volcanic_kernel_action.dart';
 import '../action/choose_event_action.dart';
@@ -25,7 +26,9 @@ import 'seeded_random.dart';
 /// when it is a [SeededRandom], so that a replay rolls the same dice.
 abstract final class ActionEncoder {
   /// `null` for an action that is not a player move (ending the turn).
-  static Map<String, Object?>? encode(Action action) {
+  /// An attack on [humanId] names its target `human`, whose id changes
+  /// from one game to the next.
+  static Map<String, Object?>? encode(Action action, {String? humanId}) {
     return switch (action) {
       UpgradeBuildingAction a => {
         'do': 'upgrade',
@@ -66,6 +69,14 @@ abstract final class ActionEncoder {
         units: a.selectedUnits,
         random: a.random,
       ),
+      AttackBaseAction a => {
+        'do': 'attackPlayer',
+        'target': a.targetPlayerId == humanId
+            ? AttackBaseAction.human
+            : a.targetPlayerId,
+        'units': _unitsOf(a.selectedUnits),
+        if (a.random is SeededRandom) 'seed': (a.random! as SeededRandom).seed,
+      },
       AttackVolcanicKernelAction a => _at(
         'attackKernel',
         a.targetX,
@@ -109,6 +120,7 @@ abstract final class ActionEncoder {
     CollectTreasureAction a => a.random is SeededRandom,
     FightMonsterAction a => a.random is SeededRandom,
     AttackTransitionBaseAction a => a.random is SeededRandom,
+    AttackBaseAction a => a.random is SeededRandom,
     AttackVolcanicKernelAction a => a.random is SeededRandom,
     DescendAction a => a.random is SeededRandom,
     _ => true,

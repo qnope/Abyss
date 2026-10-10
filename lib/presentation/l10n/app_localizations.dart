@@ -1156,6 +1156,12 @@ abstract class AppLocalizations {
   /// **'Événement'**
   String get historyCategoryEvent;
 
+  /// No description provided for @historyCategoryAssault.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut'**
+  String get historyCategoryAssault;
+
   /// No description provided for @actionFailureUnknown.
   ///
   /// In fr, this message translates to:
@@ -1305,6 +1311,36 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Noyau dégradé : remontez le QG'**
   String get actionFailureKernelDegraded;
+
+  /// No description provided for @actionFailureNoSuchPlayer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueur introuvable'**
+  String get actionFailureNoSuchPlayer;
+
+  /// No description provided for @actionFailureCannotAttackSelf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de s\'attaquer soi-même'**
+  String get actionFailureCannotAttackSelf;
+
+  /// No description provided for @actionFailurePlayerFallen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette base est tombée'**
+  String get actionFailurePlayerFallen;
+
+  /// No description provided for @actionFailureBaseNotRevealed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Base non repérée : explorez jusqu\'à elle'**
+  String get actionFailureBaseNotRevealed;
+
+  /// No description provided for @actionFailureAttackTooEarly.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trop tôt pour attaquer une base'**
+  String get actionFailureAttackTooEarly;
 
   /// No description provided for @actionFailureNoPendingEvent.
   ///
@@ -1515,6 +1551,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Base pillée par un raid'**
   String get historyRaidLost;
+
+  /// No description provided for @historyAssaultWon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut réussi contre {name}'**
+  String historyAssaultWon(String name);
+
+  /// No description provided for @historyAssaultFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut repoussé par {name}'**
+  String historyAssaultFailed(String name);
+
+  /// No description provided for @historyAssaultSuffered.
+  ///
+  /// In fr, this message translates to:
+  /// **'Base attaquée par {name}'**
+  String historyAssaultSuffered(String name);
+
+  /// No description provided for @historyAssaultRepelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut de {name} repoussé'**
+  String historyAssaultRepelled(String name);
 
   /// No description provided for @historyPredatorsRepelled.
   ///

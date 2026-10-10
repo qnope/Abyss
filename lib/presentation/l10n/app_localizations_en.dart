@@ -687,6 +687,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get historyCategoryEvent => 'Event';
 
   @override
+  String get historyCategoryAssault => 'Assault';
+
+  @override
   String get actionFailureUnknown => 'Action not possible';
 
   @override
@@ -763,6 +766,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get actionFailureKernelDegraded =>
       'Core degraded: raise the headquarters';
+
+  @override
+  String get actionFailureNoSuchPlayer => 'Player not found';
+
+  @override
+  String get actionFailureCannotAttackSelf => 'You cannot attack yourself';
+
+  @override
+  String get actionFailurePlayerFallen => 'That base has fallen';
+
+  @override
+  String get actionFailureBaseNotRevealed =>
+      'Base not spotted: explore as far as it';
+
+  @override
+  String get actionFailureAttackTooEarly => 'Too early to attack a base';
 
   @override
   String get actionFailureNoPendingEvent => 'No pending event';
@@ -927,6 +946,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get historyRaidLost => 'Base looted by a raid';
+
+  @override
+  String historyAssaultWon(String name) {
+    return 'Assault on $name succeeded';
+  }
+
+  @override
+  String historyAssaultFailed(String name) {
+    return 'Assault repelled by $name';
+  }
+
+  @override
+  String historyAssaultSuffered(String name) {
+    return 'Base attacked by $name';
+  }
+
+  @override
+  String historyAssaultRepelled(String name) {
+    return 'Assault by $name repelled';
+  }
 
   @override
   String get historyPredatorsRepelled => 'Predator shoal repelled';

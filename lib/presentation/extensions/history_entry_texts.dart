@@ -47,6 +47,7 @@ extension HistoryEntryTexts on HistoryEntry {
     VolcanoEntry(:final victory) =>
       victory ? l10n.historyVolcanoRepelled : l10n.historyVolcanoLost,
     EventEntry(:final type) => type.label(l10n),
+    final BaseAssaultEntry entry => _assaultTitle(l10n, entry),
   };
 
   /// Detail under the title, `null` when the entry has none.
@@ -78,6 +79,18 @@ String _raidTitle(AppLocalizations l10n, RaidEntry entry) {
         : l10n.historyPredatorsLost;
   }
   return entry.victory ? l10n.historyRaidRepelled : l10n.historyRaidLost;
+}
+
+String _assaultTitle(AppLocalizations l10n, BaseAssaultEntry entry) {
+  final String name = entry.opponentName;
+  if (entry.defending) {
+    return entry.victory
+        ? l10n.historyAssaultSuffered(name)
+        : l10n.historyAssaultRepelled(name);
+  }
+  return entry.victory
+      ? l10n.historyAssaultWon(name)
+      : l10n.historyAssaultFailed(name);
 }
 
 /// The choice the player made, for an event that offered one.

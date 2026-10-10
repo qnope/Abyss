@@ -47,6 +47,7 @@ import 'package:abyss/domain/worksite/worksite.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
+    registerAdapter(BaseAssaultEntryAdapter());
     registerAdapter(BuildingAdapter());
     registerAdapter(BuildingEntryAdapter());
     registerAdapter(BuildingTypeAdapter());
@@ -105,6 +106,7 @@ extension HiveRegistrar on HiveInterface {
 
 extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
+    registerAdapter(BaseAssaultEntryAdapter());
     registerAdapter(BuildingAdapter());
     registerAdapter(BuildingEntryAdapter());
     registerAdapter(BuildingTypeAdapter());

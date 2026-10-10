@@ -11,7 +11,12 @@ class ActionExecutor {
     final result = action.execute(game, player);
     if (result.isSuccess) {
       final bool isHuman = player.id == game.humanPlayerId;
-      game.replay?.record(turn, action, playerId: isHuman ? null : player.id);
+      game.replay?.record(
+        turn,
+        action,
+        playerId: isHuman ? null : player.id,
+        humanId: game.humanPlayerId,
+      );
       final entry = action.makeHistoryEntry(game, player, result, game.turn);
       if (entry != null) player.addHistoryEntry(entry);
       player.raidState.addNoise(action.noiseMade(player));

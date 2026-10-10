@@ -690,6 +690,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get historyCategoryEvent => 'Evento';
 
   @override
+  String get historyCategoryAssault => 'Asalto';
+
+  @override
   String get actionFailureUnknown => 'Acción imposible';
 
   @override
@@ -771,6 +774,23 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get actionFailureKernelDegraded =>
       'Núcleo degradado: sube el Cuartel General';
+
+  @override
+  String get actionFailureNoSuchPlayer => 'Jugador no encontrado';
+
+  @override
+  String get actionFailureCannotAttackSelf => 'No puedes atacarte a ti mismo';
+
+  @override
+  String get actionFailurePlayerFallen => 'Esa base ha caído';
+
+  @override
+  String get actionFailureBaseNotRevealed =>
+      'Base no localizada: explora hasta ella';
+
+  @override
+  String get actionFailureAttackTooEarly =>
+      'Demasiado pronto para atacar una base';
 
   @override
   String get actionFailureNoPendingEvent => 'Ningún evento pendiente';
@@ -936,6 +956,26 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get historyRaidLost => 'Base saqueada por una incursión';
+
+  @override
+  String historyAssaultWon(String name) {
+    return 'Asalto a $name logrado';
+  }
+
+  @override
+  String historyAssaultFailed(String name) {
+    return 'Asalto rechazado por $name';
+  }
+
+  @override
+  String historyAssaultSuffered(String name) {
+    return 'Base atacada por $name';
+  }
+
+  @override
+  String historyAssaultRepelled(String name) {
+    return 'Asalto de $name rechazado';
+  }
 
   @override
   String get historyPredatorsRepelled => 'Banco de depredadores repelido';

@@ -695,6 +695,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get historyCategoryEvent => 'Événement';
 
   @override
+  String get historyCategoryAssault => 'Assaut';
+
+  @override
   String get actionFailureUnknown => 'Action impossible';
 
   @override
@@ -771,6 +774,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get actionFailureKernelDegraded => 'Noyau dégradé : remontez le QG';
+
+  @override
+  String get actionFailureNoSuchPlayer => 'Joueur introuvable';
+
+  @override
+  String get actionFailureCannotAttackSelf =>
+      'Impossible de s\'attaquer soi-même';
+
+  @override
+  String get actionFailurePlayerFallen => 'Cette base est tombée';
+
+  @override
+  String get actionFailureBaseNotRevealed =>
+      'Base non repérée : explorez jusqu\'à elle';
+
+  @override
+  String get actionFailureAttackTooEarly => 'Trop tôt pour attaquer une base';
 
   @override
   String get actionFailureNoPendingEvent => 'Aucun événement en attente';
@@ -937,6 +957,26 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get historyRaidLost => 'Base pillée par un raid';
+
+  @override
+  String historyAssaultWon(String name) {
+    return 'Assaut réussi contre $name';
+  }
+
+  @override
+  String historyAssaultFailed(String name) {
+    return 'Assaut repoussé par $name';
+  }
+
+  @override
+  String historyAssaultSuffered(String name) {
+    return 'Base attaquée par $name';
+  }
+
+  @override
+  String historyAssaultRepelled(String name) {
+    return 'Assaut de $name repoussé';
+  }
 
   @override
   String get historyPredatorsRepelled => 'Banc de prédateurs repoussé';

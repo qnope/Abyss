@@ -30,6 +30,13 @@ enum ActionFailure {
   requiredBuildingMissing,
   requiredBuildingDegraded,
 
+  // Attacks on another player's base.
+  noSuchPlayer,
+  cannotAttackSelf,
+  playerFallen,
+  baseNotRevealed,
+  attackTooEarly,
+
   // Volcanic kernel.
   noVolcanicKernelHere,
   kernelAlreadyCaptured,

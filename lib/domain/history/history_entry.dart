@@ -22,6 +22,7 @@ part 'entries/reinforcement_entry.dart';
 part 'entries/raid_entry.dart';
 part 'entries/volcano_entry.dart';
 part 'entries/event_entry.dart';
+part 'entries/base_assault_entry.dart';
 part 'history_entry.g.dart';
 
 /// Abstract base class for all history entries.

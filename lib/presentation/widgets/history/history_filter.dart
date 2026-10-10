@@ -34,7 +34,8 @@ List<HistoryEntry> applyHistoryFilter(
         .where((e) =>
             e.category == HistoryEntryCategory.combat ||
             e.category == HistoryEntryCategory.raid ||
-            e.category == HistoryEntryCategory.volcano)
+            e.category == HistoryEntryCategory.volcano ||
+            e.category == HistoryEntryCategory.assault)
         .toList(),
     HistoryFilter.building => entries
         .where((e) => e.category == HistoryEntryCategory.building)

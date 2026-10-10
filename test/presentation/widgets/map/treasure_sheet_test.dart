@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/presentation/widgets/map/treasure_sheet.dart';
 
+import '../../../helpers/l10n_fixtures.dart';
+
 void main() {
   Widget buildOpener({
     required CellContentType contentType,
@@ -75,6 +77,29 @@ void main() {
       await tester.tap(find.text('Collecter le trésor'));
       await tester.pumpAndSettle();
       expect(called, isTrue);
+    });
+    testWidgets('a cell without treasure promises no loot', (tester) async {
+      const noTreasure = [
+        CellContentType.empty,
+        CellContentType.monsterLair,
+        CellContentType.transitionBase,
+        CellContentType.passage,
+        CellContentType.volcanicKernel,
+      ];
+      for (final content in noTreasure) {
+        await tester.pumpWidget(buildOpener(contentType: content));
+        await tester.tap(find.text('Open'));
+        await tester.pumpAndSettle();
+        expect(find.text(fr.mapTreasureTitle(3, 5)), findsOneWidget);
+        for (final loot in [
+          fr.mapTreasureResourceBonus,
+          fr.mapTreasureRuins,
+          fr.mapTreasureWreck,
+        ]) {
+          expect(find.text(loot), findsNothing, reason: content.name);
+        }
+        await tester.pumpWidget(const SizedBox());
+      }
     });
   });
 }

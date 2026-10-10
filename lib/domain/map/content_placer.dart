@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'cell_content_type.dart';
+import 'grid_position.dart';
 import 'map_cell.dart';
 import 'lair_builder.dart';
 import 'monster_difficulty.dart';
@@ -31,9 +32,12 @@ class ContentPlacer {
     required Random random,
     Set<int> reservedIndices = const {},
     int familySeed = 0,
+    List<GridPosition> otherBases = const [],
+    int minLairs = 5,
+    int maxLairs = 10,
   }) {
     final eligible = _buildEligibleIndices(
-      cells, width, height, baseX, baseY, reservedIndices,
+      cells, width, height, baseX, baseY, reservedIndices, otherBases,
     );
     eligible.shuffle(random);
 
@@ -55,7 +59,7 @@ class ContentPlacer {
 
     _adjustMonsterCount(
       cells, eligible, monsterIndices, monsterCount,
-      width, baseX, baseY, random, familySeed,
+      width, baseX, baseY, random, familySeed, minLairs, maxLairs,
     );
   }
 
@@ -64,6 +68,7 @@ class ContentPlacer {
     int width, int height,
     int baseX, int baseY,
     Set<int> reservedIndices,
+    List<GridPosition> otherBases,
   ) {
     final result = <int>[];
     for (var y = 0; y < height; y++) {
@@ -71,6 +76,11 @@ class ContentPlacer {
         final idx = y * width + x;
         final dist = max((x - baseX).abs(), (y - baseY).abs());
         if (dist <= 2) continue;
+        if (otherBases.any(
+          (b) => max((x - b.x).abs(), (y - b.y).abs()) <= 2,
+        )) {
+          continue;
+        }
         if (reservedIndices.contains(idx)) continue;
         result.add(idx);
       }
@@ -121,9 +131,9 @@ class ContentPlacer {
     List<int> monsterIndices,
     int monsterCount,
     int width, int baseX, int baseY,
-    Random random, int familySeed,
+    Random random, int familySeed, int minLairs, int maxLairs,
   ) {
-    while (monsterCount < 5) {
+    while (monsterCount < minLairs) {
       final empty = eligible.where(
         (i) => cells[i].content == CellContentType.empty,
       ).toList();
@@ -133,7 +143,7 @@ class ContentPlacer {
       _placeMonster(cells, i, x, y, baseX, baseY, random, familySeed);
       monsterCount++;
     }
-    while (monsterCount > 10) {
+    while (monsterCount > maxLairs) {
       final i = monsterIndices.removeLast();
       cells[i] = cells[i].copyWith(
         content: CellContentType.empty,

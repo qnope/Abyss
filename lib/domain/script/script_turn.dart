@@ -17,6 +17,10 @@ import 'script_log_entry.dart';
 class ScriptTurn {
   final Game game;
 
+  /// The player this turn acts for; the human player unless another one
+  /// is given, so a strategy can play a faction as well.
+  final Player player;
+
   /// The game's seeded generator; give it to every action that rolls dice
   /// so that a seed always replays the same game.
   final Random random;
@@ -28,11 +32,11 @@ class ScriptTurn {
     required this.game,
     required this.random,
     required List<ScriptLogEntry> log,
+    Player? player,
     ActionExecutor? executor,
-  })  : _log = log,
+  })  : player = player ?? game.humanPlayer,
+        _log = log,
         _executor = executor ?? ActionExecutor();
-
-  Player get player => game.humanPlayer;
 
   /// Number of the turn being played.
   int get number => game.turn;

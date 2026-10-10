@@ -41,13 +41,14 @@ class ScriptMilestones {
 
   ScriptMilestones();
 
-  /// Notes the steps [game] has reached by the end of turn [turn].
-  void observe(Game game, int turn) {
-    final Set<TransitionBaseType> held =
-        game.capturedBaseTypesOf(game.humanPlayerId);
+  /// Notes the steps [playerId] (the human by default) has reached in
+  /// [game] by the end of turn [turn].
+  void observe(Game game, int turn, {String? playerId}) {
+    final String id = playerId ?? game.humanPlayerId;
+    final Set<TransitionBaseType> held = game.capturedBaseTypesOf(id);
     if (held.contains(TransitionBaseType.faille)) failleCaptured ??= turn;
     if (held.contains(TransitionBaseType.cheminee)) chemineeCaptured ??= turn;
-    if (game.isVolcanicKernelCapturedBy(game.humanPlayerId)) {
+    if (game.isVolcanicKernelCapturedBy(id)) {
       kernelCaptured ??= turn;
     }
   }

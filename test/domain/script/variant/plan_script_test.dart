@@ -41,9 +41,11 @@ void main() {
     // turns, so a few more actions than the 21 above lack resources. The
     // monster families change the lair fights and the raid waves too, and
     // the normal difficulty makes the raid waves 6 % smaller, so the
-    // stocks run short a few more times than the 21 above.
+    // stocks ran short 25 times. The rewards of the objectives, credited
+    // at the end of the turns, fill the stocks back up: 4 of those
+    // actions no longer lack resources.
     final failures = report.log.where((e) => !e.success);
-    expect(failures.where((e) => e.reason != 'Rien à collecter').length, 25);
+    expect(failures.where((e) => e.reason != 'Rien à collecter').length, 21);
   });
 
   test('plays each turn later with a stretch and a jitter', () {

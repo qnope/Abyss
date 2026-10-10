@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../theme/abyss_colors.dart';
+import '../../theme/abyss_backdrop_theme.dart';
 import 'backdrop_image.dart';
 import 'marine_snow.dart';
 
@@ -19,20 +19,6 @@ class AbyssBackdrop extends StatelessWidget {
   /// the colony dome. On a wide screen the colony then sits just above the
   /// middle, between a menu title and its buttons, under the light rays.
   static const colonyFocus = Offset(800, 1200);
-
-  /// Opacity of the dark veil of a [dimmed] backdrop.
-  static const dimOpacity = 0.85;
-  static final Color dimColor = AbyssColors.abyssBlack.withValues(
-    alpha: dimOpacity,
-  );
-
-  /// Shown until the art is ready, matching its overall tones.
-  static const fallback = LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: [AbyssColors.trench, AbyssColors.deepNavy, AbyssColors.abyssBlack],
-    stops: [0, 0.45, 1],
-  );
 
   final Widget child;
 
@@ -58,7 +44,7 @@ class AbyssBackdrop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(gradient: fallback),
+      decoration: const BoxDecoration(gradient: AbyssBackdropTheme.fallback),
       child: Stack(
         alignment: Alignment.center,
         fit: StackFit.expand,
@@ -70,7 +56,7 @@ class AbyssBackdrop extends StatelessWidget {
               children: [
                 BackdropImage(asset: asset, focus: focus),
                 MarineSnow(animate: animate),
-                if (dimmed) ColoredBox(color: dimColor),
+                if (dimmed) ColoredBox(color: AbyssBackdropTheme.dimColor),
               ],
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../extensions/map_level_info.dart';
 import '../../theme/abyss_colors.dart';
+import 'map_level_info.dart';
 
 /// Horizontal row of level chips for switching between map depths.
 ///
@@ -79,8 +79,7 @@ class _LevelChip extends StatelessWidget {
               style: TextStyle(
                 color: fg,
                 fontSize: 13,
-                fontWeight:
-                    isActive ? FontWeight.w600 : FontWeight.w400,
+                fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
               ),
             ),
           ],

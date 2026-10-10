@@ -30,7 +30,7 @@ class BreathingRays {
   static const _levels = 24;
   static final List<Color> _alphas = [
     for (var i = 0; i < _levels; i++)
-      Color.fromRGBO(255, 255, 255, maxAlpha * i / (_levels - 1)),
+      AbyssColors.daylight.withValues(alpha: maxAlpha * i / (_levels - 1)),
   ];
 
   final List<Paint> _paints = [for (final _ in _shafts) Paint()];

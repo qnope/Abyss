@@ -5,8 +5,10 @@ import '../../theme/abyss_menu_theme.dart';
 /// A screen title glowing like bioluminescence, with an optional subtitle
 /// in small capitals below. Both shrink to fit a narrow box.
 ///
-/// Sits behind its own repaint boundary: the blurred glow is costly, and
-/// a button ripple nearby must not redraw it.
+/// Sits behind its own repaint boundary, so a button ripple nearby does
+/// not record its glyphs and shadows again. It does not spare the blur:
+/// with no raster cache (Impeller, CanvasKit), the glow is still blurred
+/// on every frame drawn.
 class GlowTitle extends StatelessWidget {
   final String title;
   final String? subtitle;

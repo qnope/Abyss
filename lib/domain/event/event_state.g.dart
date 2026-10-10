@@ -25,13 +25,16 @@ class EventStateAdapter extends TypeAdapter<EventState> {
       activeUntilTurn: (fields[5] as num?)?.toInt(),
       heating: fields[6] == null ? false : fields[6] as bool,
       eventsSeen: fields[7] == null ? 0 : (fields[7] as num).toInt(),
+      survivors: (fields[8] as num?)?.toInt(),
+      tradeFrom: fields[9] as ResourceType?,
+      tradeTo: fields[10] as ResourceType?,
     );
   }
 
   @override
   void write(BinaryWriter writer, EventState obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.nextDrawTurn)
       ..writeByte(1)
@@ -47,7 +50,13 @@ class EventStateAdapter extends TypeAdapter<EventState> {
       ..writeByte(6)
       ..write(obj.heating)
       ..writeByte(7)
-      ..write(obj.eventsSeen);
+      ..write(obj.eventsSeen)
+      ..writeByte(8)
+      ..write(obj.survivors)
+      ..writeByte(9)
+      ..write(obj.tradeFrom)
+      ..writeByte(10)
+      ..write(obj.tradeTo);
   }
 
   @override

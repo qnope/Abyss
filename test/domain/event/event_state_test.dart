@@ -1,5 +1,6 @@
 import 'package:abyss/domain/event/event_state.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
+import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -43,6 +44,26 @@ void main() {
     expect(state.pending, isNull);
     expect(state.pendingTurn, isNull);
     expect(state.lastDrawn, RandomEventType.caravan);
+  });
+
+  test('a new state holds no offer', () {
+    final state = EventState();
+    expect(state.survivors, isNull);
+    expect(state.tradeFrom, isNull);
+    expect(state.tradeTo, isNull);
+  });
+
+  test('clearPending forgets the offer of the settled event', () {
+    final state =
+        EventState()
+          ..setPending(RandomEventType.caravan, 7)
+          ..survivors = 4
+          ..tradeFrom = ResourceType.coral
+          ..tradeTo = ResourceType.algae
+          ..clearPending();
+    expect(state.survivors, isNull);
+    expect(state.tradeFrom, isNull);
+    expect(state.tradeTo, isNull);
   });
 
   test('an activated effect lasts through its last turn inclusive', () {

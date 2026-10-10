@@ -58,6 +58,18 @@ void main() {
     expect(find.byType(ResourceIcon), findsNothing);
   });
 
+  testWidgets('a game in free play shows its victory and resources', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      saveCardApp(summaryOf(outcome: SaveOutcome.freePlay)),
+    );
+
+    expect(find.text('★ VICTOIRE'), findsOneWidget);
+    expect(find.text('Tour 14 · Profondeurs · QG niv. 3'), findsOneWidget);
+    expect(find.byType(ResourceIcon), findsNWidgets(5));
+  });
+
   testWidgets('a lost game is greyed out', (tester) async {
     await tester.pumpWidget(
       saveCardApp(summaryOf(outcome: SaveOutcome.defeat)),

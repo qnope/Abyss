@@ -55,6 +55,26 @@ void main() {
     });
   });
 
+  group('a game won then played on', () {
+    final summary = summaryOf(
+      outcome: SaveOutcome.freePlay,
+      difficulty: Difficulty.easy,
+    );
+
+    test('is still badged as a victory in gold', () {
+      expect(summary.badgeLabel, '★ VICTOIRE');
+      expect(summary.badgeColor, AbyssColors.energyYellow);
+    });
+
+    test('tells its turn, depth and headquarters like a game in progress', () {
+      expect(summary.metaLine, 'Tour 14 · Profondeurs · QG niv. 3');
+    });
+
+    test('shows its resources rather than a footnote', () {
+      expect(summary.footnote, isNull);
+    });
+  });
+
   group('a lost game', () {
     final summary = summaryOf(
       outcome: SaveOutcome.defeat,

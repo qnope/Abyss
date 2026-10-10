@@ -31,23 +31,46 @@ void main() {
   });
 
   test('games still played are in progress, latest played first', () {
-    final SaveSections sections =
-        SaveSections.of([oldRun, won, recentRun, lost]);
+    final SaveSections sections = SaveSections.of([
+      oldRun,
+      won,
+      recentRun,
+      lost,
+    ]);
     expect(sections.inProgress, [recentRun, oldRun]);
   });
 
-  test('won, free play and lost games are finished, latest played first',
-      () {
-    final SaveSections sections =
-        SaveSections.of([won, oldRun, lost, free, recentRun]);
-    expect(sections.finished, [free, lost, won]);
+  test('a game won then played on is still in progress', () {
+    final SaveSections sections = SaveSections.of([
+      won,
+      oldRun,
+      lost,
+      free,
+      recentRun,
+    ]);
+    expect(sections.inProgress, [free, recentRun, oldRun]);
+  });
+
+  test('won and lost games are finished, latest played first', () {
+    final SaveSections sections = SaveSections.of([
+      won,
+      oldRun,
+      lost,
+      free,
+      recentRun,
+    ]);
+    expect(sections.finished, [lost, won]);
     expect(sections.isEmpty, isFalse);
   });
 
   test('the game to continue is the latest played in progress', () {
-    final SaveSections sections =
-        SaveSections.of([oldRun, free, recentRun]);
+    final SaveSections sections = SaveSections.of([oldRun, recentRun]);
     expect(sections.mostRecentInProgress, same(recentRun));
+  });
+
+  test('a game in free play can be continued', () {
+    final SaveSections sections = SaveSections.of([oldRun, free, recentRun]);
+    expect(sections.mostRecentInProgress, same(free));
   });
 
   test('only finished games leave nothing to continue', () {

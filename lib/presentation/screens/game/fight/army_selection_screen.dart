@@ -8,6 +8,8 @@ import '../../../../domain/game/game.dart';
 import '../../../../domain/map/monster_lair.dart';
 import '../../../../domain/unit/unit_type.dart';
 import '../../../../domain/replay/seeded_random.dart';
+import '../../../l10n/l10n_extension.dart';
+import '../../../widgets/fight/army_selection_actions.dart';
 import '../../../widgets/fight/monster_preview.dart';
 import '../../../widgets/fight/selection_summary_card.dart';
 import '../../../widgets/fight/unit_quantity_row.dart';
@@ -62,7 +64,7 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Préparer le combat')),
+      appBar: AppBar(title: Text(context.l10n.fightPrepare)),
       body: _buildBody(context),
     );
   }
@@ -94,22 +96,9 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
           totalDef: _totalDef,
           boost: _boost,
         ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed:
-                    _totalSelected == 0 ? null : () => _onLaunchPressed(),
-                child: const Text('Lancer le combat'),
-              ),
-            ),
-            const SizedBox(width: 12),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Annuler'),
-            ),
-          ],
+        ArmySelectionActions(
+          launchLabel: context.l10n.fightLaunch,
+          onLaunch: _totalSelected == 0 ? null : _onLaunchPressed,
         ),
       ],
     );

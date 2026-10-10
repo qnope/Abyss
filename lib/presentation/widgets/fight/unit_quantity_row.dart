@@ -48,7 +48,7 @@ class UnitQuantityRow extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Stock: $stock',
+                      context.l10n.fightStock(stock),
                       style: textTheme.bodySmall?.copyWith(
                         color: AbyssColors.onSurfaceDim,
                       ),

@@ -71,7 +71,7 @@ void main() {
     expect(find.byType(EventCard), findsOneWidget);
 
     final before = _harpoonists(game);
-    await tester.tap(find.text('Accueillir 4 Harponneurs'));
+    await tester.tap(find.text('Accueillir 4 harponneurs'));
     await tester.pumpAndSettle();
     expect(find.byType(EventCard), findsNothing);
     expect(_harpoonists(game), before + 4);
@@ -79,7 +79,7 @@ void main() {
     expect(repository.saveCallCount, 1);
     expect(changed, 1);
     expect(
-      find.text('Survivants : Accueillir 4 Harponneurs'),
+      find.text('Survivants : Accueillir 4 harponneurs'),
       findsOneWidget,
     );
   });

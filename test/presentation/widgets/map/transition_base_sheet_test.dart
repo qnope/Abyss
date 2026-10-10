@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/presentation/widgets/map/transition_base_sheet.dart';
@@ -7,7 +8,7 @@ import 'package:abyss/presentation/widgets/map/transition_base_sheet.dart';
 Widget _buildOpener({
   required TransitionBase base,
   bool hasBuildingRequirement = true,
-  String requiredBuildingName = 'le Module de Descente',
+  BuildingType requiredBuilding = BuildingType.descentModule,
   int unitCountOnTarget = 0,
   VoidCallback? onAttack,
   VoidCallback? onDescend,
@@ -20,7 +21,7 @@ Widget _buildOpener({
               transitionBase: base,
               level: 1,
               hasBuildingRequirement: hasBuildingRequirement,
-              requiredBuildingName: requiredBuildingName,
+              requiredBuilding: requiredBuilding,
               unitCountOnTarget: unitCountOnTarget,
               onAttack: onAttack,
               onDescend: onDescend),
@@ -46,7 +47,7 @@ void main() {
       expect(find.text('Faille Alpha'), findsOneWidget);
       expect(find.text('Faille Abyssale'), findsOneWidget);
       expect(find.text('4/5'), findsOneWidget);
-      expect(find.text('Neutre \u2014 Gardiens presents'),
+      expect(find.text('Neutre \u2014 Gardiens présents'),
           findsOneWidget);
     });
 
@@ -96,8 +97,8 @@ void main() {
       await t.pumpWidget(_buildOpener(
           base: base, onDescend: () {}));
       await _open(t);
-      expect(find.text('Capturee'), findsOneWidget);
-      expect(find.text('Envoyer des unites au Niveau 2'),
+      expect(find.text('Capturée'), findsOneWidget);
+      expect(find.text('Envoyer des unités au Niveau 2'),
           findsOneWidget);
     });
 
@@ -110,7 +111,7 @@ void main() {
       await t.pumpWidget(_buildOpener(
           base: base, onDescend: () => called = true));
       await _open(t);
-      await t.tap(find.text('Envoyer des unites au Niveau 2'));
+      await t.tap(find.text('Envoyer des unités au Niveau 2'));
       await t.pumpAndSettle();
       expect(called, isTrue);
     });
@@ -126,10 +127,12 @@ void main() {
           onDescend: () {}));
       await _open(t);
       final btn = t.widget<FilledButton>(find.widgetWithText(
-          FilledButton, 'Envoyer des unites au Niveau 2'));
+          FilledButton, 'Envoyer des unités au Niveau 2'));
       expect(btn.onPressed, isNull);
       expect(
-        find.textContaining('Construisez'),
+        find.text(
+          'Bâtiment requis pour envoyer des unités : Module de Descente',
+        ),
         findsOneWidget,
       );
     });
@@ -144,7 +147,7 @@ void main() {
           unitCountOnTarget: 15,
           onDescend: () {}));
       await _open(t);
-      expect(find.text('15 unites au Niveau 2'), findsOneWidget);
+      expect(find.text('15 unités au Niveau 2'), findsOneWidget);
     });
   });
 }

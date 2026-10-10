@@ -54,7 +54,9 @@ class TechTargetHeader extends StatelessWidget {
         const SizedBox(width: 8),
         ElevatedButton(
           onPressed: canAct ? onAct : null,
-          child: Text(level == null ? 'Débloquer' : 'Rechercher'),
+          child: Text(level == null
+              ? l10n.techScreenUnlock
+              : l10n.techScreenResearch),
         ),
       ],
     ]);
@@ -66,14 +68,14 @@ class TechTargetHeader extends StatelessWidget {
   String _title(AppLocalizations l10n) => switch (level) {
     null => branch.displayName(l10n),
     final l when _choice =>
-      '${branch.displayName(l10n)} · Niveau $l · Choix',
+      l10n.techScreenChoiceTitle(branch.displayName(l10n), l),
     final l => branch.nodeName(l10n, l),
   };
 
   String _subtitle(AppLocalizations l10n) => switch (level) {
     null => branch.description(l10n),
-    _ when _choice => "Une seule option par partie, l'autre sera perdue.",
-    final l => '${branch.displayName(l10n)} · Niveau $l · '
-        '${branch.nodeEffect(l10n, l)}',
+    _ when _choice => l10n.techScreenChoiceWarning,
+    final l => l10n.techScreenNodeSubtitle(
+      branch.displayName(l10n), l, branch.nodeEffect(l10n, l)),
   };
 }

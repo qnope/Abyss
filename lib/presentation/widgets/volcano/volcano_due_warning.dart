@@ -35,9 +35,7 @@ class VolcanoDueWarning extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Vague sur le Noyau ce tour : ${wave.waveLabel(context.l10n)}, '
-              'et aucune garnison. '
-              'Le Noyau perdra probablement un niveau.',
+              context.l10n.volcanoDueWarning(wave.waveLabel(context.l10n)),
               style: const TextStyle(color: AbyssColors.error),
             ),
           ),

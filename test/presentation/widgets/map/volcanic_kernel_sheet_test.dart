@@ -68,7 +68,7 @@ void main() {
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
       expect(
-        find.text('Le coeur brulant des abysses est garde '
+        find.text('Le cœur brûlant des abysses est gardé '
             'par de puissants gardiens.'),
         findsOneWidget,
       );
@@ -79,7 +79,7 @@ void main() {
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
       expect(
-        find.textContaining('Vous avez capturé le Noyau Volcanique'),
+        find.textContaining('Tu as capturé le Noyau Volcanique'),
         findsOneWidget,
       );
     });
@@ -91,7 +91,7 @@ void main() {
       );
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
-      expect(find.text('Garnison : 0 unités'), findsOneWidget);
+      expect(find.text('Garnison : 0 unité'), findsOneWidget);
       await tester.tap(find.text('Mettre en garnison'));
       await tester.pumpAndSettle();
       expect(called, isTrue);

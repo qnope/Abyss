@@ -90,7 +90,7 @@ RaidDueWarning? predatorsDueWarning(Game game, Player player) {
   return RaidDueWarning(
     wave: wave,
     defenderCount: RaidDueWarning.defenderCountOf(player),
-    attacker: 'Banc de prédateurs',
+    predators: true,
   );
 }
 

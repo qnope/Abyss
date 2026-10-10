@@ -13,8 +13,8 @@ class RaidDueWarning extends StatelessWidget {
   final MonsterLair wave;
   final int defenderCount;
 
-  /// What strikes: a raid, or anything fought like one.
-  final String attacker;
+  /// Whether a school of predators strikes, fought like a raid.
+  final bool predators;
 
   /// Whether losing this raid ends the game.
   final bool lastChance;
@@ -23,7 +23,7 @@ class RaidDueWarning extends StatelessWidget {
     super.key,
     required this.wave,
     required this.defenderCount,
-    this.attacker = 'Raid',
+    this.predators = false,
     this.lastChance = false,
   });
 
@@ -32,14 +32,11 @@ class RaidDueWarning extends StatelessWidget {
       .values
       .fold<int>(0, (sum, count) => sum + count);
 
-  /// e.g. « aucun défenseur », « 3 défenseurs ».
-  static String defendersLabel(int count) => count == 0
-      ? 'aucun défenseur'
-      : '$count ${count > 1 ? 'défenseurs' : 'défenseur'}';
-
   @override
   Widget build(BuildContext context) {
-    final defenders = defendersLabel(defenderCount);
+    final l10n = context.l10n;
+    final attacker =
+        predators ? l10n.randomEventPredatorsLabel : l10n.raidName;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -49,17 +46,21 @@ class RaidDueWarning extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              '$attacker ce tour : ${wave.waveLabel(context.l10n)} contre $defenders',
+              l10n.raidDueThisTurn(
+                attacker,
+                wave.waveLabel(l10n),
+                l10n.raidDefenders(defenderCount),
+              ),
               style: const TextStyle(color: AbyssColors.error),
             ),
           ),
         ]),
         if (lastChance)
-          const Padding(
-            padding: EdgeInsets.only(top: 8),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
             child: Text(
-              'Si ce raid est perdu, la partie est terminée.',
-              style: TextStyle(
+              l10n.raidLastChance,
+              style: const TextStyle(
                 color: AbyssColors.error,
                 fontWeight: FontWeight.bold,
               ),

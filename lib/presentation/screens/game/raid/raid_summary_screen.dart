@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/action/fight_monster_result.dart';
 import '../../../../domain/building/coral_citadel_rampart.dart';
 import '../../../../domain/raid/raid_report.dart';
+import '../../../l10n/l10n_extension.dart';
 import '../../../theme/abyss_colors.dart';
+import '../../../widgets/fight/fight_kill_count.dart';
+import '../../../widgets/fight/fight_loot_card.dart';
+import '../../../widgets/fight/fight_result_banner.dart';
 import '../../../widgets/fight/fight_turn_list.dart';
+import '../../../widgets/fight/fight_unit_accounting.dart';
 import '../../../widgets/fight/monster_preview.dart';
-import '../fight/fight_summary_screen_sections.dart';
 import 'raid_pillage_card.dart';
 
 /// Report of a raid on the base, or of a school of predators fought like
-/// one. Reuses the fight summary sections, plus the Citadel rampart and
-/// the pillaged resources.
+/// one. Reuses the fight report cards, plus the Citadel rampart and the
+/// pillaged resources.
 class RaidSummaryScreen extends StatelessWidget {
   final RaidReport report;
 
@@ -24,13 +27,20 @@ class RaidSummaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final result = _asFightResult();
+    final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(_title)),
+      appBar: AppBar(
+        title: Text(report.surprise
+            ? l10n.raidPredatorsTitle(report.turn)
+            : l10n.raidTitle(report.turn)),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(12),
         children: [
-          buildResultBanner(context, result),
+          FightResultBanner(
+            victory: report.victory,
+            turnCount: report.fight.turnCount,
+          ),
           const SizedBox(height: 12),
           MonsterPreview(lair: report.wave),
           if (report.rampartLevel > 0) ...[
@@ -39,45 +49,36 @@ class RaidSummaryScreen extends StatelessWidget {
           ],
           if (report.defenders.isNotEmpty) ...[
             const SizedBox(height: 12),
-            buildPlayerAccounting(context, result),
+            FightUnitAccounting(
+              sent: report.defenders,
+              intact: report.survivorsIntact,
+              wounded: report.wounded,
+              dead: report.dead,
+            ),
           ],
           const SizedBox(height: 12),
-          buildMonsterSection(context, result),
+          FightKillCount(fight: report.fight),
           const SizedBox(height: 12),
           report.victory
-              ? buildLoot(context, result)
+              ? FightLootCard(loot: report.loot)
               : RaidPillageCard(pillaged: report.pillaged),
           const SizedBox(height: 12),
           FightTurnList(summaries: report.fight.turnSummaries),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Retour à la base'),
+            child: Text(l10n.commonBackToBase),
           ),
         ],
       ),
     );
   }
 
-  String get _title => report.surprise
-      ? 'Banc de prédateurs (tour ${report.turn})'
-      : 'Raid sur la base (tour ${report.turn})';
-
-  FightMonsterResult _asFightResult() => FightMonsterResult.success(
-        victory: report.victory,
-        fight: report.fight,
-        loot: report.loot,
-        sent: report.defenders,
-        survivorsIntact: report.survivorsIntact,
-        wounded: report.wounded,
-        dead: report.dead,
-      );
-
   Widget _rampartCard(BuildContext context) {
     return Card(
       child: ListTile(
         leading: const Icon(Icons.fort, color: AbyssColors.coralPink),
-        title: Text('Rempart de la Citadelle niv. ${report.rampartLevel}'),
+        title: Text(context.l10n.raidRampart(report.rampartLevel)),
         subtitle: Text(CoralCitadelRampart.label(report.rampartLevel)),
       ),
     );

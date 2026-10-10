@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'map_level_info.dart';
 
@@ -20,6 +21,7 @@ class LevelSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -29,7 +31,8 @@ class LevelSelector extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: _LevelChip(
-                label: 'Niv $level: ${MapLevelInfo.nameOf(level)}',
+                label: l10n.mapLevelChip(
+                    level, MapLevelInfo.nameOf(l10n, level)),
                 isActive: level == currentLevel,
                 isUnlocked: unlockedLevels.contains(level),
                 onTap: () => onLevelSelected(level),

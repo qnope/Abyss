@@ -9,6 +9,7 @@ import '../../../../domain/unit/unit_type.dart';
 import '../../../../domain/replay/seeded_random.dart';
 import '../../../extensions/action_failure_extensions.dart';
 import '../../../l10n/l10n_extension.dart';
+import '../../../widgets/fight/army_selection_actions.dart';
 import '../../../widgets/fight/selection_summary_card.dart';
 import '../../../widgets/fight/unit_quantity_row.dart';
 import 'army_selection_summary.dart';
@@ -58,7 +59,10 @@ class _KernelArmySelectionScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Assaut: Noyau Volcanique')),
+      appBar: AppBar(
+        title: Text(context.l10n
+            .fightAssaultOn(context.l10n.buildingVolcanicKernelName)),
+      ),
       body: _buildBody(),
     );
   }
@@ -87,32 +91,12 @@ class _KernelArmySelectionScreenState
           totalDef: _summary.totalDef(_selected, _boost),
           boost: _boost,
         ),
-        if (!_hasAdmiral) ...[
-          const SizedBox(height: 8),
-          Text(
-            'Un Amiral des Abysses est requis pour lancer l\'assaut',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.error,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-        const SizedBox(height: 16),
-        Row(children: [
-          Expanded(
-            child: ElevatedButton(
-              onPressed: _totalSelected == 0 || !_hasAdmiral
-                  ? null
-                  : _onLaunchPressed,
-              child: const Text('Lancer l\'assaut'),
-            ),
-          ),
-          const SizedBox(width: 12),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
-          ),
-        ]),
+        ArmySelectionActions(
+          launchLabel: context.l10n.fightLaunchAssault,
+          admiralMissing: !_hasAdmiral,
+          onLaunch:
+              _totalSelected == 0 || !_hasAdmiral ? null : _onLaunchPressed,
+        ),
       ],
     );
   }

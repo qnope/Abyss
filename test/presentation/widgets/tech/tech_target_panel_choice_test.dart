@@ -76,7 +76,7 @@ void main() {
           t.widgetList<ElevatedButton>(find.byType(ElevatedButton));
       expect(buttons, hasLength(2));
       expect(buttons.every((b) => b.onPressed == null), isTrue);
-      expect(find.text('Une recherche par tour : attendez le prochain tour'),
+      expect(find.text('Une recherche par tour : attends le prochain tour'),
           findsOneWidget);
     });
 

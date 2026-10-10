@@ -4,16 +4,18 @@ import '../../../domain/event/random_event_type.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
 import '../../../domain/resource/resource_type.dart';
+import '../../../domain/unit/unit_type.dart';
 import '../../extensions/action_failure_extensions.dart';
 import '../../extensions/event_state_extensions.dart';
 import '../../extensions/monster_lair_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
+import '../../extensions/unit_type_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../raid/raid_due_warning.dart';
 import 'event_choice.dart';
 
-/// French wording of the event cards of [player], with the figures of
-/// [EventRules] and of the offer drawn.
+/// Wording of the event cards of [player], in the language of [l10n],
+/// with the figures of [EventRules] and of the offer drawn.
 class EventCardTexts {
   final AppLocalizations l10n;
   final Game game;
@@ -26,35 +28,33 @@ class EventCardTexts {
 
   /// Two lines telling what happens.
   List<String> linesOf(RandomEventType type) => switch (type) {
-    RandomEventType.warmCurrent => const [
-      'Un courant chaud traverse la base.',
-      'Il dope la production, mais son remous fait du bruit.',
+    RandomEventType.warmCurrent => [
+      l10n.eventCardWarmLine1,
+      l10n.eventCardWarmLine2,
     ],
-    RandomEventType.coldCurrent => const [
-      'Un courant froid glace les serres.',
-      'Sans chauffage, les algues poussent moins.',
+    RandomEventType.coldCurrent => [
+      l10n.eventCardColdLine1,
+      l10n.eventCardColdLine2,
     ],
     RandomEventType.predators => [
-      'Un banc de prédateurs rôde autour de la base.',
+      l10n.eventCardPredatorsLine1,
       _predatorsLine(),
     ],
-    RandomEventType.survivors => const [
-      'Une capsule échouée lance une fusée de détresse.',
-      'Ses survivants peuvent rejoindre la base, mais mangeront des algues.',
+    RandomEventType.survivors => [
+      l10n.eventCardSurvivorsLine1,
+      l10n.eventCardSurvivorsLine2,
     ],
-    RandomEventType.caravan => const [
-      'Une caravane de tortues passe près de la base.',
-      'Son crabe marchand propose un échange.',
+    RandomEventType.caravan => [
+      l10n.eventCardCaravanLine1,
+      l10n.eventCardCaravanLine2,
     ],
-    RandomEventType.storm => const [
-      'Exploration impossible pendant ${EventRules.stormTurns} tours.',
-      'La tempête couvre le bruit : jauge '
-          '−${EventRules.stormNoiseRelief}.',
+    RandomEventType.storm => [
+      l10n.eventCardStormLine1(EventRules.stormTurns),
+      l10n.eventCardStormLine2(EventRules.stormNoiseRelief),
     ],
     RandomEventType.wreck => [
-      'Une épave a coulé au bord de la zone explorée.',
-      'Explore-la avec un Éclaireur puis fouille-la avant '
-          '${_wreckTurns()} tours (+${EventRules.wreckNoise} bruit).',
+      l10n.eventCardWreckLine1,
+      l10n.eventCardWreckLine2(_wreckTurns(), EventRules.wreckNoise),
     ],
   };
 
@@ -75,32 +75,30 @@ class EventCardTexts {
 
   (String, String)? _labelsOf(RandomEventType type) => switch (type) {
     RandomEventType.warmCurrent => (
-      'Exploiter (+$_percent % algues, corail, minerai pendant $_turns '
-          'tours, +${EventRules.warmNoisePerTurn} bruit/tour)',
-      'Laisser passer',
+      l10n.eventCardWarmAccept(_percent, _turns, EventRules.warmNoisePerTurn),
+      l10n.eventCardWarmRefuse,
     ),
     RandomEventType.coldCurrent => (
-      'Chauffer les serres (−${EventRules.heatingEnergyPerTurn} '
-          'énergie/tour pendant $_turns tours)',
-      "Subir (−$_percent % d'algues pendant $_turns tours)",
+      l10n.eventCardColdAccept(EventRules.heatingEnergyPerTurn, _turns),
+      l10n.eventCardColdRefuse(_percent, _turns),
     ),
     RandomEventType.predators => (
-      "L'affronter (${player.eventState.predatorWave?.totalCount ?? 0} "
-          'monstres, fin du tour)',
-      "L'appâter (−${_bait()} algues)",
+      l10n.eventCardPredatorsAccept(
+        player.eventState.predatorWave?.totalCount ?? 0,
+      ),
+      l10n.eventCardPredatorsRefuse(_bait()),
     ),
-    RandomEventType.survivors => (_welcome(), 'Refuser'),
-    RandomEventType.caravan => (_trade(), 'Refuser'),
+    RandomEventType.survivors => (_welcome(), l10n.eventCardRefuse),
+    RandomEventType.caravan => (_trade(), l10n.eventCardRefuse),
     RandomEventType.storm || RandomEventType.wreck => null,
   };
 
   String _predatorsLine() {
     final wave = player.eventState.predatorWave;
-    final defenders = RaidDueWarning.defendersLabel(
-      RaidDueWarning.defenderCountOf(player),
-    );
-    if (wave == null) return 'Ils guettent la base.';
-    return '${wave.waveLabel(l10n)} contre $defenders du niveau 1.';
+    if (wave == null) return l10n.eventCardPredatorsWatching;
+    final defenders =
+        l10n.raidDefenders(RaidDueWarning.defenderCountOf(player));
+    return l10n.eventCardPredatorsWave(wave.waveLabel(l10n), defenders);
   }
 
   int _bait() =>
@@ -110,14 +108,20 @@ class EventCardTexts {
 
   String _welcome() {
     final int count = player.eventState.survivors ?? 0;
-    return 'Accueillir $count Harponneur${count > 1 ? 's' : ''}';
+    return l10n.eventCardSurvivorsAccept(
+      UnitType.harpoonist.units(l10n, count),
+    );
   }
 
   String _trade() {
     final from = player.eventState.tradeFrom?.displayName(l10n) ?? '?';
     final to = player.eventState.tradeTo?.displayName(l10n) ?? '?';
-    return 'Échanger ${EventRules.caravanGive} $from contre '
-        '${EventRules.caravanGet} $to';
+    return l10n.eventCardTrade(
+      EventRules.caravanGive,
+      from,
+      EventRules.caravanGet,
+      to,
+    );
   }
 
   int _wreckTurns() {

@@ -1,3 +1,5 @@
+import '../../l10n/app_localizations.dart';
+
 /// How the map depths, numbered from 1 at the surface, are named and
 /// pictured across the screens.
 abstract final class MapLevelInfo {
@@ -6,10 +8,11 @@ abstract final class MapLevelInfo {
 
   static const String _thumbnails = 'assets/illustrations/saves';
 
-  static String nameOf(int level) => switch (level) {
-    1 => 'Surface',
-    2 => 'Profondeurs',
-    _ => 'Noyau',
+  /// Name of the depth [level] in the language of [l10n].
+  static String nameOf(AppLocalizations l10n, int level) => switch (level) {
+    1 => l10n.mapLevelSurface,
+    2 => l10n.mapLevelDepths,
+    _ => l10n.mapLevelCore,
   };
 
   /// Square thumbnail of a save that reached [level].

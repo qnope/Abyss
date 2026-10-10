@@ -32,9 +32,9 @@ class TechChoiceRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(child: _card(context, TechOption.a)),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6),
-            child: Center(child: Text('ou')),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: Center(child: Text(context.l10n.techScreenOr)),
           ),
           Expanded(child: _card(context, TechOption.b)),
         ],

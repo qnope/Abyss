@@ -42,7 +42,7 @@ class MonsterPreview extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Niveau ${lair.level}',
+                  l10n.fightLevel(lair.level),
                   style: textTheme.bodyMedium?.copyWith(
                     color: AbyssColors.onSurfaceDim,
                   ),
@@ -59,11 +59,11 @@ class MonsterPreview extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                _StatChip(label: 'PV', value: stats.hp),
+                _StatChip(label: l10n.statHp, value: stats.hp),
                 const SizedBox(width: 12),
-                _StatChip(label: 'ATK', value: stats.atk),
+                _StatChip(label: l10n.statAttack, value: stats.atk),
                 const SizedBox(width: 12),
-                _StatChip(label: 'DEF', value: stats.def),
+                _StatChip(label: l10n.statDefense, value: stats.def),
               ],
             ),
             if (lair.family != null) ...[

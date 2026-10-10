@@ -45,7 +45,7 @@ class EventStatusBar extends StatelessWidget {
               onTap: onOpen,
               child: _line(
                 Icons.auto_awesome,
-                'Événement : ${pending.label(l10n)} — choisir',
+                l10n.eventCardStatusPending(pending.label(l10n)),
                 style?.copyWith(color: AbyssColors.biolumCyan),
               ),
             ),

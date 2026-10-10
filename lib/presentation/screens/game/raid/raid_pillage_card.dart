@@ -15,6 +15,7 @@ class RaidPillageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     final entries = pillaged.entries.where((e) => e.value > 0).toList();
     return Card(
       child: Padding(
@@ -23,13 +24,13 @@ class RaidPillageCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Pillage',
+              l10n.raidPillage,
               style: textTheme.titleMedium?.copyWith(color: AbyssColors.error),
             ),
             const SizedBox(height: 8),
             if (entries.isEmpty)
               Text(
-                'Rien à piller',
+                l10n.raidNothingToLoot,
                 style: textTheme.bodyMedium
                     ?.copyWith(color: AbyssColors.onSurfaceDim),
               ),
@@ -40,7 +41,7 @@ class RaidPillageCard extends StatelessWidget {
                   ResourceIcon(type: e.key, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    '${e.key.displayName(context.l10n)} -${e.value}',
+                    '${e.key.displayName(l10n)} -${e.value}',
                     style: textTheme.bodyMedium
                         ?.copyWith(color: AbyssColors.onSurface),
                   ),

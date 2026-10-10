@@ -1,0 +1,49 @@
+name: Experiment
+on:
+  push:
+    branches: [claude/ci-experiments]
+jobs:
+  run:
+    name: timings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - run: flutter test --concurrency=1 --file-reporter json:times.json | tail -2
+      - name: Slowest
+        run: |
+          python3 - <<'PY'
+          import json, collections
+          suites, starts = {}, {}
+          per_file, tests = collections.Counter(), []
+          cnt = collections.Counter()
+          for line in open('times.json'):
+              e = json.loads(line)
+              t = e.get('type')
+              if t == 'suite':
+                  s = e['suite']; suites[s['id']] = s['path'].split('/test/')[-1]
+              elif t == 'testStart':
+                  starts[e['test']['id']] = (e['time'], e['test']['suiteID'], e['test']['name'])
+              elif t == 'testDone' and not e.get('hidden') and e['testID'] in starts:
+                  t0, sid, name = starts[e['testID']]
+                  d = e['time'] - t0
+                  f = suites.get(sid, '?')
+                  if name.startswith('loading '): f = f; name = 'LOAD'
+                  per_file[f] += d; cnt[f] += 1
+                  tests.append((d, f, name))
+          print('files', len(per_file), 'total s', sum(per_file.values()) / 1000)
+          print('--- slowest files')
+          for f, ms in per_file.most_common(30): print(f'{ms/1000:7.1f}s {cnt[f]:4d} tests  {f}')
+          print('--- slowest tests')
+          for d, f, n in sorted(tests, reverse=True)[:25]: print(f'{d/1000:7.1f}s {f} :: {n[:70]}')
+          big = sum(ms for ms in per_file.values())
+          grp = collections.Counter()
+          for f, ms in per_file.items(): grp[f.split('/')[0] + '/' + (f.split('/')[1] if '/' in f else '')] += ms
+          print('--- by folder')
+          for k, ms in grp.most_common(15): print(f'{ms/1000:7.1f}s {k}')
+          PY

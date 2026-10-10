@@ -4,6 +4,7 @@ import '../../../../domain/action/action_executor.dart';
 import '../../../../domain/action/attack_base_action.dart';
 import '../../../../domain/action/attack_base_entries.dart';
 import '../../../../domain/action/attack_base_result.dart';
+import '../../../../domain/action/attack_post_action.dart';
 import '../../../../domain/game/game.dart';
 import '../../../../domain/game/player.dart';
 import '../../../../domain/replay/seeded_random.dart';
@@ -18,11 +19,14 @@ import 'base_assault_summary_screen.dart';
 
 /// Picks the army of the base level to send against the base of
 /// [target], then settles the assault and shows its report. No admiral is
-/// needed to attack a base.
+/// needed to attack a base. With [post], it is the Faille or Cheminée
+/// there that [target] holds which is attacked, with the units of the
+/// level it stands on.
 class BaseArmySelectionScreen extends StatefulWidget {
   final Game game;
   final GameRepository repository;
   final Player target;
+  final ({int x, int y, int level})? post;
   final VoidCallback onChanged;
 
   const BaseArmySelectionScreen({
@@ -31,6 +35,7 @@ class BaseArmySelectionScreen extends StatefulWidget {
     required this.repository,
     required this.target,
     required this.onChanged,
+    this.post,
   });
 
   @override
@@ -50,7 +55,7 @@ class _BaseArmySelectionScreenState extends State<BaseArmySelectionScreen> {
   @override
   Widget build(BuildContext context) {
     final units = widget.game.humanPlayer.unitsOnLevel(
-      AttackBaseAction.level,
+      widget.post?.level ?? AttackBaseAction.level,
     );
     final boost = _summary.boostOf(widget.game.humanPlayer);
     return Scaffold(
@@ -83,13 +88,29 @@ class _BaseArmySelectionScreenState extends State<BaseArmySelectionScreen> {
     );
   }
 
+  String _postName(({int x, int y, int level}) post) => widget.game
+      .levels[post.level]!
+      .cellAt(post.x, post.y)
+      .transitionBase!
+      .name;
+
   Future<void> _launch() async {
+    final post = widget.post;
+    final action = post == null
+        ? AttackBaseAction(
+            targetPlayerId: widget.target.id,
+            selectedUnits: _picked,
+            random: SeededRandom.fresh(),
+          )
+        : AttackPostAction(
+            targetX: post.x,
+            targetY: post.y,
+            level: post.level,
+            selectedUnits: _picked,
+            random: SeededRandom.fresh(),
+          );
     final result = ActionExecutor().execute(
-      AttackBaseAction(
-        targetPlayerId: widget.target.id,
-        selectedUnits: _picked,
-        random: SeededRandom.fresh(),
-      ),
+      action,
       widget.game,
       widget.game.humanPlayer,
     );
@@ -109,6 +130,7 @@ class _BaseArmySelectionScreenState extends State<BaseArmySelectionScreen> {
             widget.game.turn,
             widget.target.name,
             result as AttackBaseResult,
+            postName: post == null ? null : _postName(post),
           ),
         ),
       ),

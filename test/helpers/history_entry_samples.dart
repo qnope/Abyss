@@ -74,6 +74,7 @@ TurnEndEntry turnEndEntry(int turn) => TurnEndEntry(
 BaseAssaultEntry baseAssaultEntry({
   required bool victory,
   required bool defending,
+  String? post,
 }) => BaseAssaultEntry(
   turn: 14,
   victory: victory,
@@ -90,4 +91,5 @@ BaseAssaultEntry baseAssaultEntry({
   headquartersAfter: 5,
   pillaged: const {},
   loot: const {},
+  postName: post,
 );

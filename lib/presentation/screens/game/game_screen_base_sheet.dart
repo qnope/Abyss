@@ -7,10 +7,12 @@ import '../../../domain/game/player.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../../domain/map/transition_base_type.dart';
 import '../../widgets/map/transition_base_sheet.dart';
+import 'game_screen_faction_actions.dart';
 import 'game_screen_transition_actions.dart';
 
 /// Opens the sheet of the transition [base] at ([x], [y]): its assault,
-/// or the descent once captured.
+/// or the descent once captured; the attack on it when another player
+/// holds it.
 void openTransitionBaseSheet(
   BuildContext context,
   Game game,
@@ -23,6 +25,11 @@ void openTransitionBaseSheet(
   required ValueChanged<int> onLevelSelected,
 }) {
   final human = game.humanPlayer;
+  final holder = base.capturedBy;
+  if (holder != null && holder != human.id && game.players[holder] != null) {
+    openRivalPostSheet(context, game, repository, base, x, y, level, onChanged);
+    return;
+  }
   showTransitionBaseSheet(context,
     transitionBase: base, level: level,
     hasBuildingRequirement: _hasBuildingFor(human, base),

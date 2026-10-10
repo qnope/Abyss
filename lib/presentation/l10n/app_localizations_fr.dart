@@ -3066,4 +3066,39 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tipFactionAttackLine3 =>
       'Si elle gagne, le rempart (ou le QG) baisse et une part de tes ressources est pillée.';
+
+  @override
+  String historyPostWon(String post, String name) {
+    return '$post prise à $name';
+  }
+
+  @override
+  String historyPostFailed(String post, String name) {
+    return 'Assaut sur $post repoussé par $name';
+  }
+
+  @override
+  String historyPostSuffered(String post, String name) {
+    return '$post prise par $name';
+  }
+
+  @override
+  String historyPostRepelled(String post, String name) {
+    return 'Assaut de $name sur $post repoussé';
+  }
+
+  @override
+  String assaultPostTaken(String post) {
+    return '$post est à vous : son passage est détruit. Construisez le vôtre pour y descendre.';
+  }
+
+  @override
+  String assaultPostLost(String post) {
+    return '$post est perdue : votre passage est détruit, et les unités du niveau en dessous sont perdues avec elle.';
+  }
+
+  @override
+  String mapHeldBy(String name) {
+    return 'Tenue par $name';
+  }
 }

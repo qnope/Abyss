@@ -768,5 +768,12 @@
   "tipFactionAttackTitle": "A faction is attacking you",
   "tipFactionAttackLine1": "A rival faction sent its army: it will hit your base on the announced date.",
   "tipFactionAttackLine2": "Tap the banner to see its exact composition and get your level 1 defenders ready.",
-  "tipFactionAttackLine3": "If it wins, the rampart (or the headquarters) drops and part of your resources is pillaged."
+  "tipFactionAttackLine3": "If it wins, the rampart (or the headquarters) drops and part of your resources is pillaged.",
+  "historyPostWon": "{post} taken from {name}",
+  "historyPostFailed": "Assault on {post} repelled by {name}",
+  "historyPostSuffered": "{post} taken by {name}",
+  "historyPostRepelled": "Assault by {name} on {post} repelled",
+  "assaultPostTaken": "{post} is yours: its passage is destroyed. Build your own to go down through it.",
+  "assaultPostLost": "{post} is lost: your passage is destroyed, and the units on the level below are lost with it.",
+  "mapHeldBy": "Held by {name}"
 }

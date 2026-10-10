@@ -83,6 +83,10 @@ String _raidTitle(AppLocalizations l10n, RaidEntry entry) {
 
 String _assaultTitle(AppLocalizations l10n, BaseAssaultEntry entry) {
   final String name = entry.opponentName;
+  final String? code = entry.postName;
+  if (code != null) {
+    return _postAssaultTitle(l10n, entry, baseNameLabel(l10n, code));
+  }
   if (entry.defending) {
     return entry.victory
         ? l10n.historyAssaultSuffered(name)
@@ -91,6 +95,22 @@ String _assaultTitle(AppLocalizations l10n, BaseAssaultEntry entry) {
   return entry.victory
       ? l10n.historyAssaultWon(name)
       : l10n.historyAssaultFailed(name);
+}
+
+String _postAssaultTitle(
+  AppLocalizations l10n,
+  BaseAssaultEntry entry,
+  String post,
+) {
+  final String name = entry.opponentName;
+  if (entry.defending) {
+    return entry.victory
+        ? l10n.historyPostSuffered(post, name)
+        : l10n.historyPostRepelled(post, name);
+  }
+  return entry.victory
+      ? l10n.historyPostWon(post, name)
+      : l10n.historyPostFailed(post, name);
 }
 
 /// The choice the player made, for an event that offered one.

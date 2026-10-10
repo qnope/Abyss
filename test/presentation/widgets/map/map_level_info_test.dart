@@ -1,4 +1,4 @@
-import 'package:abyss/presentation/extensions/map_level_info.dart';
+import 'package:abyss/presentation/widgets/map/map_level_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

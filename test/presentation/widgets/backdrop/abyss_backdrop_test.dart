@@ -1,3 +1,4 @@
+import 'package:abyss/presentation/theme/abyss_backdrop_theme.dart';
 import 'package:abyss/presentation/widgets/backdrop/abyss_backdrop.dart';
 import 'package:abyss/presentation/widgets/backdrop/backdrop_raster_cache.dart';
 import 'package:abyss/presentation/widgets/backdrop/marine_snow.dart';
@@ -12,7 +13,7 @@ Widget _host(Widget child, {bool disableAnimations = false}) => MediaQuery(
 const _missing = 'assets/illustrations/menu/missing.svg';
 
 Finder get _dimOverlay => find.byWidgetPredicate(
-  (w) => w is ColoredBox && w.color == AbyssBackdrop.dimColor,
+  (w) => w is ColoredBox && w.color == AbyssBackdropTheme.dimColor,
 );
 
 void main() {

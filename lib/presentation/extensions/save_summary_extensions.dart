@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../domain/game/save_outcome.dart';
 import '../../domain/game/save_summary.dart';
 import '../theme/abyss_colors.dart';
+import '../widgets/map/map_level_info.dart';
 import 'difficulty_extensions.dart';
-import 'map_level_info.dart';
 
 /// What a save card writes about a game, in French.
 extension SaveSummaryLabels on SaveSummary {

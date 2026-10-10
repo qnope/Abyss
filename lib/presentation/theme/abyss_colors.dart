@@ -21,6 +21,9 @@ abstract final class AbyssColors {
   /// Pale blue of light filtering through the water, for menu subtitles.
   static const Color abyssMist = Color(0xFFBDE6F5);
 
+  /// Daylight falling from the surface, for the light rays.
+  static const Color daylight = Color(0xFFFFFFFF);
+
   // Resource colors
   static const Color algaeGreen = Color(0xFF69F0AE);
   static const Color coralPink = Color(0xFFFF6E91);
@@ -46,8 +49,7 @@ abstract final class AbyssColors {
 
   /// [color] faded as an unavailable item (unbuilt, locked). Fading each
   /// color is far cheaper than wrapping the item in an `Opacity` layer.
-  static Color dimmed(Color color) =>
-      color.withValues(alpha: color.a * 0.5);
+  static Color dimmed(Color color) => color.withValues(alpha: color.a * 0.5);
 
   /// Opacity of a faded unavailable illustration, drawn in greyscale.
   /// Applied on the image paint, never through a compositing layer.

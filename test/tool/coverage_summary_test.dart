@@ -15,7 +15,7 @@ ProcessResult _run(String lcov, {String? minimum}) {
   addTearDown(() => dir.deleteSync(recursive: true));
   final file = File('${dir.path}/lcov.info')..writeAsStringSync(lcov);
   return Process.runSync('bash', [_script, file.path],
-      environment: {if (minimum != null) 'COVERAGE_MIN': minimum});
+      environment: {'COVERAGE_MIN': minimum ?? ''});
 }
 
 /// Runs the summary script on [lcov] and returns its Markdown report.

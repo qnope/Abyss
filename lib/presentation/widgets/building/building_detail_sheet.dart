@@ -22,6 +22,7 @@ void showBuildingDetailSheet(
   Set<TransitionBaseType> capturedBaseTypes = const {},
   bool isVolcanicKernelCaptured = false,
   int upgradeDiscountPercent = 0,
+  Widget? troops,
   required VoidCallback onUpgrade,
 }) {
   showModalBottomSheet<void>(
@@ -35,6 +36,7 @@ void showBuildingDetailSheet(
       capturedBaseTypes: capturedBaseTypes,
       isVolcanicKernelCaptured: isVolcanicKernelCaptured,
       upgradeDiscountPercent: upgradeDiscountPercent,
+      troops: troops,
       onUpgrade: onUpgrade,
     ),
   );
@@ -48,6 +50,9 @@ class _BuildingDetailSheet extends StatelessWidget {
   final Set<TransitionBaseType> capturedBaseTypes;
   final bool isVolcanicKernelCaptured;
   final int upgradeDiscountPercent;
+
+  /// Troop moves the building allows (descent, garrison), if any.
+  final Widget? troops;
   final VoidCallback onUpgrade;
 
   const _BuildingDetailSheet({
@@ -58,6 +63,7 @@ class _BuildingDetailSheet extends StatelessWidget {
     this.capturedBaseTypes = const {},
     this.isVolcanicKernelCaptured = false,
     this.upgradeDiscountPercent = 0,
+    this.troops,
     required this.onUpgrade,
   });
 
@@ -107,6 +113,10 @@ class _BuildingDetailSheet extends StatelessWidget {
               buildings: allBuildings,
               showNext: true,
             ),
+          ],
+          if (troops != null) ...[
+            const Divider(height: 24),
+            troops!,
           ],
           const Divider(height: 24),
           UpgradeSection(

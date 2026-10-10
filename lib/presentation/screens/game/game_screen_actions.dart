@@ -13,6 +13,7 @@ import '../../../domain/action/upgrade_building_action.dart';
 import '../../widgets/building/building_detail_sheet.dart';
 import '../../widgets/unit/unit_detail_sheet.dart';
 import '../../../domain/tech/tech_effects.dart';
+import 'game_screen_troops_actions.dart';
 import 'game_screen_victory_actions.dart';
 
 void showBuildingDetailAction(
@@ -33,6 +34,7 @@ void showBuildingDetailAction(
     isVolcanicKernelCaptured: game.isVolcanicKernelCapturedBy(human.id),
     upgradeDiscountPercent:
         TechEffects(human.techBranches).upgradeDiscountPercent,
+    troops: troopsSectionFor(context, game, repository, building, onChanged),
     onUpgrade: () {
       final action = UpgradeBuildingAction(buildingType: building.type);
       final result = ActionExecutor().execute(action, game, human);

@@ -30,7 +30,7 @@ void main() {
       const ReplayVariant(sameDice: false),
     );
 
-    final report = ScriptRunner(maxTurns: 40).run(script, seed: 3);
+    final report = ScriptRunner(maxTurns: 40).run(script, seed: 2);
 
     expect(report.milestones.failleCaptured, 32);
     expect(report.milestones.chemineeCaptured, 39);

@@ -10,6 +10,7 @@ import '../script_turn.dart';
 import 'army_planner.dart';
 import 'battle_moves.dart';
 import 'conquest_moves.dart';
+import 'event_moves.dart';
 import 'expedition_moves.dart';
 import 'explore_moves.dart';
 import 'growth_moves.dart';
@@ -18,9 +19,9 @@ import 'kernel_guard_moves.dart';
 /// "Conquête": plays a whole game the way a careful player would, from
 /// the first building to the volcanic kernel at level 10.
 ///
-/// It holds every announced raid, clears the lairs it surely beats,
-/// explores, takes a Faille, a Cheminée and the kernel, and grows the
-/// base with what is left.
+/// It answers the random events, holds every announced raid, clears the
+/// lairs it surely beats, explores, takes a Faille, a Cheminée and the
+/// kernel, and grows the base with what is left.
 class ConquestStrategy extends GameScript {
   static const List<BuildingType> goals = <BuildingType>[
     BuildingType.volcanicKernel,
@@ -71,6 +72,7 @@ class ConquestStrategy extends GameScript {
     for (final int level in turn.game.levels.keys) {
       turn.collectRevealed(level);
     }
+    turn.playEvents(planner);
     final bool alert = turn.player.raidState.isIncoming;
     if (alert && defends) turn.defendBase(planner);
     for (final BuildingType goal in goals) {

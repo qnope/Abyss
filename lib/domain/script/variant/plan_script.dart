@@ -7,6 +7,7 @@ import '../script_turn.dart';
 import '../strategies/army_planner.dart';
 import '../strategies/kernel_guard_moves.dart';
 import '../strategies/battle_moves.dart';
+import '../strategies/event_moves.dart';
 import 'plan_moves.dart';
 import 'plan_step.dart';
 import 'replay_variant.dart';
@@ -16,10 +17,10 @@ import 'replay_variant.dart';
 /// army, later turns.
 ///
 /// Unlike the exact replay, it plays on after the replay's last turn
-/// until the game ends, and tries a failed step again on each later turn
-/// for `variant.patience` turns, as a player sticking to a plan would.
-/// The steps on the road to the volcano (assaults, descents) wait as long
-/// as it takes.
+/// until the game ends, tries a failed step again on each later turn for
+/// `variant.patience` turns as a player sticking to a plan would (the
+/// steps on the road to the volcano wait as long as it takes), and lets
+/// the bot rules answer the events of the turns with no recorded choice.
 class PlanScript extends GameScript {
   final ReplayVariant variant;
   final String player;
@@ -55,7 +56,6 @@ class PlanScript extends GameScript {
   }) {
     final Map<String, Object?> json =
         jsonDecode(source) as Map<String, Object?>;
-    final String? label = name;
     final Map<String, Object?> turns = json['turns'] as Map<String, Object?>;
     final List<int> order = turns.keys.map(int.parse).toList()..sort();
     final List<PlanStep> steps = <PlanStep>[];
@@ -76,7 +76,7 @@ class PlanScript extends GameScript {
     }
     final Object? seeds = json['endTurnSeeds'];
     return PlanScript._(
-      name: label ?? '${json['name'] ?? 'replay'} (${variant.label})',
+      name: name ?? '${json['name'] ?? 'replay'} (${variant.label})',
       variant: variant,
       player: json['player'] as String? ?? 'replay',
       replayMapSeed: json['mapSeed'] as int?,
@@ -109,13 +109,17 @@ class PlanScript extends GameScript {
   @override
   void playTurn(ScriptTurn turn) {
     if (_undrawn) _draw(turn.random);
-    if (variant.defends && turn.player.raidState.isIncoming) {
-      turn.defendBase(const ArmyPlanner());
-    }
     final List<PlanStep> due = _pending
         .where((PlanStep s) => s.turn <= turn.number)
         .toList()
       ..sort((PlanStep a, PlanStep b) => a.rank.compareTo(b.rank));
+    if (!variant.isExact) {
+      turn.playEvents(const ArmyPlanner(),
+          choose: !due.any((PlanStep s) => s.verb == 'event'));
+    }
+    if (variant.defends && turn.player.raidState.isIncoming) {
+      turn.defendBase(const ArmyPlanner());
+    }
     for (final PlanStep step in due) {
       if (turn.isOver) return;
       final bool done = turn.playStep(step, variant);

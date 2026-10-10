@@ -6,7 +6,8 @@ import '../../theme/abyss_menu_theme.dart';
 
 /// Arranges a full-screen menu over the backdrop art: the [header] near
 /// the top, the [actions] stacked at the bottom above an optional
-/// [footer], leaving the middle of the art in view.
+/// [footer], leaving the middle of the art in view. An optional [corner]
+/// (a discreet button) stays in the top right corner, above the scroll.
 ///
 /// The column keeps to [maxWidth], centred on wide screens. On a screen
 /// too short for it all, the free middle shrinks first, the spacing
@@ -28,35 +29,45 @@ class MenuLayout extends StatelessWidget {
   final Widget header;
   final List<Widget> actions;
   final Widget? footer;
+  final Widget? corner;
 
   const MenuLayout({
     super.key,
     required this.header,
     required this.actions,
     this.footer,
+    this.corner,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: LayoutBuilder(
-        builder:
-            (context, box) => SingleChildScrollView(
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: SizedBox(
-                  key: columnKey,
-                  width: math.min(box.maxWidth, maxWidth),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: box.maxHeight),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: _column(box.maxHeight),
-                    ),
+    final corner = this.corner;
+    final menu = LayoutBuilder(
+      builder:
+          (context, box) => SingleChildScrollView(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                key: columnKey,
+                width: math.min(box.maxWidth, maxWidth),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: box.maxHeight),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: _column(box.maxHeight),
                   ),
                 ),
               ),
             ),
+          ),
+    );
+    return SafeArea(
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          menu,
+          if (corner != null) Positioned(top: 4, right: 4, child: corner),
+        ],
       ),
     );
   }

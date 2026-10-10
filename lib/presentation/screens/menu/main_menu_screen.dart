@@ -8,13 +8,16 @@ import '../../widgets/menu/beta_notice.dart';
 import '../../widgets/menu/glow_title.dart';
 import '../../widgets/menu/menu_button.dart';
 import '../../widgets/menu/menu_layout.dart';
+import '../../widgets/menu/menu_settings_button.dart';
 import '../game/resume_game.dart';
 import 'load_game_screen.dart';
 import 'new_game_screen.dart';
 import '../../l10n/l10n_extension.dart';
+import '../../l10n/language_scope.dart';
 
 /// The home screen: the colony in the abyss, a shortcut to continue the
-/// latest game in progress, a new game and the saved games.
+/// latest game in progress, a new game and the saved games, with the
+/// language settings in a corner when the app has a [LanguageScope].
 class MainMenuScreen extends StatefulWidget {
   final GameRepository repository;
 
@@ -33,6 +36,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   Widget build(BuildContext context) {
     final resumable = _saves.mostRecentInProgress;
     final l10n = context.l10n;
+    final language = LanguageScope.maybeOf(context);
     return Scaffold(
       body: AbyssBackdrop(
         child: MenuLayout(
@@ -63,6 +67,8 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
             ),
           ],
           footer: const BetaNotice(),
+          corner:
+              language == null ? null : MenuSettingsButton(settings: language),
         ),
       ),
     );

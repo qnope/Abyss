@@ -88,6 +88,15 @@
 | Widget | Purpose |
 |--------|---------|
 | `GameBottomBar` | Tab navigation + turn button |
-| `SettingsDialog` | Three-way settings dialog returning a `SettingsDialogResult`: `cancel`, `saveAndQuit`, or `openHistory`. The game screen reacts to `openHistory` by calling `showHistorySheet` |
+| `SettingsDialog` | Three-way settings dialog returning a `SettingsDialogResult`: `cancel`, `saveAndQuit`, or `openHistory`. The game screen reacts to `openHistory` by calling `showHistorySheet`. Shows the `LanguagePicker` above the guide switches when a `LanguageScope` is above it |
+| `LanguagePicker` | "Langue" section taking `LanguageSettings`: Automatic (translated, with a "device language" hint) and the three languages written in themselves ("Français", "English", "Español", from `LanguageChoiceLabel.endonym`, never translated). The current choice is checked; a tap calls `settings.choose`. Only the picker rebuilds on a change |
+| `showLanguageDialog(context, settings)` | "Paramètres" dialog outside a game: the `LanguagePicker` and a close button |
 | `SavedGameCard` | Card for saved game in load screen |
 | `TabPlaceholder` | Placeholder for empty tab content |
+
+## Menu Widgets (`menu/`)
+
+| Widget | Purpose |
+|--------|---------|
+| `MenuLayout` | Full-screen menu over the backdrop art: header, actions, footer, and an optional `corner` button kept in the top right of the safe area |
+| `MenuSettingsButton` | Discreet gear (`AbyssMenuTheme.cornerIcon*`) opening `showLanguageDialog` |

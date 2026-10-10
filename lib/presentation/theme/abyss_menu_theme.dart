@@ -106,4 +106,10 @@ abstract final class AbyssMenuTheme {
       ),
     ],
   );
+
+  /// A discreet icon in a corner of a menu, readable over the art.
+  static const cornerIconColor = AbyssColors.abyssMist;
+  static final cornerIconShadows = [
+    Shadow(color: AbyssColors.abyssBlack.withValues(alpha: 0.9), blurRadius: 6),
+  ];
 }

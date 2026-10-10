@@ -9,7 +9,9 @@ import '../../../domain/objective/objective_chapter.dart';
 import '../../../domain/objective/objective_migration.dart';
 import '../../../domain/objective/objective_state.dart';
 import '../../../domain/objective/temporary/temporary_objectives.dart';
+import '../../extensions/objective_extensions.dart';
 import '../../extensions/temporary_objective_kind_extensions.dart';
+import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
 import '../common/sheet_drag_handle.dart';
 import 'objective_row.dart';
@@ -45,6 +47,7 @@ class ObjectivesSheetBody extends StatelessWidget {
     final state = ObjectiveMigration.stateOf(game, player);
     final current = CurrentObjective.of(game, player);
     final temporary = TemporaryObjectives.activeOf(game, player);
+    final l10n = context.l10n;
     return SafeArea(
       top: false,
       child: SizedBox(
@@ -55,7 +58,7 @@ class ObjectivesSheetBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8),
               child: Text(
-                'Objectifs',
+                l10n.objectiveSheetTitle,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -65,17 +68,17 @@ class ObjectivesSheetBody extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                 children: [
                   if (temporary.isNotEmpty) ...[
-                    _header(context, "Objectifs d'événement"),
+                    _header(context, l10n.objectiveEventHeader),
                     for (final objective in temporary)
                       ObjectiveRow(
-                        title: objective.displayTitle(context.l10n),
+                        title: objective.displayTitle(l10n),
                         status: ObjectiveStatus.temporary,
                       ),
                   ],
                   for (final chapter in ObjectiveChapter.values) ...[
-                    _header(context, '${chapter.index + 1}. ${chapter.title}'),
+                    _header(context, chapter.numberedTitle(l10n)),
                     for (final objective in ObjectiveCatalog.ofChapter(chapter))
-                      _row(objective, state, current),
+                      _row(l10n, objective, state, current),
                   ],
                 ],
               ),
@@ -86,10 +89,15 @@ class ObjectivesSheetBody extends StatelessWidget {
     );
   }
 
-  Widget _row(Objective objective, ObjectiveState state, Objective? current) {
+  Widget _row(
+    AppLocalizations l10n,
+    Objective objective,
+    ObjectiveState state,
+    Objective? current,
+  ) {
     final isCurrent = objective.id == current?.id;
     return ObjectiveRow(
-      title: objective.title,
+      title: objective.displayTitle(l10n),
       status:
           state.isCompleted(objective.id)
               ? ObjectiveStatus.done

@@ -1,12 +1,13 @@
 import 'package:abyss/domain/objective/objective_state.dart';
-import 'package:abyss/domain/objective/tip/tip_catalog.dart';
 import 'package:abyss/domain/objective/tip/tip_id.dart';
+import 'package:abyss/presentation/l10n/abyss_locale.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/tip/tip_card.dart';
 import 'package:abyss/presentation/widgets/tip/tip_guide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/localized_app.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
@@ -61,13 +62,37 @@ void main() {
     await tester.tap(find.text('Les repaires'));
     await tester.pumpAndSettle();
     expect(find.byType(TipCard), findsOneWidget);
-    expect(find.text(TipCatalog.byId(TipId.lair).lines.first), findsOneWidget);
+    expect(
+      find.text(
+        'Sur la Carte, un repaire de monstres garde sa case : attaque-le '
+        'avec ton armée.',
+      ),
+      findsOneWidget,
+    );
 
     await tester.tap(find.text('Compris'));
     await tester.pumpAndSettle();
     expect(find.byType(TipCard), findsNothing);
     expect(find.text('Guide'), findsOneWidget);
   });
+
+  for (final (locale, words) in [
+    (AbyssLocale.en, ['Guide', 'Threats', 'Map', 'Events', 'Lairs', 'Close']),
+    (
+      AbyssLocale.es,
+      ['Guía', 'Amenazas', 'Mapa', 'Eventos', 'Las guaridas', 'Cerrar'],
+    ),
+  ]) {
+    testWidgets('speaks ${locale.languageCode}', (tester) async {
+      await tester.pumpWidget(
+        localizedApp(Scaffold(body: TipGuide(state: state)), locale: locale),
+      );
+      await tester.pumpAndSettle();
+      for (final word in words) {
+        expect(find.text(word), findsOneWidget, reason: word);
+      }
+    });
+  }
 
   testWidgets('a tip not seen yet stays closed', (tester) async {
     await open(tester);

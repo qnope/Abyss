@@ -5,8 +5,8 @@ import '../../raid/raid_battle.dart';
 import '../../raid/raid_defence_advisor.dart';
 import '../../unit/unit_type.dart';
 import 'guide_advice.dart';
+import 'guide_message.dart';
 import 'guide_target.dart';
-import 'guide_texts.dart';
 
 /// What the guide says once the first raid is announced: how many
 /// Harpoonists to have on the base level to push it back, as
@@ -21,17 +21,16 @@ abstract final class GuideRaid {
     final int monsters = wave.totalCount;
     final int? needed = RaidDefenceAdvisor.harpoonistsFor(player, wave);
     if (needed == null) {
-      return GuideAdvice(GuideTexts.raidOutOfReach(arrival, monsters), target);
+      return GuideAdvice(GuideRaidAlert(arrival, monsters), target);
     }
-    final int have =
-        RaidBattle.defendersOf(player)[UnitType.harpoonist] ?? 0;
+    final int have = RaidBattle.defendersOf(player)[UnitType.harpoonist] ?? 0;
     if (have >= needed) {
       return GuideAdvice(
-        GuideTexts.raidHeld(arrival, monsters),
+        GuideRaidAlert(arrival, monsters, needed: needed),
         const GuideTarget.endTurn(),
       );
     }
-    final String text = GuideTexts.raidShortOf(
+    final alert = GuideRaidAlert(
       arrival,
       monsters,
       needed: needed,
@@ -39,6 +38,6 @@ abstract final class GuideRaid {
       canRecruit: target.unit == UnitType.harpoonist,
       lastTurn: arrival <= game.turn,
     );
-    return GuideAdvice(text, target);
+    return GuideAdvice(alert, target);
   }
 }

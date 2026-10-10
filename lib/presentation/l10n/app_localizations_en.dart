@@ -1578,4 +1578,582 @@ class AppLocalizationsEn extends AppLocalizations {
   String techScreenMedallionLevel(int level) {
     return 'Lv. $level';
   }
+
+  @override
+  String get objectiveSheetTitle => 'Objectives';
+
+  @override
+  String get objectiveEventHeader => 'Event objectives';
+
+  @override
+  String objectiveProgress(String title, int current, int target) {
+    return '$title: $current/$target';
+  }
+
+  @override
+  String objectiveCompleted(String title) {
+    return 'Objective complete: $title';
+  }
+
+  @override
+  String get objectiveMissed => '(missed)';
+
+  @override
+  String objectiveRaiseHq(int level) {
+    return 'Raise the HQ to level $level';
+  }
+
+  @override
+  String get objectiveAlgaeFarm => 'Build the Algae Farm';
+
+  @override
+  String get objectiveMines => 'Build the Coral Mine and the Ore Extractor';
+
+  @override
+  String get objectiveSolarPanel => 'Build the Solar Panel';
+
+  @override
+  String objectiveBarracksAndScouts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Scouts',
+      one: '$count Scout',
+    );
+    return 'Build the Barracks and recruit $_temp0';
+  }
+
+  @override
+  String get objectiveExplore => 'Explore a tile around the base';
+
+  @override
+  String get objectiveLaboratoryAndResearch =>
+      'Build the Laboratory and start a research project';
+
+  @override
+  String get objectiveFirstRaid => 'Repel the first raid';
+
+  @override
+  String get objectiveTakeLair => 'Take a lair';
+
+  @override
+  String get objectiveCoralCitadel => 'Build the Coral Citadel';
+
+  @override
+  String get objectiveTakeFaille => 'Take the Rift';
+
+  @override
+  String get objectiveDescentModule => 'Build the Descent Module';
+
+  @override
+  String objectiveDescend(int level) {
+    return 'Go down to level $level';
+  }
+
+  @override
+  String get objectiveTakeCheminee => 'Take the Vent';
+
+  @override
+  String get objectivePressureCapsule => 'Build the Pressure Capsule';
+
+  @override
+  String get objectiveTakeKernel => 'Take the Volcanic Core';
+
+  @override
+  String objectiveRaiseKernel(int level) {
+    return 'Raise the Core to level $level';
+  }
+
+  @override
+  String get chapterInstallation => 'Settling In';
+
+  @override
+  String get chapterReef => 'The Reef';
+
+  @override
+  String get chapterRift => 'The Rift';
+
+  @override
+  String get chapterChimney => 'The Vent';
+
+  @override
+  String get chapterKernel => 'The Core';
+
+  @override
+  String get chapterAwakening => 'The Awakening';
+
+  @override
+  String chapterNumbered(int number, String title) {
+    return '$number. $title';
+  }
+
+  @override
+  String get tipGuideTitle => 'Guide';
+
+  @override
+  String get tipCategoryBase => 'Base';
+
+  @override
+  String get tipCategoryThreats => 'Threats';
+
+  @override
+  String get tipCategoryMap => 'Map';
+
+  @override
+  String get tipCategoryEvents => 'Events';
+
+  @override
+  String get tipNoiseGaugeTitle => 'The noise gauge';
+
+  @override
+  String get tipNoiseGaugeLine1 =>
+      'Every build, every recruit and every exploration makes noise, and your base makes a little every turn.';
+
+  @override
+  String tipNoiseGaugeLine2(int threshold) {
+    return 'When the gauge reaches $threshold, the monsters hear it: a raid is announced.';
+  }
+
+  @override
+  String get tipWorksitesTitle => 'Two builds per turn';
+
+  @override
+  String tipWorksitesLine1(int level) {
+    return 'Your HQ at level $level opens a second build slot: two buildings go up each turn.';
+  }
+
+  @override
+  String tipWorksitesLine2(int level) {
+    return 'HQ level $level will open a third. Research stays at one per turn.';
+  }
+
+  @override
+  String get tipTechChoiceTitle => 'Research choices';
+
+  @override
+  String get tipTechChoiceLine1 =>
+      'The next node of your branch is a choice between two options.';
+
+  @override
+  String get tipTechChoiceLine2 =>
+      'This choice is final: the other option stays closed for the whole game.';
+
+  @override
+  String get tipTechChoiceLine3 =>
+      'Take the time to read both before you start the research.';
+
+  @override
+  String get tipRaidAnnouncedTitle => 'A raid is coming';
+
+  @override
+  String tipRaidAnnouncedLine1(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: '$turns turns',
+      one: '$turns turn',
+    );
+    return 'Your noise drew monsters: they will strike your base in $_temp0.';
+  }
+
+  @override
+  String get tipRaidAnnouncedLine2 =>
+      'Recruit defenders: Harpooners are made for this.';
+
+  @override
+  String get tipRaidAnnouncedLine3 =>
+      'The rampart of the Coral Citadel will also help you hold.';
+
+  @override
+  String get tipRaidReportTitle => 'The raid report';
+
+  @override
+  String get tipRaidReportLine1 =>
+      'After each raid, the report shows the fight, your losses and the loot.';
+
+  @override
+  String get tipRaidReportLine2 =>
+      'A lost raid plunders part of your resources.';
+
+  @override
+  String get tipRaidReportLine3 =>
+      'A repelled raid wipes out your losing streak.';
+
+  @override
+  String get tipLastChanceTitle => 'Last chance';
+
+  @override
+  String tipLastChanceLine1(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Your base has lost $count raids in a row.',
+      one: 'Your base has lost $count raid.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tipLastChanceLine2 =>
+      'If the next raid is lost too, the game is over.';
+
+  @override
+  String get tipLastChanceLine3 =>
+      'Put your forces into defense: a victory wipes out the streak.';
+
+  @override
+  String get tipMonsterFamiliesTitle => 'Monster families';
+
+  @override
+  String get tipMonsterFamiliesLine1 =>
+      'Each lair houses a family, with its own combat rule.';
+
+  @override
+  String get tipMonsterFamiliesLine2 =>
+      'Each family has a weak spot: a unit that counters it.';
+
+  @override
+  String get tipMonsterFamiliesLine3 =>
+      'Tap the lair on the Map to learn about it before you attack.';
+
+  @override
+  String get tipVolcanoWaveTitle => 'The Volcano\'s wave';
+
+  @override
+  String get tipVolcanoWaveLine1 =>
+      'The Volcano sends its Krakens to take back the Core.';
+
+  @override
+  String get tipVolcanoWaveLine2 =>
+      'The wave strikes at the end of next turn: keep a garrison at the Core.';
+
+  @override
+  String get tipVolcanoWaveLine3 => 'Each lost wave costs the Core a level.';
+
+  @override
+  String get tipLairTitle => 'Lairs';
+
+  @override
+  String get tipLairLine1 =>
+      'On the Map, a monster lair guards its tile: attack it with your army.';
+
+  @override
+  String get tipLairLine2 =>
+      'Beaten monsters leave their loot, but every fight makes noise.';
+
+  @override
+  String get tipLairLine3 => 'Check their numbers before you pick your units.';
+
+  @override
+  String get tipChestAndRuinsTitle => 'Chests and ruins';
+
+  @override
+  String get tipChestAndRuinsLine1 => 'A chest or ruins hide resources.';
+
+  @override
+  String get tipChestAndRuinsLine2 =>
+      'Tap the tile on the Map to search them: it\'s safe and silent.';
+
+  @override
+  String get tipTransitionBaseTitle => 'Transition bases';
+
+  @override
+  String get tipTransitionBaseLine1 =>
+      'A guarded base on the Map leads to the depths.';
+
+  @override
+  String get tipTransitionBaseLine2 =>
+      'Once you storm it, it brings you pearls every turn.';
+
+  @override
+  String get tipTransitionBaseLine3 =>
+      'It also opens the way to the next level.';
+
+  @override
+  String get tipDescentTitle => 'The descent';
+
+  @override
+  String get tipDescentLine1 =>
+      'Your Descent Module sends units to the level below, through the Rift.';
+
+  @override
+  String get tipDescentLine2 =>
+      'Careful: a unit sent down never comes back up.';
+
+  @override
+  String get tipDescentLine3 =>
+      'Down there, more lairs await you, and the road to the Core.';
+
+  @override
+  String get tipEventsTitle => 'Events';
+
+  @override
+  String tipEventsLine1(int minGap, int maxGap) {
+    return 'Every $minGap to $maxGap turns, an event shakes the abyss.';
+  }
+
+  @override
+  String get tipEventsLine2 =>
+      'You have the next turn to choose your answer on its card.';
+
+  @override
+  String get tipEventsLine3 =>
+      'If you don\'t choose, the cautious option applies automatically.';
+
+  @override
+  String tipWarmCurrentLine1(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: '$turns turns',
+      one: '$turns turn',
+    );
+    return 'A warm current boosts your production for $_temp0.';
+  }
+
+  @override
+  String get tipWarmCurrentLine2 => 'But its swirl makes noise every turn.';
+
+  @override
+  String get tipWarmCurrentLine3 =>
+      'Make the most of it if your defenses are ready for a raid.';
+
+  @override
+  String tipWreckLine1(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: '$turns turns',
+      one: '$turns turn',
+    );
+    return 'A sunken galleon stays $_temp0 at the edge of the explored area.';
+  }
+
+  @override
+  String get tipWreckLine2 =>
+      'Explore its tile with a Scout, then search it for its loot.';
+
+  @override
+  String tipWreckLine3(int noise) {
+    return 'Searching makes noise (+$noise): pick your moment.';
+  }
+
+  @override
+  String get tipPredatorsLine1 =>
+      'A great shark and its shoal prowl around your base.';
+
+  @override
+  String get tipPredatorsLine2 =>
+      'Fight them for their loot, or give up algae to drive them away.';
+
+  @override
+  String get tipPredatorsLine3 => 'Losing to them never ends the game.';
+
+  @override
+  String tipStormLine1(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: '$turns turns',
+      one: '$turns turn',
+    );
+    return 'The storm closes exploration for $_temp0.';
+  }
+
+  @override
+  String tipStormLine2(int relief) {
+    return 'In return, it covers your noise: the gauge drops by $relief.';
+  }
+
+  @override
+  String get tipSurvivorsLine1 => 'A stranded capsule shelters survivors.';
+
+  @override
+  String get tipSurvivorsLine2 =>
+      'Taken in, they join your base as Harpooners.';
+
+  @override
+  String get tipSurvivorsLine3 =>
+      'Like the rest of your army, they eat algae every turn.';
+
+  @override
+  String get tipCaravanLine1 => 'A turtle caravan passes near your base.';
+
+  @override
+  String get tipCaravanLine2 =>
+      'Its merchant crab trades your most plentiful resource for the scarcest one.';
+
+  @override
+  String tipColdCurrentLine1(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: '$turns turns',
+      one: '$turns turn',
+    );
+    return 'A cold current slows your algae for $_temp0.';
+  }
+
+  @override
+  String get tipColdCurrentLine2 =>
+      'Heating the greenhouses costs energy, but saves the harvest.';
+
+  @override
+  String get tipColdCurrentLine3 =>
+      'Without algae, your army can\'t hold out: watch your stock.';
+
+  @override
+  String get guideLessonHqLevel1 =>
+      'Welcome to the abyss! Tap the HQ to start your first build: just one per turn to begin with. Then press “Next turn”.';
+
+  @override
+  String get guideLessonAlgaeFarm =>
+      'Well done on your first build! Algae feed your army: every unit eats some each turn. Build the Algae Farm.';
+
+  @override
+  String get guideLessonMines =>
+      'Coral and ore pay for almost everything. Build the Coral Mine, then the Ore Extractor, one per turn. Look closely: each level costs more than the one before.';
+
+  @override
+  String get guideLessonSolarPanel =>
+      'The Extractor uses energy, and the Barracks will too. Without energy, they stop. Build the Solar Panel.';
+
+  @override
+  String guideLessonHqLevel2(int level) {
+    return 'HQ level $level unlocks the Barracks and the Laboratory. But every build makes noise: watch the gauge at the top of the screen, it draws monsters.';
+  }
+
+  @override
+  String guideLessonBarracksAndScouts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Scouts',
+      one: '$count Scout',
+    );
+    return 'Build the Barracks, then recruit $_temp0 in the Army tab. Every unit eats algae each turn, and every recruit raises the noise.';
+  }
+
+  @override
+  String get guideLessonExplore =>
+      'Around your base, everything is in the fog. On the Map, send a Scout to a nearby tile: you\'ll find monster lairs of different families there, and sometimes chests.';
+
+  @override
+  String get guideLessonLaboratoryAndResearch =>
+      'Build the Laboratory, open a branch in the Tech tab and start a research project. Only one research per turn, and some choices are final: take the time to read.';
+
+  @override
+  String guideLessonFirstRaid(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: '$turns turns',
+      one: '$turns turn',
+    );
+    return 'Noise always ends up drawing a raid, announced $_temp0 ahead. Recruit Harpooners to defend your base. Later, the Citadel\'s rampart will help you too.';
+  }
+
+  @override
+  String get guideGoalMet =>
+      'Well done, that\'s it! End the turn to complete the objective and collect your reward.';
+
+  @override
+  String get guideWorksiteTaken =>
+      'Your build for this turn is already taken. End the turn: you\'ll build the next one next turn.';
+
+  @override
+  String get guideAlreadyRecruited =>
+      'You\'ve already recruited these units this turn. End the turn to recruit more.';
+
+  @override
+  String get guideExploring =>
+      'Your Scout is on its way. End the turn to find out what the tile hides.';
+
+  @override
+  String guideStorm(int turn) {
+    return 'A storm closes exploration until the end of turn $turn. Be patient: the objective will wait, end the turn.';
+  }
+
+  @override
+  String guideWreckWithoutBarracks(int turn) {
+    return 'A wreck has sunk near your base, visible until the end of turn $turn. Reaching it takes a Scout, so the Barracks: keep going with your objective, they will come.';
+  }
+
+  @override
+  String guideWreckWithoutScout(int turn) {
+    return 'A wreck has sunk near your base, visible until the end of turn $turn. Recruit a Scout in the Army tab to go and search it.';
+  }
+
+  @override
+  String guideRaidIntro(int turn, int monsters) {
+    String _temp0 = intl.Intl.pluralLogic(
+      monsters,
+      locale: localeName,
+      other: '$monsters monsters',
+      one: '$monsters monster',
+    );
+    return 'The raid arrives on turn $turn with $_temp0.';
+  }
+
+  @override
+  String get guideRaidOutOfReach =>
+      'Recruit as many Harpooners as you can in the Army tab.';
+
+  @override
+  String get guideRaidHeld =>
+      'Your defense should repel it: end the turn to wait for it.';
+
+  @override
+  String guideRaidNeeded(int needed, int missing) {
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed Harpooners',
+      one: '$needed Harpooner',
+    );
+    return 'Have at least $_temp0 on level 1: you\'re $missing short.';
+  }
+
+  @override
+  String guideRaidRecruitNow(int missing) {
+    String _temp0 = intl.Intl.pluralLogic(
+      missing,
+      locale: localeName,
+      other: 'Recruit them in the Army tab.',
+      one: 'Recruit it in the Army tab.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String guideRaidRecruitNextTurn(int missing) {
+    String _temp0 = intl.Intl.pluralLogic(
+      missing,
+      locale: localeName,
+      other: 'them',
+      one: 'it',
+    );
+    return 'You\'ve already recruited this turn: recruit $_temp0 next turn.';
+  }
+
+  @override
+  String get guideRaidHoldOn =>
+      'You\'ve already recruited this turn: end it and hold on.';
+
+  @override
+  String get tutorialGuideSwitch => 'Tutorial guide';
+
+  @override
+  String get tutorialGuideSwitchHint =>
+      'The guide shows you what to do, one objective at a time';
+
+  @override
+  String get tutorialTipsSwitch => 'Tips';
+
+  @override
+  String get tutorialTipsSwitchHint =>
+      'A card explains each new feature the first time it shows up';
+
+  @override
+  String get tutorialReviewTips => 'Review the tip cards';
 }

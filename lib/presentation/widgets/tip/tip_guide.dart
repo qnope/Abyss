@@ -5,16 +5,15 @@ import '../../../domain/objective/tip/tip.dart';
 import '../../../domain/objective/tip/tip_catalog.dart';
 import '../../../domain/objective/tip/tip_category.dart';
 import '../../extensions/tip_id_extensions.dart';
+import '../../extensions/tip_texts.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 import 'tip_card.dart';
 
 /// Opens the Guide of the tips [state] has seen.
 Future<void> showTipGuide(BuildContext context, ObjectiveState state) =>
-    showDialog<void>(
-      context: context,
-      builder: (_) => TipGuide(state: state),
-    );
+    showDialog<void>(context: context, builder: (_) => TipGuide(state: state));
 
 /// The Guide: every tip, section by section, those seen by their title
 /// to open their card again, the others greyed as « ??? ».
@@ -25,11 +24,11 @@ class TipGuide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final label = Theme.of(context).textTheme.labelLarge?.copyWith(
-      color: AbyssColors.onSurfaceDim,
-    );
+    final label = Theme.of(
+      context,
+    ).textTheme.labelLarge?.copyWith(color: AbyssColors.onSurfaceDim);
     return AlertDialog(
-      title: const Text('Guide'),
+      title: Text(context.l10n.tipGuideTitle),
       content: SizedBox(
         width: double.maxFinite,
         child: SingleChildScrollView(
@@ -39,7 +38,7 @@ class TipGuide extends StatelessWidget {
               for (final category in TipCategory.values) ...[
                 Padding(
                   padding: const EdgeInsets.only(top: 12, bottom: 4),
-                  child: Text(category.label, style: label),
+                  child: Text(category.label(context.l10n), style: label),
                 ),
                 for (final tip in TipCatalog.all)
                   if (tip.category == category)
@@ -52,7 +51,7 @@ class TipGuide extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Fermer'),
+          child: Text(context.l10n.commonClose),
         ),
       ],
     );
@@ -85,8 +84,11 @@ class _TipTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: RasterSvg(assetPath: tip.id.illustration, size: _iconSize),
-      title: Text(tip.title),
-      trailing: const Icon(Icons.chevron_right, color: AbyssColors.onSurfaceDim),
+      title: Text(tip.id.title(context.l10n)),
+      trailing: const Icon(
+        Icons.chevron_right,
+        color: AbyssColors.onSurfaceDim,
+      ),
       onTap: () => showTipCard(context, tip),
     );
   }

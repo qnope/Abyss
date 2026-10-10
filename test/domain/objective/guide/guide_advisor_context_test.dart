@@ -3,6 +3,7 @@ import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/map/exploration_order.dart';
 import 'package:abyss/domain/map/grid_position.dart';
+import 'package:abyss/domain/objective/guide/guide_message.dart';
 import 'package:abyss/domain/objective/guide/guide_target.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -18,7 +19,7 @@ void main() {
 
     final advice = adviceOf(game)!;
 
-    expect(advice.text, contains('Termine le tour pour valider'));
+    expect(advice.message, const GuideGoalMet());
     expect(advice.target, const GuideTarget.endTurn());
   });
 
@@ -29,7 +30,7 @@ void main() {
 
     final advice = adviceOf(game)!;
 
-    expect(advice.text, contains('chantier du tour'));
+    expect(advice.message, const GuideWorksiteTaken());
     expect(advice.target, const GuideTarget.endTurn());
   });
 
@@ -42,7 +43,7 @@ void main() {
 
     final advice = adviceOf(game)!;
 
-    expect(advice.text, contains('déjà recruté'));
+    expect(advice.message, const GuideAlreadyRecruited());
     expect(advice.target, const GuideTarget.endTurn());
   });
 
@@ -55,7 +56,7 @@ void main() {
 
       final advice = adviceOf(game)!;
 
-      expect(advice.text, contains('en route'));
+      expect(advice.message, const GuideExploring());
       expect(advice.target, const GuideTarget.endTurn());
     });
 
@@ -65,8 +66,7 @@ void main() {
 
       final advice = adviceOf(game)!;
 
-      expect(advice.text, contains('tempête'));
-      expect(advice.text, contains('fin du tour 8'));
+      expect(advice.message, const GuideStorm(8));
       expect(advice.target, const GuideTarget.endTurn());
     });
 
@@ -74,7 +74,10 @@ void main() {
       final game = guideGame(ObjectiveId.solarPanel)..turn = 7;
       game.humanPlayer.eventState.activate(RandomEventType.storm, untilTurn: 8);
 
-      expect(adviceOf(game)!.text, isNot(contains('tempête')));
+      expect(
+        adviceOf(game)!.message,
+        const GuideLesson(ObjectiveId.solarPanel),
+      );
     });
   });
 
@@ -90,9 +93,7 @@ void main() {
 
       final advice = adviceOf(game)!;
 
-      expect(advice.text, contains('épave'));
-      expect(advice.text, contains('fin du tour 9'));
-      expect(advice.text, contains('Caserne'));
+      expect(advice.message, const GuideWreck(9, hasBarracks: false));
       expect(
         advice.target,
         const GuideTarget.building(BuildingType.solarPanel),
@@ -106,7 +107,7 @@ void main() {
 
       final advice = adviceOf(game)!;
 
-      expect(advice.text, contains('Recrute un Éclaireur'));
+      expect(advice.message, const GuideWreck(9, hasBarracks: true));
       expect(advice.target, const GuideTarget.unit(UnitType.scout));
     });
 
@@ -116,7 +117,7 @@ void main() {
       setUnits(game.humanPlayer, UnitType.scout, 2);
       sinkWreck(game);
 
-      expect(adviceOf(game)!.text, isNot(contains('épave')));
+      expect(adviceOf(game)!.message, isNot(isA<GuideWreck>()));
     });
   });
 }

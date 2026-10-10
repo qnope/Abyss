@@ -1,6 +1,8 @@
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/objective/guide/guide_message.dart';
 import 'package:abyss/domain/objective/guide/guide_target.dart';
+import 'package:abyss/domain/objective/installation_objectives.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -24,27 +26,12 @@ void main() {
   });
 
   group('each objective of the tutorial teaches its lesson', () {
-    const lessons = {
-      ObjectiveId.hqLevel1: ['QG', 'un seul par tour', '« Tour suivant »'],
-      ObjectiveId.algaeFarm: ['algues nourrissent ton armée'],
-      ObjectiveId.mines: ['Mine de corail', 'Extracteur', 'plus cher'],
-      ObjectiveId.solarPanel: ['énergie', 'Extracteur', 'Caserne'],
-      ObjectiveId.hqLevel2: ['Caserne', 'Laboratoire', 'jauge', 'bruit'],
-      ObjectiveId.barracksAndScouts: ['2 Éclaireurs', 'algues', 'bruit'],
-      ObjectiveId.explore: ['brouillard', 'repaires', 'familles', 'coffres'],
-      ObjectiveId.laboratoryAndResearch: [
-        'Une seule recherche par tour',
-        'définitifs',
-      ],
-      ObjectiveId.firstRaid: ['2 tours', 'Harponneurs', 'Citadelle'],
-    };
-    for (final MapEntry(key: id, value: words) in lessons.entries) {
-      test(id.name, () {
-        final text = adviceOf(guideGame(id))!.text;
-        for (final word in words) {
-          expect(text, contains(word));
-        }
-        expect('.'.allMatches(text).length, inInclusiveRange(2, 3));
+    for (final objective in installationObjectives) {
+      test(objective.id.name, () {
+        expect(
+          adviceOf(guideGame(objective.id))!.message,
+          GuideLesson(objective.id),
+        );
       });
     }
   });

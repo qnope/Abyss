@@ -4,6 +4,7 @@ import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
 import '../../../domain/objective/current_objective.dart';
 import '../../../domain/objective/temporary/temporary_objectives.dart';
+import '../../extensions/objective_extensions.dart';
 import '../../extensions/temporary_objective_kind_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
@@ -31,6 +32,7 @@ class ObjectiveBanner extends StatelessWidget {
     if (objective == null) return const SizedBox.shrink();
     final progress = objective.progressOf(game, player);
     final temporary = TemporaryObjectives.activeOf(game, player);
+    final l10n = context.l10n;
     final style = Theme.of(context).textTheme.bodySmall;
     final color =
         progress.isDone ? AbyssColors.success : AbyssColors.biolumCyan;
@@ -45,19 +47,23 @@ class ObjectiveBanner extends StatelessWidget {
               Icon(Icons.flag, size: 16, color: color),
               const SizedBox(width: 8),
               Text(
-                objective.chapter.title,
+                objective.chapter.title(l10n),
                 style: style?.copyWith(color: AbyssColors.onSurfaceDim),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  '${objective.title} : $progress',
+                  l10n.objectiveProgress(
+                    objective.displayTitle(l10n),
+                    progress.current,
+                    progress.target,
+                  ),
                   style: style?.copyWith(color: color),
                 ),
               ),
               if (temporary.isNotEmpty)
                 Text(
-                  '+ ${temporary.map((t) => t.kind.shortLabel(context.l10n)).join(', ')}',
+                  '+ ${temporary.map((t) => t.kind.shortLabel(l10n)).join(', ')}',
                   style: style?.copyWith(color: AbyssColors.warning),
                 ),
               const Icon(

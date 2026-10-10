@@ -1,7 +1,7 @@
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
-import 'package:abyss/domain/objective/guide/guide_texts.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
+import 'package:abyss/presentation/extensions/guide_message_extensions.dart';
 import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/building/building_card.dart';
@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_game_repository.dart';
 import '../../../helpers/guide_helpers.dart';
+import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/objective_helpers.dart';
 import '../../../helpers/test_svg_helper.dart';
 import '../../widgets/guide/guide_widget_helpers.dart';
@@ -39,10 +40,7 @@ void main() {
   ) async {
     await pumpScreen(tester, guideGame(ObjectiveId.hqLevel1));
 
-    expect(
-      find.text(GuideTexts.lessonOf(ObjectiveId.hqLevel1)!),
-      findsOneWidget,
-    );
+    expect(find.text(ObjectiveId.hqLevel1.lesson(fr)!), findsOneWidget);
     expect(activeHalos, findsOneWidget);
     expect(haloAround(hqCard), findsOneWidget);
   });
@@ -64,10 +62,7 @@ void main() {
   ) async {
     await pumpScreen(tester, guideGame(ObjectiveId.explore));
 
-    expect(
-      find.text(GuideTexts.lessonOf(ObjectiveId.explore)!),
-      findsOneWidget,
-    );
+    expect(find.text(ObjectiveId.explore.lesson(fr)!), findsOneWidget);
     expect(haloAround(find.byIcon(Icons.map)), findsOneWidget);
 
     await tester.tap(find.text('Carte'));
@@ -83,7 +78,7 @@ void main() {
 
     await pumpScreen(tester, game);
 
-    expect(find.text(GuideTexts.goalMet), findsOneWidget);
+    expect(find.text(fr.guideGoalMet), findsOneWidget);
     expect(activeHalos, findsOneWidget);
     expect(haloAround(find.text('Tour suivant')), findsOneWidget);
   });

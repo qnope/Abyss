@@ -2415,6 +2415,786 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Niv. {level}'**
   String techScreenMedallionLevel(int level);
+
+  /// No description provided for @objectiveSheetTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectifs'**
+  String get objectiveSheetTitle;
+
+  /// No description provided for @objectiveEventHeader.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectifs d\'événement'**
+  String get objectiveEventHeader;
+
+  /// No description provided for @objectiveProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'{title} : {current}/{target}'**
+  String objectiveProgress(String title, int current, int target);
+
+  /// No description provided for @objectiveCompleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectif accompli : {title}'**
+  String objectiveCompleted(String title);
+
+  /// No description provided for @objectiveMissed.
+  ///
+  /// In fr, this message translates to:
+  /// **'(raté)'**
+  String get objectiveMissed;
+
+  /// No description provided for @objectiveRaiseHq.
+  ///
+  /// In fr, this message translates to:
+  /// **'Monte le QG au niveau {level}'**
+  String objectiveRaiseHq(int level);
+
+  /// No description provided for @objectiveAlgaeFarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis la Ferme d\'algues'**
+  String get objectiveAlgaeFarm;
+
+  /// No description provided for @objectiveMines.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis la Mine de corail et l\'Extracteur de minerai'**
+  String get objectiveMines;
+
+  /// No description provided for @objectiveSolarPanel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis le Panneau solaire'**
+  String get objectiveSolarPanel;
+
+  /// No description provided for @objectiveBarracksAndScouts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis la Caserne et recrute {count, plural, one{{count} Éclaireur} other{{count} Éclaireurs}}'**
+  String objectiveBarracksAndScouts(int count);
+
+  /// No description provided for @objectiveExplore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explore une case autour de la base'**
+  String get objectiveExplore;
+
+  /// No description provided for @objectiveLaboratoryAndResearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis le Laboratoire et lance une recherche'**
+  String get objectiveLaboratoryAndResearch;
+
+  /// No description provided for @objectiveFirstRaid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repousse le premier raid'**
+  String get objectiveFirstRaid;
+
+  /// No description provided for @objectiveTakeLair.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prends un repaire'**
+  String get objectiveTakeLair;
+
+  /// No description provided for @objectiveCoralCitadel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis la Citadelle corallienne'**
+  String get objectiveCoralCitadel;
+
+  /// No description provided for @objectiveTakeFaille.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prends la Faille'**
+  String get objectiveTakeFaille;
+
+  /// No description provided for @objectiveDescentModule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis le Module de Descente'**
+  String get objectiveDescentModule;
+
+  /// No description provided for @objectiveDescend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Descends au niveau {level}'**
+  String objectiveDescend(int level);
+
+  /// No description provided for @objectiveTakeCheminee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prends la Cheminée'**
+  String get objectiveTakeCheminee;
+
+  /// No description provided for @objectivePressureCapsule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis la Capsule Pressurisée'**
+  String get objectivePressureCapsule;
+
+  /// No description provided for @objectiveTakeKernel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prends le Noyau Volcanique'**
+  String get objectiveTakeKernel;
+
+  /// No description provided for @objectiveRaiseKernel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Monte le Noyau au niveau {level}'**
+  String objectiveRaiseKernel(int level);
+
+  /// No description provided for @chapterInstallation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Installation'**
+  String get chapterInstallation;
+
+  /// No description provided for @chapterReef.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le récif'**
+  String get chapterReef;
+
+  /// No description provided for @chapterRift.
+  ///
+  /// In fr, this message translates to:
+  /// **'La Faille'**
+  String get chapterRift;
+
+  /// No description provided for @chapterChimney.
+  ///
+  /// In fr, this message translates to:
+  /// **'La Cheminée'**
+  String get chapterChimney;
+
+  /// No description provided for @chapterKernel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Noyau'**
+  String get chapterKernel;
+
+  /// No description provided for @chapterAwakening.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le réveil'**
+  String get chapterAwakening;
+
+  /// No description provided for @chapterNumbered.
+  ///
+  /// In fr, this message translates to:
+  /// **'{number}. {title}'**
+  String chapterNumbered(int number, String title);
+
+  /// No description provided for @tipGuideTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Guide'**
+  String get tipGuideTitle;
+
+  /// No description provided for @tipCategoryBase.
+  ///
+  /// In fr, this message translates to:
+  /// **'Base'**
+  String get tipCategoryBase;
+
+  /// No description provided for @tipCategoryThreats.
+  ///
+  /// In fr, this message translates to:
+  /// **'Menaces'**
+  String get tipCategoryThreats;
+
+  /// No description provided for @tipCategoryMap.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte'**
+  String get tipCategoryMap;
+
+  /// No description provided for @tipCategoryEvents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événements'**
+  String get tipCategoryEvents;
+
+  /// No description provided for @tipNoiseGaugeTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La jauge de bruit'**
+  String get tipNoiseGaugeTitle;
+
+  /// No description provided for @tipNoiseGaugeLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque chantier, chaque recrue et chaque exploration font du bruit, et ta base en fait un peu à chaque tour.'**
+  String get tipNoiseGaugeLine1;
+
+  /// No description provided for @tipNoiseGaugeLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quand la jauge atteint {threshold}, les monstres l\'entendent : un raid est annoncé.'**
+  String tipNoiseGaugeLine2(int threshold);
+
+  /// No description provided for @tipWorksitesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Deux chantiers par tour'**
+  String get tipWorksitesTitle;
+
+  /// No description provided for @tipWorksitesLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton QG niveau {level} ouvre un deuxième chantier : deux bâtiments montent à chaque tour.'**
+  String tipWorksitesLine1(int level);
+
+  /// No description provided for @tipWorksitesLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le QG niveau {level} en ouvrira un troisième. La recherche, elle, reste à une par tour.'**
+  String tipWorksitesLine2(int level);
+
+  /// No description provided for @tipTechChoiceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les choix de la recherche'**
+  String get tipTechChoiceTitle;
+
+  /// No description provided for @tipTechChoiceLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le prochain nœud de ta branche est un choix entre deux options.'**
+  String get tipTechChoiceLine1;
+
+  /// No description provided for @tipTechChoiceLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce choix est définitif : l\'autre option restera fermée pour toute la partie.'**
+  String get tipTechChoiceLine2;
+
+  /// No description provided for @tipTechChoiceLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prends le temps de lire les deux avant de lancer la recherche.'**
+  String get tipTechChoiceLine3;
+
+  /// No description provided for @tipRaidAnnouncedTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un raid approche'**
+  String get tipRaidAnnouncedTitle;
+
+  /// No description provided for @tipRaidAnnouncedLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton bruit a attiré des monstres : ils frapperont ta base dans {turns, plural, one{{turns} tour} other{{turns} tours}}.'**
+  String tipRaidAnnouncedLine1(int turns);
+
+  /// No description provided for @tipRaidAnnouncedLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recrute des défenseurs, les Harponneurs sont faits pour ça.'**
+  String get tipRaidAnnouncedLine2;
+
+  /// No description provided for @tipRaidAnnouncedLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le rempart de la Citadelle corallienne t\'aidera aussi à tenir.'**
+  String get tipRaidAnnouncedLine3;
+
+  /// No description provided for @tipRaidReportTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le rapport de raid'**
+  String get tipRaidReportTitle;
+
+  /// No description provided for @tipRaidReportLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Après chaque raid, le rapport montre le combat, tes pertes et le butin.'**
+  String get tipRaidReportLine1;
+
+  /// No description provided for @tipRaidReportLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un raid perdu pille une partie de tes ressources.'**
+  String get tipRaidReportLine2;
+
+  /// No description provided for @tipRaidReportLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un raid repoussé efface ta série de défaites.'**
+  String get tipRaidReportLine3;
+
+  /// No description provided for @tipLastChanceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernière chance'**
+  String get tipLastChanceTitle;
+
+  /// No description provided for @tipLastChanceLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{Ta base a perdu {count} raid.} other{Ta base a perdu {count} raids d\'affilée.}}'**
+  String tipLastChanceLine1(int count);
+
+  /// No description provided for @tipLastChanceLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si le prochain raid est perdu lui aussi, la partie est finie.'**
+  String get tipLastChanceLine2;
+
+  /// No description provided for @tipLastChanceLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mets tes forces dans la défense : une victoire efface la série.'**
+  String get tipLastChanceLine3;
+
+  /// No description provided for @tipMonsterFamiliesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les familles de monstres'**
+  String get tipMonsterFamiliesTitle;
+
+  /// No description provided for @tipMonsterFamiliesLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque repaire abrite une famille, avec sa propre règle de combat.'**
+  String get tipMonsterFamiliesLine1;
+
+  /// No description provided for @tipMonsterFamiliesLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque famille a son point faible : une unité qui la contre.'**
+  String get tipMonsterFamiliesLine2;
+
+  /// No description provided for @tipMonsterFamiliesLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche le repaire sur la Carte pour la connaître avant d\'attaquer.'**
+  String get tipMonsterFamiliesLine3;
+
+  /// No description provided for @tipVolcanoWaveTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La vague du Volcan'**
+  String get tipVolcanoWaveTitle;
+
+  /// No description provided for @tipVolcanoWaveLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Volcan envoie ses Krakens reprendre le Noyau.'**
+  String get tipVolcanoWaveLine1;
+
+  /// No description provided for @tipVolcanoWaveLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'La vague frappe à la fin du prochain tour : garde une garnison au Noyau.'**
+  String get tipVolcanoWaveLine2;
+
+  /// No description provided for @tipVolcanoWaveLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque vague perdue fait perdre un niveau au Noyau.'**
+  String get tipVolcanoWaveLine3;
+
+  /// No description provided for @tipLairTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les repaires'**
+  String get tipLairTitle;
+
+  /// No description provided for @tipLairLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sur la Carte, un repaire de monstres garde sa case : attaque-le avec ton armée.'**
+  String get tipLairLine1;
+
+  /// No description provided for @tipLairLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vaincus, les monstres laissent leur butin, mais chaque combat fait du bruit.'**
+  String get tipLairLine2;
+
+  /// No description provided for @tipLairLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Regarde leur nombre avant de choisir tes unités.'**
+  String get tipLairLine3;
+
+  /// No description provided for @tipChestAndRuinsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coffres et ruines'**
+  String get tipChestAndRuinsTitle;
+
+  /// No description provided for @tipChestAndRuinsLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un coffre ou des ruines cachent des ressources.'**
+  String get tipChestAndRuinsLine1;
+
+  /// No description provided for @tipChestAndRuinsLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche la case sur la Carte pour les fouiller : c\'est sans danger et sans bruit.'**
+  String get tipChestAndRuinsLine2;
+
+  /// No description provided for @tipTransitionBaseTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les bases de transition'**
+  String get tipTransitionBaseTitle;
+
+  /// No description provided for @tipTransitionBaseLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une base gardée, sur la Carte, mène vers les profondeurs.'**
+  String get tipTransitionBaseLine1;
+
+  /// No description provided for @tipTransitionBaseLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prise d\'assaut, elle te rapporte des perles à chaque tour.'**
+  String get tipTransitionBaseLine2;
+
+  /// No description provided for @tipTransitionBaseLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Elle ouvre aussi la route du niveau suivant.'**
+  String get tipTransitionBaseLine3;
+
+  /// No description provided for @tipDescentTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La descente'**
+  String get tipDescentTitle;
+
+  /// No description provided for @tipDescentLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton Module de Descente envoie des unités au niveau inférieur, par la Faille.'**
+  String get tipDescentLine1;
+
+  /// No description provided for @tipDescentLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Attention : une unité descendue ne remonte plus.'**
+  String get tipDescentLine2;
+
+  /// No description provided for @tipDescentLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'En bas t\'attendent d\'autres repaires, et la route du Noyau.'**
+  String get tipDescentLine3;
+
+  /// No description provided for @tipEventsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les événements'**
+  String get tipEventsTitle;
+
+  /// No description provided for @tipEventsLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les {minGap} à {maxGap} tours, un événement secoue les abysses.'**
+  String tipEventsLine1(int minGap, int maxGap);
+
+  /// No description provided for @tipEventsLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as le tour suivant pour choisir ta réponse sur sa carte.'**
+  String get tipEventsLine2;
+
+  /// No description provided for @tipEventsLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans choix de ta part, l\'option prudente s\'applique d\'office.'**
+  String get tipEventsLine3;
+
+  /// No description provided for @tipWarmCurrentLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un courant chaud dope ta production pendant {turns, plural, one{{turns} tour} other{{turns} tours}}.'**
+  String tipWarmCurrentLine1(int turns);
+
+  /// No description provided for @tipWarmCurrentLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mais son remous fait du bruit à chaque tour.'**
+  String get tipWarmCurrentLine2;
+
+  /// No description provided for @tipWarmCurrentLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exploite-le si tes défenses sont prêtes à recevoir un raid.'**
+  String get tipWarmCurrentLine3;
+
+  /// No description provided for @tipWreckLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un galion englouti reste {turns, plural, one{{turns} tour} other{{turns} tours}} au bord de la zone explorée.'**
+  String tipWreckLine1(int turns);
+
+  /// No description provided for @tipWreckLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explore sa case avec un Éclaireur, puis fouille-la pour son butin.'**
+  String get tipWreckLine2;
+
+  /// No description provided for @tipWreckLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'La fouille fait du bruit (+{noise}) : choisis ton moment.'**
+  String tipWreckLine3(int noise);
+
+  /// No description provided for @tipPredatorsLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un grand requin et son banc rôdent autour de ta base.'**
+  String get tipPredatorsLine1;
+
+  /// No description provided for @tipPredatorsLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Affronte-les pour leur butin, ou cède des algues pour les éloigner.'**
+  String get tipPredatorsLine2;
+
+  /// No description provided for @tipPredatorsLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Perdre contre eux ne met jamais fin à la partie.'**
+  String get tipPredatorsLine3;
+
+  /// No description provided for @tipStormLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'La tempête ferme l\'exploration pendant {turns, plural, one{{turns} tour} other{{turns} tours}}.'**
+  String tipStormLine1(int turns);
+
+  /// No description provided for @tipStormLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'En échange, elle couvre ton bruit : la jauge baisse de {relief}.'**
+  String tipStormLine2(int relief);
+
+  /// No description provided for @tipSurvivorsLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une capsule échouée abrite des survivants.'**
+  String get tipSurvivorsLine1;
+
+  /// No description provided for @tipSurvivorsLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accueillis, ils rejoignent ta base comme Harponneurs.'**
+  String get tipSurvivorsLine2;
+
+  /// No description provided for @tipSurvivorsLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Comme toute ton armée, ils mangent des algues à chaque tour.'**
+  String get tipSurvivorsLine3;
+
+  /// No description provided for @tipCaravanLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une caravane de tortues passe près de ta base.'**
+  String get tipCaravanLine1;
+
+  /// No description provided for @tipCaravanLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Son crabe marchand échange ta ressource la plus abondante contre la plus rare.'**
+  String get tipCaravanLine2;
+
+  /// No description provided for @tipColdCurrentLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un courant froid ralentit tes algues pendant {turns, plural, one{{turns} tour} other{{turns} tours}}.'**
+  String tipColdCurrentLine1(int turns);
+
+  /// No description provided for @tipColdCurrentLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chauffer les serres coûte de l\'énergie, mais sauve la récolte.'**
+  String get tipColdCurrentLine2;
+
+  /// No description provided for @tipColdCurrentLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans algues, ton armée ne tient pas : surveille ton stock.'**
+  String get tipColdCurrentLine3;
+
+  /// No description provided for @guideLessonHqLevel1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bienvenue dans les abysses ! Touche le QG pour lancer ton premier chantier : un seul par tour pour commencer. Puis appuie sur « Tour suivant ».'**
+  String get guideLessonHqLevel1;
+
+  /// No description provided for @guideLessonAlgaeFarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bravo pour ce premier chantier ! Les algues nourrissent ton armée : chaque unité en mange à chaque tour. Construis la Ferme d\'algues.'**
+  String get guideLessonAlgaeFarm;
+
+  /// No description provided for @guideLessonMines.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le corail et le minerai paient presque tout. Construis la Mine de corail puis l\'Extracteur de minerai, un par tour. Regarde bien : chaque niveau coûte plus cher que le précédent.'**
+  String get guideLessonMines;
+
+  /// No description provided for @guideLessonSolarPanel.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'Extracteur consomme de l\'énergie, et la Caserne en consommera aussi. Sans énergie, ils s\'arrêtent. Construis le Panneau solaire.'**
+  String get guideLessonSolarPanel;
+
+  /// No description provided for @guideLessonHqLevel2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le QG niveau {level} débloque la Caserne et le Laboratoire. Mais chaque chantier fait du bruit : surveille la jauge en haut de l\'écran, elle attire les monstres.'**
+  String guideLessonHqLevel2(int level);
+
+  /// No description provided for @guideLessonBarracksAndScouts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis la Caserne, puis recrute {count, plural, one{{count} Éclaireur} other{{count} Éclaireurs}} dans l\'onglet Armée. Chaque unité mange des algues à chaque tour, et chaque recrue fait monter le bruit.'**
+  String guideLessonBarracksAndScouts(int count);
+
+  /// No description provided for @guideLessonExplore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autour de ta base, tout est dans le brouillard. Sur la Carte, envoie un Éclaireur sur une case voisine : tu y trouveras des repaires de monstres de différentes familles, et parfois des coffres.'**
+  String get guideLessonExplore;
+
+  /// No description provided for @guideLessonLaboratoryAndResearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis le Laboratoire, ouvre une branche dans l\'onglet Tech et lance une recherche. Une seule recherche par tour, et certains choix sont définitifs : prends le temps de lire.'**
+  String get guideLessonLaboratoryAndResearch;
+
+  /// No description provided for @guideLessonFirstRaid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le bruit finit toujours par attirer un raid, annoncé {turns, plural, one{{turns} tour} other{{turns} tours}} à l\'avance. Recrute des Harponneurs pour défendre ta base. Plus tard, le rempart de la Citadelle t\'aidera aussi.'**
+  String guideLessonFirstRaid(int turns);
+
+  /// No description provided for @guideGoalMet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bravo, c\'est fait ! Termine le tour pour valider l\'objectif et toucher ta récompense.'**
+  String get guideGoalMet;
+
+  /// No description provided for @guideWorksiteTaken.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton chantier du tour est déjà pris. Termine le tour : tu construiras la suite au prochain.'**
+  String get guideWorksiteTaken;
+
+  /// No description provided for @guideAlreadyRecruited.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as déjà recruté ces unités ce tour. Termine le tour pour en recruter d\'autres.'**
+  String get guideAlreadyRecruited;
+
+  /// No description provided for @guideExploring.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton Éclaireur est en route. Termine le tour pour découvrir ce que cache la case.'**
+  String get guideExploring;
+
+  /// No description provided for @guideStorm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une tempête ferme l\'exploration jusqu\'à la fin du tour {turn}. Patiente : l\'objectif t\'attend, termine le tour.'**
+  String guideStorm(int turn);
+
+  /// No description provided for @guideWreckWithoutBarracks.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une épave a coulé près de ta base, visible jusqu\'à la fin du tour {turn}. Il faut un Éclaireur pour l\'atteindre, donc une Caserne : continue ton objectif, elle viendra.'**
+  String guideWreckWithoutBarracks(int turn);
+
+  /// No description provided for @guideWreckWithoutScout.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une épave a coulé près de ta base, visible jusqu\'à la fin du tour {turn}. Recrute un Éclaireur dans l\'onglet Armée pour aller la fouiller.'**
+  String guideWreckWithoutScout(int turn);
+
+  /// No description provided for @guideRaidIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le raid arrive au tour {turn} avec {monsters, plural, one{{monsters} monstre} other{{monsters} monstres}}.'**
+  String guideRaidIntro(int turn, int monsters);
+
+  /// No description provided for @guideRaidOutOfReach.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recrute autant de Harponneurs que tu peux dans l\'onglet Armée.'**
+  String get guideRaidOutOfReach;
+
+  /// No description provided for @guideRaidHeld.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta défense devrait le repousser : termine le tour pour l\'attendre.'**
+  String get guideRaidHeld;
+
+  /// No description provided for @guideRaidNeeded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aie au moins {needed, plural, one{{needed} Harponneur} other{{needed} Harponneurs}} au niveau 1 : il t\'en manque {missing}.'**
+  String guideRaidNeeded(int needed, int missing);
+
+  /// No description provided for @guideRaidRecruitNow.
+  ///
+  /// In fr, this message translates to:
+  /// **'{missing, plural, one{Recrute-le dans l\'onglet Armée.} other{Recrute-les dans l\'onglet Armée.}}'**
+  String guideRaidRecruitNow(int missing);
+
+  /// No description provided for @guideRaidRecruitNextTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as déjà recruté ce tour : {missing, plural, one{recrute-le} other{recrute-les}} au prochain tour.'**
+  String guideRaidRecruitNextTurn(int missing);
+
+  /// No description provided for @guideRaidHoldOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as déjà recruté ce tour : termine-le et tiens bon.'**
+  String get guideRaidHoldOn;
+
+  /// No description provided for @tutorialGuideSwitch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Guide du tutoriel'**
+  String get tutorialGuideSwitch;
+
+  /// No description provided for @tutorialGuideSwitchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le guide te montre quoi faire, objectif après objectif'**
+  String get tutorialGuideSwitchHint;
+
+  /// No description provided for @tutorialTipsSwitch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conseils'**
+  String get tutorialTipsSwitch;
+
+  /// No description provided for @tutorialTipsSwitchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une fiche explique chaque nouveauté à sa première apparition'**
+  String get tutorialTipsSwitchHint;
+
+  /// No description provided for @tutorialReviewTips.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revoir les fiches'**
+  String get tutorialReviewTips;
 }
 
 class _AppLocalizationsDelegate

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../domain/unit/unit_type.dart';
+import '../l10n/app_localizations.dart';
 
 extension UnitTypeExtensions on UnitType {
-  String get displayName => switch (this) {
-    UnitType.scout => 'Eclaireur',
-    UnitType.harpoonist => 'Harponneur',
-    UnitType.guardian => 'Gardien',
-    UnitType.domeBreaker => 'Briseur',
-    UnitType.abyssAdmiral => 'Amiral des Abysses',
-    UnitType.saboteur => 'Saboteur',
+  String displayName(AppLocalizations l10n) => switch (this) {
+    UnitType.scout => l10n.unitScoutName,
+    UnitType.harpoonist => l10n.unitHarpoonistName,
+    UnitType.guardian => l10n.unitGuardianName,
+    UnitType.domeBreaker => l10n.unitDomeBreakerName,
+    UnitType.abyssAdmiral => l10n.unitAbyssAdmiralName,
+    UnitType.saboteur => l10n.unitSaboteurName,
   };
 
   Color get color => switch (this) {
@@ -29,21 +30,21 @@ extension UnitTypeExtensions on UnitType {
     UnitType.saboteur => 'assets/icons/units/saboteur.svg',
   };
 
-  String get role => switch (this) {
-    UnitType.scout => 'Eclaireur',
-    UnitType.harpoonist => 'DPS',
-    UnitType.guardian => 'Tank',
-    UnitType.domeBreaker => 'Siege',
-    UnitType.abyssAdmiral => 'Amiral',
-    UnitType.saboteur => 'Verre-canon',
+  String role(AppLocalizations l10n) => switch (this) {
+    UnitType.scout => l10n.unitScoutRole,
+    UnitType.harpoonist => l10n.unitHarpoonistRole,
+    UnitType.guardian => l10n.unitGuardianRole,
+    UnitType.domeBreaker => l10n.unitDomeBreakerRole,
+    UnitType.abyssAdmiral => l10n.unitAbyssAdmiralRole,
+    UnitType.saboteur => l10n.unitSaboteurRole,
   };
 
-  String get roleEffect => switch (this) {
-    UnitType.scout => 'Fuit au lieu de mourir : revient toujours blessé.',
-    UnitType.harpoonist => 'Dégâts réguliers, sans règle spéciale.',
-    UnitType.guardian => 'Provoque : les monstres le ciblent en priorité.',
-    UnitType.domeBreaker => 'Inflige le double de dégâts aux boss.',
-    UnitType.abyssAdmiral => 'Commande les assauts, sans combattre.',
-    UnitType.saboteur => 'Ignore la défense de sa cible.',
+  String roleEffect(AppLocalizations l10n) => switch (this) {
+    UnitType.scout => l10n.unitScoutRoleEffect,
+    UnitType.harpoonist => l10n.unitHarpoonistRoleEffect,
+    UnitType.guardian => l10n.unitGuardianRoleEffect,
+    UnitType.domeBreaker => l10n.unitDomeBreakerRoleEffect,
+    UnitType.abyssAdmiral => l10n.unitAbyssAdmiralRoleEffect,
+    UnitType.saboteur => l10n.unitSaboteurRoleEffect,
   };
 }

@@ -4,6 +4,7 @@ import 'package:abyss/presentation/extensions/save_summary_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/l10n_fixtures.dart';
 import '../../helpers/save_summary_helpers.dart';
 
 void main() {
@@ -11,12 +12,12 @@ void main() {
     final summary = summaryOf(difficulty: Difficulty.easy);
 
     test('is badged with its difficulty', () {
-      expect(summary.badgeLabel, 'FACILE');
+      expect(summary.badgeLabel(fr), 'FACILE');
       expect(summary.badgeColor, AbyssColors.success);
     });
 
     test('tells its turn, depth and headquarters', () {
-      expect(summary.metaLine, 'Tour 14 · Profondeurs · QG niv. 3');
+      expect(summary.metaLine(fr), 'Tour 14 · Profondeurs · QG niv. 3');
     });
 
     test('shows its resources rather than a footnote', () {
@@ -37,12 +38,12 @@ void main() {
     );
 
     test('is badged as a victory in gold', () {
-      expect(summary.badgeLabel, '★ VICTOIRE');
+      expect(summary.badgeLabel(fr), '★ VICTOIRE');
       expect(summary.badgeColor, AbyssColors.energyYellow);
     });
 
     test('tells its turn, depth and difficulty', () {
-      expect(summary.metaLine, 'Tour 63 · Noyau · Facile');
+      expect(summary.metaLine(fr), 'Tour 63 · Noyau · Facile');
     });
 
     test('tells whether the volcanic kernel was conquered', () {
@@ -62,12 +63,12 @@ void main() {
     );
 
     test('is still badged as a victory in gold', () {
-      expect(summary.badgeLabel, '★ VICTOIRE');
+      expect(summary.badgeLabel(fr), '★ VICTOIRE');
       expect(summary.badgeColor, AbyssColors.energyYellow);
     });
 
     test('tells its turn, depth and headquarters like a game in progress', () {
-      expect(summary.metaLine, 'Tour 14 · Profondeurs · QG niv. 3');
+      expect(summary.metaLine(fr), 'Tour 14 · Profondeurs · QG niv. 3');
     });
 
     test('shows its resources rather than a footnote', () {
@@ -84,12 +85,12 @@ void main() {
     );
 
     test('is badged as a defeat in red', () {
-      expect(summary.badgeLabel, 'DÉFAITE');
+      expect(summary.badgeLabel(fr), 'DÉFAITE');
       expect(summary.badgeColor, AbyssColors.error);
     });
 
     test('tells the turn its base fell on', () {
-      expect(summary.metaLine, 'Tombée au tour 27 · Surface · Difficile');
+      expect(summary.metaLine(fr), 'Tombée au tour 27 · Surface · Difficile');
     });
 
     test('invites to look at its report', () {
@@ -99,6 +100,6 @@ void main() {
 
   test('names who plays, the turn and the difficulty', () {
     final summary = summaryOf(difficulty: Difficulty.hard);
-    expect(summary.resumeLabel, 'Alice · Tour 14 · Difficile');
+    expect(summary.resumeLabel(fr), 'Alice · Tour 14 · Difficile');
   });
 }

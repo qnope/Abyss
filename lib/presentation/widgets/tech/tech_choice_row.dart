@@ -3,6 +3,7 @@ import '../../../domain/tech/tech_branch.dart';
 import '../../../domain/tech/tech_option.dart';
 import '../../extensions/tech_branch_extensions.dart';
 import '../../extensions/tech_node_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import 'tech_option_card.dart';
 
 /// The two exclusive options of a choice node, face to face.
@@ -30,27 +31,28 @@ class TechChoiceRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(child: _card(TechOption.a)),
+          Expanded(child: _card(context, TechOption.a)),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 6),
             child: Center(child: Text('ou')),
           ),
-          Expanded(child: _card(TechOption.b)),
+          Expanded(child: _card(context, TechOption.b)),
         ],
       ),
     );
   }
 
-  Widget _card(TechOption option) {
+  Widget _card(BuildContext context, TechOption option) {
     final status = taken == null
         ? TechOptionStatus.open
         : taken == option
             ? TechOptionStatus.taken
             : TechOptionStatus.discarded;
+    final l10n = context.l10n;
     return TechOptionCard(
       iconPath: branch.nodeIconPath(level, option),
-      name: branch.nodeName(level, option),
-      effect: branch.nodeEffect(level, option),
+      name: branch.nodeName(l10n, level, option),
+      effect: branch.nodeEffect(l10n, level, option),
       color: branch.color,
       status: status,
       onChoose: onChoose == null ? null : () => onChoose!(option),

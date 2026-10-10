@@ -44,7 +44,7 @@ void main() {
     testWidgets('shows 6 unit names', (tester) async {
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();
-      expect(find.text('Eclaireur'), findsOneWidget);
+      expect(find.text('Éclaireur'), findsOneWidget);
       expect(find.text('Harponneur'), findsOneWidget);
       expect(find.text('Gardien'), findsOneWidget);
       expect(find.text('Briseur'), findsOneWidget);
@@ -78,7 +78,7 @@ void main() {
         createApp(onUnitTap: (t) => tappedType = t),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Eclaireur'));
+      await tester.tap(find.text('Éclaireur'));
       expect(tappedType, UnitType.scout);
     });
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/event/random_event_type.dart';
 import '../../../domain/game/player.dart';
 import '../../extensions/random_event_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// Warning shown before ending a turn while an event still waits for a
@@ -29,7 +30,7 @@ class EventPendingWarning extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              "${type.label} : sans choix, l'option prudente s'appliquera",
+              "${type.label(context.l10n)} : sans choix, l'option prudente s'appliquera",
               style: const TextStyle(color: AbyssColors.warning),
             ),
           ),

@@ -153,6 +153,960 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Difficulté'**
   String get difficultyTitle;
+
+  /// No description provided for @buildingHeadquartersName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quartier Général'**
+  String get buildingHeadquartersName;
+
+  /// No description provided for @buildingHeadquartersDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Centre de commandement de votre base sous-marine. Son niveau détermine les capacités de votre colonie. Une fois bâti, il fournit {coral} corail et {ore} minerai par tour.'**
+  String buildingHeadquartersDescription(int coral, int ore);
+
+  /// No description provided for @buildingAlgaeFarmName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ferme d\'algues'**
+  String get buildingAlgaeFarmName;
+
+  /// No description provided for @buildingAlgaeFarmDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cultive des algues pour nourrir votre colonie sous-marine.'**
+  String get buildingAlgaeFarmDescription;
+
+  /// No description provided for @buildingCoralMineName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mine de corail'**
+  String get buildingCoralMineName;
+
+  /// No description provided for @buildingCoralMineDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Extrait du corail des récifs pour la construction.'**
+  String get buildingCoralMineDescription;
+
+  /// No description provided for @buildingCoralCitadelName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Citadelle corallienne'**
+  String get buildingCoralCitadelName;
+
+  /// No description provided for @buildingCoralCitadelDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Forteresse corallienne massive qui dresse un rempart pour la défense de votre base. Pendant un raid, il encaisse les coups à la place des unités stationnées.'**
+  String get buildingCoralCitadelDescription;
+
+  /// No description provided for @buildingOreExtractorName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Extracteur de minerai'**
+  String get buildingOreExtractorName;
+
+  /// No description provided for @buildingOreExtractorDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fore les profondeurs pour extraire du minerai océanique.'**
+  String get buildingOreExtractorDescription;
+
+  /// No description provided for @buildingSolarPanelName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Panneau solaire'**
+  String get buildingSolarPanelName;
+
+  /// No description provided for @buildingSolarPanelDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Capte l\'énergie solaire pour alimenter vos installations.'**
+  String get buildingSolarPanelDescription;
+
+  /// No description provided for @buildingLaboratoryName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Laboratoire'**
+  String get buildingLaboratoryName;
+
+  /// No description provided for @buildingLaboratoryDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Centre de recherche sous-marin pour développer de nouvelles technologies.'**
+  String get buildingLaboratoryDescription;
+
+  /// No description provided for @buildingBarracksName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Caserne'**
+  String get buildingBarracksName;
+
+  /// No description provided for @buildingBarracksDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Forme et entraîne vos unités militaires sous-marines.'**
+  String get buildingBarracksDescription;
+
+  /// No description provided for @buildingDescentModuleName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Module de Descente'**
+  String get buildingDescentModuleName;
+
+  /// No description provided for @buildingDescentModuleDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Module spécialisé permettant l\'assaut des failles abyssales.'**
+  String get buildingDescentModuleDescription;
+
+  /// No description provided for @buildingPressureCapsuleName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Capsule Pressurisée'**
+  String get buildingPressureCapsuleName;
+
+  /// No description provided for @buildingPressureCapsuleDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Capsule haute pression permettant l\'assaut des cheminées hydrothermales.'**
+  String get buildingPressureCapsuleDescription;
+
+  /// No description provided for @buildingVolcanicKernelName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noyau Volcanique'**
+  String get buildingVolcanicKernelName;
+
+  /// No description provided for @buildingVolcanicKernelDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le cœur brûlant des abysses. Construisez-le au niveau 10 pour remporter la victoire. Sa garnison se gère ici, ou depuis sa case sur la carte.'**
+  String get buildingVolcanicKernelDescription;
+
+  /// No description provided for @unitScoutName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Éclaireur'**
+  String get unitScoutName;
+
+  /// No description provided for @unitScoutRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Éclaireur'**
+  String get unitScoutRole;
+
+  /// No description provided for @unitScoutRoleEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fuit au lieu de mourir : revient toujours blessé.'**
+  String get unitScoutRoleEffect;
+
+  /// No description provided for @unitHarpoonistName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Harponneur'**
+  String get unitHarpoonistName;
+
+  /// No description provided for @unitHarpoonistRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'DPS'**
+  String get unitHarpoonistRole;
+
+  /// No description provided for @unitHarpoonistRoleEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dégâts réguliers, sans règle spéciale.'**
+  String get unitHarpoonistRoleEffect;
+
+  /// No description provided for @unitGuardianName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gardien'**
+  String get unitGuardianName;
+
+  /// No description provided for @unitGuardianRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tank'**
+  String get unitGuardianRole;
+
+  /// No description provided for @unitGuardianRoleEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Provoque : les monstres le ciblent en priorité.'**
+  String get unitGuardianRoleEffect;
+
+  /// No description provided for @unitDomeBreakerName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Briseur'**
+  String get unitDomeBreakerName;
+
+  /// No description provided for @unitDomeBreakerRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Siège'**
+  String get unitDomeBreakerRole;
+
+  /// No description provided for @unitDomeBreakerRoleEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inflige le double de dégâts aux boss.'**
+  String get unitDomeBreakerRoleEffect;
+
+  /// No description provided for @unitAbyssAdmiralName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Amiral des Abysses'**
+  String get unitAbyssAdmiralName;
+
+  /// No description provided for @unitAbyssAdmiralRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Amiral'**
+  String get unitAbyssAdmiralRole;
+
+  /// No description provided for @unitAbyssAdmiralRoleEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commande les assauts, sans combattre.'**
+  String get unitAbyssAdmiralRoleEffect;
+
+  /// No description provided for @unitSaboteurName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saboteur'**
+  String get unitSaboteurName;
+
+  /// No description provided for @unitSaboteurRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Verre-canon'**
+  String get unitSaboteurRole;
+
+  /// No description provided for @unitSaboteurRoleEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ignore la défense de sa cible.'**
+  String get unitSaboteurRoleEffect;
+
+  /// No description provided for @resourceAlgaeName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Algues'**
+  String get resourceAlgaeName;
+
+  /// No description provided for @resourceAlgaeFlavor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nourriture cultivée dans les fermes sous-marines pour nourrir vos unités.'**
+  String get resourceAlgaeFlavor;
+
+  /// No description provided for @resourceCoralName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Corail'**
+  String get resourceCoralName;
+
+  /// No description provided for @resourceCoralFlavor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Matériau de construction récolté sur les récifs pour bâtir votre base.'**
+  String get resourceCoralFlavor;
+
+  /// No description provided for @resourceOreName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Minerai'**
+  String get resourceOreName;
+
+  /// No description provided for @resourceOreFlavor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Métal extrait des profondeurs pour forger des équipements avancés.'**
+  String get resourceOreFlavor;
+
+  /// No description provided for @resourceEnergyName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Énergie'**
+  String get resourceEnergyName;
+
+  /// No description provided for @resourceEnergyFlavor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Énergie captée pour alimenter vos bâtiments et machines.'**
+  String get resourceEnergyFlavor;
+
+  /// No description provided for @resourcePearlName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Perles'**
+  String get resourcePearlName;
+
+  /// No description provided for @resourcePearlFlavor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gemmes rares trouvées dans les ruines et les repaires, et récoltées chaque tour dans les failles et cheminées capturées.'**
+  String get resourcePearlFlavor;
+
+  /// No description provided for @monsterFamilyGenericLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rôdeurs'**
+  String get monsterFamilyGenericLabel;
+
+  /// No description provided for @monsterFamilySwarmLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nuée'**
+  String get monsterFamilySwarmLabel;
+
+  /// No description provided for @monsterFamilyArmouredLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carapaces'**
+  String get monsterFamilyArmouredLabel;
+
+  /// No description provided for @monsterFamilyHunterLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chasseurs'**
+  String get monsterFamilyHunterLabel;
+
+  /// No description provided for @monsterFamilyColossusLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Colosses'**
+  String get monsterFamilyColossusLabel;
+
+  /// No description provided for @monsterFamilyKrakenLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Kraken'**
+  String get monsterFamilyKrakenLabel;
+
+  /// No description provided for @monsterFamilyGenericCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} monstre} other{{count} monstres}}'**
+  String monsterFamilyGenericCount(int count);
+
+  /// No description provided for @monsterFamilySwarmCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} Dents-de-verre} other{{count} Dents-de-verre}}'**
+  String monsterFamilySwarmCount(int count);
+
+  /// No description provided for @monsterFamilyArmouredCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} Isopode cuirassé} other{{count} Isopodes cuirassés}}'**
+  String monsterFamilyArmouredCount(int count);
+
+  /// No description provided for @monsterFamilyHunterCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} Calmar-chasseur} other{{count} Calmars-chasseurs}}'**
+  String monsterFamilyHunterCount(int count);
+
+  /// No description provided for @monsterFamilyColossusCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} Requin dormeur} other{{count} Requins dormeurs}}'**
+  String monsterFamilyColossusCount(int count);
+
+  /// No description provided for @monsterFamilyKrakenCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} Kraken} other{{count} Krakens}}'**
+  String monsterFamilyKrakenCount(int count);
+
+  /// No description provided for @monsterFamilySwarmRule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essaim : un coup de Harponneur touche deux poissons.'**
+  String get monsterFamilySwarmRule;
+
+  /// No description provided for @monsterFamilyArmouredRule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cuirasse : seuls les Saboteurs ignorent leur DEF.'**
+  String get monsterFamilyArmouredRule;
+
+  /// No description provided for @monsterFamilyHunterRule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Traque : ils visent l\'unité la plus fragile et frappent deux fois plus fort, sauf un Gardien ou le rempart qui provoque.'**
+  String get monsterFamilyHunterRule;
+
+  /// No description provided for @monsterFamilyColossusRule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Géants : tous des boss, que les Briseurs frappent double.'**
+  String get monsterFamilyColossusRule;
+
+  /// No description provided for @monsterFamilyKrakenRule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Étreinte : chaque coup de tentacule frappe aussi un deuxième défenseur. Des boss, que les Briseurs frappent double.'**
+  String get monsterFamilyKrakenRule;
+
+  /// No description provided for @monsterFamilySwarmWeakness.
+  ///
+  /// In fr, this message translates to:
+  /// **'Harponneurs'**
+  String get monsterFamilySwarmWeakness;
+
+  /// No description provided for @monsterFamilyArmouredWeakness.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saboteurs'**
+  String get monsterFamilyArmouredWeakness;
+
+  /// No description provided for @monsterFamilyHunterWeakness.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gardiens'**
+  String get monsterFamilyHunterWeakness;
+
+  /// No description provided for @monsterFamilyColossusWeakness.
+  ///
+  /// In fr, this message translates to:
+  /// **'Briseurs de dôme'**
+  String get monsterFamilyColossusWeakness;
+
+  /// No description provided for @monsterLairGroupsAnd.
+  ///
+  /// In fr, this message translates to:
+  /// **'{first} et {second}'**
+  String monsterLairGroupsAnd(String first, String second);
+
+  /// No description provided for @monsterLairWave.
+  ///
+  /// In fr, this message translates to:
+  /// **'{monsters} niv. {level}'**
+  String monsterLairWave(String monsters, int level);
+
+  /// No description provided for @monsterLairWeakAgainst.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faibles contre : {units}'**
+  String monsterLairWeakAgainst(String units);
+
+  /// No description provided for @monsterDifficultyEasy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Facile'**
+  String get monsterDifficultyEasy;
+
+  /// No description provided for @monsterDifficultyMedium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moyen'**
+  String get monsterDifficultyMedium;
+
+  /// No description provided for @monsterDifficultyHard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Difficile'**
+  String get monsterDifficultyHard;
+
+  /// No description provided for @randomEventWarmCurrentLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Courant chaud'**
+  String get randomEventWarmCurrentLabel;
+
+  /// No description provided for @randomEventWreckLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épave'**
+  String get randomEventWreckLabel;
+
+  /// No description provided for @randomEventPredatorsLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Banc de prédateurs'**
+  String get randomEventPredatorsLabel;
+
+  /// No description provided for @randomEventStormLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tempête'**
+  String get randomEventStormLabel;
+
+  /// No description provided for @randomEventSurvivorsLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Survivants'**
+  String get randomEventSurvivorsLabel;
+
+  /// No description provided for @randomEventCaravanLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Caravane de tortues'**
+  String get randomEventCaravanLabel;
+
+  /// No description provided for @randomEventColdCurrentLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Courant froid'**
+  String get randomEventColdCurrentLabel;
+
+  /// No description provided for @eventCountdown.
+  ///
+  /// In fr, this message translates to:
+  /// **'{label} : encore {turns, plural, one{{turns} tour} other{{turns} tours}}'**
+  String eventCountdown(String label, int turns);
+
+  /// No description provided for @eventColdCurrentHeated.
+  ///
+  /// In fr, this message translates to:
+  /// **'{label} (serres chauffées)'**
+  String eventColdCurrentHeated(String label);
+
+  /// No description provided for @techBranchMilitaryName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Militaire'**
+  String get techBranchMilitaryName;
+
+  /// No description provided for @techBranchMilitaryDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Améliore l\'attaque et la défense de toutes les unités.'**
+  String get techBranchMilitaryDescription;
+
+  /// No description provided for @techBranchResourcesName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ressources'**
+  String get techBranchResourcesName;
+
+  /// No description provided for @techBranchResourcesDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Améliore la production de toutes les ressources.'**
+  String get techBranchResourcesDescription;
+
+  /// No description provided for @techBranchExplorerName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explorateur'**
+  String get techBranchExplorerName;
+
+  /// No description provided for @techBranchExplorerDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Améliore la portée d\'exploration de la carte.'**
+  String get techBranchExplorerDescription;
+
+  /// No description provided for @techTierEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'+20 % ATK et DEF'**
+  String get techTierEffect;
+
+  /// No description provided for @techProductionEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'+20 % de production'**
+  String get techProductionEffect;
+
+  /// No description provided for @techExploredAreaEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Zone explorée {size}×{size}'**
+  String techExploredAreaEffect(int size);
+
+  /// No description provided for @techMilitary1Name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trident aiguisé'**
+  String get techMilitary1Name;
+
+  /// No description provided for @techMilitary2aName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lames de corail'**
+  String get techMilitary2aName;
+
+  /// No description provided for @techMilitary2aEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'+35 % ATK'**
+  String get techMilitary2aEffect;
+
+  /// No description provided for @techMilitary2bName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carapace de nacre'**
+  String get techMilitary2bName;
+
+  /// No description provided for @techMilitary2bEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'+35 % PV'**
+  String get techMilitary2bEffect;
+
+  /// No description provided for @techMilitary3Name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discipline des abysses'**
+  String get techMilitary3Name;
+
+  /// No description provided for @techMilitary4aName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rempart vivant'**
+  String get techMilitary4aName;
+
+  /// No description provided for @techMilitary4aEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'+35 % DEF en défense de la base'**
+  String get techMilitary4aEffect;
+
+  /// No description provided for @techMilitary4bName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut des profondeurs'**
+  String get techMilitary4bName;
+
+  /// No description provided for @techMilitary4bEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'+35 % ATK contre repaires, bases et Noyau'**
+  String get techMilitary4bEffect;
+
+  /// No description provided for @techMilitary5Name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Légion abyssale'**
+  String get techMilitary5Name;
+
+  /// No description provided for @techResources1Name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bancs fertiles'**
+  String get techResources1Name;
+
+  /// No description provided for @techResources2aName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Culture intensive'**
+  String get techResources2aName;
+
+  /// No description provided for @techResources2aEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'+35 % d\'algues et de corail'**
+  String get techResources2aEffect;
+
+  /// No description provided for @techResources2bName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Forage profond'**
+  String get techResources2bName;
+
+  /// No description provided for @techResources2bEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'+35 % de minerai et d\'énergie'**
+  String get techResources2bEffect;
+
+  /// No description provided for @techResources3Name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Courants nourriciers'**
+  String get techResources3Name;
+
+  /// No description provided for @techResources4aName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coffres scellés'**
+  String get techResources4aName;
+
+  /// No description provided for @techResources4aEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un raid perdu pille 15 % au lieu de 30 %'**
+  String get techResources4aEffect;
+
+  /// No description provided for @techResources4bName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chantiers économes'**
+  String get techResources4bName;
+
+  /// No description provided for @techResources4bEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Améliorations 15 % moins chères'**
+  String get techResources4bEffect;
+
+  /// No description provided for @techResources5Name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Abondance des grands fonds'**
+  String get techResources5Name;
+
+  /// No description provided for @techExplorer1Name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lanterne bioluminescente'**
+  String get techExplorer1Name;
+
+  /// No description provided for @techExplorer2aName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sonar profond'**
+  String get techExplorer2aName;
+
+  /// No description provided for @techExplorer2aEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Zone explorée agrandie de 2'**
+  String get techExplorer2aEffect;
+
+  /// No description provided for @techExplorer2bName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nage silencieuse'**
+  String get techExplorer2bName;
+
+  /// No description provided for @techExplorer2bEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explorer et combattre ne font plus de bruit'**
+  String get techExplorer2bEffect;
+
+  /// No description provided for @techExplorer3Name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cartographie des courants'**
+  String get techExplorer3Name;
+
+  /// No description provided for @techExplorer4aName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pillards d\'épaves'**
+  String get techExplorer4aName;
+
+  /// No description provided for @techExplorer4aEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'+50 % de butin (repaires, trésors, raids repoussés)'**
+  String get techExplorer4aEffect;
+
+  /// No description provided for @techExplorer4bName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sentinelles'**
+  String get techExplorer4bName;
+
+  /// No description provided for @techExplorer4bEffect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raids annoncés 4 tours à l\'avance au lieu de 2'**
+  String get techExplorer4bEffect;
+
+  /// No description provided for @techExplorer5Name.
+  ///
+  /// In fr, this message translates to:
+  /// **'Œil de l\'abysse'**
+  String get techExplorer5Name;
+
+  /// No description provided for @terrainPlain.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plaine'**
+  String get terrainPlain;
+
+  /// No description provided for @cellContentEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vide'**
+  String get cellContentEmpty;
+
+  /// No description provided for @cellContentResourceBonus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ressources'**
+  String get cellContentResourceBonus;
+
+  /// No description provided for @cellContentRuins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ruines'**
+  String get cellContentRuins;
+
+  /// No description provided for @cellContentMonsterLair.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repaire'**
+  String get cellContentMonsterLair;
+
+  /// No description provided for @cellContentPassage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passage'**
+  String get cellContentPassage;
+
+  /// No description provided for @transitionBaseFailleName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faille Abyssale'**
+  String get transitionBaseFailleName;
+
+  /// No description provided for @transitionBaseFailleDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passage vers les profondeurs'**
+  String get transitionBaseFailleDescription;
+
+  /// No description provided for @transitionBaseChemineeName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cheminée du Noyau'**
+  String get transitionBaseChemineeName;
+
+  /// No description provided for @transitionBaseChemineeDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passage vers le noyau'**
+  String get transitionBaseChemineeDescription;
+
+  /// No description provided for @difficultyEasyName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Facile'**
+  String get difficultyEasyName;
+
+  /// No description provided for @difficultyEasyDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus de ressources, des monstres moins nombreux.'**
+  String get difficultyEasyDescription;
+
+  /// No description provided for @difficultyNormalName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Normal'**
+  String get difficultyNormalName;
+
+  /// No description provided for @difficultyNormalDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'équilibre prévu pour les abysses.'**
+  String get difficultyNormalDescription;
+
+  /// No description provided for @difficultyHardName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Difficile'**
+  String get difficultyHardName;
+
+  /// No description provided for @difficultyHardDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moins de ressources, des monstres plus nombreux.'**
+  String get difficultyHardDescription;
+
+  /// No description provided for @temporaryObjectiveWreckShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épave'**
+  String get temporaryObjectiveWreckShort;
+
+  /// No description provided for @temporaryObjectivePredatorsShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prédateurs'**
+  String get temporaryObjectivePredatorsShort;
+
+  /// No description provided for @historyCategoryCombat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Combat'**
+  String get historyCategoryCombat;
+
+  /// No description provided for @historyCategoryBuilding.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construction'**
+  String get historyCategoryBuilding;
+
+  /// No description provided for @historyCategoryResearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recherche'**
+  String get historyCategoryResearch;
+
+  /// No description provided for @historyCategoryRecruit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recrutement'**
+  String get historyCategoryRecruit;
+
+  /// No description provided for @historyCategoryExplore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exploration'**
+  String get historyCategoryExplore;
+
+  /// No description provided for @historyCategoryCollect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Collecte'**
+  String get historyCategoryCollect;
+
+  /// No description provided for @historyCategoryTurnEnd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fin de tour'**
+  String get historyCategoryTurnEnd;
+
+  /// No description provided for @historyCategoryCapture.
+  ///
+  /// In fr, this message translates to:
+  /// **'Capture'**
+  String get historyCategoryCapture;
+
+  /// No description provided for @historyCategoryDescent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Descente'**
+  String get historyCategoryDescent;
+
+  /// No description provided for @historyCategoryReinforcement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renfort'**
+  String get historyCategoryReinforcement;
+
+  /// No description provided for @historyCategoryRaid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raid'**
+  String get historyCategoryRaid;
+
+  /// No description provided for @historyCategoryVolcano.
+  ///
+  /// In fr, this message translates to:
+  /// **'Volcan'**
+  String get historyCategoryVolcano;
+
+  /// No description provided for @historyCategoryEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement'**
+  String get historyCategoryEvent;
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/resource/resource.dart';
 import '../../extensions/resource_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'resource_icon.dart';
 
@@ -20,6 +21,7 @@ class _ResourceDetailSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = resource.type.color;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
@@ -28,9 +30,9 @@ class _ResourceDetailSheet extends StatelessWidget {
         children: [
           ResourceIcon(type: resource.type, size: 64),
           const SizedBox(height: 12),
-          Text(resource.type.displayName, style: textTheme.headlineSmall?.copyWith(color: color)),
+          Text(resource.type.displayName(l10n), style: textTheme.headlineSmall?.copyWith(color: color)),
           const SizedBox(height: 8),
-          Text(resource.type.flavorText, style: textTheme.bodyMedium?.copyWith(color: AbyssColors.onSurfaceDim), textAlign: TextAlign.center),
+          Text(resource.type.flavorText(l10n), style: textTheme.bodyMedium?.copyWith(color: AbyssColors.onSurfaceDim), textAlign: TextAlign.center),
           const SizedBox(height: 16),
           Text('${resource.amount} / ${resource.maxStorage}', style: textTheme.titleLarge?.copyWith(color: color)),
           const SizedBox(height: 16),

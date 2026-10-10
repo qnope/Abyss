@@ -3,6 +3,7 @@ import '../../../domain/game/player.dart';
 import '../../../domain/volcano/kernel_garrison.dart';
 import '../../../domain/volcano/magma_rampart.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// Part of the kernel sheet once it is captured: its level, the magma
@@ -37,7 +38,7 @@ class KernelGarrisonPanel extends StatelessWidget {
         Text('Garnison : $size unités', style: style),
         if (wave != null) ...[
           const SizedBox(height: 8),
-          Text('Prochaine vague, à la fin du tour : ${wave.waveLabel}',
+          Text('Prochaine vague, à la fin du tour : ${wave.waveLabel(context.l10n)}',
               style: style?.copyWith(color: AbyssColors.error)),
         ],
         if (state.levelsLost > 0)

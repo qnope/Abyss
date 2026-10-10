@@ -4,6 +4,8 @@ import '../../../domain/objective/objective_completion.dart';
 import '../../../domain/objective/temporary/temporary_objective_end.dart';
 import '../../../domain/turn/turn_result.dart';
 import '../../extensions/resource_type_extensions.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'summary_line.dart';
 
@@ -27,7 +29,11 @@ class ObjectiveTurnSection extends StatelessWidget {
       children: [
         const Divider(),
         for (final completion in result.objectives)
-          SummaryLine(Icons.flag, _completed(completion), AbyssColors.success),
+          SummaryLine(
+            Icons.flag,
+            _completed(context.l10n, completion),
+            AbyssColors.success,
+          ),
         for (final ended in result.temporaryObjectives)
           ended.isDone
               ? SummaryLine(
@@ -40,8 +46,11 @@ class ObjectiveTurnSection extends StatelessWidget {
     );
   }
 
-  String _completed(ObjectiveCompletion completion) {
-    final gains = completion.credited.gainLabel;
+  String _completed(
+    AppLocalizations l10n,
+    ObjectiveCompletion completion,
+  ) {
+    final gains = completion.credited.gainLabel(l10n);
     final title = '$_done${completion.objective.title}';
     return gains.isEmpty ? title : '$title ($gains)';
   }

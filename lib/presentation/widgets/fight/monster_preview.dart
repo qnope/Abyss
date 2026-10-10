@@ -4,6 +4,7 @@ import '../../../domain/map/monster_lair.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../extensions/monster_family_extensions.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 import 'monster_family_traits.dart';
@@ -16,6 +17,7 @@ class MonsterPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     final stats = MonsterUnitStats.of(lair.family, lair.level);
     return Card(
       child: Padding(
@@ -29,7 +31,7 @@ class MonsterPreview extends StatelessWidget {
                 RasterSvg(assetPath: lair.svgPath, size: 40),
                 const SizedBox(width: 12),
                 Text(
-                  '${lair.family.label} · ${lair.difficulty.label}',
+                  '${lair.family.label(l10n)} · ${lair.difficulty.label(l10n)}',
                   style: textTheme.titleLarge?.copyWith(
                     color: AbyssColors.biolumCyan,
                   ),
@@ -47,7 +49,7 @@ class MonsterPreview extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 Text(
-                  lair.family.monsters(lair.unitCount),
+                  lair.family.monsters(l10n, lair.unitCount),
                   style: textTheme.bodyMedium?.copyWith(
                     color: AbyssColors.onSurfaceDim,
                   ),

@@ -11,6 +11,7 @@ import 'package:abyss/presentation/widgets/tech/tech_tree_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/test_svg_helper.dart';
 import 'guide_widget_helpers.dart';
 
@@ -47,7 +48,8 @@ void main() {
 
   Finder medallion(TechBranch branch) => find.byWidgetPredicate(
     (widget) =>
-        widget is TechBranchMedallion && widget.label == branch.displayName,
+        widget is TechBranchMedallion &&
+        widget.label == branch.displayName(fr),
   );
 
   Finder firstNode(TechBranch branch) => find.byWidgetPredicate(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/unit_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../unit/unit_icon.dart';
 
@@ -41,7 +42,7 @@ class UnitQuantityRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      type.displayName,
+                      type.displayName(context.l10n),
                       style: textTheme.titleMedium?.copyWith(
                         color: type.color,
                       ),

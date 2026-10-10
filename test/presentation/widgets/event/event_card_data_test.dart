@@ -9,12 +9,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../domain/event/effects/predators_test_helper.dart';
 import '../../../domain/raid/raid_test_helper.dart';
+import '../../../helpers/l10n_fixtures.dart';
 
 /// Card of [type] waiting for [player]'s choice during turn 12.
 EventCardData _card(RandomEventType type, [Player? player]) {
   final p = player ?? raidPlayer();
   if (p.eventState.pending == null) p.eventState.setPending(type, 12);
-  return EventCardData.of(Game.singlePlayer(p)..turn = 12, type);
+  return EventCardData.of(fr, Game.singlePlayer(p)..turn = 12, type);
 }
 
 List<String> _labels(EventCardData card) =>
@@ -45,7 +46,7 @@ void main() {
     final card = _card(RandomEventType.predators, player);
     expect(
       card.lines.last,
-      '${predatorTestWave.waveLabel} contre 3 défenseurs du niveau 1.',
+      '${predatorTestWave.waveLabel(fr)} contre 3 défenseurs du niveau 1.',
     );
     expect(_labels(card), [
       "L'affronter (5 monstres, fin du tour)",
@@ -89,6 +90,7 @@ void main() {
 
   test('the storm only explains its effect', () {
     final card = EventCardData.of(
+      fr,
       Game.singlePlayer(raidPlayer())..turn = 12,
       RandomEventType.storm,
     );
@@ -103,6 +105,7 @@ void main() {
     final player = raidPlayer();
     player.eventState.wreckUntilTurn = 16;
     final card = EventCardData.of(
+      fr,
       Game.singlePlayer(player)..turn = 12,
       RandomEventType.wreck,
     );

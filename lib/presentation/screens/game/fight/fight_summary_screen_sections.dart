@@ -3,6 +3,7 @@ import '../../../../domain/action/fight_monster_result.dart';
 import '../../../../domain/resource/resource_type.dart';
 import '../../../../domain/unit/unit_type.dart';
 import '../../../extensions/resource_type_extensions.dart';
+import '../../../l10n/l10n_extension.dart';
 import '../../../theme/abyss_colors.dart';
 import '../../../widgets/resource/resource_icon.dart';
 import '../../../widgets/unit/unit_icon.dart';
@@ -112,7 +113,7 @@ Widget _lootRow(BuildContext context, ResourceType type, int amount) {
       ResourceIcon(type: type, size: 20),
       const SizedBox(width: 8),
       Text(
-        '${type.displayName} +$amount',
+        '${type.displayName(context.l10n)} +$amount',
         style: textTheme.bodyMedium?.copyWith(color: AbyssColors.onSurface),
       ),
     ]),

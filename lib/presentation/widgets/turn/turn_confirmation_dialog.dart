@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/unit/unit_type.dart';
-import '../../extensions/building_type_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
-import '../../extensions/unit_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../resource/resource_icon.dart';
+import 'turn_loss_sections.dart';
 
 Future<bool> showTurnConfirmationDialog(
   BuildContext context, {
@@ -56,7 +56,7 @@ class _TurnConfirmationDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('Tour $currentTurn \u2192 Tour ${currentTurn + 1}'),
-      content: _buildContent(),
+      content: _buildContent(context),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
@@ -70,7 +70,7 @@ class _TurnConfirmationDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     final hasProduction = production.isNotEmpty;
     final hasWarnings = buildingsToDeactivate.isNotEmpty;
     final hasLosses = unitsToLose.isNotEmpty;
@@ -91,7 +91,7 @@ class _TurnConfirmationDialog extends StatelessWidget {
               children: [
                 ResourceIcon(type: entry.key),
                 const SizedBox(width: 8),
-                Text(entry.key.displayName),
+                Text(entry.key.displayName(context.l10n)),
                 const Spacer(),
                 Text(
                   '+${entry.value}',
@@ -101,8 +101,9 @@ class _TurnConfirmationDialog extends StatelessWidget {
             ),
           ),
         if (pendingExplorationCount > 0) ..._buildExplorationSection(),
-        if (hasWarnings) ..._buildBuildingWarnings(),
-        if (hasLosses) ..._buildUnitLosses(),
+        if (hasWarnings)
+          DeactivatedBuildingsSection(buildings: buildingsToDeactivate),
+        if (hasLosses) LostUnitsSection(units: unitsToLose),
         if (raidWarning != null) raidWarning!,
       ],
     );
@@ -119,31 +120,5 @@ class _TurnConfirmationDialog extends StatelessWidget {
             style: TextStyle(color: AbyssColors.biolumCyan),
           ),
         ]),
-      ];
-
-  List<Widget> _buildBuildingWarnings() => [
-        const Divider(),
-        Row(children: [
-          Icon(Icons.warning, color: AbyssColors.warning),
-          const SizedBox(width: 8),
-          Text('Batiments desactives',
-              style: TextStyle(color: AbyssColors.warning)),
-        ]),
-        for (final building in buildingsToDeactivate)
-          Text(building.displayName,
-              style: TextStyle(color: AbyssColors.warning)),
-      ];
-
-  List<Widget> _buildUnitLosses() => [
-        const Divider(),
-        Row(children: [
-          Icon(Icons.error, color: AbyssColors.error),
-          const SizedBox(width: 8),
-          Text('Unites perdues',
-              style: TextStyle(color: AbyssColors.error)),
-        ]),
-        for (final entry in unitsToLose.entries)
-          Text('${entry.key.displayName}: -${entry.value}',
-              style: TextStyle(color: AbyssColors.error)),
       ];
 }

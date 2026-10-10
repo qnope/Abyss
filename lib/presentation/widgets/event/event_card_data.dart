@@ -1,5 +1,6 @@
 import '../../../domain/event/random_event_type.dart';
 import '../../../domain/game/game.dart';
+import '../../l10n/app_localizations.dart';
 import 'event_card_texts.dart';
 import 'event_choice.dart';
 
@@ -21,9 +22,13 @@ class EventCardData {
   });
 
   /// The card of [type] for the human player of [game], with the figures
-  /// of the current turn.
-  factory EventCardData.of(Game game, RandomEventType type) {
-    final texts = EventCardTexts(game, game.humanPlayer);
+  /// of the current turn, in the language of [l10n].
+  factory EventCardData.of(
+    AppLocalizations l10n,
+    Game game,
+    RandomEventType type,
+  ) {
+    final texts = EventCardTexts(l10n, game, game.humanPlayer);
     return EventCardData(
       type: type,
       lines: texts.linesOf(type),

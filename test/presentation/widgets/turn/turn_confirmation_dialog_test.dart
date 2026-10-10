@@ -107,7 +107,7 @@ void main() {
       ));
       await _open(t);
       expect(find.text('Unites perdues'), findsOneWidget);
-      expect(find.text('Eclaireur: -5'), findsOneWidget);
+      expect(find.text('Éclaireur: -5'), findsOneWidget);
     });
 
     testWidgets('no warnings when no deficits', (t) async {

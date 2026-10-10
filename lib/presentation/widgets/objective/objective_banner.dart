@@ -5,6 +5,7 @@ import '../../../domain/game/player.dart';
 import '../../../domain/objective/current_objective.dart';
 import '../../../domain/objective/temporary/temporary_objectives.dart';
 import '../../extensions/temporary_objective_kind_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// Thin strip under the status bars: the objective the player is on, its
@@ -56,7 +57,7 @@ class ObjectiveBanner extends StatelessWidget {
               ),
               if (temporary.isNotEmpty)
                 Text(
-                  '+ ${temporary.map((t) => t.kind.shortLabel).join(', ')}',
+                  '+ ${temporary.map((t) => t.kind.shortLabel(context.l10n)).join(', ')}',
                   style: style?.copyWith(color: AbyssColors.warning),
                 ),
               const Icon(

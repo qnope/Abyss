@@ -6,6 +6,7 @@ import '../../../domain/unit/unit_cost_calculator.dart';
 import '../../../domain/unit/unit_stats.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/unit_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'recruitment_section.dart';
 import 'unit_icon.dart';
@@ -57,6 +58,7 @@ class _UnitDetailSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
@@ -66,14 +68,14 @@ class _UnitDetailSheet extends StatelessWidget {
           UnitIcon(type: unitType, size: 64, greyscale: !isUnlocked),
           const SizedBox(height: 12),
           Text(
-            unitType.displayName,
+            unitType.displayName(l10n),
             style: textTheme.headlineSmall?.copyWith(color: unitType.color),
           ),
           const SizedBox(height: 4),
-          Text(unitType.role, style: textTheme.bodySmall),
+          Text(unitType.role(l10n), style: textTheme.bodySmall),
           const SizedBox(height: 4),
           Text(
-            unitType.roleEffect,
+            unitType.roleEffect(l10n),
             textAlign: TextAlign.center,
             style: textTheme.bodySmall?.copyWith(
               color: AbyssColors.onSurfaceDim,

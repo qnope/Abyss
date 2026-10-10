@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/turn/turn_result.dart';
 import '../../extensions/random_event_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'summary_line.dart';
 
@@ -35,13 +36,13 @@ class EventTurnSection extends StatelessWidget {
         if (defaulted != null)
           SummaryLine(
             Icons.auto_awesome,
-            '${defaulted.label} : option prudente appliquée',
+            '${defaulted.label(context.l10n)} : option prudente appliquée',
             AbyssColors.warning,
           ),
         if (drawn != null)
           SummaryLine(
             Icons.auto_awesome,
-            'Événement : ${drawn.label}',
+            'Événement : ${drawn.label(context.l10n)}',
             AbyssColors.biolumCyan,
           ),
       ],

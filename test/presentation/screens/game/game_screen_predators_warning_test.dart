@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../domain/event/effects/predators_test_helper.dart';
+import '../../../helpers/l10n_fixtures.dart';
 
 const _lastChance = 'Si ce raid est perdu, la partie est terminée.';
 
@@ -47,7 +48,7 @@ void main() {
     await _show(tester, warning);
     expect(
       find.text(
-        'Banc de prédateurs ce tour : ${wave.waveLabel} '
+        'Banc de prédateurs ce tour : ${wave.waveLabel(fr)} '
         'contre 3 défenseurs',
       ),
       findsOneWidget,

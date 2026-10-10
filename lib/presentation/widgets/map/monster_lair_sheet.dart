@@ -4,6 +4,7 @@ import '../../../domain/map/monster_lair.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../extensions/monster_family_extensions.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 import '../fight/monster_family_traits.dart';
@@ -52,7 +53,7 @@ class _MonsterLairSheet extends StatelessWidget {
           RasterSvg(assetPath: lair.svgPath, size: 64),
           const SizedBox(height: 12),
           Text(
-            '${lair.family.label} ($targetX, $targetY)',
+            '${lair.family.label(context.l10n)} ($targetX, $targetY)',
             style: textTheme.headlineSmall?.copyWith(
               color: AbyssColors.biolumCyan,
             ),
@@ -98,14 +99,15 @@ class _LairInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final stats = MonsterUnitStats.of(lair.family, lair.level);
     return Column(
       children: [
-        SheetInfoRow('Difficulté', lair.difficulty.label),
+        SheetInfoRow('Difficulté', lair.difficulty.label(l10n)),
         const SizedBox(height: 6),
         SheetInfoRow('Niveau', '${lair.level}'),
         const SizedBox(height: 6),
-        SheetInfoRow('Unités', lair.family.monsters(lair.unitCount)),
+        SheetInfoRow('Unités', lair.family.monsters(l10n, lair.unitCount)),
         const SizedBox(height: 6),
         SheetInfoRow('PV / ATK / DEF',
           '${stats.hp} / ${stats.atk} / ${stats.def}',

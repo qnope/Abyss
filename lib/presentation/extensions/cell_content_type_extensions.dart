@@ -1,18 +1,19 @@
 import '../../domain/event/random_event_type.dart';
 import '../../domain/map/cell_content_type.dart';
 import '../../domain/map/monster_difficulty.dart';
+import '../l10n/app_localizations.dart';
 import 'random_event_type_extensions.dart';
 
 extension CellContentTypeExtensions on CellContentType {
-  String get label => switch (this) {
-    CellContentType.empty => 'Vide',
-    CellContentType.resourceBonus => 'Ressources',
-    CellContentType.ruins => 'Ruines',
-    CellContentType.monsterLair => 'Repaire',
-    CellContentType.transitionBase => 'Faille Abyssale',
-    CellContentType.passage => 'Passage',
-    CellContentType.volcanicKernel => 'Noyau Volcanique',
-    CellContentType.wreck => 'Épave',
+  String label(AppLocalizations l10n) => switch (this) {
+    CellContentType.empty => l10n.cellContentEmpty,
+    CellContentType.resourceBonus => l10n.cellContentResourceBonus,
+    CellContentType.ruins => l10n.cellContentRuins,
+    CellContentType.monsterLair => l10n.cellContentMonsterLair,
+    CellContentType.transitionBase => l10n.transitionBaseFailleName,
+    CellContentType.passage => l10n.cellContentPassage,
+    CellContentType.volcanicKernel => l10n.buildingVolcanicKernelName,
+    CellContentType.wreck => RandomEventType.wreck.label(l10n),
   };
 
   String? get svgPath => switch (this) {
@@ -30,10 +31,10 @@ extension CellContentTypeExtensions on CellContentType {
 }
 
 extension MonsterDifficultyExtensions on MonsterDifficulty {
-  String get label => switch (this) {
-    MonsterDifficulty.easy => 'Facile',
-    MonsterDifficulty.medium => 'Moyen',
-    MonsterDifficulty.hard => 'Difficile',
+  String label(AppLocalizations l10n) => switch (this) {
+    MonsterDifficulty.easy => l10n.monsterDifficultyEasy,
+    MonsterDifficulty.medium => l10n.monsterDifficultyMedium,
+    MonsterDifficulty.hard => l10n.monsterDifficultyHard,
   };
 
   String get svgPath => switch (this) {

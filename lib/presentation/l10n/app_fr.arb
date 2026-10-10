@@ -12,5 +12,216 @@
   "newGameTutorial": "Tutoriel",
   "newGameTutorialHint": "Un guide t'accompagne sur les premiers tours",
   "newGameStart": "Commencer",
-  "difficultyTitle": "Difficulté"
+  "difficultyTitle": "Difficulté",
+
+  "buildingHeadquartersName": "Quartier Général",
+  "buildingHeadquartersDescription": "Centre de commandement de votre base sous-marine. Son niveau détermine les capacités de votre colonie. Une fois bâti, il fournit {coral} corail et {ore} minerai par tour.",
+  "@buildingHeadquartersDescription": {
+    "placeholders": { "coral": { "type": "int" }, "ore": { "type": "int" } }
+  },
+  "buildingAlgaeFarmName": "Ferme d'algues",
+  "buildingAlgaeFarmDescription": "Cultive des algues pour nourrir votre colonie sous-marine.",
+  "buildingCoralMineName": "Mine de corail",
+  "buildingCoralMineDescription": "Extrait du corail des récifs pour la construction.",
+  "buildingCoralCitadelName": "Citadelle corallienne",
+  "buildingCoralCitadelDescription": "Forteresse corallienne massive qui dresse un rempart pour la défense de votre base. Pendant un raid, il encaisse les coups à la place des unités stationnées.",
+  "buildingOreExtractorName": "Extracteur de minerai",
+  "buildingOreExtractorDescription": "Fore les profondeurs pour extraire du minerai océanique.",
+  "buildingSolarPanelName": "Panneau solaire",
+  "buildingSolarPanelDescription": "Capte l'énergie solaire pour alimenter vos installations.",
+  "buildingLaboratoryName": "Laboratoire",
+  "buildingLaboratoryDescription": "Centre de recherche sous-marin pour développer de nouvelles technologies.",
+  "buildingBarracksName": "Caserne",
+  "buildingBarracksDescription": "Forme et entraîne vos unités militaires sous-marines.",
+  "buildingDescentModuleName": "Module de Descente",
+  "buildingDescentModuleDescription": "Module spécialisé permettant l'assaut des failles abyssales.",
+  "buildingPressureCapsuleName": "Capsule Pressurisée",
+  "buildingPressureCapsuleDescription": "Capsule haute pression permettant l'assaut des cheminées hydrothermales.",
+  "buildingVolcanicKernelName": "Noyau Volcanique",
+  "buildingVolcanicKernelDescription": "Le cœur brûlant des abysses. Construisez-le au niveau 10 pour remporter la victoire. Sa garnison se gère ici, ou depuis sa case sur la carte.",
+
+  "unitScoutName": "Éclaireur",
+  "unitScoutRole": "Éclaireur",
+  "unitScoutRoleEffect": "Fuit au lieu de mourir : revient toujours blessé.",
+  "unitHarpoonistName": "Harponneur",
+  "unitHarpoonistRole": "DPS",
+  "unitHarpoonistRoleEffect": "Dégâts réguliers, sans règle spéciale.",
+  "unitGuardianName": "Gardien",
+  "unitGuardianRole": "Tank",
+  "unitGuardianRoleEffect": "Provoque : les monstres le ciblent en priorité.",
+  "unitDomeBreakerName": "Briseur",
+  "unitDomeBreakerRole": "Siège",
+  "unitDomeBreakerRoleEffect": "Inflige le double de dégâts aux boss.",
+  "unitAbyssAdmiralName": "Amiral des Abysses",
+  "unitAbyssAdmiralRole": "Amiral",
+  "unitAbyssAdmiralRoleEffect": "Commande les assauts, sans combattre.",
+  "unitSaboteurName": "Saboteur",
+  "unitSaboteurRole": "Verre-canon",
+  "unitSaboteurRoleEffect": "Ignore la défense de sa cible.",
+
+  "resourceAlgaeName": "Algues",
+  "resourceAlgaeFlavor": "Nourriture cultivée dans les fermes sous-marines pour nourrir vos unités.",
+  "resourceCoralName": "Corail",
+  "resourceCoralFlavor": "Matériau de construction récolté sur les récifs pour bâtir votre base.",
+  "resourceOreName": "Minerai",
+  "resourceOreFlavor": "Métal extrait des profondeurs pour forger des équipements avancés.",
+  "resourceEnergyName": "Énergie",
+  "resourceEnergyFlavor": "Énergie captée pour alimenter vos bâtiments et machines.",
+  "resourcePearlName": "Perles",
+  "resourcePearlFlavor": "Gemmes rares trouvées dans les ruines et les repaires, et récoltées chaque tour dans les failles et cheminées capturées.",
+
+  "monsterFamilyGenericLabel": "Rôdeurs",
+  "monsterFamilySwarmLabel": "Nuée",
+  "monsterFamilyArmouredLabel": "Carapaces",
+  "monsterFamilyHunterLabel": "Chasseurs",
+  "monsterFamilyColossusLabel": "Colosses",
+  "monsterFamilyKrakenLabel": "Kraken",
+  "monsterFamilyGenericCount": "{count, plural, one{{count} monstre} other{{count} monstres}}",
+  "@monsterFamilyGenericCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "monsterFamilySwarmCount": "{count, plural, one{{count} Dents-de-verre} other{{count} Dents-de-verre}}",
+  "@monsterFamilySwarmCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "monsterFamilyArmouredCount": "{count, plural, one{{count} Isopode cuirassé} other{{count} Isopodes cuirassés}}",
+  "@monsterFamilyArmouredCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "monsterFamilyHunterCount": "{count, plural, one{{count} Calmar-chasseur} other{{count} Calmars-chasseurs}}",
+  "@monsterFamilyHunterCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "monsterFamilyColossusCount": "{count, plural, one{{count} Requin dormeur} other{{count} Requins dormeurs}}",
+  "@monsterFamilyColossusCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "monsterFamilyKrakenCount": "{count, plural, one{{count} Kraken} other{{count} Krakens}}",
+  "@monsterFamilyKrakenCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "monsterFamilySwarmRule": "Essaim : un coup de Harponneur touche deux poissons.",
+  "monsterFamilyArmouredRule": "Cuirasse : seuls les Saboteurs ignorent leur DEF.",
+  "monsterFamilyHunterRule": "Traque : ils visent l'unité la plus fragile et frappent deux fois plus fort, sauf un Gardien ou le rempart qui provoque.",
+  "monsterFamilyColossusRule": "Géants : tous des boss, que les Briseurs frappent double.",
+  "monsterFamilyKrakenRule": "Étreinte : chaque coup de tentacule frappe aussi un deuxième défenseur. Des boss, que les Briseurs frappent double.",
+  "monsterFamilySwarmWeakness": "Harponneurs",
+  "monsterFamilyArmouredWeakness": "Saboteurs",
+  "monsterFamilyHunterWeakness": "Gardiens",
+  "monsterFamilyColossusWeakness": "Briseurs de dôme",
+  "monsterLairGroupsAnd": "{first} et {second}",
+  "@monsterLairGroupsAnd": {
+    "placeholders": { "first": { "type": "String" }, "second": { "type": "String" } }
+  },
+  "monsterLairWave": "{monsters} niv. {level}",
+  "@monsterLairWave": {
+    "placeholders": { "monsters": { "type": "String" }, "level": { "type": "int" } }
+  },
+  "monsterLairWeakAgainst": "Faibles contre : {units}",
+  "@monsterLairWeakAgainst": {
+    "placeholders": { "units": { "type": "String" } }
+  },
+  "monsterDifficultyEasy": "Facile",
+  "monsterDifficultyMedium": "Moyen",
+  "monsterDifficultyHard": "Difficile",
+
+  "randomEventWarmCurrentLabel": "Courant chaud",
+  "randomEventWreckLabel": "Épave",
+  "randomEventPredatorsLabel": "Banc de prédateurs",
+  "randomEventStormLabel": "Tempête",
+  "randomEventSurvivorsLabel": "Survivants",
+  "randomEventCaravanLabel": "Caravane de tortues",
+  "randomEventColdCurrentLabel": "Courant froid",
+
+  "eventCountdown": "{label} : encore {turns, plural, one{{turns} tour} other{{turns} tours}}",
+  "@eventCountdown": {
+    "placeholders": { "label": { "type": "String" }, "turns": { "type": "int" } }
+  },
+  "eventColdCurrentHeated": "{label} (serres chauffées)",
+  "@eventColdCurrentHeated": {
+    "placeholders": { "label": { "type": "String" } }
+  },
+
+  "techBranchMilitaryName": "Militaire",
+  "techBranchMilitaryDescription": "Améliore l'attaque et la défense de toutes les unités.",
+  "techBranchResourcesName": "Ressources",
+  "techBranchResourcesDescription": "Améliore la production de toutes les ressources.",
+  "techBranchExplorerName": "Explorateur",
+  "techBranchExplorerDescription": "Améliore la portée d'exploration de la carte.",
+  "techTierEffect": "+20 % ATK et DEF",
+  "techProductionEffect": "+20 % de production",
+  "techExploredAreaEffect": "Zone explorée {size}×{size}",
+  "@techExploredAreaEffect": {
+    "placeholders": { "size": { "type": "int" } }
+  },
+  "techMilitary1Name": "Trident aiguisé",
+  "techMilitary2aName": "Lames de corail",
+  "techMilitary2aEffect": "+35 % ATK",
+  "techMilitary2bName": "Carapace de nacre",
+  "techMilitary2bEffect": "+35 % PV",
+  "techMilitary3Name": "Discipline des abysses",
+  "techMilitary4aName": "Rempart vivant",
+  "techMilitary4aEffect": "+35 % DEF en défense de la base",
+  "techMilitary4bName": "Assaut des profondeurs",
+  "techMilitary4bEffect": "+35 % ATK contre repaires, bases et Noyau",
+  "techMilitary5Name": "Légion abyssale",
+  "techResources1Name": "Bancs fertiles",
+  "techResources2aName": "Culture intensive",
+  "techResources2aEffect": "+35 % d'algues et de corail",
+  "techResources2bName": "Forage profond",
+  "techResources2bEffect": "+35 % de minerai et d'énergie",
+  "techResources3Name": "Courants nourriciers",
+  "techResources4aName": "Coffres scellés",
+  "techResources4aEffect": "Un raid perdu pille 15 % au lieu de 30 %",
+  "techResources4bName": "Chantiers économes",
+  "techResources4bEffect": "Améliorations 15 % moins chères",
+  "techResources5Name": "Abondance des grands fonds",
+  "techExplorer1Name": "Lanterne bioluminescente",
+  "techExplorer2aName": "Sonar profond",
+  "techExplorer2aEffect": "Zone explorée agrandie de 2",
+  "techExplorer2bName": "Nage silencieuse",
+  "techExplorer2bEffect": "Explorer et combattre ne font plus de bruit",
+  "techExplorer3Name": "Cartographie des courants",
+  "techExplorer4aName": "Pillards d'épaves",
+  "techExplorer4aEffect": "+50 % de butin (repaires, trésors, raids repoussés)",
+  "techExplorer4bName": "Sentinelles",
+  "techExplorer4bEffect": "Raids annoncés 4 tours à l'avance au lieu de 2",
+  "techExplorer5Name": "Œil de l'abysse",
+
+  "terrainPlain": "Plaine",
+
+  "cellContentEmpty": "Vide",
+  "cellContentResourceBonus": "Ressources",
+  "cellContentRuins": "Ruines",
+  "cellContentMonsterLair": "Repaire",
+  "cellContentPassage": "Passage",
+
+  "transitionBaseFailleName": "Faille Abyssale",
+  "transitionBaseFailleDescription": "Passage vers les profondeurs",
+  "transitionBaseChemineeName": "Cheminée du Noyau",
+  "transitionBaseChemineeDescription": "Passage vers le noyau",
+
+  "difficultyEasyName": "Facile",
+  "difficultyEasyDescription": "Plus de ressources, des monstres moins nombreux.",
+  "difficultyNormalName": "Normal",
+  "difficultyNormalDescription": "L'équilibre prévu pour les abysses.",
+  "difficultyHardName": "Difficile",
+  "difficultyHardDescription": "Moins de ressources, des monstres plus nombreux.",
+
+  "temporaryObjectiveWreckShort": "Épave",
+  "temporaryObjectivePredatorsShort": "Prédateurs",
+
+  "historyCategoryCombat": "Combat",
+  "historyCategoryBuilding": "Construction",
+  "historyCategoryResearch": "Recherche",
+  "historyCategoryRecruit": "Recrutement",
+  "historyCategoryExplore": "Exploration",
+  "historyCategoryCollect": "Collecte",
+  "historyCategoryTurnEnd": "Fin de tour",
+  "historyCategoryCapture": "Capture",
+  "historyCategoryDescent": "Descente",
+  "historyCategoryReinforcement": "Renfort",
+  "historyCategoryRaid": "Raid",
+  "historyCategoryVolcano": "Volcan",
+  "historyCategoryEvent": "Événement"
 }

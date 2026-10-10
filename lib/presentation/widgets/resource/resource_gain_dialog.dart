@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../extensions/resource_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'resource_icon.dart';
 
@@ -45,7 +46,7 @@ class _ResourceGainDialog extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                for (final entry in entries) _buildResourceLine(entry),
+                for (final entry in entries) _buildResourceLine(context, entry),
               ],
             ),
       actions: [
@@ -68,7 +69,10 @@ class _ResourceGainDialog extends StatelessWidget {
     return result;
   }
 
-  Widget _buildResourceLine(MapEntry<ResourceType, int> entry) {
+  Widget _buildResourceLine(
+    BuildContext context,
+    MapEntry<ResourceType, int> entry,
+  ) {
     final type = entry.key;
     final amount = entry.value;
     return Padding(
@@ -77,7 +81,7 @@ class _ResourceGainDialog extends StatelessWidget {
         children: [
           ResourceIcon(type: type),
           const SizedBox(width: 8),
-          Text(type.displayName),
+          Text(type.displayName(context.l10n)),
           const Spacer(),
           Text(
             '+$amount',

@@ -33,7 +33,7 @@ class DifficultyPicker extends StatelessWidget {
           children: [
             for (final difficulty in Difficulty.values)
               ChoiceChip(
-                label: Text(difficulty.displayName),
+                label: Text(difficulty.displayName(context.l10n)),
                 selected: difficulty == current,
                 selectedColor: difficulty.color.withAlpha(60),
                 onSelected: (selected) {
@@ -44,7 +44,7 @@ class DifficultyPicker extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          current.description,
+          current.description(context.l10n),
           textAlign: TextAlign.center,
           style: textTheme.bodySmall?.copyWith(color: AbyssColors.onSurfaceDim),
         ),

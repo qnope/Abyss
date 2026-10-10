@@ -34,7 +34,7 @@ void main() {
     testWidgets('unlocked card displays unit name', (tester) async {
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();
-      expect(find.text('Eclaireur'), findsOneWidget);
+      expect(find.text('Éclaireur'), findsOneWidget);
     });
 
     testWidgets('unlocked card shows count', (tester) async {

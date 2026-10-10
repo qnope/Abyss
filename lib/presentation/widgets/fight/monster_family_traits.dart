@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/map/monster_family.dart';
 import '../../extensions/monster_family_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// The rule of a monster family and the unit that answers it. Shows
@@ -13,8 +14,8 @@ class MonsterFamilyTraits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? rule = family.rule;
-    final String? weakness = family.weakness;
+    final String? rule = family.rule(context.l10n);
+    final String? weakness = family.weakness(context.l10n);
     if (rule == null || weakness == null) return const SizedBox.shrink();
     final textTheme = Theme.of(context).textTheme;
     return Column(

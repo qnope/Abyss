@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/map/transition_base.dart';
 import '../../extensions/transition_base_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'transition_base_captured_section.dart';
 import 'transition_base_uncaptured_section.dart';
@@ -53,7 +54,7 @@ class TransitionBaseHeader extends StatelessWidget {
           ),
         ),
         Text(
-          transitionBase.type.displayName,
+          transitionBase.type.displayName(context.l10n),
           style: textTheme.bodySmall?.copyWith(
             color: AbyssColors.onSurfaceDim,
           ),

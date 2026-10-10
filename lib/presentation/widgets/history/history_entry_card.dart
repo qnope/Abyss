@@ -34,7 +34,7 @@ class HistoryEntryCard extends StatelessWidget {
     final subtitleText = _buildSubtitle(tappable: tappable);
     final listTile = ListTile(
       leading: Icon(entry.category.icon, color: accent),
-      title: Text(entry.title),
+      title: Text(entry.displayTitle),
       subtitle: subtitleText == null ? null : Text(subtitleText),
       trailing: tappable
           ? const Icon(Icons.chevron_right)

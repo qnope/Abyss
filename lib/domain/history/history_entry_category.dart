@@ -16,4 +16,5 @@ enum HistoryEntryCategory {
   @HiveField(9) reinforcement,
   @HiveField(10) raid,
   @HiveField(11) volcano,
+  @HiveField(12) event,
 }

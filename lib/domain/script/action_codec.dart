@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../action/attack_transition_base_action.dart';
 import '../action/attack_volcanic_kernel_action.dart';
+import '../action/choose_event_action.dart';
 import '../action/collect_treasure_action.dart';
 import '../action/descend_action.dart';
 import '../action/explore_action.dart';
@@ -88,6 +89,7 @@ abstract final class ActionCodec {
       'garrison' => (_) => GarrisonKernelAction(selectedUnits: f.units),
       'withdraw' => (_) =>
           GarrisonKernelAction(selectedUnits: f.units, withdraw: true),
+      'event' => (_) => ChooseEventAction(accept: f.boolean('accept')),
       final String verb => throw FormatException('Action inconnue : $verb'),
     };
   }
@@ -119,6 +121,12 @@ class _Fields {
     final Object? value = json[key];
     if (value is String) return value;
     throw FormatException('Champ "$key" attendu');
+  }
+
+  bool boolean(String key) {
+    final Object? value = json[key];
+    if (value is bool) return value;
+    throw FormatException('Champ booléen "$key" attendu');
   }
 
   int integer(String key) {

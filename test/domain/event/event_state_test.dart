@@ -27,6 +27,13 @@ void main() {
     expect(state.eventsSeen, 1);
   });
 
+  test('recordDraw remembers a draw that waits for no choice', () {
+    final state = EventState()..recordDraw(RandomEventType.storm);
+    expect(state.hasPending, isFalse);
+    expect(state.lastDrawn, RandomEventType.storm);
+    expect(state.eventsSeen, 1);
+  });
+
   test('clearPending forgets the choice but keeps the last draw', () {
     final state =
         EventState()

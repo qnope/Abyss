@@ -5,7 +5,7 @@ import 'package:abyss/domain/history/history_entry_category.dart';
 ///
 /// `combat`, `building` and `research` map directly to a single
 /// [HistoryEntryCategory]. `other` groups the lower-volume categories
-/// (recruit, explore, collect, turnEnd) into a single bucket.
+/// (recruit, explore, collect, turnEnd, events...) into a single bucket.
 enum HistoryFilter { all, combat, building, research, other }
 
 extension HistoryFilterLabel on HistoryFilter {
@@ -46,7 +46,8 @@ List<HistoryEntry> applyHistoryFilter(
           e.category == HistoryEntryCategory.turnEnd ||
           e.category == HistoryEntryCategory.capture ||
           e.category == HistoryEntryCategory.descent ||
-          e.category == HistoryEntryCategory.reinforcement;
+          e.category == HistoryEntryCategory.reinforcement ||
+          e.category == HistoryEntryCategory.event;
     }).toList(),
   };
 }

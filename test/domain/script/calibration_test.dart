@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// plan `plan85` (a win, played again with other dice and a careful
 /// defence) and the careful script, 160 games each (see `Difficulty`):
 /// about 50 % of wins in easy, 15 % in normal and 5 % in hard. In normal,
-/// seed 4 is one of the plan's wins and seed 20 falls the earliest; seed 1
+/// seed 0 is one of the plan's wins and seed 16 falls the earliest; seed 11
 /// wins in easy and falls in normal.
 void main() {
   ScriptRunner runner(Difficulty d) =>
@@ -16,7 +16,7 @@ void main() {
   test('the human plan still wins some games', () {
     final run = runner(
       Difficulty.normal,
-    ).run(ScriptLibrary.byName('plan85'), seed: 4);
+    ).run(ScriptLibrary.byName('plan85'), seed: 0);
 
     expect(run.isVictory, isTrue);
   }, timeout: const Timeout(Duration(minutes: 5)));
@@ -24,7 +24,7 @@ void main() {
   test('the human plan can also fall to the raids', () {
     final run = runner(
       Difficulty.normal,
-    ).run(ScriptLibrary.byName('plan85'), seed: 20);
+    ).run(ScriptLibrary.byName('plan85'), seed: 16);
 
     expect(run.isDefeat, isTrue);
     expect(run.turnsPlayed, lessThan(60));
@@ -33,10 +33,10 @@ void main() {
   test('the same plan and dice win in easy and fall in normal', () {
     final easy = runner(
       Difficulty.easy,
-    ).run(ScriptLibrary.byName('plan85'), seed: 1);
+    ).run(ScriptLibrary.byName('plan85'), seed: 11);
     final normal = runner(
       Difficulty.normal,
-    ).run(ScriptLibrary.byName('plan85'), seed: 1);
+    ).run(ScriptLibrary.byName('plan85'), seed: 11);
 
     expect(easy.isVictory, isTrue);
     expect(normal.isDefeat, isTrue);

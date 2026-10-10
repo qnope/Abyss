@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../event/event_resolver.dart';
 import '../game/defeat_checker.dart';
 import '../game/game.dart';
 import '../map/exploration_resolver.dart';
@@ -11,14 +12,15 @@ import 'player_turn_resolver.dart';
 import 'turn_result.dart';
 
 class TurnResolver {
-  /// [random] drives the raid fights; pass a seeded one for a
-  /// reproducible turn.
+  /// [random] drives the raid fights and the random events; pass a seeded
+  /// one for a reproducible turn.
   TurnResult resolve(Game game, {Random? random}) {
     final previousTurn = game.turn;
     final humanId = game.humanPlayer.id;
     TurnResult? humanResult;
     RaidTurnOutcome raid = const RaidTurnOutcome();
     VolcanoTurnOutcome volcano = const VolcanoTurnOutcome();
+    EventTurnOutcome event = const EventTurnOutcome();
 
     for (final player in game.players.values) {
       final result = PlayerTurnResolver.resolve(
@@ -39,10 +41,17 @@ class TurnResolver {
         random: random,
         difficulty: game.difficulty,
       );
+      final eventOutcome = EventResolver.resolve(
+        game,
+        player,
+        previousTurn,
+        random: random,
+      );
       if (player.id == humanId) {
         humanResult = result;
         raid = outcome;
         volcano = volcanoOutcome;
+        event = eventOutcome;
       }
     }
 
@@ -66,6 +75,8 @@ class TurnResolver {
       announcedRaidTurn: raid.announcedTurn,
       volcano: volcano.report,
       announcedWave: volcano.announced,
+      event: event.drawn,
+      defaultedEvent: event.defaulted,
     );
   }
 }

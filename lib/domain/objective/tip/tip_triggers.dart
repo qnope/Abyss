@@ -70,8 +70,9 @@ abstract final class TipTriggers {
     (cell) => cell.content == CellContentType.transitionBase,
   );
 
+  /// The descent module built; a save older than it has none.
   static bool descent(Game game, Player player) =>
-      player.buildings[BuildingType.descentModule]!.level >= 1;
+      (player.buildings[BuildingType.descentModule]?.level ?? 0) >= 1;
 
   /// A first random event was drawn.
   static bool event(Game game, Player player) =>

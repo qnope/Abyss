@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../theme/abyss_colors.dart';
 import 'transition_base_sheet.dart';
+import 'sheet_info_row.dart';
 
 class TransitionBaseUncapturedSection extends StatelessWidget {
   final TransitionBase transitionBase;
@@ -25,10 +26,10 @@ class TransitionBaseUncapturedSection extends StatelessWidget {
         children: [
           TransitionBaseHeader(transitionBase: transitionBase),
           const SizedBox(height: 8),
-          _infoRow(textTheme, 'Difficulte',
+          SheetInfoRow('Difficulte',
               '${transitionBase.difficulty}/5'),
           const SizedBox(height: 6),
-          _infoRow(textTheme, 'Revenu une fois capturee',
+          SheetInfoRow('Revenu une fois capturee',
               '+${transitionBase.pearlsPerTurn} perles / tour'),
           const SizedBox(height: 6),
           Text(
@@ -52,23 +53,4 @@ class TransitionBaseUncapturedSection extends StatelessWidget {
       ),
     );
   }
-
-  Widget _infoRow(TextTheme t, String label, String value) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(label,
-              style: t.bodyMedium?.copyWith(
-                color: AbyssColors.onSurfaceDim,
-              )),
-        ),
-        Text(value,
-            style: t.bodyMedium?.copyWith(
-              color: AbyssColors.onSurface,
-              fontWeight: FontWeight.bold,
-            )),
-      ],
-    );
-  }
-
 }

@@ -176,6 +176,7 @@ void _showExplorationFlow(
         game.levels[level]!, human, x, y, level: level,
       );
 
+  final action = ExploreAction(targetX: x, targetY: y, level: level);
   showExplorationSheet(
     context,
     targetX: x,
@@ -184,10 +185,8 @@ void _showExplorationFlow(
     revealSide: revealSide,
     isEligible: isEligible,
     notice: human.eventState.wreckCountdownAt(x, y, level, game.turn),
+    refusal: action.validate(game, human).reason,
     onConfirm: () {
-      final action = ExploreAction(
-        targetX: x, targetY: y, level: level,
-      );
       final result = ActionExecutor().execute(action, game, human);
       if (result.isSuccess) onChanged();
     },

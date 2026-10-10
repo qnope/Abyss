@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme/abyss_colors.dart';
 import 'sheet_notice.dart';
+import 'sheet_info_row.dart';
 
 void showExplorationSheet(
   BuildContext context, {
@@ -12,6 +13,7 @@ void showExplorationSheet(
   required bool isEligible,
   required VoidCallback onConfirm,
   String? notice,
+  String? refusal,
 }) {
   showModalBottomSheet<void>(
     context: context,
@@ -24,6 +26,7 @@ void showExplorationSheet(
       isEligible: isEligible,
       onConfirm: onConfirm,
       notice: notice,
+      refusal: refusal,
     ),
   );
 }
@@ -39,6 +42,10 @@ class _ExplorationSheet extends StatelessWidget {
   /// Timed notice about the target, e.g. the countdown of a wreck.
   final String? notice;
 
+  /// Why the exploration cannot be sent now, checked before the scouts
+  /// and the eligibility (e.g. a storm).
+  final String? refusal;
+
   const _ExplorationSheet({
     required this.targetX,
     required this.targetY,
@@ -47,6 +54,7 @@ class _ExplorationSheet extends StatelessWidget {
     required this.isEligible,
     required this.onConfirm,
     this.notice,
+    this.refusal,
   });
 
   @override
@@ -73,17 +81,13 @@ class _ExplorationSheet extends StatelessWidget {
           ),
           if (notice != null) SheetNotice(notice!),
           const SizedBox(height: 16),
-          _infoRow(textTheme, 'Co\u00fbt', '1 \u00e9claireur'),
+          SheetInfoRow('Co\u00fbt', '1 \u00e9claireur'),
           const SizedBox(height: 8),
-          _infoRow(
-            textTheme,
-            '\u00c9claireurs disponibles',
+          SheetInfoRow('\u00c9claireurs disponibles',
             '$scoutCount',
           ),
           const SizedBox(height: 8),
-          _infoRow(
-            textTheme,
-            'Zone r\u00e9v\u00e9l\u00e9e',
+          SheetInfoRow('Zone r\u00e9v\u00e9l\u00e9e',
             '$side\u00d7$side cellules',
           ),
           const Divider(height: 24),
@@ -93,35 +97,14 @@ class _ExplorationSheet extends StatelessWidget {
     );
   }
 
-  Widget _infoRow(TextTheme textTheme, String label, String value) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            label,
-            style: textTheme.bodyMedium?.copyWith(
-              color: AbyssColors.onSurfaceDim,
-            ),
-          ),
-        ),
-        Text(
-          value,
-          style: textTheme.bodyMedium?.copyWith(
-            color: AbyssColors.onSurface,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _actionSection(BuildContext context, TextTheme textTheme) {
-    if (scoutCount <= 0) {
-      return _disabledAction(textTheme, 'Aucun \u00e9claireur disponible');
-    }
-    if (!isEligible) {
-      return _disabledAction(textTheme, 'Cellule non \u00e9ligible');
-    }
+    final reason = refusal ??
+        (scoutCount <= 0
+            ? 'Aucun \u00e9claireur disponible'
+            : !isEligible
+                ? 'Cellule non \u00e9ligible'
+                : null);
+    if (reason != null) return _disabledAction(textTheme, reason);
     return _sendButton(context);
   }
 
@@ -133,10 +116,7 @@ class _ExplorationSheet extends StatelessWidget {
           style: textTheme.bodyMedium?.copyWith(color: AbyssColors.warning),
         ),
         const SizedBox(height: 12),
-        FilledButton(
-          onPressed: null,
-          child: const Text('Envoyer'),
-        ),
+        const FilledButton(onPressed: null, child: Text('Envoyer')),
       ],
     );
   }

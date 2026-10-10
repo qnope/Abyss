@@ -3,6 +3,7 @@ import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/objective/objective_migration.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/turn/turn_resolver.dart';
@@ -28,8 +29,13 @@ Player _player({
   return p;
 }
 
-Game _singleGame(Player p, {int turn = 1}) =>
-    Game.singlePlayer(p)..turn = turn;
+/// A game where the objectives [p] already meets were completed earlier,
+/// so a turn shows its production alone, without their rewards.
+Game _singleGame(Player p, {int turn = 1}) {
+  final game = Game.singlePlayer(p)..turn = turn;
+  p.savedObjectiveState = ObjectiveMigration.legacyState(game, p);
+  return game;
+}
 
 void main() {
   late TurnResolver resolver;

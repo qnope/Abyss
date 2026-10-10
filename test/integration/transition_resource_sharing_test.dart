@@ -4,6 +4,7 @@ import 'package:abyss/domain/action/action_executor.dart';
 import 'package:abyss/domain/action/attack_transition_base_action.dart';
 import 'package:abyss/domain/action/descend_action.dart';
 import 'package:abyss/domain/action/end_turn_action.dart';
+import 'package:abyss/domain/objective/objective_migration.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -51,6 +52,9 @@ void main() {
       final game = s.game;
       final player = s.player;
       captureAndDescend(game, player);
+      // The objectives this scenario meets were completed earlier: the
+      // turn shows the production alone, without their rewards.
+      player.savedObjectiveState = ObjectiveMigration.legacyState(game, player);
 
       // Record resources before turn
       final algaeBefore =

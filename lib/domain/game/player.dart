@@ -10,6 +10,7 @@ import '../map/exploration_order.dart';
 import '../map/grid_position.dart';
 import '../map/reinforcement_order.dart';
 import '../map/reveal_area_calculator.dart';
+import '../objective/objective_state.dart';
 import '../raid/raid_state.dart';
 import '../volcano/volcano_state.dart';
 import '../resource/resource.dart';
@@ -76,6 +77,11 @@ class Player extends HiveObject {
   @HiveField(17)
   final EventState eventState;
 
+  /// Objectives completed and tutorial choice; `null` for players saved
+  /// before the objectives, until `ObjectiveMigration` fills it.
+  @HiveField(18)
+  ObjectiveState? savedObjectiveState;
+
   /// Side of the square revealed around the base when a game starts.
   static const int initialRevealSide = 5;
 
@@ -96,6 +102,7 @@ class Player extends HiveObject {
     RaidState? raidState,
     VolcanoState? volcanoState,
     EventState? eventState,
+    ObjectiveState? objectiveState,
     Worksite? worksite,
   })  : id = id ?? const Uuid().v4(),
         resources = resources ?? PlayerDefaults.resources(),
@@ -110,6 +117,7 @@ class Player extends HiveObject {
         raidState = raidState ?? RaidState(),
         volcanoState = volcanoState ?? VolcanoState(),
         eventState = eventState ?? EventState(),
+        savedObjectiveState = objectiveState ?? ObjectiveState(),
         worksite = worksite ?? Worksite();
 
   Player.withBase({

@@ -1,5 +1,6 @@
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import '../domain/game/game.dart';
+import '../domain/objective/objective_migration.dart';
 import '../hive_registrar.g.dart';
 
 class GameRepository {
@@ -26,8 +27,12 @@ class GameRepository {
     }
   }
 
+  /// Every saved game, those saved before the objectives migrated to
+  /// them.
   List<Game> loadAll() {
-    return _box.values.toList();
+    final games = _box.values.toList();
+    games.forEach(ObjectiveMigration.migrate);
+    return games;
   }
 
   Future<void> delete(int index) async {

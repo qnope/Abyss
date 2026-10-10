@@ -40,13 +40,13 @@ class PlayerAdapter extends TypeAdapter<Player> {
       volcanoState: fields[16] as VolcanoState?,
       eventState: fields[17] as EventState?,
       worksite: fields[15] as Worksite?,
-    );
+    )..savedObjectiveState = fields[18] as ObjectiveState?;
   }
 
   @override
   void write(BinaryWriter writer, Player obj) {
     writer
-      ..writeByte(17)
+      ..writeByte(18)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -80,7 +80,9 @@ class PlayerAdapter extends TypeAdapter<Player> {
       ..writeByte(16)
       ..write(obj.volcanoState)
       ..writeByte(17)
-      ..write(obj.eventState);
+      ..write(obj.eventState)
+      ..writeByte(18)
+      ..write(obj.savedObjectiveState);
   }
 
   @override

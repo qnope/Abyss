@@ -8,7 +8,7 @@ import '../fight/fight_result.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
 import '../map/monster_lair.dart';
-import '../resource/resource.dart';
+import '../resource/resource_credit.dart';
 import '../resource/resource_type.dart';
 import '../fight/unit_boost.dart';
 import '../tech/tech_effects.dart';
@@ -65,21 +65,8 @@ class FightMonsterHelpers {
   static Map<ResourceType, int> applyLoot(
     Player player,
     Map<ResourceType, int> loot,
-  ) {
-    final Map<ResourceType, int> applied = <ResourceType, int>{};
-    for (final MapEntry<ResourceType, int> entry in loot.entries) {
-      final Resource? resource = player.resources[entry.key];
-      if (resource == null) {
-        applied[entry.key] = 0;
-        continue;
-      }
-      final int before = resource.amount;
-      resource.amount =
-          (resource.amount + entry.value).clamp(0, resource.maxStorage);
-      applied[entry.key] = resource.amount - before;
-    }
-    return applied;
-  }
+  ) =>
+      ResourceCredit.add(player.resources, loot);
 
   /// Converts a list of combatants grouped by unit type to a count map.
   static Map<UnitType, int> combatantsByType(List<Combatant> combatants) {

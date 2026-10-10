@@ -4,6 +4,8 @@ import 'package:hive_ce/hive.dart';
 import 'package:abyss/domain/volcano/volcano_state.dart';
 import 'package:abyss/domain/event/event_state.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
+import 'package:abyss/domain/objective/objective_id.dart';
+import 'package:abyss/domain/objective/objective_state.dart';
 import 'package:abyss/data/game_repository.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
@@ -58,6 +60,8 @@ void _registerAdapters() {
   Hive.registerAdapter(VolcanoStateAdapter());
   Hive.registerAdapter(RandomEventTypeAdapter());
   Hive.registerAdapter(EventStateAdapter());
+  Hive.registerAdapter(ObjectiveIdAdapter());
+  Hive.registerAdapter(ObjectiveStateAdapter());
   Hive.registerAdapter(WorksiteAdapter());
 }
 

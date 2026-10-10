@@ -71,6 +71,8 @@ void main() {
     expect(MonsterUnitStats.countFor(MonsterFamily.hunter, 20), 16);
     expect(MonsterUnitStats.countFor(MonsterFamily.colossus, 20), 3);
     expect(MonsterUnitStats.countFor(MonsterFamily.colossus, 1), 1);
+    expect(MonsterUnitStats.countFor(MonsterFamily.kraken, 20), 2);
+    expect(MonsterUnitStats.countFor(MonsterFamily.kraken, 5), 1);
     expect(MonsterUnitStats.countFor(null, 20), 20);
   });
 }

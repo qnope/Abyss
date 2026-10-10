@@ -41,4 +41,15 @@ void main() {
     expect(TransitionBaseName.parse('faille:x'), isNull);
     expect(TransitionBaseName.parse('volcan:0'), isNull);
   });
+
+  test('the same base is one name, whether parsed or built', () {
+    final names = {
+      TransitionBaseName.parse('Faille Beta'),
+      TransitionBaseName.parse('faille:1'),
+      const TransitionBaseName(faille, 1),
+      const TransitionBaseName(cheminee, 1),
+    };
+    expect(names, hasLength(2));
+    expect('${const TransitionBaseName(cheminee, 1)}', 'cheminee:1');
+  });
 }

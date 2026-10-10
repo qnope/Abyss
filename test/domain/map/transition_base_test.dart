@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/transition_base.dart';
+import 'package:abyss/domain/map/transition_base_name.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 
 void main() {
@@ -61,6 +62,16 @@ void main() {
         name: 'C1',
       );
       expect(base.targetLevel, 3);
+    });
+
+    test('baseName reads the stored code and older French names', () {
+      TransitionBaseName? nameOf(String stored) =>
+          TransitionBase(type: TransitionBaseType.faille, name: stored).baseName;
+      expect(nameOf('cheminee:1'),
+          const TransitionBaseName(TransitionBaseType.cheminee, 1));
+      expect(nameOf('Faille Gamma'),
+          const TransitionBaseName(TransitionBaseType.faille, 2));
+      expect(nameOf('F1'), isNull);
     });
   });
 }

@@ -5,6 +5,9 @@ import 'package:abyss/domain/action/end_turn_action.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_factory.dart';
+import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_family.dart';
+import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/objective/installation_objectives.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/raid/raid_defence_advisor.dart';
@@ -82,6 +85,24 @@ void main() {
     final int needed = RaidDefenceAdvisor.harpoonistsFor(player, wave)!;
     expect(needed, greaterThan(0));
     expect(player.unitsOnLevel(1)[UnitType.harpoonist]!.count, needed);
+  });
+
+  test('still recruits defenders when no advice can hold the raid', () {
+    final Game game = _game();
+    _play(const TutorialStrategy(), game, 7);
+    final player = game.humanPlayer;
+    const wave = MonsterLair(
+        difficulty: MonsterDifficulty.hard,
+        family: MonsterFamily.colossus,
+        unitCount: 40);
+    player.raidState.announce(wave, game.turn + 2);
+    expect(RaidDefenceAdvisor.harpoonistsFor(player, wave), isNull);
+    final int before = player.unitsOnLevel(1)[UnitType.harpoonist]!.count;
+
+    _play(const TutorialStrategy(), game, 1);
+
+    expect(player.unitsOnLevel(1)[UnitType.harpoonist]!.count,
+        greaterThan(before));
   });
 
   test('plays like the careful script once the first raid is fought', () {

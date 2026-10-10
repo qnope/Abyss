@@ -104,6 +104,20 @@ void main() {
       );
     });
 
+    test('names the field an action is missing', () {
+      Matcher missing(String key) => throwsA(isA<FormatException>()
+          .having((e) => e.message, 'message', contains('"$key"')));
+
+      expect(
+        () => ActionCodec.decode(<String, Object?>{'building': 'algaeFarm'}),
+        missing('do'),
+      );
+      expect(
+        () => ActionCodec.decode(<String, Object?>{'do': 'unlock'}),
+        missing('branch'),
+      );
+    });
+
     test('rejects an unknown verb or value right away', () {
       expect(
         () => ActionCodec.decode(<String, Object?>{'do': 'dance'}),

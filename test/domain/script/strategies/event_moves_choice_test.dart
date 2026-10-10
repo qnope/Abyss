@@ -116,4 +116,10 @@ void main() {
     expect(choiceOf(player), isNull);
     expect(player.eventState.hasPending, isTrue);
   });
+
+  test('storms and wrecks are never taken as an offer', () {
+    final turn = scriptTurnOf(eventGame(eventPlayer()));
+    expect(turn.wantsEvent(RandomEventType.storm, _planner), isFalse);
+    expect(turn.wantsEvent(RandomEventType.wreck, _planner), isFalse);
+  });
 }

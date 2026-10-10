@@ -9,6 +9,7 @@ import '../game/difficulty.dart';
 import '../game/game.dart';
 import '../game/game_factory.dart';
 import '../game/game_status.dart';
+import '../game/player.dart';
 import 'game_script.dart';
 import 'script_log_entry.dart';
 import 'script_milestones.dart';
@@ -45,6 +46,19 @@ class ScriptRunner {
       difficulty: script.difficulty ?? difficulty,
     );
     CheatCodes.apply(game.humanPlayer);
+    return runOn(game, script, random: random, seed: seed);
+  }
+
+  /// Plays [game] with [script] for [playerId] (the human by default).
+  /// The human player still ends the turns: they belong to the game.
+  ScriptRunReport runOn(
+    Game game,
+    GameScript script, {
+    required Random random,
+    required int seed,
+    String? playerId,
+  }) {
+    final Player player = game.players[playerId] ?? game.humanPlayer;
     final List<ScriptLogEntry> log = <ScriptLogEntry>[];
     final ScriptMilestones milestones = ScriptMilestones();
     final int turnLimit = script.lastTurn ?? maxTurns;
@@ -53,17 +67,20 @@ class ScriptRunner {
         game: game,
         random: random,
         log: log,
+        player: player,
         executor: _executor,
       );
       script.playTurn(turn);
-      milestones.observe(game, game.turn);
+      milestones.observe(game, game.turn, playerId: player.id);
       if (turn.isOver || game.turn == script.lastTurn) break;
       final ActionResult end = _executor.execute(
           EndTurnAction(random: script.endTurnRandom(game.turn) ?? random),
           game,
           game.humanPlayer);
       final raid = end is EndTurnActionResult ? end.turnResult?.raid : null;
-      if (raid != null) milestones.raids.add(ScriptRaid.of(raid));
+      if (raid != null && player.id == game.humanPlayerId) {
+        milestones.raids.add(ScriptRaid.of(raid));
+      }
     }
     return ScriptRunReport.of(
       game,
@@ -71,6 +88,7 @@ class ScriptRunner {
       seed: seed,
       log: log,
       milestones: milestones,
+      playerId: player.id,
     );
   }
 }

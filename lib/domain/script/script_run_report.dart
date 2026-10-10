@@ -47,13 +47,14 @@ class ScriptRunReport {
     required int seed,
     required List<ScriptLogEntry> log,
     ScriptMilestones? milestones,
+    String? playerId,
   }) {
-    final player = game.humanPlayer;
+    final player = game.players[playerId] ?? game.humanPlayer;
     return ScriptRunReport(
       scriptName: scriptName,
       seed: seed,
       status: game.status,
-      statistics: const GameStatisticsCalculator().compute(game),
+      statistics: const GameStatisticsCalculator().compute(game, player: player),
       turnsPlayed:
           game.status == GameStatus.victory ? game.turn : game.turn - 1,
       totalNoise: player.raidState.totalNoise,

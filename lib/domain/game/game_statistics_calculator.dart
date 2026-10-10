@@ -2,12 +2,14 @@ import '../history/history_entry.dart';
 import 'game.dart';
 import 'game_status.dart';
 import 'game_statistics.dart';
+import 'player.dart';
 
 class GameStatisticsCalculator {
   const GameStatisticsCalculator();
 
-  GameStatistics compute(Game game) {
-    final entries = game.humanPlayer.historyEntries;
+  GameStatistics compute(Game game, {Player? player}) {
+    final who = player ?? game.humanPlayer;
+    final entries = who.historyEntries;
 
     var monstersDefeated = 0;
     var basesCaptured = 0;
@@ -26,7 +28,7 @@ class GameStatisticsCalculator {
       }
     }
 
-    final currentResources = game.humanPlayer.resources.values
+    final currentResources = who.resources.values
         .fold(0, (sum, r) => sum + r.amount);
 
     return GameStatistics(

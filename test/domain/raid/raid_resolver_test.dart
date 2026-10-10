@@ -54,5 +54,7 @@ void main() {
     expect(player.raidState.isIncoming, isFalse);
     expect(player.raidState.lostInARow, 1);
     expect(player.historyEntries.last, isA<RaidEntry>());
+    expect(outcome.report!.surprise, isFalse);
+    expect((player.historyEntries.last as RaidEntry).surprise, isFalse);
   });
 }

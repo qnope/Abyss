@@ -77,6 +77,7 @@ class TurnResolver {
       announcedWave: volcano.announced,
       event: event.drawn,
       defaultedEvent: event.defaulted,
+      predators: event.predators,
     );
   }
 }

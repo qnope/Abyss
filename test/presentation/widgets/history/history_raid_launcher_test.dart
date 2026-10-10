@@ -14,7 +14,11 @@ void main() {
   setUp(mockSvgAssets);
   tearDown(clearSvgMocks);
 
-  RaidEntry buildEntry({required bool victory, int rampartLevel = 2}) {
+  RaidEntry buildEntry({
+    required bool victory,
+    int rampartLevel = 2,
+    bool surprise = false,
+  }) {
     return RaidEntry(
       turn: 7,
       victory: victory,
@@ -30,6 +34,7 @@ void main() {
       wounded: const {UnitType.harpoonist: 1},
       dead: const {},
       rampartLevel: rampartLevel,
+      surprise: surprise,
     );
   }
 
@@ -53,6 +58,16 @@ void main() {
       expect(screen.report.victory, isTrue);
       expect(screen.report.wave.unitCount, 4);
       expect(screen.report.loot, {ResourceType.algae: 30});
+    });
+
+    testWidgets('replays a school of predators under its own name',
+        (tester) async {
+      await launch(tester, buildEntry(victory: true, surprise: true));
+      final screen =
+          tester.widget<RaidSummaryScreen>(find.byType(RaidSummaryScreen));
+      expect(screen.report.surprise, isTrue);
+      expect(find.text('Banc de prédateurs (tour 7)'), findsOneWidget);
+      expect(find.text('Raid sur la base (tour 7)'), findsNothing);
     });
 
     testWidgets('carries over every persisted field', (tester) async {

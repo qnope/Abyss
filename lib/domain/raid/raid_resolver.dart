@@ -2,7 +2,6 @@ import 'dart:math';
 
 import '../game/difficulty.dart';
 import '../game/player.dart';
-import '../history/history_entry.dart';
 import '../map/monster_lair.dart';
 import '../tech/tech_effects.dart';
 import 'noise_rules.dart';
@@ -42,7 +41,7 @@ abstract final class RaidResolver {
         random: random,
       );
       state.recordOutcome(victory: report.victory);
-      player.addHistoryEntry(_entryOf(report));
+      player.addHistoryEntry(report.toEntry());
       state.clearIncoming();
     }
     state.addNoise(NoiseRules.perTurn);
@@ -65,18 +64,4 @@ abstract final class RaidResolver {
       announcedTurn: arrival,
     );
   }
-
-  static RaidEntry _entryOf(RaidReport r) => RaidEntry(
-        turn: r.turn,
-        victory: r.victory,
-        wave: r.wave,
-        fightResult: r.fight,
-        loot: r.loot,
-        pillaged: r.pillaged,
-        defenders: r.defenders,
-        survivorsIntact: r.survivorsIntact,
-        wounded: r.wounded,
-        dead: r.dead,
-        rampartLevel: r.rampartLevel,
-      );
 }

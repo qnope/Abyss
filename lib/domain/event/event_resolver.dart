@@ -3,27 +3,21 @@ import 'dart:math';
 import '../game/game.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
+import '../raid/raid_report.dart';
+import 'effects/predators_effect.dart';
 import 'event_drawer.dart';
 import 'event_effects.dart';
 import 'event_state.dart';
+import 'event_turn_outcome.dart';
 import 'random_event_choice.dart';
 import 'random_event_type.dart';
 
-/// What the random events did while a turn ended.
-class EventTurnOutcome {
-  /// Event drawn this turn, if any; one with a choice waits for it
-  /// during the next turn.
-  final RandomEventType? drawn;
+export 'event_turn_outcome.dart';
 
-  /// Event left without a choice, settled with its prudent option.
-  final RandomEventType? defaulted;
-
-  const EventTurnOutcome({this.drawn, this.defaulted});
-}
-
-/// End-of-turn step of the random events, after the production: upkeeps
-/// the lasting effect, settles the event left without a choice, ends the
-/// lasting effects, then draws the next event when due.
+/// End-of-turn step of the random events, after the production and the
+/// raid: upkeeps the lasting effect, fights the predators faced this turn,
+/// settles the event left without a choice, ends the lasting effects,
+/// then draws the next event when due.
 abstract final class EventResolver {
   static EventTurnOutcome resolve(
     Game game,
@@ -33,11 +27,17 @@ abstract final class EventResolver {
   }) {
     final Random dice = random ?? Random();
     _upkeep(game, player, endedTurn);
+    final RaidReport? predators = PredatorsEffect.strike(
+      player,
+      endedTurn,
+      dice,
+    );
     final RandomEventType? defaulted = _settle(game, player, endedTurn, dice);
     player.eventState.expireEffects(endedTurn + 1);
     return EventTurnOutcome(
       drawn: _draw(game, player, endedTurn, dice),
       defaulted: defaulted,
+      predators: predators,
     );
   }
 

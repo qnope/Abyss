@@ -36,7 +36,7 @@ void main() {
 
   test('a batch tells how many games reached a milestone, and when', () async {
     final report = await BatchRunner(runner: ScriptRunner(maxTurns: 60))
-        .run((_) => const IdleScript(), games: 2);
+        .run((_) => const IdleScript(), games: 2, firstSeed: 8);
 
     final fall = report.milestone((r) => r.isDefeat ? r.turnsPlayed : null);
     expect(fall.games, 2);

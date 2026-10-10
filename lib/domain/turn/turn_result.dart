@@ -74,6 +74,9 @@ class TurnResult {
   /// option.
   final RandomEventType? defaultedEvent;
 
+  /// School of predators faced this turn and fought at its end, if any.
+  final RaidReport? predators;
+
   const TurnResult({
     required this.changes,
     required this.previousTurn,
@@ -90,5 +93,6 @@ class TurnResult {
     this.announcedWave,
     this.event,
     this.defaultedEvent,
+    this.predators,
   });
 }

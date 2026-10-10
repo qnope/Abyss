@@ -1,6 +1,7 @@
 part of '../history_entry.dart';
 
-/// History entry recording a raid on the base.
+/// History entry recording a raid on the base, or a [surprise] attack
+/// fought like one (the school of predators of a random event).
 ///
 /// Carries the full [FightResult] so the raid can be replayed from the
 /// history view, plus the wave, the defenders' fate and the resources won
@@ -53,6 +54,11 @@ class RaidEntry extends HistoryEntry {
   @HiveField(13)
   final int rampartLevel;
 
+  /// Whether a school of predators attacked rather than a raid; `false`
+  /// for the raids saved before the predators.
+  @HiveField(14, defaultValue: false)
+  final bool surprise;
+
   RaidEntry({
     required this.turn,
     required this.victory,
@@ -65,7 +71,17 @@ class RaidEntry extends HistoryEntry {
     required this.wounded,
     required this.dead,
     required this.rampartLevel,
+    this.surprise = false,
     this.subtitle,
   }) : category = HistoryEntryCategory.raid,
-       title = victory ? 'Raid repoussé' : 'Base pillée par un raid';
+       title = _titleOf(victory: victory, surprise: surprise);
+
+  static String _titleOf({required bool victory, required bool surprise}) {
+    if (surprise) {
+      return victory
+          ? 'Banc de prédateurs repoussé'
+          : 'Base pillée par un banc de prédateurs';
+    }
+    return victory ? 'Raid repoussé' : 'Base pillée par un raid';
+  }
 }

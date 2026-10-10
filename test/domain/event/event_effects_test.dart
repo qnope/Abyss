@@ -30,12 +30,14 @@ void main() {
     });
   });
 
-  test('the hooks of every event run without touching the dice', () {
+  test('the hooks of every event but the predators leave the dice alone', () {
     for (final type in RandomEventType.values) {
       final player = eventPlayer();
       final game = eventGame(player, turn: 12);
       final random = Random(5);
-      EventEffects.onDraw(game, player, type, turn: 12, random: random);
+      if (type != RandomEventType.predators) {
+        EventEffects.onDraw(game, player, type, turn: 12, random: random);
+      }
       for (final accept in [true, false]) {
         EventEffects.apply(
           game,
@@ -48,5 +50,19 @@ void main() {
       }
       expect(random.nextInt(1000), Random(5).nextInt(1000), reason: type.name);
     }
+  });
+
+  test('the predators draw their wave with the dice of the draw', () {
+    final player = eventPlayer()..raidState.addNoise(200);
+    final random = Random(5);
+    EventEffects.onDraw(
+      eventGame(player, turn: 12),
+      player,
+      RandomEventType.predators,
+      turn: 12,
+      random: random,
+    );
+    expect(player.eventState.predatorWave, isNotNull);
+    expect(random.nextInt(1000), isNot(Random(5).nextInt(1000)));
   });
 }

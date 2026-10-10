@@ -9,8 +9,9 @@ import '../../../widgets/fight/monster_preview.dart';
 import '../fight/fight_summary_screen_sections.dart';
 import 'raid_pillage_card.dart';
 
-/// Report of a raid on the base. Reuses the fight summary sections, plus
-/// the Citadel rampart and the pillaged resources.
+/// Report of a raid on the base, or of a school of predators fought like
+/// one. Reuses the fight summary sections, plus the Citadel rampart and
+/// the pillaged resources.
 class RaidSummaryScreen extends StatelessWidget {
   final RaidReport report;
 
@@ -25,7 +26,7 @@ class RaidSummaryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final result = _asFightResult();
     return Scaffold(
-      appBar: AppBar(title: Text('Raid sur la base (tour ${report.turn})')),
+      appBar: AppBar(title: Text(_title)),
       body: ListView(
         padding: const EdgeInsets.all(12),
         children: [
@@ -57,6 +58,10 @@ class RaidSummaryScreen extends StatelessWidget {
       ),
     );
   }
+
+  String get _title => report.surprise
+      ? 'Banc de prédateurs (tour ${report.turn})'
+      : 'Raid sur la base (tour ${report.turn})';
 
   FightMonsterResult _asFightResult() => FightMonsterResult.success(
         victory: report.victory,

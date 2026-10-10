@@ -394,6 +394,42 @@ abstract class AppLocalizations {
   /// **'Ignore la défense de sa cible.'**
   String get unitSaboteurRoleEffect;
 
+  /// No description provided for @unitScoutCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} éclaireur} other{{count} éclaireurs}}'**
+  String unitScoutCount(int count);
+
+  /// No description provided for @unitHarpoonistCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} harponneur} other{{count} harponneurs}}'**
+  String unitHarpoonistCount(int count);
+
+  /// No description provided for @unitGuardianCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} gardien} other{{count} gardiens}}'**
+  String unitGuardianCount(int count);
+
+  /// No description provided for @unitDomeBreakerCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} briseur} other{{count} briseurs}}'**
+  String unitDomeBreakerCount(int count);
+
+  /// No description provided for @unitAbyssAdmiralCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} amiral des abysses} other{{count} amiraux des abysses}}'**
+  String unitAbyssAdmiralCount(int count);
+
+  /// No description provided for @unitSaboteurCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} saboteur} other{{count} saboteurs}}'**
+  String unitSaboteurCount(int count);
+
   /// No description provided for @resourceAlgaeName.
   ///
   /// In fr, this message translates to:
@@ -1030,6 +1066,18 @@ abstract class AppLocalizations {
   /// **'Prédateurs'**
   String get temporaryObjectivePredatorsShort;
 
+  /// No description provided for @temporaryObjectiveWreckTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fouille l\'épave d\'ici la fin du tour {turn}'**
+  String temporaryObjectiveWreckTitle(int turn);
+
+  /// No description provided for @temporaryObjectivePredatorsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repousse le banc de prédateurs'**
+  String get temporaryObjectivePredatorsTitle;
+
   /// No description provided for @historyCategoryCombat.
   ///
   /// In fr, this message translates to:
@@ -1107,6 +1155,396 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Événement'**
   String get historyCategoryEvent;
+
+  /// No description provided for @actionFailureUnknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Action impossible'**
+  String get actionFailureUnknown;
+
+  /// No description provided for @actionFailureMapNotGenerated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte non générée'**
+  String get actionFailureMapNotGenerated;
+
+  /// No description provided for @actionFailureCellNotRevealed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Case non révélée'**
+  String get actionFailureCellNotRevealed;
+
+  /// No description provided for @actionFailureCellNotEligible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cellule non éligible'**
+  String get actionFailureCellNotEligible;
+
+  /// No description provided for @actionFailureAlreadyCollected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà collecté'**
+  String get actionFailureAlreadyCollected;
+
+  /// No description provided for @actionFailureNothingToCollect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien à collecter'**
+  String get actionFailureNothingToCollect;
+
+  /// No description provided for @actionFailureStormBlocksExploration.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tempête : exploration impossible'**
+  String get actionFailureStormBlocksExploration;
+
+  /// No description provided for @actionFailureNoScoutAvailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun éclaireur disponible'**
+  String get actionFailureNoScoutAvailable;
+
+  /// No description provided for @actionFailureNoMonsterHere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de monstre ici'**
+  String get actionFailureNoMonsterHere;
+
+  /// No description provided for @actionFailureLairAlreadyDefeated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repaire déjà vaincu'**
+  String get actionFailureLairAlreadyDefeated;
+
+  /// No description provided for @actionFailureLairEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repaire vide'**
+  String get actionFailureLairEmpty;
+
+  /// No description provided for @actionFailureNotEnoughUnits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Unités insuffisantes'**
+  String get actionFailureNotEnoughUnits;
+
+  /// No description provided for @actionFailureNoUnitSelected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune unité sélectionnée'**
+  String get actionFailureNoUnitSelected;
+
+  /// No description provided for @actionFailureAdmiralRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un Amiral des Abysses est requis'**
+  String get actionFailureAdmiralRequired;
+
+  /// No description provided for @actionFailureNoTransitionBaseHere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de base de transition ici'**
+  String get actionFailureNoTransitionBaseHere;
+
+  /// No description provided for @actionFailureBaseNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Base introuvable'**
+  String get actionFailureBaseNotFound;
+
+  /// No description provided for @actionFailureBaseAlreadyCaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'Base déjà capturée'**
+  String get actionFailureBaseAlreadyCaptured;
+
+  /// No description provided for @actionFailureBaseNotCaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'Base non capturée'**
+  String get actionFailureBaseNotCaptured;
+
+  /// No description provided for @actionFailureTargetLevelNotExplored.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau cible non exploré'**
+  String get actionFailureTargetLevelNotExplored;
+
+  /// No description provided for @actionFailureRequiredBuildingMissing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bâtiment requis manquant'**
+  String get actionFailureRequiredBuildingMissing;
+
+  /// No description provided for @actionFailureNoVolcanicKernelHere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de noyau volcanique ici'**
+  String get actionFailureNoVolcanicKernelHere;
+
+  /// No description provided for @actionFailureKernelAlreadyCaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noyau déjà capturé'**
+  String get actionFailureKernelAlreadyCaptured;
+
+  /// No description provided for @actionFailureKernelNotCaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noyau non capturé'**
+  String get actionFailureKernelNotCaptured;
+
+  /// No description provided for @actionFailureNoPendingEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement en attente'**
+  String get actionFailureNoPendingEvent;
+
+  /// No description provided for @actionFailureNotThisChoiceTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce n\'est pas le tour de ce choix'**
+  String get actionFailureNotThisChoiceTurn;
+
+  /// No description provided for @actionFailureNotEnoughStockToTrade.
+  ///
+  /// In fr, this message translates to:
+  /// **'Stock insuffisant pour échanger'**
+  String get actionFailureNotEnoughStockToTrade;
+
+  /// No description provided for @actionFailureBranchNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Branche introuvable'**
+  String get actionFailureBranchNotFound;
+
+  /// No description provided for @actionFailureBranchLocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Branche verrouillée'**
+  String get actionFailureBranchLocked;
+
+  /// No description provided for @actionFailureBranchAlreadyUnlocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Branche déjà débloquée'**
+  String get actionFailureBranchAlreadyUnlocked;
+
+  /// No description provided for @actionFailureLaboratoryRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Laboratoire requis'**
+  String get actionFailureLaboratoryRequired;
+
+  /// No description provided for @actionFailureLaboratoryLevelTooLow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau de laboratoire insuffisant'**
+  String get actionFailureLaboratoryLevelTooLow;
+
+  /// No description provided for @actionFailureResearchAlreadyStarted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recherche déjà lancée ce tour'**
+  String get actionFailureResearchAlreadyStarted;
+
+  /// No description provided for @actionFailureBuildingNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bâtiment introuvable'**
+  String get actionFailureBuildingNotFound;
+
+  /// No description provided for @actionFailureWorksitesBusy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chantiers occupés ce tour'**
+  String get actionFailureWorksitesBusy;
+
+  /// No description provided for @actionFailureMaxLevelReached.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau maximum atteint'**
+  String get actionFailureMaxLevelReached;
+
+  /// No description provided for @actionFailureNotEnoughResources.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ressources insuffisantes'**
+  String get actionFailureNotEnoughResources;
+
+  /// No description provided for @actionFailureUnitLocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Unité verrouillée'**
+  String get actionFailureUnitLocked;
+
+  /// No description provided for @actionFailureRecruitmentAlreadyDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recrutement déjà effectué ce tour'**
+  String get actionFailureRecruitmentAlreadyDone;
+
+  /// No description provided for @actionFailureInvalidQuantity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité invalide'**
+  String get actionFailureInvalidQuantity;
+
+  /// No description provided for @actionFailureGameOver.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partie terminée'**
+  String get actionFailureGameOver;
+
+  /// No description provided for @historyBuildingTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{building} niv. {level}'**
+  String historyBuildingTitle(String building, int level);
+
+  /// No description provided for @historyResearchUnlocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'{branch} débloquée'**
+  String historyResearchUnlocked(String branch);
+
+  /// No description provided for @historyResearchLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'{branch} niv. {level}'**
+  String historyResearchLevel(String branch, int level);
+
+  /// No description provided for @historyResearchImproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'{branch} améliorée'**
+  String historyResearchImproved(String branch);
+
+  /// No description provided for @historyRecruitTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{units} recruté} other{{units} recrutés}}'**
+  String historyRecruitTitle(int count, String units);
+
+  /// No description provided for @historyExploreTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exploration ({x}, {y})'**
+  String historyExploreTitle(int x, int y);
+
+  /// No description provided for @historyCollectTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trésor collecté ({x}, {y})'**
+  String historyCollectTitle(int x, int y);
+
+  /// No description provided for @historyCombatVictory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Victoire vs Repaire niv. {level}'**
+  String historyCombatVictory(int level);
+
+  /// No description provided for @historyCombatDefeat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Défaite vs Repaire niv. {level}'**
+  String historyCombatDefeat(int level);
+
+  /// No description provided for @historyTurnEndTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour {turn} terminé'**
+  String historyTurnEndTitle(int turn);
+
+  /// No description provided for @historyCaptureTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Capture : {name}'**
+  String historyCaptureTitle(String name);
+
+  /// No description provided for @historyCaptureVictory.
+  ///
+  /// In fr, this message translates to:
+  /// **'{turns, plural, one{Victoire en {turns} tour} other{Victoire en {turns} tours}}'**
+  String historyCaptureVictory(int turns);
+
+  /// No description provided for @historyDescentTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Descente au Niveau {level}'**
+  String historyDescentTitle(int level);
+
+  /// No description provided for @historyDescentUnits.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} unité envoyée} other{{count} unités envoyées}}'**
+  String historyDescentUnits(int count);
+
+  /// No description provided for @historyReinforcementTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renforts vers Niveau {level}'**
+  String historyReinforcementTitle(int level);
+
+  /// No description provided for @historyReinforcementUnits.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} unité en transit} other{{count} unités en transit}}'**
+  String historyReinforcementUnits(int count);
+
+  /// No description provided for @historyRaidRepelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raid repoussé'**
+  String get historyRaidRepelled;
+
+  /// No description provided for @historyRaidLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Base pillée par un raid'**
+  String get historyRaidLost;
+
+  /// No description provided for @historyPredatorsRepelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Banc de prédateurs repoussé'**
+  String get historyPredatorsRepelled;
+
+  /// No description provided for @historyPredatorsLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Base pillée par un banc de prédateurs'**
+  String get historyPredatorsLost;
+
+  /// No description provided for @historyVolcanoRepelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vague repoussée sur le Noyau'**
+  String get historyVolcanoRepelled;
+
+  /// No description provided for @historyVolcanoLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Noyau a perdu un niveau'**
+  String get historyVolcanoLost;
+
+  /// No description provided for @historyEventAccepted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accepté'**
+  String get historyEventAccepted;
+
+  /// No description provided for @historyEventRefused.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refusé'**
+  String get historyEventRefused;
+
+  /// No description provided for @historyEventDefaulted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Option prudente, sans choix'**
+  String get historyEventDefaulted;
 }
 
 class _AppLocalizationsDelegate

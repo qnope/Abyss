@@ -1,4 +1,5 @@
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import '../building/building_type.dart';
@@ -27,20 +28,20 @@ class RecruitUnitAction extends Action {
         player.buildings[BuildingType.barracks]?.level ?? 0;
 
     if (!UnitCostCalculator().isUnlocked(unitType, barracksLevel)) {
-      return ActionResult.failure('Unite verrouilee');
+      return ActionResult.failure(ActionFailure.unitLocked);
     }
     if (player.recruitedUnitTypes.contains(unitType)) {
-      return ActionResult.failure('Recrutement deja effectue ce tour');
+      return ActionResult.failure(ActionFailure.recruitmentAlreadyDone);
     }
     if (quantity <= 0) {
-      return ActionResult.failure('Quantite invalide');
+      return ActionResult.failure(ActionFailure.invalidQuantity);
     }
 
     final costs = UnitCostCalculator().recruitmentCost(unitType);
     for (final entry in costs.entries) {
       final totalCost = entry.value * quantity;
       if (player.resources[entry.key]!.amount < totalCost) {
-        return ActionResult.failure('Ressources insuffisantes');
+        return ActionResult.failure(ActionFailure.notEnoughResources);
       }
     }
 

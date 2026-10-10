@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/explore_action.dart';
 
 import 'explore_action_helper.dart';
@@ -28,7 +29,7 @@ void main() {
       final action = ExploreAction(targetX: 2, targetY: 2);
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Carte non générée');
+      expect(result.reason, ActionFailure.mapNotGenerated);
     });
 
     test('fails with 0 scouts', () {
@@ -36,7 +37,7 @@ void main() {
       final action = ExploreAction(targetX: 2, targetY: 2);
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Aucun éclaireur disponible');
+      expect(result.reason, ActionFailure.noScoutAvailable);
     });
 
     test('fails with ineligible cell', () {
@@ -46,7 +47,7 @@ void main() {
       final action = ExploreAction(targetX: 0, targetY: 0);
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Cellule non éligible');
+      expect(result.reason, ActionFailure.cellNotEligible);
     });
 
     test('fails on base cell', () {
@@ -55,7 +56,7 @@ void main() {
       final action = ExploreAction(targetX: 3, targetY: 3);
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Cellule non éligible');
+      expect(result.reason, ActionFailure.cellNotEligible);
     });
   });
 }

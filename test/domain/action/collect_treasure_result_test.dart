@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action_result.dart';
 import 'package:abyss/domain/action/collect_treasure_result.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
@@ -15,10 +16,12 @@ void main() {
     });
 
     test('failure exposes isSuccess false, the reason and empty deltas', () {
-      const result = CollectTreasureResult.failure('reason');
+      const result = CollectTreasureResult.failure(
+        ActionFailure.nothingToCollect,
+      );
 
       expect(result.isSuccess, false);
-      expect(result.reason, 'reason');
+      expect(result.reason, ActionFailure.nothingToCollect);
       expect(result.deltas, isEmpty);
     });
 

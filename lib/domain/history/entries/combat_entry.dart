@@ -14,12 +14,13 @@ class CombatEntry extends HistoryEntry {
   @override
   final HistoryEntryCategory category;
 
+  /// Left empty: the presentation titles the entry in the player's
+  /// language. Kept so the Hive layout keeps its field 2.
   @HiveField(2)
-  @override
   final String title;
 
+  /// Not shown: a French line some older versions saved.
   @HiveField(3)
-  @override
   final String? subtitle;
 
   @HiveField(4)
@@ -66,10 +67,5 @@ class CombatEntry extends HistoryEntry {
     required this.dead,
     this.subtitle,
   }) : category = HistoryEntryCategory.combat,
-       title = _buildCombatTitle(victory, lair.level);
-}
-
-String _buildCombatTitle(bool victory, int lairLevel) {
-  final outcome = victory ? 'Victoire' : 'Défaite';
-  return '$outcome vs Tanière niv $lairLevel';
+       title = '';
 }

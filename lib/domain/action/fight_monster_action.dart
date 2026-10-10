@@ -15,6 +15,7 @@ import '../map/monster_lair.dart';
 import '../resource/resource_type.dart';
 import '../unit/unit_type.dart';
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import 'fight_casualty_breakdown.dart';
@@ -47,17 +48,19 @@ class FightMonsterAction extends Action {
   @override
   ActionResult validate(Game game, Player player) {
     if (game.levels[level] == null) {
-      return const FightMonsterResult.failure('Carte non générée');
+      return const FightMonsterResult.failure(ActionFailure.mapNotGenerated);
     }
     final MapCell cell = game.levels[level]!.cellAt(targetX, targetY);
     if (cell.content != CellContentType.monsterLair) {
-      return const FightMonsterResult.failure('Pas de monstre ici');
+      return const FightMonsterResult.failure(ActionFailure.noMonsterHere);
     }
     if (cell.isCollected) {
-      return const FightMonsterResult.failure('Tanière déjà vaincue');
+      return const FightMonsterResult.failure(
+        ActionFailure.lairAlreadyDefeated,
+      );
     }
     if (cell.lair == null) {
-      return const FightMonsterResult.failure('Tanière vide');
+      return const FightMonsterResult.failure(ActionFailure.lairEmpty);
     }
     int total = 0;
     for (final MapEntry<UnitType, int> entry in selectedUnits.entries) {
@@ -66,12 +69,12 @@ class FightMonsterAction extends Action {
       }
       final int stock = player.unitsOnLevel(level)[entry.key]?.count ?? 0;
       if (entry.value > stock) {
-        return const FightMonsterResult.failure('Unités insuffisantes');
+        return const FightMonsterResult.failure(ActionFailure.notEnoughUnits);
       }
       total += entry.value;
     }
     if (total <= 0) {
-      return const FightMonsterResult.failure('Aucune unité sélectionnée');
+      return const FightMonsterResult.failure(ActionFailure.noUnitSelected);
     }
     return const ActionResult.success();
   }

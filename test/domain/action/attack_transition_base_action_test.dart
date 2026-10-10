@@ -1,3 +1,4 @@
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/attack_transition_base_action.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -18,7 +19,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Carte non générée');
+      expect(result.reason, ActionFailure.mapNotGenerated);
     });
 
     test('fails when cell is not a transition base', () {
@@ -32,7 +33,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Pas de base de transition ici');
+      expect(result.reason, ActionFailure.noTransitionBaseHere);
     });
 
     test('fails when base is already captured', () {
@@ -46,7 +47,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Base déjà capturée');
+      expect(result.reason, ActionFailure.baseAlreadyCaptured);
     });
 
     test('succeeds without descent module (not required for attack)', () {
@@ -72,7 +73,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Un Amiral des Abysses est requis');
+      expect(result.reason, ActionFailure.admiralRequired);
     });
 
     test('fails when units exceed stock', () {
@@ -85,7 +86,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Unités insuffisantes');
+      expect(result.reason, ActionFailure.notEnoughUnits);
     });
 
     test('succeeds on valid scenario', () {

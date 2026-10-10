@@ -8,6 +8,8 @@ import '../../../../domain/game/game.dart';
 import '../../../../domain/map/transition_base.dart';
 import '../../../../domain/unit/unit_type.dart';
 import '../../../../domain/replay/seeded_random.dart';
+import '../../../extensions/action_failure_extensions.dart';
+import '../../../l10n/l10n_extension.dart';
 import '../../../widgets/fight/selection_summary_card.dart';
 import '../../../widgets/fight/unit_quantity_row.dart';
 import 'army_selection_summary.dart';
@@ -144,7 +146,7 @@ class _TransitionArmySelectionScreenState
     if (!result.isSuccess) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result.reason ?? 'Erreur')),
+        SnackBar(content: Text(result.failureMessage(context.l10n))),
       );
       return;
     }

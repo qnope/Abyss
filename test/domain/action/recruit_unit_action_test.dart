@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action_executor.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
@@ -51,7 +52,7 @@ void main() {
             RecruitUnitAction(unitType: UnitType.scout, quantity: 1);
         final result = action.validate(s.game, s.player);
         expect(result.isSuccess, isFalse);
-        expect(result.reason, 'Unite verrouilee');
+        expect(result.reason, ActionFailure.unitLocked);
       });
 
       test('fails when already recruited this type', () {
@@ -60,7 +61,7 @@ void main() {
             RecruitUnitAction(unitType: UnitType.scout, quantity: 1);
         final result = action.validate(s.game, s.player);
         expect(result.isSuccess, isFalse);
-        expect(result.reason, 'Recrutement deja effectue ce tour');
+        expect(result.reason, ActionFailure.recruitmentAlreadyDone);
       });
 
       test('fails with insufficient resources', () {
@@ -69,7 +70,7 @@ void main() {
             RecruitUnitAction(unitType: UnitType.scout, quantity: 1);
         final result = action.validate(s.game, s.player);
         expect(result.isSuccess, isFalse);
-        expect(result.reason, 'Ressources insuffisantes');
+        expect(result.reason, ActionFailure.notEnoughResources);
       });
 
       test('fails with zero quantity', () {
@@ -78,7 +79,7 @@ void main() {
             RecruitUnitAction(unitType: UnitType.scout, quantity: 0);
         final result = action.validate(s.game, s.player);
         expect(result.isSuccess, isFalse);
-        expect(result.reason, 'Quantite invalide');
+        expect(result.reason, ActionFailure.invalidQuantity);
       });
 
       test('fails for guardian at barracks 2', () {

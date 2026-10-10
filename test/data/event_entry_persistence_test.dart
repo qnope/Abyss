@@ -51,6 +51,5 @@ void main() {
     expect(entry.type, RandomEventType.predators);
     expect(entry.accepted, isFalse);
     expect(entry.defaulted, isTrue);
-    expect(entry.subtitle, 'Option prudente, sans choix');
   });
 }

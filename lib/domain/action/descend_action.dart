@@ -135,7 +135,6 @@ class DescendAction extends Action {
       turn: turn,
       targetLevel: result.targetLevel!,
       unitCount: total,
-      subtitle: '$total unites envoyees',
     );
   }
 }

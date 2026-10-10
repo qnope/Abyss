@@ -1,6 +1,7 @@
 import '../game/player.dart';
 import '../unit/unit.dart';
 import '../unit/unit_type.dart';
+import 'action_failure.dart';
 import 'attack_volcanic_kernel_result.dart';
 
 class AttackVolcanicKernelHelpers {
@@ -14,7 +15,7 @@ class AttackVolcanicKernelHelpers {
     if (!selectedUnits.containsKey(UnitType.abyssAdmiral) ||
         selectedUnits[UnitType.abyssAdmiral]! <= 0) {
       return const AttackVolcanicKernelResult.failure(
-        'Un Amiral des Abysses est requis',
+        ActionFailure.admiralRequired,
       );
     }
     final Map<UnitType, Unit> stock = player.unitsOnLevel(level);
@@ -23,7 +24,7 @@ class AttackVolcanicKernelHelpers {
       final int available = stock[entry.key]?.count ?? 0;
       if (entry.value > available) {
         return const AttackVolcanicKernelResult.failure(
-          'Unités insuffisantes',
+          ActionFailure.notEnoughUnits,
         );
       }
     }

@@ -13,13 +13,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 const _wreck = TemporaryObjective(
   kind: TemporaryObjectiveKind.wreck,
-  title: "Fouille l'épave d'ici la fin du tour 17",
   lastTurn: 17,
 );
 
 const _predators = TemporaryObjective(
   kind: TemporaryObjectiveKind.predators,
-  title: 'Repousse le banc de prédateurs',
   lastTurn: 12,
 );
 

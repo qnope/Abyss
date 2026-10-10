@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:abyss/domain/action/action_failure.dart';
 
 import 'package:abyss/domain/action/action.dart';
 import 'package:abyss/domain/action/action_result.dart';
@@ -312,7 +313,7 @@ void main() {
       );
       // No execute: captured lair is still null, and the result we fabricate
       // is a failure. Expect null.
-      const result = FightMonsterResult.failure('not run');
+      const result = FightMonsterResult.failure(ActionFailure.lairEmpty);
       final entry = action.makeHistoryEntry(
         scenario.game,
         scenario.player,

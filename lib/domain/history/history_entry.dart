@@ -1,6 +1,5 @@
 import 'package:hive_ce/hive.dart';
 import 'package:abyss/domain/building/building_type.dart';
-import 'package:abyss/domain/event/random_event_choice.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/fight/fight_result.dart';
 import 'package:abyss/domain/history/history_entry_category.dart';
@@ -35,11 +34,12 @@ part 'history_entry.g.dart';
 /// live in this same library and are declared via `part` files under
 /// `entries/`. Each concrete subclass defines its own `@HiveType` and
 /// `@HiveField` annotations (Hive does not walk abstract bases).
+///
+/// Entries hold data only: the presentation words their title and
+/// subtitle in the player's language.
 sealed class HistoryEntry {
   const HistoryEntry();
 
   int get turn;
   HistoryEntryCategory get category;
-  String get title;
-  String? get subtitle;
 }

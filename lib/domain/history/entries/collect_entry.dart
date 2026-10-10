@@ -11,12 +11,13 @@ class CollectEntry extends HistoryEntry {
   @override
   final HistoryEntryCategory category;
 
+  /// Left empty: the presentation titles the entry in the player's
+  /// language. Kept so the Hive layout keeps its field 2.
   @HiveField(2)
-  @override
   final String title;
 
+  /// Not shown: a French line some older versions saved.
   @HiveField(3)
-  @override
   final String? subtitle;
 
   @HiveField(4)
@@ -35,5 +36,5 @@ class CollectEntry extends HistoryEntry {
     required this.gains,
     this.subtitle,
   }) : category = HistoryEntryCategory.collect,
-       title = 'Trésor collecté ($targetX, $targetY)';
+       title = '';
 }

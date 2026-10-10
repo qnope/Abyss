@@ -1,4 +1,5 @@
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import '../game/game.dart';
@@ -34,22 +35,22 @@ class SendReinforcementsAction extends Action {
   ActionResult validate(Game game, Player player) {
     final map = game.levels[fromLevel];
     if (map == null) {
-      return const ActionResult.failure('Carte non generee');
+      return const ActionResult.failure(ActionFailure.mapNotGenerated);
     }
 
     final cell = map.cellAt(transitionX, transitionY);
     if (cell.content != CellContentType.transitionBase) {
-      return const ActionResult.failure('Pas de base de transition');
+      return const ActionResult.failure(ActionFailure.noTransitionBaseHere);
     }
 
     final base = cell.transitionBase;
     if (base == null || base.capturedBy != player.id) {
-      return const ActionResult.failure('Base non capturee');
+      return const ActionResult.failure(ActionFailure.baseNotCaptured);
     }
 
     final targetLevel = base.targetLevel;
     if (game.levels[targetLevel] == null) {
-      return const ActionResult.failure('Niveau cible non explore');
+      return const ActionResult.failure(ActionFailure.targetLevelNotExplored);
     }
 
     return _validateUnits(player);
@@ -62,12 +63,12 @@ class SendReinforcementsAction extends Action {
       final stock =
           player.unitsOnLevel(fromLevel)[entry.key]?.count ?? 0;
       if (entry.value > stock) {
-        return const ActionResult.failure('Unites insuffisantes');
+        return const ActionResult.failure(ActionFailure.notEnoughUnits);
       }
       total += entry.value;
     }
     if (total <= 0) {
-      return const ActionResult.failure('Aucune unite selectionnee');
+      return const ActionResult.failure(ActionFailure.noUnitSelected);
     }
     return const ActionResult.success();
   }
@@ -125,7 +126,6 @@ class SendReinforcementsAction extends Action {
       turn: turn,
       targetLevel: _targetLevel!,
       unitCount: _totalSent,
-      subtitle: '$_totalSent unites en transit',
     );
   }
 }

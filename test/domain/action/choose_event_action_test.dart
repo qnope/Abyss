@@ -1,3 +1,4 @@
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action_executor.dart';
 import 'package:abyss/domain/action/action_type.dart';
 import 'package:abyss/domain/action/choose_event_action.dart';
@@ -20,7 +21,7 @@ void main() {
       accept: true,
     ).validate(eventGame(player, turn: 12), player);
     expect(result.isSuccess, isFalse);
-    expect(result.reason, 'Aucun événement en attente');
+    expect(result.reason, ActionFailure.noPendingEvent);
   });
 
   test('fails outside the turn of the choice', () {
@@ -30,7 +31,7 @@ void main() {
       accept: true,
     ).validate(eventGame(player, turn: 12), player);
     expect(result.isSuccess, isFalse);
-    expect(result.reason, "Ce n'est pas le tour de ce choix");
+    expect(result.reason, ActionFailure.notThisChoiceTurn);
   });
 
   for (final accept in [true, false]) {

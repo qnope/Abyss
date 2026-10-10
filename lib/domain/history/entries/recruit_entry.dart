@@ -11,12 +11,13 @@ class RecruitEntry extends HistoryEntry {
   @override
   final HistoryEntryCategory category;
 
+  /// Left empty: the presentation titles the entry in the player's
+  /// language. Kept so the Hive layout keeps its field 2.
   @HiveField(2)
-  @override
   final String title;
 
+  /// Not shown: a French line some older versions saved.
   @HiveField(3)
-  @override
   final String? subtitle;
 
   @HiveField(4)
@@ -31,17 +32,5 @@ class RecruitEntry extends HistoryEntry {
     required this.quantity,
     this.subtitle,
   }) : category = HistoryEntryCategory.recruit,
-       title = '$quantity ${_unitLabel(unitType, quantity)} recrutés';
-}
-
-String _unitLabel(UnitType type, int quantity) {
-  final plural = quantity > 1;
-  return switch (type) {
-    UnitType.scout => plural ? 'éclaireurs' : 'éclaireur',
-    UnitType.harpoonist => plural ? 'harponneurs' : 'harponneur',
-    UnitType.guardian => plural ? 'gardiens' : 'gardien',
-    UnitType.domeBreaker => plural ? 'briseurs' : 'briseur',
-    UnitType.abyssAdmiral => plural ? 'amiraux des abysses' : 'amiral des abysses',
-    UnitType.saboteur => plural ? 'saboteurs' : 'saboteur',
-  };
+       title = '';
 }

@@ -9,6 +9,8 @@ import '../../../domain/objective/objective_chapter.dart';
 import '../../../domain/objective/objective_migration.dart';
 import '../../../domain/objective/objective_state.dart';
 import '../../../domain/objective/temporary/temporary_objectives.dart';
+import '../../extensions/temporary_objective_kind_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../common/sheet_drag_handle.dart';
 import 'objective_row.dart';
 
@@ -66,7 +68,7 @@ class ObjectivesSheetBody extends StatelessWidget {
                     _header(context, "Objectifs d'événement"),
                     for (final objective in temporary)
                       ObjectiveRow(
-                        title: objective.title,
+                        title: objective.displayTitle(context.l10n),
                         status: ObjectiveStatus.temporary,
                       ),
                   ],

@@ -1,3 +1,4 @@
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/garrison_kernel_action.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/domain/volcano/kernel_garrison.dart';
@@ -41,6 +42,6 @@ void main() {
     final result = GarrisonKernelAction(
       selectedUnits: {UnitType.harpoonist: 2},
     ).validate(volcanoGame(player, captured: false), player);
-    expect(result.reason, 'Noyau non capturé');
+    expect(result.reason, ActionFailure.kernelNotCaptured);
   });
 }

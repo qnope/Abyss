@@ -8,6 +8,7 @@ import '../fight/fight_result.dart';
 import '../game/player.dart';
 import '../unit/unit.dart';
 import '../unit/unit_type.dart';
+import 'action_failure.dart';
 import 'attack_transition_base_result.dart';
 import 'fight_casualty_breakdown.dart';
 import 'fight_monster_helpers.dart';
@@ -23,7 +24,7 @@ class AttackTransitionBaseHelpers {
     if (!selectedUnits.containsKey(UnitType.abyssAdmiral) ||
         selectedUnits[UnitType.abyssAdmiral]! <= 0) {
       return const AttackTransitionBaseResult.failure(
-        'Un Amiral des Abysses est requis',
+        ActionFailure.admiralRequired,
       );
     }
     final Map<UnitType, Unit> stock = player.unitsOnLevel(level);
@@ -32,7 +33,7 @@ class AttackTransitionBaseHelpers {
       final int available = stock[entry.key]?.count ?? 0;
       if (entry.value > available) {
         return const AttackTransitionBaseResult.failure(
-          'Unités insuffisantes',
+          ActionFailure.notEnoughUnits,
         );
       }
     }

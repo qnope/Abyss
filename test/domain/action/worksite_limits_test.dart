@@ -1,3 +1,4 @@
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/research_tech_action.dart';
 import 'package:abyss/domain/action/upgrade_building_action.dart';
 import 'package:abyss/domain/building/building_type.dart';
@@ -31,7 +32,7 @@ void main() {
         .isSuccess, isTrue);
     final second = _upgrade(BuildingType.coralMine).execute(s.game, s.player);
     expect(second.isSuccess, isFalse);
-    expect(second.reason, 'Chantiers occupes ce tour');
+    expect(second.reason, ActionFailure.worksitesBusy);
   });
 
   test('two building sites from HQ 5', () {
@@ -51,7 +52,7 @@ void main() {
     final second = ResearchTechAction(branch: TechBranch.resources)
         .execute(s.game, s.player);
     expect(second.isSuccess, isFalse);
-    expect(second.reason, 'Recherche deja lancee ce tour');
+    expect(second.reason, ActionFailure.researchAlreadyStarted);
   });
 
   test('the end of the turn frees the sites and the laboratory', () {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'dart:io';
 import 'dart:math';
 
@@ -45,7 +46,7 @@ void main() {
     // at the end of the turns, fill the stocks back up: 4 of those
     // actions no longer lack resources.
     final failures = report.log.where((e) => !e.success);
-    expect(failures.where((e) => e.reason != 'Rien à collecter').length, 21);
+    expect(failures.where((e) => e.reason != ActionFailure.nothingToCollect).length, 21);
   });
 
   test('plays each turn later with a stretch and a jitter', () {

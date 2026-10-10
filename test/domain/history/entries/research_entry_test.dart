@@ -5,7 +5,7 @@ import 'package:abyss/domain/tech/tech_branch.dart';
 
 void main() {
   group('ResearchEntry', () {
-    test('unlock variant produces "débloquée" title', () {
+    test('unlock variant has no level', () {
       final entry = ResearchEntry(
         turn: 4,
         branch: TechBranch.military,
@@ -15,7 +15,7 @@ void main() {
       expect(entry.category, HistoryEntryCategory.research);
       expect(entry.isUnlock, isTrue);
       expect(entry.newLevel, isNull);
-      expect(entry.title, 'Militaire débloquée');
+      expect(entry.branch, TechBranch.military);
     });
 
     test('research variant includes new level', () {
@@ -28,23 +28,7 @@ void main() {
 
       expect(entry.isUnlock, isFalse);
       expect(entry.newLevel, 3);
-      expect(entry.title, 'Ressources niv 3');
-    });
-
-    test('unlock and research titles differ for the same branch', () {
-      final unlock = ResearchEntry(
-        turn: 1,
-        branch: TechBranch.explorer,
-        isUnlock: true,
-      );
-      final research = ResearchEntry(
-        turn: 2,
-        branch: TechBranch.explorer,
-        isUnlock: false,
-        newLevel: 1,
-      );
-
-      expect(unlock.title, isNot(equals(research.title)));
+      expect(entry.branch, TechBranch.resources);
     });
   });
 }

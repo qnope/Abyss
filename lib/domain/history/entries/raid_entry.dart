@@ -16,12 +16,13 @@ class RaidEntry extends HistoryEntry {
   @override
   final HistoryEntryCategory category;
 
+  /// Left empty: the presentation titles the entry in the player's
+  /// language. Kept so the Hive layout keeps its field 2.
   @HiveField(2)
-  @override
   final String title;
 
+  /// Not shown: a French line some older versions saved.
   @HiveField(3)
-  @override
   final String? subtitle;
 
   @HiveField(4)
@@ -74,14 +75,5 @@ class RaidEntry extends HistoryEntry {
     this.surprise = false,
     this.subtitle,
   }) : category = HistoryEntryCategory.raid,
-       title = _titleOf(victory: victory, surprise: surprise);
-
-  static String _titleOf({required bool victory, required bool surprise}) {
-    if (surprise) {
-      return victory
-          ? 'Banc de prédateurs repoussé'
-          : 'Base pillée par un banc de prédateurs';
-    }
-    return victory ? 'Raid repoussé' : 'Base pillée par un raid';
-  }
+       title = '';
 }

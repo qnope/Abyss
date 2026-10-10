@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/collect_treasure_action.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
@@ -17,7 +18,7 @@ void main() {
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
       final result = action.validate(game, player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Carte non générée');
+      expect(result.reason, ActionFailure.mapNotGenerated);
     });
 
     test('fails when cell is not revealed', () {
@@ -32,7 +33,7 @@ void main() {
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
       final result = action.validate(game, player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Case non révélée');
+      expect(result.reason, ActionFailure.cellNotRevealed);
     });
 
     test('fails when cell is already collected by someone else', () {
@@ -43,7 +44,7 @@ void main() {
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Déjà collecté');
+      expect(result.reason, ActionFailure.alreadyCollected);
     });
 
     test('fails when cell is already collected by caller (double collect)',
@@ -55,7 +56,7 @@ void main() {
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Déjà collecté');
+      expect(result.reason, ActionFailure.alreadyCollected);
     });
 
     test('fails when cell is empty', () {
@@ -63,7 +64,7 @@ void main() {
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Rien à collecter');
+      expect(result.reason, ActionFailure.nothingToCollect);
     });
 
     test('fails when cell is monsterLair', () {
@@ -72,7 +73,7 @@ void main() {
       final action = CollectTreasureAction(targetX: 1, targetY: 1);
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Rien à collecter');
+      expect(result.reason, ActionFailure.nothingToCollect);
     });
 
     test('succeeds for resourceBonus', () {

@@ -9,7 +9,7 @@ import 'package:abyss/domain/unit/unit_type.dart';
 
 void main() {
   group('TurnEndEntry', () {
-    test('title uses French tour format with recorded turn', () {
+    test('records the turn that ended', () {
       final entry = TurnEndEntry(
         turn: 12,
         changes: const [],
@@ -19,7 +19,6 @@ void main() {
 
       expect(entry.turn, 12);
       expect(entry.category, HistoryEntryCategory.turnEnd);
-      expect(entry.title, 'Tour 12 terminé');
       expect(entry.subtitle, isNull);
     });
   });
@@ -56,7 +55,6 @@ void main() {
 
       expect(entry.turn, 5);
       expect(entry.category, HistoryEntryCategory.turnEnd);
-      expect(entry.title, 'Tour 5 terminé');
       expect(entry.changes, hasLength(2));
       expect(entry.changes.first.type, ResourceType.algae);
       expect(entry.changes.first.afterAmount, 120);

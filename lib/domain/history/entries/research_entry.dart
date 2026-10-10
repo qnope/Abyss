@@ -11,12 +11,13 @@ class ResearchEntry extends HistoryEntry {
   @override
   final HistoryEntryCategory category;
 
+  /// Left empty: the presentation titles the entry in the player's
+  /// language. Kept so the Hive layout keeps its field 2.
   @HiveField(2)
-  @override
   final String title;
 
+  /// Not shown: a French line some older versions saved.
   @HiveField(3)
-  @override
   final String? subtitle;
 
   @HiveField(4)
@@ -35,22 +36,5 @@ class ResearchEntry extends HistoryEntry {
     this.newLevel,
     this.subtitle,
   }) : category = HistoryEntryCategory.research,
-       title = _buildResearchTitle(branch, isUnlock, newLevel);
+       title = '';
 }
-
-String _buildResearchTitle(TechBranch branch, bool isUnlock, int? newLevel) {
-  final label = _branchLabel(branch);
-  if (isUnlock) {
-    return '$label débloquée';
-  }
-  if (newLevel != null) {
-    return '$label niv $newLevel';
-  }
-  return '$label améliorée';
-}
-
-String _branchLabel(TechBranch branch) => switch (branch) {
-  TechBranch.military => 'Militaire',
-  TechBranch.resources => 'Ressources',
-  TechBranch.explorer => 'Explorateur',
-};

@@ -1,3 +1,4 @@
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/fight_monster_action.dart';
 import 'package:abyss/domain/action/fight_monster_result.dart';
 import 'package:abyss/domain/game/game.dart';
@@ -23,7 +24,7 @@ void main() {
       );
       final result = action.validate(game, player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Carte non générée');
+      expect(result.reason, ActionFailure.mapNotGenerated);
       expect(result, isA<FightMonsterResult>());
     });
 
@@ -41,7 +42,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Pas de monstre ici');
+      expect(result.reason, ActionFailure.noMonsterHere);
     });
 
     test('fails when cell is already collected', () {
@@ -57,7 +58,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Tanière déjà vaincue');
+      expect(result.reason, ActionFailure.lairAlreadyDefeated);
     });
 
     test('fails when lair data is missing', () {
@@ -74,7 +75,7 @@ void main() {
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
       // content defaults to monsterLair -> falls through to lair null
-      expect(result.reason, 'Tanière vide');
+      expect(result.reason, ActionFailure.lairEmpty);
     });
 
     test('fails when selected count exceeds stock', () {
@@ -89,7 +90,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Unités insuffisantes');
+      expect(result.reason, ActionFailure.notEnoughUnits);
     });
 
     test('fails on all-zero selection', () {
@@ -104,7 +105,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Aucune unité sélectionnée');
+      expect(result.reason, ActionFailure.noUnitSelected);
     });
 
     test('fails on empty selection', () {
@@ -119,7 +120,7 @@ void main() {
       );
       final result = action.validate(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Aucune unité sélectionnée');
+      expect(result.reason, ActionFailure.noUnitSelected);
     });
 
     test('succeeds on happy path', () {

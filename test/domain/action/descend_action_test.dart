@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/descend_action.dart';
 import 'package:abyss/domain/action/descend_result.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
@@ -30,7 +31,7 @@ void main() {
       );
       final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Carte non generee');
+      expect(result.reason, ActionFailure.mapNotGenerated);
     });
 
     test('fails when cell has no transition base', () {
@@ -45,7 +46,7 @@ void main() {
       );
       final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Pas de base de transition');
+      expect(result.reason, ActionFailure.noTransitionBaseHere);
     });
 
     test('fails when base not captured by player', () {
@@ -58,7 +59,7 @@ void main() {
       );
       final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Base non capturee');
+      expect(result.reason, ActionFailure.baseNotCaptured);
     });
 
     test('fails when required building missing', () {
@@ -71,7 +72,7 @@ void main() {
       );
       final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Batiment requis manquant');
+      expect(result.reason, ActionFailure.requiredBuildingMissing);
     });
 
     test('fails with insufficient units', () {
@@ -84,7 +85,7 @@ void main() {
       );
       final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Unites insuffisantes');
+      expect(result.reason, ActionFailure.notEnoughUnits);
     });
 
     test('fails with no units selected', () {
@@ -97,7 +98,7 @@ void main() {
       );
       final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Aucune unite selectionnee');
+      expect(result.reason, ActionFailure.noUnitSelected);
     });
   });
 

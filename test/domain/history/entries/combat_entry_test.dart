@@ -48,7 +48,7 @@ void main() {
       unitCount: 3,
     );
 
-    test('victory builds French title with lair level', () {
+    test('victory keeps the lair and the outcome', () {
       final entry = CombatEntry(
         turn: 5,
         victory: true,
@@ -65,7 +65,7 @@ void main() {
 
       expect(entry.turn, 5);
       expect(entry.category, HistoryEntryCategory.combat);
-      expect(entry.title, 'Victoire vs Tanière niv 2');
+      expect(entry.lair.level, 2);
       expect(entry.victory, isTrue);
       expect(entry.targetX, 3);
       expect(entry.targetY, 4);
@@ -80,7 +80,7 @@ void main() {
       expect(entry.subtitle, isNull);
     });
 
-    test('defeat switches title to Défaite', () {
+    test('defeat is recorded as such', () {
       final entry = CombatEntry(
         turn: 7,
         victory: false,
@@ -98,7 +98,7 @@ void main() {
         dead: {UnitType.guardian: 3},
       );
 
-      expect(entry.title, 'Défaite vs Tanière niv 3');
+      expect(entry.lair.level, 3);
       expect(entry.victory, isFalse);
       expect(entry.dead[UnitType.guardian], 3);
     });

@@ -112,7 +112,6 @@ void main() {
     expect(loaded.category, HistoryEntryCategory.explore);
     expect(loaded.targetX, 2);
     expect(loaded.targetY, 7);
-    expect(loaded.title, 'Exploration (2, 7)');
   });
 
   test('CollectEntry survives Hive round-trip with gains map', () async {

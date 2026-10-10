@@ -5,6 +5,7 @@ import '../../../domain/action/action_executor.dart';
 import '../../../domain/action/choose_event_action.dart';
 import '../../../domain/event/random_event_type.dart';
 import '../../../domain/game/game.dart';
+import '../../extensions/action_failure_extensions.dart';
 import '../../extensions/random_event_type_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../widgets/event/event_card.dart';
@@ -36,6 +37,6 @@ Future<void> openEventCard(
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(result.isSuccess
         ? '${type.label(context.l10n)} : $chosen'
-        : result.reason ?? 'Action impossible'),
+        : result.failureMessage(context.l10n)),
   ));
 }

@@ -1,4 +1,5 @@
 import 'action.dart';
+import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import '../building/building_type.dart';
@@ -23,21 +24,21 @@ class UnlockBranchAction extends Action {
   ActionResult validate(Game game, Player player) {
     final state = player.techBranches[branch];
     if (state == null) {
-      return ActionResult.failure('Branche introuvable');
+      return ActionResult.failure(ActionFailure.branchNotFound);
     }
     if (state.unlocked) {
-      return ActionResult.failure('Branche deja debloquee');
+      return ActionResult.failure(ActionFailure.branchAlreadyUnlocked);
     }
     final labLevel = player.buildings[BuildingType.laboratory]?.level ?? 0;
     if (labLevel < 1) {
-      return ActionResult.failure('Laboratoire requis');
+      return ActionResult.failure(ActionFailure.laboratoryRequired);
     }
     final costs = TechCostCalculator.unlockCost(branch,
         opened: TechCostCalculator.openedBranches(player.techBranches));
     for (final entry in costs.entries) {
       final available = player.resources[entry.key]?.amount ?? 0;
       if (available < entry.value) {
-        return ActionResult.failure('Ressources insuffisantes');
+        return ActionResult.failure(ActionFailure.notEnoughResources);
       }
     }
     return ActionResult.success();

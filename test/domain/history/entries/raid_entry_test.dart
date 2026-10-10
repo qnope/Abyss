@@ -22,20 +22,17 @@ RaidEntry _entry({required bool victory, bool surprise = false}) => RaidEntry(
 );
 
 void main() {
-  test('a raid is titled as a raid', () {
+  test('a raid is a raid that is no surprise', () {
     final entry = _entry(victory: true);
     expect(entry.category, HistoryEntryCategory.raid);
-    expect(entry.title, 'Raid repoussé');
-    expect(_entry(victory: false).title, 'Base pillée par un raid');
+    expect(entry.victory, isTrue);
+    expect(entry.surprise, isFalse);
   });
 
-  test('a school of predators is named after it', () {
-    final won = _entry(victory: true, surprise: true);
-    expect(won.category, HistoryEntryCategory.raid);
-    expect(won.title, 'Banc de prédateurs repoussé');
-    expect(
-      _entry(victory: false, surprise: true).title,
-      'Base pillée par un banc de prédateurs',
-    );
+  test('a school of predators is a surprise raid', () {
+    final lost = _entry(victory: false, surprise: true);
+    expect(lost.category, HistoryEntryCategory.raid);
+    expect(lost.victory, isFalse);
+    expect(lost.surprise, isTrue);
   });
 }

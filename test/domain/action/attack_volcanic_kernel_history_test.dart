@@ -32,7 +32,8 @@ void main() {
       expect(entry, isA<CaptureEntry>());
       final capture = entry! as CaptureEntry;
       expect(capture.turn, 5);
-      expect(capture.transitionBaseName, 'Noyau Volcanique');
+      expect(capture.isVolcanicKernel, isTrue);
+      expect(capture.subtitle, isNull);
     });
 
     test('returns null when not captured', () {

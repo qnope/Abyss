@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../../action/action_failure.dart';
 import '../../game/game.dart';
 import '../../game/player.dart';
 
@@ -22,7 +23,7 @@ abstract class EventEffect {
 
   /// Why the player may not take the first option now, or `null` when
   /// they may. The prudent option is always open.
-  String? refusal(Game game, Player player) => null;
+  ActionFailure? refusal(Game game, Player player) => null;
 
   /// Plays the event out from [turn], the first turn whose end it can
   /// still change: the turn of the choice when the player chooses, the

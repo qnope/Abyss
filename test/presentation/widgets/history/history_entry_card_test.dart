@@ -8,8 +8,11 @@ import 'package:abyss/domain/fight/fight_turn_summary.dart';
 import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
+import 'package:abyss/presentation/l10n/abyss_locale.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/history/history_entry_card.dart';
+
+import '../../../helpers/localized_app.dart';
 
 FightResult _fakeFightResult({required bool victory}) {
   final combatant = Combatant(
@@ -71,6 +74,14 @@ BuildingEntry _buildingEntry({int turn = 3}) => BuildingEntry(
   subtitle: 'Production accrue',
 );
 
+/// A descent saved with the French subtitle of the older versions.
+DescentEntry _descentEntry() => DescentEntry(
+  turn: 2,
+  targetLevel: 2,
+  unitCount: 4,
+  subtitle: '4 unites envoyees',
+);
+
 Widget _wrap(Widget child) => MaterialApp(
   theme: AbyssTheme.create(),
   home: Scaffold(body: child),
@@ -78,20 +89,30 @@ Widget _wrap(Widget child) => MaterialApp(
 
 void main() {
   group('HistoryEntryCard', () {
-    testWidgets('BuildingEntry renders icon, title, subtitle and Tour N',
+    testWidgets('BuildingEntry renders icon, title and Tour N, not its saved subtitle',
         (tester) async {
       final entry = _buildingEntry(turn: 4);
 
       await tester.pumpWidget(_wrap(HistoryEntryCard(entry: entry)));
 
       expect(find.byIcon(Icons.build), findsOneWidget);
-      expect(find.text(entry.title), findsOneWidget);
-      expect(find.text('Production accrue'), findsOneWidget);
+      expect(find.text('Ferme d\'algues niv. 2'), findsOneWidget);
+      expect(find.text('Production accrue'), findsNothing);
       expect(find.text('Tour 4'), findsOneWidget);
       expect(find.byIcon(Icons.chevron_right), findsNothing);
 
       final tile = tester.widget<ListTile>(find.byType(ListTile));
       expect(tile.onTap, isNull);
+    });
+
+    testWidgets('an entry reads in the language of the game', (tester) async {
+      await tester.pumpWidget(localizedApp(
+        Scaffold(body: HistoryEntryCard(entry: _descentEntry())),
+        locale: AbyssLocale.en,
+      ));
+
+      expect(find.text('Descent to Level 2'), findsOneWidget);
+      expect(find.text('4 units sent'), findsOneWidget);
     });
 
     testWidgets('BuildingEntry tap does nothing when no handler provided',

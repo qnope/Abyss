@@ -51,7 +51,7 @@ void main() {
       final end = _endOf(game);
 
       expect(end.objective.kind, TemporaryObjectiveKind.wreck);
-      expect(end.objective.title, "Fouille l'épave d'ici la fin du tour 17");
+      expect(end.objective.lastTurn, 17);
       expect(end.outcome, TemporaryObjectiveOutcome.done);
       expect(TurnResolver().resolve(game).temporaryObjectives, isEmpty);
     });
@@ -77,7 +77,6 @@ void main() {
       final end = _endOf(game);
 
       expect(end.objective.kind, TemporaryObjectiveKind.predators);
-      expect(end.objective.title, 'Repousse le banc de prédateurs');
       expect(end.objective.lastTurn, 12);
       expect(end.outcome, TemporaryObjectiveOutcome.done);
       expect(TurnResolver().resolve(game).temporaryObjectives, isEmpty);

@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action_result.dart';
 import 'package:abyss/domain/action/descend_action.dart';
 import 'package:abyss/domain/history/history_entry.dart';
@@ -31,7 +32,7 @@ void main() {
       expect(descent.category, HistoryEntryCategory.descent);
       expect(descent.targetLevel, 2);
       expect(descent.unitCount, 4);
-      expect(descent.subtitle, '4 unites envoyees');
+      expect(descent.subtitle, isNull);
     });
 
     test('returns null on failure result', () {
@@ -42,7 +43,7 @@ void main() {
         fromLevel: 1,
         selectedUnits: {UnitType.scout: 1},
       );
-      const failResult = ActionResult.failure('nope');
+      const failResult = ActionResult.failure(ActionFailure.notEnoughUnits);
       final entry = action.makeHistoryEntry(
         s.game,
         s.player,

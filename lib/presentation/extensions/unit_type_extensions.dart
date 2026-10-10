@@ -12,6 +12,16 @@ extension UnitTypeExtensions on UnitType {
     UnitType.saboteur => l10n.unitSaboteurName,
   };
 
+  /// [count] units of the type, e.g. "3 éclaireurs".
+  String units(AppLocalizations l10n, int count) => switch (this) {
+    UnitType.scout => l10n.unitScoutCount(count),
+    UnitType.harpoonist => l10n.unitHarpoonistCount(count),
+    UnitType.guardian => l10n.unitGuardianCount(count),
+    UnitType.domeBreaker => l10n.unitDomeBreakerCount(count),
+    UnitType.abyssAdmiral => l10n.unitAbyssAdmiralCount(count),
+    UnitType.saboteur => l10n.unitSaboteurCount(count),
+  };
+
   Color get color => switch (this) {
     UnitType.scout => const Color(0xFF0D47A1),
     UnitType.harpoonist => const Color(0xFFBF360C),

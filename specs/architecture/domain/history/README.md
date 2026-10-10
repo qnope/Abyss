@@ -23,8 +23,16 @@ Common contract:
 
 - `int get turn` — the turn on which the event occurred.
 - `HistoryEntryCategory get category` — enum used by filters and icons.
-- `String get title` — short, French, human-readable label.
-- `String? get subtitle` — optional extra line.
+
+Entries hold data only (unit type and quantity, building and level,
+victory, coordinates, unit count…): the presentation words their title
+and subtitle in the player's language (`HistoryEntryTexts` in
+`lib/presentation/extensions/history_entry_texts.dart`). Each subclass
+still declares a `title` (Hive field 2, never written by the adapter,
+left empty) and a `subtitle` (Hive field 3, where older versions saved a
+French line) so the Hive layout of old saves is unchanged; neither is
+shown. `CaptureEntry.volcanicKernel` marks the capture of the volcanic
+kernel in `transitionBaseName`.
 
 ### Concrete subclasses
 

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:abyss/domain/action/action_failure.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/action/collect_treasure_action.dart';
@@ -106,7 +107,7 @@ void main() {
       final result = CollectTreasureAction(targetX: 1, targetY: 1)
           .execute(scenario.game, scenario.player);
       expect(result.isSuccess, isFalse);
-      expect(result.reason, 'Déjà collecté');
+      expect(result.reason, ActionFailure.alreadyCollected);
     });
   });
 }

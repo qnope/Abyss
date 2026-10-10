@@ -15,20 +15,22 @@ class TransitionBasePlacer {
     required int level,
     required Random random,
     Set<int> reservedIndices = const {},
+    int extraPosts = 0,
   }) {
     if (level == 1) {
+      final quadrants = _buildQuadrants(width, height);
       _placeAll(
         cells, width, height, baseX, baseY, random,
-        _buildQuadrants(width, height),
+        [for (var i = 0; i < 4 + extraPosts; i++) quadrants[i % 4]],
         TransitionBaseType.faille, 8, 5,
-        reservedIndices,
+        reservedIndices, extraPosts,
       );
     } else if (level == 2) {
       _placeAll(
         cells, width, height, baseX, baseY, random,
-        List.filled(3, _outerEdgeCells(width, height)),
+        List.filled(3 + extraPosts, _outerEdgeCells(width, height)),
         TransitionBaseType.cheminee, 10, 5,
-        reservedIndices,
+        reservedIndices, extraPosts,
       );
     }
   }
@@ -40,10 +42,11 @@ class TransitionBasePlacer {
     TransitionBaseType type,
     int minCenterDist, int minSpacing,
     Set<int> reservedIndices,
+    int extraPosts,
   ) {
     final centerX = width ~/ 2, centerY = height ~/ 2;
     final placed = <int>[];
-    final names = TransitionBaseName.allOf(type);
+    final names = TransitionBaseName.allOf(type, extra: extraPosts);
     for (var i = 0; i < names.length; i++) {
       final idx = _pickCell(
         candidateSets[i], width, centerX, centerY,

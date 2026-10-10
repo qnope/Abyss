@@ -19,9 +19,12 @@ class TransitionBaseName {
     TransitionBaseType.cheminee => 3,
   };
 
-  /// Every name of [type], by rank.
-  static List<TransitionBaseName> allOf(TransitionBaseType type) => [
-    for (var rank = 0; rank < countOf(type); rank++)
+  /// Every name of [type], by rank, with [extra] more for a larger map.
+  static List<TransitionBaseName> allOf(
+    TransitionBaseType type, {
+    int extra = 0,
+  }) => [
+    for (var rank = 0; rank < countOf(type) + extra; rank++)
       TransitionBaseName(type, rank),
   ];
 

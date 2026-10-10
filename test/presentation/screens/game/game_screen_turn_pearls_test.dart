@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
@@ -53,7 +55,7 @@ void main() {
   test('the previewed pearls are the ones the end of turn credits', () {
     final game = _game();
     final preview = _previewPearls(game);
-    final result = TurnResolver().resolve(game);
+    final result = TurnResolver().resolve(game, random: Random(1));
     final change =
         result.changes.firstWhere((c) => c.type == ResourceType.pearl);
     expect(change.produced, preview);

@@ -4498,6 +4498,24 @@ abstract class AppLocalizations {
   /// **'{post} est perdue : votre passage est détruit, et les unités du niveau en dessous sont perdues avec elle.'**
   String assaultPostLost(String post);
 
+  /// No description provided for @assaultKernelLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noyau : niveau {before} → {after}'**
+  String assaultKernelLevel(int before, int after);
+
+  /// No description provided for @assaultKernelTaken.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Noyau est à vous : sa garnison est perdue. Montez-le au niveau 1 pour pouvoir le garnir.'**
+  String get assaultKernelTaken;
+
+  /// No description provided for @assaultKernelLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Noyau est perdu : sa garnison est perdue avec lui.'**
+  String get assaultKernelLost;
+
   /// No description provided for @mapHeldBy.
   ///
   /// In fr, this message translates to:

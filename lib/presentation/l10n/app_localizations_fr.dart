@@ -3107,6 +3107,19 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String assaultKernelLevel(int before, int after) {
+    return 'Noyau : niveau $before → $after';
+  }
+
+  @override
+  String get assaultKernelTaken =>
+      'Le Noyau est à vous : sa garnison est perdue. Montez-le au niveau 1 pour pouvoir le garnir.';
+
+  @override
+  String get assaultKernelLost =>
+      'Le Noyau est perdu : sa garnison est perdue avec lui.';
+
+  @override
   String mapHeldBy(String name) {
     return 'Tenue par $name';
   }

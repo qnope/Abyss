@@ -42,6 +42,7 @@ Widget factionMapHost(
   Game game, {
   GameRepository? repository,
   VoidCallback? onChanged,
+  int level = 1,
 }) => MaterialApp(
   theme: AbyssTheme.create(),
   locale: AbyssLocale.fr,
@@ -53,7 +54,7 @@ Widget factionMapHost(
         context,
         game,
         repository ?? FakeGameRepository(),
-        currentLevel: 1,
+        currentLevel: level,
         unlockedLevels: game.levels.keys.toSet(),
         onLevelSelected: (_) {},
         onChanged: onChanged ?? () {},

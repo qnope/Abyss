@@ -3073,6 +3073,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String assaultKernelLevel(int before, int after) {
+    return 'Core: level $before → $after';
+  }
+
+  @override
+  String get assaultKernelTaken =>
+      'The Core is yours: its garrison is lost. Raise it to level 1 to garrison it.';
+
+  @override
+  String get assaultKernelLost =>
+      'The Core is lost: its garrison is lost with it.';
+
+  @override
   String mapHeldBy(String name) {
     return 'Held by $name';
   }

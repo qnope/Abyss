@@ -84,7 +84,7 @@ String _raidTitle(AppLocalizations l10n, RaidEntry entry) {
 String _assaultTitle(AppLocalizations l10n, BaseAssaultEntry entry) {
   final String name = entry.opponentName;
   final String? code = entry.postName;
-  if (code != null) {
+  if (code != null && code != 'volcanicKernel') {
     return _postAssaultTitle(l10n, entry, baseNameLabel(l10n, code));
   }
   if (entry.defending) {

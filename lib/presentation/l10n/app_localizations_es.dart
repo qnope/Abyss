@@ -3110,6 +3110,19 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String assaultKernelLevel(int before, int after) {
+    return 'Núcleo: nivel $before → $after';
+  }
+
+  @override
+  String get assaultKernelTaken =>
+      'El Núcleo es tuyo: su guarnición está perdida. Súbelo al nivel 1 para guarnecerlo.';
+
+  @override
+  String get assaultKernelLost =>
+      'El Núcleo está perdido: su guarnición se pierde con él.';
+
+  @override
   String mapHeldBy(String name) {
     return 'En manos de $name';
   }

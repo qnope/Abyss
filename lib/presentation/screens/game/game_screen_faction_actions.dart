@@ -5,7 +5,9 @@ import '../../../domain/building/building_type.dart';
 import '../../../domain/faction/faction.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
+import '../../../domain/action/attack_held_kernel_validator.dart';
 import '../../../domain/action/attack_post_validator.dart';
+import '../../../domain/volcano/kernel_garrison.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../widgets/faction/faction_base_sheet.dart';
 import '../../widgets/map/rival_post_sheet.dart';
@@ -76,6 +78,40 @@ void openRivalPostSheet(
           repository: repository,
           target: owner,
           post: (x: x, y: y, level: level),
+          onChanged: onChanged,
+        ),
+      ),
+    ),
+  );
+}
+
+/// Opens the sheet of the volcanic kernel at ([x], [y]) that another
+/// player holds; its attack button leads to the army selection of the
+/// volcano level.
+void openRivalKernelSheet(
+  BuildContext context,
+  Game game,
+  GameRepository repository,
+  int x,
+  int y,
+  VoidCallback onChanged,
+) {
+  final Player owner = game.players[game.levels[KernelGarrison.volcanoLevel]!
+      .cellAt(x, y)
+      .collectedBy]!;
+  showRivalPostSheet(
+    context,
+    post: null,
+    ownerName: owner.name,
+    refusal: AttackHeldKernelValidator.refusal(game, game.humanPlayer, x, y),
+    onAttack: () => Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => BaseArmySelectionScreen(
+          game: game,
+          repository: repository,
+          target: owner,
+          post: (x: x, y: y, level: KernelGarrison.volcanoLevel),
+          kernel: true,
           onChanged: onChanged,
         ),
       ),

@@ -1058,6 +1058,10 @@
   "@assaultPostTaken": { "placeholders": { "post": { "type": "String" } } },
   "assaultPostLost": "{post} est perdue : votre passage est détruit, et les unités du niveau en dessous sont perdues avec elle.",
   "@assaultPostLost": { "placeholders": { "post": { "type": "String" } } },
+  "assaultKernelLevel": "Noyau : niveau {before} → {after}",
+  "@assaultKernelLevel": { "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } } },
+  "assaultKernelTaken": "Le Noyau est à vous : sa garnison est perdue. Montez-le au niveau 1 pour pouvoir le garnir.",
+  "assaultKernelLost": "Le Noyau est perdu : sa garnison est perdue avec lui.",
   "mapHeldBy": "Tenue par {name}",
   "@mapHeldBy": { "placeholders": { "name": { "type": "String" } } }
 }

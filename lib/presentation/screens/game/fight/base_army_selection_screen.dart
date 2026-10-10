@@ -4,6 +4,7 @@ import '../../../../domain/action/action_executor.dart';
 import '../../../../domain/action/attack_base_action.dart';
 import '../../../../domain/action/attack_base_entries.dart';
 import '../../../../domain/action/attack_base_result.dart';
+import '../../../../domain/action/attack_held_kernel_action.dart';
 import '../../../../domain/action/attack_post_action.dart';
 import '../../../../domain/game/game.dart';
 import '../../../../domain/game/player.dart';
@@ -27,6 +28,10 @@ class BaseArmySelectionScreen extends StatefulWidget {
   final GameRepository repository;
   final Player target;
   final ({int x, int y, int level})? post;
+
+  /// Whether [post] is the volcanic kernel rather than a Faille or a
+  /// Cheminée.
+  final bool kernel;
   final VoidCallback onChanged;
 
   const BaseArmySelectionScreen({
@@ -36,6 +41,7 @@ class BaseArmySelectionScreen extends StatefulWidget {
     required this.target,
     required this.onChanged,
     this.post,
+    this.kernel = false,
   });
 
   @override
@@ -88,7 +94,9 @@ class _BaseArmySelectionScreenState extends State<BaseArmySelectionScreen> {
     );
   }
 
-  String _postName(({int x, int y, int level}) post) => widget.game
+  String _postName(({int x, int y, int level}) post) => widget.kernel
+      ? AttackHeldKernelAction.kernelCode
+      : widget.game
       .levels[post.level]!
       .cellAt(post.x, post.y)
       .transitionBase!
@@ -99,6 +107,13 @@ class _BaseArmySelectionScreenState extends State<BaseArmySelectionScreen> {
     final action = post == null
         ? AttackBaseAction(
             targetPlayerId: widget.target.id,
+            selectedUnits: _picked,
+            random: SeededRandom.fresh(),
+          )
+        : widget.kernel
+        ? AttackHeldKernelAction(
+            targetX: post.x,
+            targetY: post.y,
             selectedUnits: _picked,
             random: SeededRandom.fresh(),
           )

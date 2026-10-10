@@ -11,7 +11,7 @@ class TwoPlayerGame {
 
   TwoPlayerGame._(this.game, this.human, this.rival);
 
-  factory TwoPlayerGame.create({int mapSeed = 3}) {
+  factory TwoPlayerGame.create({int mapSeed = 3, String? rivalId}) {
     final Game game = GameFactory.newSinglePlayer(
       playerName: 'human',
       mapSeed: mapSeed,
@@ -20,6 +20,7 @@ class TwoPlayerGame {
     final int height = game.levels[1]!.height;
     final Player human = game.humanPlayer;
     final Player rival = Player.withBase(
+      id: rivalId,
       name: 'rival',
       baseX: (human.baseX + width ~/ 2) % width,
       baseY: (human.baseY + height ~/ 2) % height,

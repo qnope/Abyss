@@ -12,6 +12,9 @@ part 'replay_journal.g.dart';
 /// Every move of a game, in the order it was played, with the seeds that
 /// drove its dice: enough to replay the game turn for turn.
 ///
+/// Every player's moves share one list per turn, in the order played; a
+/// move of a player other than the human carries a `player` key.
+///
 /// Unlike the history shown to the player, the journal is never trimmed.
 /// `ActionExecutor` fills it as actions succeed; `ReplayExport` turns it
 /// into a scenario that `bin/simulate.dart` plays headless.
@@ -44,8 +47,9 @@ class ReplayJournal {
   }) : actions = actions ?? <int, List<String>>{},
        endTurnSeeds = endTurnSeeds ?? <int, int>{};
 
-  /// Notes that [action] succeeded during [turn].
-  void record(int turn, Action action) {
+  /// Notes that [action] succeeded during [turn]. The human player's
+  /// actions carry no player; any other player's carry its [playerId].
+  void record(int turn, Action action, {String? playerId}) {
     if (action is EndTurnAction) {
       final random = action.random;
       if (random is SeededRandom) {
@@ -58,7 +62,11 @@ class ReplayJournal {
     final Map<String, Object?>? json = ActionEncoder.encode(action);
     if (json == null) return;
     if (!ActionEncoder.isExact(action)) exact = false;
-    (actions[turn] ??= <String>[]).add(jsonEncode(json));
+    final Map<String, Object?> entry = <String, Object?>{
+      ...json,
+      if (playerId != null) 'player': playerId,
+    };
+    (actions[turn] ??= <String>[]).add(jsonEncode(entry));
   }
 
   /// Decoded actions of [turn], oldest first.

@@ -17,6 +17,9 @@ import 'replay_journal.dart';
 ///   "endTurnSeeds": {"1": 98765}
 /// }
 /// ```
+///
+/// With several players, `players` lists them (`id`, `name`) and the actions
+/// of the others carry `"player": "<id>"`, in the order they were played.
 abstract final class ReplayExport {
   /// Whether [game] kept a journal; games started before it existed did not.
   static bool canExport(Game game) => game.replay != null;
@@ -28,6 +31,10 @@ abstract final class ReplayExport {
     return <String, Object?>{
       'name': fileName(game).replaceAll('.json', ''),
       'player': journal.playerName,
+      if (game.players.length > 1)
+        'players': <Map<String, String>>[
+          for (final p in game.players.values) {'id': p.id, 'name': p.name},
+        ],
       'mapSeed': journal.mapSeed,
       'difficulty': game.difficulty.name,
       'lastTurn': game.turn,

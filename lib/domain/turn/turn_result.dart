@@ -5,6 +5,7 @@ import '../map/exploration_result.dart';
 import '../map/monster_lair.dart';
 import '../map/reinforcement_order.dart';
 import '../objective/objective_completion.dart';
+import '../objective/temporary/temporary_objective_end.dart';
 import '../raid/raid_report.dart';
 import '../volcano/volcano_report.dart';
 import '../resource/resource_type.dart';
@@ -82,6 +83,11 @@ class TurnResult {
   /// the rewards they credited.
   final List<ObjectiveCompletion> objectives;
 
+  /// Temporary objectives of the events that ended this turn, done or
+  /// missed: the wreck searched during the turn or sunk at its end, the
+  /// predators fought at its end.
+  final List<TemporaryObjectiveEnd> temporaryObjectives;
+
   const TurnResult({
     required this.changes,
     required this.previousTurn,
@@ -100,5 +106,6 @@ class TurnResult {
     this.defaultedEvent,
     this.predators,
     this.objectives = const [],
+    this.temporaryObjectives = const [],
   });
 }

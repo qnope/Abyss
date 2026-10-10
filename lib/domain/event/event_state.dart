@@ -70,6 +70,7 @@ class EventState {
   GridPosition? wreckPosition;
 
   /// Last turn, inclusive, the wreck at [wreckPosition] can be searched.
+  /// Kept until the end of the turn of its search (see [wreckSearched]).
   @HiveField(14)
   int? wreckUntilTurn;
 
@@ -92,6 +93,10 @@ class EventState {
   });
 
   bool get hasPending => pending != null && pendingTurn != null;
+
+  /// Whether the wreck was searched during the turn being played: it left
+  /// the map but its [wreckUntilTurn] waits for the end of the turn.
+  bool get wreckSearched => wreckPosition == null && wreckUntilTurn != null;
 
   /// Whether the effect of [type] applies during [turn].
   bool isActive(RandomEventType type, int turn) =>
@@ -127,7 +132,7 @@ class EventState {
     predatorsTurn = null;
   }
 
-  /// Forgets the wreck, searched or sunk.
+  /// Forgets the wreck, searched or sunk, once the turn is over.
   void clearWreck() {
     wreckPosition = null;
     wreckUntilTurn = null;

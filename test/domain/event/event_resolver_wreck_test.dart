@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:abyss/domain/action/action_executor.dart';
+import 'package:abyss/domain/action/collect_treasure_action.dart';
 import 'package:abyss/domain/event/effects/wreck_effect.dart';
 import 'package:abyss/domain/event/event_resolver.dart';
 import 'package:abyss/domain/event/event_rules.dart';
@@ -69,5 +71,36 @@ void main() {
       expect(outcome.drawn, isNot(RandomEventType.wreck));
       expect(player.eventState.wreckPosition, isNotNull);
     }
+  });
+
+  test('the end of turn 17 tells the sunk wreck and its last turn', () {
+    final player = wreckPlayer();
+    final game = wreckGame(player);
+    const WreckEffect().onDraw(game, player, turn: 12, random: Random(2));
+    for (var turn = 13; turn <= 16; turn++) {
+      final outcome = EventResolver.resolve(game, player, turn);
+      expect(outcome.wreck, isNull);
+    }
+    final ending = EventResolver.resolve(game, player, 17).wreck!;
+    expect(ending.searched, isFalse);
+    expect(ending.untilTurn, 17);
+  });
+
+  test('a wreck searched during the turn is told at its end, once', () {
+    final player = wreckPlayer();
+    final game = wreckGame(player, turn: 14);
+    const WreckEffect().onDraw(game, player, turn: 12, random: Random(2));
+    final at = player.eventState.wreckPosition!;
+    player.addRevealedCell(1, at);
+    final search = CollectTreasureAction(targetX: at.x, targetY: at.y);
+    expect(ActionExecutor().execute(search, game, player).isSuccess, isTrue);
+    expect(player.eventState.wreckPosition, isNull);
+
+    final ending = EventResolver.resolve(game, player, 14).wreck!;
+
+    expect(ending.searched, isTrue);
+    expect(ending.untilTurn, 17);
+    expect(player.eventState.wreckUntilTurn, isNull);
+    expect(EventResolver.resolve(game, player, 15).wreck, isNull);
   });
 }

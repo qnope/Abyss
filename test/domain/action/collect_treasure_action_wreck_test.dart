@@ -61,7 +61,9 @@ void main() {
     expect(player.raidState.noise, noise + EventRules.wreckNoise);
     expect(game.currentMap.cellAt(at.x, at.y).collectedBy, player.id);
     expect(player.eventState.wreckPosition, isNull);
-    expect(player.eventState.wreckUntilTurn, isNull);
+    // Kept until the end of the turn, to tell the search from a sinking.
+    expect(player.eventState.wreckSearched, isTrue);
+    expect(player.eventState.wreckUntilTurn, 12 + EventRules.wreckTurns);
     final entry = player.historyEntries.whereType<CollectEntry>().single;
     expect(entry.gains, result.deltas);
   });

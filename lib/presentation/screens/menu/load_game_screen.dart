@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/save_sections.dart';
-import '../../theme/abyss_colors.dart';
 import '../../widgets/backdrop/abyss_backdrop.dart';
 import '../../widgets/save/confirm_save_deletion.dart';
+import '../../widgets/save/empty_saves.dart';
 import '../../widgets/save/save_list.dart';
 import '../game/resume_game.dart';
+import 'new_game_screen.dart';
 
 /// The saved games, over the dimmed deep sea, ready to be resumed or
 /// deleted.
@@ -44,7 +45,7 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
         ),
         body:
             _sections.isEmpty
-                ? _buildEmpty()
+                ? EmptySaves(onNewGame: _startNewGame)
                 : SaveList(
                   sections: _sections,
                   now: widget.now(),
@@ -55,25 +56,10 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
     );
   }
 
-  Widget _buildEmpty() {
-    final textTheme = Theme.of(context).textTheme;
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.folder_open,
-            size: 64,
-            color: AbyssColors.onSurfaceDim,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Aucune partie sauvegardée',
-            style: textTheme.bodyLarge?.copyWith(
-              color: AbyssColors.onSurfaceDim,
-            ),
-          ),
-        ],
+  void _startNewGame() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(
+        builder: (_) => NewGameScreen(repository: widget.repository),
       ),
     );
   }

@@ -22,6 +22,31 @@ Widget loadGameApp(FakeGameRepository repository) => MaterialApp(
   home: LoadGameScreen(repository: repository, now: () => loadScreenNow),
 );
 
+/// A stand-in home whose « Charger » button pushes the load screen over
+/// [repository], so the route it leaves to can be checked.
+Widget loadGameFromHomeApp(FakeGameRepository repository) => MaterialApp(
+  theme: AbyssTheme.create(),
+  builder:
+      (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(disableAnimations: true),
+        child: child!,
+      ),
+  home: Builder(
+    builder:
+        (context) => Scaffold(
+          body: TextButton(
+            onPressed:
+                () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => LoadGameScreen(repository: repository),
+                  ),
+                ),
+            child: const Text('Charger'),
+          ),
+        ),
+  ),
+);
+
 /// A save of [name], last played [hoursAgo] before [loadScreenNow].
 Game savedGame(
   String name, {

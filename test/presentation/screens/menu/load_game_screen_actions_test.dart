@@ -58,7 +58,8 @@ void main() {
     await tester.tap(find.text('Supprimer'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Aucune partie sauvegardée'), findsOneWidget);
+    expect(find.text('Aucune colonie détectée'), findsOneWidget);
+    expect(find.text('NOUVELLE PARTIE'), findsOneWidget);
   });
 
   testWidgets('cancelling keeps the game', (tester) async {

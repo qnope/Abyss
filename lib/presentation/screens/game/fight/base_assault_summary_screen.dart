@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/history/history_entry.dart';
+import '../../../extensions/transition_base_name_extensions.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../../../widgets/fight/assault_damage_card.dart';
 import '../../../widgets/fight/fight_loot_card.dart';
@@ -60,7 +61,14 @@ class BaseAssaultSummaryScreen extends StatelessWidget {
               fight.initialMonsterCount,
             ),
           ),
-          if (entry.victory) ...[
+          if (entry.victory && entry.postName != null) ...[
+            const SizedBox(height: 12),
+            FightReportCard.line(
+              defending
+                  ? l10n.assaultPostLost(baseNameLabel(l10n, entry.postName!))
+                  : l10n.assaultPostTaken(baseNameLabel(l10n, entry.postName!)),
+            ),
+          ] else if (entry.victory) ...[
             const SizedBox(height: 12),
             AssaultDamageCard(entry: entry),
             const SizedBox(height: 12),

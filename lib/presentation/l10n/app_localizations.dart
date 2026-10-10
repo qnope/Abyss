@@ -4449,6 +4449,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Si elle gagne, le rempart (ou le QG) baisse et une part de tes ressources est pillée.'**
   String get tipFactionAttackLine3;
+
+  /// No description provided for @historyPostWon.
+  ///
+  /// In fr, this message translates to:
+  /// **'{post} prise à {name}'**
+  String historyPostWon(String post, String name);
+
+  /// No description provided for @historyPostFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut sur {post} repoussé par {name}'**
+  String historyPostFailed(String post, String name);
+
+  /// No description provided for @historyPostSuffered.
+  ///
+  /// In fr, this message translates to:
+  /// **'{post} prise par {name}'**
+  String historyPostSuffered(String post, String name);
+
+  /// No description provided for @historyPostRepelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut de {name} sur {post} repoussé'**
+  String historyPostRepelled(String post, String name);
+
+  /// No description provided for @assaultPostTaken.
+  ///
+  /// In fr, this message translates to:
+  /// **'{post} est à vous : son passage est détruit. Construisez le vôtre pour y descendre.'**
+  String assaultPostTaken(String post);
+
+  /// No description provided for @assaultPostLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'{post} est perdue : votre passage est détruit, et les unités du niveau en dessous sont perdues avec elle.'**
+  String assaultPostLost(String post);
+
+  /// No description provided for @mapHeldBy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tenue par {name}'**
+  String mapHeldBy(String name);
 }
 
 class _AppLocalizationsDelegate

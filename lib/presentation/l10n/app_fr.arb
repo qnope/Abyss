@@ -1042,5 +1042,19 @@
   "tipFactionAttackTitle": "Une faction t'attaque",
   "tipFactionAttackLine1": "Une faction rivale a envoyé son armée : elle frappera ta base à la date annoncée.",
   "tipFactionAttackLine2": "Touche le bandeau pour voir sa composition exacte et prépare tes défenseurs du niveau 1.",
-  "tipFactionAttackLine3": "Si elle gagne, le rempart (ou le QG) baisse et une part de tes ressources est pillée."
+  "tipFactionAttackLine3": "Si elle gagne, le rempart (ou le QG) baisse et une part de tes ressources est pillée.",
+  "historyPostWon": "{post} prise à {name}",
+  "@historyPostWon": { "placeholders": { "post": { "type": "String" }, "name": { "type": "String" } } },
+  "historyPostFailed": "Assaut sur {post} repoussé par {name}",
+  "@historyPostFailed": { "placeholders": { "post": { "type": "String" }, "name": { "type": "String" } } },
+  "historyPostSuffered": "{post} prise par {name}",
+  "@historyPostSuffered": { "placeholders": { "post": { "type": "String" }, "name": { "type": "String" } } },
+  "historyPostRepelled": "Assaut de {name} sur {post} repoussé",
+  "@historyPostRepelled": { "placeholders": { "post": { "type": "String" }, "name": { "type": "String" } } },
+  "assaultPostTaken": "{post} est à vous : son passage est détruit. Construisez le vôtre pour y descendre.",
+  "@assaultPostTaken": { "placeholders": { "post": { "type": "String" } } },
+  "assaultPostLost": "{post} est perdue : votre passage est détruit, et les unités du niveau en dessous sont perdues avec elle.",
+  "@assaultPostLost": { "placeholders": { "post": { "type": "String" } } },
+  "mapHeldBy": "Tenue par {name}",
+  "@mapHeldBy": { "placeholders": { "name": { "type": "String" } } }
 }

@@ -3032,4 +3032,39 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tipFactionAttackLine3 =>
       'If it wins, the rampart (or the headquarters) drops and part of your resources is pillaged.';
+
+  @override
+  String historyPostWon(String post, String name) {
+    return '$post taken from $name';
+  }
+
+  @override
+  String historyPostFailed(String post, String name) {
+    return 'Assault on $post repelled by $name';
+  }
+
+  @override
+  String historyPostSuffered(String post, String name) {
+    return '$post taken by $name';
+  }
+
+  @override
+  String historyPostRepelled(String post, String name) {
+    return 'Assault by $name on $post repelled';
+  }
+
+  @override
+  String assaultPostTaken(String post) {
+    return '$post is yours: its passage is destroyed. Build your own to go down through it.';
+  }
+
+  @override
+  String assaultPostLost(String post) {
+    return '$post is lost: your passage is destroyed, and the units on the level below are lost with it.';
+  }
+
+  @override
+  String mapHeldBy(String name) {
+    return 'Held by $name';
+  }
 }

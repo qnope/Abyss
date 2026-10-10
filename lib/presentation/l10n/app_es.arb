@@ -768,5 +768,12 @@
   "tipFactionAttackTitle": "Una facción te ataca",
   "tipFactionAttackLine1": "Una facción rival envió su ejército: golpeará tu base en la fecha anunciada.",
   "tipFactionAttackLine2": "Toca el banner para ver su composición exacta y prepara a tus defensores del nivel 1.",
-  "tipFactionAttackLine3": "Si gana, la muralla (o el cuartel general) baja y se saquea parte de tus recursos."
+  "tipFactionAttackLine3": "Si gana, la muralla (o el cuartel general) baja y se saquea parte de tus recursos.",
+  "historyPostWon": "{post} tomada a {name}",
+  "historyPostFailed": "Asalto a {post} rechazado por {name}",
+  "historyPostSuffered": "{post} tomada por {name}",
+  "historyPostRepelled": "Asalto de {name} a {post} rechazado",
+  "assaultPostTaken": "{post} es tuya: su pasaje está destruido. Construye el tuyo para bajar por ella.",
+  "assaultPostLost": "{post} está perdida: tu pasaje está destruido y las unidades del nivel inferior se pierden con ella.",
+  "mapHeldBy": "En manos de {name}"
 }

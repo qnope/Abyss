@@ -3069,4 +3069,39 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get tipFactionAttackLine3 =>
       'Si gana, la muralla (o el cuartel general) baja y se saquea parte de tus recursos.';
+
+  @override
+  String historyPostWon(String post, String name) {
+    return '$post tomada a $name';
+  }
+
+  @override
+  String historyPostFailed(String post, String name) {
+    return 'Asalto a $post rechazado por $name';
+  }
+
+  @override
+  String historyPostSuffered(String post, String name) {
+    return '$post tomada por $name';
+  }
+
+  @override
+  String historyPostRepelled(String post, String name) {
+    return 'Asalto de $name a $post rechazado';
+  }
+
+  @override
+  String assaultPostTaken(String post) {
+    return '$post es tuya: su pasaje está destruido. Construye el tuyo para bajar por ella.';
+  }
+
+  @override
+  String assaultPostLost(String post) {
+    return '$post está perdida: tu pasaje está destruido y las unidades del nivel inferior se pierden con ella.';
+  }
+
+  @override
+  String mapHeldBy(String name) {
+    return 'En manos de $name';
+  }
 }

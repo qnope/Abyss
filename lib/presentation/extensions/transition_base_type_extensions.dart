@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import '../../domain/map/transition_base_type.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/abyss_colors.dart';
 
 extension TransitionBaseTypeExtensions on TransitionBaseType {
-  String get displayName => switch (this) {
-    TransitionBaseType.faille => 'Faille Abyssale',
-    TransitionBaseType.cheminee => 'Cheminee du Noyau',
+  String displayName(AppLocalizations l10n) => switch (this) {
+    TransitionBaseType.faille => l10n.transitionBaseFailleName,
+    TransitionBaseType.cheminee => l10n.transitionBaseChemineeName,
   };
 
-  String get description => switch (this) {
-    TransitionBaseType.faille => 'Passage vers les profondeurs',
-    TransitionBaseType.cheminee => 'Passage vers le noyau',
+  String description(AppLocalizations l10n) => switch (this) {
+    TransitionBaseType.faille => l10n.transitionBaseFailleDescription,
+    TransitionBaseType.cheminee => l10n.transitionBaseChemineeDescription,
   };
 
   Color get glowColor => switch (this) {

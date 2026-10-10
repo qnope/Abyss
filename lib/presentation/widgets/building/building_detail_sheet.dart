@@ -5,6 +5,7 @@ import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../extensions/building_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'base_shield_badge.dart';
 import 'building_icon.dart';
@@ -85,7 +86,7 @@ class _BuildingDetailSheet extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            building.type.displayName,
+            building.type.displayName(context.l10n),
             style: textTheme.headlineSmall?.copyWith(color: color),
           ),
           const SizedBox(height: 4),
@@ -95,7 +96,7 @@ class _BuildingDetailSheet extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            building.type.description,
+            building.type.description(context.l10n),
             style: textTheme.bodyMedium?.copyWith(
               color: AbyssColors.onSurfaceDim,
             ),

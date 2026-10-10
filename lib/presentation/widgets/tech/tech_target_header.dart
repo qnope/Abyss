@@ -3,6 +3,8 @@ import '../../../domain/tech/tech_branch.dart';
 import '../../../domain/tech/tech_tree.dart';
 import '../../extensions/tech_branch_extensions.dart';
 import '../../extensions/tech_node_extensions.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 
@@ -28,6 +30,7 @@ class TechTargetHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     return Row(children: [
       if (!_choice) ...[
         RasterSvg(assetPath: _iconPath, size: 48),
@@ -37,11 +40,11 @@ class TechTargetHeader extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(_title,
+            Text(_title(l10n),
               style: text.titleMedium?.copyWith(
                 color: branch.color, fontWeight: FontWeight.w700)),
             const SizedBox(height: 2),
-            Text(_subtitle,
+            Text(_subtitle(l10n),
               style: text.bodySmall?.copyWith(
                 color: AbyssColors.onSurfaceDim)),
           ],
@@ -60,15 +63,17 @@ class TechTargetHeader extends StatelessWidget {
   String get _iconPath =>
       level == null ? branch.iconPath : branch.nodeIconPath(level!);
 
-  String get _title => switch (level) {
-    null => branch.displayName,
-    final l when _choice => '${branch.displayName} · Niveau $l · Choix',
-    final l => branch.nodeName(l),
+  String _title(AppLocalizations l10n) => switch (level) {
+    null => branch.displayName(l10n),
+    final l when _choice =>
+      '${branch.displayName(l10n)} · Niveau $l · Choix',
+    final l => branch.nodeName(l10n, l),
   };
 
-  String get _subtitle => switch (level) {
-    null => branch.description,
+  String _subtitle(AppLocalizations l10n) => switch (level) {
+    null => branch.description(l10n),
     _ when _choice => "Une seule option par partie, l'autre sera perdue.",
-    final l => '${branch.displayName} · Niveau $l · ${branch.nodeEffect(l)}',
+    final l => '${branch.displayName(l10n)} · Niveau $l · '
+        '${branch.nodeEffect(l10n, l)}',
   };
 }

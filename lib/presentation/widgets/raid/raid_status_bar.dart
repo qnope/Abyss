@@ -4,6 +4,7 @@ import '../../../domain/game/defeat_checker.dart';
 import '../../../domain/raid/noise_rules.dart';
 import '../../../domain/raid/raid_state.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// Thin strip under the resource bar: the noise gauge, or the alert of
@@ -87,7 +88,8 @@ class RaidStatusBar extends StatelessWidget {
         ? 'à la fin de ce tour'
         : 'à la fin du tour $arrival';
     final style = Theme.of(context).textTheme.bodyMedium;
-    final weakness = state.incoming!.weaknessLabel;
+    final l10n = context.l10n;
+    final weakness = state.incoming!.weaknessLabel(l10n);
     return Row(
       children: [
         const Icon(Icons.warning_amber, size: 18, color: AbyssColors.error),
@@ -97,7 +99,7 @@ class RaidStatusBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Raid $when : ${state.incoming!.waveLabel}',
+                'Raid $when : ${state.incoming!.waveLabel(l10n)}',
                 style: style?.copyWith(color: AbyssColors.error),
               ),
               if (weakness != null)

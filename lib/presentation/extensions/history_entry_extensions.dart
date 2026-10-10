@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../domain/event/random_event_type.dart';
 import '../../domain/history/history_entry.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/abyss_colors.dart';
 import 'history_entry_category_extensions.dart';
 import 'random_event_type_extensions.dart';
@@ -60,8 +61,8 @@ extension HistoryEntryDisplay on HistoryEntry {
   };
 
   /// Title shown on the card: an event is named after its type.
-  String get displayTitle => switch (this) {
-    EventEntry(:final type) => type.label,
+  String displayTitle(AppLocalizations l10n) => switch (this) {
+    EventEntry(:final type) => type.label(l10n),
     _ => title,
   };
 }

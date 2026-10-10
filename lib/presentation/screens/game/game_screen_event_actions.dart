@@ -6,6 +6,7 @@ import '../../../domain/action/choose_event_action.dart';
 import '../../../domain/event/random_event_type.dart';
 import '../../../domain/game/game.dart';
 import '../../extensions/random_event_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../widgets/event/event_card.dart';
 import '../../widgets/event/event_card_data.dart';
 
@@ -19,7 +20,7 @@ Future<void> openEventCard(
   RandomEventType type,
   VoidCallback onChanged,
 ) async {
-  final data = EventCardData.of(game, type);
+  final data = EventCardData.of(context.l10n, game, type);
   final accept = await showEventCard(context, data);
   if (accept == null) return;
   final player = game.humanPlayer;
@@ -34,7 +35,7 @@ Future<void> openEventCard(
   final chosen = data.choices.firstWhere((c) => c.accept == accept).label;
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(result.isSuccess
-        ? '${type.label} : $chosen'
+        ? '${type.label(context.l10n)} : $chosen'
         : result.reason ?? 'Action impossible'),
   ));
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/map/exploration_result.dart';
 import '../../extensions/cell_content_type_extensions.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 class ExplorationSummarySection extends StatelessWidget {
@@ -34,7 +36,7 @@ class ExplorationSummarySection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 28, top: 4),
             child: Text(
-              _formatExploration(exploration),
+              _formatExploration(context.l10n, exploration),
               style: TextStyle(
                 color: AbyssColors.biolumCyan.withValues(alpha: 0.7),
               ),
@@ -44,13 +46,17 @@ class ExplorationSummarySection extends StatelessWidget {
     );
   }
 
-  String _formatExploration(ExplorationResult exploration) {
+  String _formatExploration(
+    AppLocalizations l10n,
+    ExplorationResult exploration,
+  ) {
     final coords = '(${exploration.target.x}, ${exploration.target.y})';
     final cells = '${exploration.newCellsRevealed} cellules';
     if (exploration.notableContent.isEmpty) {
       return '$coords → $cells';
     }
-    final notable = exploration.notableContent.map((c) => c.label).join(', ');
+    final notable =
+        exploration.notableContent.map((c) => c.label(l10n)).join(', ');
     return '$coords → $cells ($notable)';
   }
 }

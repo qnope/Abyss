@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../domain/resource/resource_type.dart';
 import '../../../extensions/resource_type_extensions.dart';
+import '../../../l10n/l10n_extension.dart';
 import '../../../theme/abyss_colors.dart';
 import '../../../widgets/resource/resource_icon.dart';
 
@@ -39,7 +40,7 @@ class RaidPillageCard extends StatelessWidget {
                   ResourceIcon(type: e.key, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    '${e.key.displayName} -${e.value}',
+                    '${e.key.displayName(context.l10n)} -${e.value}',
                     style: textTheme.bodyMedium
                         ?.copyWith(color: AbyssColors.onSurface),
                   ),

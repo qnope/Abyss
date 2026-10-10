@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/building/building.dart';
 import '../../extensions/building_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'building_icon.dart';
 
@@ -19,7 +20,7 @@ class BuildingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final content = _buildContent(textTheme);
+    final content = _buildContent(context, textTheme);
 
     return Card(
       child: InkWell(
@@ -32,7 +33,7 @@ class BuildingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(TextTheme textTheme) {
+  Widget _buildContent(BuildContext context, TextTheme textTheme) {
     return Row(
       children: [
         BuildingIcon(
@@ -46,7 +47,7 @@ class BuildingCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              building.type.displayName,
+              building.type.displayName(context.l10n),
               style: textTheme.titleMedium?.copyWith(
                 color: _isBuilt
                     ? building.type.color

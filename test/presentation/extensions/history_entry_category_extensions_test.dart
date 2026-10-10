@@ -4,6 +4,8 @@ import 'package:abyss/domain/history/history_entry_category.dart';
 import 'package:abyss/presentation/extensions/history_entry_category_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 
+import '../../helpers/l10n_fixtures.dart';
+
 void main() {
   group('HistoryEntryCategoryDisplay.icon', () {
     test('maps every category to the expected Material icon', () {
@@ -28,21 +30,26 @@ void main() {
 
   group('HistoryEntryCategoryDisplay.label', () {
     test('maps every category to the expected French label', () {
-      expect(HistoryEntryCategory.combat.label, 'Combat');
-      expect(HistoryEntryCategory.building.label, 'Construction');
-      expect(HistoryEntryCategory.research.label, 'Recherche');
-      expect(HistoryEntryCategory.recruit.label, 'Recrutement');
-      expect(HistoryEntryCategory.explore.label, 'Exploration');
-      expect(HistoryEntryCategory.collect.label, 'Collecte');
-      expect(HistoryEntryCategory.turnEnd.label, 'Fin de tour');
-      expect(HistoryEntryCategory.capture.label, 'Capture');
-      expect(HistoryEntryCategory.descent.label, 'Descente');
-      expect(HistoryEntryCategory.reinforcement.label, 'Renfort');
-      expect(HistoryEntryCategory.event.label, 'Événement');
+      expect(HistoryEntryCategory.combat.label(fr), 'Combat');
+      expect(HistoryEntryCategory.building.label(fr), 'Construction');
+      expect(HistoryEntryCategory.research.label(fr), 'Recherche');
+      expect(HistoryEntryCategory.recruit.label(fr), 'Recrutement');
+      expect(HistoryEntryCategory.explore.label(fr), 'Exploration');
+      expect(HistoryEntryCategory.collect.label(fr), 'Collecte');
+      expect(HistoryEntryCategory.turnEnd.label(fr), 'Fin de tour');
+      expect(HistoryEntryCategory.capture.label(fr), 'Capture');
+      expect(HistoryEntryCategory.descent.label(fr), 'Descente');
+      expect(HistoryEntryCategory.reinforcement.label(fr), 'Renfort');
+      expect(HistoryEntryCategory.event.label(fr), 'Événement');
+    });
+
+    test('translates the labels', () {
+      expect(HistoryEntryCategory.turnEnd.label(en), 'End of turn');
+      expect(HistoryEntryCategory.research.label(es), 'Investigación');
     });
 
     test('returns a distinct, non-empty label for every category', () {
-      final labels = HistoryEntryCategory.values.map((c) => c.label).toSet();
+      final labels = HistoryEntryCategory.values.map((c) => c.label(fr)).toSet();
       expect(labels.length, HistoryEntryCategory.values.length);
       expect(labels.every((l) => l.isNotEmpty), isTrue);
     });

@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
+import '../../../domain/map/monster_lair.dart';
 import '../../../domain/volcano/kernel_garrison.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// Warning shown before ending a turn when a kraken wave hits the kernel
 /// at its end and no unit guards it.
 class VolcanoDueWarning extends StatelessWidget {
-  final String waveLabel;
+  final MonsterLair wave;
 
-  const VolcanoDueWarning({super.key, required this.waveLabel});
+  const VolcanoDueWarning({super.key, required this.wave});
 
   /// The warning for [player], or `null` when no wave hits an empty
   /// garrison this turn.
@@ -19,7 +21,7 @@ class VolcanoDueWarning extends StatelessWidget {
     final state = player.volcanoState;
     if (!state.isIncoming || state.arrivalTurn! > game.turn) return null;
     if (KernelGarrison.sizeOf(player) > 0) return null;
-    return VolcanoDueWarning(waveLabel: state.incoming!.waveLabel);
+    return VolcanoDueWarning(wave: state.incoming!);
   }
 
   @override
@@ -33,7 +35,8 @@ class VolcanoDueWarning extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Vague sur le Noyau ce tour : $waveLabel, et aucune garnison. '
+              'Vague sur le Noyau ce tour : ${wave.waveLabel(context.l10n)}, '
+              'et aucune garnison. '
               'Le Noyau perdra probablement un niveau.',
               style: const TextStyle(color: AbyssColors.error),
             ),

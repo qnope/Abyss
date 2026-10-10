@@ -7,16 +7,18 @@ import '../../../domain/resource/resource_type.dart';
 import '../../extensions/event_state_extensions.dart';
 import '../../extensions/monster_lair_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
+import '../../l10n/app_localizations.dart';
 import '../raid/raid_due_warning.dart';
 import 'event_choice.dart';
 
 /// French wording of the event cards of [player], with the figures of
 /// [EventRules] and of the offer drawn.
 class EventCardTexts {
+  final AppLocalizations l10n;
   final Game game;
   final Player player;
 
-  const EventCardTexts(this.game, this.player);
+  const EventCardTexts(this.l10n, this.game, this.player);
 
   static const _turns = EventRules.effectTurns;
   static const _percent = EventRules.currentPercent;
@@ -97,7 +99,7 @@ class EventCardTexts {
       RaidDueWarning.defenderCountOf(player),
     );
     if (wave == null) return 'Ils guettent la base.';
-    return '${wave.waveLabel} contre $defenders du niveau 1.';
+    return '${wave.waveLabel(l10n)} contre $defenders du niveau 1.';
   }
 
   int _bait() =>
@@ -111,8 +113,8 @@ class EventCardTexts {
   }
 
   String _trade() {
-    final from = player.eventState.tradeFrom?.displayName ?? '?';
-    final to = player.eventState.tradeTo?.displayName ?? '?';
+    final from = player.eventState.tradeFrom?.displayName(l10n) ?? '?';
+    final to = player.eventState.tradeTo?.displayName(l10n) ?? '?';
     return 'Échanger ${EventRules.caravanGive} $from contre '
         '${EventRules.caravanGet} $to';
   }

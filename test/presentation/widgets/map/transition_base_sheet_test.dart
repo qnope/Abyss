@@ -83,7 +83,7 @@ void main() {
       await t.pumpWidget(_buildOpener(base: base));
       await _open(t);
       expect(find.text('5/5'), findsOneWidget);
-      expect(find.text('Cheminee du Noyau'), findsOneWidget);
+      expect(find.text('Cheminée du Noyau'), findsOneWidget);
     });
   });
 

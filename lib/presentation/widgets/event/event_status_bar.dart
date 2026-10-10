@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/event/event_state.dart';
 import '../../extensions/event_state_extensions.dart';
 import '../../extensions/random_event_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// Thin strip under the raid and volcano bars: the event waiting for a
@@ -24,10 +25,11 @@ class EventStatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final pending = state.hasPending ? state.pending : null;
     final countdowns = [
-      state.effectCountdown(currentTurn),
-      state.wreckCountdown(currentTurn),
+      state.effectCountdown(l10n, currentTurn),
+      state.wreckCountdown(l10n, currentTurn),
     ].whereType<String>().toList();
     if (pending == null && countdowns.isEmpty) return const SizedBox.shrink();
     final style = Theme.of(context).textTheme.bodySmall;
@@ -43,7 +45,7 @@ class EventStatusBar extends StatelessWidget {
               onTap: onOpen,
               child: _line(
                 Icons.auto_awesome,
-                'Événement : ${pending.label} — choisir',
+                'Événement : ${pending.label(l10n)} — choisir',
                 style?.copyWith(color: AbyssColors.biolumCyan),
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/turn/turn_result.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../turn/summary_line.dart';
 
@@ -35,7 +36,7 @@ class VolcanoTurnSection extends StatelessWidget {
         if (announced != null)
           SummaryLine(
             Icons.warning_amber,
-            'Le Kraken remonte : ${announced.waveLabel} au prochain tour',
+            'Le Kraken remonte : ${announced.waveLabel(context.l10n)} au prochain tour',
             AbyssColors.warning,
           ),
       ],

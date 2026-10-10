@@ -5,6 +5,8 @@ import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/presentation/extensions/cell_content_type_extensions.dart';
 import 'package:abyss/presentation/extensions/random_event_type_extensions.dart';
 
+import '../../helpers/l10n_fixtures.dart';
+
 void main() {
   group('CellContentTypeExtensions', () {
     test('empty has null svgPath', () {
@@ -28,14 +30,23 @@ void main() {
       expect(CellContentType.monsterLair.svgPath, isNull);
     });
 
-    test('each content type has a non-empty label', () {
-      for (final c in CellContentType.values) {
-        expect(c.label, isNotEmpty);
+    test('each content type has a non-empty label in each language', () {
+      for (final l10n in [fr, en, es]) {
+        for (final c in CellContentType.values) {
+          expect(c.label(l10n), isNotEmpty);
+        }
       }
     });
 
+    test('names a lair in each language', () {
+      expect(CellContentType.monsterLair.label(fr), 'Repaire');
+      expect(CellContentType.monsterLair.label(en), 'Lair');
+      expect(CellContentType.monsterLair.label(es), 'Guarida');
+    });
+
     test('a wreck is drawn with the wreck event illustration', () {
-      expect(CellContentType.wreck.label, 'Épave');
+      expect(CellContentType.wreck.label(fr), 'Épave');
+      expect(CellContentType.wreck.label(es), 'Pecio');
       expect(
         CellContentType.wreck.svgPath,
         RandomEventType.wreck.illustration,
@@ -43,7 +54,8 @@ void main() {
     });
 
     test('volcanicKernel has correct label', () {
-      expect(CellContentType.volcanicKernel.label, 'Noyau Volcanique');
+      expect(CellContentType.volcanicKernel.label(fr), 'Noyau Volcanique');
+      expect(CellContentType.volcanicKernel.label(en), 'Volcanic Core');
     });
 
     test('volcanicKernel has correct svgPath', () {
@@ -64,8 +76,14 @@ void main() {
 
     test('each difficulty has a non-empty label', () {
       for (final d in MonsterDifficulty.values) {
-        expect(d.label, isNotEmpty);
+        expect(d.label(fr), isNotEmpty);
       }
+    });
+
+    test('names the difficulty in each language', () {
+      expect(MonsterDifficulty.medium.label(fr), 'Moyen');
+      expect(MonsterDifficulty.medium.label(en), 'Medium');
+      expect(MonsterDifficulty.hard.label(es), 'Difícil');
     });
   });
 }

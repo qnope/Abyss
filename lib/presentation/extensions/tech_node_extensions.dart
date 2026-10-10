@@ -1,53 +1,60 @@
 import '../../domain/tech/tech_branch.dart';
 import '../../domain/tech/tech_option.dart';
+import '../l10n/app_localizations.dart';
 
 /// Name, effect and icon of every node of the research reef. A node is a
 /// branch [level], plus the [TechOption] on a choice level (2 and 4).
 extension TechNodeInfo on TechBranch {
-  String nodeName(int level, [TechOption? option]) =>
-      _info(level, option).$1;
+  String nodeName(AppLocalizations l10n, int level, [TechOption? option]) =>
+      _info(l10n, level, option).$1;
 
-  String nodeEffect(int level, [TechOption? option]) =>
-      _info(level, option).$2;
+  String nodeEffect(AppLocalizations l10n, int level, [TechOption? option]) =>
+      _info(l10n, level, option).$2;
 
   String nodeIconPath(int level, [TechOption? option]) =>
       'assets/icons/tech/${name}_$level${option?.name ?? ''}.svg';
 
-  (String, String) _info(int level, TechOption? option) =>
-      _nodes[this]!['$level${option?.name ?? ''}'] ?? ('', '');
+  (String, String) _info(AppLocalizations l10n, int level, TechOption? option) {
+    final tier = l10n.techTierEffect;
+    final prod = l10n.techProductionEffect;
+    return switch ((this, '$level${option?.name ?? ''}')) {
+      (TechBranch.military, '1') => (l10n.techMilitary1Name, tier),
+      (TechBranch.military, '2a') =>
+        (l10n.techMilitary2aName, l10n.techMilitary2aEffect),
+      (TechBranch.military, '2b') =>
+        (l10n.techMilitary2bName, l10n.techMilitary2bEffect),
+      (TechBranch.military, '3') => (l10n.techMilitary3Name, tier),
+      (TechBranch.military, '4a') =>
+        (l10n.techMilitary4aName, l10n.techMilitary4aEffect),
+      (TechBranch.military, '4b') =>
+        (l10n.techMilitary4bName, l10n.techMilitary4bEffect),
+      (TechBranch.military, '5') => (l10n.techMilitary5Name, tier),
+      (TechBranch.resources, '1') => (l10n.techResources1Name, prod),
+      (TechBranch.resources, '2a') =>
+        (l10n.techResources2aName, l10n.techResources2aEffect),
+      (TechBranch.resources, '2b') =>
+        (l10n.techResources2bName, l10n.techResources2bEffect),
+      (TechBranch.resources, '3') => (l10n.techResources3Name, prod),
+      (TechBranch.resources, '4a') =>
+        (l10n.techResources4aName, l10n.techResources4aEffect),
+      (TechBranch.resources, '4b') =>
+        (l10n.techResources4bName, l10n.techResources4bEffect),
+      (TechBranch.resources, '5') => (l10n.techResources5Name, prod),
+      (TechBranch.explorer, '1') =>
+        (l10n.techExplorer1Name, l10n.techExploredAreaEffect(5)),
+      (TechBranch.explorer, '2a') =>
+        (l10n.techExplorer2aName, l10n.techExplorer2aEffect),
+      (TechBranch.explorer, '2b') =>
+        (l10n.techExplorer2bName, l10n.techExplorer2bEffect),
+      (TechBranch.explorer, '3') =>
+        (l10n.techExplorer3Name, l10n.techExploredAreaEffect(7)),
+      (TechBranch.explorer, '4a') =>
+        (l10n.techExplorer4aName, l10n.techExplorer4aEffect),
+      (TechBranch.explorer, '4b') =>
+        (l10n.techExplorer4bName, l10n.techExplorer4bEffect),
+      (TechBranch.explorer, '5') =>
+        (l10n.techExplorer5Name, l10n.techExploredAreaEffect(9)),
+      _ => ('', ''),
+    };
+  }
 }
-
-const _tier = '+20 % ATK et DEF';
-const _prod = '+20 % de production';
-
-const Map<TechBranch, Map<String, (String, String)>> _nodes = {
-  TechBranch.military: {
-    '1': ('Trident aiguisé', _tier),
-    '2a': ('Lames de corail', '+35 % ATK'),
-    '2b': ('Carapace de nacre', '+35 % PV'),
-    '3': ('Discipline des abysses', _tier),
-    '4a': ('Rempart vivant', '+35 % DEF en défense de la base'),
-    '4b': ('Assaut des profondeurs',
-        '+35 % ATK contre repaires, bases et Noyau'),
-    '5': ('Légion abyssale', _tier),
-  },
-  TechBranch.resources: {
-    '1': ('Bancs fertiles', _prod),
-    '2a': ('Culture intensive', "+35 % d'algues et de corail"),
-    '2b': ('Forage profond', "+35 % de minerai et d'énergie"),
-    '3': ('Courants nourriciers', _prod),
-    '4a': ('Coffres scellés', 'Un raid perdu pille 15 % au lieu de 30 %'),
-    '4b': ('Chantiers économes', 'Améliorations 15 % moins chères'),
-    '5': ('Abondance des grands fonds', _prod),
-  },
-  TechBranch.explorer: {
-    '1': ('Lanterne bioluminescente', 'Zone explorée 5×5'),
-    '2a': ('Sonar profond', 'Zone explorée agrandie de 2'),
-    '2b': ('Nage silencieuse', 'Explorer et combattre ne font plus de bruit'),
-    '3': ('Cartographie des courants', 'Zone explorée 7×7'),
-    '4a': ("Pillards d'épaves",
-        '+50 % de butin (repaires, trésors, raids repoussés)'),
-    '4b': ('Sentinelles', "Raids annoncés 4 tours à l'avance au lieu de 2"),
-    '5': ("Œil de l'abysse", 'Zone explorée 9×9'),
-  },
-};

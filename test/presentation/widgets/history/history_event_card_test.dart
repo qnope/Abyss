@@ -12,6 +12,7 @@ import 'package:abyss/presentation/widgets/history/history_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/test_svg_helper.dart';
 import '../../../helpers/transition_fight_fixtures.dart';
 
@@ -56,12 +57,13 @@ void main() {
   }
 
   test('an event entry is titled after its event', () {
-    expect(_caravan().displayTitle, 'Caravane de tortues');
+    expect(_caravan().displayTitle(fr), 'Caravane de tortues');
+    expect(_caravan().displayTitle(en), 'Turtle Caravan');
   });
 
   test('other entries keep their own title', () {
     final entry = ExploreEntry(turn: 1, targetX: 3, targetY: 4);
-    expect(entry.displayTitle, entry.title);
+    expect(entry.displayTitle(en), entry.title);
   });
 
   test('an event entry takes its category color and is not tappable', () {

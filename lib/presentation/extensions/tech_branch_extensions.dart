@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/tech/tech_branch.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/abyss_colors.dart';
 
 extension TechBranchColor on TechBranch {
@@ -11,19 +12,16 @@ extension TechBranchColor on TechBranch {
 }
 
 extension TechBranchInfo on TechBranch {
-  String get displayName => switch (this) {
-    TechBranch.military => 'Militaire',
-    TechBranch.resources => 'Ressources',
-    TechBranch.explorer => 'Explorateur',
+  String displayName(AppLocalizations l10n) => switch (this) {
+    TechBranch.military => l10n.techBranchMilitaryName,
+    TechBranch.resources => l10n.techBranchResourcesName,
+    TechBranch.explorer => l10n.techBranchExplorerName,
   };
 
-  String get description => switch (this) {
-    TechBranch.military =>
-      'Améliore l\'attaque et la défense de toutes les unités.',
-    TechBranch.resources =>
-      'Améliore la production de toutes les ressources.',
-    TechBranch.explorer =>
-      'Améliore la portée d\'exploration de la carte.',
+  String description(AppLocalizations l10n) => switch (this) {
+    TechBranch.military => l10n.techBranchMilitaryDescription,
+    TechBranch.resources => l10n.techBranchResourcesDescription,
+    TechBranch.explorer => l10n.techBranchExplorerDescription,
   };
 
   String get iconPath => switch (this) {

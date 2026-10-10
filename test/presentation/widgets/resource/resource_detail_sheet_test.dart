@@ -7,6 +7,7 @@ import 'package:abyss/presentation/widgets/resource/resource_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
@@ -39,8 +40,8 @@ void main() {
     await openSheet(tester, production: 0);
 
     expect(find.byType(ResourceIcon), findsOneWidget);
-    expect(find.text(ResourceType.coral.displayName), findsOneWidget);
-    expect(find.text(ResourceType.coral.flavorText), findsOneWidget);
+    expect(find.text(ResourceType.coral.displayName(fr)), findsOneWidget);
+    expect(find.text(ResourceType.coral.flavorText(fr)), findsOneWidget);
     expect(find.text('42 / 300'), findsOneWidget);
     expect(find.text('Production'), findsNothing);
   });

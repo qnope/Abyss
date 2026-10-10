@@ -59,7 +59,7 @@ void main() {
 
     testWidgets('shows unit cards', (tester) async {
       await goToArmyTab(tester, armyGame());
-      expect(find.text('Eclaireur'), findsOneWidget);
+      expect(find.text('Éclaireur'), findsOneWidget);
       expect(find.text('Harponneur'), findsOneWidget);
     });
 
@@ -70,7 +70,7 @@ void main() {
 
     testWidgets('tapping unlocked unit shows stats', (tester) async {
       await goToArmyTab(tester, armyGame());
-      await tester.tap(find.text('Eclaireur'));
+      await tester.tap(find.text('Éclaireur'));
       await tester.pumpAndSettle();
       expect(find.text('PV: 10'), findsOneWidget);
     });
@@ -88,7 +88,7 @@ void main() {
     testWidgets('recruit units updates count', (tester) async {
       final g = armyGame();
       await goToArmyTab(tester, g);
-      await tester.tap(find.text('Eclaireur'));
+      await tester.tap(find.text('Éclaireur'));
       await tester.pumpAndSettle();
       await tester.drag(find.byType(Slider), const Offset(200, 0));
       await tester.pumpAndSettle();

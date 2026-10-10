@@ -8,6 +8,7 @@ import '../../../domain/tech/tech_option.dart';
 import '../../../domain/tech/tech_tree.dart';
 import '../../extensions/tech_branch_extensions.dart';
 import '../../extensions/tech_node_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../building/building_icon.dart';
 import '../guide/guide_halo.dart';
@@ -52,7 +53,7 @@ class TechReef extends StatelessWidget {
                 active: guide?.isTechNode(branch, l) ?? false,
                 shape: BoxShape.circle,
                 child: _node(branch, l, g.nodeSize))),
-          _medallion(g, branch, guide?.isBranch(branch) ?? false),
+          _medallion(context, g, branch, guide?.isBranch(branch) ?? false),
         ],
       ]);
     });
@@ -91,7 +92,12 @@ class TechReef extends StatelessWidget {
     );
   }
 
-  Widget _medallion(TechReefGeometry g, TechBranch branch, bool guided) {
+  Widget _medallion(
+    BuildContext context,
+    TechReefGeometry g,
+    TechBranch branch,
+    bool guided,
+  ) {
     final state = techBranches[branch];
     final unlocked = state?.unlocked ?? false;
     final level = state?.researchLevel ?? 0;
@@ -101,7 +107,7 @@ class TechReef extends StatelessWidget {
       g.medallion(branch) + Offset(0, shift),
       TechBranchMedallion(
         iconPath: branch.iconPath,
-        label: branch.displayName,
+        label: branch.displayName(context.l10n),
         detail: unlocked ? 'Niv. $level' : null,
         color: branch.color,
         unlocked: unlocked,

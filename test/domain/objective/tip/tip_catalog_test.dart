@@ -9,6 +9,7 @@ import 'package:abyss/domain/objective/tip/tip_id.dart';
 import 'package:abyss/presentation/extensions/building_type_extensions.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/objective_helpers.dart';
 
 void main() {
@@ -30,11 +31,11 @@ void main() {
       String text(TipId id) => TipCatalog.byId(id).lines.join(' ');
       expect(
         text(TipId.raidAnnounced),
-        contains(BuildingType.coralCitadel.displayName),
+        contains(BuildingType.coralCitadel.displayName(fr)),
       );
       expect(
         text(TipId.descent),
-        contains(BuildingType.descentModule.displayName),
+        contains(BuildingType.descentModule.displayName(fr)),
       );
     });
 

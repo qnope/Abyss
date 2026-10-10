@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../extensions/random_event_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/illustrated_card.dart';
 import 'event_card_data.dart';
@@ -24,7 +25,7 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => IllustratedCard(
     illustration: data.type.illustration,
-    title: data.type.label,
+    title: data.type.label(context.l10n),
     lines: data.lines,
     actions: _actions(context),
   );

@@ -4,6 +4,7 @@ import '../../../domain/game/player.dart';
 import '../../../domain/map/monster_lair.dart';
 import '../../../domain/raid/raid_battle.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// Warning shown before ending a turn when a raid hits at its end: the
@@ -48,7 +49,7 @@ class RaidDueWarning extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              '$attacker ce tour : ${wave.waveLabel} contre $defenders',
+              '$attacker ce tour : ${wave.waveLabel(context.l10n)} contre $defenders',
               style: const TextStyle(color: AbyssColors.error),
             ),
           ),

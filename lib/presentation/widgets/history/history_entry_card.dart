@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/history/history_entry.dart';
 import '../../extensions/history_entry_category_extensions.dart';
 import '../../extensions/history_entry_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../common/raster_svg.dart';
 
 /// Renders a single [HistoryEntry] as a colored [Card] with an icon,
@@ -35,7 +36,7 @@ class HistoryEntryCard extends StatelessWidget {
     final subtitleText = _buildSubtitle(tappable: tappable);
     final listTile = ListTile(
       leading: _leading(accent),
-      title: Text(entry.displayTitle),
+      title: Text(entry.displayTitle(context.l10n)),
       subtitle: subtitleText == null ? null : Text(subtitleText),
       trailing: tappable
           ? const Icon(Icons.chevron_right)

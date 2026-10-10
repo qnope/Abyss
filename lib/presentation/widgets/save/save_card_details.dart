@@ -6,6 +6,7 @@ import '../../extensions/save_summary_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/status_pill.dart';
 import '../resource/resource_amount_strip.dart';
+import '../../l10n/l10n_extension.dart';
 
 /// The text of a save card: name and badge, last played date, turn and
 /// depth, then the resources of a game in progress or how it ended.
@@ -38,7 +39,7 @@ class SaveCardDetails extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: _title(text)),
+            Expanded(child: _title(context, text)),
             const SizedBox(width: 8),
             Padding(
               padding: const EdgeInsets.only(top: 4),
@@ -56,7 +57,7 @@ class SaveCardDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                summary.metaLine,
+                summary.metaLine(context.l10n),
                 style: text.bodyMedium?.copyWith(
                   color: faded ? dim : AbyssColors.onSurface,
                 ),
@@ -80,7 +81,7 @@ class SaveCardDetails extends StatelessWidget {
 
   /// The name keeps its line, ellipsized; the badge follows it, or moves
   /// under it when the name is too long.
-  Widget _title(TextTheme text) => Wrap(
+  Widget _title(BuildContext context, TextTheme text) => Wrap(
     spacing: 8,
     runSpacing: 2,
     crossAxisAlignment: WrapCrossAlignment.center,
@@ -95,7 +96,7 @@ class SaveCardDetails extends StatelessWidget {
         ),
       ),
       StatusPill(
-        label: summary.badgeLabel,
+        label: summary.badgeLabel(context.l10n),
         color: summary.badgeColor,
         faded: faded,
       ),

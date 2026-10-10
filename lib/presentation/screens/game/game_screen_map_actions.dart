@@ -16,6 +16,7 @@ import '../../../domain/tech/tech_effects.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../../domain/replay/seeded_random.dart';
 import '../../extensions/event_state_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../../widgets/map/cell_info_sheet.dart';
 import '../../widgets/map/exploration_sheet.dart';
@@ -105,7 +106,8 @@ void _showCellAction(BuildContext context, Game game,
     case CellContentType.wreck:
       showTreasureSheet(context, targetX: x, targetY: y,
         contentType: cell.content,
-        notice: human.eventState.wreckCountdownAt(x, y, level, game.turn),
+        notice: human.eventState
+            .wreckCountdownAt(context.l10n, x, y, level, game.turn),
         onCollect: () =>
             _collectTreasure(
             context, game, x, y, level, cell.content, onChanged));
@@ -186,7 +188,8 @@ void _showExplorationFlow(
     scoutCount: scoutCount,
     revealSide: revealSide,
     isEligible: isEligible,
-    notice: human.eventState.wreckCountdownAt(x, y, level, game.turn),
+    notice: human.eventState
+        .wreckCountdownAt(context.l10n, x, y, level, game.turn),
     refusal: action.validate(game, human).reason,
     onConfirm: () {
       final result = ActionExecutor().execute(action, game, human);

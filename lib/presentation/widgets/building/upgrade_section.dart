@@ -6,10 +6,12 @@ import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/raid/noise_rules.dart';
 import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
+import '../../../domain/worksite/worksite.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
 import '../../extensions/transition_base_type_extensions.dart';
-import '../../../domain/worksite/worksite.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../raid/noise_cost_row.dart';
 import '../resource/resource_icon.dart';
@@ -49,6 +51,7 @@ class UpgradeSection extends StatelessWidget {
       isVolcanicKernelCaptured: isVolcanicKernelCaptured,
     );
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     final hqLevel = allBuildings[BuildingType.headquarters]?.level ?? 0;
     final siteFree = worksite.freeBuildSites(hqLevel) > 0;
 
@@ -73,12 +76,12 @@ class UpgradeSection extends StatelessWidget {
           style: textTheme.titleSmall,
         ),
         const SizedBox(height: 8),
-        ...costs.entries.map((e) => _costRow(e.key, e.value, textTheme)),
+        ...costs.entries.map((e) => _costRow(e.key, e.value, l10n)),
         NoiseCostRow(
             noise: NoiseRules.forUpgrade(building.type, building.level + 1)),
-        ...prereqs.entries.map((e) => _prereqRow(e.key, e.value, textTheme)),
+        ...prereqs.entries.map((e) => _prereqRow(e.key, e.value, l10n)),
         if (check.missingCapturedBase != null)
-          _capturedBaseRow(check.missingCapturedBase!, textTheme),
+          _capturedBaseRow(check.missingCapturedBase!, l10n),
         if (check.missingCapturedKernel)
           _capturedKernelRow(textTheme),
         if (!siteFree) _lockedRow('Chantiers occupés ce tour'),
@@ -91,7 +94,7 @@ class UpgradeSection extends StatelessWidget {
     );
   }
 
-  Widget _costRow(ResourceType type, int required, TextTheme textTheme) {
+  Widget _costRow(ResourceType type, int required, AppLocalizations l10n) {
     final available = resources[type]?.amount ?? 0;
     final sufficient = available >= required;
     final color = sufficient ? AbyssColors.onSurface : AbyssColors.error;
@@ -103,7 +106,7 @@ class UpgradeSection extends StatelessWidget {
           ResourceIcon(type: type, size: 16),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(type.displayName, style: TextStyle(color: color)),
+            child: Text(type.displayName(l10n), style: TextStyle(color: color)),
           ),
           Text('$available/$required', style: TextStyle(color: color)),
         ],
@@ -111,7 +114,7 @@ class UpgradeSection extends StatelessWidget {
     );
   }
 
-  Widget _prereqRow(BuildingType type, int level, TextTheme textTheme) {
+  Widget _prereqRow(BuildingType type, int level, AppLocalizations l10n) {
     final current = allBuildings[type]?.level ?? 0;
     final met = current >= level;
     final color = met ? AbyssColors.onSurface : AbyssColors.error;
@@ -123,7 +126,7 @@ class UpgradeSection extends StatelessWidget {
           Icon(Icons.lock, size: 16, color: color),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(type.displayName, style: TextStyle(color: color)),
+            child: Text(type.displayName(l10n), style: TextStyle(color: color)),
           ),
           Text('Niv. $level', style: TextStyle(color: color)),
         ],
@@ -131,8 +134,8 @@ class UpgradeSection extends StatelessWidget {
     );
   }
 
-  Widget _capturedBaseRow(TransitionBaseType type, TextTheme textTheme) =>
-      _lockedRow('${type.displayName} capturee requise');
+  Widget _capturedBaseRow(TransitionBaseType type, AppLocalizations l10n) =>
+      _lockedRow('${type.displayName(l10n)} capturee requise');
 
   Widget _capturedKernelRow(TextTheme textTheme) =>
       _lockedRow('Noyau Volcanique capture requis');

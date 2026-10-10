@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/turn/turn_result.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../turn/summary_line.dart';
 
@@ -32,7 +33,7 @@ class RaidTurnSection extends StatelessWidget {
         if (announced != null)
           SummaryLine(
             Icons.warning_amber,
-            'Un raid approche : ${announced.waveLabel}, '
+            'Un raid approche : ${announced.waveLabel(context.l10n)}, '
                 'fin du tour ${result.announcedRaidTurn}',
             AbyssColors.warning,
           ),

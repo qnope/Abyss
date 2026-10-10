@@ -57,7 +57,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('Eclaireur'), findsOneWidget);
+      expect(find.text('Éclaireur'), findsOneWidget);
       expect(find.text('Harponneur'), findsOneWidget);
       expect(find.text('Gardien'), findsNothing);
     });
@@ -70,7 +70,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('Eclaireur'), findsOneWidget);
+      expect(find.text('Éclaireur'), findsOneWidget);
       expect(find.text('Harponneur'), findsNothing);
       expect(find.text('Briseur'), findsNothing);
     });

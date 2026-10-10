@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/resource/resource_type.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/abyss_colors.dart';
 
 extension ResourceTypeColor on ResourceType {
@@ -13,28 +14,28 @@ extension ResourceTypeColor on ResourceType {
 }
 
 extension ResourceTypeInfo on ResourceType {
-  String get displayName => switch (this) {
-    ResourceType.algae => 'Algues',
-    ResourceType.coral => 'Corail',
-    ResourceType.ore => 'Minerai',
-    ResourceType.energy => 'Énergie',
-    ResourceType.pearl => 'Perles',
+  String displayName(AppLocalizations l10n) => switch (this) {
+    ResourceType.algae => l10n.resourceAlgaeName,
+    ResourceType.coral => l10n.resourceCoralName,
+    ResourceType.ore => l10n.resourceOreName,
+    ResourceType.energy => l10n.resourceEnergyName,
+    ResourceType.pearl => l10n.resourcePearlName,
   };
 
-  String get flavorText => switch (this) {
-    ResourceType.algae => 'Nourriture cultivée dans les fermes sous-marines pour nourrir vos unités.',
-    ResourceType.coral => 'Matériau de construction récolté sur les récifs pour bâtir votre base.',
-    ResourceType.ore => 'Métal extrait des profondeurs pour forger des équipements avancés.',
-    ResourceType.energy => 'Énergie captée pour alimenter vos bâtiments et machines.',
-    ResourceType.pearl => 'Gemmes rares trouvées dans les ruines et les repaires, et récoltées chaque tour dans les failles et cheminées capturées.',
+  String flavorText(AppLocalizations l10n) => switch (this) {
+    ResourceType.algae => l10n.resourceAlgaeFlavor,
+    ResourceType.coral => l10n.resourceCoralFlavor,
+    ResourceType.ore => l10n.resourceOreFlavor,
+    ResourceType.energy => l10n.resourceEnergyFlavor,
+    ResourceType.pearl => l10n.resourcePearlFlavor,
   };
 }
 
 extension ResourceGainsLabel on Map<ResourceType, int> {
-  /// The gains in French, in the order of the map: « +30 corail, +20
-  /// minerai ». What was not gained is left out.
-  String get gainLabel => [
+  /// The gains in the order of the map: « +30 corail, +20 minerai ».
+  /// What was not gained is left out.
+  String gainLabel(AppLocalizations l10n) => [
     for (final MapEntry(:key, :value) in entries)
-      if (value > 0) '+$value ${key.displayName.toLowerCase()}',
+      if (value > 0) '+$value ${key.displayName(l10n).toLowerCase()}',
   ].join(', ');
 }

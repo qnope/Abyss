@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../domain/building/building_type.dart';
 import '../../domain/resource/production_calculator.dart';
 import '../../domain/resource/resource_type.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/abyss_colors.dart';
 
 extension BuildingTypeColor on BuildingType {
@@ -21,50 +22,35 @@ extension BuildingTypeColor on BuildingType {
 }
 
 extension BuildingTypeInfo on BuildingType {
-  String get displayName => switch (this) {
-    BuildingType.headquarters => 'Quartier Général',
-    BuildingType.algaeFarm => 'Ferme d\'algues',
-    BuildingType.coralMine => 'Mine de corail',
-    BuildingType.coralCitadel => 'Citadelle corallienne',
-    BuildingType.oreExtractor => 'Extracteur de minerai',
-    BuildingType.solarPanel => 'Panneau solaire',
-    BuildingType.laboratory => 'Laboratoire',
-    BuildingType.barracks => 'Caserne',
-    BuildingType.descentModule => 'Module de Descente',
-    BuildingType.pressureCapsule => 'Capsule Pressurisee',
-    BuildingType.volcanicKernel => 'Noyau Volcanique',
+  String displayName(AppLocalizations l10n) => switch (this) {
+    BuildingType.headquarters => l10n.buildingHeadquartersName,
+    BuildingType.algaeFarm => l10n.buildingAlgaeFarmName,
+    BuildingType.coralMine => l10n.buildingCoralMineName,
+    BuildingType.coralCitadel => l10n.buildingCoralCitadelName,
+    BuildingType.oreExtractor => l10n.buildingOreExtractorName,
+    BuildingType.solarPanel => l10n.buildingSolarPanelName,
+    BuildingType.laboratory => l10n.buildingLaboratoryName,
+    BuildingType.barracks => l10n.buildingBarracksName,
+    BuildingType.descentModule => l10n.buildingDescentModuleName,
+    BuildingType.pressureCapsule => l10n.buildingPressureCapsuleName,
+    BuildingType.volcanicKernel => l10n.buildingVolcanicKernelName,
   };
 
-  String get description => switch (this) {
-    BuildingType.headquarters =>
-      'Centre de commandement de votre base sous-marine. '
-      'Son niveau détermine les capacités de votre colonie. '
-      'Une fois bâti, il fournit ${_hqIncome(ResourceType.coral)} corail '
-      'et ${_hqIncome(ResourceType.ore)} minerai par tour.',
-    BuildingType.algaeFarm =>
-      'Cultive des algues pour nourrir votre colonie sous-marine.',
-    BuildingType.coralMine =>
-      'Extrait du corail des récifs pour la construction.',
-    BuildingType.coralCitadel =>
-      'Forteresse corallienne massive qui dresse un rempart pour la défense '
-      'de votre base. Pendant un raid, il encaisse les coups à la place des '
-      'unités stationnées.',
-    BuildingType.oreExtractor =>
-      'Fore les profondeurs pour extraire du minerai océanique.',
-    BuildingType.solarPanel =>
-      'Capte l\'énergie solaire pour alimenter vos installations.',
-    BuildingType.laboratory =>
-      'Centre de recherche sous-marin pour développer de nouvelles technologies.',
-    BuildingType.barracks =>
-      'Forme et entraîne vos unités militaires sous-marines.',
-    BuildingType.descentModule =>
-      'Module spécialisé permettant l\'assaut des failles abyssales.',
-    BuildingType.pressureCapsule =>
-      'Capsule haute pression permettant l\'assaut des cheminées hydrothermales.',
-    BuildingType.volcanicKernel =>
-      'Le coeur brulant des abysses. '
-      'Construisez-le au niveau 10 pour remporter la victoire. '
-      'Sa garnison se gère ici, ou depuis sa case sur la carte.',
+  String description(AppLocalizations l10n) => switch (this) {
+    BuildingType.headquarters => l10n.buildingHeadquartersDescription(
+      _hqIncome(ResourceType.coral),
+      _hqIncome(ResourceType.ore),
+    ),
+    BuildingType.algaeFarm => l10n.buildingAlgaeFarmDescription,
+    BuildingType.coralMine => l10n.buildingCoralMineDescription,
+    BuildingType.coralCitadel => l10n.buildingCoralCitadelDescription,
+    BuildingType.oreExtractor => l10n.buildingOreExtractorDescription,
+    BuildingType.solarPanel => l10n.buildingSolarPanelDescription,
+    BuildingType.laboratory => l10n.buildingLaboratoryDescription,
+    BuildingType.barracks => l10n.buildingBarracksDescription,
+    BuildingType.descentModule => l10n.buildingDescentModuleDescription,
+    BuildingType.pressureCapsule => l10n.buildingPressureCapsuleDescription,
+    BuildingType.volcanicKernel => l10n.buildingVolcanicKernelDescription,
   };
 
   String get iconPath => switch (this) {

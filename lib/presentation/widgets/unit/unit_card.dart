@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/volcano/kernel_garrison.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/unit_type_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'unit_icon.dart';
 
@@ -25,7 +26,7 @@ class UnitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final content = _buildContent(textTheme);
+    final content = _buildContent(context, textTheme);
 
     return Card(
       child: InkWell(
@@ -51,7 +52,7 @@ class UnitCard extends StatelessWidget {
         .join(' · ');
   }
 
-  Widget _buildContent(TextTheme textTheme) {
+  Widget _buildContent(BuildContext context, TextTheme textTheme) {
     return Row(
       children: [
         UnitIcon(
@@ -65,7 +66,7 @@ class UnitCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              unitType.displayName,
+              unitType.displayName(context.l10n),
               style: textTheme.titleMedium?.copyWith(
                 color: isUnlocked
                     ? unitType.color

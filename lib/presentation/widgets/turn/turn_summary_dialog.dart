@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../domain/turn/turn_result.dart';
-import '../../extensions/building_type_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
-import '../../extensions/unit_type_extensions.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../resource/resource_icon.dart';
 import '../raid/raid_turn_section.dart';
@@ -11,6 +11,7 @@ import 'event_turn_section.dart';
 import 'exploration_summary_section.dart';
 import 'objective_turn_section.dart';
 import 'summary_line.dart';
+import 'turn_loss_sections.dart';
 
 Future<void> showTurnSummaryDialog(
   BuildContext context, {
@@ -33,7 +34,7 @@ class _TurnSummaryDialog extends StatelessWidget {
       title: Text(
         'Tour ${result.previousTurn} \u2192 Tour ${result.newTurn}',
       ),
-      content: _buildContent(),
+      content: _buildContent(context.l10n),
       actions: [
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
@@ -43,7 +44,7 @@ class _TurnSummaryDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(AppLocalizations l10n) {
     final hasChanges = result.changes.isNotEmpty;
     final hasWarnings = result.deactivatedBuildings.isNotEmpty;
     final hasLosses = result.lostUnits.isNotEmpty;
@@ -65,9 +66,10 @@ class _TurnSummaryDialog extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         for (final change in result.changes)
-          _buildResourceLine(change),
-        if (hasWarnings) ..._buildBuildingWarnings(),
-        if (hasLosses) ..._buildUnitLosses(),
+          _buildResourceLine(l10n, change),
+        if (hasWarnings)
+          DeactivatedBuildingsSection(buildings: result.deactivatedBuildings),
+        if (hasLosses) LostUnitsSection(units: result.lostUnits),
         if (hasExplorations)
           ExplorationSummarySection(explorations: result.explorations),
         if (hasRaid) RaidTurnSection(result: result),
@@ -83,14 +85,17 @@ class _TurnSummaryDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildResourceLine(TurnResourceChange change) {
+  Widget _buildResourceLine(
+    AppLocalizations l10n,
+    TurnResourceChange change,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
           ResourceIcon(type: change.type),
           const SizedBox(width: 8),
-          Text(change.type.displayName),
+          Text(change.type.displayName(l10n)),
           const Spacer(),
           Text(
             _formatChange(change),
@@ -114,32 +119,6 @@ class _TurnSummaryDialog extends StatelessWidget {
     }
     return '+${change.produced}';
   }
-
-  List<Widget> _buildBuildingWarnings() => [
-        const Divider(),
-        Row(children: [
-          Icon(Icons.warning, color: AbyssColors.warning),
-          const SizedBox(width: 8),
-          Text('Batiments desactives',
-              style: TextStyle(color: AbyssColors.warning)),
-        ]),
-        for (final building in result.deactivatedBuildings)
-          Text(building.displayName,
-              style: TextStyle(color: AbyssColors.warning)),
-      ];
-
-  List<Widget> _buildUnitLosses() => [
-        const Divider(),
-        Row(children: [
-          Icon(Icons.error, color: AbyssColors.error),
-          const SizedBox(width: 8),
-          Text('Unites perdues',
-              style: TextStyle(color: AbyssColors.error)),
-        ]),
-        for (final entry in result.lostUnits.entries)
-          Text('${entry.key.displayName}: -${entry.value}',
-              style: TextStyle(color: AbyssColors.error)),
-      ];
 
   Widget _buildArmySection() => const SummaryLine(
       Icons.shield, 'Recrutement disponible', AbyssColors.success);

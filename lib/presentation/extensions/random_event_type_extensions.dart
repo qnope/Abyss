@@ -1,16 +1,17 @@
 import '../../domain/event/random_event_type.dart';
+import '../l10n/app_localizations.dart';
 
 /// Display primitives for a [RandomEventType].
 extension RandomEventTypeDisplay on RandomEventType {
-  /// Short French name of the event.
-  String get label => switch (this) {
-    RandomEventType.warmCurrent => 'Courant chaud',
-    RandomEventType.wreck => 'Épave',
-    RandomEventType.predators => 'Banc de prédateurs',
-    RandomEventType.storm => 'Tempête',
-    RandomEventType.survivors => 'Survivants',
-    RandomEventType.caravan => 'Caravane de tortues',
-    RandomEventType.coldCurrent => 'Courant froid',
+  /// Short name of the event.
+  String label(AppLocalizations l10n) => switch (this) {
+    RandomEventType.warmCurrent => l10n.randomEventWarmCurrentLabel,
+    RandomEventType.wreck => l10n.randomEventWreckLabel,
+    RandomEventType.predators => l10n.randomEventPredatorsLabel,
+    RandomEventType.storm => l10n.randomEventStormLabel,
+    RandomEventType.survivors => l10n.randomEventSurvivorsLabel,
+    RandomEventType.caravan => l10n.randomEventCaravanLabel,
+    RandomEventType.coldCurrent => l10n.randomEventColdCurrentLabel,
   };
 
   /// Detailed illustration of the event, shown on its card.

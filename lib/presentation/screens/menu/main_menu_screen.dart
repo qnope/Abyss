@@ -11,6 +11,7 @@ import '../../widgets/menu/menu_layout.dart';
 import '../game/resume_game.dart';
 import 'load_game_screen.dart';
 import 'new_game_screen.dart';
+import '../../l10n/l10n_extension.dart';
 
 /// The home screen: the colony in the abyss, a shortcut to continue the
 /// latest game in progress, a new game and the saved games.
@@ -42,7 +43,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
             if (resumable != null)
               MenuButton(
                 label: 'CONTINUER',
-                subtitle: SaveSummary.of(resumable).resumeLabel,
+                subtitle: SaveSummary.of(resumable).resumeLabel(context.l10n),
                 onPressed:
                     () => resumeGame(context, resumable, widget.repository),
               ),

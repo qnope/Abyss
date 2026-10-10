@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../domain/history/history_entry_category.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/abyss_colors.dart';
 
-/// Display primitives (icon, background color, French label) for a
+/// Display primitives (icon, background color, label) for a
 /// [HistoryEntryCategory]. Kept in the presentation layer so the domain
 /// model stays free of UI dependencies.
 extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
@@ -45,20 +46,20 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
     };
   }
 
-  /// Human-readable French label for this category.
-  String get label => switch (this) {
-    HistoryEntryCategory.combat => 'Combat',
-    HistoryEntryCategory.building => 'Construction',
-    HistoryEntryCategory.research => 'Recherche',
-    HistoryEntryCategory.recruit => 'Recrutement',
-    HistoryEntryCategory.explore => 'Exploration',
-    HistoryEntryCategory.collect => 'Collecte',
-    HistoryEntryCategory.turnEnd => 'Fin de tour',
-    HistoryEntryCategory.capture => 'Capture',
-    HistoryEntryCategory.descent => 'Descente',
-    HistoryEntryCategory.reinforcement => 'Renfort',
-    HistoryEntryCategory.raid => 'Raid',
-    HistoryEntryCategory.volcano => 'Volcan',
-    HistoryEntryCategory.event => 'Événement',
+  /// Human-readable label for this category.
+  String label(AppLocalizations l10n) => switch (this) {
+    HistoryEntryCategory.combat => l10n.historyCategoryCombat,
+    HistoryEntryCategory.building => l10n.historyCategoryBuilding,
+    HistoryEntryCategory.research => l10n.historyCategoryResearch,
+    HistoryEntryCategory.recruit => l10n.historyCategoryRecruit,
+    HistoryEntryCategory.explore => l10n.historyCategoryExplore,
+    HistoryEntryCategory.collect => l10n.historyCategoryCollect,
+    HistoryEntryCategory.turnEnd => l10n.historyCategoryTurnEnd,
+    HistoryEntryCategory.capture => l10n.historyCategoryCapture,
+    HistoryEntryCategory.descent => l10n.historyCategoryDescent,
+    HistoryEntryCategory.reinforcement => l10n.historyCategoryReinforcement,
+    HistoryEntryCategory.raid => l10n.historyCategoryRaid,
+    HistoryEntryCategory.volcano => l10n.historyCategoryVolcano,
+    HistoryEntryCategory.event => l10n.historyCategoryEvent,
   };
 }

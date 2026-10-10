@@ -127,7 +127,7 @@ void main() {
         tester,
         app: buildApp(units: makeUnits(scouts: 2, harpoonists: 0)),
       );
-      expect(find.text('Eclaireur'), findsOneWidget);
+      expect(find.text('Éclaireur'), findsOneWidget);
       expect(find.text('Harponneur'), findsNothing);
     });
   });

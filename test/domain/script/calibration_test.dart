@@ -5,10 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// The calibration targets of the difficulties, measured on the human
 /// plan `plan85` (a win, played again with other dice and a careful
-/// defence) and the careful script, 160 games each (see `Difficulty`):
-/// about 50 % of wins in easy, 15 % in normal and 5 % in hard. In normal,
-/// seed 92 is one of the plan's wins and seed 3 falls among the earliest;
-/// seed 4 wins in easy and falls in normal.
+/// defence) and the careful script, 160 games each with the random events
+/// (see `Difficulty`): about 50 % of wins in easy, 15 % in normal and 5 %
+/// in hard. In normal, seed 92 is one of the plan's wins and seed 3 falls
+/// among the earliest; seed 2 wins in easy and falls in normal.
 void main() {
   ScriptRunner runner(Difficulty d) =>
       ScriptRunner(maxTurns: 120, difficulty: d);
@@ -33,10 +33,10 @@ void main() {
   test('the same plan and dice win in easy and fall in normal', () {
     final easy = runner(
       Difficulty.easy,
-    ).run(ScriptLibrary.byName('plan85'), seed: 4);
+    ).run(ScriptLibrary.byName('plan85'), seed: 2);
     final normal = runner(
       Difficulty.normal,
-    ).run(ScriptLibrary.byName('plan85'), seed: 4);
+    ).run(ScriptLibrary.byName('plan85'), seed: 2);
 
     expect(easy.isVictory, isTrue);
     expect(normal.isDefeat, isTrue);

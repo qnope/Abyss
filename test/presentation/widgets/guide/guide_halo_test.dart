@@ -29,8 +29,31 @@ void main() {
     await tester.pumpWidget(halo(active: false));
 
     expect(find.text('Caserne'), findsOneWidget);
+    expect(paintOf(tester).painter, isNull);
     expect(paintOf(tester).foregroundPainter, isNull);
     expect(tester.hasRunningAnimations, isFalse);
+  });
+
+  testWidgets('glows outside the child, a crisp outline alone in front', (
+    tester,
+  ) async {
+    await tester.pumpWidget(halo(active: true));
+    final render = tester.renderObject(
+      find.descendant(
+        of: find.byType(GuideHalo),
+        matching: find.byType(CustomPaint),
+      ).first,
+    );
+
+    expect(
+      render,
+      paints
+        ..clipPath()
+        ..rrect(hasMaskFilter: true)
+        ..paragraph()
+        ..rrect(hasMaskFilter: false, strokeWidth: 2),
+    );
+    expect(render, isNot(paints..paragraph()..rrect(hasMaskFilter: true)));
   });
 
   testWidgets('active, pulses a glow around the child', (tester) async {
@@ -48,6 +71,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
     await tester.pumpWidget(halo(active: false));
 
+    expect(paintOf(tester).painter, isNull);
     expect(paintOf(tester).foregroundPainter, isNull);
     expect(tester.hasRunningAnimations, isFalse);
   });

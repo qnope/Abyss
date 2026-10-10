@@ -73,22 +73,27 @@ class _GuideHaloState extends State<GuideHalo>
   }
 
   /// The boundary keeps each beat of the glow from repainting anything
-  /// but [GuideHalo.child].
+  /// but [GuideHalo.child]. The glow goes behind the child and only the
+  /// crisp outline in front, so the child stays sharp.
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: CustomPaint(
-        foregroundPainter:
-            widget.active
-                ? GuideHaloPainter(
-                  pulse: _pulse,
-                  shape: widget.shape,
-                  radius: widget.radius,
-                  inset: widget.inset,
-                )
-                : null,
+        painter: _layer(glow: true),
+        foregroundPainter: _layer(glow: false),
         child: widget.child,
       ),
     );
   }
+
+  GuideHaloPainter? _layer({required bool glow}) =>
+      widget.active
+          ? GuideHaloPainter(
+            pulse: _pulse,
+            shape: widget.shape,
+            radius: widget.radius,
+            inset: widget.inset,
+            glow: glow,
+          )
+          : null;
 }

@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import '../../../domain/objective/guide/guide_area.dart';
 import '../../theme/abyss_colors.dart';
+import '../guide/guide_halo.dart';
+import '../guide/guide_scope.dart';
 
 class GameBottomBar extends StatelessWidget {
+  /// Area of the game screen each tab opens, in the order of the tabs.
+  static const tabAreas = [
+    GuideArea.base,
+    GuideArea.map,
+    GuideArea.army,
+    GuideArea.research,
+  ];
+
   final int currentTab;
   final int turnNumber;
   final ValueChanged<int> onTabChanged;
@@ -19,16 +30,17 @@ class GameBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final guide = GuideScope.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _buildActionRow(),
-        _buildTabBar(),
+        _buildActionRow(guide?.endTurn ?? false),
+        _buildTabBar(guide?.area),
       ],
     );
   }
 
-  Widget _buildActionRow() {
+  Widget _buildActionRow(bool endTurnGuided) {
     return Container(
       color: AbyssColors.deepNavy,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -50,17 +62,31 @@ class GameBottomBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          ElevatedButton.icon(
-            onPressed: onNextTurn,
-            icon: const Icon(Icons.skip_next, size: 20),
-            label: const Text('Tour suivant'),
+          GuideHalo(
+            active: endTurnGuided,
+            child: ElevatedButton.icon(
+              onPressed: onNextTurn,
+              icon: const Icon(Icons.skip_next, size: 20),
+              label: const Text('Tour suivant'),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildTabBar() {
+  /// The tabs; the halo surrounds the one opening [guided], unless open.
+  Widget _buildTabBar(GuideArea? guided) {
+    BottomNavigationBarItem tab(int index, IconData icon, String label) =>
+        BottomNavigationBarItem(
+          icon: GuideHalo(
+            active: index != currentTab && tabAreas[index] == guided,
+            shape: BoxShape.circle,
+            child: Icon(icon),
+          ),
+          label: label,
+        );
+
     return BottomNavigationBar(
       currentIndex: currentTab,
       onTap: onTabChanged,
@@ -68,11 +94,11 @@ class GameBottomBar extends StatelessWidget {
       backgroundColor: AbyssColors.abyssBlack,
       selectedItemColor: AbyssColors.biolumCyan,
       unselectedItemColor: AbyssColors.onSurfaceDim,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Base'),
-        BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Carte'),
-        BottomNavigationBarItem(icon: Icon(Icons.shield), label: 'Armée'),
-        BottomNavigationBarItem(icon: Icon(Icons.science), label: 'Tech'),
+      items: [
+        tab(0, Icons.home, 'Base'),
+        tab(1, Icons.map, 'Carte'),
+        tab(2, Icons.shield, 'Armée'),
+        tab(3, Icons.science, 'Tech'),
       ],
     );
   }

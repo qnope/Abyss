@@ -5,6 +5,8 @@ import '../../../domain/unit/unit.dart';
 import '../../../domain/unit/unit_cost_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../building/base_shield_badge.dart';
+import '../guide/guide_card_halo.dart';
+import '../guide/guide_scope.dart';
 import 'unit_card.dart';
 
 class ArmyListView extends StatelessWidget {
@@ -52,11 +54,17 @@ class ArmyListView extends StatelessWidget {
                   top: index == 0 ? 16 : 4,
                   bottom: 4,
                 ),
-                child: UnitCard(
-                  unitType: unitType,
-                  countsPerLevel: countsPerLevel,
-                  isUnlocked: isUnlocked,
-                  onTap: () => onUnitTap(unitType),
+                child: GuideCardHalo(
+                  active: GuideScope.points(
+                    context,
+                    (target) => target.isUnit(unitType),
+                  ),
+                  child: UnitCard(
+                    unitType: unitType,
+                    countsPerLevel: countsPerLevel,
+                    isUnlocked: isUnlocked,
+                    onTap: () => onUnitTap(unitType),
+                  ),
                 ),
               );
             },

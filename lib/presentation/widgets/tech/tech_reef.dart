@@ -10,6 +10,8 @@ import '../../extensions/tech_branch_extensions.dart';
 import '../../extensions/tech_node_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../building/building_icon.dart';
+import '../guide/guide_halo.dart';
+import '../guide/guide_scope.dart';
 import 'tech_branch_medallion.dart';
 import 'tech_node_widget.dart';
 import 'tech_reef_geometry.dart';
@@ -34,6 +36,7 @@ class TechReef extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       final g = TechReefGeometry(constraints.biggest);
+      final guide = GuideScope.of(context);
       return Stack(children: [
         Positioned.fill(child: CustomPaint(
           painter: TechReefPainter(
@@ -45,8 +48,11 @@ class TechReef extends StatelessWidget {
               for (final o in TechOption.values)
                 _at(g.twin(branch, l, o), _node(branch, l, g.nodeSize, o))
             else
-              _at(g.node(branch, l), _node(branch, l, g.nodeSize)),
-          _medallion(g, branch),
+              _at(g.node(branch, l), GuideHalo(
+                active: guide?.isTechNode(branch, l) ?? false,
+                shape: BoxShape.circle,
+                child: _node(branch, l, g.nodeSize))),
+          _medallion(g, branch, guide?.isBranch(branch) ?? false),
         ],
       ]);
     });
@@ -85,7 +91,7 @@ class TechReef extends StatelessWidget {
     );
   }
 
-  Widget _medallion(TechReefGeometry g, TechBranch branch) {
+  Widget _medallion(TechReefGeometry g, TechBranch branch, bool guided) {
     final state = techBranches[branch];
     final unlocked = state?.unlocked ?? false;
     final level = state?.researchLevel ?? 0;
@@ -101,6 +107,7 @@ class TechReef extends StatelessWidget {
         unlocked: unlocked,
         labelAbove: above,
         size: TechReefGeometry.medallionRadius * 2,
+        highlighted: guided,
         onTap: () => onTap(TechTarget(branch)),
       ),
     );

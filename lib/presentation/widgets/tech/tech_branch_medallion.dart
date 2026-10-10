@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
+import '../guide/guide_halo.dart';
 
 /// Round emblem of a tech branch, glowing once unlocked and greyed out
 /// with a padlock otherwise. The [label] is drawn above or below it.
@@ -12,6 +13,9 @@ class TechBranchMedallion extends StatelessWidget {
   final bool unlocked;
   final bool labelAbove;
   final double size;
+
+  /// Whether the guide's halo surrounds the emblem.
+  final bool highlighted;
   final VoidCallback? onTap;
 
   const TechBranchMedallion({
@@ -23,6 +27,7 @@ class TechBranchMedallion extends StatelessWidget {
     required this.unlocked,
     this.labelAbove = false,
     this.size = 52,
+    this.highlighted = false,
     this.onTap,
   });
 
@@ -42,7 +47,8 @@ class TechBranchMedallion extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (labelAbove) ...[text, const SizedBox(height: 4)],
-          _emblem(),
+          GuideHalo(
+            active: highlighted, shape: BoxShape.circle, child: _emblem()),
           if (!labelAbove) ...[const SizedBox(height: 4), text],
         ],
       ),

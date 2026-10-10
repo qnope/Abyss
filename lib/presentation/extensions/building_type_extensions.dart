@@ -64,7 +64,7 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.volcanicKernel =>
       'Le coeur brulant des abysses. '
       'Construisez-le au niveau 10 pour remporter la victoire. '
-      'Sa garnison se gère depuis sa case, sur la carte du niveau 3.',
+      'Sa garnison se gère ici, ou depuis sa case sur la carte.',
   };
 
   String get iconPath => switch (this) {

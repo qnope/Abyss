@@ -15,6 +15,7 @@ class RecruitmentSection extends StatefulWidget {
   final int maxRecruitableCount;
   final bool hasRecruitedThisType;
   final void Function(int quantity) onRecruit;
+  final bool costDoubled;
 
   const RecruitmentSection({
     super.key,
@@ -22,6 +23,7 @@ class RecruitmentSection extends StatefulWidget {
     required this.maxRecruitableCount,
     required this.hasRecruitedThisType,
     required this.onRecruit,
+    this.costDoubled = false,
   });
 
   @override
@@ -50,7 +52,10 @@ class _RecruitmentSectionState extends State<RecruitmentSection> {
       );
     }
 
-    final costs = UnitCostCalculator().recruitmentCost(widget.unitType);
+    final costs = UnitCostCalculator().recruitmentCost(
+      widget.unitType,
+      degraded: widget.costDoubled,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

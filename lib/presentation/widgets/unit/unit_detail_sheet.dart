@@ -21,6 +21,7 @@ void showUnitDetailSheet(
   required Map<ResourceType, Resource> resources,
   required bool hasRecruitedThisType,
   required void Function(int quantity) onRecruit,
+  bool costDoubled = false,
 }) {
   showModalBottomSheet<void>(
     context: context,
@@ -33,6 +34,7 @@ void showUnitDetailSheet(
       resources: resources,
       hasRecruitedThisType: hasRecruitedThisType,
       onRecruit: onRecruit,
+      costDoubled: costDoubled,
     ),
   );
 }
@@ -46,6 +48,9 @@ class _UnitDetailSheet extends StatelessWidget {
   final bool hasRecruitedThisType;
   final void Function(int quantity) onRecruit;
 
+  /// The barracks are degraded: every unit costs twice as much.
+  final bool costDoubled;
+
   const _UnitDetailSheet({
     required this.unitType,
     required this.count,
@@ -54,6 +59,7 @@ class _UnitDetailSheet extends StatelessWidget {
     required this.resources,
     required this.hasRecruitedThisType,
     required this.onRecruit,
+    this.costDoubled = false,
   });
 
   @override
@@ -109,6 +115,7 @@ class _UnitDetailSheet extends StatelessWidget {
       unitType,
       barracksLevel,
       resources,
+      degraded: costDoubled,
     );
 
     return [
@@ -136,6 +143,7 @@ class _UnitDetailSheet extends StatelessWidget {
         maxRecruitableCount: maxCount,
         hasRecruitedThisType: hasRecruitedThisType,
         onRecruit: onRecruit,
+        costDoubled: costDoubled,
       ),
     ];
   }

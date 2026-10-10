@@ -211,9 +211,11 @@
   "actionFailureBaseNotCaptured": "Base no capturada",
   "actionFailureTargetLevelNotExplored": "Nivel de destino no explorado",
   "actionFailureRequiredBuildingMissing": "Falta el edificio necesario",
+  "actionFailureRequiredBuildingDegraded": "Edificio degradado: sube el Cuartel General",
   "actionFailureNoVolcanicKernelHere": "No hay ningún Núcleo Volcánico aquí",
   "actionFailureKernelAlreadyCaptured": "Núcleo ya capturado",
   "actionFailureKernelNotCaptured": "Núcleo no capturado",
+  "actionFailureKernelDegraded": "Núcleo degradado: sube el Cuartel General",
   "actionFailureNoPendingEvent": "Ningún evento pendiente",
   "actionFailureNotThisChoiceTurn": "Esta elección corresponde a otro turno",
   "actionFailureNotEnoughStockToTrade": "Reservas insuficientes para comerciar",
@@ -706,5 +708,16 @@
     "placeholders": { "level": { "type": "int" } }
   },
   "factionRankingKernel": "Controla el Núcleo del Volcán",
-  "factionRankingFallen": "Caída"
+  "factionRankingFallen": "Caída",
+  "buildingDegraded": "Degradado",
+  "buildingDegradedReason": "Degradado: el Cuartel General debe ser de nivel {level}",
+  "@buildingDegradedReason": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "buildingDegradedProduction": "Produce el 50 % de sus recursos",
+  "buildingDegradedLaboratory": "La investigación tiene la mitad de su efecto",
+  "buildingDegradedBarracks": "Las unidades cuestan el doble",
+  "buildingDegradedSolar": "Produce el 50 % de su energía",
+  "buildingDegradedCitadel": "La muralla tiene la mitad de su fuerza",
+  "buildingDegradedUnusable": "Inutilizable: ni descenso, ni guarnición, ni victoria"
 }

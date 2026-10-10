@@ -1276,6 +1276,12 @@ abstract class AppLocalizations {
   /// **'Bâtiment requis manquant'**
   String get actionFailureRequiredBuildingMissing;
 
+  /// No description provided for @actionFailureRequiredBuildingDegraded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bâtiment dégradé : remontez le QG'**
+  String get actionFailureRequiredBuildingDegraded;
+
   /// No description provided for @actionFailureNoVolcanicKernelHere.
   ///
   /// In fr, this message translates to:
@@ -1293,6 +1299,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Noyau non capturé'**
   String get actionFailureKernelNotCaptured;
+
+  /// No description provided for @actionFailureKernelDegraded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noyau dégradé : remontez le QG'**
+  String get actionFailureKernelDegraded;
 
   /// No description provided for @actionFailureNoPendingEvent.
   ///
@@ -4185,6 +4197,54 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tombée'**
   String get factionRankingFallen;
+
+  /// No description provided for @buildingDegraded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dégradé'**
+  String get buildingDegraded;
+
+  /// No description provided for @buildingDegradedReason.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dégradé : le QG doit être au niveau {level}'**
+  String buildingDegradedReason(int level);
+
+  /// No description provided for @buildingDegradedProduction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Produit 50 % de ses ressources'**
+  String get buildingDegradedProduction;
+
+  /// No description provided for @buildingDegradedLaboratory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les recherches ont la moitié de leur effet'**
+  String get buildingDegradedLaboratory;
+
+  /// No description provided for @buildingDegradedBarracks.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les unités coûtent deux fois plus cher'**
+  String get buildingDegradedBarracks;
+
+  /// No description provided for @buildingDegradedSolar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Produit 50 % de son énergie'**
+  String get buildingDegradedSolar;
+
+  /// No description provided for @buildingDegradedCitadel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le rempart a la moitié de sa force'**
+  String get buildingDegradedCitadel;
+
+  /// No description provided for @buildingDegradedUnusable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inutilisable : ni descente, ni garnison, ni victoire'**
+  String get buildingDegradedUnusable;
 }
 
 class _AppLocalizationsDelegate

@@ -88,5 +88,5 @@ class ExploreAction extends Action {
 
   @override
   int noiseMade(Player player) =>
-      TechEffects(player.techBranches).muffle(NoiseRules.perExploration);
+      TechEffects.of(player).muffle(NoiseRules.perExploration);
 }

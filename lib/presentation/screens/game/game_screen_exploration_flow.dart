@@ -22,7 +22,7 @@ void showExplorationFlow(
 ) {
   final human = game.humanPlayer;
   final scoutCount = human.unitsOnLevel(level)[UnitType.scout]?.count ?? 0;
-  final revealSide = TechEffects(human.techBranches).revealSide;
+  final revealSide = TechEffects.of(human).revealSide;
   final isEligible =
       CellEligibilityChecker.isEligible(
         game.levels[level]!, human, x, y, level: level,

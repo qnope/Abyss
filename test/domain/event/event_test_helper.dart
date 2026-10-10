@@ -35,6 +35,8 @@ Player producingPlayer({String id = 'p1'}) {
   ]) {
     buildings[type] = Building(type: type, level: 3);
   }
+  // The QG stands high enough for the others: none of them is degraded.
+  buildings[BuildingType.headquarters]!.level = 10;
   buildings[BuildingType.solarPanel] =
       Building(type: BuildingType.solarPanel, level: 6);
   return Player(id: id, name: 'Test', buildings: buildings);

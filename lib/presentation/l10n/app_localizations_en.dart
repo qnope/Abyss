@@ -748,6 +748,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Required building missing';
 
   @override
+  String get actionFailureRequiredBuildingDegraded =>
+      'Building degraded: raise the headquarters';
+
+  @override
   String get actionFailureNoVolcanicKernelHere => 'No Volcanic Core here';
 
   @override
@@ -755,6 +759,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionFailureKernelNotCaptured => 'Core not captured';
+
+  @override
+  String get actionFailureKernelDegraded =>
+      'Core degraded: raise the headquarters';
 
   @override
   String get actionFailureNoPendingEvent => 'No pending event';
@@ -2849,4 +2857,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get factionRankingFallen => 'Fallen';
+
+  @override
+  String get buildingDegraded => 'Degraded';
+
+  @override
+  String buildingDegradedReason(int level) {
+    return 'Degraded: the headquarters must be level $level';
+  }
+
+  @override
+  String get buildingDegradedProduction => 'Makes 50% of its resources';
+
+  @override
+  String get buildingDegradedLaboratory => 'Research has half its effect';
+
+  @override
+  String get buildingDegradedBarracks => 'Units cost twice as much';
+
+  @override
+  String get buildingDegradedSolar => 'Makes 50% of its energy';
+
+  @override
+  String get buildingDegradedCitadel => 'The rampart has half its strength';
+
+  @override
+  String get buildingDegradedUnusable =>
+      'Unusable: no descent, no garrison, no victory';
 }

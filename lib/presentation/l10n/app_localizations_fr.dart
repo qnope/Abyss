@@ -757,6 +757,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get actionFailureRequiredBuildingMissing => 'Bâtiment requis manquant';
 
   @override
+  String get actionFailureRequiredBuildingDegraded =>
+      'Bâtiment dégradé : remontez le QG';
+
+  @override
   String get actionFailureNoVolcanicKernelHere => 'Pas de noyau volcanique ici';
 
   @override
@@ -764,6 +768,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get actionFailureKernelNotCaptured => 'Noyau non capturé';
+
+  @override
+  String get actionFailureKernelDegraded => 'Noyau dégradé : remontez le QG';
 
   @override
   String get actionFailureNoPendingEvent => 'Aucun événement en attente';
@@ -2881,4 +2888,33 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get factionRankingFallen => 'Tombée';
+
+  @override
+  String get buildingDegraded => 'Dégradé';
+
+  @override
+  String buildingDegradedReason(int level) {
+    return 'Dégradé : le QG doit être au niveau $level';
+  }
+
+  @override
+  String get buildingDegradedProduction => 'Produit 50 % de ses ressources';
+
+  @override
+  String get buildingDegradedLaboratory =>
+      'Les recherches ont la moitié de leur effet';
+
+  @override
+  String get buildingDegradedBarracks =>
+      'Les unités coûtent deux fois plus cher';
+
+  @override
+  String get buildingDegradedSolar => 'Produit 50 % de son énergie';
+
+  @override
+  String get buildingDegradedCitadel => 'Le rempart a la moitié de sa force';
+
+  @override
+  String get buildingDegradedUnusable =>
+      'Inutilisable : ni descente, ni garnison, ni victoire';
 }

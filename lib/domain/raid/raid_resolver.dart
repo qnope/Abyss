@@ -54,7 +54,7 @@ abstract final class RaidResolver {
       monsterPercent: difficulty.monsterPercent,
     );
     final int arrival = max(
-      endedTurn + TechEffects(player.techBranches).raidWarningTurns,
+      endedTurn + TechEffects.of(player).raidWarningTurns,
       NoiseRules.firstRaidTurn,
     );
     state.announce(wave, arrival);

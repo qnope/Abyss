@@ -211,9 +211,11 @@
   "actionFailureBaseNotCaptured": "Base not captured",
   "actionFailureTargetLevelNotExplored": "Target level not explored",
   "actionFailureRequiredBuildingMissing": "Required building missing",
+  "actionFailureRequiredBuildingDegraded": "Building degraded: raise the headquarters",
   "actionFailureNoVolcanicKernelHere": "No Volcanic Core here",
   "actionFailureKernelAlreadyCaptured": "Core already captured",
   "actionFailureKernelNotCaptured": "Core not captured",
+  "actionFailureKernelDegraded": "Core degraded: raise the headquarters",
   "actionFailureNoPendingEvent": "No pending event",
   "actionFailureNotThisChoiceTurn": "This choice belongs to another turn",
   "actionFailureNotEnoughStockToTrade": "Not enough stock to trade",
@@ -706,5 +708,16 @@
     "placeholders": { "level": { "type": "int" } }
   },
   "factionRankingKernel": "Holds the Volcanic Kernel",
-  "factionRankingFallen": "Fallen"
+  "factionRankingFallen": "Fallen",
+  "buildingDegraded": "Degraded",
+  "buildingDegradedReason": "Degraded: the headquarters must be level {level}",
+  "@buildingDegradedReason": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "buildingDegradedProduction": "Makes 50% of its resources",
+  "buildingDegradedLaboratory": "Research has half its effect",
+  "buildingDegradedBarracks": "Units cost twice as much",
+  "buildingDegradedSolar": "Makes 50% of its energy",
+  "buildingDegradedCitadel": "The rampart has half its strength",
+  "buildingDegradedUnusable": "Unusable: no descent, no garrison, no victory"
 }

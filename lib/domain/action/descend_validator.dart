@@ -53,6 +53,9 @@ class DescendValidator {
     if (level <= 0) {
       return const DescendResult.failure(ActionFailure.requiredBuildingMissing);
     }
+    if (player.isDegraded(required)) {
+      return const DescendResult.failure(ActionFailure.requiredBuildingDegraded);
+    }
     return null;
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../domain/building/building.dart';
+import '../../../domain/building/building_degradation.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
@@ -50,6 +51,10 @@ class BuildingListView extends StatelessWidget {
             child: BuildingCard(
               building: building,
               onTap: () => onBuildingTap(building),
+              missingHeadquarters: BuildingDegradation.missingHeadquarters(
+                buildings,
+                building.type,
+              ),
             ),
           ),
         );

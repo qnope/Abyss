@@ -5,7 +5,16 @@ import '../resource/resource_type.dart';
 import 'unit_type.dart';
 
 class UnitCostCalculator {
-  Map<ResourceType, int> recruitmentCost(UnitType type) => switch (type) {
+  /// Cost of one [type], twice as much when the barracks are [degraded].
+  Map<ResourceType, int> recruitmentCost(
+    UnitType type, {
+    bool degraded = false,
+  }) {
+    final Map<ResourceType, int> base = _baseCost(type);
+    return degraded ? base.map((r, v) => MapEntry(r, v * 2)) : base;
+  }
+
+  Map<ResourceType, int> _baseCost(UnitType type) => switch (type) {
     UnitType.scout => {
       ResourceType.algae: 10,
       ResourceType.coral: 5,
@@ -48,9 +57,10 @@ class UnitCostCalculator {
   int maxRecruitableCount(
     UnitType type,
     int barracksLevel,
-    Map<ResourceType, Resource> resources,
-  ) {
-    final costs = recruitmentCost(type);
+    Map<ResourceType, Resource> resources, {
+    bool degraded = false,
+  }) {
+    final costs = recruitmentCost(type, degraded: degraded);
     var minAffordable = barracksLevel * 100;
 
     for (final entry in costs.entries) {

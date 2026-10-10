@@ -2,6 +2,7 @@ import '../fight/combat_role.dart';
 import '../fight/combat_side.dart';
 import '../fight/combatant.dart';
 import 'building.dart';
+import 'building_degradation.dart';
 import 'building_type.dart';
 
 /// The rampart the Coral Citadel raises when the base is raided.
@@ -22,14 +23,26 @@ abstract final class CoralCitadelRampart {
       buildings[BuildingType.coralCitadel]?.level ?? 0;
 
   /// Rampart combatant for a Citadel at [level], or `null` when unbuilt.
-  static Combatant? combatantFor(int level) {
+  /// A [degraded] Citadel has half the PV and half the DEF.
+  static Combatant? combatantFor(int level, {bool degraded = false}) {
     if (level <= 0) return null;
     return Combatant(
       side: CombatSide.player,
       typeKey: typeKey,
-      maxHp: hpForLevel(level),
+      maxHp: BuildingDegradation.half(hpForLevel(level), degraded: degraded),
       atk: 0,
-      def: defForLevel(level),
+      def: BuildingDegradation.half(defForLevel(level), degraded: degraded),
     );
   }
+
+  /// The rampart of a base's [buildings], halved when the Citadel is
+  /// degraded; `null` when unbuilt.
+  static Combatant? combatantOf(Map<BuildingType, Building> buildings) =>
+      combatantFor(
+        levelOf(buildings),
+        degraded: BuildingDegradation.isDegraded(
+          buildings,
+          BuildingType.coralCitadel,
+        ),
+      );
 }

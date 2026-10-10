@@ -274,9 +274,11 @@
   "actionFailureBaseNotCaptured": "Base non capturée",
   "actionFailureTargetLevelNotExplored": "Niveau cible non exploré",
   "actionFailureRequiredBuildingMissing": "Bâtiment requis manquant",
+  "actionFailureRequiredBuildingDegraded": "Bâtiment dégradé : remontez le QG",
   "actionFailureNoVolcanicKernelHere": "Pas de noyau volcanique ici",
   "actionFailureKernelAlreadyCaptured": "Noyau déjà capturé",
   "actionFailureKernelNotCaptured": "Noyau non capturé",
+  "actionFailureKernelDegraded": "Noyau dégradé : remontez le QG",
   "actionFailureNoPendingEvent": "Aucun événement en attente",
   "actionFailureNotThisChoiceTurn": "Ce n'est pas le tour de ce choix",
   "actionFailureNotEnoughStockToTrade": "Stock insuffisant pour échanger",
@@ -969,5 +971,16 @@
     "placeholders": { "level": { "type": "int" } }
   },
   "factionRankingKernel": "Tient le Noyau du Volcan",
-  "factionRankingFallen": "Tombée"
+  "factionRankingFallen": "Tombée",
+  "buildingDegraded": "Dégradé",
+  "buildingDegradedReason": "Dégradé : le QG doit être au niveau {level}",
+  "@buildingDegradedReason": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "buildingDegradedProduction": "Produit 50 % de ses ressources",
+  "buildingDegradedLaboratory": "Les recherches ont la moitié de leur effet",
+  "buildingDegradedBarracks": "Les unités coûtent deux fois plus cher",
+  "buildingDegradedSolar": "Produit 50 % de son énergie",
+  "buildingDegradedCitadel": "Le rempart a la moitié de sa force",
+  "buildingDegradedUnusable": "Inutilisable : ni descente, ni garnison, ni victoire"
 }

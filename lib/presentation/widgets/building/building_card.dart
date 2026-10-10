@@ -4,15 +4,20 @@ import '../../extensions/building_type_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'building_icon.dart';
+import 'degraded_badge.dart';
 
 class BuildingCard extends StatelessWidget {
   final Building building;
   final VoidCallback onTap;
 
+  /// Headquarters level the building is missing; `null` unless degraded.
+  final int? missingHeadquarters;
+
   const BuildingCard({
     super.key,
     required this.building,
     required this.onTap,
+    this.missingHeadquarters,
   });
 
   bool get _isBuilt => building.level > 0;
@@ -64,6 +69,8 @@ class BuildingCard extends StatelessWidget {
                     : AbyssColors.dimmed(AbyssColors.disabled),
               ),
             ),
+            if (missingHeadquarters != null)
+              DegradedBadge(requiredHeadquarters: missingHeadquarters!),
           ],
         ),
       ],

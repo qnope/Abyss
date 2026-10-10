@@ -26,7 +26,7 @@ class FightMonsterHelpers {
     bool attacking = false,
     bool defendingBase = false,
   }) =>
-      TechEffects(player.techBranches)
+      TechEffects.of(player)
           .unitBoost(attacking: attacking, defendingBase: defendingBase);
 
   /// Guarded pct lost calculator.

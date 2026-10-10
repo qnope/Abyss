@@ -26,7 +26,12 @@ extension ScriptTurnMoves on ScriptTurn {
   int recruitShare(UnitType type, double share) {
     final int barracks = player.buildings[BuildingType.barracks]?.level ?? 0;
     final int affordable = UnitCostCalculator()
-        .maxRecruitableCount(type, barracks, player.resources);
+        .maxRecruitableCount(
+      type,
+      barracks,
+      player.resources,
+      degraded: player.isDegraded(BuildingType.barracks),
+    );
     final int count = (affordable * share).floor();
     if (count <= 0) return 0;
     final RecruitUnitAction action =

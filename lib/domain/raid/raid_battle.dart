@@ -32,7 +32,7 @@ abstract final class RaidBattle {
   }) {
     final Map<UnitType, int> defenders = defendersOf(player);
     final int rampartLevel = CoralCitadelRampart.levelOf(player.buildings);
-    final Combatant? rampart = CoralCitadelRampart.combatantFor(rampartLevel);
+    final Combatant? rampart = CoralCitadelRampart.combatantOf(player.buildings);
     final List<Combatant> playerSide = <Combatant>[
       ...CombatantBuilder.playerCombatantsFrom(
         defenders,
@@ -55,7 +55,7 @@ abstract final class RaidBattle {
       random: random,
     );
     final bool victory = result.isVictory;
-    final TechEffects tech = TechEffects(player.techBranches);
+    final TechEffects tech = TechEffects.of(player);
     return RaidReport(
       turn: turn,
       victory: victory,

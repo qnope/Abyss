@@ -18,7 +18,7 @@ class UpgradeBuildingAction extends Action {
   static BuildingCostCalculator _calculator(Player player) =>
       BuildingCostCalculator(
         discountPercent:
-            TechEffects(player.techBranches).upgradeDiscountPercent);
+            TechEffects.of(player).upgradeDiscountPercent);
 
   @override
   ActionType get type => ActionType.upgradeBuilding;

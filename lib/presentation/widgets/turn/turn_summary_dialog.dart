@@ -9,6 +9,7 @@ import '../raid/raid_turn_section.dart';
 import '../volcano/volcano_turn_section.dart';
 import 'event_turn_section.dart';
 import 'exploration_summary_section.dart';
+import 'objective_turn_section.dart';
 import 'summary_line.dart';
 
 Future<void> showTurnSummaryDialog(
@@ -51,9 +52,11 @@ class _TurnSummaryDialog extends StatelessWidget {
     final hasRaid = RaidTurnSection.hasContent(result);
     final hasVolcano = VolcanoTurnSection.hasContent(result);
     final hasEvent = EventTurnSection.hasContent(result);
+    final hasObjectives = ObjectiveTurnSection.hasContent(result);
 
     if (!hasChanges && !hasWarnings && !hasLosses && !showArmy &&
-        !hasExplorations && !hasRaid && !hasVolcano && !hasEvent) {
+        !hasExplorations && !hasRaid && !hasVolcano && !hasEvent &&
+        !hasObjectives) {
       return const Text('Aucun changement ce tour.');
     }
 
@@ -70,6 +73,7 @@ class _TurnSummaryDialog extends StatelessWidget {
         if (hasRaid) RaidTurnSection(result: result),
         if (hasVolcano) VolcanoTurnSection(result: result),
         if (hasEvent) EventTurnSection(result: result),
+        if (hasObjectives) ObjectiveTurnSection(result: result),
         if (showArmy) ...[
           if (hasChanges || hasWarnings || hasLosses || hasExplorations)
             const Divider(),

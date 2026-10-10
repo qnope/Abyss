@@ -59,7 +59,7 @@ class _GameScreenState extends State<GameScreen> {
             production: production,
             consumption: consumption,
           ),
-          GameStatusBars(player: _human, currentTurn: widget.game.turn,
+          GameStatusBars(game: widget.game, player: _human,
               onOpenEvent: _openPendingEvent),
           Expanded(child: _buildTabContent()),
         ],

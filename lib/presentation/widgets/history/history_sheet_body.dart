@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/history/history_entry.dart';
+import '../common/sheet_drag_handle.dart';
 import 'history_entry_card.dart';
 import 'history_fight_launcher.dart';
 import 'history_raid_launcher.dart';
@@ -36,7 +37,7 @@ class _HistorySheetBodyState extends State<HistorySheetBody> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildDragHandle(context),
+            const SheetDragHandle(),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: HistoryFilterChips(
@@ -47,20 +48,6 @@ class _HistorySheetBodyState extends State<HistorySheetBody> {
             const Divider(height: 1),
             Expanded(child: _buildContent(context)),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDragHandle(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 4),
-      child: Container(
-        width: 40,
-        height: 4,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
-          borderRadius: BorderRadius.circular(2),
         ),
       ),
     );

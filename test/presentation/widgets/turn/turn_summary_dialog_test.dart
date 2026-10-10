@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/objective/objective_catalog.dart';
+import 'package:abyss/domain/objective/objective_completion.dart';
+import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/turn/turn_result.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -122,6 +125,27 @@ void main() {
       await t.pumpWidget(_app(_result(hadRecruitedUnits: true)));
       await _open(t);
       expect(find.text('Recrutement disponible'), findsOneWidget);
+      expect(find.text('Aucun changement ce tour.'), findsNothing);
+    });
+
+    testWidgets('shows the objectives completed this turn', (t) async {
+      await t.pumpWidget(_app(TurnResult(
+        changes: const [],
+        previousTurn: 3,
+        newTurn: 4,
+        hadRecruitedUnits: false,
+        objectives: [
+          ObjectiveCompletion(
+            objective: ObjectiveCatalog.byId(ObjectiveId.hqLevel1),
+            credited: const {ResourceType.coral: 30},
+          ),
+        ],
+      )));
+      await _open(t);
+      expect(
+        find.text('Objectif accompli : Monte le QG au niveau 1 (+30 corail)'),
+        findsOneWidget,
+      );
       expect(find.text('Aucun changement ce tour.'), findsNothing);
     });
 

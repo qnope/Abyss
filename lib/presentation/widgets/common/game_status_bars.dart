@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
 import '../event/event_status_bar.dart';
+import '../objective/objective_banner.dart';
+import '../objective/objectives_sheet.dart';
 import '../raid/raid_status_bar.dart';
 import '../volcano/volcano_status_bar.dart';
 
 /// The strips stacked under the resource bar: the noise gauge or the raid
-/// alert, the kraken wave, then the random events.
+/// alert, the kraken wave, the random events, then the current objective,
+/// which opens the sheet of the objectives when tapped.
 class GameStatusBars extends StatelessWidget {
+  final Game game;
   final Player player;
-  final int currentTurn;
 
   /// Reopens the card of the event waiting for a choice.
   final VoidCallback? onOpenEvent;
 
   const GameStatusBars({
     super.key,
+    required this.game,
     required this.player,
-    required this.currentTurn,
     this.onOpenEvent,
   });
 
   @override
   Widget build(BuildContext context) {
+    final currentTurn = game.turn;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -32,6 +37,11 @@ class GameStatusBars extends StatelessWidget {
           state: player.eventState,
           currentTurn: currentTurn,
           onOpen: onOpenEvent,
+        ),
+        ObjectiveBanner(
+          game: game,
+          player: player,
+          onTap: () => showObjectivesSheet(context, game: game, player: player),
         ),
       ],
     );

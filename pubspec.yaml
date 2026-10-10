@@ -43,8 +43,6 @@ flutter:
     # SIL Open Font License 1.1: see assets/fonts/rajdhani/OFL.txt.
     - family: Rajdhani
       fonts:
-        - asset: assets/fonts/rajdhani/Rajdhani-Regular.ttf
-          weight: 400
         - asset: assets/fonts/rajdhani/Rajdhani-Medium.ttf
           weight: 500
         - asset: assets/fonts/rajdhani/Rajdhani-SemiBold.ttf

@@ -31,6 +31,13 @@ Any screen reads or changes the choice through
 `LanguageScope.maybeOf(context)?.choose(choice)`; `maybeOf` returns null in
 an app built without settings, as in most widget tests.
 
+The player picks it in the `LanguagePicker` (`widgets/common/`), shown in
+the in-game settings and behind the gear of the home screen. Its language
+rows are endonyms ("Français", "English", "Español", from
+`extensions/language_choice_extensions.dart`): they stay the same in every
+language, so they are constants rather than ARB texts, and that file is
+allowed by `no_french_literals_test.dart`.
+
 ## Writing a text
 
 1. Add the key to `app_fr.arb`, named after its screen or subject
@@ -53,4 +60,6 @@ French punctuation keeps its space before `:`, `;`, `!` and `?`
 `context.l10n` falls back to the French texts when no translations are
 loaded, so a widget test with a bare `MaterialApp` keeps reading French.
 `test/helpers/localized_app.dart` loads the real translations for tests that
-check another language.
+check another language. `test/helpers/language_settings_harness.dart` gives
+real `LanguageSettings`; `chooseLanguage` and `tapLanguage` write the choice
+with real file access (`tester.runAsync`), so Hive never hangs a test.

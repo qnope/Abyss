@@ -690,5 +690,8 @@
   "historyFilterEvent": "Events",
   "historyFilterOther": "Other",
   "historyEmpty": "No action recorded yet.",
-  "historyEmptyFilter": "No action for this filter."
+  "historyEmptyFilter": "No action for this filter.",
+  "settingsLanguageTitle": "Language",
+  "settingsLanguageAutomatic": "Automatic",
+  "settingsLanguageAutomaticHint": "Device language"
 }

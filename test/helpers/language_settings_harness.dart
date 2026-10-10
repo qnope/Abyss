@@ -35,3 +35,13 @@ Future<void> chooseLanguage(
   await tester.runAsync(() => settings.choose(choice));
   await tester.pumpAndSettle();
 }
+
+/// Taps [finder], a row of the language picker, with real file access,
+/// waits until the choice it makes is written, then lets the app redraw.
+Future<void> tapLanguage(WidgetTester tester, Finder finder) async {
+  await tester.runAsync(() async {
+    await tester.tap(finder);
+    await Hive.box<String>(LanguageSettings.boxName).flush();
+  });
+  await tester.pumpAndSettle();
+}

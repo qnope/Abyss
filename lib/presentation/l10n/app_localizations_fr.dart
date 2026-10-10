@@ -2847,4 +2847,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get historyEmptyFilter => 'Aucune action pour ce filtre.';
+
+  @override
+  String get settingsLanguageTitle => 'Langue';
+
+  @override
+  String get settingsLanguageAutomatic => 'Automatique';
+
+  @override
+  String get settingsLanguageAutomaticHint => 'Langue de l\'appareil';
 }

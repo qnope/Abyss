@@ -12,12 +12,18 @@ class PlayerTurnResolver {
     int previousTurn, {
     Map<ResourceType, int> extraProduction = const {},
     Difficulty difficulty = Difficulty.normal,
+    bool isFaction = false,
   }) {
     final hadRecruitedUnits = player.recruitedUnitTypes.isNotEmpty;
 
     // Step 1: Calculate initial production
     var production = _withExtra(
-      TurnProduction.of(player, turn: previousTurn, difficulty: difficulty),
+      TurnProduction.of(
+        player,
+        turn: previousTurn,
+        difficulty: difficulty,
+        isFaction: isFaction,
+      ),
       extraProduction,
     );
 
@@ -36,6 +42,7 @@ class PlayerTurnResolver {
           turn: previousTurn,
           difficulty: difficulty,
           deactivated: deactivated,
+          isFaction: isFaction,
         ),
         extraProduction,
       );

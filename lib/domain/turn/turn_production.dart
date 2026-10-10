@@ -13,12 +13,14 @@ import '../resource/resource_type.dart';
 abstract final class TurnProduction {
   /// What the buildings make at the end of [turn], [deactivated] ones
   /// apart: scaled by [difficulty], then changed by the random event
-  /// lasting during [turn]. The pearl income comes on top.
+  /// lasting during [turn]; a faction ([isFaction]) by the difficulty's
+  /// faction percent. The pearl income comes on top.
   static Map<ResourceType, int> of(
     Player player, {
     required int turn,
     required Difficulty difficulty,
     Iterable<BuildingType> deactivated = const [],
+    bool isFaction = false,
   }) {
     final Map<BuildingType, Building> buildings = Map.of(player.buildings);
     for (final BuildingType type in deactivated) {
@@ -30,6 +32,7 @@ abstract final class TurnProduction {
           buildings,
           techBranches: player.techBranches,
         ),
+        faction: isFaction,
       ),
       player.eventState,
       turn,

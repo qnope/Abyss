@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../faction/faction_personality.dart';
 import '../game/difficulty.dart';
 import 'script_turn.dart';
 
@@ -24,6 +25,14 @@ abstract class GameScript {
 
   /// Difficulty the game was played in; `null` lets the runner pick it.
   Difficulty? get difficulty => null;
+
+  /// Factions the game is played against, in the order they play; none by
+  /// default, a replay names those of the exported game.
+  List<FactionPersonality> get factions => const <FactionPersonality>[];
+
+  /// Whether the factions' brains play at the end of each turn. A replay
+  /// says no: the actions of the factions are already in its timeline.
+  bool get factionsPlay => true;
 
   /// The turn the game stops on, before ending it; `null` plays on.
   int? get lastTurn => null;

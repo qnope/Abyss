@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../event/event_resolver.dart';
+import '../faction/faction_fall.dart';
 import '../game/defeat_checker.dart';
 import '../game/game.dart';
 import '../map/exploration_resolver.dart';
@@ -25,11 +26,13 @@ class TurnResolver {
     EventTurnOutcome event = const EventTurnOutcome();
 
     for (final player in game.players.values) {
+      if (player.hasFallen) continue;
       final result = PlayerTurnResolver.resolve(
         player,
         previousTurn,
         extraProduction: PearlIncome.asProduction(game, player.id),
         difficulty: game.difficulty,
+        isFaction: player.id != humanId,
       );
       final outcome = RaidResolver.resolve(
         player,
@@ -57,6 +60,7 @@ class TurnResolver {
       }
     }
 
+    FactionFall.apply(game);
     final explorations = ExplorationResolver.resolve(game);
     final reinforcements = ReinforcementResolver.resolve(game);
     // After the moves, so an exploration or a raid counts the same turn.

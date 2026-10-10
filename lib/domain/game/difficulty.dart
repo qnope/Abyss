@@ -21,15 +21,16 @@ part 'difficulty.g.dart';
 @HiveType(typeId: 49)
 enum Difficulty {
   @HiveField(0)
-  easy(resourcePercent: 110, monsterPercent: 86),
+  easy(resourcePercent: 110, monsterPercent: 86, factionPercent: 90),
   @HiveField(1)
-  normal(resourcePercent: 100, monsterPercent: 94),
+  normal(resourcePercent: 100, monsterPercent: 94, factionPercent: 100),
   @HiveField(2)
-  hard(resourcePercent: 95, monsterPercent: 102);
+  hard(resourcePercent: 95, monsterPercent: 102, factionPercent: 110);
 
   const Difficulty({
     required this.resourcePercent,
     required this.monsterPercent,
+    required this.factionPercent,
   });
 
   /// Production of algae, coral and ore, in percent of the buildings' own.
@@ -39,6 +40,10 @@ enum Difficulty {
   /// base waves (`RaidWaveFactory`, `VolcanoWaveFactory`).
   final int monsterPercent;
 
+  /// Same production for a faction, the other way round: the easier the
+  /// game, the slower the factions grow.
+  final int factionPercent;
+
   /// The resources scaled by the difficulty; energy and pearls are not.
   static const Set<ResourceType> scaledResources = <ResourceType>{
     ResourceType.algae,
@@ -46,12 +51,17 @@ enum Difficulty {
     ResourceType.ore,
   };
 
-  /// [production] of the buildings, scaled in place.
-  Map<ResourceType, int> scaleProduction(Map<ResourceType, int> production) {
+  /// [production] of the buildings, scaled in place; by
+  /// [factionPercent] for a [faction], by [resourcePercent] otherwise.
+  Map<ResourceType, int> scaleProduction(
+    Map<ResourceType, int> production, {
+    bool faction = false,
+  }) {
+    final int percent = faction ? factionPercent : resourcePercent;
     for (final ResourceType type in scaledResources) {
       final int? amount = production[type];
       if (amount != null && amount > 0) {
-        production[type] = amount * resourcePercent ~/ 100;
+        production[type] = amount * percent ~/ 100;
       }
     }
     return production;

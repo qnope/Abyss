@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../faction/faction_personality.dart';
 import '../game/difficulty.dart';
 import '../game/player.dart';
 import '../replay/seeded_random.dart';
@@ -34,6 +35,13 @@ class TimelineScript extends GameScript {
   @override
   final int? lastTurn;
 
+  @override
+  final List<FactionPersonality> factions;
+
+  /// A timeline holds every move of every player, so no brain plays.
+  @override
+  bool get factionsPlay => false;
+
   final Map<int, int> endTurnSeeds;
 
   /// Who plays each action of [turns], by turn and position; `null`, or
@@ -48,6 +56,7 @@ class TimelineScript extends GameScript {
     this.mapSeed,
     this.difficulty,
     this.lastTurn,
+    this.factions = const <FactionPersonality>[],
     this.endTurnSeeds = const <int, int>{},
     this.actors = const <int, List<String?>>{},
   });

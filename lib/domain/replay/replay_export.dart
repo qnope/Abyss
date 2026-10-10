@@ -18,6 +18,7 @@ import 'replay_journal.dart';
 /// }
 /// ```
 ///
+/// Against factions, `factions` names their personalities in playing order.
 /// With several players, `players` lists them (`id`, `name`) and the actions
 /// of the others carry `"player": "<id>"`, in the order they were played.
 abstract final class ReplayExport {
@@ -34,6 +35,10 @@ abstract final class ReplayExport {
       if (game.players.length > 1)
         'players': <Map<String, String>>[
           for (final p in game.players.values) {'id': p.id, 'name': p.name},
+        ],
+      if (game.factions.isNotEmpty)
+        'factions': <String>[
+          for (final f in game.factions) f.personality.name,
         ],
       'mapSeed': journal.mapSeed,
       'difficulty': game.difficulty.name,

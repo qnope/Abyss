@@ -7,6 +7,7 @@ import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/event/event_state.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
+import 'package:abyss/domain/faction/faction_personality.dart';
 import 'package:abyss/domain/fight/combat_side.dart';
 import 'package:abyss/domain/fight/combatant.dart';
 import 'package:abyss/domain/fight/fight_result.dart';
@@ -61,6 +62,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(EventStateAdapter());
     registerAdapter(ExplorationOrderAdapter());
     registerAdapter(ExploreEntryAdapter());
+    registerAdapter(FactionPersonalityAdapter());
     registerAdapter(FightResultAdapter());
     registerAdapter(FightTurnSummaryAdapter());
     registerAdapter(GameAdapter());
@@ -118,6 +120,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(EventStateAdapter());
     registerAdapter(ExplorationOrderAdapter());
     registerAdapter(ExploreEntryAdapter());
+    registerAdapter(FactionPersonalityAdapter());
     registerAdapter(FightResultAdapter());
     registerAdapter(FightTurnSummaryAdapter());
     registerAdapter(GameAdapter());

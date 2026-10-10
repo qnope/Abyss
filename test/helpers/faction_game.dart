@@ -65,3 +65,24 @@ int growthOf(Player player) =>
     player.unitsPerLevel.values
         .expand((units) => units.values)
         .fold(0, (sum, u) => sum + u.count);
+
+/// A game against [factions] factions where the human does nothing but end
+/// its turns, so the factions find an easy prey; played until [turns] or
+/// the end of the game.
+Game playIdleFactionGame(int factions, int turns, {int seed = 1}) {
+  final seeds = Random(seed);
+  final game = GameFactory.newGame(
+    playerName: 'Nemo',
+    mapSeed: seeds.nextInt(0x7FFFFFFF),
+    factionCount: factions,
+  );
+  final executor = ActionExecutor();
+  while (game.status == GameStatus.playing && game.turn < turns) {
+    executor.execute(
+      EndTurnAction(random: SeededRandom(seeds.nextInt(1 << 30))),
+      game,
+      game.humanPlayer,
+    );
+  }
+  return game;
+}

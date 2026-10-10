@@ -36,6 +36,8 @@ enum ActionFailure {
   playerFallen,
   baseNotRevealed,
   attackTooEarly,
+  attackAlreadyAnnounced,
+  raidSameTurn,
 
   // Volcanic kernel.
   noVolcanicKernelHere,

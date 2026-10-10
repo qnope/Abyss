@@ -61,6 +61,11 @@ const List<Map<String, Object?>> _scenarioActions = <Map<String, Object?>>[
     'seed': 16,
   },
   {
+    'do': 'announceAttack',
+    'units': {'harpoonist': 5},
+    'seed': 17,
+  },
+  {
     'do': 'descend',
     'x': 5,
     'y': 6,

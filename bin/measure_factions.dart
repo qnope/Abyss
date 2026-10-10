@@ -1,5 +1,6 @@
 // Wall-clock cost of one end of turn against 10 factions (brains included),
-// at turns 1, 30 and 60:  dart run bin/measure_factions.dart [factions]
+// at turns 1, 30 and 60, then the mean and the worst of all turns:
+//   dart run bin/measure_factions.dart [factions] [idle]
 // ignore_for_file: avoid_print
 
 import 'dart:math';
@@ -15,6 +16,8 @@ import 'package:abyss/domain/script/strategies/balanced_strategy.dart';
 
 void main(List<String> args) {
   final int factions = args.isEmpty ? 10 : int.parse(args.first);
+  // An idle human leaves the factions an easy prey: attacks included.
+  final bool idle = args.contains('idle');
   final Random seeds = Random(4);
   final Game game = GameFactory.newGame(
     playerName: 'Nemo',
@@ -23,12 +26,15 @@ void main(List<String> args) {
   );
   final ActionExecutor executor = ActionExecutor();
   const Set<int> measured = <int>{1, 30, 60};
+  final List<int> costs = <int>[];
   print('$factions factions, end of turn (human move excluded):');
   while (game.status == GameStatus.playing && game.turn <= 60) {
-    const BalancedStrategy().playTurn(
-      ScriptTurn(game: game, random: SeededRandom(seeds.nextInt(1 << 30)),
-          log: []),
-    );
+    if (!idle) {
+      const BalancedStrategy().playTurn(
+        ScriptTurn(
+            game: game, random: SeededRandom(seeds.nextInt(1 << 30)), log: []),
+      );
+    }
     final Stopwatch watch = Stopwatch()..start();
     executor.execute(
       EndTurnAction(random: SeededRandom(seeds.nextInt(1 << 30))),
@@ -37,10 +43,14 @@ void main(List<String> args) {
     );
     watch.stop();
     final int turn = game.turn - 1;
+    costs.add(watch.elapsedMicroseconds);
     if (measured.contains(turn)) {
       print('  turn $turn: ${watch.elapsedMilliseconds} ms');
     }
   }
+  final int worst = costs.reduce(max);
+  print('  all turns: mean ${costs.fold(0, (s, c) => s + c) ~/ costs.length / 1000}'
+      ' ms, worst ${worst / 1000} ms (turn ${costs.indexOf(worst) + 1})');
   print('  status ${game.status.name}, journal '
       '${game.replay!.actions.values.fold(0, (s, l) => s + l.length)} actions');
   for (final f in game.factions) {

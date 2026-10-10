@@ -24,6 +24,9 @@ extension ActionFailureText on ActionFailure {
     ActionFailure.playerFallen => l10n.actionFailurePlayerFallen,
     ActionFailure.baseNotRevealed => l10n.actionFailureBaseNotRevealed,
     ActionFailure.attackTooEarly => l10n.actionFailureAttackTooEarly,
+    ActionFailure.attackAlreadyAnnounced =>
+      l10n.actionFailureAttackAlreadyAnnounced,
+    ActionFailure.raidSameTurn => l10n.actionFailureRaidSameTurn,
     ActionFailure.noTransitionBaseHere =>
       l10n.actionFailureNoTransitionBaseHere,
     ActionFailure.baseNotFound => l10n.actionFailureBaseNotFound,

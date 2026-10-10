@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../action/action.dart';
+import '../action/announce_attack_action.dart';
 import '../action/attack_base_action.dart';
 import '../action/attack_transition_base_action.dart';
 import '../action/attack_volcanic_kernel_action.dart';
@@ -77,6 +78,11 @@ abstract final class ActionEncoder {
         'units': _unitsOf(a.selectedUnits),
         if (a.random is SeededRandom) 'seed': (a.random! as SeededRandom).seed,
       },
+      AnnounceAttackAction a => {
+        'do': 'announceAttack',
+        'units': _unitsOf(a.selectedUnits),
+        if (a.random is SeededRandom) 'seed': (a.random! as SeededRandom).seed,
+      },
       AttackVolcanicKernelAction a => _at(
         'attackKernel',
         a.targetX,
@@ -121,6 +127,7 @@ abstract final class ActionEncoder {
     FightMonsterAction a => a.random is SeededRandom,
     AttackTransitionBaseAction a => a.random is SeededRandom,
     AttackBaseAction a => a.random is SeededRandom,
+    AnnounceAttackAction a => a.random is SeededRandom,
     AttackVolcanicKernelAction a => a.random is SeededRandom,
     DescendAction a => a.random is SeededRandom,
     _ => true,

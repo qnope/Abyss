@@ -222,6 +222,8 @@
   "actionFailurePlayerFallen": "That base has fallen",
   "actionFailureBaseNotRevealed": "Base not spotted: explore as far as it",
   "actionFailureAttackTooEarly": "Too early to attack a base",
+  "actionFailureAttackAlreadyAnnounced": "An attack from this faction is already announced",
+  "actionFailureRaidSameTurn": "An attack is already announced for that turn: a monster raid hits then",
   "actionFailureNoPendingEvent": "No pending event",
   "actionFailureNotThisChoiceTurn": "This choice belongs to another turn",
   "actionFailureNotEnoughStockToTrade": "Not enough stock to trade",

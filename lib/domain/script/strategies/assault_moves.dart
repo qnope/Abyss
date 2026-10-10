@@ -1,3 +1,4 @@
+import '../../action/announce_attack_action.dart';
 import '../../action/attack_base_action.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
@@ -13,5 +14,12 @@ extension AssaultMoves on ScriptTurn {
       selectedUnits: army,
       random: random,
     ),
+  );
+
+  /// Announces an attack with [army] on the human player, two turns
+  /// ahead; returns whether it was announced. Only another player than the
+  /// human can announce.
+  bool announceAttack(Map<UnitType, int> army) => tryPerform(
+    AnnounceAttackAction(selectedUnits: army, random: random),
   );
 }

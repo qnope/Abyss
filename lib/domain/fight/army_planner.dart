@@ -42,7 +42,7 @@ class ArmyPlanner {
       ];
       if (side.isEmpty) return 0;
       final List<Combatant> foes = enemy();
-      if (i == 0 && _strength(side, foes) * 2 < _strength(foes, side)) {
+      if (i == 0 && strength(side, foes) * 2 < strength(foes, side)) {
         return 0;
       }
       final result = FightEngine(random: random)
@@ -117,13 +117,13 @@ class ArmyPlanner {
       ...?allies?.call(),
     ];
     final List<Combatant> foes = enemy();
-    return _strength(side, foes) * 2 < _strength(foes, side);
+    return strength(side, foes) * 2 < strength(foes, side);
   }
 
   /// Rough Lanchester strength of [side] against [foes]: total hit points
   /// times the damage it deals per round. Lets clearly hopeless fights be
   /// ruled out without replaying them.
-  static double _strength(List<Combatant> side, List<Combatant> foes) {
+  static double strength(List<Combatant> side, List<Combatant> foes) {
     if (foes.isEmpty) return double.infinity;
     final double def =
         foes.fold<int>(0, (a, c) => a + c.def) / foes.length;

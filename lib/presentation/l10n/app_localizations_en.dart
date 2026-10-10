@@ -784,6 +784,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionFailureAttackTooEarly => 'Too early to attack a base';
 
   @override
+  String get actionFailureAttackAlreadyAnnounced =>
+      'An attack from this faction is already announced';
+
+  @override
+  String get actionFailureRaidSameTurn =>
+      'An attack is already announced for that turn: a monster raid hits then';
+
+  @override
   String get actionFailureNoPendingEvent => 'No pending event';
 
   @override

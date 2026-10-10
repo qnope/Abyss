@@ -1,6 +1,7 @@
 import 'package:hive_ce/hive.dart';
 
 import '../map/monster_lair.dart';
+import 'announced_attack.dart';
 
 part 'raid_state.g.dart';
 
@@ -35,6 +36,11 @@ class RaidState {
   @HiveField(6)
   int raidsLost;
 
+  /// Attacks of factions announced against this player, oldest first;
+  /// empty for a player saved before the attacks.
+  @HiveField(7)
+  final List<AnnouncedAttack> attacks;
+
   RaidState({
     this.noise = 0,
     this.totalNoise = 0,
@@ -43,9 +49,18 @@ class RaidState {
     this.lostInARow = 0,
     this.raidsRepelled = 0,
     this.raidsLost = 0,
-  });
+    List<AnnouncedAttack>? attacks,
+  }) : attacks = attacks ?? <AnnouncedAttack>[];
 
   bool get isIncoming => incoming != null && arrivalTurn != null;
+
+  /// Whether the faction [attackerId] has an attack announced.
+  bool hasAttackFrom(String attackerId) =>
+      attacks.any((AnnouncedAttack a) => a.attackerId == attackerId);
+
+  /// Whether an attack is announced for the end of [turn].
+  bool isAttackedOn(int turn) =>
+      attacks.any((AnnouncedAttack a) => a.arrivalTurn == turn);
 
   void addNoise(int amount) {
     if (amount <= 0) return;

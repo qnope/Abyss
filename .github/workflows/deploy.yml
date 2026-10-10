@@ -45,7 +45,7 @@ jobs:
         run: |
           .github/scripts/coverage_summary.sh coverage/lcov.info coverage/badge.json >> "$GITHUB_STEP_SUMMARY"
           sudo apt-get update -qq && sudo apt-get install -y -qq lcov
-          lcov --remove coverage/lcov.info '*.g.dart' -o coverage/lcov.info --ignore-errors unused
+          lcov --remove coverage/lcov.info '*.g.dart' '*/l10n/app_localizations*.dart' -o coverage/lcov.info --ignore-errors unused
           genhtml coverage/lcov.info -o coverage/html --quiet
           cp coverage/badge.json coverage/html/badge.json
       - name: Upload coverage

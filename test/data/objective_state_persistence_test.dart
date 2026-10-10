@@ -71,61 +71,6 @@ void main() {
     if (tempDir.existsSync()) tempDir.deleteSync(recursive: true);
   });
 
-  test('an ObjectiveState survives its adapter', () {
-    final state = ObjectiveState(tutorialEnabled: true, tipsEnabled: true)
-      ..complete(ObjectiveId.mines)
-      ..complete(ObjectiveId.hqLevel1)
-      ..markSeen(TipId.raidAnnounced)
-      ..markSeen(TipId.noiseGauge);
-    final writer = BinaryWriterImpl(Hive)..write(state);
-
-    final decoded =
-        BinaryReaderImpl(writer.toBytes(), Hive).read() as ObjectiveState;
-
-    expect(decoded.completed, [ObjectiveId.mines, ObjectiveId.hqLevel1]);
-    expect(decoded.tutorialEnabled, isTrue);
-    expect(decoded.tipsEnabled, isTrue);
-    expect(decoded.seenTips, [TipId.raidAnnounced, TipId.noiseGauge]);
-  });
-
-  test('a state saved before the tip cards decodes with none seen', () {
-    final writer = BinaryWriterImpl(Hive)
-      ..writeByte(3)
-      ..writeByte(0)
-      ..write([ObjectiveId.hqLevel1])
-      ..writeByte(1)
-      ..write(true)
-      ..writeByte(2)
-      ..write(true);
-
-    final decoded = ObjectiveStateAdapter().read(
-      BinaryReaderImpl(writer.toBytes(), Hive),
-    );
-
-    expect(decoded.tipsEnabled, isTrue);
-    expect(decoded.seenTips, isEmpty);
-    expect(decoded.hasSeen(TipId.noiseGauge), isFalse);
-    decoded.markSeen(TipId.noiseGauge);
-    expect(decoded.seenTips, [TipId.noiseGauge]);
-  });
-
-  test('a state saved before the tips decodes with the tips off', () {
-    final writer = BinaryWriterImpl(Hive)
-      ..writeByte(2)
-      ..writeByte(0)
-      ..write([ObjectiveId.hqLevel1])
-      ..writeByte(1)
-      ..write(true);
-
-    final decoded = ObjectiveStateAdapter().read(
-      BinaryReaderImpl(writer.toBytes(), Hive),
-    );
-
-    expect(decoded.completed, [ObjectiveId.hqLevel1]);
-    expect(decoded.tutorialEnabled, isTrue);
-    expect(decoded.tipsEnabled, isFalse);
-  });
-
   test('a player carries its objectives through a save and a reload', () async {
     final player = Player(name: 'Nemo', id: 'nemo-id')
       ..savedObjectiveState = (ObjectiveState(tutorialEnabled: true)

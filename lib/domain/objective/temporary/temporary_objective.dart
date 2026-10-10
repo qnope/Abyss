@@ -26,4 +26,7 @@ class TemporaryObjective {
 
   @override
   int get hashCode => Object.hash(kind, title, lastTurn);
+
+  @override
+  String toString() => 'TemporaryObjective(${kind.name}, $title, $lastTurn)';
 }

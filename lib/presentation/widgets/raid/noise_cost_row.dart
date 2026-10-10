@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// "+N bruit" line shown under an action's cost, so the player sees how
@@ -19,7 +20,7 @@ class NoiseCostRow extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Bruit',
+              context.l10n.raidNoise,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),

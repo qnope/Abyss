@@ -56,7 +56,7 @@ void main() {
         tester,
         gameWithBase(TransitionBaseType.cheminee, capturedBy: 'me'),
       );
-      expect(find.textContaining('la Capsule Pressurisee'), findsOneWidget);
+      expect(find.textContaining('Capsule Pressurisée'), findsOneWidget);
       final button = tester.widget<FilledButton>(find.byType(FilledButton));
       expect(button.onPressed, isNull);
     });
@@ -68,7 +68,7 @@ void main() {
           Building(type: BuildingType.descentModule, level: 1);
       await open(tester, game);
 
-      await tester.tap(find.text('Envoyer des unites au Niveau 2'));
+      await tester.tap(find.text('Envoyer des unités au Niveau 2'));
       await tester.pumpAndSettle();
 
       expect(find.byType(DescentDialog), findsOneWidget);

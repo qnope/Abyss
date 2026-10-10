@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/fight/unit_boost.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 class SelectionSummaryCard extends StatelessWidget {
@@ -14,19 +16,20 @@ class SelectionSummaryCard extends StatelessWidget {
     required this.boost,
   });
 
-  String get _bonusLabel {
+  String _bonusLabel(AppLocalizations l10n) {
     final parts = [
-      if (boost.atkPercent > 0) '+${boost.atkPercent}% ATK',
-      if (boost.defPercent > 0) '+${boost.defPercent}% DEF',
-      if (boost.hpPercent > 0) '+${boost.hpPercent}% PV',
+      if (boost.atkPercent > 0) '+${boost.atkPercent}% ${l10n.statAttack}',
+      if (boost.defPercent > 0) '+${boost.defPercent}% ${l10n.statDefense}',
+      if (boost.hpPercent > 0) '+${boost.hpPercent}% ${l10n.statHp}',
     ];
-    if (parts.isEmpty) return 'Bonus militaire : aucun';
-    return 'Bonus militaire : ${parts.join(', ')}';
+    if (parts.isEmpty) return l10n.fightMilitaryBonusNone;
+    return l10n.fightMilitaryBonus(parts.join(', '));
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -37,16 +40,16 @@ class SelectionSummaryCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _StatColumn(label: 'ATK', value: totalAtk),
+                  child: _StatColumn(label: l10n.statAttack, value: totalAtk),
                 ),
                 Expanded(
-                  child: _StatColumn(label: 'DEF', value: totalDef),
+                  child: _StatColumn(label: l10n.statDefense, value: totalDef),
                 ),
               ],
             ),
             const SizedBox(height: 8),
             Text(
-              _bonusLabel,
+              _bonusLabel(l10n),
               style: textTheme.bodyMedium?.copyWith(
                 color: AbyssColors.onSurfaceDim,
               ),

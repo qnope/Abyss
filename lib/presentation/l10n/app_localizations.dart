@@ -1545,6 +1545,876 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Option prudente, sans choix'**
   String get historyEventDefaulted;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get commonCancel;
+
+  /// No description provided for @commonClose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer'**
+  String get commonClose;
+
+  /// No description provided for @commonOk.
+  ///
+  /// In fr, this message translates to:
+  /// **'OK'**
+  String get commonOk;
+
+  /// No description provided for @commonConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer'**
+  String get commonConfirm;
+
+  /// No description provided for @commonGotIt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compris'**
+  String get commonGotIt;
+
+  /// No description provided for @commonSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer'**
+  String get commonSend;
+
+  /// No description provided for @commonBackToBase.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à la base'**
+  String get commonBackToBase;
+
+  /// No description provided for @commonBackToMap.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à la carte'**
+  String get commonBackToMap;
+
+  /// No description provided for @commonTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour {turn}'**
+  String commonTurn(int turn);
+
+  /// No description provided for @commonNamedLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} niv. {level}'**
+  String commonNamedLevel(String name, int level);
+
+  /// No description provided for @statHp.
+  ///
+  /// In fr, this message translates to:
+  /// **'PV'**
+  String get statHp;
+
+  /// No description provided for @statAttack.
+  ///
+  /// In fr, this message translates to:
+  /// **'ATK'**
+  String get statAttack;
+
+  /// No description provided for @statDefense.
+  ///
+  /// In fr, this message translates to:
+  /// **'DEF'**
+  String get statDefense;
+
+  /// No description provided for @fightVictory.
+  ///
+  /// In fr, this message translates to:
+  /// **'VICTOIRE'**
+  String get fightVictory;
+
+  /// No description provided for @fightDefeat.
+  ///
+  /// In fr, this message translates to:
+  /// **'DÉFAITE'**
+  String get fightDefeat;
+
+  /// No description provided for @fightKernelCaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'NOYAU CAPTURÉ'**
+  String get fightKernelCaptured;
+
+  /// No description provided for @fightBaseCaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'BASE CAPTURÉE'**
+  String get fightBaseCaptured;
+
+  /// No description provided for @fightTurnCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{Combat en {count} tour} other{Combat en {count} tours}}'**
+  String fightTurnCount(int count);
+
+  /// No description provided for @fightYourUnits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos unités'**
+  String get fightYourUnits;
+
+  /// No description provided for @fightUnitAccounting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyés: {sent} / Intactes: {intact} / Blessés: {wounded} / Morts: {dead}'**
+  String fightUnitAccounting(int sent, int intact, int wounded, int dead);
+
+  /// No description provided for @fightEnemiesKilled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ennemis tués: {killed}/{total}'**
+  String fightEnemiesKilled(int killed, int total);
+
+  /// No description provided for @fightGuardiansKilled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gardiens éliminés: {killed}/{total}'**
+  String fightGuardiansKilled(int killed, int total);
+
+  /// No description provided for @fightLoot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Butin'**
+  String get fightLoot;
+
+  /// No description provided for @fightNoLoot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun butin'**
+  String get fightNoLoot;
+
+  /// No description provided for @fightTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Combat ({x}, {y})'**
+  String fightTitle(int x, int y);
+
+  /// No description provided for @fightAssaultTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut ({x}, {y})'**
+  String fightAssaultTitle(int x, int y);
+
+  /// No description provided for @fightAssaultOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut: {target}'**
+  String fightAssaultOn(String target);
+
+  /// No description provided for @fightPrepare.
+  ///
+  /// In fr, this message translates to:
+  /// **'Préparer le combat'**
+  String get fightPrepare;
+
+  /// No description provided for @fightLaunch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lancer le combat'**
+  String get fightLaunch;
+
+  /// No description provided for @fightLaunchAssault.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lancer l\'assaut'**
+  String get fightLaunchAssault;
+
+  /// No description provided for @fightAdmiralRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un Amiral des Abysses est requis pour lancer l\'assaut'**
+  String get fightAdmiralRequired;
+
+  /// No description provided for @fightStock.
+  ///
+  /// In fr, this message translates to:
+  /// **'Stock: {count}'**
+  String fightStock(int count);
+
+  /// No description provided for @fightAlliesAlive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alliés vivants: {count}'**
+  String fightAlliesAlive(int count);
+
+  /// No description provided for @fightAlliesHp.
+  ///
+  /// In fr, this message translates to:
+  /// **'PV alliés: {hp}'**
+  String fightAlliesHp(int hp);
+
+  /// No description provided for @fightDamageDealt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dégâts infligés: {damage}'**
+  String fightDamageDealt(int damage);
+
+  /// No description provided for @fightEnemiesAlive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ennemis vivants: {count}'**
+  String fightEnemiesAlive(int count);
+
+  /// No description provided for @fightEnemiesHp.
+  ///
+  /// In fr, this message translates to:
+  /// **'PV ennemis: {hp}'**
+  String fightEnemiesHp(int hp);
+
+  /// No description provided for @fightDamageTaken.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dégâts subis: {damage}'**
+  String fightDamageTaken(int damage);
+
+  /// No description provided for @fightCriticalHits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coups critiques: {count}'**
+  String fightCriticalHits(int count);
+
+  /// No description provided for @fightMilitaryBonus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonus militaire : {bonuses}'**
+  String fightMilitaryBonus(String bonuses);
+
+  /// No description provided for @fightMilitaryBonusNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonus militaire : aucun'**
+  String get fightMilitaryBonusNone;
+
+  /// No description provided for @fightLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau {level}'**
+  String fightLevel(int level);
+
+  /// No description provided for @fightWeakAgainst.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faible contre : {unit}'**
+  String fightWeakAgainst(String unit);
+
+  /// No description provided for @mapLevelSurface.
+  ///
+  /// In fr, this message translates to:
+  /// **'Surface'**
+  String get mapLevelSurface;
+
+  /// No description provided for @mapLevelDepths.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profondeurs'**
+  String get mapLevelDepths;
+
+  /// No description provided for @mapLevelCore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noyau'**
+  String get mapLevelCore;
+
+  /// No description provided for @mapLevelChip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niv {level}: {name}'**
+  String mapLevelChip(int level, String name);
+
+  /// No description provided for @mapDifficulty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Difficulté'**
+  String get mapDifficulty;
+
+  /// No description provided for @mapLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau'**
+  String get mapLevel;
+
+  /// No description provided for @mapUnits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Unités'**
+  String get mapUnits;
+
+  /// No description provided for @mapIncomeOnceCaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenu une fois capturée'**
+  String get mapIncomeOnceCaptured;
+
+  /// No description provided for @mapPearlsPerTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{+{count} perle par tour} other{+{count} perles par tour}}'**
+  String mapPearlsPerTurn(int count);
+
+  /// No description provided for @mapGuardedNeutral.
+  ///
+  /// In fr, this message translates to:
+  /// **'Neutre — Gardiens présents'**
+  String get mapGuardedNeutral;
+
+  /// No description provided for @mapAssault.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assaut'**
+  String get mapAssault;
+
+  /// No description provided for @mapCaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'Capturée'**
+  String get mapCaptured;
+
+  /// No description provided for @mapUnitsOnLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} unité au Niveau {level}} other{{count} unités au Niveau {level}}}'**
+  String mapUnitsOnLevel(int count, int level);
+
+  /// No description provided for @mapBuildingRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bâtiment requis pour envoyer des unités : {building}'**
+  String mapBuildingRequired(String building);
+
+  /// No description provided for @mapSendUnitsToLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer des unités au Niveau {level}'**
+  String mapSendUnitsToLevel(int level);
+
+  /// No description provided for @mapExploreTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explorer ({x}, {y})'**
+  String mapExploreTitle(int x, int y);
+
+  /// No description provided for @mapCost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coût'**
+  String get mapCost;
+
+  /// No description provided for @mapScoutsAvailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Éclaireurs disponibles'**
+  String get mapScoutsAvailable;
+
+  /// No description provided for @mapRevealedArea.
+  ///
+  /// In fr, this message translates to:
+  /// **'Zone révélée'**
+  String get mapRevealedArea;
+
+  /// No description provided for @mapAreaCells.
+  ///
+  /// In fr, this message translates to:
+  /// **'{side}×{side} cellules'**
+  String mapAreaCells(int side);
+
+  /// No description provided for @mapKernelUncaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le cœur brûlant des abysses est gardé par de puissants gardiens.'**
+  String get mapKernelUncaptured;
+
+  /// No description provided for @mapKernelCaptured.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as capturé le Noyau Volcanique. Monte-le au niveau 10 pour remporter la victoire. Dès le niveau 1, le Kraken vient le reprendre chaque tour : une vague gagnée lui retire un niveau.'**
+  String get mapKernelCaptured;
+
+  /// No description provided for @mapTreasureTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trésor ({x}, {y})'**
+  String mapTreasureTitle(int x, int y);
+
+  /// No description provided for @mapCollectTreasure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Collecter le trésor'**
+  String get mapCollectTreasure;
+
+  /// No description provided for @mapTreasureResourceBonus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Algues, corail et minerai'**
+  String get mapTreasureResourceBonus;
+
+  /// No description provided for @mapTreasureRuins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Corail, minerai et perles'**
+  String get mapTreasureRuins;
+
+  /// No description provided for @mapTreasureWreck.
+  ///
+  /// In fr, this message translates to:
+  /// **'Corail, minerai et une perle'**
+  String get mapTreasureWreck;
+
+  /// No description provided for @raidName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raid'**
+  String get raidName;
+
+  /// No description provided for @raidPillage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pillage'**
+  String get raidPillage;
+
+  /// No description provided for @raidNothingToLoot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien à piller'**
+  String get raidNothingToLoot;
+
+  /// No description provided for @raidPredatorsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Banc de prédateurs (tour {turn})'**
+  String raidPredatorsTitle(int turn);
+
+  /// No description provided for @raidTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raid sur la base (tour {turn})'**
+  String raidTitle(int turn);
+
+  /// No description provided for @raidRampart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rempart de la Citadelle niv. {level}'**
+  String raidRampart(int level);
+
+  /// No description provided for @raidNoise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bruit'**
+  String get raidNoise;
+
+  /// No description provided for @raidLostInARow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raids perdus d\'affilée : {lost}/{limit}'**
+  String raidLostInARow(int lost, int limit);
+
+  /// No description provided for @raidIncomingThisTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raid à la fin de ce tour : {wave}'**
+  String raidIncomingThisTurn(String wave);
+
+  /// No description provided for @raidIncomingOnTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raid à la fin du tour {turn} : {wave}'**
+  String raidIncomingOnTurn(int turn, String wave);
+
+  /// No description provided for @raidBaseLooted.
+  ///
+  /// In fr, this message translates to:
+  /// **'La base a été pillée'**
+  String get raidBaseLooted;
+
+  /// No description provided for @raidAnnounced.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un raid approche : {wave}, fin du tour {turn}'**
+  String raidAnnounced(String wave, int turn);
+
+  /// No description provided for @raidDueThisTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'{attacker} ce tour : {wave} contre {defenders}'**
+  String raidDueThisTurn(String attacker, String wave, String defenders);
+
+  /// No description provided for @raidDefenders.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{aucun défenseur} one{{count} défenseur} other{{count} défenseurs}}'**
+  String raidDefenders(int count);
+
+  /// No description provided for @raidLastChance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si ce raid est perdu, la partie est terminée.'**
+  String get raidLastChance;
+
+  /// No description provided for @volcanoWaveTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vague sur le Noyau (tour {turn})'**
+  String volcanoWaveTitle(int turn);
+
+  /// No description provided for @volcanoKernelHolds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Noyau tient au niveau {level}'**
+  String volcanoKernelHolds(int level);
+
+  /// No description provided for @volcanoKernelDrops.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Noyau retombe au niveau {level}'**
+  String volcanoKernelDrops(int level);
+
+  /// No description provided for @volcanoMagmaRampart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rempart de magma : {stats}'**
+  String volcanoMagmaRampart(String stats);
+
+  /// No description provided for @volcanoKernelLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noyau niveau {level}'**
+  String volcanoKernelLevel(int level);
+
+  /// No description provided for @volcanoGarrison.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{Garnison : {count} unité} other{Garnison : {count} unités}}'**
+  String volcanoGarrison(int count);
+
+  /// No description provided for @volcanoNextWave.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochaine vague, à la fin du tour : {wave}'**
+  String volcanoNextWave(String wave);
+
+  /// No description provided for @volcanoLevelsLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveaux perdus face aux vagues : {count}'**
+  String volcanoLevelsLost(int count);
+
+  /// No description provided for @volcanoGarrisonUnits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mettre en garnison'**
+  String get volcanoGarrisonUnits;
+
+  /// No description provided for @volcanoWithdraw.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer'**
+  String get volcanoWithdraw;
+
+  /// No description provided for @volcanoDueWarning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vague sur le Noyau ce tour : {wave}, et aucune garnison. Le Noyau perdra probablement un niveau.'**
+  String volcanoDueWarning(String wave);
+
+  /// No description provided for @volcanoStatus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noyau niv. {level}, fin du tour : {wave} contre une garnison de {size}'**
+  String volcanoStatus(int level, String wave, int size);
+
+  /// No description provided for @volcanoRepelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Volcan : vague repoussée, {losses}'**
+  String volcanoRepelled(String losses);
+
+  /// No description provided for @volcanoKernelFell.
+  ///
+  /// In fr, this message translates to:
+  /// **'Volcan : le Noyau retombe au niveau {level}'**
+  String volcanoKernelFell(int level);
+
+  /// No description provided for @volcanoWounded.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} blessé} other{{count} blessés}}'**
+  String volcanoWounded(int count);
+
+  /// No description provided for @volcanoDead.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} mort} other{{count} morts}}'**
+  String volcanoDead(int count);
+
+  /// No description provided for @volcanoKrakenRises.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Kraken remonte : {wave} au prochain tour'**
+  String volcanoKrakenRises(String wave);
+
+  /// No description provided for @eventCardWarmLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un courant chaud traverse la base.'**
+  String get eventCardWarmLine1;
+
+  /// No description provided for @eventCardWarmLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il dope la production, mais son remous fait du bruit.'**
+  String get eventCardWarmLine2;
+
+  /// No description provided for @eventCardColdLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un courant froid glace les serres.'**
+  String get eventCardColdLine1;
+
+  /// No description provided for @eventCardColdLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans chauffage, les algues poussent moins.'**
+  String get eventCardColdLine2;
+
+  /// No description provided for @eventCardPredatorsLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un banc de prédateurs rôde autour de la base.'**
+  String get eventCardPredatorsLine1;
+
+  /// No description provided for @eventCardPredatorsWatching.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ils guettent la base.'**
+  String get eventCardPredatorsWatching;
+
+  /// No description provided for @eventCardPredatorsWave.
+  ///
+  /// In fr, this message translates to:
+  /// **'{wave} contre {defenders} du niveau 1.'**
+  String eventCardPredatorsWave(String wave, String defenders);
+
+  /// No description provided for @eventCardSurvivorsLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une capsule échouée lance une fusée de détresse.'**
+  String get eventCardSurvivorsLine1;
+
+  /// No description provided for @eventCardSurvivorsLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ses survivants peuvent rejoindre la base, mais mangeront des algues.'**
+  String get eventCardSurvivorsLine2;
+
+  /// No description provided for @eventCardCaravanLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une caravane de tortues passe près de la base.'**
+  String get eventCardCaravanLine1;
+
+  /// No description provided for @eventCardCaravanLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Son crabe marchand propose un échange.'**
+  String get eventCardCaravanLine2;
+
+  /// No description provided for @eventCardStormLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'{turns, plural, one{Exploration impossible pendant {turns} tour.} other{Exploration impossible pendant {turns} tours.}}'**
+  String eventCardStormLine1(int turns);
+
+  /// No description provided for @eventCardStormLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'La tempête couvre le bruit : jauge −{relief}.'**
+  String eventCardStormLine2(int relief);
+
+  /// No description provided for @eventCardWreckLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une épave a coulé au bord de la zone explorée.'**
+  String get eventCardWreckLine1;
+
+  /// No description provided for @eventCardWreckLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'{turns, plural, one{Explore-la avec un Éclaireur puis fouille-la avant {turns} tour (+{noise} bruit).} other{Explore-la avec un Éclaireur puis fouille-la avant {turns} tours (+{noise} bruit).}}'**
+  String eventCardWreckLine2(int turns, int noise);
+
+  /// No description provided for @eventCardWarmAccept.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exploiter (+{percent} % algues, corail, minerai pendant {turns} tours, +{noise} bruit/tour)'**
+  String eventCardWarmAccept(int percent, int turns, int noise);
+
+  /// No description provided for @eventCardWarmRefuse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Laisser passer'**
+  String get eventCardWarmRefuse;
+
+  /// No description provided for @eventCardColdAccept.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chauffer les serres (−{energy} énergie/tour pendant {turns} tours)'**
+  String eventCardColdAccept(int energy, int turns);
+
+  /// No description provided for @eventCardColdRefuse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Subir (−{percent} % d\'algues pendant {turns} tours)'**
+  String eventCardColdRefuse(int percent, int turns);
+
+  /// No description provided for @eventCardPredatorsAccept.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{L\'affronter ({count} monstre, fin du tour)} other{L\'affronter ({count} monstres, fin du tour)}}'**
+  String eventCardPredatorsAccept(int count);
+
+  /// No description provided for @eventCardPredatorsRefuse.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'appâter (−{algae} algues)'**
+  String eventCardPredatorsRefuse(int algae);
+
+  /// No description provided for @eventCardSurvivorsAccept.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accueillir {units}'**
+  String eventCardSurvivorsAccept(String units);
+
+  /// No description provided for @eventCardRefuse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser'**
+  String get eventCardRefuse;
+
+  /// No description provided for @eventCardTrade.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échanger {give} {from} contre {get} {to}'**
+  String eventCardTrade(int give, String from, int get, String to);
+
+  /// No description provided for @eventCardLater.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus tard'**
+  String get eventCardLater;
+
+  /// No description provided for @eventCardPendingWarning.
+  ///
+  /// In fr, this message translates to:
+  /// **'{event} : sans choix, l\'option prudente s\'appliquera'**
+  String eventCardPendingWarning(String event);
+
+  /// No description provided for @eventCardStatusPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement : {event} — choisir'**
+  String eventCardStatusPending(String event);
+
+  /// No description provided for @techScreenUnlock.
+  ///
+  /// In fr, this message translates to:
+  /// **'Débloquer'**
+  String get techScreenUnlock;
+
+  /// No description provided for @techScreenResearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher'**
+  String get techScreenResearch;
+
+  /// No description provided for @techScreenChoiceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{branch} · Niveau {level} · Choix'**
+  String techScreenChoiceTitle(String branch, int level);
+
+  /// No description provided for @techScreenNodeSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{branch} · Niveau {level} · {effect}'**
+  String techScreenNodeSubtitle(String branch, int level, String effect);
+
+  /// No description provided for @techScreenChoiceWarning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une seule option par partie, l\'autre sera perdue.'**
+  String get techScreenChoiceWarning;
+
+  /// No description provided for @techScreenChoose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir'**
+  String get techScreenChoose;
+
+  /// No description provided for @techScreenChosen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisi ✓'**
+  String get techScreenChosen;
+
+  /// No description provided for @techScreenDiscarded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écarté'**
+  String get techScreenDiscarded;
+
+  /// No description provided for @techScreenOr.
+  ///
+  /// In fr, this message translates to:
+  /// **'ou'**
+  String get techScreenOr;
+
+  /// No description provided for @techScreenAcquired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Acquis ✓'**
+  String get techScreenAcquired;
+
+  /// No description provided for @techScreenSurcharge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes les recherches coûteront ×{factor} une fois cette branche ouverte.'**
+  String techScreenSurcharge(String factor);
+
+  /// No description provided for @techScreenUnlockBranchFirst.
+  ///
+  /// In fr, this message translates to:
+  /// **'Débloque d\'abord la branche'**
+  String get techScreenUnlockBranchFirst;
+
+  /// No description provided for @techScreenResearchPreviousFirst.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recherche d\'abord le niveau {level}'**
+  String techScreenResearchPreviousFirst(int level);
+
+  /// No description provided for @techScreenLabRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Laboratoire niveau {level} requis'**
+  String techScreenLabRequired(int level);
+
+  /// No description provided for @techScreenOneResearchPerTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une recherche par tour : attends le prochain tour'**
+  String get techScreenOneResearchPerTurn;
+
+  /// No description provided for @techScreenMedallionLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niv. {level}'**
+  String techScreenMedallionLevel(int level);
 }
 
 class _AppLocalizationsDelegate

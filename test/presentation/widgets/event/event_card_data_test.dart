@@ -60,7 +60,7 @@ void main() {
       ..setPending(RandomEventType.survivors, 12)
       ..survivors = 4;
     expect(_labels(_card(RandomEventType.survivors, player)), [
-      'Accueillir 4 Harponneurs',
+      'Accueillir 4 harponneurs',
       'Refuser',
     ]);
   });

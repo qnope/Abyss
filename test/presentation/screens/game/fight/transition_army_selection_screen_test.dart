@@ -114,7 +114,7 @@ void main() {
       expect(find.byType(TransitionArmySelectionScreen), findsNothing);
       expect(find.byType(TransitionFightSummaryScreen), findsOneWidget);
       expect(
-        find.text('BASE CAPTUREE'),
+        find.text('BASE CAPTURÉE'),
         faille(game).isCaptured ? findsOneWidget : findsNothing,
       );
     });

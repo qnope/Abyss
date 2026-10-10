@@ -32,8 +32,11 @@ class VolcanoStatusBar extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Noyau niv. $level, fin du tour : ${wave.waveLabel(context.l10n)} '
-              'contre une garnison de $size',
+              context.l10n.volcanoStatus(
+                level,
+                wave.waveLabel(context.l10n),
+                size,
+              ),
               style: style?.copyWith(
                 color: size == 0 ? AbyssColors.error : AbyssColors.coralPink,
               ),

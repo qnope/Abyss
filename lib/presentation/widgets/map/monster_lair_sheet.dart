@@ -70,7 +70,7 @@ class _MonsterLairSheet extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Annuler'),
+                child: Text(context.l10n.commonCancel),
               ),
               const SizedBox(width: 12),
               ElevatedButton(
@@ -82,7 +82,7 @@ class _MonsterLairSheet extends StatelessWidget {
                   Navigator.of(context).pop();
                   onPrepareFight();
                 },
-                child: const Text('Préparer le combat'),
+                child: Text(context.l10n.fightPrepare),
               ),
             ],
           ),
@@ -103,13 +103,14 @@ class _LairInfoSection extends StatelessWidget {
     final stats = MonsterUnitStats.of(lair.family, lair.level);
     return Column(
       children: [
-        SheetInfoRow('Difficulté', lair.difficulty.label(l10n)),
+        SheetInfoRow(l10n.mapDifficulty, lair.difficulty.label(l10n)),
         const SizedBox(height: 6),
-        SheetInfoRow('Niveau', '${lair.level}'),
+        SheetInfoRow(l10n.mapLevel, '${lair.level}'),
         const SizedBox(height: 6),
-        SheetInfoRow('Unités', lair.family.monsters(l10n, lair.unitCount)),
+        SheetInfoRow(l10n.mapUnits, lair.family.monsters(l10n, lair.unitCount)),
         const SizedBox(height: 6),
-        SheetInfoRow('PV / ATK / DEF',
+        SheetInfoRow(
+          '${l10n.statHp} / ${l10n.statAttack} / ${l10n.statDefense}',
           '${stats.hp} / ${stats.atk} / ${stats.def}',
         ),
       ],

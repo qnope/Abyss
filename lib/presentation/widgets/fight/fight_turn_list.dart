@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../domain/fight/fight_turn_summary.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 class FightTurnList extends StatelessWidget {
@@ -27,6 +28,7 @@ class _FightTurnTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -35,7 +37,7 @@ class _FightTurnTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Tour ${summary.turnNumber}',
+              l10n.commonTurn(summary.turnNumber),
               style: textTheme.titleLarge?.copyWith(
                 color: AbyssColors.biolumCyan,
               ),
@@ -46,16 +48,16 @@ class _FightTurnTile extends StatelessWidget {
               children: [
                 Expanded(
                   child: _StatsColumn(lines: [
-                    'Alliés vivants: ${summary.playerAliveAtEnd}',
-                    'PV alliés: ${summary.playerHpAtEnd}',
-                    'Dégâts infligés: ${summary.damageDealtByPlayer}',
+                    l10n.fightAlliesAlive(summary.playerAliveAtEnd),
+                    l10n.fightAlliesHp(summary.playerHpAtEnd),
+                    l10n.fightDamageDealt(summary.damageDealtByPlayer),
                   ]),
                 ),
                 Expanded(
                   child: _StatsColumn(lines: [
-                    'Ennemis vivants: ${summary.monsterAliveAtEnd}',
-                    'PV ennemis: ${summary.monsterHpAtEnd}',
-                    'Dégâts subis: ${summary.damageDealtByMonster}',
+                    l10n.fightEnemiesAlive(summary.monsterAliveAtEnd),
+                    l10n.fightEnemiesHp(summary.monsterHpAtEnd),
+                    l10n.fightDamageTaken(summary.damageDealtByMonster),
                   ]),
                 ),
               ],
@@ -115,7 +117,7 @@ class _CritBadge extends StatelessWidget {
         ),
       ),
       child: Text(
-        'Coups critiques: $critCount',
+        context.l10n.fightCriticalHits(critCount),
         style: textTheme.labelMedium?.copyWith(color: AbyssColors.warning),
       ),
     );

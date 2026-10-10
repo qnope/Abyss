@@ -35,7 +35,7 @@ class EventCard extends StatelessWidget {
       return [
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Compris'),
+          child: Text(context.l10n.commonGotIt),
         ),
       ];
     }
@@ -43,7 +43,7 @@ class EventCard extends StatelessWidget {
       for (final choice in data.choices) _ChoiceButton(choice: choice),
       TextButton(
         onPressed: () => Navigator.pop(context),
-        child: const Text('Plus tard'),
+        child: Text(context.l10n.eventCardLater),
       ),
     ];
   }

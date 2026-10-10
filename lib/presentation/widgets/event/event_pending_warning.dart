@@ -30,7 +30,7 @@ class EventPendingWarning extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              "${type.label(context.l10n)} : sans choix, l'option prudente s'appliquera",
+              context.l10n.eventCardPendingWarning(type.label(context.l10n)),
               style: const TextStyle(color: AbyssColors.warning),
             ),
           ),

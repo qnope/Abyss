@@ -108,7 +108,8 @@ class TechReef extends StatelessWidget {
       TechBranchMedallion(
         iconPath: branch.iconPath,
         label: branch.displayName(context.l10n),
-        detail: unlocked ? 'Niv. $level' : null,
+        detail:
+            unlocked ? context.l10n.techScreenMedallionLevel(level) : null,
         color: branch.color,
         unlocked: unlocked,
         labelAbove: above,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/map/transition_base.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'transition_base_sheet.dart';
 import 'sheet_info_row.dart';
@@ -18,6 +19,7 @@ class TransitionBaseUncapturedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
@@ -26,14 +28,13 @@ class TransitionBaseUncapturedSection extends StatelessWidget {
         children: [
           TransitionBaseHeader(transitionBase: transitionBase),
           const SizedBox(height: 8),
-          SheetInfoRow('Difficulte',
-              '${transitionBase.difficulty}/5'),
+          SheetInfoRow(l10n.mapDifficulty, '${transitionBase.difficulty}/5'),
           const SizedBox(height: 6),
-          SheetInfoRow('Revenu une fois capturee',
-              '+${transitionBase.pearlsPerTurn} perles / tour'),
+          SheetInfoRow(l10n.mapIncomeOnceCaptured,
+              l10n.mapPearlsPerTurn(transitionBase.pearlsPerTurn)),
           const SizedBox(height: 6),
           Text(
-            'Neutre \u2014 Gardiens presents',
+            l10n.mapGuardedNeutral,
             style: textTheme.bodyMedium?.copyWith(
               color: AbyssColors.error,
               fontWeight: FontWeight.bold,
@@ -47,7 +48,7 @@ class TransitionBaseUncapturedSection extends StatelessWidget {
                     onAttack!();
                   }
                 : null,
-            child: const Text('Assaut'),
+            child: Text(l10n.mapAssault),
           ),
         ],
       ),

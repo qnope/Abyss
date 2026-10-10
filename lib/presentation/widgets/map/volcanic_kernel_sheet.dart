@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../domain/game/player.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 import '../volcano/kernel_garrison_panel.dart';
@@ -45,6 +46,7 @@ class _VolcanicKernelSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
       child: Column(
@@ -56,14 +58,14 @@ class _VolcanicKernelSheet extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Noyau Volcanique',
+            l10n.buildingVolcanicKernelName,
             style: textTheme.headlineSmall?.copyWith(
               color: AbyssColors.biolumCyan,
             ),
           ),
           const SizedBox(height: 16),
           Text(
-            isCaptured ? _capturedDescription : _uncapturedDescription,
+            isCaptured ? l10n.mapKernelCaptured : l10n.mapKernelUncaptured,
             textAlign: TextAlign.center,
             style: textTheme.bodyMedium?.copyWith(
               color: AbyssColors.onSurfaceDim,
@@ -79,7 +81,7 @@ class _VolcanicKernelSheet extends StatelessWidget {
           else
             FilledButton(
               onPressed: () => _closeThen(context, onAttack),
-              child: const Text("Lancer l'assaut"),
+              child: Text(l10n.fightLaunchAssault),
             ),
         ],
       ),
@@ -90,12 +92,4 @@ class _VolcanicKernelSheet extends StatelessWidget {
     Navigator.pop(context);
     action();
   }
-
-  static const _uncapturedDescription =
-      'Le coeur brulant des abysses est garde par de puissants gardiens.';
-
-  static const _capturedDescription =
-      'Vous avez capturé le Noyau Volcanique. Montez-le au niveau 10 pour '
-      'remporter la victoire. Dès le niveau 1, le Kraken vient le reprendre '
-      'chaque tour : une vague gagnée lui retire un niveau.';
 }

@@ -42,8 +42,10 @@ class RaidStatusBar extends StatelessWidget {
           const Icon(Icons.heart_broken, size: 16, color: AbyssColors.error),
           const SizedBox(width: 8),
           Text(
-            "Raids perdus d'affilée : ${state.lostInARow}/"
-            '${DefeatChecker.lostRaidsLimit}',
+            context.l10n.raidLostInARow(
+              state.lostInARow,
+              DefeatChecker.lostRaidsLimit,
+            ),
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
@@ -60,7 +62,8 @@ class RaidStatusBar extends StatelessWidget {
       children: [
         const Icon(Icons.graphic_eq, size: 16, color: AbyssColors.warning),
         const SizedBox(width: 8),
-        Text('Bruit', style: Theme.of(context).textTheme.bodySmall),
+        Text(context.l10n.raidNoise,
+            style: Theme.of(context).textTheme.bodySmall),
         const SizedBox(width: 8),
         Expanded(
           child: ClipRRect(
@@ -84,11 +87,9 @@ class RaidStatusBar extends StatelessWidget {
 
   Widget _alert(BuildContext context) {
     final arrival = state.arrivalTurn!;
-    final when = arrival <= currentTurn
-        ? 'à la fin de ce tour'
-        : 'à la fin du tour $arrival';
     final style = Theme.of(context).textTheme.bodyMedium;
     final l10n = context.l10n;
+    final wave = state.incoming!.waveLabel(l10n);
     final weakness = state.incoming!.weaknessLabel(l10n);
     return Row(
       children: [
@@ -99,7 +100,9 @@ class RaidStatusBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Raid $when : ${state.incoming!.waveLabel(l10n)}',
+                arrival <= currentTurn
+                    ? l10n.raidIncomingThisTurn(wave)
+                    : l10n.raidIncomingOnTurn(arrival, wave),
                 style: style?.copyWith(color: AbyssColors.error),
               ),
               if (weakness != null)

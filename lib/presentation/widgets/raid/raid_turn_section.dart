@@ -20,6 +20,7 @@ class RaidTurnSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final raid = result.raid;
     final announced = result.announcedRaid;
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -27,14 +28,16 @@ class RaidTurnSection extends StatelessWidget {
         if (raid != null)
           SummaryLine(
             raid.victory ? Icons.shield : Icons.dangerous,
-            raid.victory ? 'Raid repoussé' : 'La base a été pillée',
+            raid.victory ? l10n.historyRaidRepelled : l10n.raidBaseLooted,
             raid.victory ? AbyssColors.success : AbyssColors.error,
           ),
         if (announced != null)
           SummaryLine(
             Icons.warning_amber,
-            'Un raid approche : ${announced.waveLabel(context.l10n)}, '
-                'fin du tour ${result.announcedRaidTurn}',
+            l10n.raidAnnounced(
+              announced.waveLabel(l10n),
+              result.announcedRaidTurn ?? 0,
+            ),
             AbyssColors.warning,
           ),
       ],

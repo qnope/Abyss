@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/action/action_failure.dart';
+import '../../../domain/unit/unit_type.dart';
 import '../../extensions/action_failure_extensions.dart';
+import '../../extensions/unit_type_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'sheet_notice.dart';
@@ -63,7 +65,7 @@ class _ExplorationSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final side = revealSide;
+    final l10n = context.l10n;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
@@ -77,22 +79,18 @@ class _ExplorationSheet extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Explorer ($targetX, $targetY)',
+            l10n.mapExploreTitle(targetX, targetY),
             style: textTheme.headlineSmall?.copyWith(
               color: AbyssColors.biolumCyan,
             ),
           ),
           if (notice != null) SheetNotice(notice!),
           const SizedBox(height: 16),
-          SheetInfoRow('Co\u00fbt', '1 \u00e9claireur'),
+          SheetInfoRow(l10n.mapCost, UnitType.scout.units(l10n, 1)),
           const SizedBox(height: 8),
-          SheetInfoRow('\u00c9claireurs disponibles',
-            '$scoutCount',
-          ),
+          SheetInfoRow(l10n.mapScoutsAvailable, '$scoutCount'),
           const SizedBox(height: 8),
-          SheetInfoRow('Zone r\u00e9v\u00e9l\u00e9e',
-            '$side\u00d7$side cellules',
-          ),
+          SheetInfoRow(l10n.mapRevealedArea, l10n.mapAreaCells(revealSide)),
           const Divider(height: 24),
           _actionSection(context, textTheme),
         ],
@@ -107,11 +105,15 @@ class _ExplorationSheet extends StatelessWidget {
             ? ActionFailure.cellNotEligible
             : null;
     final reason = refusal ?? failure?.message(context.l10n);
-    if (reason != null) return _disabledAction(textTheme, reason);
+    if (reason != null) return _disabledAction(context, textTheme, reason);
     return _sendButton(context);
   }
 
-  Widget _disabledAction(TextTheme textTheme, String message) {
+  Widget _disabledAction(
+    BuildContext context,
+    TextTheme textTheme,
+    String message,
+  ) {
     return Column(
       children: [
         Text(
@@ -119,7 +121,7 @@ class _ExplorationSheet extends StatelessWidget {
           style: textTheme.bodyMedium?.copyWith(color: AbyssColors.warning),
         ),
         const SizedBox(height: 12),
-        const FilledButton(onPressed: null, child: Text('Envoyer')),
+        FilledButton(onPressed: null, child: Text(context.l10n.commonSend)),
       ],
     );
   }
@@ -130,7 +132,7 @@ class _ExplorationSheet extends StatelessWidget {
         Navigator.pop(context);
         onConfirm();
       },
-      child: const Text('Envoyer'),
+      child: Text(context.l10n.commonSend),
     );
   }
 }

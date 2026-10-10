@@ -950,4 +950,656 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get historyEventDefaulted => 'Opción prudente, sin elección';
+
+  @override
+  String get commonCancel => 'Cancelar';
+
+  @override
+  String get commonClose => 'Cerrar';
+
+  @override
+  String get commonOk => 'OK';
+
+  @override
+  String get commonConfirm => 'Confirmar';
+
+  @override
+  String get commonGotIt => 'Entendido';
+
+  @override
+  String get commonSend => 'Enviar';
+
+  @override
+  String get commonBackToBase => 'Volver a la base';
+
+  @override
+  String get commonBackToMap => 'Volver al mapa';
+
+  @override
+  String commonTurn(int turn) {
+    return 'Turno $turn';
+  }
+
+  @override
+  String commonNamedLevel(String name, int level) {
+    return '$name niv. $level';
+  }
+
+  @override
+  String get statHp => 'PV';
+
+  @override
+  String get statAttack => 'ATK';
+
+  @override
+  String get statDefense => 'DEF';
+
+  @override
+  String get fightVictory => 'VICTORIA';
+
+  @override
+  String get fightDefeat => 'DERROTA';
+
+  @override
+  String get fightKernelCaptured => 'NÚCLEO CAPTURADO';
+
+  @override
+  String get fightBaseCaptured => 'BASE CAPTURADA';
+
+  @override
+  String fightTurnCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Combate en $count turnos',
+      one: 'Combate en $count turno',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get fightYourUnits => 'Tus unidades';
+
+  @override
+  String fightUnitAccounting(int sent, int intact, int wounded, int dead) {
+    return 'Enviadas: $sent / Intactas: $intact / Heridas: $wounded / Muertas: $dead';
+  }
+
+  @override
+  String fightEnemiesKilled(int killed, int total) {
+    return 'Enemigos abatidos: $killed/$total';
+  }
+
+  @override
+  String fightGuardiansKilled(int killed, int total) {
+    return 'Guardianes eliminados: $killed/$total';
+  }
+
+  @override
+  String get fightLoot => 'Botín';
+
+  @override
+  String get fightNoLoot => 'Sin botín';
+
+  @override
+  String fightTitle(int x, int y) {
+    return 'Combate ($x, $y)';
+  }
+
+  @override
+  String fightAssaultTitle(int x, int y) {
+    return 'Asalto ($x, $y)';
+  }
+
+  @override
+  String fightAssaultOn(String target) {
+    return 'Asalto: $target';
+  }
+
+  @override
+  String get fightPrepare => 'Preparar el combate';
+
+  @override
+  String get fightLaunch => 'Iniciar el combate';
+
+  @override
+  String get fightLaunchAssault => 'Lanzar el asalto';
+
+  @override
+  String get fightAdmiralRequired =>
+      'Se necesita un Almirante del Abismo para lanzar el asalto';
+
+  @override
+  String fightStock(int count) {
+    return 'Reserva: $count';
+  }
+
+  @override
+  String fightAlliesAlive(int count) {
+    return 'Aliados vivos: $count';
+  }
+
+  @override
+  String fightAlliesHp(int hp) {
+    return 'PV aliados: $hp';
+  }
+
+  @override
+  String fightDamageDealt(int damage) {
+    return 'Daño infligido: $damage';
+  }
+
+  @override
+  String fightEnemiesAlive(int count) {
+    return 'Enemigos vivos: $count';
+  }
+
+  @override
+  String fightEnemiesHp(int hp) {
+    return 'PV enemigos: $hp';
+  }
+
+  @override
+  String fightDamageTaken(int damage) {
+    return 'Daño recibido: $damage';
+  }
+
+  @override
+  String fightCriticalHits(int count) {
+    return 'Golpes críticos: $count';
+  }
+
+  @override
+  String fightMilitaryBonus(String bonuses) {
+    return 'Bonificación militar: $bonuses';
+  }
+
+  @override
+  String get fightMilitaryBonusNone => 'Bonificación militar: ninguna';
+
+  @override
+  String fightLevel(int level) {
+    return 'Nivel $level';
+  }
+
+  @override
+  String fightWeakAgainst(String unit) {
+    return 'Débil contra: $unit';
+  }
+
+  @override
+  String get mapLevelSurface => 'Superficie';
+
+  @override
+  String get mapLevelDepths => 'Profundidades';
+
+  @override
+  String get mapLevelCore => 'Núcleo';
+
+  @override
+  String mapLevelChip(int level, String name) {
+    return 'Niv $level: $name';
+  }
+
+  @override
+  String get mapDifficulty => 'Dificultad';
+
+  @override
+  String get mapLevel => 'Nivel';
+
+  @override
+  String get mapUnits => 'Unidades';
+
+  @override
+  String get mapIncomeOnceCaptured => 'Ingresos una vez capturada';
+
+  @override
+  String mapPearlsPerTurn(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '+$count perlas por turno',
+      one: '+$count perla por turno',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mapGuardedNeutral => 'Neutral — Guardianes presentes';
+
+  @override
+  String get mapAssault => 'Asalto';
+
+  @override
+  String get mapCaptured => 'Capturada';
+
+  @override
+  String mapUnitsOnLevel(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unidades en el Nivel $level',
+      one: '$count unidad en el Nivel $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String mapBuildingRequired(String building) {
+    return 'Edificio necesario para enviar unidades: $building';
+  }
+
+  @override
+  String mapSendUnitsToLevel(int level) {
+    return 'Enviar unidades al Nivel $level';
+  }
+
+  @override
+  String mapExploreTitle(int x, int y) {
+    return 'Explorar ($x, $y)';
+  }
+
+  @override
+  String get mapCost => 'Coste';
+
+  @override
+  String get mapScoutsAvailable => 'Exploradores disponibles';
+
+  @override
+  String get mapRevealedArea => 'Zona revelada';
+
+  @override
+  String mapAreaCells(int side) {
+    return '$side×$side casillas';
+  }
+
+  @override
+  String get mapKernelUncaptured =>
+      'El corazón ardiente del abismo está custodiado por poderosos guardianes.';
+
+  @override
+  String get mapKernelCaptured =>
+      'Has capturado el Núcleo Volcánico. Súbelo al nivel 10 para ganar. Desde el nivel 1, el Kraken viene a recuperarlo cada turno: cada oleada que gana le quita un nivel.';
+
+  @override
+  String mapTreasureTitle(int x, int y) {
+    return 'Tesoro ($x, $y)';
+  }
+
+  @override
+  String get mapCollectTreasure => 'Recoger el tesoro';
+
+  @override
+  String get mapTreasureResourceBonus => 'Algas, coral y mineral';
+
+  @override
+  String get mapTreasureRuins => 'Coral, mineral y perlas';
+
+  @override
+  String get mapTreasureWreck => 'Coral, mineral y una perla';
+
+  @override
+  String get raidName => 'Incursión';
+
+  @override
+  String get raidPillage => 'Saqueo';
+
+  @override
+  String get raidNothingToLoot => 'Nada que saquear';
+
+  @override
+  String raidPredatorsTitle(int turn) {
+    return 'Banco de depredadores (turno $turn)';
+  }
+
+  @override
+  String raidTitle(int turn) {
+    return 'Incursión en la base (turno $turn)';
+  }
+
+  @override
+  String raidRampart(int level) {
+    return 'Muralla de la Ciudadela niv. $level';
+  }
+
+  @override
+  String get raidNoise => 'Ruido';
+
+  @override
+  String raidLostInARow(int lost, int limit) {
+    return 'Incursiones perdidas seguidas: $lost/$limit';
+  }
+
+  @override
+  String raidIncomingThisTurn(String wave) {
+    return 'Incursión al final de este turno: $wave';
+  }
+
+  @override
+  String raidIncomingOnTurn(int turn, String wave) {
+    return 'Incursión al final del turno $turn: $wave';
+  }
+
+  @override
+  String get raidBaseLooted => 'La base fue saqueada';
+
+  @override
+  String raidAnnounced(String wave, int turn) {
+    return 'Se acerca una incursión: $wave, final del turno $turn';
+  }
+
+  @override
+  String raidDueThisTurn(String attacker, String wave, String defenders) {
+    return '$attacker este turno: $wave contra $defenders';
+  }
+
+  @override
+  String raidDefenders(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count defensores',
+      one: '$count defensor',
+      zero: 'ningún defensor',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get raidLastChance => 'Si pierdes esta incursión, la partida termina.';
+
+  @override
+  String volcanoWaveTitle(int turn) {
+    return 'Oleada sobre el Núcleo (turno $turn)';
+  }
+
+  @override
+  String volcanoKernelHolds(int level) {
+    return 'El Núcleo resiste en el nivel $level';
+  }
+
+  @override
+  String volcanoKernelDrops(int level) {
+    return 'El Núcleo cae al nivel $level';
+  }
+
+  @override
+  String volcanoMagmaRampart(String stats) {
+    return 'Muralla de magma: $stats';
+  }
+
+  @override
+  String volcanoKernelLevel(int level) {
+    return 'Núcleo nivel $level';
+  }
+
+  @override
+  String volcanoGarrison(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Guarnición: $count unidades',
+      one: 'Guarnición: $count unidad',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String volcanoNextWave(String wave) {
+    return 'Próxima oleada, al final del turno: $wave';
+  }
+
+  @override
+  String volcanoLevelsLost(int count) {
+    return 'Niveles perdidos ante las oleadas: $count';
+  }
+
+  @override
+  String get volcanoGarrisonUnits => 'Poner en guarnición';
+
+  @override
+  String get volcanoWithdraw => 'Retirar';
+
+  @override
+  String volcanoDueWarning(String wave) {
+    return 'Oleada sobre el Núcleo este turno: $wave, y sin guarnición. El Núcleo probablemente perderá un nivel.';
+  }
+
+  @override
+  String volcanoStatus(int level, String wave, int size) {
+    return 'Núcleo niv. $level, final del turno: $wave contra una guarnición de $size';
+  }
+
+  @override
+  String volcanoRepelled(String losses) {
+    return 'Volcán: oleada repelida, $losses';
+  }
+
+  @override
+  String volcanoKernelFell(int level) {
+    return 'Volcán: el Núcleo cae al nivel $level';
+  }
+
+  @override
+  String volcanoWounded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count heridos',
+      one: '$count herido',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String volcanoDead(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count muertos',
+      one: '$count muerto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String volcanoKrakenRises(String wave) {
+    return 'El Kraken asciende: $wave el próximo turno';
+  }
+
+  @override
+  String get eventCardWarmLine1 => 'Una corriente cálida atraviesa la base.';
+
+  @override
+  String get eventCardWarmLine2 =>
+      'Impulsa la producción, pero su remolino hace ruido.';
+
+  @override
+  String get eventCardColdLine1 => 'Una corriente fría hiela los invernaderos.';
+
+  @override
+  String get eventCardColdLine2 => 'Sin calefacción, las algas crecen menos.';
+
+  @override
+  String get eventCardPredatorsLine1 =>
+      'Un banco de depredadores merodea alrededor de la base.';
+
+  @override
+  String get eventCardPredatorsWatching => 'Acechan la base.';
+
+  @override
+  String eventCardPredatorsWave(String wave, String defenders) {
+    return '$wave contra $defenders del nivel 1.';
+  }
+
+  @override
+  String get eventCardSurvivorsLine1 =>
+      'Una cápsula varada lanza una bengala de socorro.';
+
+  @override
+  String get eventCardSurvivorsLine2 =>
+      'Sus supervivientes pueden unirse a la base, pero comerán algas.';
+
+  @override
+  String get eventCardCaravanLine1 =>
+      'Una caravana de tortugas pasa cerca de la base.';
+
+  @override
+  String get eventCardCaravanLine2 =>
+      'Su cangrejo mercader propone un intercambio.';
+
+  @override
+  String eventCardStormLine1(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: 'Exploración imposible durante $turns turnos.',
+      one: 'Exploración imposible durante $turns turno.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventCardStormLine2(int relief) {
+    return 'La tormenta cubre el ruido: indicador −$relief.';
+  }
+
+  @override
+  String get eventCardWreckLine1 =>
+      'Un pecio se hundió al borde de la zona explorada.';
+
+  @override
+  String eventCardWreckLine2(int turns, int noise) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other:
+          'Explóralo con un Explorador y regístralo antes de $turns turnos (+$noise ruido).',
+      one:
+          'Explóralo con un Explorador y regístralo antes de $turns turno (+$noise ruido).',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventCardWarmAccept(int percent, int turns, int noise) {
+    return 'Aprovechar (+$percent % algas, coral, mineral durante $turns turnos, +$noise ruido/turno)';
+  }
+
+  @override
+  String get eventCardWarmRefuse => 'Dejarla pasar';
+
+  @override
+  String eventCardColdAccept(int energy, int turns) {
+    return 'Calentar los invernaderos (−$energy energía/turno durante $turns turnos)';
+  }
+
+  @override
+  String eventCardColdRefuse(int percent, int turns) {
+    return 'Aguantar (−$percent % de algas durante $turns turnos)';
+  }
+
+  @override
+  String eventCardPredatorsAccept(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Enfrentarlo ($count monstruos, final del turno)',
+      one: 'Enfrentarlo ($count monstruo, final del turno)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventCardPredatorsRefuse(int algae) {
+    return 'Atraerlo con cebo (−$algae algas)';
+  }
+
+  @override
+  String eventCardSurvivorsAccept(String units) {
+    return 'Acoger a $units';
+  }
+
+  @override
+  String get eventCardRefuse => 'Rechazar';
+
+  @override
+  String eventCardTrade(int give, String from, int get, String to) {
+    return 'Cambiar $give $from por $get $to';
+  }
+
+  @override
+  String get eventCardLater => 'Más tarde';
+
+  @override
+  String eventCardPendingWarning(String event) {
+    return '$event: sin elección, se aplicará la opción prudente';
+  }
+
+  @override
+  String eventCardStatusPending(String event) {
+    return 'Evento: $event — elegir';
+  }
+
+  @override
+  String get techScreenUnlock => 'Desbloquear';
+
+  @override
+  String get techScreenResearch => 'Investigar';
+
+  @override
+  String techScreenChoiceTitle(String branch, int level) {
+    return '$branch · Nivel $level · Elección';
+  }
+
+  @override
+  String techScreenNodeSubtitle(String branch, int level, String effect) {
+    return '$branch · Nivel $level · $effect';
+  }
+
+  @override
+  String get techScreenChoiceWarning =>
+      'Solo una opción por partida, la otra se perderá.';
+
+  @override
+  String get techScreenChoose => 'Elegir';
+
+  @override
+  String get techScreenChosen => 'Elegida ✓';
+
+  @override
+  String get techScreenDiscarded => 'Descartada';
+
+  @override
+  String get techScreenOr => 'o';
+
+  @override
+  String get techScreenAcquired => 'Adquirido ✓';
+
+  @override
+  String techScreenSurcharge(String factor) {
+    return 'Todas las investigaciones costarán ×$factor una vez abierta esta rama.';
+  }
+
+  @override
+  String get techScreenUnlockBranchFirst => 'Desbloquea primero la rama';
+
+  @override
+  String techScreenResearchPreviousFirst(int level) {
+    return 'Investiga primero el nivel $level';
+  }
+
+  @override
+  String techScreenLabRequired(int level) {
+    return 'Laboratorio nivel $level necesario';
+  }
+
+  @override
+  String get techScreenOneResearchPerTurn =>
+      'Una investigación por turno: espera al próximo turno';
+
+  @override
+  String techScreenMedallionLevel(int level) {
+    return 'Niv. $level';
+  }
 }

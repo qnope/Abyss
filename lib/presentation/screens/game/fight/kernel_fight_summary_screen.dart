@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../../domain/action/attack_volcanic_kernel_result.dart';
-import '../../../../domain/unit/unit_type.dart';
-import '../../../theme/abyss_colors.dart';
+import '../../../l10n/l10n_extension.dart';
+import '../../../widgets/fight/fight_kill_count.dart';
+import '../../../widgets/fight/fight_result_banner.dart';
 import '../../../widgets/fight/fight_turn_list.dart';
-import '../../../widgets/unit/unit_icon.dart';
+import '../../../widgets/fight/fight_unit_accounting.dart';
 
 class KernelFightSummaryScreen extends StatelessWidget {
   final AttackVolcanicKernelResult result;
@@ -19,121 +20,39 @@ class KernelFightSummaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final fight = result.fight;
     return Scaffold(
-      appBar: AppBar(title: const Text('Assaut Noyau Volcanique')),
+      appBar: AppBar(
+        title: Text(l10n.fightAssaultOn(l10n.buildingVolcanicKernelName)),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(12),
         children: [
-          _buildResultBanner(context),
+          FightResultBanner(
+            victory: result.victory,
+            label: result.captured ? l10n.fightKernelCaptured : null,
+            turnCount: fight?.turnCount,
+          ),
           const SizedBox(height: 12),
-          _buildPlayerAccounting(context),
-          const SizedBox(height: 12),
-          _buildMonsterSection(context),
-          if (result.fight != null) ...[
+          FightUnitAccounting(
+            sent: result.sent,
+            intact: result.survivorsIntact,
+            wounded: result.wounded,
+            dead: result.dead,
+          ),
+          if (fight != null) ...[
             const SizedBox(height: 12),
-            FightTurnList(summaries: result.fight!.turnSummaries),
+            FightKillCount(fight: fight, guardians: true),
+            const SizedBox(height: 12),
+            FightTurnList(summaries: fight.turnSummaries),
           ],
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Retour a la carte'),
+            child: Text(l10n.commonBackToMap),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildResultBanner(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final label = result.captured
-        ? 'NOYAU CAPTURE'
-        : result.victory
-            ? 'VICTOIRE'
-            : 'DEFAITE';
-    final color = result.victory
-        ? AbyssColors.biolumCyan
-        : AbyssColors.warning;
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label,
-                style: textTheme.headlineMedium?.copyWith(
-                  color: color,
-                  fontWeight: FontWeight.bold,
-                )),
-            if (result.fight != null) ...[
-              const SizedBox(height: 4),
-              Text(
-                'Combat en ${result.fight!.turnCount} tours',
-                style: textTheme.bodyMedium
-                    ?.copyWith(color: AbyssColors.onSurfaceDim),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPlayerAccounting(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Vos unites',
-                style: textTheme.titleMedium
-                    ?.copyWith(color: AbyssColors.biolumCyan)),
-            const SizedBox(height: 8),
-            for (final t in result.sent.keys) _unitRow(context, t),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _unitRow(BuildContext context, UnitType type) {
-    final textTheme = Theme.of(context).textTheme;
-    final sent = result.sent[type] ?? 0;
-    final intact = result.survivorsIntact[type] ?? 0;
-    final wounded = result.wounded[type] ?? 0;
-    final dead = result.dead[type] ?? 0;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Row(children: [
-        UnitIcon(type: type, size: 28),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(
-            'Envoyes: $sent / Intactes: $intact '
-            '/ Blesses: $wounded / Morts: $dead',
-            style: textTheme.bodyMedium
-                ?.copyWith(color: AbyssColors.onSurface),
-          ),
-        ),
-      ]),
-    );
-  }
-
-  Widget _buildMonsterSection(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    if (result.fight == null) return const SizedBox.shrink();
-    final initial = result.fight!.initialMonsterCount;
-    final killed = initial - result.fight!.finalMonsterCount;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Text(
-          'Gardiens elimines: $killed/$initial',
-          style: textTheme.bodyMedium
-              ?.copyWith(color: AbyssColors.onSurface),
-        ),
       ),
     );
   }

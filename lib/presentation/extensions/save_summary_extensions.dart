@@ -9,7 +9,8 @@ import 'difficulty_extensions.dart';
 
 /// What a save card writes about a game, in French.
 extension SaveSummaryLabels on SaveSummary {
-  String get depthName => MapLevelInfo.nameOf(deepestLevel);
+  String depthName(AppLocalizations l10n) =>
+      MapLevelInfo.nameOf(l10n, deepestLevel);
 
   /// Thumbnail of the deepest level reached.
   String get thumbnail => MapLevelInfo.saveThumbnailOf(deepestLevel);
@@ -32,11 +33,11 @@ extension SaveSummaryLabels on SaveSummary {
   /// difficulty instead, its badge telling how it ended.
   String metaLine(AppLocalizations l10n) => switch (outcome) {
     SaveOutcome.inProgress || SaveOutcome.freePlay =>
-      'Tour $turn · $depthName · QG niv. $headquartersLevel',
+      'Tour $turn · ${depthName(l10n)} · QG niv. $headquartersLevel',
     SaveOutcome.victory =>
-      'Tour $turn · $depthName · ${difficulty.displayName(l10n)}',
+      'Tour $turn · ${depthName(l10n)} · ${difficulty.displayName(l10n)}',
     SaveOutcome.defeat =>
-      'Tombée au tour $turn · $depthName · ${difficulty.displayName(l10n)}',
+      'Tombée au tour $turn · ${depthName(l10n)} · ${difficulty.displayName(l10n)}',
   };
 
   /// The last line of a finished game; a game in progress lists its

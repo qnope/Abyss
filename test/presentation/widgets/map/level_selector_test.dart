@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/l10n/abyss_locale.dart';
 import 'package:abyss/presentation/widgets/map/level_selector.dart';
+
+import '../../../helpers/localized_app.dart';
 
 void main() {
   Widget buildApp({
@@ -28,6 +31,23 @@ void main() {
       expect(find.text('Niv 1: Surface'), findsOneWidget);
       expect(find.text('Niv 2: Profondeurs'), findsOneWidget);
       expect(find.text('Niv 3: Noyau'), findsOneWidget);
+    });
+
+    testWidgets('names the levels in English and Spanish', (tester) async {
+      Widget selector() => Scaffold(
+            body: LevelSelector(
+              currentLevel: 1,
+              unlockedLevels: const {1},
+              onLevelSelected: (_) {},
+            ),
+          );
+      await tester.pumpWidget(localizedApp(selector(), locale: AbyssLocale.en));
+      expect(find.text('Lv 2: Depths'), findsOneWidget);
+      expect(find.text('Lv 3: Core'), findsOneWidget);
+      await tester.pumpWidget(localizedApp(selector(), locale: AbyssLocale.es));
+      await tester.pumpAndSettle();
+      expect(find.text('Niv 1: Superficie'), findsOneWidget);
+      expect(find.text('Niv 3: Núcleo'), findsOneWidget);
     });
 
     testWidgets('locked levels show a padlock icon', (tester) async {

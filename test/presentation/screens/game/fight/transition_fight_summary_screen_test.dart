@@ -44,10 +44,10 @@ void main() {
       expect(find.text('Assaut (3, 4)'), findsOneWidget);
     });
 
-    testWidgets('shows BASE CAPTUREE when captured', (tester) async {
+    testWidgets('shows BASE CAPTURÉE when captured', (tester) async {
       await pumpSummary(
           tester, buildTransitionResult(victory: true, captured: true));
-      expect(find.text('BASE CAPTUREE'), findsOneWidget);
+      expect(find.text('BASE CAPTURÉE'), findsOneWidget);
       expect(find.text('VICTOIRE'), findsNothing);
     });
 
@@ -57,32 +57,32 @@ void main() {
       expect(find.text('VICTOIRE'), findsOneWidget);
     });
 
-    testWidgets('shows DEFAITE and remaining guardians on defeat',
+    testWidgets('shows DÉFAITE and remaining guardians on defeat',
         (tester) async {
       await pumpSummary(
           tester, buildTransitionResult(victory: false, captured: false));
-      expect(find.text('DEFAITE'), findsOneWidget);
-      expect(find.text('Gardiens elimines: 1/4'), findsOneWidget);
+      expect(find.text('DÉFAITE'), findsOneWidget);
+      expect(find.text('Gardiens éliminés: 1/4'), findsOneWidget);
     });
 
     testWidgets('shows fight details when a fight happened', (tester) async {
       await pumpSummary(
           tester, buildTransitionResult(victory: true, captured: true));
       expect(find.text('Combat en 2 tours'), findsOneWidget);
-      expect(find.text('Gardiens elimines: 4/4'), findsOneWidget);
+      expect(find.text('Gardiens éliminés: 4/4'), findsOneWidget);
       expect(find.byType(FightTurnList), findsOneWidget);
     });
 
     testWidgets('lists per-unit accounting', (tester) async {
       await pumpSummary(
           tester, buildTransitionResult(victory: true, captured: true));
-      expect(find.text('Vos unites'), findsOneWidget);
+      expect(find.text('Vos unités'), findsOneWidget);
       expect(
-        find.text('Envoyes: 1 / Intactes: 1 / Blesses: 0 / Morts: 0'),
+        find.text('Envoyés: 1 / Intactes: 1 / Blessés: 0 / Morts: 0'),
         findsOneWidget,
       );
       expect(
-        find.text('Envoyes: 5 / Intactes: 2 / Blesses: 1 / Morts: 2'),
+        find.text('Envoyés: 5 / Intactes: 2 / Blessés: 1 / Morts: 2'),
         findsOneWidget,
       );
     });
@@ -94,7 +94,7 @@ void main() {
         buildTransitionResult(victory: true, captured: true, withFight: false),
       );
       expect(find.textContaining('Combat en'), findsNothing);
-      expect(find.textContaining('Gardiens elimines'), findsNothing);
+      expect(find.textContaining('Gardiens éliminés'), findsNothing);
       expect(find.byType(FightTurnList), findsNothing);
     });
 
@@ -102,7 +102,7 @@ void main() {
         (tester) async {
       await pumpSummary(
           tester, buildTransitionResult(victory: true, captured: true));
-      await tester.tap(find.text('Retour a la carte'));
+      await tester.tap(find.text('Retour à la carte'));
       await tester.pumpAndSettle();
       expect(find.byType(TransitionFightSummaryScreen), findsNothing);
       expect(find.text('open'), findsOneWidget);

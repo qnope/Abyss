@@ -66,7 +66,7 @@ void main() {
   Widget wrap(Widget child) => MaterialApp(home: child);
 
   group('KernelFightSummaryScreen', () {
-    testWidgets('shows NOYAU CAPTURE when captured', (tester) async {
+    testWidgets('shows NOYAU CAPTURÉ when captured', (tester) async {
       await tester.pumpWidget(wrap(KernelFightSummaryScreen(
         result: buildResult(victory: true, captured: true),
         targetX: 1,
@@ -74,7 +74,7 @@ void main() {
       )));
       await tester.pumpAndSettle();
 
-      expect(find.text('NOYAU CAPTURE'), findsOneWidget);
+      expect(find.text('NOYAU CAPTURÉ'), findsOneWidget);
     });
 
     testWidgets('shows VICTOIRE when victory but not captured',
@@ -89,7 +89,7 @@ void main() {
       expect(find.text('VICTOIRE'), findsOneWidget);
     });
 
-    testWidgets('shows DEFAITE when defeated', (tester) async {
+    testWidgets('shows DÉFAITE when defeated', (tester) async {
       await tester.pumpWidget(wrap(KernelFightSummaryScreen(
         result: buildResult(victory: false, captured: false),
         targetX: 1,
@@ -97,7 +97,7 @@ void main() {
       )));
       await tester.pumpAndSettle();
 
-      expect(find.text('DEFAITE'), findsOneWidget);
+      expect(find.text('DÉFAITE'), findsOneWidget);
     });
 
     testWidgets('displays unit accounting rows', (tester) async {
@@ -109,16 +109,16 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Envoyes: 1 / Intactes: 1 / Blesses: 0 / Morts: 0'),
+        find.text('Envoyés: 1 / Intactes: 1 / Blessés: 0 / Morts: 0'),
         findsOneWidget,
       );
       expect(
-        find.text('Envoyes: 2 / Intactes: 1 / Blesses: 1 / Morts: 0'),
+        find.text('Envoyés: 2 / Intactes: 1 / Blessés: 1 / Morts: 0'),
         findsOneWidget,
       );
     });
 
-    testWidgets('Retour a la carte pops navigation', (tester) async {
+    testWidgets('Retour à la carte pops navigation', (tester) async {
       await tester.pumpWidget(MaterialApp(
         home: Builder(
           builder: (ctx) => Scaffold(
@@ -142,9 +142,9 @@ void main() {
 
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
-      expect(find.text('NOYAU CAPTURE'), findsOneWidget);
+      expect(find.text('NOYAU CAPTURÉ'), findsOneWidget);
 
-      final button = find.text('Retour a la carte');
+      final button = find.text('Retour à la carte');
       await tester.scrollUntilVisible(
         button,
         200,
@@ -152,7 +152,7 @@ void main() {
       );
       await tester.tap(button);
       await tester.pumpAndSettle();
-      expect(find.text('NOYAU CAPTURE'), findsNothing);
+      expect(find.text('NOYAU CAPTURÉ'), findsNothing);
       expect(find.text('open'), findsOneWidget);
     });
   });

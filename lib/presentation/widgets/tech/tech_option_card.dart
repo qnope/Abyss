@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 
@@ -57,17 +59,17 @@ class TechOptionCard extends StatelessWidget {
           textAlign: TextAlign.center,
           style: text.bodySmall?.copyWith(color: AbyssColors.onSurfaceDim)),
         const SizedBox(height: 8),
-        _footer(text),
+        _footer(text, context.l10n),
       ]),
     );
   }
 
-  Widget _footer(TextTheme text) => switch (status) {
+  Widget _footer(TextTheme text, AppLocalizations l10n) => switch (status) {
     TechOptionStatus.open => ElevatedButton(
-      onPressed: onChoose, child: const Text('Choisir')),
-    TechOptionStatus.taken => Text('Choisi ✓',
+      onPressed: onChoose, child: Text(l10n.techScreenChoose)),
+    TechOptionStatus.taken => Text(l10n.techScreenChosen,
       style: text.labelLarge?.copyWith(color: AbyssColors.success)),
-    TechOptionStatus.discarded => Text('Écarté',
+    TechOptionStatus.discarded => Text(l10n.techScreenDiscarded,
       style: text.labelLarge?.copyWith(color: AbyssColors.onSurfaceDim)),
   };
 }

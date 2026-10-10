@@ -129,7 +129,7 @@ void _showCellAction(BuildContext context, Game game,
       showTransitionBaseSheet(context,
         transitionBase: base, level: level,
         hasBuildingRequirement: _hasBuildingFor(human, base),
-        requiredBuildingName: _requiredBuildingNameFor(base),
+        requiredBuilding: _requiredBuildingFor(base),
         unitCountOnTarget: _unitCountOnLevel(human, base.targetLevel),
         onAttack: () => handleAttackTransitionBase(
           context, game, repository, base, x, y, level, onChanged),
@@ -220,11 +220,10 @@ bool _hasBuildingFor(Player player, TransitionBase base) {
   return (player.buildings[buildingType]?.level ?? 0) > 0;
 }
 
-String _requiredBuildingNameFor(TransitionBase base) {
-  return base.type == TransitionBaseType.faille
-      ? 'le Module de Descente'
-      : 'la Capsule Pressurisee';
-}
+BuildingType _requiredBuildingFor(TransitionBase base) =>
+    base.type == TransitionBaseType.faille
+        ? BuildingType.descentModule
+        : BuildingType.pressureCapsule;
 
 int _unitCountOnLevel(Player player, int level) {
   final units = player.unitsOnLevel(level);

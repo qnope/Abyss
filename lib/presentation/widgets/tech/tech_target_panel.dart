@@ -10,6 +10,8 @@ import '../../../domain/tech/tech_cost_calculator.dart';
 import '../../../domain/tech/tech_option.dart';
 import '../../../domain/tech/tech_tree.dart';
 import '../../extensions/tech_branch_extensions.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'tech_choice_row.dart';
 import 'tech_cost_row.dart';
@@ -53,11 +55,14 @@ class TechTargetPanel extends StatelessWidget {
           targetLevel: _level!, resources: resources, buildings: buildings,
           techBranches: techBranches);
 
-  bool get _canAct => !_done && _check.canAct && _blocker == null;
+  bool _canAct(AppLocalizations l10n) =>
+      !_done && _check.canAct && _blocker(l10n) == null;
 
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
+    final l10n = context.l10n;
+    final canAct = _canAct(l10n);
     final level = _level;
     final choice = level != null && TechTree.isChoiceLevel(level);
     return Container(
@@ -73,24 +78,24 @@ class TechTargetPanel extends StatelessWidget {
         children: [
           TechTargetHeader(branch: _branch, level: level,
             onAct: choice || _done ? null : () => onAct(TechOption.a),
-            canAct: _canAct),
+            canAct: canAct),
           if (choice) ...[
             const SizedBox(height: 10),
             TechChoiceRow(branch: _branch, level: level,
               taken: _state?.optionAt(level),
-              onChoose: _canAct ? onAct : null),
+              onChoose: canAct ? onAct : null),
           ],
           const SizedBox(height: 8),
-          _status(text),
+          _status(text, l10n),
         ],
       ),
     );
   }
 
-  Widget _status(TextTheme text) {
-    final reason = _blocker;
+  Widget _status(TextTheme text, AppLocalizations l10n) {
+    final reason = _blocker(l10n);
     if (_done || reason != null) {
-      return Text(_done ? 'Acquis ✓' : reason!,
+      return Text(_done ? l10n.techScreenAcquired : reason!,
         style: text.labelLarge?.copyWith(
           color: _done ? AbyssColors.success : AbyssColors.warning));
     }
@@ -103,31 +108,30 @@ class TechTargetPanel extends StatelessWidget {
         TechCostRow(costs: costs, resources: resources),
         if (_level == null && _opened > 0) ...[
           const SizedBox(height: 6),
-          Text(_surcharge,
+          Text(_surcharge(l10n),
             style: text.bodySmall?.copyWith(color: AbyssColors.warning)),
         ],
       ],
     );
   }
 
-  String get _surcharge {
+  String _surcharge(AppLocalizations l10n) {
     final factor = TechCostCalculator.costPercent(_opened + 1) / 100;
     final shown = factor.toStringAsFixed(1).replaceAll('.', ',');
-    return 'Toutes les recherches coûteront ×$shown une fois '
-        'cette branche ouverte.';
+    return l10n.techScreenSurcharge(shown);
   }
 
-  String? get _blocker {
+  String? _blocker(AppLocalizations l10n) {
     final check = _check;
-    if (check.branchLocked) return 'Débloquez d\'abord la branche';
+    if (check.branchLocked) return l10n.techScreenUnlockBranchFirst;
     if (check.previousNodeMissing) {
-      return 'Recherchez d\'abord le niveau ${_level! - 1}';
+      return l10n.techScreenResearchPreviousFirst(_level! - 1);
     }
     if (check.currentLabLevel < check.requiredLabLevel) {
-      return 'Laboratoire niveau ${check.requiredLabLevel} requis';
+      return l10n.techScreenLabRequired(check.requiredLabLevel);
     }
     if (_level != null && researchDone) {
-      return 'Une recherche par tour : attendez le prochain tour';
+      return l10n.techScreenOneResearchPerTurn;
     }
     return null;
   }

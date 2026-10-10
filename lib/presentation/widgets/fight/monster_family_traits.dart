@@ -33,7 +33,7 @@ class MonsterFamilyTraits extends StatelessWidget {
             const SizedBox(width: 6),
             Expanded(
               child: Text(
-                'Faible contre : $weakness',
+                context.l10n.fightWeakAgainst(weakness),
                 style: textTheme.bodyMedium?.copyWith(
                   color: AbyssColors.success,
                   fontWeight: FontWeight.w600,

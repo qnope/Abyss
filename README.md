@@ -51,6 +51,8 @@ the `app_localizations*.dart` files `flutter gen-l10n` writes from the ARB.
   `coverage` artifact holds `lcov.info` and the HTML report.
 - **Locally**: `flutter test --coverage`, then
   `.github/scripts/coverage_summary.sh coverage/lcov.info`.
+- **Minimum**: the Test job fails when the total drops below 97 %. Set
+  `COVERAGE_MIN` to apply the same check locally.
 
 ## Migration
 

@@ -71,6 +71,8 @@ jobs:
           name: coverage
           path: coverage
           retention-days: 14
+      - name: Enforce coverage minimum
+        run: COVERAGE_MIN=97 .github/scripts/coverage_summary.sh coverage/lcov.info > /dev/null
 
   build-web:
     name: Build Web

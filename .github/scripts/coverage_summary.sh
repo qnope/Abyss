@@ -2,6 +2,8 @@
 # Writes a Markdown coverage report from an lcov file.
 # Usage: coverage_summary.sh <lcov.info> [badge.json]
 # When badge.json is given, also writes a shields.io endpoint badge there.
+# When COVERAGE_MIN is set (a percentage), exits with 1 after writing the
+# report if the total coverage is below it.
 set -euo pipefail
 
 lcov_file="${1:-coverage/lcov.info}"
@@ -65,3 +67,12 @@ echo "$per_file" | awk '{ printf "%.4f %s\n", $1 == 0 ? 100 : 100 * $2 / $1, $0 
   while read -r _ f h name; do row "$name" "$f" "$h"; done
 echo
 echo "</details>"
+
+if [[ -n "${COVERAGE_MIN:-}" ]]; then
+  awk -v f="$total_found" -v h="$total_hit" -v min="$COVERAGE_MIN" 'BEGIN {
+    p = f == 0 ? 100 : 100 * h / f
+    if (p >= min + 0) exit 0
+    printf "Coverage %.2f%% is below the %s%% minimum.\n", p, min > "/dev/stderr"
+    exit 1
+  }'
+fi

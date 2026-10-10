@@ -3,6 +3,7 @@ import 'idle_script.dart';
 import 'strategies/balanced_strategy.dart';
 import 'strategies/conquest_strategy.dart';
 import 'strategies/economy_strategy.dart';
+import 'strategies/tutorial_strategy.dart';
 import 'variant/plan_library.dart';
 
 /// Built-in strategies, by the name a scenario or the command line uses,
@@ -15,6 +16,7 @@ abstract final class ScriptLibrary {
     'idle': () => const IdleScript(),
     'conquest': () => const ConquestStrategy(),
     'rush': () => const ConquestStrategy(defends: false, name: 'rush'),
+    'tutorial': () => const TutorialStrategy(),
     ...PlanLibrary.builders,
   };
 

@@ -9,23 +9,23 @@ part 'difficulty.g.dart';
 /// Two levers: the production of the buildings and the size of the
 /// monster waves (raids on the base and krakens on the volcanic kernel).
 /// Calibrated with the simulator (160 games per player, 120 turns, random
-/// events on) on two reference players, the plan of a human win played
-/// again with other dice and a careful defence (plan85) and the careful
-/// script (conquest):
+/// events and objective rewards on) on two reference players, the plan of
+/// a human win played again with other dice and a careful defence
+/// (plan85) and the careful script (conquest):
 ///
 /// | Difficulty | plan85 | conquest | Mean |
 /// |------------|--------|----------|------|
-/// | easy       | 29 %   | 71 %     | 50 % |
-/// | normal     | 7 %    | 21 %     | 14 % |
-/// | hard       | 5 %    | 3 %      | 4 %  |
+/// | easy       | 37 %   | 64 %     | 51 % |
+/// | normal     | 11 %   | 18 %     | 14 % |
+/// | hard       | 6 %    | 5 %      | 6 %  |
 @HiveType(typeId: 49)
 enum Difficulty {
   @HiveField(0)
-  easy(resourcePercent: 110, monsterPercent: 84),
+  easy(resourcePercent: 110, monsterPercent: 86),
   @HiveField(1)
   normal(resourcePercent: 100, monsterPercent: 94),
   @HiveField(2)
-  hard(resourcePercent: 95, monsterPercent: 103);
+  hard(resourcePercent: 95, monsterPercent: 102);
 
   const Difficulty({
     required this.resourcePercent,

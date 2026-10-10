@@ -768,6 +768,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Core degraded: raise the headquarters';
 
   @override
+  String get actionFailureKernelNotBuilt =>
+      'Build the core to level 1 before garrisoning it';
+
+  @override
   String get actionFailureNoSuchPlayer => 'Player not found';
 
   @override
@@ -2221,6 +2225,11 @@ class AppLocalizationsEn extends AppLocalizations {
           'Your base fell at the end of turn $turn, after $raids raid lost in a row.',
     );
     return '$_temp0';
+  }
+
+  @override
+  String gameOverFactionWonSubtitle(String name, int turn) {
+    return '$name tamed the Volcano at turn $turn.';
   }
 
   @override

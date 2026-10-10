@@ -19,11 +19,16 @@ void main() {
     raidsLost: 4,
   );
 
-  Widget build({VoidCallback? onMenu, VoidCallback? onExport}) => MaterialApp(
+  Widget build({
+    VoidCallback? onMenu,
+    VoidCallback? onExport,
+    String? winnerName,
+  }) => MaterialApp(
         theme: AbyssTheme.create(),
         home: DefeatScreen(
           statistics: statistics,
           fallTurn: 26,
+          winnerName: winnerName,
           onReturnToMenu: onMenu ?? () {},
           onExport: onExport,
         ),
@@ -38,6 +43,16 @@ void main() {
           "perdus d'affilée."),
       findsOneWidget,
     );
+  });
+
+  testWidgets('names the faction that tamed the volcano', (tester) async {
+    await tester.pumpWidget(build(winnerName: 'La Horde des Murènes'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('La Horde des Murènes a dompté le Volcan au tour 26.'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Votre base est tombée'), findsNothing);
   });
 
   testWidgets('shows the raid statistics', (tester) async {

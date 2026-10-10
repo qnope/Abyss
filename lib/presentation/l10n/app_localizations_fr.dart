@@ -776,6 +776,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get actionFailureKernelDegraded => 'Noyau dégradé : remontez le QG';
 
   @override
+  String get actionFailureKernelNotBuilt =>
+      'Montez le Noyau au niveau 1 avant de le garnir';
+
+  @override
   String get actionFailureNoSuchPlayer => 'Joueur introuvable';
 
   @override
@@ -2251,6 +2255,11 @@ class AppLocalizationsFr extends AppLocalizations {
           'Votre base est tombée à la fin du tour $turn, après $raids raid perdu d\'affilée.',
     );
     return '$_temp0';
+  }
+
+  @override
+  String gameOverFactionWonSubtitle(String name, int turn) {
+    return '$name a dompté le Volcan au tour $turn.';
   }
 
   @override

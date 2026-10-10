@@ -12,6 +12,10 @@ class DefeatScreen extends StatelessWidget {
 
   /// Turn at the end of which the base fell.
   final int fallTurn;
+
+  /// Name of the faction that tamed the volcano first; `null` when the
+  /// base fell to raids.
+  final String? winnerName;
   final VoidCallback onReturnToMenu;
 
   /// Shares the lost game as a replay; hidden when `null`.
@@ -21,6 +25,7 @@ class DefeatScreen extends StatelessWidget {
     super.key,
     required this.statistics,
     required this.fallTurn,
+    this.winnerName,
     required this.onReturnToMenu,
     this.onExport,
   });
@@ -32,10 +37,9 @@ class DefeatScreen extends StatelessWidget {
       emblemAsset: 'assets/icons/buildings/headquarters.svg',
       title: l10n.gameOverDefeatTitle,
       titleColor: AbyssColors.error,
-      subtitle: l10n.gameOverDefeatSubtitle(
-        fallTurn,
-        DefeatChecker.lostRaidsLimit,
-      ),
+      subtitle: winnerName == null
+          ? l10n.gameOverDefeatSubtitle(fallTurn, DefeatChecker.lostRaidsLimit)
+          : l10n.gameOverFactionWonSubtitle(winnerName!, fallTurn),
       statistics: statistics,
       actions: [
         GameOverAction(

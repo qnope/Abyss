@@ -32,6 +32,9 @@ class GarrisonKernelAction extends Action {
     if (!withdraw && player.isDegraded(BuildingType.volcanicKernel)) {
       return const ActionResult.failure(ActionFailure.kernelDegraded);
     }
+    if (!withdraw && KernelGarrison.kernelLevelOf(player) < 1) {
+      return const ActionResult.failure(ActionFailure.kernelNotBuilt);
+    }
     int total = 0;
     final Map<UnitType, Unit> from = _from(player);
     for (final MapEntry<UnitType, int> e in selectedUnits.entries) {

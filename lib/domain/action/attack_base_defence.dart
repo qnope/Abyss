@@ -10,6 +10,8 @@ import '../game/player.dart';
 import '../raid/raid_battle.dart';
 import '../unit/unit.dart';
 import '../unit/unit_type.dart';
+import '../volcano/kernel_garrison.dart';
+import '../volcano/magma_rampart.dart';
 import 'fight_monster_helpers.dart';
 
 /// What a base fielded against an attack, and what became of it.
@@ -67,6 +69,24 @@ class BaseDefence {
       ),
       level,
     );
+  }
+
+  /// The defence of a volcanic kernel: the garrison, backed by the magma
+  /// rampart that its level raises. The garrison lives in a stock of its
+  /// own, away from the units of the volcano level.
+  factory BaseDefence.kernel(Player target) {
+    final Map<UnitType, int> engaged = KernelGarrison.of(target);
+    final Combatant? rampart = MagmaRampart.combatantFor(
+      KernelGarrison.kernelLevelOf(target),
+    );
+    return BaseDefence._(engaged, <Combatant>[
+      ...CombatantBuilder.playerCombatantsFrom(
+        engaged,
+        boost: FightMonsterHelpers.unitBoostOf(target, defendingBase: true),
+        side: CombatSide.monster,
+      ),
+      if (rampart != null) _onDefendersSide(rampart),
+    ], KernelGarrison.stockKey);
   }
 
   factory BaseDefence.of(Player target) {

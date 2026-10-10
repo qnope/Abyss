@@ -45,12 +45,14 @@ class TurnResolver {
         previousTurn,
         random: random,
         difficulty: game.difficulty,
+        isFaction: player.id != humanId,
       );
       final volcanoOutcome = VolcanoResolver.resolve(
         player,
         previousTurn,
         random: random,
         difficulty: game.difficulty,
+        isFaction: player.id != humanId,
       );
       final eventOutcome = EventResolver.resolve(
         game,

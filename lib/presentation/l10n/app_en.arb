@@ -217,6 +217,7 @@
   "actionFailureKernelAlreadyCaptured": "Core already captured",
   "actionFailureKernelNotCaptured": "Core not captured",
   "actionFailureKernelDegraded": "Core degraded: raise the headquarters",
+  "actionFailureKernelNotBuilt": "Build the core to level 1 before garrisoning it",
   "actionFailureNoSuchPlayer": "Player not found",
   "actionFailureCannotAttackSelf": "You cannot attack yourself",
   "actionFailurePlayerFallen": "That base has fallen",
@@ -551,6 +552,8 @@
 
   "gameOverDefeatTitle": "DEFEAT",
   "gameOverDefeatSubtitle": "{raids, plural, one{Your base fell at the end of turn {turn}, after {raids} raid lost in a row.} other{Your base fell at the end of turn {turn}, after {raids} raids lost in a row.}}",
+  "gameOverFactionWonSubtitle": "{name} tamed the Volcano at turn {turn}.",
+  "@gameOverFactionWonSubtitle": { "placeholders": { "name": { "type": "String" }, "turn": { "type": "int" } } },
   "gameOverVictoryTitle": "VICTORY!",
   "gameOverVictorySubtitle": "You have conquered the Volcanic Core!",
   "gameOverContinueFreePlay": "Continue in free play",

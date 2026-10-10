@@ -217,6 +217,7 @@
   "actionFailureKernelAlreadyCaptured": "Núcleo ya capturado",
   "actionFailureKernelNotCaptured": "Núcleo no capturado",
   "actionFailureKernelDegraded": "Núcleo degradado: sube el Cuartel General",
+  "actionFailureKernelNotBuilt": "Construye el Núcleo al nivel 1 antes de guarnecerlo",
   "actionFailureNoSuchPlayer": "Jugador no encontrado",
   "actionFailureCannotAttackSelf": "No puedes atacarte a ti mismo",
   "actionFailurePlayerFallen": "Esa base ha caído",
@@ -551,6 +552,7 @@
 
   "gameOverDefeatTitle": "DERROTA",
   "gameOverDefeatSubtitle": "{raids, plural, one{Tu base cayó al final del turno {turn}, tras {raids} incursión perdida seguida.} other{Tu base cayó al final del turno {turn}, tras {raids} incursiones perdidas seguidas.}}",
+  "gameOverFactionWonSubtitle": "{name} domó el Volcán en el turno {turn}.",
   "gameOverVictoryTitle": "¡VICTORIA!",
   "gameOverVictorySubtitle": "¡Has conquistado el Núcleo Volcánico!",
   "gameOverContinueFreePlay": "Continuar en modo libre",

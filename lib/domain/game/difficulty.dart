@@ -40,6 +40,15 @@ enum Difficulty {
   /// base waves (`RaidWaveFactory`, `VolcanoWaveFactory`).
   final int monsterPercent;
 
+  /// Share of [monsterPercent] the monsters keep against a faction: they
+  /// are drawn to the human first, so the factions can run their race.
+  static const int factionMonsterShare = 75;
+
+  /// Power of the raids and waves that hit a faction when [faction], the
+  /// human otherwise.
+  int monsterPercentFor({required bool faction}) =>
+      faction ? monsterPercent * factionMonsterShare ~/ 100 : monsterPercent;
+
   /// Same production for a faction, the other way round: the easier the
   /// game, the slower the factions grow.
   final int factionPercent;

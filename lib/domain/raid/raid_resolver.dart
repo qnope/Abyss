@@ -30,6 +30,7 @@ abstract final class RaidResolver {
     int endedTurn, {
     Random? random,
     Difficulty difficulty = Difficulty.normal,
+    bool isFaction = false,
   }) {
     final RaidState state = player.raidState;
     RaidReport? report;
@@ -51,7 +52,7 @@ abstract final class RaidResolver {
     final MonsterLair wave = RaidWaveFactory.fromTotalNoise(
       state.totalNoise,
       random: random,
-      monsterPercent: difficulty.monsterPercent,
+      monsterPercent: difficulty.monsterPercentFor(faction: isFaction),
     );
     int arrival = max(
       endedTurn + TechEffects.of(player).raidWarningTurns,

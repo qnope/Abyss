@@ -44,6 +44,7 @@ extension ActionFailureText on ActionFailure {
       l10n.actionFailureKernelAlreadyCaptured,
     ActionFailure.kernelNotCaptured => l10n.actionFailureKernelNotCaptured,
     ActionFailure.kernelDegraded => l10n.actionFailureKernelDegraded,
+    ActionFailure.kernelNotBuilt => l10n.actionFailureKernelNotBuilt,
     ActionFailure.noPendingEvent => l10n.actionFailureNoPendingEvent,
     ActionFailure.notThisChoiceTurn => l10n.actionFailureNotThisChoiceTurn,
     ActionFailure.notEnoughStockToTrade =>

@@ -51,7 +51,7 @@ class BuildingCostCalculator {
     return switch (type) {
       BuildingType.headquarters => {},
       BuildingType.laboratory => _hqPrereq(targetLevel, [2, 3, 5, 7, 10]),
-      BuildingType.barracks => _hqPrereq(targetLevel, [3, 4, 6, 8, 10]),
+      BuildingType.barracks => _hqPrereq(targetLevel, [2, 4, 6, 8, 10]),
       BuildingType.coralCitadel => coralCitadelPrereqs(targetLevel),
       BuildingType.algaeFarm ||
       BuildingType.coralMine ||

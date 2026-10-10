@@ -55,9 +55,14 @@ void main() {
       expect(prereqs[BuildingType.headquarters], 10);
     });
 
-    test('barracks level 1 requires HQ 3', () {
+    test('barracks level 1 requires HQ 2', () {
       final prereqs = calculator.prerequisites(BuildingType.barracks, 1);
-      expect(prereqs[BuildingType.headquarters], 3);
+      expect(prereqs[BuildingType.headquarters], 2);
+    });
+
+    test('barracks level 2 still requires HQ 4', () {
+      final prereqs = calculator.prerequisites(BuildingType.barracks, 2);
+      expect(prereqs[BuildingType.headquarters], 4);
     });
 
     test('barracks level 5 requires HQ 10', () {

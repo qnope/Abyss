@@ -45,7 +45,7 @@ Every building except headquarters requires a minimum headquarters level to upgr
 
 - **Production buildings** (algaeFarm, coralMine, oreExtractor, solarPanel): HQ 1/2/4/6/10 for levels 1-5
 - **Laboratory**: HQ 2/3/5/7/10 for levels 1-5
-- **Barracks**: HQ 3/4/6/8/10 for levels 1-5
+- **Barracks**: HQ 2/4/6/8/10 for levels 1-5
 - **Coral Citadel**: HQ 3/5/7/9/10 for levels 1-5
 - **Descent Module**: HQ 5 for level 1 (max level 1)
 - **Pressure Capsule**: HQ 8 for level 1 (max level 1)

@@ -38,6 +38,7 @@ class PlayerAdapter extends TypeAdapter<Player> {
       pendingReinforcements: (fields[13] as List?)?.cast<ReinforcementOrder>(),
       raidState: fields[14] as RaidState?,
       volcanoState: fields[16] as VolcanoState?,
+      eventState: fields[17] as EventState?,
       worksite: fields[15] as Worksite?,
     );
   }
@@ -45,7 +46,7 @@ class PlayerAdapter extends TypeAdapter<Player> {
   @override
   void write(BinaryWriter writer, Player obj) {
     writer
-      ..writeByte(16)
+      ..writeByte(17)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -77,7 +78,9 @@ class PlayerAdapter extends TypeAdapter<Player> {
       ..writeByte(15)
       ..write(obj.worksite)
       ..writeByte(16)
-      ..write(obj.volcanoState);
+      ..write(obj.volcanoState)
+      ..writeByte(17)
+      ..write(obj.eventState);
   }
 
   @override

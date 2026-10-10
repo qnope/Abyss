@@ -71,6 +71,15 @@ void main() {
     expect(turnEndEntry(12).displayTitle(en), 'Turn 12 ended');
   });
 
+  test('a research saved without its level says the branch improved', () {
+    final research = ResearchEntry(
+      turn: 1,
+      branch: TechBranch.explorer,
+      isUnlock: false,
+    );
+    expect(research.displayTitle(en), 'Explorer improved');
+  });
+
   test('entries without details have no subtitle', () {
     expect(combatEntry(victory: true).displaySubtitle(fr), isNull);
     expect(_recruit(UnitType.guardian, 2).displaySubtitle(en), isNull);

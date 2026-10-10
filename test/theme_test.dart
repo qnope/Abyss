@@ -18,5 +18,17 @@ void main() {
 
       expect(theme.useMaterial3, isTrue);
     });
+    test('the selected navigation tab glows cyan, the others stay dim', () {
+      final nav = AbyssTheme.create().navigationBarTheme;
+      const selected = {WidgetState.selected};
+      const idle = <WidgetState>{};
+
+      expect(nav.iconTheme!.resolve(selected)!.color, AbyssColors.biolumCyan);
+      expect(nav.iconTheme!.resolve(idle)!.color, AbyssColors.onSurfaceDim);
+      final label = nav.labelTextStyle!;
+      expect(label.resolve(selected)!.color, AbyssColors.biolumCyan);
+      expect(label.resolve(selected)!.fontWeight, FontWeight.w600);
+      expect(label.resolve(idle)!.color, AbyssColors.onSurfaceDim);
+    });
   });
 }

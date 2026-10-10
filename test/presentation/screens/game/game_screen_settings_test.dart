@@ -9,9 +9,11 @@ import 'package:abyss/domain/map/map_generator.dart';
 import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/screens/menu/main_menu_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/widgets/common/replay_export_dialog.dart';
 import 'package:abyss/presentation/widgets/history/history_sheet_body.dart';
 
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
@@ -100,6 +102,22 @@ void main() {
       expect(find.text('Paramètres'), findsNothing);
       expect(find.byType(HistorySheetBody), findsNothing);
       expect(find.byType(MainMenuScreen), findsNothing);
+      expect(repository.saveCallCount, 0);
+    });
+    testWidgets('exporting the game opens the replay export in the game', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.settings));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(fr.screenExportGame));
+      await tester.pumpAndSettle();
+
+      expect(find.text(fr.screenSettings), findsNothing);
+      expect(find.byType(ReplayExportDialog), findsOneWidget);
+      expect(find.byType(GameScreen), findsOneWidget);
       expect(repository.saveCallCount, 0);
     });
   });

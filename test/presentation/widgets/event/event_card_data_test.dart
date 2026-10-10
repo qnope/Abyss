@@ -54,6 +54,11 @@ void main() {
     ]);
   });
 
+  test('predators with no wave drawn yet only watch the base', () {
+    final card = _card(RandomEventType.predators, raidPlayer());
+    expect(card.lines.last, fr.eventCardPredatorsWatching);
+  });
+
   test('the survivors count the harpoonists who join', () {
     final player = raidPlayer();
     player.eventState

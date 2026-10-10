@@ -1,137 +1,104 @@
+import 'package:abyss/domain/game/game_status.dart';
+import 'package:abyss/presentation/widgets/backdrop/abyss_backdrop.dart';
+import 'package:abyss/presentation/widgets/save/save_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:abyss/domain/game/game.dart';
-import 'package:abyss/domain/game/game_status.dart';
-import 'package:abyss/domain/game/player.dart';
-import 'package:abyss/presentation/screens/menu/load_game_screen.dart';
-import 'package:abyss/presentation/theme/abyss_theme.dart';
+
 import '../../../helpers/fake_game_repository.dart';
-import '../../../helpers/test_svg_helper.dart';
+import '../../../helpers/load_game_harness.dart';
 
 void main() {
-  group('LoadGameScreen', () {
-    late FakeGameRepository repository;
+  late FakeGameRepository repository;
 
-    setUp(() {
-      repository = FakeGameRepository();
-    });
+  setUp(() => repository = FakeGameRepository());
 
-    Widget createApp() {
-      return MaterialApp(
-        theme: AbyssTheme.create(),
-        home: LoadGameScreen(repository: repository),
-      );
-    }
+  double topOf(WidgetTester tester, String text) =>
+      tester.getTopLeft(find.text(text)).dy;
 
-    testWidgets('shows empty state when no saves', (tester) async {
-      await tester.pumpWidget(createApp());
+  testWidgets('shows the empty state when there is no save', (tester) async {
+    await tester.pumpWidget(loadGameApp(repository));
 
-      expect(find.text('Aucune partie sauvegardée'), findsOneWidget);
-      expect(find.byIcon(Icons.folder_open), findsOneWidget);
-    });
-
-    testWidgets('shows saved games with info', (tester) async {
-      final alice = Player(name: 'Alice');
-      repository.addGame(Game(
-        humanPlayerId: alice.id,
-        players: {alice.id: alice},
-        turn: 5,
-        createdAt: DateTime(2026, 3, 15, 14, 30),
-      ));
-      final bob = Player(name: 'Bob');
-      repository.addGame(Game(
-        humanPlayerId: bob.id,
-        players: {bob.id: bob},
-        turn: 12,
-        createdAt: DateTime(2026, 3, 20, 9, 0),
-      ));
-
-      await tester.pumpWidget(createApp());
-
-      expect(find.text('Alice'), findsOneWidget);
-      expect(find.text('Tour 5 · Normal'), findsOneWidget);
-      expect(find.text('15/03/2026 14:30'), findsOneWidget);
-      expect(find.text('Bob'), findsOneWidget);
-      expect(find.text('Tour 12 · Normal'), findsOneWidget);
-      expect(find.text('20/03/2026 09:00'), findsOneWidget);
-    });
-
-    testWidgets('shows delete confirmation dialog', (tester) async {
-      repository.addGame(Game.singlePlayer(Player(name: 'Alice')));
-
-      await tester.pumpWidget(createApp());
-      await tester.tap(find.byIcon(Icons.delete_outline));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Supprimer la partie ?'), findsOneWidget);
-      expect(find.text('Annuler'), findsOneWidget);
-      expect(find.text('Supprimer'), findsOneWidget);
-    });
-
-    testWidgets('deletes game after confirmation', (tester) async {
-      repository.addGame(Game.singlePlayer(Player(name: 'Alice')));
-
-      await tester.pumpWidget(createApp());
-      expect(find.text('Alice'), findsOneWidget);
-
-      await tester.tap(find.byIcon(Icons.delete_outline));
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('Supprimer'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Alice'), findsNothing);
-      expect(find.text('Aucune partie sauvegardée'), findsOneWidget);
-    });
-
-    testWidgets('deletes only the game whose card was tapped',
-        (tester) async {
-      repository.addGame(Game.singlePlayer(Player(name: 'Alice')));
-      repository.addGame(Game.singlePlayer(Player(name: 'Bob')));
-
-      await tester.pumpWidget(createApp());
-      await tester.tap(find.byIcon(Icons.delete_outline).last);
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Supprimer'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Alice'), findsOneWidget);
-      expect(find.text('Bob'), findsNothing);
-      expect(repository.loadAll().single.humanPlayer.name, 'Alice');
-    });
-
-    testWidgets('cancel delete keeps game', (tester) async {
-      repository.addGame(Game.singlePlayer(Player(name: 'Alice')));
-
-      await tester.pumpWidget(createApp());
-
-      await tester.tap(find.byIcon(Icons.delete_outline));
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('Annuler'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Alice'), findsOneWidget);
-    });
-
-    testWidgets('a lost game is marked and reopens on the defeat screen',
-        (tester) async {
-      mockSvgAssets();
-      addTearDown(clearSvgMocks);
-      final alice = Player(name: 'Alice');
-      repository.addGame(Game(
-        humanPlayerId: alice.id,
-        players: {alice.id: alice},
-        turn: 27,
-        status: GameStatus.defeat,
-      ));
-
-      await tester.pumpWidget(createApp());
-      expect(find.text('Défaite au tour 26'), findsOneWidget);
-
-      await tester.tap(find.text('Alice'));
-      await tester.pumpAndSettle();
-      expect(find.text('DÉFAITE'), findsOneWidget);
-    });
+    expect(find.text('Aucune partie sauvegardée'), findsOneWidget);
+    expect(find.byIcon(Icons.folder_open), findsOneWidget);
   });
+
+  testWidgets('sits on the dimmed backdrop under its title', (tester) async {
+    repository.addGame(savedGame('Alice'));
+    await tester.pumpWidget(loadGameApp(repository));
+
+    expect(find.text('Charger une partie'), findsOneWidget);
+    final backdrop = tester.widget<AbyssBackdrop>(find.byType(AbyssBackdrop));
+    expect(backdrop.dimmed, isTrue);
+  });
+
+  testWidgets('groups games in progress above finished ones, latest first', (
+    tester,
+  ) async {
+    repository
+      ..addGame(savedGame('Ancien', hoursAgo: 5))
+      ..addGame(savedGame('Perdu', status: GameStatus.defeat, hoursAgo: 3))
+      ..addGame(savedGame('Recent', hoursAgo: 1))
+      ..addGame(savedGame('Gagne', status: GameStatus.victory, hoursAgo: 2));
+    await tester.pumpWidget(loadGameApp(repository));
+
+    final order = ['EN COURS', 'Recent', 'Ancien', 'TERMINÉES', 'Gagne']
+        .map((text) => topOf(tester, text))
+        .toList();
+    expect(order, orderedEquals([...order]..sort()));
+    expect(topOf(tester, 'Perdu'), greaterThan(topOf(tester, 'Gagne')));
+  });
+
+  testWidgets('leaves out the header of an empty section', (tester) async {
+    repository.addGame(savedGame('Alice'));
+    await tester.pumpWidget(loadGameApp(repository));
+    expect(find.text('EN COURS'), findsOneWidget);
+    expect(find.text('TERMINÉES'), findsNothing);
+  });
+
+  testWidgets('shows only finished games under their header', (tester) async {
+    repository.addGame(savedGame('Nemo', status: GameStatus.victory));
+    await tester.pumpWidget(loadGameApp(repository));
+    expect(find.text('EN COURS'), findsNothing);
+    expect(find.text('TERMINÉES'), findsOneWidget);
+  });
+
+  testWidgets('dates each save from the injected clock', (tester) async {
+    repository.addGame(savedGame('Alice', hoursAgo: 2));
+    await tester.pumpWidget(loadGameApp(repository));
+    expect(find.text('il y a 2 h'), findsOneWidget);
+  });
+
+  testWidgets('highlights the game in progress played last', (tester) async {
+    repository
+      ..addGame(savedGame('Gagne', status: GameStatus.victory, hoursAgo: 1))
+      ..addGame(savedGame('Ancien', hoursAgo: 4))
+      ..addGame(savedGame('Recent', hoursAgo: 2));
+    await tester.pumpWidget(loadGameApp(repository));
+
+    final cards = tester.widgetList<SaveCard>(find.byType(SaveCard));
+    final highlighted = {
+      for (final card in cards) card.summary.playerName: card.highlighted,
+    };
+    expect(highlighted, {'Recent': true, 'Ancien': false, 'Gagne': false});
+  });
+
+  for (final size in [const Size(320, 640), const Size(1280, 720)]) {
+    testWidgets('fits a ${size.width.toInt()} px wide window', (tester) async {
+      tester.view
+        ..physicalSize = size
+        ..devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      repository
+        ..addGame(savedGame('Alice ' * 10))
+        ..addGame(savedGame('Nemo', status: GameStatus.defeat, turn: 27))
+        ..addGame(savedGame('Cousteau', status: GameStatus.victory));
+      await tester.pumpWidget(loadGameApp(repository));
+
+      expect(tester.takeException(), isNull);
+      final cardWidth = tester.getSize(find.byType(SaveCard).first).width;
+      expect(cardWidth, lessThanOrEqualTo(560));
+      final center = tester.getCenter(find.byType(SaveCard).first).dx;
+      expect(center, moreOrLessEquals(size.width / 2, epsilon: 1));
+    });
+  }
 }

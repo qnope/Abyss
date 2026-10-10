@@ -4,6 +4,24 @@ import 'abyss_colors.dart';
 abstract final class AbyssTextTheme {
   static const _fontFamily = 'Rajdhani';
 
+  /// Small spaced capitals heading a section of a list, e.g. « EN COURS ».
+  static const sectionLabel = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 3,
+    color: AbyssColors.onSurfaceDim,
+  );
+
+  /// Capitals inside a small pill, such as a difficulty or an outcome.
+  static const pillLabel = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 11,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1,
+    height: 1.2,
+  );
+
   static TextTheme create() {
     return const TextTheme(
       displayLarge: TextStyle(

@@ -5,16 +5,17 @@ import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/game/save_outcome.dart';
 import 'package:abyss/domain/game/save_summary.dart';
+import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-GameMap _map() => GameMap(
+GameMap _map({MapCell? cell}) => GameMap(
       width: 1,
       height: 1,
-      cells: [MapCell(terrain: TerrainType.plain)],
+      cells: [cell ?? MapCell(terrain: TerrainType.plain)],
       seed: 1,
     );
 
@@ -105,5 +106,21 @@ void main() {
   test('gives when the game was last played', () {
     final Game game = _game()..savedLastPlayedAt = DateTime(2026, 4, 2, 9);
     expect(SaveSummary.of(game).lastPlayedAt, DateTime(2026, 4, 2, 9));
+  });
+
+  test('tells whether the player conquered the volcanic kernel', () {
+    MapCell kernel(String? by) => MapCell(
+          terrain: TerrainType.plain,
+          content: CellContentType.volcanicKernel,
+          collectedBy: by,
+        );
+    bool capturedWith(String? by) => SaveSummary.of(
+          _game(levels: {1: _map(), 3: _map(cell: kernel(by))}),
+        ).volcanicKernelCaptured;
+
+    expect(capturedWith('nemo'), isTrue);
+    expect(capturedWith('rival'), isFalse);
+    expect(capturedWith(null), isFalse);
+    expect(SaveSummary.of(_game()).volcanicKernelCaptured, isFalse);
   });
 }

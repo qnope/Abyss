@@ -62,4 +62,55 @@ abstract final class AbyssCardTheme {
       iconTheme: const IconThemeData(color: AbyssColors.biolumCyan),
     );
   }
+
+  static PopupMenuThemeData popupMenu() {
+    return PopupMenuThemeData(
+      color: AbyssColors.deepNavy,
+      surfaceTintColor: Colors.transparent,
+      elevation: 6,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: AbyssColors.biolumCyan.withValues(alpha: 0.2),
+        ),
+      ),
+    );
+  }
+
+  static const double savePanelRadius = 16;
+  static const _panelShape = BorderRadius.all(
+    Radius.circular(savePanelRadius),
+  );
+  static final _panelColor = AbyssColors.surfaceLight.withValues(alpha: 0.78);
+
+  /// Panel of a save card, lighter when [faded]. A [highlighted] panel
+  /// glows cyan: the game a player most likely resumes.
+  static BoxDecoration savePanel({
+    required bool highlighted,
+    bool faded = false,
+  }) {
+    if (highlighted) {
+      return BoxDecoration(
+        color: _panelColor,
+        borderRadius: _panelShape,
+        border: Border.all(
+          color: AbyssColors.biolumCyan.withValues(alpha: 0.75),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AbyssColors.biolumCyan.withValues(alpha: 0.22),
+            blurRadius: 18,
+          ),
+        ],
+      );
+    }
+    return BoxDecoration(
+      color: faded ? AbyssColors.dimmed(_panelColor) : _panelColor,
+      borderRadius: _panelShape,
+      border: Border.all(
+        color: AbyssColors.biolumCyan.withValues(alpha: faded ? 0.08 : 0.18),
+      ),
+    );
+  }
 }

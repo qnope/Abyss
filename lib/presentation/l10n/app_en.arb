@@ -729,5 +729,28 @@
   "buildingDegradedBarracks": "Units cost twice as much",
   "buildingDegradedSolar": "Makes 50% of its energy",
   "buildingDegradedCitadel": "The rampart has half its strength",
-  "buildingDegradedUnusable": "Unusable: no descent, no garrison, no victory"
+  "buildingDegradedUnusable": "Unusable: no descent, no garrison, no victory",
+  "factionBaseHeadquarters": "Headquarters",
+  "factionBaseAttack": "Attack",
+  "assaultYouAttacked": "You attacked {name}",
+  "@assaultYouAttacked": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "assaultAttackedYou": "{name} attacked you",
+  "@assaultAttackedYou": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "assaultDefendersDown": "Defenders put out of action: {killed}/{total}",
+  "@assaultDefendersDown": {
+    "placeholders": { "killed": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "assaultRampart": "Rampart: level {before} → {after}",
+  "@assaultRampart": {
+    "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } }
+  },
+  "assaultHeadquarters": "Headquarters: level {before} → {after}",
+  "@assaultHeadquarters": {
+    "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } }
+  },
+  "assaultBaseIntact": "The base held"
 }

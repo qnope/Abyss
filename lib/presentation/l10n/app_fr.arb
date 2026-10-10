@@ -996,5 +996,28 @@
   "buildingDegradedBarracks": "Les unités coûtent deux fois plus cher",
   "buildingDegradedSolar": "Produit 50 % de son énergie",
   "buildingDegradedCitadel": "Le rempart a la moitié de sa force",
-  "buildingDegradedUnusable": "Inutilisable : ni descente, ni garnison, ni victoire"
+  "buildingDegradedUnusable": "Inutilisable : ni descente, ni garnison, ni victoire",
+  "factionBaseHeadquarters": "Quartier général",
+  "factionBaseAttack": "Attaquer",
+  "assaultYouAttacked": "Vous avez attaqué {name}",
+  "@assaultYouAttacked": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "assaultAttackedYou": "{name} vous a attaqué",
+  "@assaultAttackedYou": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "assaultDefendersDown": "Défenseurs mis hors de combat : {killed}/{total}",
+  "@assaultDefendersDown": {
+    "placeholders": { "killed": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "assaultRampart": "Rempart : niveau {before} → {after}",
+  "@assaultRampart": {
+    "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } }
+  },
+  "assaultHeadquarters": "QG : niveau {before} → {after}",
+  "@assaultHeadquarters": {
+    "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } }
+  },
+  "assaultBaseIntact": "La base tient bon"
 }

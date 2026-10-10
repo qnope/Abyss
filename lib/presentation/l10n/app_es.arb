@@ -729,5 +729,28 @@
   "buildingDegradedBarracks": "Las unidades cuestan el doble",
   "buildingDegradedSolar": "Produce el 50 % de su energía",
   "buildingDegradedCitadel": "La muralla tiene la mitad de su fuerza",
-  "buildingDegradedUnusable": "Inutilizable: ni descenso, ni guarnición, ni victoria"
+  "buildingDegradedUnusable": "Inutilizable: ni descenso, ni guarnición, ni victoria",
+  "factionBaseHeadquarters": "Cuartel general",
+  "factionBaseAttack": "Atacar",
+  "assaultYouAttacked": "Has atacado a {name}",
+  "@assaultYouAttacked": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "assaultAttackedYou": "{name} te ha atacado",
+  "@assaultAttackedYou": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "assaultDefendersDown": "Defensores fuera de combate: {killed}/{total}",
+  "@assaultDefendersDown": {
+    "placeholders": { "killed": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "assaultRampart": "Muralla: nivel {before} → {after}",
+  "@assaultRampart": {
+    "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } }
+  },
+  "assaultHeadquarters": "Cuartel general: nivel {before} → {after}",
+  "@assaultHeadquarters": {
+    "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } }
+  },
+  "assaultBaseIntact": "La base ha resistido"
 }

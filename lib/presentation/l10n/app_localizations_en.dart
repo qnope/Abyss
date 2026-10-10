@@ -2923,4 +2923,38 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get buildingDegradedUnusable =>
       'Unusable: no descent, no garrison, no victory';
+
+  @override
+  String get factionBaseHeadquarters => 'Headquarters';
+
+  @override
+  String get factionBaseAttack => 'Attack';
+
+  @override
+  String assaultYouAttacked(String name) {
+    return 'You attacked $name';
+  }
+
+  @override
+  String assaultAttackedYou(String name) {
+    return '$name attacked you';
+  }
+
+  @override
+  String assaultDefendersDown(int killed, int total) {
+    return 'Defenders put out of action: $killed/$total';
+  }
+
+  @override
+  String assaultRampart(int before, int after) {
+    return 'Rampart: level $before → $after';
+  }
+
+  @override
+  String assaultHeadquarters(int before, int after) {
+    return 'Headquarters: level $before → $after';
+  }
+
+  @override
+  String get assaultBaseIntact => 'The base held';
 }

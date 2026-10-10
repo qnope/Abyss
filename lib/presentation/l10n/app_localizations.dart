@@ -4305,6 +4305,54 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Inutilisable : ni descente, ni garnison, ni victoire'**
   String get buildingDegradedUnusable;
+
+  /// No description provided for @factionBaseHeadquarters.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quartier général'**
+  String get factionBaseHeadquarters;
+
+  /// No description provided for @factionBaseAttack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Attaquer'**
+  String get factionBaseAttack;
+
+  /// No description provided for @assaultYouAttacked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez attaqué {name}'**
+  String assaultYouAttacked(String name);
+
+  /// No description provided for @assaultAttackedYou.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} vous a attaqué'**
+  String assaultAttackedYou(String name);
+
+  /// No description provided for @assaultDefendersDown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Défenseurs mis hors de combat : {killed}/{total}'**
+  String assaultDefendersDown(int killed, int total);
+
+  /// No description provided for @assaultRampart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rempart : niveau {before} → {after}'**
+  String assaultRampart(int before, int after);
+
+  /// No description provided for @assaultHeadquarters.
+  ///
+  /// In fr, this message translates to:
+  /// **'QG : niveau {before} → {after}'**
+  String assaultHeadquarters(int before, int after);
+
+  /// No description provided for @assaultBaseIntact.
+  ///
+  /// In fr, this message translates to:
+  /// **'La base tient bon'**
+  String get assaultBaseIntact;
 }
 
 class _AppLocalizationsDelegate

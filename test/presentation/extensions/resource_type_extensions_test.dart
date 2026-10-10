@@ -44,4 +44,24 @@ void main() {
       expect(ResourceType.pearl.flavorText, contains('rares'));
     });
   });
+
+  group('ResourceGainsLabel.gainLabel', () {
+    test('lists each gain in lower case, in the order given', () {
+      expect(
+        {ResourceType.coral: 30, ResourceType.ore: 20}.gainLabel,
+        '+30 corail, +20 minerai',
+      );
+    });
+
+    test('leaves out what was not gained', () {
+      expect(
+        {ResourceType.coral: 0, ResourceType.pearl: 2}.gainLabel,
+        '+2 perles',
+      );
+    });
+
+    test('is empty without any gain', () {
+      expect(const <ResourceType, int>{}.gainLabel, isEmpty);
+    });
+  });
 }

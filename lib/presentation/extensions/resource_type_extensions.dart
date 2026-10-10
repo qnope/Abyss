@@ -29,3 +29,12 @@ extension ResourceTypeInfo on ResourceType {
     ResourceType.pearl => 'Gemmes rares trouvées dans les ruines et les repaires, et récoltées chaque tour dans les failles et cheminées capturées.',
   };
 }
+
+extension ResourceGainsLabel on Map<ResourceType, int> {
+  /// The gains in French, in the order of the map: « +30 corail, +20
+  /// minerai ». What was not gained is left out.
+  String get gainLabel => [
+    for (final MapEntry(:key, :value) in entries)
+      if (value > 0) '+$value ${key.displayName.toLowerCase()}',
+  ].join(', ');
+}

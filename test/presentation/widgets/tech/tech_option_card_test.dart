@@ -58,7 +58,7 @@ void main() {
       await pump(t, TechOptionStatus.taken, onChoose: () {});
       expect(find.text('Choisi ✓'), findsOneWidget);
       expect(find.byType(ElevatedButton), findsNothing);
-      expect(t.widget<RasterSvg>(find.byType(RasterSvg)).color, isNull);
+      expect(t.widget<RasterSvg>(find.byType(RasterSvg)).greyscale, isFalse);
     });
 
     testWidgets('a discarded option is greyed and marked "Écarté"',
@@ -66,7 +66,7 @@ void main() {
       await pump(t, TechOptionStatus.discarded, onChoose: () {});
       expect(find.text('Écarté'), findsOneWidget);
       expect(find.byType(ElevatedButton), findsNothing);
-      expect(t.widget<RasterSvg>(find.byType(RasterSvg)).color, isNotNull);
+      expect(t.widget<RasterSvg>(find.byType(RasterSvg)).greyscale, isTrue);
     });
   });
 }

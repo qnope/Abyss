@@ -5,8 +5,9 @@ import '../common/raster_svg.dart';
 import 'dashed_ring_painter.dart';
 
 /// Round research node showing its icon. Researched nodes glow, the next
-/// reachable one is ringed with dashes, locked ones fade away and the
-/// option a choice left aside is greyed out and struck through.
+/// reachable one is ringed with dashes, locked ones show their icon faded
+/// in greyscale and the option a choice left aside is greyscale and struck
+/// through.
 class TechNodeWidget extends StatelessWidget {
   final Color color;
   final TechNodeState state;
@@ -36,7 +37,10 @@ class TechNodeWidget extends StatelessWidget {
       child: RasterSvg(
         assetPath: iconPath,
         size: size * 0.78,
-        color: _lit ? null : _grey,
+        greyscale: !_lit,
+        opacity: state == TechNodeState.locked
+            ? AbyssColors.unavailableOpacity
+            : 1,
       ),
     );
     return GestureDetector(
@@ -52,10 +56,6 @@ class TechNodeWidget extends StatelessWidget {
       },
     );
   }
-
-  Color get _grey => state == TechNodeState.locked
-      ? AbyssColors.dimmed(AbyssColors.disabled)
-      : AbyssColors.disabled;
 
   BoxDecoration _decoration() => switch (state) {
     TechNodeState.researched => BoxDecoration(

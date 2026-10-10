@@ -42,21 +42,6 @@ void main() {
       expect(tester.getSize(find.byType(RasterSvg)), const Size(24, 24));
     });
 
-    testWidgets('passes the tint to the image', (tester) async {
-      await tester.pumpWidget(
-        const Center(
-          child: RasterSvg(
-            assetPath: _path,
-            color: Colors.grey,
-            colorBlendMode: BlendMode.saturation,
-          ),
-        ),
-      );
-      final raw = tester.widget<RawImage>(find.byType(RawImage));
-      expect(raw.color, Colors.grey);
-      expect(raw.colorBlendMode, BlendMode.saturation);
-    });
-
     testWidgets('draws the greyscale bitmap when greyscale', (tester) async {
       await tester.runAsync(() => SvgRasterCache.loadGrey(_path));
       await tester.pumpWidget(

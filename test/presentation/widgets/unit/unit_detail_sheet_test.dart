@@ -4,6 +4,7 @@ import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/unit/unit_detail_sheet.dart';
+import 'package:abyss/presentation/widgets/unit/unit_icon.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 final _defaultPlayer = Player(name: 'Tester');
@@ -102,6 +103,17 @@ void main() {
         await _openSheet(t);
         expect(find.byType(Slider), findsNothing);
       });
+
+      testWidgets('shows its illustration in greyscale', (t) async {
+        _useTallSurface(t);
+        await t.pumpWidget(_app(
+          unitType: UnitType.guardian,
+          isUnlocked: false,
+          barracksLevel: 0,
+        ));
+        await _openSheet(t);
+        expect(t.widget<UnitIcon>(find.byType(UnitIcon)).greyscale, isTrue);
+      });
     });
 
     group('unlocked unit', () {
@@ -136,6 +148,13 @@ void main() {
         await t.pumpWidget(_app(count: 5));
         await _openSheet(t);
         expect(find.byType(Slider), findsOneWidget);
+      });
+
+      testWidgets('shows its illustration in colour', (t) async {
+        _useTallSurface(t);
+        await t.pumpWidget(_app(count: 5));
+        await _openSheet(t);
+        expect(t.widget<UnitIcon>(find.byType(UnitIcon)).greyscale, isFalse);
       });
     });
   });

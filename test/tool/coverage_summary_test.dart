@@ -8,12 +8,19 @@ const _script = '.github/scripts/coverage_summary.sh';
 String _record(String file, int found, int hit) =>
     'SF:/repo/lib/$file\nLF:$found\nLH:$hit\nend_of_record\n';
 
-/// Runs the summary script on [lcov] and returns its Markdown report.
-String _summary(String lcov) {
+/// Runs the summary script on [lcov], with [minimum] as the coverage
+/// threshold when given.
+ProcessResult _run(String lcov, {String? minimum}) {
   final dir = Directory.systemTemp.createTempSync('coverage_summary');
   addTearDown(() => dir.deleteSync(recursive: true));
   final file = File('${dir.path}/lcov.info')..writeAsStringSync(lcov);
-  final result = Process.runSync('bash', [_script, file.path]);
+  return Process.runSync('bash', [_script, file.path],
+      environment: {if (minimum != null) 'COVERAGE_MIN': minimum});
+}
+
+/// Runs the summary script on [lcov] and returns its Markdown report.
+String _summary(String lcov) {
+  final result = _run(lcov);
   expect(result.exitCode, 0, reason: '${result.stderr}');
   return result.stdout as String;
 }
@@ -46,5 +53,24 @@ void main() {
         _record('presentation/l10n/l10n_extension.dart', 10, 0));
     expect(report, contains('## Code coverage: 50.0%'));
     expect(report, contains('l10n_extension.dart'));
+  });
+
+  group('with a minimum coverage', () {
+    final lcov = _record('domain/game/game.dart', 1000, 970);
+
+    test('passes when the coverage reaches it', () {
+      expect(_run(lcov, minimum: '97').exitCode, 0);
+    });
+
+    test('fails and says why when the coverage is below it', () {
+      final result = _run(lcov, minimum: '97.5');
+      expect(result.exitCode, 1);
+      expect(result.stderr, contains('97.00% is below the 97.5% minimum'));
+    });
+
+    test('still writes the report when it fails', () {
+      final result = _run(lcov, minimum: '98');
+      expect(result.stdout, contains('## Code coverage: 97.0%'));
+    });
   });
 }

@@ -60,12 +60,17 @@ class EventState {
 
   void schedule(int turn) => nextDrawTurn = turn;
 
-  /// Records the draw of [type], waiting for a choice during [turn].
-  void setPending(RandomEventType type, int turn) {
-    pending = type;
-    pendingTurn = turn;
+  /// Records the draw of [type], never drawn twice in a row.
+  void recordDraw(RandomEventType type) {
     lastDrawn = type;
     eventsSeen++;
+  }
+
+  /// Records the draw of [type], waiting for a choice during [turn].
+  void setPending(RandomEventType type, int turn) {
+    recordDraw(type);
+    pending = type;
+    pendingTurn = turn;
   }
 
   void clearPending() {

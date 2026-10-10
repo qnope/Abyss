@@ -1,5 +1,6 @@
 import 'package:hive_ce/hive.dart';
 import '../building/building_type.dart';
+import '../event/random_event_type.dart';
 import '../map/exploration_result.dart';
 import '../map/monster_lair.dart';
 import '../map/reinforcement_order.dart';
@@ -65,6 +66,14 @@ class TurnResult {
   /// the end of the next one.
   final MonsterLair? announcedWave;
 
+  /// Random event drawn at the end of this turn, if any; one with a
+  /// choice waits for it during the next turn.
+  final RandomEventType? event;
+
+  /// Event left without a choice this turn, settled with its prudent
+  /// option.
+  final RandomEventType? defaultedEvent;
+
   const TurnResult({
     required this.changes,
     required this.previousTurn,
@@ -79,5 +88,7 @@ class TurnResult {
     this.announcedRaidTurn,
     this.volcano,
     this.announcedWave,
+    this.event,
+    this.defaultedEvent,
   });
 }

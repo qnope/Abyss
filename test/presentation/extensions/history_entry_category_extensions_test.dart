@@ -17,6 +17,7 @@ void main() {
       expect(HistoryEntryCategory.capture.icon, Icons.flag);
       expect(HistoryEntryCategory.descent.icon, Icons.arrow_downward);
       expect(HistoryEntryCategory.reinforcement.icon, Icons.groups);
+      expect(HistoryEntryCategory.event.icon, Icons.auto_awesome);
     });
 
     test('returns a distinct icon for every category', () {
@@ -37,6 +38,7 @@ void main() {
       expect(HistoryEntryCategory.capture.label, 'Capture');
       expect(HistoryEntryCategory.descent.label, 'Descente');
       expect(HistoryEntryCategory.reinforcement.label, 'Renfort');
+      expect(HistoryEntryCategory.event.label, 'Événement');
     });
 
     test('returns a distinct, non-empty label for every category', () {

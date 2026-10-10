@@ -37,6 +37,8 @@ class HistoryEntryCategoryAdapter extends TypeAdapter<HistoryEntryCategory> {
         return HistoryEntryCategory.raid;
       case 11:
         return HistoryEntryCategory.volcano;
+      case 12:
+        return HistoryEntryCategory.event;
       default:
         return HistoryEntryCategory.combat;
     }
@@ -69,6 +71,8 @@ class HistoryEntryCategoryAdapter extends TypeAdapter<HistoryEntryCategory> {
         writer.writeByte(10);
       case HistoryEntryCategory.volcano:
         writer.writeByte(11);
+      case HistoryEntryCategory.event:
+        writer.writeByte(12);
     }
   }
 

@@ -128,7 +128,7 @@ void main() {
     final String source =
         File('scenarios/replays/victoire-tour-85.json').readAsStringSync();
     int recruits(ReplayVariant v) => ScriptRunner(maxTurns: 60)
-        .run(PlanScript.fromReplay(source, v), seed: 1)
+        .run(PlanScript.fromReplay(source, v), seed: 2)
         .log
         .where((e) => e.success && e.description.startsWith('Recruter'))
         .length;

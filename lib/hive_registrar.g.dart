@@ -54,6 +54,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(CombatantAdapter());
     registerAdapter(DescentEntryAdapter());
     registerAdapter(DifficultyAdapter());
+    registerAdapter(EventEntryAdapter());
     registerAdapter(EventStateAdapter());
     registerAdapter(ExplorationOrderAdapter());
     registerAdapter(ExploreEntryAdapter());
@@ -107,6 +108,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(CombatantAdapter());
     registerAdapter(DescentEntryAdapter());
     registerAdapter(DifficultyAdapter());
+    registerAdapter(EventEntryAdapter());
     registerAdapter(EventStateAdapter());
     registerAdapter(ExplorationOrderAdapter());
     registerAdapter(ExploreEntryAdapter());

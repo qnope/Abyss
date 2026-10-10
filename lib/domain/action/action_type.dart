@@ -11,5 +11,6 @@ enum ActionType {
   attackTransitionBase,
   attackVolcanicKernel,
   garrisonKernel,
+  chooseEvent,
   endTurn,
 }

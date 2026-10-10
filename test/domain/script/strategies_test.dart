@@ -46,10 +46,10 @@ void main() {
 
   // The 15 % target of the normal difficulty is measured on a human plan
   // and on the careful script (calibration_test.dart); the careful script
-  // wins about 1 game in 6 in normal, seed 12 is a loss.
+  // wins about 1 game in 6 in normal, seed 0 is a loss.
   test('the careful script loses most games', () {
     final run =
-        ScriptRunner(maxTurns: 100).run(const ConquestStrategy(), seed: 12);
+        ScriptRunner(maxTurns: 100).run(const ConquestStrategy(), seed: 0);
 
     expect(run.isVictory, isFalse);
   }, timeout: const Timeout(Duration(minutes: 5)));

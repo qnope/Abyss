@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../domain/history/history_entry.dart';
 import '../theme/abyss_colors.dart';
 import 'history_entry_category_extensions.dart';
+import 'random_event_type_extensions.dart';
 
 /// Display primitives for a concrete [HistoryEntry]. Centralises the
 /// sealed-type switch so widget code (see `HistoryEntryCard`) stays dumb
@@ -25,7 +26,8 @@ extension HistoryEntryDisplay on HistoryEntry {
     CollectEntry() ||
     TurnEndEntry() ||
     DescentEntry() ||
-    ReinforcementEntry() => category.backgroundColor(theme),
+    ReinforcementEntry() ||
+    EventEntry() => category.backgroundColor(theme),
   };
 
   /// Whether tapping this entry should open a detail view.
@@ -44,6 +46,13 @@ extension HistoryEntryDisplay on HistoryEntry {
     CollectEntry() ||
     TurnEndEntry() ||
     DescentEntry() ||
-    ReinforcementEntry() => false,
+    ReinforcementEntry() ||
+    EventEntry() => false,
+  };
+
+  /// Title shown on the card: an event is named after its type.
+  String get displayTitle => switch (this) {
+    EventEntry(:final type) => type.label,
+    _ => title,
   };
 }

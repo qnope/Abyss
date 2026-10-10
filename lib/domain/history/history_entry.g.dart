@@ -596,3 +596,46 @@ class VolcanoEntryAdapter extends TypeAdapter<VolcanoEntry> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class EventEntryAdapter extends TypeAdapter<EventEntry> {
+  @override
+  final typeId = 52;
+
+  @override
+  EventEntry read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return EventEntry(
+      turn: (fields[0] as num).toInt(),
+      type: fields[4] as RandomEventType,
+      accepted: fields[5] as bool,
+      defaulted: fields[6] as bool,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, EventEntry obj) {
+    writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.turn)
+      ..writeByte(4)
+      ..write(obj.type)
+      ..writeByte(5)
+      ..write(obj.accepted)
+      ..writeByte(6)
+      ..write(obj.defaulted);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is EventEntryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

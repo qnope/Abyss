@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:abyss/domain/action/choose_event_action.dart';
 import 'package:abyss/domain/action/fight_monster_action.dart';
 import 'package:abyss/domain/action/recruit_unit_action.dart';
 import 'package:abyss/domain/action/research_tech_action.dart';
@@ -74,6 +75,31 @@ void main() {
           'branch': 'military',
           'option': 'c',
         })(Random(1)),
+        throwsFormatException,
+      );
+    });
+
+    test('reads the choice of an event', () {
+      final accepted = ActionCodec.decode(
+        <String, Object?>{'do': 'event', 'accept': true},
+      )(Random(1)) as ChooseEventAction;
+      final refused = ActionCodec.decode(
+        <String, Object?>{'do': 'event', 'accept': false},
+      )(Random(1)) as ChooseEventAction;
+
+      expect(accepted.accept, isTrue);
+      expect(refused.accept, isFalse);
+    });
+
+    test('rejects the choice of an event without a boolean', () {
+      expect(
+        () => ActionCodec.decode(<String, Object?>{'do': 'event'}),
+        throwsFormatException,
+      );
+      expect(
+        () => ActionCodec.decode(
+          <String, Object?>{'do': 'event', 'accept': 'yes'},
+        ),
         throwsFormatException,
       );
     });

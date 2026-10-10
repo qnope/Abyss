@@ -3,6 +3,7 @@ import 'dart:math';
 import '../action/action.dart';
 import '../action/attack_transition_base_action.dart';
 import '../action/attack_volcanic_kernel_action.dart';
+import '../action/choose_event_action.dart';
 import '../action/collect_treasure_action.dart';
 import '../action/descend_action.dart';
 import '../action/explore_action.dart';
@@ -92,6 +93,7 @@ abstract final class ActionEncoder {
         'do': a.withdraw ? 'withdraw' : 'garrison',
         'units': _unitsOf(a.selectedUnits),
       },
+      ChooseEventAction a => {'do': 'event', 'accept': a.accept},
       _ => null,
     };
   }

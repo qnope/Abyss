@@ -1,5 +1,7 @@
 import 'package:hive_ce/hive.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/event/random_event_choice.dart';
+import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/fight/fight_result.dart';
 import 'package:abyss/domain/history/history_entry_category.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
@@ -20,6 +22,7 @@ part 'entries/descent_entry.dart';
 part 'entries/reinforcement_entry.dart';
 part 'entries/raid_entry.dart';
 part 'entries/volcano_entry.dart';
+part 'entries/event_entry.dart';
 part 'history_entry.g.dart';
 
 /// Abstract base class for all history entries.

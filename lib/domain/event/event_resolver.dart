@@ -5,6 +5,8 @@ import '../game/player.dart';
 import '../history/history_entry.dart';
 import '../raid/raid_report.dart';
 import 'effects/predators_effect.dart';
+import 'effects/wreck_effect.dart';
+import 'effects/wreck_ending.dart';
 import 'event_drawer.dart';
 import 'event_effects.dart';
 import 'event_state.dart';
@@ -17,7 +19,8 @@ export 'event_turn_outcome.dart';
 /// End-of-turn step of the random events, after the production and the
 /// raid: upkeeps the lasting effect, fights the predators faced this turn,
 /// settles the event left without a choice, ends the lasting effects and
-/// what the events left on the map, then draws the next event when due.
+/// what the events left on the map (the wreck searched or sunk), then
+/// draws the next event when due.
 abstract final class EventResolver {
   static EventTurnOutcome resolve(
     Game game,
@@ -35,10 +38,16 @@ abstract final class EventResolver {
     final RandomEventType? defaulted = _settle(game, player, endedTurn, dice);
     player.eventState.expireEffects(endedTurn + 1);
     EventEffects.endTurn(game, player, turn: endedTurn);
+    final WreckEnding? wreck = WreckEffect.settle(
+      game,
+      player,
+      turn: endedTurn,
+    );
     return EventTurnOutcome(
       drawn: _draw(game, player, endedTurn, dice),
       defaulted: defaulted,
       predators: predators,
+      wreck: wreck,
     );
   }
 

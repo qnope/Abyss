@@ -6,6 +6,7 @@ import '../game/game.dart';
 import '../map/exploration_resolver.dart';
 import '../map/reinforcement_resolver.dart';
 import '../objective/objective_resolver.dart';
+import '../objective/temporary/temporary_objectives.dart';
 import '../raid/raid_resolver.dart';
 import '../volcano/volcano_resolver.dart';
 import '../resource/pearl_income.dart';
@@ -85,6 +86,7 @@ class TurnResolver {
       defaultedEvent: event.defaulted,
       predators: event.predators,
       objectives: objectives[humanId]!,
+      temporaryObjectives: TemporaryObjectives.endedBy(event),
     );
   }
 }

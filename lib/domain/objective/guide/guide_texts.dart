@@ -74,7 +74,39 @@ abstract final class GuideTexts {
       '$untilTurn. Recrute un Éclaireur dans l\'onglet Armée pour aller la '
       'fouiller.';
 
-  static String raidIncoming(int arrivalTurn) =>
-      'Un raid frappera ta base à la fin du tour $arrivalTurn ! Recrute des '
-      'Harponneurs dans l\'onglet Armée pour le repousser.';
+  /// The first raid of [monsters] monsters, out of reach of any number
+  /// of harpoonists.
+  static String raidOutOfReach(int arrivalTurn, int monsters) =>
+      '${_raid(arrivalTurn, monsters)} Recrute autant de Harponneurs que '
+      'tu peux dans l\'onglet Armée.';
+
+  /// The first raid, which [needed] harpoonists on level 1 push back:
+  /// [missing] more, recruited now if [canRecruit], else on the next turn
+  /// unless the raid comes at the end of this one ([lastTurn]).
+  static String raidShortOf(
+    int arrivalTurn,
+    int monsters, {
+    required int needed,
+    required int missing,
+    required bool canRecruit,
+    required bool lastTurn,
+  }) {
+    final String them = missing > 1 ? 'les' : 'le';
+    final String then = canRecruit
+        ? 'Recrute-$them dans l\'onglet Armée.'
+        : lastTurn
+        ? 'Tu as déjà recruté ce tour : termine-le et tiens bon.'
+        : 'Tu as déjà recruté ce tour : recrute-$them au prochain tour.';
+    return '${_raid(arrivalTurn, monsters)} Aie au moins $needed '
+        '${needed > 1 ? 'Harponneurs' : 'Harponneur'} au niveau 1 : il '
+        't\'en manque $missing. $then';
+  }
+
+  /// The first raid, which the base should push back as it stands.
+  static String raidHeld(int arrivalTurn, int monsters) =>
+      '${_raid(arrivalTurn, monsters)} Ta défense devrait le repousser : '
+      'termine le tour pour l\'attendre.';
+
+  static String _raid(int arrivalTurn, int monsters) =>
+      'Le raid arrive au tour $arrivalTurn avec $monsters monstres.';
 }

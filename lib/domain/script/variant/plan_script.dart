@@ -4,7 +4,7 @@ import 'dart:math';
 import '../../replay/seeded_random.dart';
 import '../game_script.dart';
 import '../script_turn.dart';
-import '../strategies/army_planner.dart';
+import '../../fight/army_planner.dart';
 import '../strategies/kernel_guard_moves.dart';
 import '../strategies/battle_moves.dart';
 import '../strategies/event_moves.dart';

@@ -7,7 +7,7 @@ import '../../map/grid_position.dart';
 import '../../unit/unit_type.dart';
 import '../game_script.dart';
 import '../script_turn.dart';
-import 'army_planner.dart';
+import '../../fight/army_planner.dart';
 import 'battle_moves.dart';
 import 'conquest_moves.dart';
 import 'event_moves.dart';

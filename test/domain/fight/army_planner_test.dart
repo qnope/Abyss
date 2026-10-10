@@ -3,7 +3,7 @@ import 'package:abyss/domain/fight/combatant_builder.dart';
 import 'package:abyss/domain/fight/guardian_factory.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
-import 'package:abyss/domain/script/strategies/army_planner.dart';
+import 'package:abyss/domain/fight/army_planner.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 

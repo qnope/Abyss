@@ -9,7 +9,7 @@ import '../../map/monster_lair.dart';
 import '../../raid/raid_battle.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
-import 'army_planner.dart';
+import '../../fight/army_planner.dart';
 import 'expedition_moves.dart';
 import 'explore_moves.dart';
 import 'recruit_moves.dart';

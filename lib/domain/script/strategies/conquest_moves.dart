@@ -6,7 +6,7 @@ import '../../map/grid_position.dart';
 import '../../map/transition_base_type.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
-import 'army_planner.dart';
+import '../../fight/army_planner.dart';
 import 'expedition_moves.dart';
 import 'recruit_moves.dart';
 

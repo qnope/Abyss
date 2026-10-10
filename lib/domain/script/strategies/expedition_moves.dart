@@ -11,7 +11,7 @@ import '../../fight/unit_boost.dart';
 import '../../tech/tech_effects.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
-import 'army_planner.dart';
+import '../../fight/army_planner.dart';
 import 'explore_moves.dart';
 
 /// Moves of the conquest: assaulting transition bases and the volcanic

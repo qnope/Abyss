@@ -32,23 +32,21 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   @override
   Widget build(BuildContext context) {
     final resumable = _saves.mostRecentInProgress;
+    final l10n = context.l10n;
     return Scaffold(
       body: AbyssBackdrop(
         child: MenuLayout(
-          header: const GlowTitle(
-            title: 'ABYSSES',
-            subtitle: 'Les profondeurs vous attendent',
-          ),
+          header: GlowTitle(title: 'ABYSSES', subtitle: l10n.menuSubtitle),
           actions: [
             if (resumable != null)
               MenuButton(
-                label: 'CONTINUER',
-                subtitle: SaveSummary.of(resumable).resumeLabel(context.l10n),
+                label: l10n.menuContinue,
+                subtitle: SaveSummary.of(resumable).resumeLabel(l10n),
                 onPressed:
                     () => resumeGame(context, resumable, widget.repository),
               ),
             MenuButton(
-              label: 'NOUVELLE PARTIE',
+              label: l10n.menuNewGame,
               variant:
                   resumable == null
                       ? MenuButtonVariant.primary
@@ -57,7 +55,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                   () => _open(NewGameScreen(repository: widget.repository)),
             ),
             MenuButton(
-              label: 'CHARGER UNE PARTIE',
+              label: l10n.menuLoadGame,
               variant: MenuButtonVariant.outlined,
               badgeCount: _saves.count,
               onPressed:

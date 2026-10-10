@@ -77,7 +77,7 @@ void main() {
         ));
         await _openSheet(t);
         expect(
-          find.text('Caserne niveau 3 requise pour debloquer'),
+          find.text('Caserne niveau 3 requise pour débloquer'),
           findsOneWidget,
         );
       });
@@ -132,7 +132,7 @@ void main() {
         await t.pumpWidget(_app(count: 5));
         await _openSheet(t);
         expect(find.text('PV: 10'), findsOneWidget);
-        expect(find.text('ATQ: 2'), findsOneWidget);
+        expect(find.text('ATK: 2'), findsOneWidget);
         expect(find.text('DEF: 1'), findsOneWidget);
       });
 
@@ -140,7 +140,7 @@ void main() {
         _useTallSurface(t);
         await t.pumpWidget(_app(count: 5));
         await _openSheet(t);
-        expect(find.text('En service: 5'), findsOneWidget);
+        expect(find.text('En service : 5'), findsOneWidget);
       });
 
       testWidgets('shows recruitment section', (t) async {

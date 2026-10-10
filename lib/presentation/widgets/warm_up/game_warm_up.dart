@@ -31,7 +31,7 @@ final List<WidgetBuilder> gameWarmUpPages = [
 ];
 
 const _glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz '
-    "0123456789 éèêëàâçîïôûù'·:+-/.,()";
+    "0123456789 éèêëàâçîïôûùáíóúñüÉÁÍÓÚÑ¿¡'·:+-/.,()";
 
 class _CardsPage extends StatelessWidget {
   const _CardsPage();

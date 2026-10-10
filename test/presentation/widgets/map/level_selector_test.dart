@@ -28,9 +28,9 @@ void main() {
     testWidgets('renders 3 level chips', (tester) async {
       await tester.pumpWidget(buildApp());
 
-      expect(find.text('Niv 1: Surface'), findsOneWidget);
-      expect(find.text('Niv 2: Profondeurs'), findsOneWidget);
-      expect(find.text('Niv 3: Noyau'), findsOneWidget);
+      expect(find.text('Niv. 1 : Surface'), findsOneWidget);
+      expect(find.text('Niv. 2 : Profondeurs'), findsOneWidget);
+      expect(find.text('Niv. 3 : Noyau'), findsOneWidget);
     });
 
     testWidgets('names the levels in English and Spanish', (tester) async {
@@ -69,7 +69,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.text('Niv 2: Profondeurs'));
+      await tester.tap(find.text('Niv. 2 : Profondeurs'));
       await tester.pump();
 
       expect(taps, isEmpty);
@@ -86,7 +86,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.text('Niv 2: Profondeurs'));
+      await tester.tap(find.text('Niv. 2 : Profondeurs'));
       await tester.pump();
 
       expect(taps, [2]);

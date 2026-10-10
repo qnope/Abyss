@@ -8,6 +8,8 @@ import '../../../domain/game/game.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../../domain/replay/seeded_random.dart';
+import '../../extensions/transition_base_name_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import 'descent_dialog.dart';
 import 'fight/transition_army_selection_screen.dart';
 import 'reinforcement_dialog.dart';
@@ -54,7 +56,7 @@ void handleDescend(
     builder: (_) => DescentDialog(
       availableUnits: human.unitsOnLevel(level),
       targetLevel: transitionBase.targetLevel,
-      transitionBaseName: transitionBase.name,
+      transitionBaseName: transitionBase.displayName(context.l10n),
       onConfirm: (selected) => _executeDescent(
         context, game, repository, x, y, level, selected,
         targetLevel: transitionBase.targetLevel,
@@ -91,7 +93,7 @@ void _executeDescent(
   final descResult = result as DescendResult;
   onLevelSelected(descResult.targetLevel!);
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('Descente au Niveau $targetLevel effectuee')),
+    SnackBar(content: Text(context.l10n.screenDescentDone(targetLevel))),
   );
 }
 
@@ -111,7 +113,7 @@ void handleSendReinforcements(
     builder: (_) => ReinforcementDialog(
       availableUnits: human.unitsOnLevel(level),
       targetLevel: transitionBase.targetLevel,
-      transitionBaseName: transitionBase.name,
+      transitionBaseName: transitionBase.displayName(context.l10n),
       onConfirm: (selected) => _executeReinforcements(
         context, game, repository, x, y, level, selected,
         targetLevel: transitionBase.targetLevel,
@@ -132,18 +134,16 @@ void _executeReinforcements(
   required int targetLevel,
   required VoidCallback onChanged,
 }) {
-  final action = SendReinforcementsAction(
-    transitionX: x,
-    transitionY: y,
-    fromLevel: fromLevel,
-    selectedUnits: selected,
-  );
+  final action = SendReinforcementsAction(transitionX: x, transitionY: y,
+      fromLevel: fromLevel, selectedUnits: selected);
   final result = ActionExecutor().execute(action, game, game.humanPlayer);
   if (!result.isSuccess) return;
   repository.save(game);
   onChanged();
   final total = selected.values.fold(0, (a, b) => a + b);
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('$total unites en transit vers Niveau $targetLevel')),
+    SnackBar(
+      content: Text(context.l10n.screenReinforcementsSent(total, targetLevel)),
+    ),
   );
 }

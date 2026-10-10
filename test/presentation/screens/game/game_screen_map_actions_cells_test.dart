@@ -52,7 +52,7 @@ void main() {
   testWidgets('an empty cell shows a plain', (tester) async {
     await tapCellWith(tester, cellOf(CellContentType.empty), x: 1, y: 4);
     expect(find.text('Plaine (1, 4)'), findsOneWidget);
-    expect(find.text("Il n'y a rien a voir ici"), findsOneWidget);
+    expect(find.text("Il n'y a rien à voir ici"), findsOneWidget);
   });
 
   testWidgets('a transition base cell without base acts as a plain',

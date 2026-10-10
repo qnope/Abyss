@@ -69,7 +69,7 @@ void main() {
     await open(tester, (ctx) => handleAttackTransitionBase(
         ctx, g, repo, faille(g), kFailleX, kFailleY, 1, () => changed++));
     expect(find.byType(TransitionArmySelectionScreen), findsOneWidget);
-    expect(find.text('Assaut: Faille Alpha'), findsOneWidget);
+    expect(find.text('Assaut : Faille Alpha'), findsOneWidget);
   });
 
   group('handleDescend', () {
@@ -77,16 +77,16 @@ void main() {
         (tester) async {
       final g = scenario(captured: true);
       await open(tester, (ctx) => descend(ctx, g));
-      expect(find.text('Descente vers Niveau 2'), findsOneWidget);
+      expect(find.text('Descente vers le Niveau 2'), findsOneWidget);
       await pickOneScout(tester);
-      await tester.tap(find.text('Descendre (1 unites)'));
+      await tester.tap(find.text('Descendre (1 unité)'));
       await tester.pumpAndSettle();
 
       expect(levels, [2]);
       expect(changed, 1);
       expect(repo.saveCallCount, 1);
       expect(g.humanPlayer.unitsOnLevel(2)[UnitType.scout]!.count, 1);
-      expect(find.text('Descente au Niveau 2 effectuee'), findsOneWidget);
+      expect(find.text('Descente au Niveau 2 effectuée'), findsOneWidget);
     });
 
     testWidgets('does nothing when the base is not captured',
@@ -94,7 +94,7 @@ void main() {
       final g = scenario();
       await open(tester, (ctx) => descend(ctx, g));
       await pickOneScout(tester);
-      await tester.tap(find.text('Descendre (1 unites)'));
+      await tester.tap(find.text('Descendre (1 unité)'));
       await tester.pumpAndSettle();
 
       expect(levels, isEmpty);
@@ -108,15 +108,15 @@ void main() {
     testWidgets('confirming queues reinforcements', (tester) async {
       final g = scenario(captured: true, level2: true);
       await open(tester, (ctx) => reinforce(ctx, g));
-      expect(find.text('Renforts vers Niveau 2'), findsOneWidget);
+      expect(find.text('Renforts vers le Niveau 2'), findsOneWidget);
       await pickOneScout(tester);
-      await tester.tap(find.text('Envoyer (1 unites)'));
+      await tester.tap(find.text('Envoyer (1 unité)'));
       await tester.pumpAndSettle();
 
       expect(changed, 1);
       expect(repo.saveCallCount, 1);
       expect(g.humanPlayer.pendingReinforcements, hasLength(1));
-      expect(find.text('1 unites en transit vers Niveau 2'), findsOneWidget);
+      expect(find.text('1 unité en transit vers le Niveau 2'), findsOneWidget);
     });
 
     testWidgets('does nothing when the target level is unexplored',
@@ -124,7 +124,7 @@ void main() {
       final g = scenario(captured: true);
       await open(tester, (ctx) => reinforce(ctx, g));
       await pickOneScout(tester);
-      await tester.tap(find.text('Envoyer (1 unites)'));
+      await tester.tap(find.text('Envoyer (1 unité)'));
       await tester.pumpAndSettle();
 
       expect(changed, 0);

@@ -34,7 +34,7 @@ void main() {
         isVolcanicKernelCaptured: false,
       ));
       await openSheet(t);
-      expect(find.text('Noyau Volcanique capture requis'), findsOneWidget);
+      expect(find.text('Noyau Volcanique capturé requis'), findsOneWidget);
     });
 
     testWidgets('hides kernel row when kernel captured', (t) async {
@@ -47,7 +47,7 @@ void main() {
         isVolcanicKernelCaptured: true,
       ));
       await openSheet(t);
-      expect(find.text('Noyau Volcanique capture requis'), findsNothing);
+      expect(find.text('Noyau Volcanique capturé requis'), findsNothing);
     });
 
     testWidgets('button disabled when kernel not captured', (t) async {

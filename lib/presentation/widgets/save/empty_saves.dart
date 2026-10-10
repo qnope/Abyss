@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../menu/menu_button.dart';
 import '../common/raster_svg.dart';
@@ -57,6 +58,7 @@ class EmptySaves extends StatelessWidget {
 
   Widget _content(BuildContext context, double sonar) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: maxWidth),
       child: Column(
@@ -65,20 +67,20 @@ class EmptySaves extends StatelessWidget {
           RasterSvg(assetPath: illustration, size: sonar),
           const SizedBox(height: 24),
           Text(
-            'Aucune colonie détectée',
+            l10n.saveEmptyTitle,
             textAlign: TextAlign.center,
             style: textTheme.headlineLarge?.copyWith(fontSize: 26),
           ),
           const SizedBox(height: 8),
           Text(
-            'Fondez votre première base dans les abysses.',
+            l10n.saveEmptyMessage,
             textAlign: TextAlign.center,
             style: textTheme.bodyMedium?.copyWith(
               color: AbyssColors.onSurfaceDim,
             ),
           ),
           const SizedBox(height: 28),
-          MenuButton(label: 'NOUVELLE PARTIE', onPressed: onNewGame),
+          MenuButton(label: l10n.menuNewGame, onPressed: onNewGame),
         ],
       ),
     );

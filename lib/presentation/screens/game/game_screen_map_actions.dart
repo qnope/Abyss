@@ -1,37 +1,23 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
-import '../../../domain/action/action_executor.dart';
-import '../../../domain/action/collect_treasure_action.dart';
-import '../../../domain/action/collect_treasure_result.dart';
-import '../../../domain/action/explore_action.dart';
-import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
-import '../../../domain/game/player.dart';
 import '../../../domain/map/cell_content_type.dart';
-import '../../../domain/map/cell_eligibility_checker.dart';
 import '../../../domain/map/grid_position.dart';
-import '../../../domain/map/transition_base.dart';
-import '../../../domain/map/transition_base_type.dart';
-import '../../../domain/tech/tech_effects.dart';
-import '../../../domain/unit/unit_type.dart';
-import '../../../domain/replay/seeded_random.dart';
-import '../../extensions/action_failure_extensions.dart';
 import '../../extensions/event_state_extensions.dart';
+import '../../extensions/transition_base_name_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../../widgets/map/cell_info_sheet.dart';
-import '../../widgets/map/exploration_sheet.dart';
 import '../../widgets/map/game_map_view.dart';
 import '../../widgets/map/level_selector.dart';
 import '../../widgets/map/monster_lair_sheet.dart';
-import '../../widgets/map/transition_base_sheet.dart';
 import '../../widgets/map/treasure_sheet.dart';
 import '../../widgets/map/volcanic_kernel_sheet.dart';
-import '../../widgets/resource/resource_gain_dialog.dart';
+import 'game_screen_base_sheet.dart';
 import 'game_screen_collect_messages.dart';
+import 'game_screen_exploration_flow.dart';
 import 'game_screen_fight_actions.dart';
 import 'game_screen_kernel_actions.dart';
-import 'game_screen_transition_actions.dart';
 
 Widget buildMapTab(
   BuildContext context, Game game, GameRepository repository, {
@@ -82,25 +68,29 @@ void _showCellAction(BuildContext context, Game game,
 }) {
   final cell = game.levels[level]!.cellAt(x, y);
   final human = game.humanPlayer;
+  final l10n = context.l10n;
   if (!human.revealedCellsSetOnLevel(level).contains(
         GridPosition(x: x, y: y))) {
-    _showExplorationFlow(context, game, x, y, level, onChanged);
+    showExplorationFlow(context, game, x, y, level, onChanged);
     return;
   }
   // A captured kernel is "collected" too, but it keeps its own sheet: that
   // is where the garrison is managed.
   if (cell.isCollected && cell.content != CellContentType.volcanicKernel) {
     showCellInfoSheet(context,
-      title: 'Déjà visité', message: 'Vous êtes déjà venu par ici',
+      title: l10n.screenAlreadyVisitedTitle,
+      message: l10n.screenAlreadyVisitedMessage,
       icon: Icons.check_circle_outline);
     return;
   }
   if (x == human.baseX && y == human.baseY) {
     showCellInfoSheet(context,
-      title: 'Votre base', message: 'Votre quartier général',
+      title: l10n.screenYourBaseTitle,
+      message: l10n.screenYourBaseMessage,
       icon: Icons.home);
     return;
   }
+  final base = cell.transitionBase;
   switch (cell.content) {
     case CellContentType.resourceBonus:
     case CellContentType.ruins:
@@ -108,9 +98,8 @@ void _showCellAction(BuildContext context, Game game,
       showTreasureSheet(context, targetX: x, targetY: y,
         contentType: cell.content,
         notice: human.eventState
-            .wreckCountdownAt(context.l10n, x, y, level, game.turn),
-        onCollect: () =>
-            _collectTreasure(
+            .wreckCountdownAt(l10n, x, y, level, game.turn),
+        onCollect: () => collectTreasure(
             context, game, x, y, level, cell.content, onChanged));
     case CellContentType.monsterLair:
       showMonsterLairSheet(context, targetX: x, targetY: y,
@@ -118,41 +107,27 @@ void _showCellAction(BuildContext context, Game game,
         onPrepareFight: () => openArmySelection(
             context, game, repository, x, y, cell.lair!, onChanged,
             level: level));
-    case CellContentType.transitionBase:
-      final base = cell.transitionBase;
-      if (base == null) {
-        showCellInfoSheet(context, title: 'Plaine ($x, $y)',
-          message: "Il n'y a rien a voir ici");
-        return;
-      }
-      final human = game.humanPlayer;
-      showTransitionBaseSheet(context,
-        transitionBase: base, level: level,
-        hasBuildingRequirement: _hasBuildingFor(human, base),
-        requiredBuilding: _requiredBuildingFor(base),
-        unitCountOnTarget: _unitCountOnLevel(human, base.targetLevel),
-        onAttack: () => handleAttackTransitionBase(
-          context, game, repository, base, x, y, level, onChanged),
-        onDescend: () => handleDescend(
-          context, game, repository, base, x, y, level,
-          onChanged: onChanged, onLevelSelected: onLevelSelected),
-      );
+    case CellContentType.transitionBase when base != null:
+      openTransitionBaseSheet(context, game, repository, base, x, y, level,
+          onChanged: onChanged, onLevelSelected: onLevelSelected);
     case CellContentType.passage:
-      final name = cell.passageName ?? 'passage inconnu';
+      final name = cell.passageName;
       showCellInfoSheet(context,
-        title: 'Passage vers $name',
-        message: 'Ce lieu marque un passage vers le niveau inferieur.',
+        title: l10n.screenPassageTitle(name == null
+            ? l10n.screenUnknownPassage
+            : baseNameLabel(l10n, name)),
+        message: l10n.screenPassageMessage,
         icon: Icons.blur_circular,
         iconColor: AbyssColors.biolumPurple,
       );
+    case CellContentType.transitionBase:
     case CellContentType.empty:
-      showCellInfoSheet(context, title: 'Plaine ($x, $y)',
-        message: "Il n'y a rien a voir ici");
+      showCellInfoSheet(context, title: l10n.screenPlainTitle(x, y),
+        message: l10n.screenNothingToSee);
     case CellContentType.volcanicKernel:
-      final isCaptured = cell.collectedBy == human.id;
       showVolcanicKernelSheet(
         context,
-        isCaptured: isCaptured,
+        isCaptured: cell.collectedBy == human.id,
         player: human,
         onAttack: () => handleAttackVolcanicKernel(
           context, game, repository, x, y, level, onChanged,
@@ -163,69 +138,4 @@ void _showCellAction(BuildContext context, Game game,
           context, game, repository, onChanged, withdraw: true),
       );
   }
-}
-
-void _showExplorationFlow(
-  BuildContext context,
-  Game game,
-  int x,
-  int y,
-  int level,
-  VoidCallback onChanged,
-) {
-  final human = game.humanPlayer;
-  final scoutCount = human.unitsOnLevel(level)[UnitType.scout]?.count ?? 0;
-  final revealSide = TechEffects(human.techBranches).revealSide;
-  final isEligible =
-      CellEligibilityChecker.isEligible(
-        game.levels[level]!, human, x, y, level: level,
-      );
-
-  final action = ExploreAction(targetX: x, targetY: y, level: level);
-  showExplorationSheet(
-    context,
-    targetX: x,
-    targetY: y,
-    scoutCount: scoutCount,
-    revealSide: revealSide,
-    isEligible: isEligible,
-    notice: human.eventState
-        .wreckCountdownAt(context.l10n, x, y, level, game.turn),
-    refusal: action.validate(game, human).reason?.message(context.l10n),
-    onConfirm: () {
-      final result = ActionExecutor().execute(action, game, human);
-      if (result.isSuccess) onChanged();
-    },
-  );
-}
-
-void _collectTreasure(BuildContext context, Game game, int x, int y,
-    int level, CellContentType content, VoidCallback onChanged) {
-  final action = CollectTreasureAction(
-      targetX: x, targetY: y, level: level, random: SeededRandom.fresh());
-  final result = ActionExecutor().execute(action, game, game.humanPlayer);
-  if (!result.isSuccess) return;
-  onChanged();
-  if (result is! CollectTreasureResult) return;
-  showResourceGainDialog(context,
-      title: titleFor(content),
-      deltas: result.deltas,
-      emptyMessage: emptyMessageFor(content));
-}
-
-bool _hasBuildingFor(Player player, TransitionBase base) {
-  final buildingType = base.type == TransitionBaseType.faille
-      ? BuildingType.descentModule
-      : BuildingType.pressureCapsule;
-  return (player.buildings[buildingType]?.level ?? 0) > 0;
-}
-
-BuildingType _requiredBuildingFor(TransitionBase base) =>
-    base.type == TransitionBaseType.faille
-        ? BuildingType.descentModule
-        : BuildingType.pressureCapsule;
-
-int _unitCountOnLevel(Player player, int level) {
-  final units = player.unitsOnLevel(level);
-  return units.values.fold<int>(0, (sum, u) => sum + u.count);
 }

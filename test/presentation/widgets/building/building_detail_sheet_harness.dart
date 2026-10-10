@@ -6,8 +6,10 @@ import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/worksite/worksite.dart';
-import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/l10n/abyss_locale.dart';
 import 'package:abyss/presentation/widgets/building/building_detail_sheet.dart';
+
+import '../../../helpers/localized_app.dart';
 
 final defaultPlayer = Player(name: 'Tester');
 
@@ -18,10 +20,11 @@ Widget buildSheetApp({
   bool isVolcanicKernelCaptured = false,
   Worksite? worksite,
   VoidCallback? onUpgrade,
+  Locale locale = AbyssLocale.fr,
 }) {
-  return MaterialApp(
-    theme: AbyssTheme.create(),
-    home: Scaffold(
+  return localizedApp(
+    locale: locale,
+    Scaffold(
       body: Builder(
         builder: (ctx) => ElevatedButton(
           onPressed: () => showBuildingDetailSheet(

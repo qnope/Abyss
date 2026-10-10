@@ -40,7 +40,7 @@ void main() {
     tester,
   ) async {
     final game = _game(faced: true);
-    final warning = dueWarnings(game, game.humanPlayer);
+    final warning = dueWarnings(fr, game, game.humanPlayer);
     expect(warning, isA<RaidDueWarning>());
     final raid = warning! as RaidDueWarning;
     expect(raid.lastChance, isFalse);
@@ -60,7 +60,7 @@ void main() {
     tester,
   ) async {
     final game = _game(faced: false);
-    final warning = dueWarnings(game, game.humanPlayer);
+    final warning = dueWarnings(fr, game, game.humanPlayer);
     expect(warning, isA<EventPendingWarning>());
     await _show(tester, warning);
     expect(
@@ -77,13 +77,13 @@ void main() {
     game.humanPlayer.eventState
       ..clearPending()
       ..clearPredators();
-    expect(dueWarnings(game, game.humanPlayer), isNull);
+    expect(dueWarnings(fr, game, game.humanPlayer), isNull);
   });
 
   testWidgets('a raid due this turn still says "Raid"', (tester) async {
     final game = _game(faced: false);
     game.humanPlayer.raidState.announce(wave, 12);
-    await _show(tester, dueWarnings(game, game.humanPlayer));
+    await _show(tester, dueWarnings(fr, game, game.humanPlayer));
     expect(find.textContaining('Raid ce tour : '), findsOneWidget);
     expect(find.text(_lastChance), findsOneWidget);
   });

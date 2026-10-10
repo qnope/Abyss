@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/building/coral_citadel_rampart.dart';
 import '../../../../domain/raid/raid_report.dart';
+import '../../../extensions/rampart_texts.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../../../theme/abyss_colors.dart';
 import '../../../widgets/fight/fight_kill_count.dart';
@@ -79,7 +79,7 @@ class RaidSummaryScreen extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.fort, color: AbyssColors.coralPink),
         title: Text(context.l10n.raidRampart(report.rampartLevel)),
-        subtitle: Text(CoralCitadelRampart.label(report.rampartLevel)),
+        subtitle: Text(RampartTexts.coral(context.l10n, report.rampartLevel)),
       ),
     );
   }

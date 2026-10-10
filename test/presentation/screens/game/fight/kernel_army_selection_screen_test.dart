@@ -39,14 +39,14 @@ void main() {
   }
 
   group('KernelArmySelectionScreen', () {
-    testWidgets('displays Assaut: Noyau Volcanique title', (tester) async {
+    testWidgets('displays Assaut : Noyau Volcanique title', (tester) async {
       await tester.pumpWidget(buildApp(
         repository: FakeGameRepository(),
         onChanged: () {},
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('Assaut: Noyau Volcanique'), findsOneWidget);
+      expect(find.text('Assaut : Noyau Volcanique'), findsOneWidget);
     });
 
     testWidgets('admiral required warning shown when no admiral selected',

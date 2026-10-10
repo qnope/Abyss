@@ -56,8 +56,8 @@ class BuildingCard extends StatelessWidget {
             ),
             Text(
               _isBuilt
-                  ? 'Niveau ${building.level}'
-                  : 'Non construit',
+                  ? context.l10n.baseLevel(building.level)
+                  : context.l10n.baseNotBuilt,
               style: textTheme.bodySmall?.copyWith(
                 color: _isBuilt
                     ? AbyssColors.onSurfaceDim

@@ -982,11 +982,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String commonNamedLevel(String name, int level) {
-    return '$name niv. $level';
-  }
-
-  @override
   String get statHp => 'PV';
 
   @override
@@ -1023,17 +1018,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String fightUnitAccounting(int sent, int intact, int wounded, int dead) {
-    return 'Envoyés: $sent / Intactes: $intact / Blessés: $wounded / Morts: $dead';
+    return 'Envoyés : $sent / Intactes : $intact / Blessés : $wounded / Morts : $dead';
   }
 
   @override
   String fightEnemiesKilled(int killed, int total) {
-    return 'Ennemis tués: $killed/$total';
+    return 'Ennemis tués : $killed/$total';
   }
 
   @override
   String fightGuardiansKilled(int killed, int total) {
-    return 'Gardiens éliminés: $killed/$total';
+    return 'Gardiens éliminés : $killed/$total';
   }
 
   @override
@@ -1054,7 +1049,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String fightAssaultOn(String target) {
-    return 'Assaut: $target';
+    return 'Assaut : $target';
   }
 
   @override
@@ -1072,42 +1067,42 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String fightStock(int count) {
-    return 'Stock: $count';
+    return 'Stock : $count';
   }
 
   @override
   String fightAlliesAlive(int count) {
-    return 'Alliés vivants: $count';
+    return 'Alliés vivants : $count';
   }
 
   @override
   String fightAlliesHp(int hp) {
-    return 'PV alliés: $hp';
+    return 'PV alliés : $hp';
   }
 
   @override
   String fightDamageDealt(int damage) {
-    return 'Dégâts infligés: $damage';
+    return 'Dégâts infligés : $damage';
   }
 
   @override
   String fightEnemiesAlive(int count) {
-    return 'Ennemis vivants: $count';
+    return 'Ennemis vivants : $count';
   }
 
   @override
   String fightEnemiesHp(int hp) {
-    return 'PV ennemis: $hp';
+    return 'PV ennemis : $hp';
   }
 
   @override
   String fightDamageTaken(int damage) {
-    return 'Dégâts subis: $damage';
+    return 'Dégâts subis : $damage';
   }
 
   @override
   String fightCriticalHits(int count) {
-    return 'Coups critiques: $count';
+    return 'Coups critiques : $count';
   }
 
   @override
@@ -1139,7 +1134,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String mapLevelChip(int level, String name) {
-    return 'Niv $level: $name';
+    return 'Niv. $level : $name';
   }
 
   @override
@@ -2186,4 +2181,670 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutorialReviewTips => 'Revoir les fiches';
+
+  @override
+  String get gameOverDefeatTitle => 'DÉFAITE';
+
+  @override
+  String gameOverDefeatSubtitle(int turn, int raids) {
+    String _temp0 = intl.Intl.pluralLogic(
+      raids,
+      locale: localeName,
+      other:
+          'Votre base est tombée à la fin du tour $turn, après $raids raids perdus d\'affilée.',
+      one:
+          'Votre base est tombée à la fin du tour $turn, après $raids raid perdu d\'affilée.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameOverVictoryTitle => 'VICTOIRE !';
+
+  @override
+  String get gameOverVictorySubtitle =>
+      'Vous avez conquis le Noyau Volcanique !';
+
+  @override
+  String get gameOverContinueFreePlay => 'Continuer en mode libre';
+
+  @override
+  String get gameOverBackToMenu => 'Retour au menu';
+
+  @override
+  String gameOverTurnsPlayed(int count) {
+    return 'Tours joués : $count';
+  }
+
+  @override
+  String gameOverMonstersDefeated(int count) {
+    return 'Monstres vaincus : $count';
+  }
+
+  @override
+  String gameOverBasesCaptured(int count) {
+    return 'Bases capturées : $count';
+  }
+
+  @override
+  String gameOverResourcesCollected(int count) {
+    return 'Ressources collectées : $count';
+  }
+
+  @override
+  String gameOverRaidsRepelled(int count) {
+    return 'Raids repoussés : $count';
+  }
+
+  @override
+  String gameOverRaidsLost(int count) {
+    return 'Raids perdus : $count';
+  }
+
+  @override
+  String get menuSubtitle => 'Les profondeurs vous attendent';
+
+  @override
+  String get menuContinue => 'CONTINUER';
+
+  @override
+  String get menuNewGame => 'NOUVELLE PARTIE';
+
+  @override
+  String get menuLoadGame => 'CHARGER UNE PARTIE';
+
+  @override
+  String menuBetaVersion(String version) {
+    return 'Version bêta $version';
+  }
+
+  @override
+  String get menuBetaWarning => 'les sauvegardes peuvent être effacées';
+
+  @override
+  String get saveLoadTitle => 'Charger une partie';
+
+  @override
+  String get saveDeleteTitle => 'Supprimer la partie ?';
+
+  @override
+  String saveDeleteMessage(String name) {
+    return 'La partie de $name sera définitivement supprimée.';
+  }
+
+  @override
+  String get saveDelete => 'Supprimer';
+
+  @override
+  String get saveOptions => 'Options';
+
+  @override
+  String get saveEmptyTitle => 'Aucune colonie détectée';
+
+  @override
+  String get saveEmptyMessage => 'Fondez votre première base dans les abysses.';
+
+  @override
+  String get saveInProgress => 'En cours';
+
+  @override
+  String get saveFinished => 'Terminées';
+
+  @override
+  String get saveVictoryBadge => '★ VICTOIRE';
+
+  @override
+  String get saveDefeatBadge => 'DÉFAITE';
+
+  @override
+  String saveMetaInProgress(int turn, String depth, int level) {
+    return 'Tour $turn · $depth · QG niv. $level';
+  }
+
+  @override
+  String saveMetaWon(int turn, String depth, String difficulty) {
+    return 'Tour $turn · $depth · $difficulty';
+  }
+
+  @override
+  String saveMetaFallen(int turn, String depth, String difficulty) {
+    return 'Tombée au tour $turn · $depth · $difficulty';
+  }
+
+  @override
+  String get saveKernelConquered => 'Noyau Volcanique conquis';
+
+  @override
+  String get saveVictory => 'Victoire';
+
+  @override
+  String get saveSeeReport => 'Voir le bilan de la partie';
+
+  @override
+  String saveResumeLabel(String name, int turn, String difficulty) {
+    return '$name · Tour $turn · $difficulty';
+  }
+
+  @override
+  String get saveJustNow => 'à l\'instant';
+
+  @override
+  String saveMinutesAgo(int minutes) {
+    return 'il y a $minutes min';
+  }
+
+  @override
+  String saveHoursAgo(int hours) {
+    return 'il y a $hours h';
+  }
+
+  @override
+  String get saveYesterday => 'hier';
+
+  @override
+  String saveShortDate(int day, String month) {
+    return '$day $month';
+  }
+
+  @override
+  String saveShortDateWithYear(int day, String month, int year) {
+    return '$day $month $year';
+  }
+
+  @override
+  String saveMonth(String month) {
+    String _temp0 = intl.Intl.selectLogic(month, {
+      'jan': 'janv.',
+      'feb': 'févr.',
+      'mar': 'mars',
+      'apr': 'avr.',
+      'may': 'mai',
+      'jun': 'juin',
+      'jul': 'juil.',
+      'aug': 'août',
+      'sep': 'sept.',
+      'oct': 'oct.',
+      'nov': 'nov.',
+      'other': 'déc.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get screenSettings => 'Paramètres';
+
+  @override
+  String get screenNextTurn => 'Tour suivant';
+
+  @override
+  String get screenTabBase => 'Base';
+
+  @override
+  String get screenTabMap => 'Carte';
+
+  @override
+  String get screenTabArmy => 'Armée';
+
+  @override
+  String get screenTabTech => 'Tech';
+
+  @override
+  String get screenComingSoon => 'Bientôt disponible';
+
+  @override
+  String get screenGameInProgress => 'Partie en cours';
+
+  @override
+  String get screenViewHistory => 'Voir l\'historique';
+
+  @override
+  String get screenExportGame => 'Exporter la partie';
+
+  @override
+  String get screenSaveAndQuit => 'Sauvegarder et quitter';
+
+  @override
+  String get screenCopy => 'Copier';
+
+  @override
+  String get screenShareFile => 'Partager le fichier';
+
+  @override
+  String get screenReplayUnavailable =>
+      'Cette partie a commencé avant l\'enregistrement des replays : elle ne peut pas être exportée. Les nouvelles parties le peuvent.';
+
+  @override
+  String screenReplaySummary(String file, String actions, String turns) {
+    return 'Le fichier $file contient $actions sur $turns.';
+  }
+
+  @override
+  String screenReplayActions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count actions',
+      one: '$count action',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String screenReplayTurns(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tours joués',
+      one: '$count tour joué',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screenReplayExact =>
+      'Les combats et les raids seront rejoués à l\'identique.';
+
+  @override
+  String get screenReplayInexact =>
+      'Certains dés n\'ont pas été enregistrés : le rejeu pourra différer sur quelques combats.';
+
+  @override
+  String get screenReplayCopied => 'Replay copié dans le presse-papiers';
+
+  @override
+  String get screenReplayShareTitle => 'Replay Abysses';
+
+  @override
+  String get screenTreasureCollected => 'Trésor collecté !';
+
+  @override
+  String get screenRuinsSearched => 'Ruines fouillées !';
+
+  @override
+  String get screenWreckSearched => 'Épave fouillée !';
+
+  @override
+  String get screenCollectTitle => 'Collecte';
+
+  @override
+  String get screenRuinsEmpty => 'Les ruines étaient vides...';
+
+  @override
+  String get screenWreckEmpty => 'L\'épave était vide...';
+
+  @override
+  String get screenNothingToCollect => 'Rien à récupérer ici...';
+
+  @override
+  String screenEventChosen(String event, String choice) {
+    return '$event : $choice';
+  }
+
+  @override
+  String get screenGarrisonSendTitle => 'Mettre en garnison';
+
+  @override
+  String get screenGarrisonWithdrawTitle => 'Retirer de la garnison';
+
+  @override
+  String get screenGarrisonWithdraw => 'Retirer';
+
+  @override
+  String get screenGarrisonSendInfo =>
+      'Seule la garnison défend le Noyau contre les vagues du Kraken.';
+
+  @override
+  String get screenGarrisonWithdrawInfo =>
+      'Les unités retirées rejoignent le niveau 3.';
+
+  @override
+  String screenGarrisonSize(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Garnison : $count unités',
+      one: 'Garnison : $count unité',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screenAlreadyVisitedTitle => 'Déjà visité';
+
+  @override
+  String get screenAlreadyVisitedMessage => 'Vous êtes déjà venu par ici';
+
+  @override
+  String get screenYourBaseTitle => 'Votre base';
+
+  @override
+  String get screenYourBaseMessage => 'Votre quartier général';
+
+  @override
+  String screenPlainTitle(int x, int y) {
+    return 'Plaine ($x, $y)';
+  }
+
+  @override
+  String get screenNothingToSee => 'Il n\'y a rien à voir ici';
+
+  @override
+  String screenPassageTitle(String name) {
+    return 'Passage vers $name';
+  }
+
+  @override
+  String get screenUnknownPassage => 'passage inconnu';
+
+  @override
+  String get screenPassageMessage =>
+      'Ce lieu marque un passage vers le niveau inférieur.';
+
+  @override
+  String screenDescendThrough(String base) {
+    return 'Descendre des troupes par $base';
+  }
+
+  @override
+  String screenDescentTitle(int level) {
+    return 'Descente vers le Niveau $level';
+  }
+
+  @override
+  String get screenDescentWarning =>
+      'Attention : la descente est définitive. Les unités ne pourront pas remonter.';
+
+  @override
+  String screenDescentConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Descendre ($count unités)',
+      one: 'Descendre ($count unité)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String screenDescentDone(int level) {
+    return 'Descente au Niveau $level effectuée';
+  }
+
+  @override
+  String screenReinforcementTitle(int level) {
+    return 'Renforts vers le Niveau $level';
+  }
+
+  @override
+  String get screenReinforcementInfo =>
+      'Les renforts arriveront au prochain tour.';
+
+  @override
+  String screenReinforcementConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Envoyer ($count unités)',
+      one: 'Envoyer ($count unité)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String screenReinforcementsSent(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unités en transit vers le Niveau $level',
+      one: '$count unité en transit vers le Niveau $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get baseFailleAlpha => 'Faille Alpha';
+
+  @override
+  String get baseFailleBeta => 'Faille Bêta';
+
+  @override
+  String get baseFailleGamma => 'Faille Gamma';
+
+  @override
+  String get baseFailleDelta => 'Faille Delta';
+
+  @override
+  String get baseChemineePrimary => 'Cheminée Primaire';
+
+  @override
+  String get baseChemineeSecondary => 'Cheminée Secondaire';
+
+  @override
+  String get baseChemineeTertiary => 'Cheminée Tertiaire';
+
+  @override
+  String baseOtherName(String type, int number) {
+    return '$type $number';
+  }
+
+  @override
+  String baseLevel(int level) {
+    return 'Niveau $level';
+  }
+
+  @override
+  String baseLevelShort(int level) {
+    return 'Niv. $level';
+  }
+
+  @override
+  String get baseNotBuilt => 'Non construit';
+
+  @override
+  String get baseMaxLevel => 'Niveau maximum atteint';
+
+  @override
+  String baseUpgradeLevels(int from, int to) {
+    return 'Niveau $from → $to';
+  }
+
+  @override
+  String get baseWorksitesBusy => 'Chantiers occupés ce tour';
+
+  @override
+  String get baseBuild => 'Construire';
+
+  @override
+  String get baseUpgrade => 'Améliorer';
+
+  @override
+  String baseCapturedBaseRequired(String base) {
+    return '$base capturée requise';
+  }
+
+  @override
+  String get baseKernelRequired => 'Noyau Volcanique capturé requis';
+
+  @override
+  String baseWorksitesFree(int free, int total) {
+    return 'Chantiers libres ce tour : $free/$total';
+  }
+
+  @override
+  String baseWorksitesNext(int level) {
+    return '+1 au QG $level';
+  }
+
+  @override
+  String baseShield(String rampart) {
+    return 'Rempart de la base : $rampart';
+  }
+
+  @override
+  String baseRampartCurrent(String rampart) {
+    return 'Rempart actuel : $rampart';
+  }
+
+  @override
+  String baseRampartNext(String rampart) {
+    return 'Prochain niveau : $rampart';
+  }
+
+  @override
+  String get baseRampartMax => 'Rempart à son apogée';
+
+  @override
+  String get baseRampartHint =>
+      'Pendant un raid, le rempart combat avec les défenseurs du niveau 1 et attire toutes les attaques.';
+
+  @override
+  String get baseRampartNone => 'aucun';
+
+  @override
+  String baseCoralRampartStats(int hp, int def) {
+    return '$hp PV, DEF $def';
+  }
+
+  @override
+  String baseMagmaRampartStats(int hp, int atk, int def) {
+    return '$hp PV, ATK $atk, DEF $def';
+  }
+
+  @override
+  String get unitRecruitDone => 'Recrutement déjà effectué ce tour';
+
+  @override
+  String get unitNotEnoughResources => 'Ressources insuffisantes';
+
+  @override
+  String get unitRecruit => 'Recruter';
+
+  @override
+  String unitTotalCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unités',
+      one: '$count unité',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get unitPlaceKernel => 'Noyau';
+
+  @override
+  String get unitLocked => 'Verrouillé';
+
+  @override
+  String unitBarracksRequired(int level) {
+    return 'Caserne niveau $level requise pour débloquer';
+  }
+
+  @override
+  String unitInService(int count) {
+    return 'En service : $count';
+  }
+
+  @override
+  String get unitNoneAvailable => 'Aucune unité disponible.';
+
+  @override
+  String get resourceProduction => 'Production';
+
+  @override
+  String get resourceMainBuilding => 'Bâtiment principal';
+
+  @override
+  String turnTransition(int from, int to) {
+    return 'Tour $from → Tour $to';
+  }
+
+  @override
+  String get turnNoProduction => 'Aucune production ce tour.';
+
+  @override
+  String get turnNoChange => 'Aucun changement ce tour.';
+
+  @override
+  String get turnStorageFull => '(max atteint)';
+
+  @override
+  String get turnRecruitAvailable => 'Recrutement disponible';
+
+  @override
+  String turnPendingExplorations(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count explorations en attente',
+      one: '$count exploration en attente',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get turnBuildingsDeactivated => 'Bâtiments désactivés';
+
+  @override
+  String get turnUnitsLost => 'Unités perdues';
+
+  @override
+  String get turnPredatorsLooted => 'Le banc de prédateurs a pillé la base';
+
+  @override
+  String turnEventDefaulted(String event) {
+    return '$event : option prudente appliquée';
+  }
+
+  @override
+  String turnEventDrawn(String event) {
+    return 'Événement : $event';
+  }
+
+  @override
+  String turnExplorationTotal(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Exploration : $count nouvelles cellules',
+      one: 'Exploration : $count nouvelle cellule',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String turnExplorationCells(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count cellules',
+      one: '$count cellule',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get historyFilterAll => 'Tous';
+
+  @override
+  String get historyFilterCombat => 'Combats';
+
+  @override
+  String get historyFilterBuilding => 'Construction';
+
+  @override
+  String get historyFilterResearch => 'Recherche';
+
+  @override
+  String get historyFilterEvent => 'Événements';
+
+  @override
+  String get historyFilterOther => 'Autres';
+
+  @override
+  String get historyEmpty => 'Aucune action enregistrée pour l\'instant.';
+
+  @override
+  String get historyEmptyFilter => 'Aucune action pour ce filtre.';
 }

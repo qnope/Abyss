@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/building/building_type.dart';
 import '../../../domain/map/transition_base.dart';
+import '../../extensions/transition_base_name_extensions.dart';
 import '../../extensions/transition_base_type_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
@@ -49,7 +50,7 @@ class TransitionBaseHeader extends StatelessWidget {
         Icon(Icons.waves, size: 48, color: transitionBase.type.glowColor),
         const SizedBox(height: 8),
         Text(
-          transitionBase.name,
+          transitionBase.displayName(context.l10n),
           style: textTheme.headlineSmall?.copyWith(
             color: AbyssColors.biolumCyan,
           ),

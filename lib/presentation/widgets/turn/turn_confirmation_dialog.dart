@@ -3,6 +3,7 @@ import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/resource_type_extensions.dart';
+import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../resource/resource_icon.dart';
@@ -54,17 +55,18 @@ class _TurnConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text('Tour $currentTurn \u2192 Tour ${currentTurn + 1}'),
+      title: Text(l10n.turnTransition(currentTurn, currentTurn + 1)),
       content: _buildContent(context),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('Annuler'),
+          child: Text(l10n.commonCancel),
         ),
         ElevatedButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Confirmer'),
+          child: Text(l10n.commonConfirm),
         ),
       ],
     );
@@ -77,7 +79,7 @@ class _TurnConfirmationDialog extends StatelessWidget {
 
     if (!hasProduction && !hasWarnings && !hasLosses &&
         raidWarning == null) {
-      return const Text('Aucune production ce tour.');
+      return Text(context.l10n.turnNoProduction);
     }
 
     return Column(
@@ -100,7 +102,8 @@ class _TurnConfirmationDialog extends StatelessWidget {
               ],
             ),
           ),
-        if (pendingExplorationCount > 0) ..._buildExplorationSection(),
+        if (pendingExplorationCount > 0)
+          ..._buildExplorationSection(context.l10n),
         if (hasWarnings)
           DeactivatedBuildingsSection(buildings: buildingsToDeactivate),
         if (hasLosses) LostUnitsSection(units: unitsToLose),
@@ -109,14 +112,13 @@ class _TurnConfirmationDialog extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildExplorationSection() => [
+  List<Widget> _buildExplorationSection(AppLocalizations l10n) => [
         const Divider(),
         Row(children: [
           Icon(Icons.explore, color: AbyssColors.biolumCyan),
           const SizedBox(width: 8),
           Text(
-            '$pendingExplorationCount exploration'
-            '${pendingExplorationCount > 1 ? 's' : ''} en attente',
+            l10n.turnPendingExplorations(pendingExplorationCount),
             style: TextStyle(color: AbyssColors.biolumCyan),
           ),
         ]),

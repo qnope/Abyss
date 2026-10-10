@@ -1,10 +1,12 @@
 import 'package:abyss/presentation/extensions/relative_date_extensions.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/l10n_fixtures.dart';
+
 void main() {
   final DateTime now = DateTime(2026, 10, 10, 15, 30);
 
-  String format(DateTime date) => date.relativeTo(now);
+  String format(DateTime date) => date.relativeTo(fr, now);
 
   group('within the hour', () {
     test('less than a minute ago is just now', () {
@@ -28,7 +30,7 @@ void main() {
 
     test('minutes are counted across midnight', () {
       final DateTime justAfterMidnight = DateTime(2026, 10, 10, 0, 10);
-      expect(DateTime(2026, 10, 9, 23, 50).relativeTo(justAfterMidnight),
+      expect(DateTime(2026, 10, 9, 23, 50).relativeTo(fr, justAfterMidnight),
           'il y a 20 min');
     });
   });
@@ -49,10 +51,10 @@ void main() {
     });
 
     test('yesterday crosses months and years', () {
-      expect(DateTime(2026, 9, 30, 20).relativeTo(DateTime(2026, 10, 1, 8)),
+      expect(DateTime(2026, 9, 30, 20).relativeTo(fr, DateTime(2026, 10, 1, 8)),
           'hier');
       expect(
-          DateTime(2025, 12, 31, 20).relativeTo(DateTime(2026, 1, 1, 8)),
+          DateTime(2025, 12, 31, 20).relativeTo(fr, DateTime(2026, 1, 1, 8)),
           'hier');
     });
   });
@@ -81,5 +83,37 @@ void main() {
   test('a utc date is compared in local time', () {
     final DateTime utc = now.subtract(const Duration(minutes: 5)).toUtc();
     expect(format(utc), 'il y a 5 min');
+  });
+
+  group('in English', () {
+    String english(DateTime date) => date.relativeTo(en, now);
+
+    test('tells the time elapsed', () {
+      expect(english(now), 'just now');
+      expect(english(now.subtract(const Duration(minutes: 5))), '5 min ago');
+      expect(english(now.subtract(const Duration(hours: 2))), '2 h ago');
+      expect(english(DateTime(2026, 10, 9, 8)), 'yesterday');
+    });
+
+    test('writes the month before the day', () {
+      expect(english(DateTime(2026, 10, 8, 12)), 'Oct 8');
+      expect(english(DateTime(2025, 1, 5)), 'Jan 5, 2025');
+    });
+  });
+
+  group('in Spanish', () {
+    String spanish(DateTime date) => date.relativeTo(es, now);
+
+    test('tells the time elapsed', () {
+      expect(spanish(now), 'ahora mismo');
+      expect(spanish(now.subtract(const Duration(minutes: 5))), 'hace 5 min');
+      expect(spanish(now.subtract(const Duration(hours: 2))), 'hace 2 h');
+      expect(spanish(DateTime(2026, 10, 9, 8)), 'ayer');
+    });
+
+    test('writes the day before the month', () {
+      expect(spanish(DateTime(2026, 1, 8, 12)), '8 ene');
+      expect(spanish(DateTime(2025, 12, 5)), '5 dic 2025');
+    });
   });
 }

@@ -96,7 +96,7 @@ void main() {
         buildingsToDeactivate: [BuildingType.oreExtractor],
       ));
       await _open(t);
-      expect(find.text('Batiments desactives'), findsOneWidget);
+      expect(find.text('Bâtiments désactivés'), findsOneWidget);
       expect(find.text('Extracteur de minerai'), findsOneWidget);
     });
 
@@ -106,15 +106,15 @@ void main() {
         unitsToLose: {UnitType.scout: 5},
       ));
       await _open(t);
-      expect(find.text('Unites perdues'), findsOneWidget);
+      expect(find.text('Unités perdues'), findsOneWidget);
       expect(find.text('Éclaireur: -5'), findsOneWidget);
     });
 
     testWidgets('no warnings when no deficits', (t) async {
       await t.pumpWidget(_app(production: {ResourceType.algae: 5}));
       await _open(t);
-      expect(find.text('Batiments desactives'), findsNothing);
-      expect(find.text('Unites perdues'), findsNothing);
+      expect(find.text('Bâtiments désactivés'), findsNothing);
+      expect(find.text('Unités perdues'), findsNothing);
     });
 
     testWidgets('existing production display still works', (t) async {

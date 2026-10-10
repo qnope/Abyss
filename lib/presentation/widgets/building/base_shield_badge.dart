@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_type.dart';
-import '../../../domain/building/coral_citadel_rampart.dart';
+import '../../extensions/rampart_texts.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// Synthetic "Rempart de la base : X PV, DEF Y" badge. Hidden when the Citadel
@@ -15,7 +16,7 @@ class BaseShieldBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final level = buildings[BuildingType.coralCitadel]?.level ?? 0;
     if (level == 0) return const SizedBox.shrink();
-    final label = CoralCitadelRampart.label(level);
+    final l10n = context.l10n;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -30,7 +31,7 @@ class BaseShieldBadge extends StatelessWidget {
           const Icon(Icons.shield, size: 16, color: AbyssColors.coralPink),
           const SizedBox(width: 8),
           Text(
-            'Rempart de la base : $label',
+            l10n.baseShield(RampartTexts.coral(l10n, level)),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],

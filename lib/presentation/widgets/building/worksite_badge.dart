@@ -3,6 +3,8 @@ import '../../../domain/building/building.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/worksite/worksite.dart';
 import '../../../domain/worksite/worksite_rules.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// "Chantiers libres : X/Y" badge: building upgrades still allowed this
@@ -42,7 +44,7 @@ class WorksiteBadge extends StatelessWidget {
           const SizedBox(width: 8),
           Flexible(
             child: Text(
-              _label(free, total, next),
+              _label(context.l10n, free, total, next),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -51,9 +53,9 @@ class WorksiteBadge extends StatelessWidget {
     );
   }
 
-  String _label(int free, int total, int? next) {
-    final base = 'Chantiers libres ce tour : $free/$total';
+  String _label(AppLocalizations l10n, int free, int total, int? next) {
+    final base = l10n.baseWorksitesFree(free, total);
     if (!showNext || next == null) return base;
-    return '$base · +1 au QG $next';
+    return '$base · ${l10n.baseWorksitesNext(next)}';
   }
 }

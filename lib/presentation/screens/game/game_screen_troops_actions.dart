@@ -5,6 +5,8 @@ import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/map/captured_base_finder.dart';
 import '../../widgets/volcano/kernel_garrison_panel.dart';
+import '../../extensions/transition_base_name_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import 'game_screen_kernel_actions.dart';
 import 'game_screen_transition_actions.dart';
 
@@ -28,7 +30,9 @@ Widget? troopsSectionFor(
       if (captured == null) return null;
       return FilledButton.icon(
         icon: const Icon(Icons.arrow_downward),
-        label: Text('Descendre des troupes par ${captured.base.name}'),
+        label: Text(context.l10n.screenDescendThrough(
+          captured.base.displayName(context.l10n),
+        )),
         onPressed: () {
           Navigator.pop(context);
           handleDescend(

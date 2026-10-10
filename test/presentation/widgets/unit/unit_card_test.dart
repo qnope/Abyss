@@ -40,13 +40,13 @@ void main() {
     testWidgets('unlocked card shows count', (tester) async {
       await tester.pumpWidget(createApp(countsPerLevel: {1: 5}));
       await tester.pumpAndSettle();
-      expect(find.text('5 unites'), findsOneWidget);
+      expect(find.text('5 unités'), findsOneWidget);
     });
 
     testWidgets('locked card shows Verrouille', (tester) async {
       await tester.pumpWidget(createApp(isUnlocked: false));
       await tester.pumpAndSettle();
-      expect(find.text('Verrouille'), findsOneWidget);
+      expect(find.text('Verrouillé'), findsOneWidget);
     });
 
     testWidgets('locked card shows lock icon', (tester) async {
@@ -79,7 +79,7 @@ void main() {
         createApp(countsPerLevel: {1: 5, 2: 3}),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Niv 1: 5 · Niv 2: 3'), findsOneWidget);
+      expect(find.text('Niv. 1: 5 · Niv. 2: 3'), findsOneWidget);
     });
 
     testWidgets('shows simple count when only one level has units',
@@ -88,7 +88,7 @@ void main() {
         createApp(countsPerLevel: {1: 7}),
       );
       await tester.pumpAndSettle();
-      expect(find.text('7 unites'), findsOneWidget);
+      expect(find.text('7 unités'), findsOneWidget);
     });
 
     testWidgets('ignores levels with zero count', (tester) async {
@@ -96,7 +96,7 @@ void main() {
         createApp(countsPerLevel: {1: 4, 2: 0}),
       );
       await tester.pumpAndSettle();
-      expect(find.text('4 unites'), findsOneWidget);
+      expect(find.text('4 unités'), findsOneWidget);
     });
   });
 }

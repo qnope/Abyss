@@ -60,7 +60,7 @@ void main() {
       ..[1] = ['a', 'b']
       ..[2] = ['c'];
     await openDialog(tester, game);
-    expect(find.textContaining('3 actions des 3 tours'), findsOneWidget);
+    expect(find.textContaining('contient 3 actions sur 3 tours joués'), findsOneWidget);
   });
 
   testWidgets('warns when some dice were not recorded', (tester) async {

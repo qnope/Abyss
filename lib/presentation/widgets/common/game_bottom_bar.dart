@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/objective/guide/guide_area.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../guide/guide_halo.dart';
 import '../guide/guide_scope.dart';
@@ -31,16 +33,17 @@ class GameBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final guide = GuideScope.of(context);
+    final l10n = context.l10n;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _buildActionRow(guide?.endTurn ?? false),
-        _buildTabBar(guide?.area),
+        _buildActionRow(l10n, guide?.endTurn ?? false),
+        _buildTabBar(l10n, guide?.area),
       ],
     );
   }
 
-  Widget _buildActionRow(bool endTurnGuided) {
+  Widget _buildActionRow(AppLocalizations l10n, bool endTurnGuided) {
     return Container(
       color: AbyssColors.deepNavy,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -49,11 +52,11 @@ class GameBottomBar extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.settings, color: AbyssColors.onSurfaceDim),
             onPressed: onSettings,
-            tooltip: 'Paramètres',
+            tooltip: l10n.screenSettings,
           ),
           const Spacer(),
           Text(
-            'Tour $turnNumber',
+            l10n.commonTurn(turnNumber),
             style: const TextStyle(
               color: AbyssColors.biolumCyan,
               fontWeight: FontWeight.bold,
@@ -67,7 +70,7 @@ class GameBottomBar extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: onNextTurn,
               icon: const Icon(Icons.skip_next, size: 20),
-              label: const Text('Tour suivant'),
+              label: Text(l10n.screenNextTurn),
             ),
           ),
         ],
@@ -76,7 +79,7 @@ class GameBottomBar extends StatelessWidget {
   }
 
   /// The tabs; the halo surrounds the one opening [guided], unless open.
-  Widget _buildTabBar(GuideArea? guided) {
+  Widget _buildTabBar(AppLocalizations l10n, GuideArea? guided) {
     BottomNavigationBarItem tab(int index, IconData icon, String label) =>
         BottomNavigationBarItem(
           icon: GuideHalo(
@@ -95,10 +98,10 @@ class GameBottomBar extends StatelessWidget {
       selectedItemColor: AbyssColors.biolumCyan,
       unselectedItemColor: AbyssColors.onSurfaceDim,
       items: [
-        tab(0, Icons.home, 'Base'),
-        tab(1, Icons.map, 'Carte'),
-        tab(2, Icons.shield, 'Armée'),
-        tab(3, Icons.science, 'Tech'),
+        tab(0, Icons.home, l10n.screenTabBase),
+        tab(1, Icons.map, l10n.screenTabMap),
+        tab(2, Icons.shield, l10n.screenTabArmy),
+        tab(3, Icons.science, l10n.screenTabTech),
       ],
     );
   }

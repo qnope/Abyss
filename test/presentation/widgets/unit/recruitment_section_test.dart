@@ -48,7 +48,7 @@ void main() {
       await tester.pumpWidget(createApp(hasRecruitedThisType: true));
       await tester.pumpAndSettle();
       expect(
-        find.text('Recrutement deja effectue ce tour'),
+        find.text('Recrutement déjà effectué ce tour'),
         findsOneWidget,
       );
     });
@@ -64,7 +64,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.drag(find.byType(Slider), const Offset(200, 0));
       await tester.pumpAndSettle();
-      expect(find.text('0 unites'), findsNothing);
+      expect(find.text('0 unités'), findsNothing);
     });
 
     testWidgets('tapping recruit calls onRecruit', (tester) async {

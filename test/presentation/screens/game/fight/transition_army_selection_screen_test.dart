@@ -65,7 +65,7 @@ void main() {
     testWidgets('shows base name and a row per unit in stock',
         (tester) async {
       await pumpScreen(tester, buildTransitionScenario().game);
-      expect(find.text('Assaut: Faille Alpha'), findsOneWidget);
+      expect(find.text('Assaut : Faille Alpha'), findsOneWidget);
       expect(find.byType(UnitQuantityRow), findsNWidgets(3));
     });
 

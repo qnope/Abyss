@@ -10,6 +10,7 @@ import '../../../domain/resource/resource_type.dart';
 import '../../../domain/turn/turn_production.dart';
 import '../../../domain/unit/unit_loss_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
+import '../../l10n/app_localizations.dart';
 import '../../widgets/event/event_pending_warning.dart';
 import '../../widgets/raid/raid_due_warning.dart';
 import '../../widgets/volcano/volcano_due_warning.dart';
@@ -82,7 +83,11 @@ RaidDueWarning? raidDueWarning(Game game, Player player) {
 
 /// Warning for the end-of-turn confirmation when the school of predators
 /// faced this turn strikes at its end. Losing it never ends the game.
-RaidDueWarning? predatorsDueWarning(Game game, Player player) {
+RaidDueWarning? predatorsDueWarning(
+  AppLocalizations l10n,
+  Game game,
+  Player player,
+) {
   final state = player.eventState;
   final wave = state.predatorWave;
   final due = state.predatorsTurn;
@@ -97,9 +102,9 @@ RaidDueWarning? predatorsDueWarning(Game game, Player player) {
 /// Warnings for the end-of-turn confirmation: the raid or the predators
 /// on the base, the kraken wave on an unguarded kernel and the event
 /// still waiting for a choice, `null` when there is none.
-Widget? dueWarnings(Game game, Player player) {
+Widget? dueWarnings(AppLocalizations l10n, Game game, Player player) {
   final Widget? raid = raidDueWarning(game, player);
-  final Widget? predators = predatorsDueWarning(game, player);
+  final Widget? predators = predatorsDueWarning(l10n, game, player);
   final Widget? volcano = VolcanoDueWarning.of(game, player);
   final Widget? event = EventPendingWarning.of(player);
   final List<Widget> warnings = <Widget>[

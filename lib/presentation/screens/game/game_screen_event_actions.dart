@@ -36,7 +36,7 @@ Future<void> openEventCard(
   final chosen = data.choices.firstWhere((c) => c.accept == accept).label;
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(result.isSuccess
-        ? '${type.label(context.l10n)} : $chosen'
+        ? context.l10n.screenEventChosen(type.label(context.l10n), chosen)
         : result.failureMessage(context.l10n)),
   ));
 }

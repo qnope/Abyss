@@ -109,11 +109,11 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Envoyés: 1 / Intactes: 1 / Blessés: 0 / Morts: 0'),
+        find.text('Envoyés : 1 / Intactes : 1 / Blessés : 0 / Morts : 0'),
         findsOneWidget,
       );
       expect(
-        find.text('Envoyés: 2 / Intactes: 1 / Blessés: 1 / Morts: 0'),
+        find.text('Envoyés : 2 / Intactes : 1 / Blessés : 1 / Morts : 0'),
         findsOneWidget,
       );
     });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/game/game_statistics.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 
 /// End-of-game statistics, shared by the victory and defeat screens.
@@ -12,20 +13,24 @@ class GameStatisticsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = statistics;
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            _StatRow(Icons.timer, 'Tours joués : ${s.turnsPlayed}'),
-            _StatRow(Icons.dangerous, 'Monstres vaincus : ${s.monstersDefeated}'),
-            _StatRow(Icons.flag, 'Bases capturées : ${s.basesCaptured}'),
+            _StatRow(Icons.timer, l10n.gameOverTurnsPlayed(s.turnsPlayed)),
+            _StatRow(
+              Icons.dangerous,
+              l10n.gameOverMonstersDefeated(s.monstersDefeated),
+            ),
+            _StatRow(Icons.flag, l10n.gameOverBasesCaptured(s.basesCaptured)),
             _StatRow(
               Icons.inventory,
-              'Ressources collectées : ${s.totalResourcesCollected}',
+              l10n.gameOverResourcesCollected(s.totalResourcesCollected),
             ),
-            _StatRow(Icons.shield, 'Raids repoussés : ${s.raidsRepelled}'),
-            _StatRow(Icons.heart_broken, 'Raids perdus : ${s.raidsLost}'),
+            _StatRow(Icons.shield, l10n.gameOverRaidsRepelled(s.raidsRepelled)),
+            _StatRow(Icons.heart_broken, l10n.gameOverRaidsLost(s.raidsLost)),
           ],
         ),
       ),

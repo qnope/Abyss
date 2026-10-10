@@ -37,9 +37,9 @@ class _ResourceDetailSheet extends StatelessWidget {
           Text('${resource.amount} / ${resource.maxStorage}', style: textTheme.titleLarge?.copyWith(color: color)),
           const SizedBox(height: 16),
           if (production > 0) ...[
-            Align(alignment: Alignment.centerLeft, child: Text('Production', style: textTheme.titleSmall?.copyWith(color: AbyssColors.onSurface))),
+            Align(alignment: Alignment.centerLeft, child: Text(l10n.resourceProduction, style: textTheme.titleSmall?.copyWith(color: AbyssColors.onSurface))),
             const SizedBox(height: 8),
-            _buildingRow('Bâtiment principal', production, color),
+            _buildingRow(l10n.resourceMainBuilding, production, color),
           ],
         ],
       ),

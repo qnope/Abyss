@@ -9,6 +9,8 @@ import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/widgets/history/history_filter.dart';
 
+import '../../../helpers/l10n_fixtures.dart';
+
 void main() {
   group('applyHistoryFilter', () {
     late List<HistoryEntry> entries;
@@ -91,11 +93,21 @@ void main() {
 
   group('HistoryFilterLabel', () {
     test('exposes French labels for every value', () {
-      expect(HistoryFilter.all.label, 'Tous');
-      expect(HistoryFilter.combat.label, 'Combats');
-      expect(HistoryFilter.building.label, 'Construction');
-      expect(HistoryFilter.research.label, 'Recherche');
-      expect(HistoryFilter.other.label, 'Autres');
+      expect(HistoryFilter.all.label(fr), 'Tous');
+      expect(HistoryFilter.combat.label(fr), 'Combats');
+      expect(HistoryFilter.building.label(fr), 'Construction');
+      expect(HistoryFilter.research.label(fr), 'Recherche');
+      expect(HistoryFilter.other.label(fr), 'Autres');
+    });
+
+    test('words every value in English and Spanish', () {
+      expect(HistoryFilter.values.map((f) => f.label(en)), [
+        'All', 'Combat', 'Construction', 'Research', 'Events', 'Other',
+      ]);
+      expect(HistoryFilter.values.map((f) => f.label(es)), [
+        'Todos', 'Combates', 'Construcción', 'Investigación', 'Eventos',
+        'Otros',
+      ]);
     });
   });
 }

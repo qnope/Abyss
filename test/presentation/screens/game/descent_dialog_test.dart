@@ -56,14 +56,14 @@ void main() {
         (tester) async {
       await openDialog(tester,
           app: buildApp(targetLevel: 3, baseName: 'Base Omega'));
-      expect(find.text('Descente vers Niveau 3'), findsOneWidget);
+      expect(find.text('Descente vers le Niveau 3'), findsOneWidget);
       expect(find.text('Base Omega'), findsOneWidget);
     });
 
     testWidgets('displays warning banner', (tester) async {
       await openDialog(tester);
       expect(
-        find.textContaining('la descente est definitive'),
+        find.textContaining('la descente est définitive'),
         findsOneWidget,
       );
       expect(find.byIcon(Icons.warning_amber), findsOneWidget);
@@ -72,7 +72,7 @@ void main() {
     testWidgets('confirm button disabled when 0 selected', (tester) async {
       await openDialog(tester);
       final button = tester.widget<ElevatedButton>(
-        find.widgetWithText(ElevatedButton, 'Descendre (0 unites)'),
+        find.widgetWithText(ElevatedButton, 'Descendre (0 unité)'),
       );
       expect(button.onPressed, isNull);
     });
@@ -84,7 +84,7 @@ void main() {
       await tester.pump();
 
       final button = tester.widget<ElevatedButton>(
-        find.widgetWithText(ElevatedButton, 'Descendre (1 unites)'),
+        find.widgetWithText(ElevatedButton, 'Descendre (1 unité)'),
       );
       expect(button.onPressed, isNotNull);
     });
@@ -99,7 +99,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.add).first);
       await tester.pump();
       await tester.tap(
-        find.widgetWithText(ElevatedButton, 'Descendre (1 unites)'),
+        find.widgetWithText(ElevatedButton, 'Descendre (1 unité)'),
       );
       await tester.pumpAndSettle();
 

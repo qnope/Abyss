@@ -9,6 +9,7 @@ import '../../../../domain/map/transition_base.dart';
 import '../../../../domain/unit/unit_type.dart';
 import '../../../../domain/replay/seeded_random.dart';
 import '../../../extensions/action_failure_extensions.dart';
+import '../../../extensions/transition_base_name_extensions.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../../../widgets/fight/army_selection_actions.dart';
 import '../../../widgets/fight/selection_summary_card.dart';
@@ -67,7 +68,7 @@ class _TransitionArmySelectionScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.fightAssaultOn(widget.transitionBase.name)),
+        title: Text(context.l10n.fightAssaultOn(widget.transitionBase.displayName(context.l10n))),
       ),
       body: _buildBody(),
     );

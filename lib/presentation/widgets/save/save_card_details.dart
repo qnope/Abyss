@@ -30,7 +30,8 @@ class SaveCardDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
-    final footnote = summary.footnote;
+    final l10n = context.l10n;
+    final footnote = summary.footnote(l10n);
     final dim = AbyssColors.onSurfaceDim;
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -44,7 +45,7 @@ class SaveCardDetails extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(
-                summary.lastPlayedAt.relativeTo(now),
+                summary.lastPlayedAt.relativeTo(l10n, now),
                 style: text.bodySmall,
               ),
             ),
@@ -57,7 +58,7 @@ class SaveCardDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                summary.metaLine(context.l10n),
+                summary.metaLine(l10n),
                 style: text.bodyMedium?.copyWith(
                   color: faded ? dim : AbyssColors.onSurface,
                 ),

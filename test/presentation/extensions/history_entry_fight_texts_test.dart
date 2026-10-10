@@ -42,7 +42,11 @@ void main() {
   test('titles captures after the base, or the Volcanic Core', () {
     final base = captureEntry('Faille Alpha');
     expect(base.displayTitle(fr), 'Capture : Faille Alpha');
-    expect(base.displayTitle(en), 'Capture: Faille Alpha');
+    expect(base.displayTitle(en), 'Capture: Alpha Rift');
+    expect(captureEntry('cheminee:1').displayTitle(es),
+        'Captura: Chimenea Secundaria');
+    expect(captureEntry('Faille Noire').displayTitle(en),
+        'Capture: Faille Noire');
     final kernel = captureEntry(CaptureEntry.volcanicKernel);
     expect(kernel.displayTitle(fr), 'Capture : Noyau Volcanique');
     expect(kernel.displayTitle(es), 'Captura: Núcleo Volcánico');

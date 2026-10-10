@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/game/game_statistics.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import 'game_over_screen.dart';
 
@@ -18,19 +19,23 @@ class VictoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return GameOverScreen(
       emblemAsset: 'assets/icons/terrain/volcanic_kernel.svg',
-      title: 'VICTOIRE !',
+      title: l10n.gameOverVictoryTitle,
       titleColor: AbyssColors.warning,
-      subtitle: 'Vous avez conquis le Noyau Volcanique !',
+      subtitle: l10n.gameOverVictorySubtitle,
       statistics: statistics,
       actions: [
         GameOverAction(
-          label: 'Continuer en mode libre',
+          label: l10n.gameOverContinueFreePlay,
           onPressed: onContinue,
           primary: true,
         ),
-        GameOverAction(label: 'Retour au menu', onPressed: onReturnToMenu),
+        GameOverAction(
+          label: l10n.gameOverBackToMenu,
+          onPressed: onReturnToMenu,
+        ),
       ],
     );
   }

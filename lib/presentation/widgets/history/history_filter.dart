@@ -1,5 +1,6 @@
 import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/domain/history/history_entry_category.dart';
+import 'package:abyss/presentation/l10n/app_localizations.dart';
 
 /// Filter options exposed in the history screen.
 ///
@@ -10,13 +11,13 @@ import 'package:abyss/domain/history/history_entry_category.dart';
 enum HistoryFilter { all, combat, building, research, event, other }
 
 extension HistoryFilterLabel on HistoryFilter {
-  String get label => switch (this) {
-    HistoryFilter.all => 'Tous',
-    HistoryFilter.combat => 'Combats',
-    HistoryFilter.building => 'Construction',
-    HistoryFilter.research => 'Recherche',
-    HistoryFilter.event => 'Événements',
-    HistoryFilter.other => 'Autres',
+  String label(AppLocalizations l10n) => switch (this) {
+    HistoryFilter.all => l10n.historyFilterAll,
+    HistoryFilter.combat => l10n.historyFilterCombat,
+    HistoryFilter.building => l10n.historyFilterBuilding,
+    HistoryFilter.research => l10n.historyFilterResearch,
+    HistoryFilter.event => l10n.historyFilterEvent,
+    HistoryFilter.other => l10n.historyFilterOther,
   };
 }
 

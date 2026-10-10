@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('no rampart without a Citadel', () {
     expect(CoralCitadelRampart.combatantFor(0), isNull);
-    expect(CoralCitadelRampart.label(0), 'aucun');
   });
 
   test('40 PV and one DEF point per level', () {
@@ -15,7 +14,6 @@ void main() {
     expect(rampart.def, 7);
     expect(rampart.atk, 0);
     expect(rampart.side, CombatSide.player);
-    expect(CoralCitadelRampart.label(3), '120 PV, DEF 7');
   });
 
   test('the rampart taunts', () {

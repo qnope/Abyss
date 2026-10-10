@@ -15,7 +15,7 @@ class DeactivatedBuildingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _LossSection(
     icon: Icons.warning,
-    title: 'Batiments desactives',
+    title: context.l10n.turnBuildingsDeactivated,
     color: AbyssColors.warning,
     lines: [for (final type in buildings) type.displayName(context.l10n)],
   );
@@ -30,7 +30,7 @@ class LostUnitsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _LossSection(
     icon: Icons.error,
-    title: 'Unites perdues',
+    title: context.l10n.turnUnitsLost,
     color: AbyssColors.error,
     lines: [
       for (final MapEntry(:key, :value) in units.entries)

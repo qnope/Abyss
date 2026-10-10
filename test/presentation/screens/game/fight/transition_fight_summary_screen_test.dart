@@ -62,14 +62,14 @@ void main() {
       await pumpSummary(
           tester, buildTransitionResult(victory: false, captured: false));
       expect(find.text('DÉFAITE'), findsOneWidget);
-      expect(find.text('Gardiens éliminés: 1/4'), findsOneWidget);
+      expect(find.text('Gardiens éliminés : 1/4'), findsOneWidget);
     });
 
     testWidgets('shows fight details when a fight happened', (tester) async {
       await pumpSummary(
           tester, buildTransitionResult(victory: true, captured: true));
       expect(find.text('Combat en 2 tours'), findsOneWidget);
-      expect(find.text('Gardiens éliminés: 4/4'), findsOneWidget);
+      expect(find.text('Gardiens éliminés : 4/4'), findsOneWidget);
       expect(find.byType(FightTurnList), findsOneWidget);
     });
 
@@ -78,11 +78,11 @@ void main() {
           tester, buildTransitionResult(victory: true, captured: true));
       expect(find.text('Vos unités'), findsOneWidget);
       expect(
-        find.text('Envoyés: 1 / Intactes: 1 / Blessés: 0 / Morts: 0'),
+        find.text('Envoyés : 1 / Intactes : 1 / Blessés : 0 / Morts : 0'),
         findsOneWidget,
       );
       expect(
-        find.text('Envoyés: 5 / Intactes: 2 / Blessés: 1 / Morts: 2'),
+        find.text('Envoyés : 5 / Intactes : 2 / Blessés : 1 / Morts : 2'),
         findsOneWidget,
       );
     });

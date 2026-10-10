@@ -2,18 +2,10 @@ import 'dart:math';
 import 'cell_content_type.dart';
 import 'map_cell.dart';
 import 'transition_base.dart';
+import 'transition_base_name.dart';
 import 'transition_base_type.dart';
 
 class TransitionBasePlacer {
-  static const _failleNames = [
-    'Faille Alpha', 'Faille Beta',
-    'Faille Gamma', 'Faille Delta',
-  ];
-  static const _chemineeNames = [
-    'Cheminee Primaire', 'Cheminee Secondaire',
-    'Cheminee Tertiaire',
-  ];
-
   static void place({
     required List<MapCell> cells,
     required int width,
@@ -28,14 +20,14 @@ class TransitionBasePlacer {
       _placeAll(
         cells, width, height, baseX, baseY, random,
         _buildQuadrants(width, height),
-        TransitionBaseType.faille, _failleNames, 8, 5,
+        TransitionBaseType.faille, 8, 5,
         reservedIndices,
       );
     } else if (level == 2) {
       _placeAll(
         cells, width, height, baseX, baseY, random,
         List.filled(3, _outerEdgeCells(width, height)),
-        TransitionBaseType.cheminee, _chemineeNames, 10, 5,
+        TransitionBaseType.cheminee, 10, 5,
         reservedIndices,
       );
     }
@@ -45,12 +37,13 @@ class TransitionBasePlacer {
     List<MapCell> cells,
     int width, int height, int baseX, int baseY,
     Random random, List<List<int>> candidateSets,
-    TransitionBaseType type, List<String> names,
+    TransitionBaseType type,
     int minCenterDist, int minSpacing,
     Set<int> reservedIndices,
   ) {
     final centerX = width ~/ 2, centerY = height ~/ 2;
     final placed = <int>[];
+    final names = TransitionBaseName.allOf(type);
     for (var i = 0; i < names.length; i++) {
       final idx = _pickCell(
         candidateSets[i], width, centerX, centerY,
@@ -60,7 +53,7 @@ class TransitionBasePlacer {
       if (idx != null) {
         cells[idx] = cells[idx].copyWith(
           content: CellContentType.transitionBase,
-          transitionBase: TransitionBase(type: type, name: names[i]),
+          transitionBase: TransitionBase(type: type, name: names[i].code),
         );
         placed.add(idx);
       }

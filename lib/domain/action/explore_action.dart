@@ -1,3 +1,4 @@
+import '../event/random_event_type.dart';
 import '../game/game.dart';
 import '../game/player.dart';
 import '../tech/tech_effects.dart';
@@ -32,6 +33,10 @@ class ExploreAction extends Action {
   ActionResult validate(Game game, Player player) {
     if (game.levels[level] == null) {
       return const ActionResult.failure('Carte non générée');
+    }
+
+    if (player.eventState.isActive(RandomEventType.storm, game.turn)) {
+      return const ActionResult.failure('Tempête : exploration impossible');
     }
 
     final scoutCount =

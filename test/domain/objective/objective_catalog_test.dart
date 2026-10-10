@@ -1,3 +1,6 @@
+import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/objective/goals/all_of_goal.dart';
+import 'package:abyss/domain/objective/goals/building_level_goal.dart';
 import 'package:abyss/domain/objective/objective_catalog.dart';
 import 'package:abyss/domain/objective/objective_chapter.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
@@ -7,14 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ObjectiveChapter', () {
-    test('six chapters in order with their French titles', () {
-      expect(ObjectiveChapter.values.map((c) => c.title), [
-        'Installation',
-        'Le récif',
-        'La Faille',
-        'La Cheminée',
-        'Le Noyau',
-        'Le réveil',
+    test('six chapters in order, the tutorial first', () {
+      expect(ObjectiveChapter.values, [
+        ObjectiveChapter.installation,
+        ObjectiveChapter.reef,
+        ObjectiveChapter.rift,
+        ObjectiveChapter.chimney,
+        ObjectiveChapter.kernel,
+        ObjectiveChapter.awakening,
       ]);
     });
   });
@@ -54,18 +57,14 @@ void main() {
       );
     });
 
-    test('byId finds the objective with its title', () {
+    test('byId finds the objective with its chapter and goal', () {
       final objective = ObjectiveCatalog.byId(ObjectiveId.mines);
       expect(objective.id, ObjectiveId.mines);
       expect(objective.chapter, ObjectiveChapter.installation);
-      expect(
-        objective.title,
-        'Construis la Mine de corail et l\'Extracteur de minerai',
-      );
-      expect(
-        ObjectiveCatalog.byId(ObjectiveId.kernelLevel10).title,
-        'Monte le Noyau au niveau 10',
-      );
+      expect(objective.goal, isA<AllOfGoal>());
+      final kernel = ObjectiveCatalog.byId(ObjectiveId.kernelLevel10).goal;
+      expect((kernel as BuildingLevelGoal).type, BuildingType.volcanicKernel);
+      expect(kernel.level, 10);
     });
 
     test('firstNotDone skips the completed ids in catalog order', () {
@@ -78,12 +77,6 @@ void main() {
         ObjectiveId.algaeFarm,
       );
       expect(ObjectiveCatalog.firstNotDone(ObjectiveId.values.toSet()), isNull);
-    });
-
-    test('every title is unique and non-empty', () {
-      final titles = ObjectiveCatalog.all.map((o) => o.title).toList();
-      expect(titles.toSet().length, titles.length);
-      expect(titles.every((t) => t.isNotEmpty), isTrue);
     });
   });
 

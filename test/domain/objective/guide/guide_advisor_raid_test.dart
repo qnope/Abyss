@@ -2,6 +2,7 @@ import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_family.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
+import 'package:abyss/domain/objective/guide/guide_message.dart';
 import 'package:abyss/domain/objective/guide/guide_target.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/raid/raid_defence_advisor.dart';
@@ -39,10 +40,14 @@ void main() {
     final advice = adviceOf(game)!;
 
     expect(
-      advice.text,
-      'Le raid arrive au tour 12 avec 28 monstres. Aie au moins $needed '
-      'Harponneurs au niveau 1 : il t\'en manque ${needed - 3}. '
-      'Recrute-les dans l\'onglet Armée.',
+      advice.message,
+      GuideRaidAlert(
+        12,
+        28,
+        needed: needed,
+        missing: needed - 3,
+        canRecruit: true,
+      ),
     );
     expect(advice.target, const GuideTarget.unit(UnitType.harpoonist));
   });
@@ -53,9 +58,7 @@ void main() {
 
     final advice = adviceOf(game)!;
 
-    expect(advice.text, startsWith('Le raid arrive au tour 12 avec 28'));
-    expect(advice.text, contains('termine le tour'));
-    expect(advice.text, isNot(contains('manque')));
+    expect(advice.message, GuideRaidAlert(12, 28, needed: _needed(game)));
     expect(advice.target, const GuideTarget.endTurn());
   });
 
@@ -65,8 +68,10 @@ void main() {
 
     final advice = adviceOf(game)!;
 
-    expect(advice.text, contains('manque'));
-    expect(advice.text, contains('au prochain tour'));
+    expect(
+      advice.message,
+      GuideRaidAlert(12, 28, needed: _needed(game), missing: _needed(game)),
+    );
     expect(advice.target, const GuideTarget.endTurn());
   });
 
@@ -76,8 +81,16 @@ void main() {
 
     final advice = adviceOf(game)!;
 
-    expect(advice.text, contains('manque'));
-    expect(advice.text, isNot(contains('prochain')));
+    expect(
+      advice.message,
+      GuideRaidAlert(
+        10,
+        28,
+        needed: _needed(game),
+        missing: _needed(game),
+        lastTurn: true,
+      ),
+    );
     expect(advice.target, const GuideTarget.endTurn());
   });
 
@@ -90,8 +103,7 @@ void main() {
 
     final advice = adviceOf(game)!;
 
-    expect(advice.text, contains('400 monstres'));
-    expect(advice.text, contains('autant de Harponneurs'));
+    expect(advice.message, const GuideRaidAlert(12, 400));
     expect(advice.target, const GuideTarget.unit(UnitType.harpoonist));
   });
 }

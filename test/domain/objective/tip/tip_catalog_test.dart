@@ -1,15 +1,13 @@
-import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/raid/noise_rules.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/objective/objective_state.dart';
 import 'package:abyss/domain/objective/tip/event_tips.dart';
 import 'package:abyss/domain/objective/tip/tip_catalog.dart';
+import 'package:abyss/domain/objective/tip/tip_category.dart';
 import 'package:abyss/domain/objective/tip/tip_id.dart';
-import 'package:abyss/presentation/extensions/building_type_extensions.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/objective_helpers.dart';
 
 void main() {
@@ -27,35 +25,19 @@ void main() {
       expect(TipCatalog.all.map((tip) => tip.id), TipId.values);
     });
 
-    test('names the buildings as the base shows them', () {
-      String text(TipId id) => TipCatalog.byId(id).lines.join(' ');
-      expect(
-        text(TipId.raidAnnounced),
-        contains(BuildingType.coralCitadel.displayName(fr)),
-      );
-      expect(
-        text(TipId.descent),
-        contains(BuildingType.descentModule.displayName(fr)),
-      );
+    test('files each tip in its section of the Guide', () {
+      expect(TipCatalog.byId(TipId.noiseGauge).category, TipCategory.base);
+      expect(TipCatalog.byId(TipId.lastChance).category, TipCategory.threats);
+      expect(TipCatalog.byId(TipId.descent).category, TipCategory.map);
+      expect(TipCatalog.byId(TipId.storm).category, TipCategory.events);
     });
 
-    test('every tip has a title and 2 or 3 short lines', () {
-      for (final tip in TipCatalog.all) {
-        expect(tip.title, isNotEmpty, reason: tip.id.name);
-        expect(tip.lines.length, inInclusiveRange(2, 3), reason: tip.id.name);
-        for (final line in tip.lines) {
-          expect(line.length, lessThanOrEqualTo(120), reason: line);
-        }
-      }
-    });
-
-    test('one tip per event, titled after it', () {
+    test('one tip per event, in the events section', () {
       final ids = RandomEventType.values.map(EventTips.idOf).toSet();
       expect(ids, hasLength(RandomEventType.values.length));
-      expect(
-        TipCatalog.byId(EventTips.idOf(RandomEventType.wreck)).title,
-        'Épave',
-      );
+      for (final id in ids) {
+        expect(TipCatalog.byId(id).category, TipCategory.events);
+      }
     });
   });
 

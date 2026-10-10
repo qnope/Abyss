@@ -3,6 +3,7 @@ import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/objective/objective_migration.dart';
 import '../../../domain/objective/objective_state.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../tip/tip_guide.dart';
 import 'labeled_switch.dart';
@@ -35,25 +36,26 @@ class _GuideSettingsState extends State<GuideSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         LabeledSwitch(
-          title: 'Guide du tutoriel',
-          subtitle: 'Le guide te montre quoi faire, objectif après objectif',
+          title: l10n.tutorialGuideSwitch,
+          subtitle: l10n.tutorialGuideSwitchHint,
           value: _state.tutorialEnabled,
           onChanged: (on) => _change((state) => state.tutorialEnabled = on),
         ),
         LabeledSwitch(
-          title: 'Conseils',
-          subtitle: 'Une fiche explique chaque nouveauté à sa première apparition',
+          title: l10n.tutorialTipsSwitch,
+          subtitle: l10n.tutorialTipsSwitchHint,
           value: _state.tipsEnabled,
           onChanged: (on) => _change((state) => state.tipsEnabled = on),
         ),
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: const Icon(Icons.menu_book, color: AbyssColors.biolumCyan),
-          title: const Text('Revoir les fiches'),
+          title: Text(l10n.tutorialReviewTips),
           onTap: () => showTipGuide(context, _state),
         ),
       ],

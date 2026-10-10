@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/objective/guide/guide_advice.dart';
+import '../../extensions/guide_message_extensions.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
 
 /// The guide of the tutorial, the octopus archivist, and what it says, at
-/// the bottom of the game screen. « Compris » hides it until the advice
+/// the bottom of the game screen. Its button hides it until the advice
 /// changes. Shows nothing without [advice].
 class GuideBubble extends StatefulWidget {
   static const portraitPath = 'assets/icons/guide/octopus_archivist.svg';
@@ -25,7 +27,9 @@ class _GuideBubbleState extends State<GuideBubble> {
   @override
   void didUpdateWidget(GuideBubble oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.advice?.text != widget.advice?.text) _dismissed = false;
+    if (oldWidget.advice?.message != widget.advice?.message) {
+      _dismissed = false;
+    }
   }
 
   @override
@@ -62,7 +66,7 @@ class _GuideBubbleState extends State<GuideBubble> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  advice.text,
+                  advice.message.text(context.l10n),
                   style: text.bodyMedium?.copyWith(
                     color: AbyssColors.onSurface,
                   ),
@@ -71,7 +75,7 @@ class _GuideBubbleState extends State<GuideBubble> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () => setState(() => _dismissed = true),
-                    child: const Text('Compris'),
+                    child: Text(context.l10n.commonGotIt),
                   ),
                 ),
               ],

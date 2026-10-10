@@ -6,12 +6,14 @@ import 'package:abyss/domain/objective/tip/tip_catalog.dart';
 import 'package:abyss/domain/objective/tip/tip_id.dart';
 import 'package:abyss/presentation/extensions/random_event_type_extensions.dart';
 import 'package:abyss/presentation/extensions/tip_id_extensions.dart';
+import 'package:abyss/presentation/l10n/abyss_locale.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 import 'package:abyss/presentation/widgets/tip/tip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/localized_app.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
@@ -41,14 +43,46 @@ void main() {
     tester,
   ) async {
     await open(tester, TipId.noiseGauge);
-    final tip = TipCatalog.byId(TipId.noiseGauge);
     final art = tester.widget<RasterSvg>(find.byType(RasterSvg));
     expect(art.assetPath, TipId.noiseGauge.illustration);
     expect(find.text('La jauge de bruit'), findsOneWidget);
-    for (final line in tip.lines) {
-      expect(find.text(line), findsOneWidget);
-    }
+    expect(
+      find.text(
+        'Quand la jauge atteint 40, les monstres l\'entendent : un raid est '
+        'annoncé.',
+      ),
+      findsOneWidget,
+    );
   });
+
+  for (final (locale, title, line, gotIt) in [
+    (
+      AbyssLocale.en,
+      'Lairs',
+      'Check their numbers before you pick your units.',
+      'Got it',
+    ),
+    (
+      AbyssLocale.es,
+      'Las guaridas',
+      'Mira cuántos son antes de elegir tus unidades.',
+      'Entendido',
+    ),
+  ]) {
+    testWidgets('speaks ${locale.languageCode}', (tester) async {
+      await tester.pumpWidget(
+        localizedApp(
+          Scaffold(body: TipCard(tip: TipCatalog.byId(TipId.lair))),
+          locale: locale,
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text(title), findsOneWidget);
+      expect(find.text(line), findsOneWidget);
+      expect(find.text(gotIt), findsOneWidget);
+    });
+  }
 
   testWidgets('« Compris » closes the card', (tester) async {
     await open(tester, TipId.lair);

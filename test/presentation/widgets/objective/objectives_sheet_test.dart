@@ -2,12 +2,16 @@ import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/objective/objective_catalog.dart';
 import 'package:abyss/domain/objective/objective_chapter.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
+import 'package:abyss/presentation/extensions/objective_extensions.dart';
+import 'package:abyss/presentation/l10n/abyss_locale.dart';
 import 'package:abyss/presentation/widgets/objective/objective_row.dart';
 import 'package:abyss/presentation/widgets/objective/objectives_sheet.dart';
 import 'package:abyss/presentation/widgets/resource/resource_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/l10n_fixtures.dart';
+import '../../../helpers/localized_app.dart';
 import '../../../helpers/test_svg_helper.dart';
 import 'objective_widget_helpers.dart';
 
@@ -22,7 +26,7 @@ Future<void> _show(WidgetTester tester, Game game) async {
 
 ObjectiveRow _row(WidgetTester tester, ObjectiveId id) => tester.widget(
   find.ancestor(
-    of: find.text(ObjectiveCatalog.byId(id).title),
+    of: find.text(ObjectiveCatalog.byId(id).displayTitle(fr)),
     matching: find.byType(ObjectiveRow),
   ),
 );
@@ -37,7 +41,7 @@ void main() {
 
       final titles = [
         for (final chapter in ObjectiveChapter.values)
-          '${chapter.index + 1}. ${chapter.title}',
+          '${chapter.index + 1}. ${chapter.title(fr)}',
       ];
       final tops = [
         for (final title in titles) tester.getTopLeft(find.text(title)).dy,
@@ -111,5 +115,63 @@ void main() {
 
       expect(find.text("Objectifs d'événement"), findsNothing);
     });
+
+    testWidgets('titles the sheet and its event section', (tester) async {
+      final game = gameWithCompleted(0)..turn = 12;
+      layWreck(game);
+
+      await _show(tester, game);
+
+      expect(find.text('Objectifs'), findsOneWidget);
+      expect(find.text("Objectifs d'événement"), findsOneWidget);
+      expect(find.text('2. Le récif'), findsOneWidget);
+      expect(find.text('Construis la Citadelle corallienne'), findsOneWidget);
+    });
+
+    for (final (locale, words) in [
+      (
+        AbyssLocale.en,
+        [
+          'Objectives',
+          'Event objectives',
+          '1. Settling In',
+          '6. The Awakening',
+          'Raise the HQ to level 10',
+          'Build the Barracks and recruit 2 Scouts',
+        ],
+      ),
+      (
+        AbyssLocale.es,
+        [
+          'Objetivos',
+          'Objetivos de evento',
+          '1. Instalación',
+          '6. El despertar',
+          'Sube el Cuartel General al nivel 10',
+          'Construye el Cuartel y recluta 2 Exploradores',
+        ],
+      ),
+    ]) {
+      testWidgets('speaks ${locale.languageCode}', (tester) async {
+        tester.view.physicalSize = const Size(800, 8000);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final game = gameWithCompleted(0)..turn = 12;
+        layWreck(game);
+        await tester.pumpWidget(
+          localizedApp(
+            Scaffold(
+              body: ObjectivesSheetBody(game: game, player: game.humanPlayer),
+            ),
+            locale: locale,
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        for (final word in words) {
+          expect(find.text(word), findsOneWidget, reason: word);
+        }
+      });
+    }
   });
 }

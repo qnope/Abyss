@@ -6,13 +6,11 @@ import 'objective_goal.dart';
 import 'objective_id.dart';
 import 'objective_progress.dart';
 
-/// One step of the main thread: what to reach, and what it pays.
+/// One step of the main thread: what to reach, and what it pays. The
+/// presentation words it after its [id] and its [goal].
 class Objective {
   final ObjectiveId id;
   final ObjectiveChapter chapter;
-
-  /// Shown to the player, in French.
-  final String title;
 
   /// Resources credited once the objective is reached.
   final Map<ResourceType, int> reward;
@@ -22,7 +20,6 @@ class Objective {
   const Objective({
     required this.id,
     required this.chapter,
-    required this.title,
     required this.reward,
     required this.goal,
   });

@@ -19,21 +19,18 @@ const List<Objective> installationObjectives = [
   Objective(
     id: ObjectiveId.hqLevel1,
     chapter: _chapter,
-    title: 'Monte le QG au niveau 1',
     reward: _reward,
     goal: BuildingLevelGoal(BuildingType.headquarters, 1),
   ),
   Objective(
     id: ObjectiveId.algaeFarm,
     chapter: _chapter,
-    title: 'Construis la Ferme d\'algues',
     reward: _reward,
     goal: BuildingLevelGoal(BuildingType.algaeFarm, 1),
   ),
   Objective(
     id: ObjectiveId.mines,
     chapter: _chapter,
-    title: 'Construis la Mine de corail et l\'Extracteur de minerai',
     reward: _reward,
     goal: AllOfGoal([
       BuildingLevelGoal(BuildingType.coralMine, 1),
@@ -43,21 +40,18 @@ const List<Objective> installationObjectives = [
   Objective(
     id: ObjectiveId.solarPanel,
     chapter: _chapter,
-    title: 'Construis le Panneau solaire',
     reward: _reward,
     goal: BuildingLevelGoal(BuildingType.solarPanel, 1),
   ),
   Objective(
     id: ObjectiveId.hqLevel2,
     chapter: _chapter,
-    title: 'Monte le QG au niveau 2',
     reward: _reward,
     goal: BuildingLevelGoal(BuildingType.headquarters, 2),
   ),
   Objective(
     id: ObjectiveId.barracksAndScouts,
     chapter: _chapter,
-    title: 'Construis la Caserne et recrute 2 Éclaireurs',
     reward: _reward,
     goal: AllOfGoal([
       BuildingLevelGoal(BuildingType.barracks, 1),
@@ -67,14 +61,12 @@ const List<Objective> installationObjectives = [
   Objective(
     id: ObjectiveId.explore,
     chapter: _chapter,
-    title: 'Explore une case autour de la base',
     reward: _reward,
     goal: ExploredAroundBaseGoal(),
   ),
   Objective(
     id: ObjectiveId.laboratoryAndResearch,
     chapter: _chapter,
-    title: 'Construis le Laboratoire et lance une recherche',
     reward: _reward,
     goal: AllOfGoal([
       BuildingLevelGoal(BuildingType.laboratory, 1),
@@ -84,7 +76,6 @@ const List<Objective> installationObjectives = [
   Objective(
     id: ObjectiveId.firstRaid,
     chapter: _chapter,
-    title: 'Repousse le premier raid',
     reward: _reward,
     goal: RaidsRepelledGoal(1),
   ),

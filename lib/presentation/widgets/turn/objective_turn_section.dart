@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/objective/objective_completion.dart';
 import '../../../domain/objective/temporary/temporary_objective_end.dart';
 import '../../../domain/turn/turn_result.dart';
+import '../../extensions/objective_extensions.dart';
 import '../../extensions/resource_type_extensions.dart';
 import '../../extensions/temporary_objective_kind_extensions.dart';
 import '../../l10n/app_localizations.dart';
@@ -21,8 +22,6 @@ class ObjectiveTurnSection extends StatelessWidget {
   static bool hasContent(TurnResult result) =>
       result.objectives.isNotEmpty || result.temporaryObjectives.isNotEmpty;
 
-  static const _done = 'Objectif accompli : ';
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +38,9 @@ class ObjectiveTurnSection extends StatelessWidget {
           ended.isDone
               ? SummaryLine(
                 Icons.flag,
-                '$_done${ended.objective.displayTitle(context.l10n)}',
+                context.l10n.objectiveCompleted(
+                  ended.objective.displayTitle(context.l10n),
+                ),
                 AbyssColors.success,
               )
               : _missed(context.l10n, ended),
@@ -47,12 +48,11 @@ class ObjectiveTurnSection extends StatelessWidget {
     );
   }
 
-  String _completed(
-    AppLocalizations l10n,
-    ObjectiveCompletion completion,
-  ) {
+  String _completed(AppLocalizations l10n, ObjectiveCompletion completion) {
     final gains = completion.credited.gainLabel(l10n);
-    final title = '$_done${completion.objective.title}';
+    final title = l10n.objectiveCompleted(
+      completion.objective.displayTitle(l10n),
+    );
     return gains.isEmpty ? title : '$title ($gains)';
   }
 
@@ -65,7 +65,7 @@ class ObjectiveTurnSection extends StatelessWidget {
               text: ended.objective.displayTitle(l10n),
               style: const TextStyle(decoration: TextDecoration.lineThrough),
             ),
-            const TextSpan(text: ' (raté)'),
+            TextSpan(text: ' ${l10n.objectiveMissed}'),
           ],
         ),
         AbyssColors.warning,

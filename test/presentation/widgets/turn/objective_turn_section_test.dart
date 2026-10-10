@@ -6,10 +6,13 @@ import 'package:abyss/domain/objective/temporary/temporary_objective_end.dart';
 import 'package:abyss/domain/objective/temporary/temporary_objective_kind.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/turn/turn_result.dart';
+import 'package:abyss/presentation/l10n/abyss_locale.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/turn/objective_turn_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../../helpers/localized_app.dart';
 
 const _wreck = TemporaryObjective(
   kind: TemporaryObjectiveKind.wreck,
@@ -137,5 +140,45 @@ void main() {
         findsOneWidget,
       );
     });
+
+    for (final (locale, done, missed) in [
+      (
+        AbyssLocale.en,
+        'Objective complete: Raise the Core to level 10',
+        'Repel the predator shoal (missed)',
+      ),
+      (
+        AbyssLocale.es,
+        'Objetivo cumplido: Sube el Núcleo al nivel 10',
+        'Repele el banco de depredadores (fallido)',
+      ),
+    ]) {
+      testWidgets('speaks ${locale.languageCode}', (tester) async {
+        final result = _result(
+          objectives: [
+            ObjectiveCompletion(
+              objective: ObjectiveCatalog.byId(ObjectiveId.kernelLevel10),
+              credited: const {},
+            ),
+          ],
+          temporaryObjectives: const [
+            TemporaryObjectiveEnd(
+              objective: _predators,
+              outcome: TemporaryObjectiveOutcome.failed,
+            ),
+          ],
+        );
+        await tester.pumpWidget(
+          localizedApp(
+            Scaffold(body: ObjectiveTurnSection(result: result)),
+            locale: locale,
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        expect(find.text(done), findsOneWidget);
+        expect(find.text(missed), findsOneWidget);
+      });
+    }
   });
 }

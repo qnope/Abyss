@@ -4,6 +4,8 @@ import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/worksite/worksite.dart';
+import '../guide/guide_card_halo.dart';
+import '../guide/guide_scope.dart';
 import 'building_card.dart';
 import 'worksite_badge.dart';
 
@@ -40,9 +42,15 @@ class BuildingListView extends StatelessWidget {
             top: 4,
             bottom: 4,
           ),
-          child: BuildingCard(
-            building: building,
-            onTap: () => onBuildingTap(building),
+          child: GuideCardHalo(
+            active: GuideScope.points(
+              context,
+              (target) => target.isBuilding(building.type),
+            ),
+            child: BuildingCard(
+              building: building,
+              onTap: () => onBuildingTap(building),
+            ),
           ),
         );
       },

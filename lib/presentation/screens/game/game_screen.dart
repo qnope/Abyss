@@ -6,6 +6,7 @@ import '../../../domain/action/end_turn_action_result.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
+import '../../../domain/objective/guide/guide_advisor.dart';
 import '../../../domain/replay/seeded_random.dart';
 import '../../widgets/unit/army_list_view.dart';
 import '../../widgets/turn/turn_confirmation_dialog.dart';
@@ -15,6 +16,8 @@ import '../../widgets/common/game_status_bars.dart';
 import '../../widgets/resource/resource_bar.dart';
 import '../../widgets/common/replay_export_dialog.dart';
 import '../../widgets/common/settings_dialog.dart';
+import '../../widgets/guide/guide_bubble.dart';
+import '../../widgets/guide/guide_scope.dart';
 import '../../widgets/history/history_sheet.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import 'game_screen_actions.dart';
@@ -51,7 +54,8 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     final production = computeProduction(widget.game, _human);
     final consumption = computeConsumption(widget.game, _human);
-    return Scaffold(
+    final guide = GuideAdvisor.of(widget.game, _human);
+    return GuideScope(target: guide?.target, child: Scaffold(
       body: Column(
         children: [
           ResourceBar(
@@ -62,6 +66,7 @@ class _GameScreenState extends State<GameScreen> {
           GameStatusBars(game: widget.game, player: _human,
               onOpenEvent: _openPendingEvent),
           Expanded(child: _buildTabContent()),
+          GuideBubble(advice: guide),
         ],
       ),
       bottomNavigationBar: GameBottomBar(
@@ -71,7 +76,7 @@ class _GameScreenState extends State<GameScreen> {
         onNextTurn: _nextTurn,
         onSettings: _showSettings,
       ),
-    );
+    ));
   }
 
   Widget _buildTabContent() {

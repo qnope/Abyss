@@ -7,7 +7,7 @@ import '../../volcano/kernel_garrison.dart';
 import '../../volcano/magma_rampart.dart';
 import '../../volcano/volcano_wave_factory.dart';
 import '../script_turn.dart';
-import 'army_planner.dart';
+import '../../fight/army_planner.dart';
 import 'expedition_moves.dart';
 import 'recruit_moves.dart';
 

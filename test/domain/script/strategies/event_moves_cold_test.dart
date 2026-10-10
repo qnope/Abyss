@@ -3,7 +3,7 @@ import 'package:abyss/domain/event/event_rules.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/script/script_turn.dart';
-import 'package:abyss/domain/script/strategies/army_planner.dart';
+import 'package:abyss/domain/fight/army_planner.dart';
 import 'package:abyss/domain/script/strategies/event_moves.dart';
 import 'package:abyss/domain/script/strategies/growth_moves.dart';
 import 'package:abyss/domain/script/strategies/recruit_moves.dart';

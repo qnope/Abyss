@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import '../../fight/combatant.dart';
-import '../../fight/combatant_builder.dart';
-import '../../fight/unit_boost.dart';
-import '../../fight/damage_calculator.dart';
-import '../../fight/fight_engine.dart';
-import '../../unit/unit_type.dart';
+import 'combatant.dart';
+import 'combatant_builder.dart';
+import 'unit_boost.dart';
+import 'damage_calculator.dart';
+import 'fight_engine.dart';
+import '../unit/unit_type.dart';
 
 /// Sizes an army the way a careful player does: by replaying the fight in
 /// their head a few times before committing.

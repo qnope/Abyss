@@ -13,7 +13,7 @@ import '../../resource/resource_type.dart';
 import '../../turn/turn_production.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
-import 'army_planner.dart';
+import '../../fight/army_planner.dart';
 import 'battle_moves.dart';
 import 'growth_moves.dart';
 import 'recruit_moves.dart';

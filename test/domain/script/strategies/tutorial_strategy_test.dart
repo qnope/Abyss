@@ -7,6 +7,7 @@ import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_factory.dart';
 import 'package:abyss/domain/objective/installation_objectives.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
+import 'package:abyss/domain/raid/raid_defence_advisor.dart';
 import 'package:abyss/domain/raid/raid_wave_factory.dart';
 import 'package:abyss/domain/script/game_script.dart';
 import 'package:abyss/domain/script/script_library.dart';
@@ -67,6 +68,20 @@ void main() {
     _play(const TutorialStrategy(), game, 1);
 
     expect(player.unitsOnLevel(1)[UnitType.harpoonist]!.count, greaterThan(0));
+  });
+
+  test('recruits the harpoonists the guide advises for the first raid', () {
+    final Game game = _game();
+    _play(const TutorialStrategy(), game, 7);
+    final player = game.humanPlayer;
+    final wave = RaidWaveFactory.fromTotalNoise(40, random: Random(3));
+    player.raidState.announce(wave, game.turn + 2);
+
+    _play(const TutorialStrategy(), game, 1);
+
+    final int needed = RaidDefenceAdvisor.harpoonistsFor(player, wave)!;
+    expect(needed, greaterThan(0));
+    expect(player.unitsOnLevel(1)[UnitType.harpoonist]!.count, needed);
   });
 
   test('plays like the careful script once the first raid is fought', () {

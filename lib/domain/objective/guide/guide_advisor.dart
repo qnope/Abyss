@@ -9,6 +9,7 @@ import '../objective_chapter.dart';
 import '../objective_id.dart';
 import '../objective_migration.dart';
 import 'guide_advice.dart';
+import 'guide_raid.dart';
 import 'guide_target.dart';
 import 'guide_targets.dart';
 import 'guide_texts.dart';
@@ -32,7 +33,7 @@ abstract final class GuideAdvisor {
     }
     final GuideAdvice? busy = _busy(player, target);
     final GuideTarget reachable = busy?.target ?? target;
-    return _raid(player, objective.id, reachable) ??
+    return _raid(game, player, objective.id, reachable) ??
         _exploration(game, player, objective.id) ??
         _wreck(player, reachable) ??
         busy ??
@@ -41,10 +42,16 @@ abstract final class GuideAdvisor {
 
   /// The first raid announced, while the tutorial asks to push it back
   /// with the harpoonists of [target].
-  static GuideAdvice? _raid(Player player, ObjectiveId id, GuideTarget target) {
-    final raid = player.raidState;
-    if (id != ObjectiveId.firstRaid || !raid.isIncoming) return null;
-    return GuideAdvice(GuideTexts.raidIncoming(raid.arrivalTurn!), target);
+  static GuideAdvice? _raid(
+    Game game,
+    Player player,
+    ObjectiveId id,
+    GuideTarget target,
+  ) {
+    if (id != ObjectiveId.firstRaid || !player.raidState.isIncoming) {
+      return null;
+    }
+    return GuideRaid.of(game, player, target);
   }
 
   /// A scout on its way, or a storm that keeps them at home.

@@ -8,7 +8,7 @@ import '../../turn/turn_production.dart';
 import '../../unit/unit_cost_calculator.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
-import 'army_planner.dart';
+import '../../fight/army_planner.dart';
 
 /// Recruiting by "mixes": a fixed ratio of unit types recruited together,
 /// such as one Gardien for two Harponneurs.

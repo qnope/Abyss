@@ -1,15 +1,23 @@
+import 'dart:math';
+
 import '../../action/recruit_unit_action.dart';
 import '../../action/upgrade_building_action.dart';
 import '../../building/building_type.dart';
+import '../../fight/army_planner.dart';
+import '../../map/monster_lair.dart';
 import '../../objective/installation_objectives.dart';
 import '../../objective/objective.dart';
 import '../../objective/objective_id.dart';
 import '../../objective/objective_migration.dart';
+import '../../raid/raid_battle.dart';
+import '../../raid/raid_defence_advisor.dart';
 import '../../raid/raid_state.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
+import 'battle_moves.dart';
 import 'explore_moves.dart';
 import 'growth_moves.dart';
+import 'recruit_moves.dart';
 
 /// What a newcomer does when the guide of the first chapter gives one
 /// objective at a time: exactly what it asks, nothing more.
@@ -55,6 +63,24 @@ extension TutorialMoves on ScriptTurn {
       default:
         break;
     }
+  }
+
+  /// Recruits the Harpoonists the guide advises against the announced
+  /// raid, as many as the stocks allow; when no number is enough, holds
+  /// it the way [planner] would.
+  void followRaidAdvice(ArmyPlanner planner) {
+    final MonsterLair wave = player.raidState.incoming!;
+    final int? needed = RaidDefenceAdvisor.harpoonistsFor(player, wave);
+    if (needed == null) {
+      defendBase(planner);
+      return;
+    }
+    const Map<UnitType, int> harpoonist = <UnitType, int>{
+      UnitType.harpoonist: 1,
+    };
+    if (usableMixes(const [harpoonist]).isEmpty) return;
+    final int have = RaidBattle.defendersOf(player)[UnitType.harpoonist] ?? 0;
+    recruitMix(harpoonist, min(needed - have, affordable(harpoonist)));
   }
 
   /// Upgrades [type] while it is under [level].

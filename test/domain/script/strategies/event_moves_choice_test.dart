@@ -5,7 +5,7 @@ import 'package:abyss/domain/map/monster_family.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/raid/noise_rules.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
-import 'package:abyss/domain/script/strategies/army_planner.dart';
+import 'package:abyss/domain/fight/army_planner.dart';
 import 'package:abyss/domain/script/strategies/event_moves.dart';
 import 'package:abyss/domain/script/strategies/recruit_moves.dart';
 import 'package:abyss/domain/unit/unit_type.dart';

@@ -10,6 +10,9 @@ class RaidDueWarning extends StatelessWidget {
   final MonsterLair wave;
   final int defenderCount;
 
+  /// What strikes: a raid, or anything fought like one.
+  final String attacker;
+
   /// Whether losing this raid ends the game.
   final bool lastChance;
 
@@ -17,6 +20,7 @@ class RaidDueWarning extends StatelessWidget {
     super.key,
     required this.wave,
     required this.defenderCount,
+    this.attacker = 'Raid',
     this.lastChance = false,
   });
 
@@ -34,7 +38,7 @@ class RaidDueWarning extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Raid ce tour : ${wave.waveLabel} contre $defenders',
+              '$attacker ce tour : ${wave.waveLabel} contre $defenders',
               style: const TextStyle(color: AbyssColors.error),
             ),
           ),

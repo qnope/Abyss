@@ -42,6 +42,9 @@ abstract final class EventRules {
   /// Strength of a predator wave, in percent of a raid.
   static const int predatorsPowerPercent = 50;
 
+  /// Loot of a predator wave pushed back, in percent of a raid's.
+  static const int predatorsLootPercent = 50;
+
   /// Share of the algae given up to bait the predators away.
   static const int baitAlgaePercent = 30;
 

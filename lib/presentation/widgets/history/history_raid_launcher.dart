@@ -19,6 +19,7 @@ Future<void> openRaidSummaryFromEntry(BuildContext context, RaidEntry entry) {
     dead: entry.dead,
     loot: entry.loot,
     pillaged: entry.pillaged,
+    surprise: entry.surprise,
   );
   return RaidSummaryScreen.open(context, report);
 }

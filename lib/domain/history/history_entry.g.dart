@@ -491,6 +491,7 @@ class RaidEntryAdapter extends TypeAdapter<RaidEntry> {
       wounded: (fields[11] as Map).cast<UnitType, int>(),
       dead: (fields[12] as Map).cast<UnitType, int>(),
       rampartLevel: (fields[13] as num).toInt(),
+      surprise: fields[14] == null ? false : fields[14] as bool,
       subtitle: fields[3] as String?,
     );
   }
@@ -498,7 +499,7 @@ class RaidEntryAdapter extends TypeAdapter<RaidEntry> {
   @override
   void write(BinaryWriter writer, RaidEntry obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.turn)
       ..writeByte(3)
@@ -522,7 +523,9 @@ class RaidEntryAdapter extends TypeAdapter<RaidEntry> {
       ..writeByte(12)
       ..write(obj.dead)
       ..writeByte(13)
-      ..write(obj.rampartLevel);
+      ..write(obj.rampartLevel)
+      ..writeByte(14)
+      ..write(obj.surprise);
   }
 
   @override

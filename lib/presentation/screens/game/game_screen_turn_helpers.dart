@@ -73,23 +73,41 @@ Map<UnitType, int> computeUnitsToLose(
 RaidDueWarning? raidDueWarning(Game game, Player player) {
   final state = player.raidState;
   if (!state.isIncoming || state.arrivalTurn! > game.turn) return null;
-  final defenders = RaidBattle.defendersOf(player)
-      .values
-      .fold<int>(0, (sum, count) => sum + count);
   return RaidDueWarning(
     wave: state.incoming!,
-    defenderCount: defenders,
+    defenderCount: _defenderCount(player),
     lastChance: DefeatChecker.isLastChance(game),
   );
 }
 
-/// Warnings for the end-of-turn confirmation: the raid on the base and
-/// the kraken wave on an unguarded kernel, `null` when neither hits.
+/// Warning for the end-of-turn confirmation when the school of predators
+/// faced this turn strikes at its end. Losing it never ends the game.
+RaidDueWarning? predatorsDueWarning(Game game, Player player) {
+  final state = player.eventState;
+  final wave = state.predatorWave;
+  final due = state.predatorsTurn;
+  if (wave == null || due == null || due > game.turn) return null;
+  return RaidDueWarning(
+    wave: wave,
+    defenderCount: _defenderCount(player),
+    attacker: 'Banc de prédateurs',
+  );
+}
+
+int _defenderCount(Player player) => RaidBattle.defendersOf(player)
+    .values
+    .fold<int>(0, (sum, count) => sum + count);
+
+/// Warnings for the end-of-turn confirmation: the raid or the predators
+/// on the base and the kraken wave on an unguarded kernel, `null` when
+/// none hits.
 Widget? dueWarnings(Game game, Player player) {
   final Widget? raid = raidDueWarning(game, player);
+  final Widget? predators = predatorsDueWarning(game, player);
   final Widget? volcano = VolcanoDueWarning.of(game, player);
   final List<Widget> warnings = <Widget>[
     if (raid != null) raid,
+    if (predators != null) predators,
     if (volcano != null) volcano,
   ];
   if (warnings.isEmpty) return null;

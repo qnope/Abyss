@@ -1,5 +1,6 @@
 import 'package:hive_ce/hive.dart';
 
+import '../map/monster_lair.dart';
 import '../resource/resource_type.dart';
 import 'random_event_type.dart';
 
@@ -55,6 +56,14 @@ class EventState {
   @HiveField(10)
   ResourceType? tradeTo;
 
+  /// Wave of the predators drawn, kept until they are fought or baited.
+  @HiveField(11)
+  MonsterLair? predatorWave;
+
+  /// Turn at the end of which the faced [predatorWave] strikes the base.
+  @HiveField(12)
+  int? predatorsTurn;
+
   EventState({
     this.nextDrawTurn,
     this.pending,
@@ -67,6 +76,8 @@ class EventState {
     this.survivors,
     this.tradeFrom,
     this.tradeTo,
+    this.predatorWave,
+    this.predatorsTurn,
   });
 
   bool get hasPending => pending != null && pendingTurn != null;
@@ -97,6 +108,12 @@ class EventState {
     survivors = null;
     tradeFrom = null;
     tradeTo = null;
+  }
+
+  /// Forgets the predators, fought or baited away.
+  void clearPredators() {
+    predatorWave = null;
+    predatorsTurn = null;
   }
 
   /// Starts the lasting effect of [type], through [untilTurn] inclusive.

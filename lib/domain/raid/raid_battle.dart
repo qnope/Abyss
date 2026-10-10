@@ -20,11 +20,15 @@ import 'raid_spoils.dart';
 abstract final class RaidBattle {
   static const int baseLevel = 1;
 
+  /// A victory brings [lootPercent] % of a raid's loot; [surprise] marks
+  /// an attack that is not a raid (see [RaidReport.surprise]).
   static RaidReport fight({
     required Player player,
     required MonsterLair wave,
     required int turn,
     Random? random,
+    int lootPercent = 100,
+    bool surprise = false,
   }) {
     final Map<UnitType, int> defenders = defendersOf(player);
     final int rampartLevel = CoralCitadelRampart.levelOf(player.buildings);
@@ -64,11 +68,16 @@ abstract final class RaidBattle {
       dead: breakdown.dead,
       loot: victory
           ? FightMonsterHelpers.applyLoot(player, tech.boostLoot(
-              RaidSpoils.loot(wave.difficulty, random: random)))
+              RaidSpoils.loot(
+                wave.difficulty,
+                random: random,
+                percent: lootPercent,
+              )))
           : const <ResourceType, int>{},
       pillaged: victory
           ? const <ResourceType, int>{}
           : RaidSpoils.pillage(player.resources, rate: tech.pillageRate),
+      surprise: surprise,
     );
   }
 

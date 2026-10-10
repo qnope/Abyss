@@ -85,7 +85,9 @@ void _showCellAction(BuildContext context, Game game,
     _showExplorationFlow(context, game, x, y, level, onChanged);
     return;
   }
-  if (cell.isCollected) {
+  // A captured kernel is "collected" too, but it keeps its own sheet: that
+  // is where the garrison is managed.
+  if (cell.isCollected && cell.content != CellContentType.volcanicKernel) {
     showCellInfoSheet(context,
       title: 'Déjà visité', message: 'Vous êtes déjà venu par ici',
       icon: Icons.check_circle_outline);

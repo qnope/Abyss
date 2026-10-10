@@ -108,4 +108,21 @@ void main() {
 
     expect(find.byType(KernelArmySelectionScreen), findsOneWidget);
   });
+
+  testWidgets('a captured volcanic kernel opens its garrison, not the '
+      'visited notice', (tester) async {
+    final game = harnessGame(plainMap({
+      GridPosition(x: 2, y: 2): cellOf(CellContentType.volcanicKernel),
+    }));
+    final cell = game.levels[1]!.cellAt(2, 2);
+    game.levels[1]!.setCell(
+      2, 2, cell.copyWith(collectedBy: game.humanPlayer.id));
+    await tester.pumpWidget(mapTabHost(game));
+    await tester.pumpAndSettle();
+    await tapMapCell(tester, 2, 2);
+
+    expect(find.text('Déjà visité'), findsNothing);
+    expect(find.text('Noyau Volcanique'), findsOneWidget);
+    expect(find.text('Mettre en garnison'), findsOneWidget);
+  });
 }

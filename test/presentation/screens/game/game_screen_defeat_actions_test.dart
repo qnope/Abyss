@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
@@ -60,6 +61,7 @@ void main() {
   });
 
   testWidgets('return to menu leaves only the main menu', (tester) async {
+    reduceMotion(tester);
     await openDefeat(tester);
     await tapAction(tester, 'Retour au menu');
 

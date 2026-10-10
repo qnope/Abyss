@@ -45,4 +45,8 @@ extension SaveSummaryLabels on SaveSummary {
       volcanicKernelCaptured ? 'Noyau volcanique conquis' : 'Victoire',
     SaveOutcome.defeat => 'Voir le bilan de la partie',
   };
+
+  /// Which game a "continue" resumes: « Alice · Tour 14 · Normal ».
+  String get resumeLabel =>
+      '$playerName · Tour $turn · ${difficulty.displayName}';
 }

@@ -1,12 +1,18 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'data/game_repository.dart';
 import 'presentation/screens/menu/main_menu_screen.dart';
 import 'presentation/theme/abyss_theme.dart';
+import 'presentation/widgets/backdrop/backdrop_prewarm.dart';
 import 'presentation/widgets/warm_up/game_warm_up.dart';
 import 'presentation/widgets/warm_up/warm_up_layer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // The home art rasterizes while the saves open, not after.
+  final view = PlatformDispatcher.instance.implicitView;
+  if (view != null) prewarmBackdrop(view);
   await GameRepository.initialize();
   runApp(AbyssApp(repository: GameRepository()));
 }

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
-import '../../../domain/game/game_status.dart';
 import '../../../domain/game/save_sections.dart';
 import '../../theme/abyss_colors.dart';
 import '../../widgets/backdrop/abyss_backdrop.dart';
 import '../../widgets/save/confirm_save_deletion.dart';
 import '../../widgets/save/save_list.dart';
-import '../game/game_screen.dart';
-import '../game/game_screen_defeat_actions.dart';
+import '../game/resume_game.dart';
 
 /// The saved games, over the dimmed deep sea, ready to be resumed or
 /// deleted.
@@ -80,18 +78,7 @@ class _LoadGameScreenState extends State<LoadGameScreen> {
     );
   }
 
-  void _loadGame(Game game) {
-    if (game.status == GameStatus.defeat) {
-      showDefeatScreen(context, game, widget.repository);
-      return;
-    }
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute<void>(
-        builder: (_) => GameScreen(game: game, repository: widget.repository),
-      ),
-      (_) => false,
-    );
-  }
+  void _loadGame(Game game) => resumeGame(context, game, widget.repository);
 
   Future<void> _confirmDelete(Game game) async {
     final name = game.humanPlayer.name;

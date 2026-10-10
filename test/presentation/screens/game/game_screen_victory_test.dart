@@ -14,6 +14,7 @@ import 'package:abyss/presentation/screens/game/victory_screen.dart';
 import 'package:abyss/presentation/screens/menu/main_menu_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 Game _makeKernelGame({required int kernelLevel}) {
@@ -116,6 +117,7 @@ void main() {
 
     testWidgets('return to menu navigates to main menu', (t) async {
       _setLargeScreen(t);
+      reduceMotion(t);
       addTearDown(() { t.view.resetPhysicalSize(); t.view.resetDevicePixelRatio(); });
       final game = _makeKernelGame(kernelLevel: 9);
       await upgradeKernel(t, game);

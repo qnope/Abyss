@@ -30,6 +30,9 @@ class ChooseEventAction extends Action {
     if (state.pendingTurn != game.turn) {
       return const ActionResult.failure("Ce n'est pas le tour de ce choix");
     }
+    final String? refusal =
+        accept ? EventEffects.of(state.pending!).refusal(game, player) : null;
+    if (refusal != null) return ActionResult.failure(refusal);
     return const ActionResult.success();
   }
 

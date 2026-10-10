@@ -20,6 +20,10 @@ abstract class EventEffect {
     required Random random,
   }) {}
 
+  /// Why the player may not take the first option now, or `null` when
+  /// they may. The prudent option is always open.
+  String? refusal(Game game, Player player) => null;
+
   /// Plays the event out from [turn], the first turn whose end it can
   /// still change: the turn of the choice when the player chooses, the
   /// next one when it is applied while a turn ends (that turn's

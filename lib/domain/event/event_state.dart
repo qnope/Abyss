@@ -1,5 +1,6 @@
 import 'package:hive_ce/hive.dart';
 
+import '../resource/resource_type.dart';
 import 'random_event_type.dart';
 
 part 'event_state.g.dart';
@@ -41,6 +42,19 @@ class EventState {
   @HiveField(7)
   int eventsSeen;
 
+  /// Survivors met by the [pending] survivors event, who join as
+  /// harpoonists if welcomed.
+  @HiveField(8)
+  int? survivors;
+
+  /// Resource the [pending] caravan takes, the most abundant at its draw.
+  @HiveField(9)
+  ResourceType? tradeFrom;
+
+  /// Resource the [pending] caravan gives, the scarcest at its draw.
+  @HiveField(10)
+  ResourceType? tradeTo;
+
   EventState({
     this.nextDrawTurn,
     this.pending,
@@ -50,6 +64,9 @@ class EventState {
     this.activeUntilTurn,
     this.heating = false,
     this.eventsSeen = 0,
+    this.survivors,
+    this.tradeFrom,
+    this.tradeTo,
   });
 
   bool get hasPending => pending != null && pendingTurn != null;
@@ -73,9 +90,13 @@ class EventState {
     pendingTurn = turn;
   }
 
+  /// Settles the [pending] event, forgetting its offer.
   void clearPending() {
     pending = null;
     pendingTurn = null;
+    survivors = null;
+    tradeFrom = null;
+    tradeTo = null;
   }
 
   /// Starts the lasting effect of [type], through [untilTurn] inclusive.

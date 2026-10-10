@@ -13,11 +13,11 @@ import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 GameMap _map({MapCell? cell}) => GameMap(
-      width: 1,
-      height: 1,
-      cells: [cell ?? MapCell(terrain: TerrainType.plain)],
-      seed: 1,
-    );
+  width: 1,
+  height: 1,
+  cells: [cell ?? MapCell(terrain: TerrainType.plain)],
+  seed: 1,
+);
 
 Game _game({
   GameStatus status = GameStatus.playing,
@@ -56,14 +56,22 @@ void main() {
         SaveSummary.of(_game(status: status)).outcome;
     expect(outcomeOf(GameStatus.playing), SaveOutcome.inProgress);
     expect(outcomeOf(GameStatus.victory), SaveOutcome.victory);
-    expect(outcomeOf(GameStatus.freePlay), SaveOutcome.victory);
+    expect(outcomeOf(GameStatus.freePlay), SaveOutcome.freePlay);
     expect(outcomeOf(GameStatus.defeat), SaveOutcome.defeat);
   });
 
-  test('only a game still being played is in progress', () {
+  test('only a won or lost game is finished', () {
     expect(SaveOutcome.inProgress.isFinished, isFalse);
+    expect(SaveOutcome.freePlay.isFinished, isFalse);
     expect(SaveOutcome.victory.isFinished, isTrue);
     expect(SaveOutcome.defeat.isFinished, isTrue);
+  });
+
+  test('a game in free play has been won', () {
+    expect(SaveOutcome.inProgress.isWon, isFalse);
+    expect(SaveOutcome.freePlay.isWon, isTrue);
+    expect(SaveOutcome.victory.isWon, isTrue);
+    expect(SaveOutcome.defeat.isWon, isFalse);
   });
 
   test('the deepest level is the deepest map generated', () {
@@ -110,11 +118,12 @@ void main() {
 
   test('tells whether the player conquered the volcanic kernel', () {
     MapCell kernel(String? by) => MapCell(
-          terrain: TerrainType.plain,
-          content: CellContentType.volcanicKernel,
-          collectedBy: by,
-        );
-    bool capturedWith(String? by) => SaveSummary.of(
+      terrain: TerrainType.plain,
+      content: CellContentType.volcanicKernel,
+      collectedBy: by,
+    );
+    bool capturedWith(String? by) =>
+        SaveSummary.of(
           _game(levels: {1: _map(), 3: _map(cell: kernel(by))}),
         ).volcanicKernelCaptured;
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../faction/faction_personality.dart';
 import '../game/difficulty.dart';
 import 'action_codec.dart';
 import 'action_spec.dart';
@@ -22,7 +23,9 @@ import 'timeline_script.dart';
 /// `otherwise` names a built-in strategy that plays the turns left out.
 ///
 /// A replay exported from the game (see `ReplayExport`) adds `player`,
-/// `mapSeed`, `lastTurn` and `endTurnSeeds`, which replay that very game.
+/// `mapSeed`, `lastTurn` and `endTurnSeeds`, which replay that very game;
+/// `factions` lists the personalities it was played against, whose moves
+/// are in the turns and never asked from a brain.
 abstract final class ScenarioParser {
   static TimelineScript parse(String source) {
     final Object? json = jsonDecode(source);
@@ -49,6 +52,7 @@ abstract final class ScenarioParser {
       mapSeed: json['mapSeed'] as int?,
       difficulty: _difficultyOf(json['difficulty']),
       lastTurn: json['lastTurn'] as int?,
+      factions: _factionsOf(json['factions']),
       endTurnSeeds: _seedsOf(json['endTurnSeeds']),
     );
   }
@@ -59,6 +63,20 @@ abstract final class ScenarioParser {
       if (d.name == value) return d;
     }
     throw FormatException('Difficulté inconnue : $value');
+  }
+
+  static List<FactionPersonality> _factionsOf(Object? value) {
+    if (value == null) return const <FactionPersonality>[];
+    if (value is! List) {
+      throw const FormatException('"factions" doit être une liste');
+    }
+    return <FactionPersonality>[
+      for (final Object? name in value)
+        FactionPersonality.values.firstWhere(
+          (FactionPersonality p) => p.name == name,
+          orElse: () => throw FormatException('Faction inconnue : $name'),
+        ),
+    ];
   }
 
   static Map<int, int> _seedsOf(Object? value) {

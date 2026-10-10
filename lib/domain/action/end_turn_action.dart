@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../faction/faction_turns.dart';
 import '../game/game.dart';
 import '../game/player.dart';
 import '../history/entries/turn_end_entry_factory.dart';
@@ -17,7 +18,11 @@ class EndTurnAction extends Action {
   /// Drives the raid fights; `null` keeps them unseeded.
   final Random? random;
 
-  EndTurnAction({this.random});
+  /// Whether the factions play their turn first; a replay turns it off,
+  /// as the journal already holds what the brains did.
+  final bool playFactions;
+
+  EndTurnAction({this.random, this.playFactions = true});
 
   @override
   ActionType get type => ActionType.endTurn;
@@ -31,6 +36,7 @@ class EndTurnAction extends Action {
 
   @override
   ActionResult execute(Game game, Player player) {
+    if (playFactions) FactionTurns.playAll(game);
     final result = TurnResolver().resolve(game, random: random);
     return EndTurnActionResult.success(turnResult: result);
   }

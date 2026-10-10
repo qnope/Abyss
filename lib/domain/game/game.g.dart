@@ -30,13 +30,14 @@ class GameAdapter extends TypeAdapter<Game> {
         replay: fields[6] as ReplayJournal?,
       )
       ..savedDifficulty = fields[7] as Difficulty?
-      ..savedLastPlayedAt = fields[8] as DateTime?;
+      ..savedLastPlayedAt = fields[8] as DateTime?
+      ..savedFactions = (fields[9] as List?)?.cast<FactionPersonality>();
   }
 
   @override
   void write(BinaryWriter writer, Game obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.players)
       ..writeByte(1)
@@ -54,7 +55,9 @@ class GameAdapter extends TypeAdapter<Game> {
       ..writeByte(7)
       ..write(obj.savedDifficulty)
       ..writeByte(8)
-      ..write(obj.savedLastPlayedAt);
+      ..write(obj.savedLastPlayedAt)
+      ..writeByte(9)
+      ..write(obj.savedFactions);
   }
 
   @override

@@ -40,10 +40,11 @@ class ScriptRunner {
   ScriptRunReport run(GameScript script, {required int seed}) {
     final Random random = Random(seed);
     final int drawnSeed = random.nextInt(0x7FFFFFFF);
-    final Game game = GameFactory.newSinglePlayer(
+    final Game game = GameFactory.newGame(
       playerName: script.playerName,
       mapSeed: script.mapSeed ?? drawnSeed,
       difficulty: script.difficulty ?? difficulty,
+      personalities: script.factions,
     );
     CheatCodes.apply(game.humanPlayer);
     return runOn(game, script, random: random, seed: seed);
@@ -74,7 +75,10 @@ class ScriptRunner {
       milestones.observe(game, game.turn, playerId: player.id);
       if (turn.isOver || game.turn == script.lastTurn) break;
       final ActionResult end = _executor.execute(
-          EndTurnAction(random: script.endTurnRandom(game.turn) ?? random),
+          EndTurnAction(
+            random: script.endTurnRandom(game.turn) ?? random,
+            playFactions: script.factionsPlay,
+          ),
           game,
           game.humanPlayer);
       final raid = end is EndTurnActionResult ? end.turnResult?.raid : null;

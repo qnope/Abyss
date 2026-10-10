@@ -1,5 +1,7 @@
 import 'package:hive_ce/hive.dart';
 
+import '../faction/faction.dart';
+import '../faction/faction_personality.dart';
 import '../map/cell_content_type.dart';
 import '../map/game_map.dart';
 import '../map/transition_base_type.dart';
@@ -45,6 +47,11 @@ class Game extends HiveObject {
   @HiveField(8)
   DateTime? savedLastPlayedAt;
 
+  /// Personalities of the factions, in the order they play; `null` for
+  /// games saved before the factions, and for single-player games.
+  @HiveField(9)
+  List<FactionPersonality>? savedFactions;
+
   Game({
     required this.humanPlayerId,
     required this.players,
@@ -67,6 +74,13 @@ class Game extends HiveObject {
         players: {human.id: human},
         difficulty: difficulty,
       );
+
+  /// The factions of the game, in the order they play; each one is the
+  /// player of the same [Faction.id].
+  List<Faction> get factions => [
+    for (final FactionPersonality p in savedFactions ?? const [])
+      Faction(p),
+  ];
 
   Difficulty get difficulty => savedDifficulty ?? Difficulty.normal;
 

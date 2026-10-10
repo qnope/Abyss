@@ -17,36 +17,39 @@ class PlayerAdapter extends TypeAdapter<Player> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Player(
-      name: fields[0] as String,
-      id: fields[1] as String?,
-      baseX: fields[2] == null ? 0 : (fields[2] as num).toInt(),
-      baseY: fields[3] == null ? 0 : (fields[3] as num).toInt(),
-      resources: (fields[4] as Map?)?.cast<ResourceType, Resource>(),
-      buildings: (fields[5] as Map?)?.cast<BuildingType, Building>(),
-      techBranches: (fields[6] as Map?)?.cast<TechBranch, TechBranchState>(),
-      unitsPerLevel: (fields[7] as Map?)?.map(
-        (dynamic k, dynamic v) =>
-            MapEntry((k as num).toInt(), (v as Map).cast<UnitType, Unit>()),
-      ),
-      recruitedUnitTypes: (fields[8] as List?)?.cast<UnitType>(),
-      pendingExplorations: (fields[9] as List?)?.cast<ExplorationOrder>(),
-      revealedCellsPerLevel: (fields[10] as Map?)?.map(
-        (dynamic k, dynamic v) =>
-            MapEntry((k as num).toInt(), (v as List).cast<GridPosition>()),
-      ),
-      historyEntries: (fields[11] as List?)?.cast<HistoryEntry>(),
-      pendingReinforcements: (fields[13] as List?)?.cast<ReinforcementOrder>(),
-      raidState: fields[14] as RaidState?,
-      volcanoState: fields[16] as VolcanoState?,
-      eventState: fields[17] as EventState?,
-      worksite: fields[15] as Worksite?,
-    )..savedObjectiveState = fields[18] as ObjectiveState?;
+        name: fields[0] as String,
+        id: fields[1] as String?,
+        baseX: fields[2] == null ? 0 : (fields[2] as num).toInt(),
+        baseY: fields[3] == null ? 0 : (fields[3] as num).toInt(),
+        resources: (fields[4] as Map?)?.cast<ResourceType, Resource>(),
+        buildings: (fields[5] as Map?)?.cast<BuildingType, Building>(),
+        techBranches: (fields[6] as Map?)?.cast<TechBranch, TechBranchState>(),
+        unitsPerLevel: (fields[7] as Map?)?.map(
+          (dynamic k, dynamic v) =>
+              MapEntry((k as num).toInt(), (v as Map).cast<UnitType, Unit>()),
+        ),
+        recruitedUnitTypes: (fields[8] as List?)?.cast<UnitType>(),
+        pendingExplorations: (fields[9] as List?)?.cast<ExplorationOrder>(),
+        revealedCellsPerLevel: (fields[10] as Map?)?.map(
+          (dynamic k, dynamic v) =>
+              MapEntry((k as num).toInt(), (v as List).cast<GridPosition>()),
+        ),
+        historyEntries: (fields[11] as List?)?.cast<HistoryEntry>(),
+        pendingReinforcements:
+            (fields[13] as List?)?.cast<ReinforcementOrder>(),
+        raidState: fields[14] as RaidState?,
+        volcanoState: fields[16] as VolcanoState?,
+        eventState: fields[17] as EventState?,
+        worksite: fields[15] as Worksite?,
+      )
+      ..savedObjectiveState = fields[18] as ObjectiveState?
+      ..savedFallen = fields[19] as bool?;
   }
 
   @override
   void write(BinaryWriter writer, Player obj) {
     writer
-      ..writeByte(18)
+      ..writeByte(19)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -82,7 +85,9 @@ class PlayerAdapter extends TypeAdapter<Player> {
       ..writeByte(17)
       ..write(obj.eventState)
       ..writeByte(18)
-      ..write(obj.savedObjectiveState);
+      ..write(obj.savedObjectiveState)
+      ..writeByte(19)
+      ..write(obj.savedFallen);
   }
 
   @override

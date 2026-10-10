@@ -82,6 +82,11 @@ class Player extends HiveObject {
   @HiveField(18)
   ObjectiveState? savedObjectiveState;
 
+  /// Whether the base fell (a faction, after three raids lost in a row);
+  /// `null` for players saved before the factions, who never fell.
+  @HiveField(19)
+  bool? savedFallen;
+
   Player({
     required this.name,
     String? id,
@@ -140,6 +145,8 @@ class Player extends HiveObject {
           },
           historyEntries: historyEntries,
         );
+
+  bool get hasFallen => savedFallen ?? false;
 
   Map<UnitType, Unit> unitsOnLevel(int level) => unitsPerLevel[level] ?? {};
 

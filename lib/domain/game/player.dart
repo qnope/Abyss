@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 import '../building/building.dart';
 import '../building/building_type.dart';
+import '../event/event_state.dart';
 import '../history/history_constants.dart';
 import '../history/history_entry.dart';
 import '../map/exploration_order.dart';
@@ -72,6 +73,9 @@ class Player extends HiveObject {
   @HiveField(16)
   final VolcanoState volcanoState;
 
+  @HiveField(17)
+  final EventState eventState;
+
   Player({
     required this.name,
     String? id,
@@ -88,6 +92,7 @@ class Player extends HiveObject {
     List<ReinforcementOrder>? pendingReinforcements,
     RaidState? raidState,
     VolcanoState? volcanoState,
+    EventState? eventState,
     Worksite? worksite,
   })  : id = id ?? const Uuid().v4(),
         resources = resources ?? PlayerDefaults.resources(),
@@ -101,6 +106,7 @@ class Player extends HiveObject {
         pendingReinforcements = pendingReinforcements ?? [],
         raidState = raidState ?? RaidState(),
         volcanoState = volcanoState ?? VolcanoState(),
+        eventState = eventState ?? EventState(),
         worksite = worksite ?? Worksite();
 
   Player.withBase({

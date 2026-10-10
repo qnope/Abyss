@@ -5,6 +5,8 @@
 import 'package:hive_ce/hive_ce.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/event/event_state.dart';
+import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/fight/combat_side.dart';
 import 'package:abyss/domain/fight/combatant.dart';
 import 'package:abyss/domain/fight/fight_result.dart';
@@ -52,6 +54,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(CombatantAdapter());
     registerAdapter(DescentEntryAdapter());
     registerAdapter(DifficultyAdapter());
+    registerAdapter(EventStateAdapter());
     registerAdapter(ExplorationOrderAdapter());
     registerAdapter(ExploreEntryAdapter());
     registerAdapter(FightResultAdapter());
@@ -68,6 +71,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(PlayerAdapter());
     registerAdapter(RaidEntryAdapter());
     registerAdapter(RaidStateAdapter());
+    registerAdapter(RandomEventTypeAdapter());
     registerAdapter(RecruitEntryAdapter());
     registerAdapter(ReinforcementEntryAdapter());
     registerAdapter(ReinforcementOrderAdapter());
@@ -103,6 +107,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(CombatantAdapter());
     registerAdapter(DescentEntryAdapter());
     registerAdapter(DifficultyAdapter());
+    registerAdapter(EventStateAdapter());
     registerAdapter(ExplorationOrderAdapter());
     registerAdapter(ExploreEntryAdapter());
     registerAdapter(FightResultAdapter());
@@ -119,6 +124,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(PlayerAdapter());
     registerAdapter(RaidEntryAdapter());
     registerAdapter(RaidStateAdapter());
+    registerAdapter(RandomEventTypeAdapter());
     registerAdapter(RecruitEntryAdapter());
     registerAdapter(ReinforcementEntryAdapter());
     registerAdapter(ReinforcementOrderAdapter());

@@ -22,6 +22,9 @@ class SaveSummary {
   final Map<ResourceType, int> resources;
   final DateTime lastPlayedAt;
 
+  /// Whether the player holds the volcanic kernel at the core.
+  final bool volcanicKernelCaptured;
+
   const SaveSummary({
     required this.playerName,
     required this.turn,
@@ -31,6 +34,7 @@ class SaveSummary {
     required this.headquartersLevel,
     required this.resources,
     required this.lastPlayedAt,
+    this.volcanicKernelCaptured = false,
   });
 
   factory SaveSummary.of(Game game) {
@@ -49,6 +53,7 @@ class SaveSummary {
           type: player.resources[type]?.amount ?? 0,
       }),
       lastPlayedAt: game.lastPlayedAt,
+      volcanicKernelCaptured: game.isVolcanicKernelCapturedBy(player.id),
     );
   }
 }

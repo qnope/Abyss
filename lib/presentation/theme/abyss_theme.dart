@@ -17,6 +17,7 @@ abstract final class AbyssTheme {
       cardTheme: AbyssCardTheme.card(),
       dialogTheme: AbyssCardTheme.dialog(),
       bottomSheetTheme: AbyssCardTheme.bottomSheet(),
+      popupMenuTheme: AbyssCardTheme.popupMenu(),
       elevatedButtonTheme: AbyssButtonTheme.elevatedButton(),
       outlinedButtonTheme: AbyssButtonTheme.outlinedButton(),
       textButtonTheme: AbyssButtonTheme.textButton(),

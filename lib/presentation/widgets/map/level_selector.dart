@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../extensions/map_level_info.dart';
 import '../../theme/abyss_colors.dart';
-
-/// Data for a single level chip.
-class _LevelInfo {
-  const _LevelInfo(this.level, this.label);
-  final int level;
-  final String label;
-}
-
-const _levels = [
-  _LevelInfo(1, 'Niv 1: Surface'),
-  _LevelInfo(2, 'Niv 2: Profondeurs'),
-  _LevelInfo(3, 'Niv 3: Noyau'),
-];
 
 /// Horizontal row of level chips for switching between map depths.
 ///
@@ -37,14 +25,14 @@ class LevelSelector extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          for (final info in _levels)
+          for (final level in MapLevelInfo.levels)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: _LevelChip(
-                info: info,
-                isActive: info.level == currentLevel,
-                isUnlocked: unlockedLevels.contains(info.level),
-                onTap: () => onLevelSelected(info.level),
+                label: 'Niv $level: ${MapLevelInfo.nameOf(level)}',
+                isActive: level == currentLevel,
+                isUnlocked: unlockedLevels.contains(level),
+                onTap: () => onLevelSelected(level),
               ),
             ),
         ],
@@ -55,13 +43,13 @@ class LevelSelector extends StatelessWidget {
 
 class _LevelChip extends StatelessWidget {
   const _LevelChip({
-    required this.info,
+    required this.label,
     required this.isActive,
     required this.isUnlocked,
     required this.onTap,
   });
 
-  final _LevelInfo info;
+  final String label;
   final bool isActive;
   final bool isUnlocked;
   final VoidCallback onTap;
@@ -87,7 +75,7 @@ class _LevelChip extends StatelessWidget {
                 child: Icon(Icons.lock, size: 14, color: fg),
               ),
             Text(
-              info.label,
+              label,
               style: TextStyle(
                 color: fg,
                 fontSize: 13,

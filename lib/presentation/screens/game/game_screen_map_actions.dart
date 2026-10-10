@@ -3,6 +3,7 @@ import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/grid_position.dart';
+import '../../../domain/map/map_cell.dart';
 import '../../extensions/event_state_extensions.dart';
 import '../../extensions/transition_base_name_extensions.dart';
 import '../../l10n/l10n_extension.dart';
@@ -132,6 +133,8 @@ void _showCellAction(BuildContext context, Game game,
     case CellContentType.empty:
       showCellInfoSheet(context, title: l10n.screenPlainTitle(x, y),
         message: l10n.screenNothingToSee);
+    case CellContentType.volcanicKernel when _heldByRival(game, cell):
+      openRivalKernelSheet(context, game, repository, x, y, onChanged);
     case CellContentType.volcanicKernel:
       showVolcanicKernelSheet(
         context,
@@ -147,3 +150,9 @@ void _showCellAction(BuildContext context, Game game,
       );
   }
 }
+
+/// Whether another player than the human holds the kernel of [cell].
+bool _heldByRival(Game game, MapCell cell) =>
+    cell.collectedBy != null &&
+    cell.collectedBy != game.humanPlayerId &&
+    game.players[cell.collectedBy] != null;

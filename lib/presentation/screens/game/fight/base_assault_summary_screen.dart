@@ -4,6 +4,7 @@ import '../../../../domain/history/history_entry.dart';
 import '../../../extensions/transition_base_name_extensions.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../../../widgets/fight/assault_damage_card.dart';
+import '../../../widgets/fight/assault_kernel_card.dart';
 import '../../../widgets/fight/fight_loot_card.dart';
 import '../../../widgets/fight/fight_report_card.dart';
 import '../../../widgets/fight/fight_result_banner.dart';
@@ -61,7 +62,10 @@ class BaseAssaultSummaryScreen extends StatelessWidget {
               fight.initialMonsterCount,
             ),
           ),
-          if (entry.victory && entry.postName != null) ...[
+          if (entry.victory && entry.postName == 'volcanicKernel') ...[
+            const SizedBox(height: 12),
+            AssaultKernelCard(entry: entry),
+          ] else if (entry.victory && entry.postName != null) ...[
             const SizedBox(height: 12),
             FightReportCard.line(
               defending

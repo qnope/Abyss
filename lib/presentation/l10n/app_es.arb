@@ -777,5 +777,9 @@
   "historyPostRepelled": "Asalto de {name} a {post} rechazado",
   "assaultPostTaken": "{post} es tuya: su pasaje está destruido. Construye el tuyo para bajar por ella.",
   "assaultPostLost": "{post} está perdida: tu pasaje está destruido y las unidades del nivel inferior se pierden con ella.",
+  "assaultKernelLevel": "Núcleo: nivel {before} → {after}",
+  "@assaultKernelLevel": { "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } } },
+  "assaultKernelTaken": "El Núcleo es tuyo: su guarnición está perdida. Súbelo al nivel 1 para guarnecerlo.",
+  "assaultKernelLost": "El Núcleo está perdido: su guarnición se pierde con él.",
   "mapHeldBy": "En manos de {name}"
 }

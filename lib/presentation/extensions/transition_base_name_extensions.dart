@@ -26,4 +26,6 @@ extension TransitionBaseTexts on TransitionBase {
 /// The name of a base as a save [stored] it (a passage, a capture...),
 /// in the player's language. A text naming no known base is shown as is.
 String baseNameLabel(AppLocalizations l10n, String stored) =>
-    TransitionBaseName.parse(stored)?.displayName(l10n) ?? stored;
+    stored == 'volcanicKernel'
+        ? l10n.buildingVolcanicKernelName
+        : TransitionBaseName.parse(stored)?.displayName(l10n) ?? stored;

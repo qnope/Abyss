@@ -5,13 +5,14 @@ import '../../../domain/map/transition_base.dart';
 import '../../extensions/action_failure_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
 import 'transition_base_sheet.dart';
 
 /// Opens the sheet of a Faille or Cheminée that the player called
-/// [ownerName] holds.
+/// [ownerName] holds, or of the volcanic kernel when [post] is `null`.
 Future<void> showRivalPostSheet(
   BuildContext context, {
-  required TransitionBase post,
+  required TransitionBase? post,
   required String ownerName,
   required ActionFailure? refusal,
   required VoidCallback onAttack,
@@ -28,9 +29,10 @@ Future<void> showRivalPostSheet(
 );
 
 /// A post held by another player: who holds it, and the attack button,
-/// off with the reason while the attack is refused.
+/// off with the reason while the attack is refused. Without a [post] it
+/// is the volcanic kernel that is held.
 class RivalPostSheet extends StatelessWidget {
-  final TransitionBase post;
+  final TransitionBase? post;
   final String ownerName;
   final ActionFailure? refusal;
   final VoidCallback onAttack;
@@ -54,7 +56,10 @@ class RivalPostSheet extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TransitionBaseHeader(transitionBase: post),
+            if (post != null)
+              TransitionBaseHeader(transitionBase: post!)
+            else
+              const _KernelHeader(),
             const SizedBox(height: 12),
             Text(
               l10n.mapHeldBy(ownerName),
@@ -103,4 +108,25 @@ class RivalPostSheet extends StatelessWidget {
       ),
     );
   }
+}
+
+class _KernelHeader extends StatelessWidget {
+  const _KernelHeader();
+
+  @override
+  Widget build(BuildContext context) => Column(
+    children: [
+      const RasterSvg(
+        assetPath: 'assets/icons/terrain/volcanic_kernel.svg',
+        size: 64,
+      ),
+      const SizedBox(height: 12),
+      Text(
+        context.l10n.buildingVolcanicKernelName,
+        style: Theme.of(
+          context,
+        ).textTheme.headlineSmall?.copyWith(color: AbyssColors.biolumCyan),
+      ),
+    ],
+  );
 }

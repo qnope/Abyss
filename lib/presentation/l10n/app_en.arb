@@ -778,5 +778,9 @@
   "historyPostRepelled": "Assault by {name} on {post} repelled",
   "assaultPostTaken": "{post} is yours: its passage is destroyed. Build your own to go down through it.",
   "assaultPostLost": "{post} is lost: your passage is destroyed, and the units on the level below are lost with it.",
+  "assaultKernelLevel": "Core: level {before} → {after}",
+  "@assaultKernelLevel": { "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } } },
+  "assaultKernelTaken": "The Core is yours: its garrison is lost. Raise it to level 1 to garrison it.",
+  "assaultKernelLost": "The Core is lost: its garrison is lost with it.",
   "mapHeldBy": "Held by {name}"
 }

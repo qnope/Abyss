@@ -13,6 +13,7 @@ import '../script/script_turn.dart';
 import '../unit/unit.dart';
 import '../unit/unit_type.dart';
 import 'faction_personality.dart';
+import 'faction_kernel_war.dart';
 import 'faction_post_war.dart';
 
 /// When and whom a faction attacks. One conservative rule that every
@@ -52,7 +53,8 @@ abstract final class FactionWar {
   static void play(ScriptTurn turn, FactionPersonality personality) {
     if (!isDue(turn.number, personality)) return;
     if (turn.game.humanPlayer.raidState.hasAttackFrom(turn.player.id)) return;
-    if (!_raidBases(turn)) FactionPostWar.play(turn);
+    if (_raidBases(turn) || FactionPostWar.play(turn)) return;
+    FactionKernelWar.play(turn);
   }
 
   /// Attacks the weakest beatable base; returns whether it attacked.

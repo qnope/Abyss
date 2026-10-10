@@ -83,7 +83,7 @@ void main() {
     ActionExecutor().execute(EndTurnAction(), game, game.humanPlayer);
     final victimGrowth = growthOf(victim);
     final otherGrowth = growthOf(other);
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 10; i++) {
       ActionExecutor().execute(EndTurnAction(), game, game.humanPlayer);
     }
 

@@ -75,6 +75,7 @@ BaseAssaultEntry baseAssaultEntry({
   required bool victory,
   required bool defending,
   String? post,
+  ({int before, int after})? kernel,
 }) => BaseAssaultEntry(
   turn: 14,
   victory: victory,
@@ -85,8 +86,8 @@ BaseAssaultEntry baseAssaultEntry({
   survivorsIntact: const {},
   wounded: const {},
   dead: const {},
-  rampartBefore: 2,
-  rampartAfter: 0,
+  rampartBefore: kernel?.before ?? 2,
+  rampartAfter: kernel?.after ?? 0,
   headquartersBefore: 5,
   headquartersAfter: 5,
   pillaged: const {},

@@ -40,7 +40,8 @@ after `flutter create` to get the icon in a local build too.
 
 ### Code coverage
 
-Generated `*.g.dart` files are left out of the numbers.
+Generated code is left out of the numbers: the Hive `*.g.dart` files and
+the `app_localizations*.dart` files `flutter gen-l10n` writes from the ARB.
 
 - **On a pull request**: a comment on the PR gives the total coverage, the
   coverage per layer and the least covered files. It is updated on each push.

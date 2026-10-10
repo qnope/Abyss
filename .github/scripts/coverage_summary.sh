@@ -8,10 +8,12 @@ lcov_file="${1:-coverage/lcov.info}"
 badge_file="${2:-}"
 
 # One "found hit file" line per source file, paths relative to lib/.
-# Generated files (*.g.dart) are left out.
+# Generated files are left out: Hive adapters (*.g.dart) and the
+# translations flutter gen-l10n writes from the ARB files.
 per_file=$(awk '
   /^SF:/ { file = substr($0, 4); sub(/^.*\/lib\//, "lib/", file)
-           skip = file ~ /\.g\.dart$/ }
+           skip = file ~ /\.g\.dart$/ ||
+                  file ~ /\/l10n\/app_localizations[a-z_]*\.dart$/ }
   skip { next }
   /^LF:/ { found[file] += substr($0, 4) }
   /^LH:/ { hit[file] += substr($0, 4) }

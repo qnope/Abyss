@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'greyscale_bitmap.dart';
 import 'run_concurrently.dart';
 
 /// Bitmaps of SVG assets, rasterized once per asset.
@@ -19,6 +20,8 @@ abstract final class SvgRasterCache {
 
   static final _pending = <String, Future<ui.Image>>{};
   static final _ready = <String, ui.Image>{};
+  static final _pendingGrey = <String, Future<ui.Image>>{};
+  static final _readyGrey = <String, ui.Image>{};
 
   /// Paths of every SVG rasterized so far.
   static Iterable<String> get readyPaths => _ready.keys;
@@ -27,15 +30,21 @@ abstract final class SvgRasterCache {
   static ui.Image? peek(String path) => _ready[path];
 
   /// Rasterizes [path] on first use only.
-  static Future<ui.Image> load(String path) {
-    return _pending[path] ??= _rasterize(path).then(
-      (image) => _ready[path] = image,
-      onError: (Object error) {
-        _pending.remove(path);
-        throw error;
-      },
-    );
-  }
+  static Future<ui.Image> load(String path) =>
+      _memoize(_pending, _ready, path, () => _rasterize(path));
+
+  /// The greyscale bitmap if it is already derived, without waiting.
+  static ui.Image? peekGrey(String path) => _readyGrey[path];
+
+  /// Derives a greyscale copy of [path]'s bitmap on first use only, so
+  /// locked items show their real illustration greyed at the cost of a
+  /// single plain image draw.
+  static Future<ui.Image> loadGrey(String path) => _memoize(
+    _pendingGrey,
+    _readyGrey,
+    path,
+    () => load(path).then(greyscaleBitmap),
+  );
 
   /// SVGs rasterized at the same time while preloading: enough to parse
   /// on several cores, few enough to keep the screen shown meanwhile
@@ -50,6 +59,27 @@ abstract final class SvgRasterCache {
     );
     final paths = manifest.listAssets().where((p) => p.endsWith('.svg'));
     await runConcurrently(paths, preloadWorkers, load);
+  }
+
+  /// Derives the greyscale bitmap of every path in [paths] ahead of time.
+  static Future<void> preloadGrey(Iterable<String> paths) =>
+      runConcurrently(paths, preloadWorkers, loadGrey);
+
+  /// Runs [compute] once per [path]; a failure is forgotten so the next
+  /// call retries.
+  static Future<ui.Image> _memoize(
+    Map<String, Future<ui.Image>> pending,
+    Map<String, ui.Image> ready,
+    String path,
+    Future<ui.Image> Function() compute,
+  ) {
+    return pending[path] ??= compute().then(
+      (image) => ready[path] = image,
+      onError: (Object error) {
+        pending.remove(path);
+        throw error;
+      },
+    );
   }
 
   static Future<ui.Image> _rasterize(String path) async {

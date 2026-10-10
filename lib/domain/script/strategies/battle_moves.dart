@@ -6,6 +6,7 @@ import '../../map/cell_content_type.dart';
 import '../../map/grid_position.dart';
 import '../../map/map_cell.dart';
 import '../../map/monster_lair.dart';
+import '../../raid/raid_battle.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
 import 'army_planner.dart';
@@ -28,22 +29,33 @@ extension BattleMoves on ScriptTurn {
   bool defendBase(ArmyPlanner planner, {double share = 1}) {
     final MonsterLair? wave = player.raidState.incoming;
     if (wave == null) return true;
-    final int rampartLevel = CoralCitadelRampart.levelOf(player.buildings);
-    final Combatant? rampart = CoralCitadelRampart.combatantFor(rampartLevel);
     return topUp(
-      base: <UnitType, int>{
-        for (final e in player.unitsOnLevel(1).entries)
-          if (e.value.count > 0) e.key: e.value.count,
-      },
+      base: RaidBattle.defendersOf(player),
       enemy: () => CombatantBuilder.monsterCombatantsFrom(wave),
-      allies: rampart == null
-          ? null
-          : () => <Combatant>[CoralCitadelRampart.combatantFor(rampartLevel)!],
+      allies: _rampart,
       mixes: defenceMixes,
       planner: planner,
       boost: defenceBoost,
       share: share,
     );
+  }
+
+  /// Whether the units on the base level and the rampart beat [wave],
+  /// with [planner]'s confidence, as they stand now.
+  bool holds(MonsterLair wave, ArmyPlanner planner) => planner.wins(
+        RaidBattle.defendersOf(player),
+        () => CombatantBuilder.monsterCombatantsFrom(wave),
+        allies: _rampart,
+        boost: defenceBoost,
+      );
+
+  /// The Coral Citadel rampart that backs the base, if built.
+  List<Combatant> Function()? get _rampart {
+    final int level = CoralCitadelRampart.levelOf(player.buildings);
+    final Combatant? rampart = CoralCitadelRampart.combatantFor(level);
+    return rampart == null
+        ? null
+        : () => <Combatant>[CoralCitadelRampart.combatantFor(level)!];
   }
 
   /// Clears the revealed lairs of the base level that a share of the

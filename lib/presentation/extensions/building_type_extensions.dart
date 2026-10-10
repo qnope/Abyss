@@ -63,7 +63,8 @@ extension BuildingTypeInfo on BuildingType {
       'Capsule haute pression permettant l\'assaut des cheminées hydrothermales.',
     BuildingType.volcanicKernel =>
       'Le coeur brulant des abysses. '
-      'Construisez-le au niveau 10 pour remporter la victoire.',
+      'Construisez-le au niveau 10 pour remporter la victoire. '
+      'Sa garnison se gère depuis sa case, sur la carte du niveau 3.',
   };
 
   String get iconPath => switch (this) {

@@ -1,4 +1,5 @@
 import '../building/building.dart';
+import '../building/building_degradation.dart';
 import '../building/building_type.dart';
 import 'production_formulas.dart';
 import 'resource_type.dart';
@@ -23,7 +24,10 @@ class ProductionCalculator {
     for (final building in buildings.values) {
       final formula = productionFormulas[building.type];
       if (formula != null && building.level > 0) {
-        final amount = formula.compute(building.level);
+        final amount = BuildingDegradation.half(
+          formula.compute(building.level),
+          degraded: BuildingDegradation.isDegraded(buildings, building.type),
+        );
         result[formula.resourceType] =
             (result[formula.resourceType] ?? 0) + amount;
       }
@@ -34,7 +38,13 @@ class ProductionCalculator {
       }
     }
     if (techBranches == null) return result;
-    final tech = TechEffects(techBranches);
+    final tech = TechEffects(
+      techBranches,
+      halved: BuildingDegradation.isDegraded(
+        buildings,
+        BuildingType.laboratory,
+      ),
+    );
     for (final type in result.keys.toList()) {
       result[type] = result[type]! * (100 + tech.productionPercent(type)) ~/ 100;
     }

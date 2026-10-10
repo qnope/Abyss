@@ -33,7 +33,7 @@ void showBuildingDetailAction(
     capturedBaseTypes: game.capturedBaseTypesOf(human.id),
     isVolcanicKernelCaptured: game.isVolcanicKernelCapturedBy(human.id),
     upgradeDiscountPercent:
-        TechEffects(human.techBranches).upgradeDiscountPercent,
+        TechEffects.of(human).upgradeDiscountPercent,
     troops: troopsSectionFor(context, game, repository, building, onChanged),
     onUpgrade: () {
       final action = UpgradeBuildingAction(buildingType: building.type);
@@ -74,6 +74,7 @@ void showUnitDetailAction(
     barracksLevel: barracksLevel,
     resources: human.resources,
     hasRecruitedThisType: hasRecruitedThisType,
+    costDoubled: human.isDegraded(BuildingType.barracks),
     onRecruit: (quantity) {
       final action = RecruitUnitAction(unitType: unitType, quantity: quantity);
       final result = ActionExecutor().execute(action, game, human);

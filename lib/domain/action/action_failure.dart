@@ -28,11 +28,13 @@ enum ActionFailure {
   baseNotCaptured,
   targetLevelNotExplored,
   requiredBuildingMissing,
+  requiredBuildingDegraded,
 
   // Volcanic kernel.
   noVolcanicKernelHere,
   kernelAlreadyCaptured,
   kernelNotCaptured,
+  kernelDegraded,
 
   // Random events.
   noPendingEvent,

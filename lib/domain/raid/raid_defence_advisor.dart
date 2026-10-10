@@ -35,7 +35,8 @@ abstract final class RaidDefenceAdvisor {
     final Map<UnitType, int> base = RaidBattle.defendersOf(player);
     final UnitBoost boost =
         FightMonsterHelpers.unitBoostOf(player, defendingBase: true);
-    final int rampart = CoralCitadelRampart.levelOf(player.buildings);
+    final Combatant? rampart =
+        CoralCitadelRampart.combatantOf(player.buildings);
     final String key = _keyOf(base, wave, boost, rampart);
     if (key == _lastKey) return _lastAnswer;
     final int have = base[UnitType.harpoonist] ?? 0;
@@ -44,7 +45,7 @@ abstract final class RaidDefenceAdvisor {
       (int k) => <UnitType, int>{...base, UnitType.harpoonist: have + k},
       () => CombatantBuilder.monsterCombatantsFrom(wave),
       boost: boost,
-      allies: _rampartOf(rampart),
+      allies: _rampartOf(player),
     );
     _lastKey = key;
     return _lastAnswer = added == null ? null : have + added;
@@ -55,7 +56,7 @@ abstract final class RaidDefenceAdvisor {
 
   /// Everything the answer depends on.
   static String _keyOf(Map<UnitType, int> base, MonsterLair wave,
-          UnitBoost boost, int rampart) =>
+          UnitBoost boost, Combatant? rampart) =>
       [
         for (final UnitType type in UnitType.values) base[type] ?? 0,
         wave.difficulty.index,
@@ -64,12 +65,14 @@ abstract final class RaidDefenceAdvisor {
         boost.atkPercent,
         boost.defPercent,
         boost.hpPercent,
-        rampart,
+        rampart?.maxHp,
+        rampart?.def,
       ].join('/');
 
-  /// The Coral Citadel rampart of [level] that backs the base, if built.
-  static List<Combatant> Function()? _rampartOf(int level) {
-    if (CoralCitadelRampart.combatantFor(level) == null) return null;
-    return () => <Combatant>[CoralCitadelRampart.combatantFor(level)!];
+  /// The Coral Citadel rampart that backs [player]'s base, if built.
+  static List<Combatant> Function()? _rampartOf(Player player) {
+    if (CoralCitadelRampart.combatantOf(player.buildings) == null) return null;
+    return () =>
+        <Combatant>[CoralCitadelRampart.combatantOf(player.buildings)!];
   }
 }

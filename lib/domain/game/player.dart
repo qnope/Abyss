@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:hive_ce/hive.dart';
 import 'package:uuid/uuid.dart';
 
 import '../building/building.dart';
+import '../building/building_degradation.dart';
 import '../building/building_type.dart';
 import '../event/event_state.dart';
 import '../history/history_constants.dart';
@@ -147,6 +150,18 @@ class Player extends HiveObject {
         );
 
   bool get hasFallen => savedFallen ?? false;
+
+  /// Whether the headquarters no longer meets what [type] needs.
+  bool isDegraded(BuildingType type) =>
+      BuildingDegradation.isDegraded(buildings, type);
+
+  /// Lowers the headquarters by [levels], never below level 1; returns
+  /// its new level.
+  int lowerHeadquarters(int levels) {
+    final Building hq = buildings[BuildingType.headquarters]!;
+    hq.level = max(1, hq.level - levels);
+    return hq.level;
+  }
 
   Map<UnitType, Unit> unitsOnLevel(int level) => unitsPerLevel[level] ?? {};
 

@@ -19,9 +19,9 @@ import 'explore_moves.dart';
 extension ExpeditionMoves on ScriptTurn {
   /// Boost of the army when it attacks, and when it guards the base.
   UnitBoost get attackBoost =>
-      TechEffects(player.techBranches).unitBoost(attacking: true);
+      TechEffects.of(player).unitBoost(attacking: true);
   UnitBoost get defenceBoost =>
-      TechEffects(player.techBranches).unitBoost(defendingBase: true);
+      TechEffects.of(player).unitBoost(defendingBase: true);
 
   /// Revealed transition base of [level] not captured yet, if any.
   GridPosition? openBase(int level) => _first(revealedWhere(

@@ -46,7 +46,7 @@ extension ExploreMoves on ScriptTurn {
     if (map == null) return;
     final List<GridPosition> revealed = player.revealedCellsOnLevel(level);
     final Set<GridPosition> known = <GridPosition>{...revealed};
-    final int side = TechEffects(player.techBranches).revealSide;
+    final int side = TechEffects.of(player).revealSide;
     // Orders only queue explorations: the frontier holds for every scout.
     final List<GridPosition> frontier = _frontier(map, revealed);
     for (int i = 0; i < count; i++) {

@@ -37,7 +37,10 @@ class RecruitUnitAction extends Action {
       return ActionResult.failure(ActionFailure.invalidQuantity);
     }
 
-    final costs = UnitCostCalculator().recruitmentCost(unitType);
+    final costs = UnitCostCalculator().recruitmentCost(
+      unitType,
+      degraded: player.isDegraded(BuildingType.barracks),
+    );
     for (final entry in costs.entries) {
       final totalCost = entry.value * quantity;
       if (player.resources[entry.key]!.amount < totalCost) {
@@ -53,7 +56,10 @@ class RecruitUnitAction extends Action {
     final validation = validate(game, player);
     if (!validation.isSuccess) return validation;
 
-    final costs = UnitCostCalculator().recruitmentCost(unitType);
+    final costs = UnitCostCalculator().recruitmentCost(
+      unitType,
+      degraded: player.isDegraded(BuildingType.barracks),
+    );
     for (final entry in costs.entries) {
       player.resources[entry.key]!.amount -= entry.value * quantity;
     }

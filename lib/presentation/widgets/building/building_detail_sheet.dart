@@ -10,6 +10,7 @@ import '../../theme/abyss_colors.dart';
 import 'base_shield_badge.dart';
 import 'building_icon.dart';
 import 'coral_citadel_info_section.dart';
+import 'degraded_badge.dart';
 import '../../../domain/worksite/worksite.dart';
 import 'upgrade_section.dart';
 import 'worksite_badge.dart';
@@ -96,6 +97,7 @@ class _BuildingDetailSheet extends StatelessWidget {
                 : context.l10n.baseNotBuilt,
             style: textTheme.bodyMedium,
           ),
+          DegradedNotice(type: building.type, buildings: allBuildings),
           const SizedBox(height: 8),
           Text(
             building.type.description(context.l10n),

@@ -28,11 +28,14 @@ extension ActionFailureText on ActionFailure {
       l10n.actionFailureTargetLevelNotExplored,
     ActionFailure.requiredBuildingMissing =>
       l10n.actionFailureRequiredBuildingMissing,
+    ActionFailure.requiredBuildingDegraded =>
+      l10n.actionFailureRequiredBuildingDegraded,
     ActionFailure.noVolcanicKernelHere =>
       l10n.actionFailureNoVolcanicKernelHere,
     ActionFailure.kernelAlreadyCaptured =>
       l10n.actionFailureKernelAlreadyCaptured,
     ActionFailure.kernelNotCaptured => l10n.actionFailureKernelNotCaptured,
+    ActionFailure.kernelDegraded => l10n.actionFailureKernelDegraded,
     ActionFailure.noPendingEvent => l10n.actionFailureNoPendingEvent,
     ActionFailure.notThisChoiceTurn => l10n.actionFailureNotThisChoiceTurn,
     ActionFailure.notEnoughStockToTrade =>

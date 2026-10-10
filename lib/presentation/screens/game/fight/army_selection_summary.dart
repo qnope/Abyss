@@ -13,7 +13,7 @@ class ArmySelectionSummary {
 
   /// Boost of the units on the attack, as every selection screen sends.
   UnitBoost boostOf(Player player) =>
-      TechEffects(player.techBranches).unitBoost(attacking: true);
+      TechEffects.of(player).unitBoost(attacking: true);
 
   int totalAtk(Map<UnitType, int> selected, UnitBoost boost) =>
       _total(selected, (UnitStats s) => boost.atk(s.atk));

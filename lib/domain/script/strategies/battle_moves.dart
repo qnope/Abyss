@@ -51,11 +51,9 @@ extension BattleMoves on ScriptTurn {
 
   /// The Coral Citadel rampart that backs the base, if built.
   List<Combatant> Function()? get _rampart {
-    final int level = CoralCitadelRampart.levelOf(player.buildings);
-    final Combatant? rampart = CoralCitadelRampart.combatantFor(level);
-    return rampart == null
-        ? null
-        : () => <Combatant>[CoralCitadelRampart.combatantFor(level)!];
+    if (CoralCitadelRampart.combatantOf(player.buildings) == null) return null;
+    return () =>
+        <Combatant>[CoralCitadelRampart.combatantOf(player.buildings)!];
   }
 
   /// Clears the revealed lairs of the base level that a share of the

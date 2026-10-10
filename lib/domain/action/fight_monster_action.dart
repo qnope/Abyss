@@ -116,7 +116,7 @@ class FightMonsterAction extends Action {
 
     Map<ResourceType, int> loot = const <ResourceType, int>{};
     if (fightResult.isVictory) {
-      final Map<ResourceType, int> rolled = TechEffects(player.techBranches)
+      final Map<ResourceType, int> rolled = TechEffects.of(player)
           .boostLoot(LootCalculator(random: random).compute(lair.difficulty));
       loot = FightMonsterHelpers.applyLoot(player, rolled);
       game.levels[level]!.setCell(
@@ -156,5 +156,5 @@ class FightMonsterAction extends Action {
 
   @override
   int noiseMade(Player player) =>
-      TechEffects(player.techBranches).muffle(NoiseRules.perFight);
+      TechEffects.of(player).muffle(NoiseRules.perFight);
 }

@@ -15,7 +15,8 @@ class VictoryChecker {
     for (final player in game.players.values) {
       final kernelLevel =
           player.buildings[BuildingType.volcanicKernel]?.level ?? 0;
-      if (kernelLevel >= _winLevel) {
+      final bool degraded = player.isDegraded(BuildingType.volcanicKernel);
+      if (kernelLevel >= _winLevel && !degraded) {
         return player.id == game.humanPlayerId
             ? GameStatus.victory
             : GameStatus.defeat;

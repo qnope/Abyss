@@ -76,7 +76,7 @@ class CollectTreasureAction extends Action {
 
     final map = game.levels[level]!;
     final cell = map.cellAt(targetX, targetY);
-    final percent = TechEffects(player.techBranches).lootPercent;
+    final percent = TechEffects.of(player).lootPercent;
     final loot = TreasureLoot.of(cell.content, random, level);
     final deltas = <ResourceType, int>{
       for (final MapEntry(:key, :value) in loot.entries)

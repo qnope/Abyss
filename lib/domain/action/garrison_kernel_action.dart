@@ -1,3 +1,4 @@
+import '../building/building_type.dart';
 import '../game/game.dart';
 import '../game/player.dart';
 import '../unit/unit.dart';
@@ -27,6 +28,9 @@ class GarrisonKernelAction extends Action {
   ActionResult validate(Game game, Player player) {
     if (!game.isVolcanicKernelCapturedBy(player.id)) {
       return const ActionResult.failure(ActionFailure.kernelNotCaptured);
+    }
+    if (!withdraw && player.isDegraded(BuildingType.volcanicKernel)) {
+      return const ActionResult.failure(ActionFailure.kernelDegraded);
     }
     int total = 0;
     final Map<UnitType, Unit> from = _from(player);

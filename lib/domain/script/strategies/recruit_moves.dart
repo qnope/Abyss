@@ -36,7 +36,10 @@ extension RecruitMoves on ScriptTurn {
     int best = 1 << 30;
     for (final ResourceType r in ResourceType.values) {
       int perMix = 0;
-      mix.forEach((t, n) => perMix += (costs.recruitmentCost(t)[r] ?? 0) * n);
+      mix.forEach((t, n) => perMix += (costs.recruitmentCost(
+            t,
+            degraded: player.isDegraded(BuildingType.barracks),
+          )[r] ?? 0) * n);
       if (perMix == 0) continue;
       final int stock = ((player.resources[r]?.amount ?? 0) * share).floor();
       best = best < stock ~/ perMix ? best : stock ~/ perMix;

@@ -153,5 +153,5 @@ class AttackTransitionBaseAction extends Action {
 
   @override
   int noiseMade(Player player) =>
-      TechEffects(player.techBranches).muffle(NoiseRules.perFight);
+      TechEffects.of(player).muffle(NoiseRules.perFight);
 }

@@ -755,6 +755,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Falta el edificio necesario';
 
   @override
+  String get actionFailureRequiredBuildingDegraded =>
+      'Edificio degradado: sube el Cuartel General';
+
+  @override
   String get actionFailureNoVolcanicKernelHere =>
       'No hay ningún Núcleo Volcánico aquí';
 
@@ -763,6 +767,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get actionFailureKernelNotCaptured => 'Núcleo no capturado';
+
+  @override
+  String get actionFailureKernelDegraded =>
+      'Núcleo degradado: sube el Cuartel General';
 
   @override
   String get actionFailureNoPendingEvent => 'Ningún evento pendiente';
@@ -2883,4 +2891,33 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get factionRankingFallen => 'Caída';
+
+  @override
+  String get buildingDegraded => 'Degradado';
+
+  @override
+  String buildingDegradedReason(int level) {
+    return 'Degradado: el Cuartel General debe ser de nivel $level';
+  }
+
+  @override
+  String get buildingDegradedProduction => 'Produce el 50 % de sus recursos';
+
+  @override
+  String get buildingDegradedLaboratory =>
+      'La investigación tiene la mitad de su efecto';
+
+  @override
+  String get buildingDegradedBarracks => 'Las unidades cuestan el doble';
+
+  @override
+  String get buildingDegradedSolar => 'Produce el 50 % de su energía';
+
+  @override
+  String get buildingDegradedCitadel =>
+      'La muralla tiene la mitad de su fuerza';
+
+  @override
+  String get buildingDegradedUnusable =>
+      'Inutilizable: ni descenso, ni guarnición, ni victoria';
 }

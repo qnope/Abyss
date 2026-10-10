@@ -11,7 +11,7 @@ class ExplorationResolver {
     for (final player in game.players.values) {
       if (player.pendingExplorations.isEmpty) continue;
 
-      final revealSide = TechEffects(player.techBranches).revealSide;
+      final revealSide = TechEffects.of(player).revealSide;
 
       for (final order in player.pendingExplorations) {
         final map = game.levels[order.level];

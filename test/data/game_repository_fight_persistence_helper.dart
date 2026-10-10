@@ -1,75 +1,19 @@
-import 'package:abyss/domain/volcano/volcano_state.dart';
-import 'package:abyss/domain/building/building.dart';
-import 'package:abyss/domain/building/building_type.dart';
-import 'package:abyss/domain/fight/combat_side.dart';
-import 'package:abyss/domain/fight/combatant.dart';
-import 'package:abyss/domain/fight/fight_result.dart';
-import 'package:abyss/domain/fight/fight_turn_summary.dart';
-import 'package:abyss/domain/game/difficulty.dart';
+import 'package:abyss/hive_registrar.g.dart';
 import 'package:abyss/domain/game/game.dart';
-import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
-import 'package:abyss/domain/raid/raid_state.dart';
-import 'package:abyss/domain/worksite/worksite.dart';
-import 'package:abyss/domain/history/history_entry.dart';
-import 'package:abyss/domain/history/history_entry_category.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
-import 'package:abyss/domain/map/exploration_order.dart';
 import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
-import 'package:abyss/domain/resource/resource.dart';
-import 'package:abyss/domain/resource/resource_type.dart';
-import 'package:abyss/domain/tech/tech_branch.dart';
-import 'package:abyss/domain/tech/tech_branch_state.dart';
-import 'package:abyss/domain/turn/turn_result.dart';
-import 'package:abyss/domain/unit/unit.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:hive_ce/hive.dart';
 
 void registerFightPersistenceAdapters() {
   if (Hive.isAdapterRegistered(0)) return;
-  Hive.registerAdapter(BuildingTypeAdapter());
-  Hive.registerAdapter(BuildingAdapter());
-  Hive.registerAdapter(ResourceTypeAdapter());
-  Hive.registerAdapter(ResourceAdapter());
-  Hive.registerAdapter(TechBranchAdapter());
-  Hive.registerAdapter(TechBranchStateAdapter());
-  Hive.registerAdapter(PlayerAdapter());
-  Hive.registerAdapter(UnitTypeAdapter());
-  Hive.registerAdapter(UnitAdapter());
-  Hive.registerAdapter(TerrainTypeAdapter());
-  Hive.registerAdapter(CellContentTypeAdapter());
-  Hive.registerAdapter(MonsterDifficultyAdapter());
-  Hive.registerAdapter(MonsterLairAdapter());
-  Hive.registerAdapter(MapCellAdapter());
-  Hive.registerAdapter(GameMapAdapter());
-  Hive.registerAdapter(GridPositionAdapter());
-  Hive.registerAdapter(ExplorationOrderAdapter());
-  Hive.registerAdapter(GameAdapter());
-  Hive.registerAdapter(DifficultyAdapter());
-  Hive.registerAdapter(HistoryEntryCategoryAdapter());
-  Hive.registerAdapter(BuildingEntryAdapter());
-  Hive.registerAdapter(ResearchEntryAdapter());
-  Hive.registerAdapter(RecruitEntryAdapter());
-  Hive.registerAdapter(ExploreEntryAdapter());
-  Hive.registerAdapter(CollectEntryAdapter());
-  Hive.registerAdapter(CombatEntryAdapter());
-  Hive.registerAdapter(TurnEndEntryAdapter());
-  Hive.registerAdapter(CombatSideAdapter());
-  Hive.registerAdapter(CombatantAdapter());
-  Hive.registerAdapter(FightTurnSummaryAdapter());
-  Hive.registerAdapter(FightResultAdapter());
-  Hive.registerAdapter(TurnResourceChangeAdapter());
-  Hive.registerAdapter(GameStatusAdapter());
-  Hive.registerAdapter(RaidStateAdapter());
-  Hive.registerAdapter(VolcanoStateAdapter());
-  Hive.registerAdapter(WorksiteAdapter());
-  Hive.registerAdapter(RaidEntryAdapter());
-  Hive.registerAdapter(VolcanoEntryAdapter());
+  Hive.registerAdapters();
 }
 
 GameMap buildFightPersistenceMap() {
@@ -77,14 +21,16 @@ GameMap buildFightPersistenceMap() {
   for (var y = 0; y < 5; y++) {
     for (var x = 0; x < 5; x++) {
       if (x == 1 && y == 1) {
-        cells.add(MapCell(
-          terrain: TerrainType.plain,
-          content: CellContentType.monsterLair,
-          lair: const MonsterLair(
-            difficulty: MonsterDifficulty.easy,
-            unitCount: 2,
+        cells.add(
+          MapCell(
+            terrain: TerrainType.plain,
+            content: CellContentType.monsterLair,
+            lair: const MonsterLair(
+              difficulty: MonsterDifficulty.easy,
+              unitCount: 2,
+            ),
           ),
-        ));
+        );
       } else {
         cells.add(MapCell(terrain: TerrainType.plain));
       }

@@ -776,6 +776,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Núcleo degradado: sube el Cuartel General';
 
   @override
+  String get actionFailureKernelNotBuilt =>
+      'Construye el Núcleo al nivel 1 antes de guarnecerlo';
+
+  @override
   String get actionFailureNoSuchPlayer => 'Jugador no encontrado';
 
   @override
@@ -2255,6 +2259,11 @@ class AppLocalizationsEs extends AppLocalizations {
           'Tu base cayó al final del turno $turn, tras $raids incursión perdida seguida.',
     );
     return '$_temp0';
+  }
+
+  @override
+  String gameOverFactionWonSubtitle(String name, int turn) {
+    return '$name domó el Volcán en el turno $turn.';
   }
 
   @override

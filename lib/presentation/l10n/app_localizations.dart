@@ -1312,6 +1312,12 @@ abstract class AppLocalizations {
   /// **'Noyau dégradé : remontez le QG'**
   String get actionFailureKernelDegraded;
 
+  /// No description provided for @actionFailureKernelNotBuilt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montez le Noyau au niveau 1 avant de le garnir'**
+  String get actionFailureKernelNotBuilt;
+
   /// No description provided for @actionFailureNoSuchPlayer.
   ///
   /// In fr, this message translates to:
@@ -3285,6 +3291,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{raids, plural, one{Votre base est tombée à la fin du tour {turn}, après {raids} raid perdu d\'affilée.} other{Votre base est tombée à la fin du tour {turn}, après {raids} raids perdus d\'affilée.}}'**
   String gameOverDefeatSubtitle(int turn, int raids);
+
+  /// No description provided for @gameOverFactionWonSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a dompté le Volcan au tour {turn}.'**
+  String gameOverFactionWonSubtitle(String name, int turn);
 
   /// No description provided for @gameOverVictoryTitle.
   ///

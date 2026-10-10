@@ -13,6 +13,7 @@ enum ActionType {
   attackPost,
   announceAttack,
   attackVolcanicKernel,
+  attackHeldKernel,
   garrisonKernel,
   chooseEvent,
   endTurn,

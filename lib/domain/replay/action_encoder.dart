@@ -3,6 +3,7 @@ import 'dart:math';
 import '../action/action.dart';
 import '../action/announce_attack_action.dart';
 import '../action/attack_base_action.dart';
+import '../action/attack_held_kernel_action.dart';
 import '../action/attack_post_action.dart';
 import '../action/attack_transition_base_action.dart';
 import '../action/attack_volcanic_kernel_action.dart';
@@ -19,6 +20,7 @@ import '../action/unlock_branch_action.dart';
 import '../action/upgrade_building_action.dart';
 import '../tech/tech_option.dart';
 import '../unit/unit_type.dart';
+import '../volcano/kernel_garrison.dart';
 import 'seeded_random.dart';
 
 /// Writes a player action in the JSON scenario format `ActionCodec`
@@ -87,6 +89,14 @@ abstract final class ActionEncoder {
         units: a.selectedUnits,
         random: a.random,
       ),
+      AttackHeldKernelAction a => _at(
+        'attackHeldKernel',
+        a.targetX,
+        a.targetY,
+        KernelGarrison.volcanoLevel,
+        units: a.selectedUnits,
+        random: a.random,
+      ),
       AnnounceAttackAction a => {
         'do': 'announceAttack',
         'units': _unitsOf(a.selectedUnits),
@@ -137,6 +147,7 @@ abstract final class ActionEncoder {
     AttackTransitionBaseAction a => a.random is SeededRandom,
     AttackBaseAction a => a.random is SeededRandom,
     AttackPostAction a => a.random is SeededRandom,
+    AttackHeldKernelAction a => a.random is SeededRandom,
     AnnounceAttackAction a => a.random is SeededRandom,
     AttackVolcanicKernelAction a => a.random is SeededRandom,
     DescendAction a => a.random is SeededRandom,

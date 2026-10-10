@@ -1,21 +1,19 @@
-import '../action/recruit_unit_action.dart';
-import '../map/grid_position.dart';
 import '../script/game_script.dart';
 import '../script/script_turn.dart';
-import '../script/strategies/balanced_strategy.dart';
-import '../script/strategies/explore_moves.dart';
-import '../unit/unit_type.dart';
+import '../script/strategies/conquest_strategy.dart';
+import 'faction_kernel_guard.dart';
 import 'faction_personality.dart';
 import 'faction_war.dart';
 
-/// What a faction plays for now: a balanced economy that also scouts the
-/// level 1 and picks up what it finds, and now and then a conservative
-/// attack on the weakest base it knows ([FactionWar]).
+/// What a faction plays: the whole game of a careful player, from the
+/// first building to the volcanic kernel at level 10 ([ConquestStrategy]),
+/// and now and then an attack on the weakest base or post it knows
+/// ([FactionWar]).
 ///
 /// Every personality shares it until its own brain exists; it only uses
 /// the actions of the game, with their costs and checks.
 class FactionBrain extends GameScript {
-  static const BalancedStrategy _economy = BalancedStrategy();
+  static const ConquestStrategy _conquest = ConquestStrategy(name: 'faction');
 
   final FactionPersonality personality;
 
@@ -27,13 +25,7 @@ class FactionBrain extends GameScript {
   @override
   void playTurn(ScriptTurn turn) {
     FactionWar.play(turn, personality);
-    turn.collectRevealed(1);
-    final bool hasScout =
-        (turn.player.unitsOnLevel(1)[UnitType.scout]?.count ?? 0) > 0;
-    if (!hasScout && !turn.fullyExplored(1)) {
-      turn.tryPerform(RecruitUnitAction(unitType: UnitType.scout, quantity: 1));
-    }
-    turn.explore(1, 1, (GridPosition _) => 0);
-    _economy.playTurn(turn);
+    _conquest.playTurn(turn);
+    FactionKernelGuard.play(turn);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
@@ -27,6 +28,7 @@ Game kernelGarrisonGame({
       },
     },
   );
+  player.buildings[BuildingType.volcanicKernel]!.level = 1;
   return Game.singlePlayer(player)
     ..levels = {
       KernelGarrison.volcanoLevel: GameMap(

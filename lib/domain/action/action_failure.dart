@@ -44,6 +44,7 @@ enum ActionFailure {
   kernelAlreadyCaptured,
   kernelNotCaptured,
   kernelDegraded,
+  kernelNotBuilt,
 
   // Random events.
   noPendingEvent,

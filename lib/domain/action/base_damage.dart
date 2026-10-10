@@ -41,6 +41,16 @@ class BaseDamage {
     );
   }
 
+  /// A kernel brought from level [before] to [after]: the kernel levels
+  /// travel in the rampart fields, the headquarters are not touched.
+  factory BaseDamage.kernel({required int before, required int after}) =>
+      BaseDamage(
+        rampartBefore: before,
+        rampartAfter: after,
+        headquartersBefore: 0,
+        headquartersAfter: 0,
+      );
+
   static Building _headquarters(Player p) =>
       p.buildings[BuildingType.headquarters]!;
 }

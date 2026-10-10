@@ -690,5 +690,8 @@
   "historyFilterEvent": "Eventos",
   "historyFilterOther": "Otros",
   "historyEmpty": "Todavía no hay ninguna acción registrada.",
-  "historyEmptyFilter": "Ninguna acción para este filtro."
+  "historyEmptyFilter": "Ninguna acción para este filtro.",
+  "settingsLanguageTitle": "Idioma",
+  "settingsLanguageAutomatic": "Automático",
+  "settingsLanguageAutomaticHint": "Idioma del dispositivo"
 }

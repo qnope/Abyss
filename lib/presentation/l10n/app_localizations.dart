@@ -4125,6 +4125,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Aucune action pour ce filtre.'**
   String get historyEmptyFilter;
+
+  /// No description provided for @settingsLanguageTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Langue'**
+  String get settingsLanguageTitle;
+
+  /// No description provided for @settingsLanguageAutomatic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Automatique'**
+  String get settingsLanguageAutomatic;
+
+  /// No description provided for @settingsLanguageAutomaticHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Langue de l\'appareil'**
+  String get settingsLanguageAutomaticHint;
 }
 
 class _AppLocalizationsDelegate

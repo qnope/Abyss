@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../l10n/l10n_extension.dart';
+import '../../l10n/language_scope.dart';
 import '../../theme/abyss_colors.dart';
 import 'guide_settings.dart';
+import 'language_picker.dart';
 
 enum SettingsDialogResult { cancel, saveAndQuit, openHistory, exportReplay }
 
-/// The settings of [game]: its guide switches, saved through [repository]
-/// as they change, and the ways out of the game.
+/// The settings of [game]: the game language when the app has a
+/// [LanguageScope], the guide switches saved through [repository] as they
+/// change, and the ways out of the game.
 Future<SettingsDialogResult> showSettingsDialog(
   BuildContext context, {
   required Game game,
@@ -23,6 +26,7 @@ Future<SettingsDialogResult> showSettingsDialog(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ..._language(ctx),
             Text(
               ctx.l10n.screenGameInProgress,
               style: Theme.of(ctx).textTheme.labelLarge?.copyWith(
@@ -58,4 +62,11 @@ Future<SettingsDialogResult> showSettingsDialog(
     ),
   );
   return result ?? SettingsDialogResult.cancel;
+}
+
+/// The [LanguagePicker] of the app settings above [context], if any.
+List<Widget> _language(BuildContext context) {
+  final settings = LanguageScope.maybeOf(context);
+  if (settings == null) return const [];
+  return [LanguagePicker(settings: settings), const Divider(height: 24)];
 }

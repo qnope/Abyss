@@ -2960,4 +2960,38 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get buildingDegradedUnusable =>
       'Inutilizable: ni descenso, ni guarnición, ni victoria';
+
+  @override
+  String get factionBaseHeadquarters => 'Cuartel general';
+
+  @override
+  String get factionBaseAttack => 'Atacar';
+
+  @override
+  String assaultYouAttacked(String name) {
+    return 'Has atacado a $name';
+  }
+
+  @override
+  String assaultAttackedYou(String name) {
+    return '$name te ha atacado';
+  }
+
+  @override
+  String assaultDefendersDown(int killed, int total) {
+    return 'Defensores fuera de combate: $killed/$total';
+  }
+
+  @override
+  String assaultRampart(int before, int after) {
+    return 'Muralla: nivel $before → $after';
+  }
+
+  @override
+  String assaultHeadquarters(int before, int after) {
+    return 'Cuartel general: nivel $before → $after';
+  }
+
+  @override
+  String get assaultBaseIntact => 'La base ha resistido';
 }

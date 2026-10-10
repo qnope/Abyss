@@ -4,6 +4,7 @@ import '../../../domain/history/history_entry.dart';
 import '../../l10n/l10n_extension.dart';
 import '../common/sheet_drag_handle.dart';
 import 'history_entry_card.dart';
+import 'history_assault_launcher.dart';
 import 'history_fight_launcher.dart';
 import 'history_raid_launcher.dart';
 import 'history_volcano_launcher.dart';
@@ -88,6 +89,8 @@ class _HistorySheetBodyState extends State<HistorySheetBody> {
             RaidEntry() => () => openRaidSummaryFromEntry(context, entry),
             VolcanoEntry() =>
               () => openVolcanoSummaryFromEntry(context, entry),
+            BaseAssaultEntry() =>
+              () => openAssaultSummaryFromEntry(context, entry),
             _ => null,
           },
         );

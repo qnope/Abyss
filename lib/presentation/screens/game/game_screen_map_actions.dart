@@ -17,6 +17,7 @@ import '../../widgets/faction/faction_base_colors.dart';
 import 'game_screen_base_sheet.dart';
 import 'game_screen_collect_messages.dart';
 import 'game_screen_exploration_flow.dart';
+import 'game_screen_faction_actions.dart';
 import 'game_screen_fight_actions.dart';
 import 'game_screen_kernel_actions.dart';
 
@@ -90,6 +91,11 @@ void _showCellAction(BuildContext context, Game game,
       title: l10n.screenYourBaseTitle,
       message: l10n.screenYourBaseMessage,
       icon: Icons.home);
+    return;
+  }
+  final faction = level == 1 ? factionBaseAt(game, x, y) : null;
+  if (faction != null) {
+    openFactionBaseSheet(context, game, repository, faction, onChanged);
     return;
   }
   final base = cell.transitionBase;

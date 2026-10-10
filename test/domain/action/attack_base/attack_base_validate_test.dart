@@ -1,5 +1,6 @@
 import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/attack_base_action.dart';
+import 'package:abyss/domain/action/attack_base_validator.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -116,6 +117,28 @@ void main() {
         UnitType.harpoonist: 1,
       }).validate(two.game, two.human).reason,
       ActionFailure.notEnoughUnits,
+    );
+  });
+
+  test('the refusal is told before any army is chosen', () {
+    final two = assaultGame();
+    expect(
+      AttackBaseValidator.refusal(two.game, two.human, two.rival.id),
+      isNull,
+    );
+    expect(
+      AttackBaseValidator.refusal(two.game, two.human, two.human.id),
+      ActionFailure.cannotAttackSelf,
+    );
+    final early = assaultGame(turn: 9);
+    expect(
+      AttackBaseValidator.refusal(early.game, early.human, early.rival.id),
+      ActionFailure.attackTooEarly,
+    );
+    final unseen = assaultGame(revealed: false);
+    expect(
+      AttackBaseValidator.refusal(unseen.game, unseen.human, unseen.rival.id),
+      ActionFailure.baseNotRevealed,
     );
   });
 }

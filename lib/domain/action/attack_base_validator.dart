@@ -17,7 +17,12 @@ abstract final class AttackBaseValidator {
     Player player,
     String targetId,
     Map<UnitType, int> army,
-  ) {
+  ) =>
+      refusal(game, player, targetId) ?? _armyFailure(player, army);
+
+  /// Why [player] may not attack [targetId] at all, whatever the army:
+  /// the part of [check] a screen can tell before an army is chosen.
+  static ActionFailure? refusal(Game game, Player player, String targetId) {
     final Player? target = game.players[targetId];
     if (targetId == player.id) return ActionFailure.cannotAttackSelf;
     if (target == null) return ActionFailure.noSuchPlayer;
@@ -28,7 +33,7 @@ abstract final class AttackBaseValidator {
     if (player.id == game.humanPlayerId && !_hasSeen(player, target)) {
       return ActionFailure.baseNotRevealed;
     }
-    return _armyFailure(player, army);
+    return null;
   }
 
   /// Whether [player] is too new for a base war: no one attacks before

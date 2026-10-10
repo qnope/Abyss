@@ -36,13 +36,14 @@ extension HistoryEntryDisplay on HistoryEntry {
 
   /// Whether tapping this entry should open a detail view.
   ///
-  /// Only combat entries currently carry enough data (the full
-  /// [FightResult]) to be replayable, so only they are tappable.
+  /// Only the entries that carry enough data (the full [FightResult])
+  /// to be replayed are tappable: the fights and the assaults on a base.
   bool get isTappable => switch (this) {
     CombatEntry() ||
     CaptureEntry() ||
     RaidEntry() ||
-    VolcanoEntry() => true,
+    VolcanoEntry() ||
+    BaseAssaultEntry() => true,
     BuildingEntry() ||
     ResearchEntry() ||
     RecruitEntry() ||
@@ -51,8 +52,7 @@ extension HistoryEntryDisplay on HistoryEntry {
     TurnEndEntry() ||
     DescentEntry() ||
     ReinforcementEntry() ||
-    EventEntry() ||
-    BaseAssaultEntry() => false,
+    EventEntry() => false,
   };
 
   /// Illustration shown in place of the category icon: the event's, and

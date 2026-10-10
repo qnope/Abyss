@@ -9,6 +9,7 @@ enum ActionType {
   descend,
   sendReinforcements,
   attackTransitionBase,
+  attackBase,
   attackVolcanicKernel,
   garrisonKernel,
   chooseEvent,

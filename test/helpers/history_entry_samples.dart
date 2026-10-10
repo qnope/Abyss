@@ -69,3 +69,25 @@ TurnEndEntry turnEndEntry(int turn) => TurnEndEntry(
   deactivatedBuildings: const [],
   lostUnits: const {},
 );
+
+/// An assault on the base of "Nacre", seen from either side.
+BaseAssaultEntry baseAssaultEntry({
+  required bool victory,
+  required bool defending,
+}) => BaseAssaultEntry(
+  turn: 14,
+  victory: victory,
+  defending: defending,
+  opponentName: 'Nacre',
+  fightResult: buildTestFight(playerWins: victory),
+  units: const {},
+  survivorsIntact: const {},
+  wounded: const {},
+  dead: const {},
+  rampartBefore: 2,
+  rampartAfter: 0,
+  headquartersBefore: 5,
+  headquartersAfter: 5,
+  pillaged: const {},
+  loot: const {},
+);

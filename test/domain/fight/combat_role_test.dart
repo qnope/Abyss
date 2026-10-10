@@ -29,12 +29,19 @@ void main() {
 
     test('monsters never have a role', () {
       expect(
-        CombatRole.of(_c('guardian', CombatSide.monster)),
-        CombatRole.none,
-      );
-      expect(
         CombatRole.of(_c('monsterL1', CombatSide.monster)),
         CombatRole.none,
+      );
+    });
+
+    test('the defenders of a base keep their role on the monsters side', () {
+      expect(
+        CombatRole.of(_c('guardian', CombatSide.monster)),
+        CombatRole.taunt,
+      );
+      expect(
+        CombatRole.of(_c(CombatRole.rampartKey, CombatSide.monster)),
+        CombatRole.taunt,
       );
     });
   });

@@ -100,9 +100,9 @@ void main() {
       expect(TargetPicker.pick(pool, Random(1)), same(other));
     });
 
-    test('monster guardians do not taunt', () {
+    test('monsters do not taunt', () {
       final List<Combatant> pool = <Combatant>[
-        _alive('guardian'),
+        _alive('monsterL1'),
         _alive('a'),
       ];
       final Set<String> seen = <String>{};
@@ -110,7 +110,7 @@ void main() {
       for (int i = 0; i < 30; i++) {
         seen.add(TargetPicker.pick(pool, random)!.typeKey);
       }
-      expect(seen, containsAll(<String>['guardian', 'a']));
+      expect(seen, containsAll(<String>['monsterL1', 'a']));
     });
   });
 });

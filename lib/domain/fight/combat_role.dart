@@ -1,5 +1,4 @@
 import '../unit/unit_type.dart';
-import 'combat_side.dart';
 import 'combatant.dart';
 
 /// Special behaviour a player unit brings to a fight.
@@ -33,10 +32,10 @@ enum CombatRole {
         UnitType.harpoonist || UnitType.abyssAdmiral => CombatRole.none,
       };
 
-  /// Role of [combatant]; monsters never have one, the Citadel rampart
-  /// always taunts.
+  /// Role of [combatant], read from its type key: no monster key is a
+  /// unit's, so only units and the Citadel rampart have one, on either
+  /// side (the defenders of a base fight on the side of the monsters).
   static CombatRole of(Combatant combatant) {
-    if (combatant.side != CombatSide.player) return CombatRole.none;
     if (combatant.typeKey == rampartKey) return CombatRole.taunt;
     final UnitType? type = _unitTypes[combatant.typeKey];
     return type == null ? CombatRole.none : forUnit(type);

@@ -101,7 +101,8 @@ void main() {
         _c(CombatRole.rampartKey, CombatSide.player).role,
         CombatRole.taunt,
       );
-      expect(_c('guardian', CombatSide.monster).role, CombatRole.none);
+      expect(_c('guardian', CombatSide.monster).role, CombatRole.taunt);
+      expect(_c('monsterL1', CombatSide.monster).role, CombatRole.none);
       expect(_c('hunterL2', CombatSide.monster).role, CombatRole.none);
     });
 

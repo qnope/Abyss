@@ -19,6 +19,11 @@ extension ActionFailureText on ActionFailure {
     ActionFailure.notEnoughUnits => l10n.actionFailureNotEnoughUnits,
     ActionFailure.noUnitSelected => l10n.actionFailureNoUnitSelected,
     ActionFailure.admiralRequired => l10n.actionFailureAdmiralRequired,
+    ActionFailure.noSuchPlayer => l10n.actionFailureNoSuchPlayer,
+    ActionFailure.cannotAttackSelf => l10n.actionFailureCannotAttackSelf,
+    ActionFailure.playerFallen => l10n.actionFailurePlayerFallen,
+    ActionFailure.baseNotRevealed => l10n.actionFailureBaseNotRevealed,
+    ActionFailure.attackTooEarly => l10n.actionFailureAttackTooEarly,
     ActionFailure.noTransitionBaseHere =>
       l10n.actionFailureNoTransitionBaseHere,
     ActionFailure.baseNotFound => l10n.actionFailureBaseNotFound,

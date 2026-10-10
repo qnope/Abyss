@@ -642,3 +642,79 @@ class EventEntryAdapter extends TypeAdapter<EventEntry> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class BaseAssaultEntryAdapter extends TypeAdapter<BaseAssaultEntry> {
+  @override
+  final typeId = 57;
+
+  @override
+  BaseAssaultEntry read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return BaseAssaultEntry(
+      turn: (fields[0] as num).toInt(),
+      victory: fields[2] as bool,
+      defending: fields[3] as bool,
+      opponentName: fields[4] as String,
+      fightResult: fields[5] as FightResult,
+      units: (fields[6] as Map).cast<UnitType, int>(),
+      survivorsIntact: (fields[7] as Map).cast<UnitType, int>(),
+      wounded: (fields[8] as Map).cast<UnitType, int>(),
+      dead: (fields[9] as Map).cast<UnitType, int>(),
+      rampartBefore: (fields[10] as num).toInt(),
+      rampartAfter: (fields[11] as num).toInt(),
+      headquartersBefore: (fields[12] as num).toInt(),
+      headquartersAfter: (fields[13] as num).toInt(),
+      pillaged: (fields[14] as Map).cast<ResourceType, int>(),
+      loot: (fields[15] as Map).cast<ResourceType, int>(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, BaseAssaultEntry obj) {
+    writer
+      ..writeByte(15)
+      ..writeByte(0)
+      ..write(obj.turn)
+      ..writeByte(2)
+      ..write(obj.victory)
+      ..writeByte(3)
+      ..write(obj.defending)
+      ..writeByte(4)
+      ..write(obj.opponentName)
+      ..writeByte(5)
+      ..write(obj.fightResult)
+      ..writeByte(6)
+      ..write(obj.units)
+      ..writeByte(7)
+      ..write(obj.survivorsIntact)
+      ..writeByte(8)
+      ..write(obj.wounded)
+      ..writeByte(9)
+      ..write(obj.dead)
+      ..writeByte(10)
+      ..write(obj.rampartBefore)
+      ..writeByte(11)
+      ..write(obj.rampartAfter)
+      ..writeByte(12)
+      ..write(obj.headquartersBefore)
+      ..writeByte(13)
+      ..write(obj.headquartersAfter)
+      ..writeByte(14)
+      ..write(obj.pillaged)
+      ..writeByte(15)
+      ..write(obj.loot);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BaseAssaultEntryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

@@ -20,6 +20,8 @@ extension HistoryEntryDisplay on HistoryEntry {
     RaidEntry(:final victory) ||
     VolcanoEntry(:final victory) =>
       victory ? AbyssColors.success : theme.colorScheme.error,
+    BaseAssaultEntry(:final victory, :final defending) =>
+      victory != defending ? AbyssColors.success : theme.colorScheme.error,
     CaptureEntry() => AbyssColors.energyYellow,
     BuildingEntry() ||
     ResearchEntry() ||
@@ -49,7 +51,8 @@ extension HistoryEntryDisplay on HistoryEntry {
     TurnEndEntry() ||
     DescentEntry() ||
     ReinforcementEntry() ||
-    EventEntry() => false,
+    EventEntry() ||
+    BaseAssaultEntry() => false,
   };
 
   /// Illustration shown in place of the category icon: the event's, and

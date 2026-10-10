@@ -49,7 +49,14 @@ class ReplayJournal {
 
   /// Notes that [action] succeeded during [turn]. The human player's
   /// actions carry no player; any other player's carry its [playerId].
-  void record(int turn, Action action, {String? playerId}) {
+  /// An action that targets the human is written with the human's name,
+  /// not its id, which is not the same in the game that replays it.
+  void record(
+    int turn,
+    Action action, {
+    String? playerId,
+    String? humanId,
+  }) {
     if (action is EndTurnAction) {
       final random = action.random;
       if (random is SeededRandom) {
@@ -59,7 +66,7 @@ class ReplayJournal {
       }
       return;
     }
-    final Map<String, Object?>? json = ActionEncoder.encode(action);
+    final Map<String, Object?>? json = ActionEncoder.encode(action, humanId: humanId);
     if (json == null) return;
     if (!ActionEncoder.isExact(action)) exact = false;
     final Map<String, Object?> entry = <String, Object?>{

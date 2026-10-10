@@ -22,6 +22,7 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
     HistoryEntryCategory.raid => Icons.warning_amber,
     HistoryEntryCategory.volcano => Icons.volcano,
     HistoryEntryCategory.event => Icons.auto_awesome,
+    HistoryEntryCategory.assault => Icons.sports_kabaddi,
   };
 
   /// Background / accent color for this category, sourced from the
@@ -43,6 +44,7 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
       HistoryEntryCategory.raid => AbyssColors.warning,
       HistoryEntryCategory.volcano => AbyssColors.coralPink,
       HistoryEntryCategory.event => AbyssColors.biolumCyan,
+      HistoryEntryCategory.assault => AbyssColors.coralPink,
     };
   }
 
@@ -61,5 +63,6 @@ extension HistoryEntryCategoryDisplay on HistoryEntryCategory {
     HistoryEntryCategory.raid => l10n.historyCategoryRaid,
     HistoryEntryCategory.volcano => l10n.historyCategoryVolcano,
     HistoryEntryCategory.event => l10n.historyCategoryEvent,
+    HistoryEntryCategory.assault => l10n.historyCategoryAssault,
   };
 }

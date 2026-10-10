@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:abyss/domain/action/attack_base_action.dart';
 import 'package:abyss/domain/action/descend_action.dart';
 import 'package:abyss/domain/action/end_turn_action.dart';
 import 'package:abyss/domain/action/fight_monster_action.dart';
@@ -54,6 +55,12 @@ const List<Map<String, Object?>> _scenarioActions = <Map<String, Object?>>[
     'seed': 14,
   },
   {
+    'do': 'attackPlayer',
+    'target': 'faction-pirates',
+    'units': {'harpoonist': 5},
+    'seed': 16,
+  },
+  {
     'do': 'descend',
     'x': 5,
     'y': 6,
@@ -92,6 +99,23 @@ void main() {
               as FightMonsterAction;
 
       expect((action.random as SeededRandom).seed, 7);
+    });
+
+    test('names the human target, whose id changes between games', () {
+      final action = AttackBaseAction(
+        targetPlayerId: 'uuid-1',
+        selectedUnits: <UnitType, int>{UnitType.guardian: 2},
+        random: SeededRandom(3),
+      );
+
+      expect(
+        ActionEncoder.encode(action, humanId: 'uuid-1')!['target'],
+        'human',
+      );
+      expect(
+        ActionEncoder.encode(action, humanId: 'uuid-2')!['target'],
+        'uuid-1',
+      );
     });
 
     test('leaves out units the player did not send', () {

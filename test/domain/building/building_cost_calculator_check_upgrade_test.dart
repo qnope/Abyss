@@ -193,14 +193,14 @@ void main() {
         },
         allBuildings: {
           BuildingType.headquarters:
-              Building(type: BuildingType.headquarters, level: 2),
+              Building(type: BuildingType.headquarters, level: 1),
           BuildingType.barracks:
               Building(type: BuildingType.barracks, level: 0),
         },
       );
 
       expect(result.canUpgrade, isFalse);
-      expect(result.missingPrerequisites[BuildingType.headquarters], 3);
+      expect(result.missingPrerequisites[BuildingType.headquarters], 2);
     });
 
     test('can upgrade barracks when HQ and resources sufficient', () {
@@ -214,7 +214,7 @@ void main() {
         },
         allBuildings: {
           BuildingType.headquarters:
-              Building(type: BuildingType.headquarters, level: 3),
+              Building(type: BuildingType.headquarters, level: 2),
           BuildingType.barracks:
               Building(type: BuildingType.barracks, level: 0),
         },

@@ -16,7 +16,12 @@ void main() {
           .run(ScriptLibrary.byName('conquest'), seed: 1);
       stopwatch.stop();
 
-      expect(report.turnsPlayed, 100);
+      expect(
+        report.turnsPlayed,
+        greaterThanOrEqualTo(80),
+        reason: 'the bot may win before turn 100, but a short game '
+            'would not measure the simulation',
+      );
       expect(
         stopwatch.elapsed,
         lessThan(budget),

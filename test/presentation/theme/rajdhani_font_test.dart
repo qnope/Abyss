@@ -44,10 +44,10 @@ Set<int> _themeRajdhaniWeights() {
 }
 
 void main() {
-  testWidgets('bundles the four Rajdhani weights', (tester) async {
+  testWidgets('bundles only the Rajdhani weights in use', (tester) async {
     final fonts = await tester.runAsync(_bundledRajdhani);
 
-    expect(fonts!.keys.toSet(), {400, 500, 600, 700});
+    expect(fonts!.keys.toSet(), {500, 600, 700});
   });
 
   testWidgets('covers every Rajdhani weight the theme uses', (tester) async {
@@ -67,6 +67,17 @@ void main() {
         loader.addFont(Future.value(bytes));
       }
       await loader.load();
+    });
+  });
+
+  // The web engine downloads every font before the app starts: a file
+  // carrying extra scripts (e.g. Devanagari) weighs ten times more.
+  testWidgets('bundles light Latin-only files', (tester) async {
+    await tester.runAsync(() async {
+      for (final asset in (await _bundledRajdhani()).values) {
+        final bytes = await rootBundle.load(asset);
+        expect(bytes.lengthInBytes, lessThan(100 * 1024), reason: asset);
+      }
     });
   });
 

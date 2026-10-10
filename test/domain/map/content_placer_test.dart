@@ -166,5 +166,15 @@ void main() {
         equals(b.map((c) => c.lair?.unitCount).toList()),
       );
     });
+
+    test('never sinks a wreck, only random events do', () {
+      for (var seed = 0; seed < 30; seed++) {
+        expect(
+          generate(seed).map((c) => c.content),
+          isNot(contains(CellContentType.wreck)),
+          reason: 'seed=$seed',
+        );
+      }
+    });
   });
 }

@@ -6,6 +6,7 @@ import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'effects/wreck_test_helper.dart';
 import 'event_test_helper.dart';
 
 const _wave = MonsterLair(difficulty: MonsterDifficulty.easy, unitCount: 3);
@@ -13,20 +14,27 @@ const _wave = MonsterLair(difficulty: MonsterDifficulty.easy, unitCount: 3);
 void main() {
   group('excludedAt', () {
     test('excludes nothing on a quiet turn', () {
-      final player = eventPlayer();
-      expect(EventEffects.excludedAt(eventGame(player), player, 20), isEmpty);
+      final player = wreckPlayer();
+      expect(EventEffects.excludedAt(wreckGame(player), player, 20), isEmpty);
     });
 
     test('excludes predators when a raid hits at the end of next turn', () {
-      final player = eventPlayer()..raidState.announce(_wave, 21);
-      expect(EventEffects.excludedAt(eventGame(player), player, 20), {
+      final player = wreckPlayer()..raidState.announce(_wave, 21);
+      expect(EventEffects.excludedAt(wreckGame(player), player, 20), {
         RandomEventType.predators,
       });
     });
 
     test('keeps predators when the raid comes later', () {
-      final player = eventPlayer()..raidState.announce(_wave, 22);
-      expect(EventEffects.excludedAt(eventGame(player), player, 20), isEmpty);
+      final player = wreckPlayer()..raidState.announce(_wave, 22);
+      expect(EventEffects.excludedAt(wreckGame(player), player, 20), isEmpty);
+    });
+
+    test('excludes the wreck when there is no map to sink it on', () {
+      final player = eventPlayer();
+      expect(EventEffects.excludedAt(eventGame(player), player, 20), {
+        RandomEventType.wreck,
+      });
     });
   });
 

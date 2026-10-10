@@ -116,6 +116,19 @@ void main() {
       expect(find.text('Ruines fouillées !'), findsOneWidget);
     });
 
+    testWidgets('a wreck shows the wreck dialog after collect',
+        (tester) async {
+      final game = buildGame(CellContentType.wreck);
+      await tester.pumpWidget(buildHost(game));
+      await tester.pumpAndSettle();
+
+      await tapTreasureCell(tester);
+      await tester.tap(find.text('Collecter le trésor'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Épave fouillée !'), findsOneWidget);
+    });
+
     testWidgets('empty ruins shows empty message when storages full',
         (tester) async {
       final game = buildGame(

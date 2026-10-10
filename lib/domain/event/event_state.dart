@@ -1,5 +1,6 @@
 import 'package:hive_ce/hive.dart';
 
+import '../map/grid_position.dart';
 import '../map/monster_lair.dart';
 import '../resource/resource_type.dart';
 import 'random_event_type.dart';
@@ -64,6 +65,14 @@ class EventState {
   @HiveField(12)
   int? predatorsTurn;
 
+  /// Cell of level 1 where a wreck lies, until searched or sunk.
+  @HiveField(13)
+  GridPosition? wreckPosition;
+
+  /// Last turn, inclusive, the wreck at [wreckPosition] can be searched.
+  @HiveField(14)
+  int? wreckUntilTurn;
+
   EventState({
     this.nextDrawTurn,
     this.pending,
@@ -78,6 +87,8 @@ class EventState {
     this.tradeTo,
     this.predatorWave,
     this.predatorsTurn,
+    this.wreckPosition,
+    this.wreckUntilTurn,
   });
 
   bool get hasPending => pending != null && pendingTurn != null;
@@ -114,6 +125,12 @@ class EventState {
   void clearPredators() {
     predatorWave = null;
     predatorsTurn = null;
+  }
+
+  /// Forgets the wreck, searched or sunk.
+  void clearWreck() {
+    wreckPosition = null;
+    wreckUntilTurn = null;
   }
 
   /// Starts the lasting effect of [type], through [untilTurn] inclusive.

@@ -10,6 +10,7 @@ extension CellContentTypeExtensions on CellContentType {
     CellContentType.transitionBase => 'Faille Abyssale',
     CellContentType.passage => 'Passage',
     CellContentType.volcanicKernel => 'Noyau Volcanique',
+    CellContentType.wreck => 'Épave',
   };
 
   String? get svgPath => switch (this) {
@@ -22,6 +23,8 @@ extension CellContentTypeExtensions on CellContentType {
     CellContentType.passage => null,
     CellContentType.volcanicKernel =>
       'assets/icons/terrain/volcanic_kernel.svg',
+    // Shown as ruins until the wreck has its own art.
+    CellContentType.wreck => 'assets/icons/map_content/ruins.svg',
   };
 }
 

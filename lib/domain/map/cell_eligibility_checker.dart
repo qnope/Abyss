@@ -5,12 +5,28 @@ import 'grid_position.dart';
 class CellEligibilityChecker {
   static bool isEligible(
     GameMap map, Player player, int x, int y, {int level = 1,
+  }) => isEligibleAmong(
+    map,
+    player,
+    player.revealedCellsSetOnLevel(level),
+    x,
+    y,
+    level: level,
+  );
+
+  /// [isEligible] with the [revealed] cells of [level] already gathered,
+  /// to test many cells at the cost of one lookup each.
+  static bool isEligibleAmong(
+    GameMap map,
+    Player player,
+    Set<GridPosition> revealed,
+    int x,
+    int y, {
+    int level = 1,
   }) {
     if (level == 1 && x == player.baseX && y == player.baseY) {
       return false;
     }
-
-    final revealed = player.revealedCellsSetOnLevel(level);
 
     // Revealed cells are eligible
     if (revealed.contains(GridPosition(x: x, y: y))) return true;

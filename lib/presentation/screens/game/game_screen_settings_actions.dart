@@ -3,6 +3,7 @@ import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../widgets/common/replay_export_dialog.dart';
 import '../../widgets/common/settings_dialog.dart';
+import '../../widgets/faction/faction_ranking_sheet.dart';
 import '../../widgets/history/history_sheet.dart';
 import '../menu/main_menu_screen.dart';
 
@@ -27,6 +28,8 @@ Future<void> openGameSettings(
       return;
     case SettingsDialogResult.openHistory:
       await showHistorySheet(context, player: game.humanPlayer);
+    case SettingsDialogResult.openRanking:
+      await showFactionRankingSheet(context, game);
     case SettingsDialogResult.exportReplay:
       await showReplayExportDialog(context, game);
     case SettingsDialogResult.saveAndQuit:

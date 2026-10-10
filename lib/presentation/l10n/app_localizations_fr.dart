@@ -2856,4 +2856,29 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsLanguageAutomaticHint => 'Langue de l\'appareil';
+
+  @override
+  String get screenViewRanking => 'Classement';
+
+  @override
+  String get factionRankingTitle => 'Classement des factions';
+
+  @override
+  String get factionRankingYou => 'Vous';
+
+  @override
+  String factionRankingHeadquarters(int level) {
+    return 'QG niveau $level';
+  }
+
+  @override
+  String factionRankingDepth(int level) {
+    return 'Profondeur : niveau $level';
+  }
+
+  @override
+  String get factionRankingKernel => 'Tient le Noyau du Volcan';
+
+  @override
+  String get factionRankingFallen => 'Tombée';
 }

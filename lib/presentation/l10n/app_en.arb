@@ -693,5 +693,18 @@
   "historyEmptyFilter": "No action for this filter.",
   "settingsLanguageTitle": "Language",
   "settingsLanguageAutomatic": "Automatic",
-  "settingsLanguageAutomaticHint": "Device language"
+  "settingsLanguageAutomaticHint": "Device language",
+  "screenViewRanking": "Ranking",
+  "factionRankingTitle": "Faction ranking",
+  "factionRankingYou": "You",
+  "factionRankingHeadquarters": "HQ level {level}",
+  "@factionRankingHeadquarters": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "factionRankingDepth": "Depth: level {level}",
+  "@factionRankingDepth": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "factionRankingKernel": "Holds the Volcanic Kernel",
+  "factionRankingFallen": "Fallen"
 }

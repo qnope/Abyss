@@ -1,3 +1,5 @@
+import 'package:flutter/painting.dart';
+
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/map_cell.dart';
 import '../../extensions/cell_content_type_extensions.dart';
@@ -19,6 +21,9 @@ class MapCellVisual {
   final bool revealed;
   final bool pending;
 
+  /// Colour of the faction whose base stands here, if the cell is seen.
+  final Color? factionColor;
+
   /// Whether the content and its glow are drawn over the fog of a hidden
   /// cell: a wreck must be seen to be explored.
   final bool aboveFog;
@@ -31,6 +36,7 @@ class MapCellVisual {
     this.revealed = false,
     this.pending = false,
     this.aboveFog = false,
+    this.factionColor,
   });
 
   factory MapCellVisual.from(
@@ -39,6 +45,7 @@ class MapCellVisual {
     bool isBase = false,
     bool hasPendingExploration = false,
     bool isCapturedTransitionBase = false,
+    Color? factionColor,
   }) {
     final terrain = cell.terrain.svgPath;
     if (!isRevealed) {
@@ -53,7 +60,8 @@ class MapCellVisual {
     }
     return MapCellVisual(
       terrainSprite: terrain,
-      contentSprite: _contentSprite(cell, isBase),
+      contentSprite: _contentSprite(cell, isBase || factionColor != null),
+      factionColor: factionColor,
       glow: _glow(cell, isCapturedTransitionBase),
       dimmed: cell.collectedBy != null,
       revealed: true,
@@ -96,9 +104,10 @@ class MapCellVisual {
       other.dimmed == dimmed &&
       other.revealed == revealed &&
       other.pending == pending &&
-      other.aboveFog == aboveFog;
+      other.aboveFog == aboveFog &&
+      other.factionColor == factionColor;
 
   @override
   int get hashCode => Object.hash(terrainSprite, contentSprite, glow, dimmed,
-        revealed, pending, aboveFog);
+        revealed, pending, aboveFog, factionColor);
 }

@@ -7,7 +7,7 @@ import '../../theme/abyss_colors.dart';
 import 'guide_settings.dart';
 import 'language_picker.dart';
 
-enum SettingsDialogResult { cancel, saveAndQuit, openHistory, exportReplay }
+enum SettingsDialogResult { cancel, saveAndQuit, openHistory, openRanking, exportReplay }
 
 /// The settings of [game]: the game language when the app has a
 /// [LanguageScope], the guide switches saved through [repository] as they
@@ -48,6 +48,12 @@ Future<SettingsDialogResult> showSettingsDialog(
               Navigator.pop(ctx, SettingsDialogResult.openHistory),
           child: Text(ctx.l10n.screenViewHistory),
         ),
+        if (game.factions.isNotEmpty)
+          TextButton(
+            onPressed: () =>
+                Navigator.pop(ctx, SettingsDialogResult.openRanking),
+            child: Text(ctx.l10n.screenViewRanking),
+          ),
         TextButton(
           onPressed: () =>
               Navigator.pop(ctx, SettingsDialogResult.exportReplay),

@@ -13,6 +13,7 @@ import '../../widgets/map/level_selector.dart';
 import '../../widgets/map/monster_lair_sheet.dart';
 import '../../widgets/map/treasure_sheet.dart';
 import '../../widgets/map/volcanic_kernel_sheet.dart';
+import '../../widgets/faction/faction_base_colors.dart';
 import 'game_screen_base_sheet.dart';
 import 'game_screen_collect_messages.dart';
 import 'game_screen_exploration_flow.dart';
@@ -56,6 +57,7 @@ Widget buildMapTab(
           onLevelSelected: onLevelSelected,
         ),
         pendingTargets: pendingTargets,
+        factionBases: level == 1 ? factionBaseColors(game) : const {},
       ),
     ),
   ]);

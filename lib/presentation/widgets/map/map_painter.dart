@@ -77,6 +77,17 @@ class MapPainter extends CustomPainter {
     if (visual.glow != MapGlow.none) {
       _drawSprite(canvas, sprites?.glow(visual.glow), rect, glow);
     }
+    final ring = visual.factionColor;
+    if (ring != null) {
+      canvas.drawCircle(
+        rect.center,
+        _contentSize / 2 + 3,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 3
+          ..color = ring,
+      );
+    }
     final sprite = visual.contentSprite;
     if (sprite != null) {
       _drawSprite(

@@ -31,6 +31,7 @@ import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/objective/objective_state.dart';
+import 'package:abyss/domain/objective/tip/tip_id.dart';
 import 'package:abyss/domain/raid/raid_state.dart';
 import 'package:abyss/domain/replay/replay_journal.dart';
 import 'package:abyss/domain/resource/resource.dart';
@@ -87,6 +88,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(TechBranchAdapter());
     registerAdapter(TechBranchStateAdapter());
     registerAdapter(TerrainTypeAdapter());
+    registerAdapter(TipIdAdapter());
     registerAdapter(TransitionBaseAdapter());
     registerAdapter(TransitionBaseTypeAdapter());
     registerAdapter(TurnEndEntryAdapter());
@@ -143,6 +145,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(TechBranchAdapter());
     registerAdapter(TechBranchStateAdapter());
     registerAdapter(TerrainTypeAdapter());
+    registerAdapter(TipIdAdapter());
     registerAdapter(TransitionBaseAdapter());
     registerAdapter(TransitionBaseTypeAdapter());
     registerAdapter(TurnEndEntryAdapter());

@@ -1,6 +1,7 @@
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/objective/objective_state.dart';
+import 'package:abyss/domain/objective/tip/tip_id.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -12,6 +13,18 @@ void main() {
       expect(state.tutorialEnabled, isFalse);
       expect(state.tipsEnabled, isFalse);
       expect(state.isCompleted(ObjectiveId.hqLevel1), isFalse);
+      expect(state.seenTips, isEmpty);
+    });
+
+    test('keeps the tips seen in their order, each once', () {
+      final state = ObjectiveState()
+        ..markSeen(TipId.lair)
+        ..markSeen(TipId.noiseGauge)
+        ..markSeen(TipId.lair);
+
+      expect(state.seenTips, [TipId.lair, TipId.noiseGauge]);
+      expect(state.hasSeen(TipId.noiseGauge), isTrue);
+      expect(state.hasSeen(TipId.descent), isFalse);
     });
 
     test('keeps the completions in their order, each once', () {

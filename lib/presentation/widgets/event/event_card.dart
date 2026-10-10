@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../extensions/random_event_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
-import '../common/raster_svg.dart';
+import '../common/illustrated_card.dart';
 import 'event_card_data.dart';
 import 'event_choice.dart';
 
@@ -21,48 +21,13 @@ class EventCard extends StatelessWidget {
 
   const EventCard({super.key, required this.data});
 
-  static const double illustrationSize = 160;
-
   @override
-  Widget build(BuildContext context) {
-    final text = Theme.of(context).textTheme;
-    return Dialog(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Center(
-              child: RasterSvg(
-                assetPath: data.type.illustration,
-                size: illustrationSize,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              data.type.label,
-              textAlign: TextAlign.center,
-              style: text.headlineSmall?.copyWith(
-                color: AbyssColors.biolumCyan,
-              ),
-            ),
-            const SizedBox(height: 8),
-            for (final line in data.lines)
-              Text(
-                line,
-                textAlign: TextAlign.center,
-                style: text.bodyMedium?.copyWith(
-                  color: AbyssColors.onSurfaceDim,
-                ),
-              ),
-            const SizedBox(height: 16),
-            ..._actions(context),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => IllustratedCard(
+    illustration: data.type.illustration,
+    title: data.type.label,
+    lines: data.lines,
+    actions: _actions(context),
+  );
 
   List<Widget> _actions(BuildContext context) {
     if (data.choices.isEmpty) {

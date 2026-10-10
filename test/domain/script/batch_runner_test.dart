@@ -69,6 +69,12 @@ void main() {
       expect(report.runs.map((r) => r.seed), [1, 2]);
     });
 
+    test('plays with a default runner when given none', () async {
+      final report = await BatchRunner().run(_SeedScript.new, games: 2);
+
+      expect(names(report), ['seed 1', 'seed 2']);
+    });
+
     test('no game at all gives an empty report', () async {
       final report = await BatchRunner(runner: runner, workers: 3)
           .run(_SeedScript.new, games: 0);

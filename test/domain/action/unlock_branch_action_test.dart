@@ -7,6 +7,7 @@ import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/domain/tech/tech_branch_state.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/unlock_branch_action.dart';
 
 ({Game game, Player player}) makeScenario({
@@ -56,6 +57,14 @@ void main() {
     test('success case', () {
       final s = makeScenario();
       expect(action.validate(s.game, s.player).isSuccess, isTrue);
+    });
+
+    test('a branch the player does not have cannot be unlocked', () {
+      final s = makeScenario()..player.techBranches.remove(TechBranch.military);
+      final result = action.execute(s.game, s.player);
+      expect(result.reason, ActionFailure.branchNotFound);
+      expect(s.player.resources[ResourceType.ore]!.amount, 100);
+      expect(s.player.techBranches[TechBranch.military], isNull);
     });
 
     test('lab not built returns failure', () {

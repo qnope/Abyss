@@ -1,4 +1,5 @@
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/game/difficulty.dart';
 import 'package:abyss/domain/script/scenario_parser.dart';
 import 'package:abyss/domain/script/script_runner.dart';
 import 'package:abyss/domain/script/strategies/economy_strategy.dart';
@@ -33,6 +34,14 @@ void main() {
 
       expect(report.scriptName, 'scenario');
       expect(report.buildings[BuildingType.headquarters], 1);
+    });
+
+    test('pins the difficulty it names, by its Dart name', () {
+      expect(ScenarioParser.parse('{"difficulty": "hard"}').difficulty,
+          Difficulty.hard);
+      expect(ScenarioParser.parse('{}').difficulty, isNull);
+      expect(() => ScenarioParser.parse('{"difficulty": "nightmare"}'),
+          throwsFormatException);
     });
 
     test('rejects a malformed scenario', () {

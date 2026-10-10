@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/action/action_type.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
@@ -72,6 +73,15 @@ void main() {
       final result = action.validate(s.game, s.player);
       expect(result.isSuccess, isFalse);
       expect(result.reason, isNotNull);
+    });
+
+    test('a building the base does not have cannot be upgraded', () {
+      final s = makeScenario();
+      final result = UpgradeBuildingAction(buildingType: BuildingType.laboratory)
+          .execute(s.game, s.player);
+      expect(result.reason, ActionFailure.buildingNotFound);
+      expect(s.player.resources[ResourceType.coral]!.amount, 80);
+      expect(s.player.buildings[BuildingType.laboratory], isNull);
     });
 
     test('returns failure when building at max level', () {

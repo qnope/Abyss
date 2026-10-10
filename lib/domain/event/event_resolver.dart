@@ -21,8 +21,9 @@ class EventTurnOutcome {
   const EventTurnOutcome({this.drawn, this.defaulted});
 }
 
-/// End-of-turn step of the random events: settles the event left without
-/// a choice, ends the lasting effects, then draws the next event when due.
+/// End-of-turn step of the random events, after the production: upkeeps
+/// the lasting effect, settles the event left without a choice, ends the
+/// lasting effects, then draws the next event when due.
 abstract final class EventResolver {
   static EventTurnOutcome resolve(
     Game game,
@@ -31,6 +32,7 @@ abstract final class EventResolver {
     Random? random,
   }) {
     final Random dice = random ?? Random();
+    _upkeep(game, player, endedTurn);
     final RandomEventType? defaulted = _settle(game, player, endedTurn, dice);
     player.eventState.expireEffects(endedTurn + 1);
     return EventTurnOutcome(
@@ -39,7 +41,17 @@ abstract final class EventResolver {
     );
   }
 
-  /// Applies the prudent option of an event whose turn of choice is over.
+  /// Upkeep of the effect lasting through [endedTurn].
+  static void _upkeep(Game game, Player player, int endedTurn) {
+    final RandomEventType? active = player.eventState.active;
+    if (active == null || !player.eventState.isActive(active, endedTurn)) {
+      return;
+    }
+    EventEffects.of(active).onTurnEnd(game, player, turn: endedTurn);
+  }
+
+  /// Applies the prudent option of an event whose turn of choice is over,
+  /// from the next turn on.
   static RandomEventType? _settle(
     Game game,
     Player player,
@@ -54,7 +66,7 @@ abstract final class EventResolver {
       player,
       type,
       accept: false,
-      turn: endedTurn,
+      turn: endedTurn + 1,
       random: dice,
     );
     state.clearPending();
@@ -111,7 +123,7 @@ abstract final class EventResolver {
       player,
       type,
       accept: true,
-      turn: endedTurn,
+      turn: endedTurn + 1,
       random: dice,
     );
     player.addHistoryEntry(

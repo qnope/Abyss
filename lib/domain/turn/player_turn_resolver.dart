@@ -1,11 +1,9 @@
-import '../building/building.dart';
-import '../building/building_deactivator.dart';
 import '../game/difficulty.dart';
 import '../game/player.dart';
 import '../resource/consumption_calculator.dart';
-import '../resource/production_calculator.dart';
 import '../resource/resource_type.dart';
 import '../unit/unit_loss_calculator.dart';
+import 'turn_production.dart';
 import 'turn_result.dart';
 
 class PlayerTurnResolver {
@@ -19,33 +17,26 @@ class PlayerTurnResolver {
 
     // Step 1: Calculate initial production
     var production = _withExtra(
-      difficulty.scaleProduction(ProductionCalculator.fromBuildings(
-        player.buildings,
-        techBranches: player.techBranches,
-      )),
+      TurnProduction.of(player, turn: previousTurn, difficulty: difficulty),
       extraProduction,
     );
 
     // Steps 2-4: Energy consumption & building deactivation
-    final energyProd = production[ResourceType.energy] ?? 0;
-    final energyStock = player.resources[ResourceType.energy]?.amount ?? 0;
-    final deactivated = BuildingDeactivator.deactivate(
-      buildings: player.buildings,
-      energyProduction: energyProd,
-      energyStock: energyStock,
+    final deactivated = TurnProduction.deactivated(
+      player,
+      production,
+      turn: previousTurn,
     );
 
     // Step 5: Recalculate production if buildings were deactivated
     if (deactivated.isNotEmpty) {
-      final activeBuildings = Map.of(player.buildings);
-      for (final type in deactivated) {
-        activeBuildings[type] = Building(type: type, level: 0);
-      }
       production = _withExtra(
-        difficulty.scaleProduction(ProductionCalculator.fromBuildings(
-          activeBuildings,
-          techBranches: player.techBranches,
-        )),
+        TurnProduction.of(
+          player,
+          turn: previousTurn,
+          difficulty: difficulty,
+          deactivated: deactivated,
+        ),
         extraProduction,
       );
     }
@@ -60,9 +51,10 @@ class PlayerTurnResolver {
     );
 
     // Step 10: Recalculate consumption after losses
-    final energyConsumption = ConsumptionCalculator.totalBuildingConsumption(
-      player.buildings,
-      excluded: deactivated.toSet(),
+    final energyConsumption = TurnProduction.energyConsumption(
+      player,
+      turn: previousTurn,
+      deactivated: deactivated,
     );
     final algaeConsumption =
         ConsumptionCalculator.totalUnitConsumptionAllLevels(

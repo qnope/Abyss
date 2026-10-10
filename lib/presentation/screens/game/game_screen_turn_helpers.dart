@@ -1,7 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../domain/building/building.dart';
-import '../../../domain/building/building_deactivator.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/consumption_calculator.dart';
 import '../../../domain/game/defeat_checker.dart';
@@ -9,17 +7,20 @@ import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
 import '../../../domain/raid/raid_battle.dart';
 import '../../../domain/resource/pearl_income.dart';
-import '../../../domain/resource/production_calculator.dart';
 import '../../../domain/resource/resource_type.dart';
+import '../../../domain/turn/turn_production.dart';
 import '../../../domain/unit/unit_loss_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../widgets/raid/raid_due_warning.dart';
 import '../../widgets/volcano/volcano_due_warning.dart';
 
+/// What the base will make at the end of the current turn.
 Map<ResourceType, int> computeProduction(Game game, Player player) {
-  final production = game.difficulty.scaleProduction(
-    ProductionCalculator.fromBuildings(
-      player.buildings, techBranches: player.techBranches));
+  final production = TurnProduction.of(
+    player,
+    turn: game.turn,
+    difficulty: game.difficulty,
+  );
   final pearls = PearlIncome.of(game, player.id);
   if (pearls > 0) {
     production[ResourceType.pearl] =
@@ -28,10 +29,10 @@ Map<ResourceType, int> computeProduction(Game game, Player player) {
   return production;
 }
 
-Map<ResourceType, int> computeConsumption(Player player) {
+/// What the base will spend at the end of the current turn.
+Map<ResourceType, int> computeConsumption(Game game, Player player) {
   final consumption = <ResourceType, int>{};
-  final energy =
-      ConsumptionCalculator.totalBuildingConsumption(player.buildings);
+  final energy = TurnProduction.energyConsumption(player, turn: game.turn);
   if (energy > 0) consumption[ResourceType.energy] = energy;
   final algae = ConsumptionCalculator.totalUnitConsumptionAllLevels(
       player.unitsPerLevel);
@@ -39,33 +40,25 @@ Map<ResourceType, int> computeConsumption(Player player) {
   return consumption;
 }
 
+/// Buildings the end of the current turn will shut down for lack of
+/// energy.
 List<BuildingType> computeBuildingsToDeactivate(
+  Game game,
   Player player,
   Map<ResourceType, int> production,
-) {
-  final energyProd = production[ResourceType.energy] ?? 0;
-  final energyStock = player.resources[ResourceType.energy]?.amount ?? 0;
-  return BuildingDeactivator.deactivate(
-    buildings: player.buildings,
-    energyProduction: energyProd,
-    energyStock: energyStock,
-  );
-}
+) => TurnProduction.deactivated(player, production, turn: game.turn);
 
+/// Units the end of the current turn will lose for lack of algae.
 Map<UnitType, int> computeUnitsToLose(
   Game game,
   Player player,
   List<BuildingType> deactivated,
 ) {
-  final activeBuildings = Map.of(player.buildings);
-  for (final type in deactivated) {
-    activeBuildings[type] = Building(type: type, level: 0);
-  }
-  final prod = game.difficulty.scaleProduction(
-    ProductionCalculator.fromBuildings(
-      activeBuildings,
-      techBranches: player.techBranches,
-    ),
+  final prod = TurnProduction.of(
+    player,
+    turn: game.turn,
+    difficulty: game.difficulty,
+    deactivated: deactivated,
   );
   final algaeProd = prod[ResourceType.algae] ?? 0;
   final algaeStock = player.resources[ResourceType.algae]?.amount ?? 0;

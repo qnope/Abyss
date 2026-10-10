@@ -54,7 +54,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     final production = computeProduction(widget.game, _human);
-    final consumption = computeConsumption(_human);
+    final consumption = computeConsumption(widget.game, _human);
     return Scaffold(
       body: Column(
         children: [
@@ -124,8 +124,9 @@ class _GameScreenState extends State<GameScreen> {
   Future<void> _nextTurn() async {
     final human = _human;
     final production = computeProduction(widget.game, human);
-    final consumption = computeConsumption(human);
-    final deactivated = computeBuildingsToDeactivate(human, production);
+    final consumption = computeConsumption(widget.game, human);
+    final deactivated =
+        computeBuildingsToDeactivate(widget.game, human, production);
     final confirmed = await showTurnConfirmationDialog(context,
       currentTurn: widget.game.turn,
       production: production, consumption: consumption,

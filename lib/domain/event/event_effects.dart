@@ -32,7 +32,7 @@ abstract final class EventEffects {
     required Random random,
   }) => of(type).onDraw(game, player, turn: turn, random: random);
 
-  /// Plays [type] out during [turn] (see [EventEffect.apply]).
+  /// Plays [type] out from [turn] (see [EventEffect.apply]).
   static void apply(
     Game game,
     Player player,
@@ -45,8 +45,12 @@ abstract final class EventEffects {
 
   /// The effect of [type].
   static EventEffect of(RandomEventType type) => switch (type) {
-    RandomEventType.warmCurrent ||
-    RandomEventType.coldCurrent => const CurrentEffect(),
+    RandomEventType.warmCurrent => const CurrentEffect(
+      RandomEventType.warmCurrent,
+    ),
+    RandomEventType.coldCurrent => const CurrentEffect(
+      RandomEventType.coldCurrent,
+    ),
     RandomEventType.wreck => const WreckEffect(),
     RandomEventType.predators => const PredatorsEffect(),
     RandomEventType.storm => const StormEffect(),

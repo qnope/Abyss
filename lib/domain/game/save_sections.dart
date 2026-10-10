@@ -21,6 +21,9 @@ class SaveSections {
 
   bool get isEmpty => inProgress.isEmpty && finished.isEmpty;
 
+  /// Every save, in progress or finished.
+  int get count => inProgress.length + finished.length;
+
   /// The game a "continue" shortcut resumes, if any is still played.
   Game? get mostRecentInProgress =>
       inProgress.isEmpty ? null : inProgress.first;

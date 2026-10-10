@@ -71,4 +71,9 @@ void main() {
     expect(() => sections.inProgress.add(won), throwsUnsupportedError);
     expect(() => sections.finished.clear(), throwsUnsupportedError);
   });
+
+  test('counts every save, in progress or finished', () {
+    expect(SaveSections.of([oldRun, won, lost]).count, 3);
+    expect(SaveSections.of(const []).count, 0);
+  });
 }

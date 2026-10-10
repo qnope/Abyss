@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'abyss_colors.dart';
 
 abstract final class AbyssTextTheme {
-  static const _fontFamily = 'Rajdhani';
+  /// Font of every title, label and button of the game.
+  static const titleFont = 'Rajdhani';
+  static const _fontFamily = titleFont;
 
   /// Small spaced capitals heading a section of a list, e.g. « EN COURS ».
   static const sectionLabel = TextStyle(

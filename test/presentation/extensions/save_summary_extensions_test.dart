@@ -76,4 +76,9 @@ void main() {
       expect(summary.footnote, 'Voir le bilan de la partie');
     });
   });
+
+  test('names who plays, the turn and the difficulty', () {
+    final summary = summaryOf(difficulty: Difficulty.hard);
+    expect(summary.resumeLabel, 'Alice · Tour 14 · Difficile');
+  });
 }

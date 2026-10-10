@@ -12,6 +12,7 @@ import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/history/history_sheet_body.dart';
 
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
@@ -70,6 +71,7 @@ void main() {
     testWidgets(
         'tapping Sauvegarder et quitter saves and navigates to main menu',
         (tester) async {
+      reduceMotion(tester);
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();
 

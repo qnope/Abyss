@@ -15,9 +15,10 @@ import 'marine_snow.dart';
 class AbyssBackdrop extends StatelessWidget {
   static const defaultAsset = 'assets/illustrations/menu/abyss_backdrop.svg';
 
-  /// Point of the art kept in view, in its 1600 x 2200 units: just above
-  /// the colony, so wide screens keep some of the light rays.
-  static const colonyFocus = Offset(800, 1080);
+  /// Point of the art kept in view, in its 1600 x 2200 units: the base of
+  /// the colony dome. On a wide screen the colony then sits just above the
+  /// middle, between a menu title and its buttons, under the light rays.
+  static const colonyFocus = Offset(800, 1200);
 
   /// Opacity of the dark veil of a [dimmed] backdrop.
   static const dimOpacity = 0.85;

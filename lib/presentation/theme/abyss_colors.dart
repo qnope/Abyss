@@ -14,6 +14,13 @@ abstract final class AbyssColors {
   static const Color biolumPurple = Color(0xFFB388FF);
   static const Color biolumPink = Color(0xFFFF80AB);
 
+  /// Ends of the glowing cyan gradient of a primary menu button.
+  static const Color biolumCyanLight = Color(0xFF6FF4FF);
+  static const Color biolumCyanDeep = Color(0xFF00C2DE);
+
+  /// Pale blue of light filtering through the water, for menu subtitles.
+  static const Color abyssMist = Color(0xFFBDE6F5);
+
   // Resource colors
   static const Color algaeGreen = Color(0xFF69F0AE);
   static const Color coralPink = Color(0xFFFF6E91);

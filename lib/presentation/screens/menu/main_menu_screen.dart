@@ -1,131 +1,80 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
-import '../../theme/abyss_colors.dart';
+import '../../../domain/game/save_sections.dart';
+import '../../../domain/game/save_summary.dart';
+import '../../extensions/save_summary_extensions.dart';
+import '../../widgets/backdrop/abyss_backdrop.dart';
+import '../../widgets/menu/beta_notice.dart';
+import '../../widgets/menu/glow_title.dart';
+import '../../widgets/menu/menu_button.dart';
+import '../../widgets/menu/menu_layout.dart';
+import '../game/resume_game.dart';
 import 'load_game_screen.dart';
 import 'new_game_screen.dart';
 
-class MainMenuScreen extends StatelessWidget {
+/// The home screen: the colony in the abyss, a shortcut to continue the
+/// latest game in progress, a new game and the saved games.
+class MainMenuScreen extends StatefulWidget {
   final GameRepository repository;
 
   const MainMenuScreen({super.key, required this.repository});
 
   @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'ABYSSES',
-                style: textTheme.displayLarge?.copyWith(
-                  color: AbyssColors.biolumCyan,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Les profondeurs vous attendent',
-                style: textTheme.bodyLarge?.copyWith(
-                  color: AbyssColors.onSurfaceDim,
-                ),
-              ),
-              const SizedBox(height: 64),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () => _startNewGame(context),
-                  child: const Text('Nouvelle Partie'),
-                ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton(
-                  onPressed: () => _loadGame(context),
-                  child: const Text('Charger une partie'),
-                ),
-              ),
-              const SizedBox(height: 32),
-              _BetaWarning(textTheme: textTheme),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _startNewGame(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => NewGameScreen(repository: repository),
-      ),
-    );
-  }
-
-  void _loadGame(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => LoadGameScreen(repository: repository),
-      ),
-    );
-  }
+  State<MainMenuScreen> createState() => _MainMenuScreenState();
 }
 
-class _BetaWarning extends StatelessWidget {
-  final TextTheme textTheme;
+class _MainMenuScreenState extends State<MainMenuScreen> {
+  late SaveSections _saves = _readSaves();
 
-  const _BetaWarning({required this.textTheme});
+  SaveSections _readSaves() => SaveSections.of(widget.repository.loadAll());
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AbyssColors.warning.withValues(alpha: 0.08),
-        border: Border.all(
-          color: AbyssColors.warning.withValues(alpha: 0.4),
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AbyssColors.warning,
-            size: 20,
+    final resumable = _saves.mostRecentInProgress;
+    return Scaffold(
+      body: AbyssBackdrop(
+        child: MenuLayout(
+          header: const GlowTitle(
+            title: 'ABYSSES',
+            subtitle: 'Les profondeurs vous attendent',
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Version bêta',
-                  style: textTheme.titleSmall?.copyWith(
-                    color: AbyssColors.warning,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Le jeu est en cours de développement. Les sauvegardes '
-                  'pourront être supprimées et votre progression perdue '
-                  "tant que le jeu est en bêta.",
-                  style: textTheme.bodySmall?.copyWith(
-                    color: AbyssColors.onSurface,
-                  ),
-                ),
-              ],
+          actions: [
+            if (resumable != null)
+              MenuButton(
+                label: 'CONTINUER',
+                subtitle: SaveSummary.of(resumable).resumeLabel,
+                onPressed:
+                    () => resumeGame(context, resumable, widget.repository),
+              ),
+            MenuButton(
+              label: 'NOUVELLE PARTIE',
+              variant:
+                  resumable == null
+                      ? MenuButtonVariant.primary
+                      : MenuButtonVariant.outlined,
+              onPressed:
+                  () => _open(NewGameScreen(repository: widget.repository)),
             ),
-          ),
-        ],
+            MenuButton(
+              label: 'CHARGER UNE PARTIE',
+              variant: MenuButtonVariant.outlined,
+              badgeCount: _saves.count,
+              onPressed:
+                  () => _open(LoadGameScreen(repository: widget.repository)),
+            ),
+          ],
+          footer: const BetaNotice(),
+        ),
       ),
     );
+  }
+
+  /// Opens [screen], then reads the saves again: games may have been
+  /// deleted or created there.
+  Future<void> _open(Widget screen) async {
+    await Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => screen));
+    if (mounted) setState(() => _saves = _readSaves());
   }
 }

@@ -17,6 +17,9 @@ class GameMapView extends StatefulWidget {
   /// Colour of the faction base standing on each cell, level 1 only.
   final Map<GridPosition, Color> factionBases;
 
+  /// Seal colour of each player who can hold the volcano, by player id.
+  final Map<String, Color> ownerColors;
+
   const GameMapView({
     super.key,
     required this.gameMap,
@@ -27,6 +30,7 @@ class GameMapView extends StatefulWidget {
     this.onCellTap,
     this.pendingTargets = const {},
     this.factionBases = const {},
+    this.ownerColors = const {},
   });
 
   @override
@@ -114,6 +118,7 @@ class _GameMapViewState extends State<GameMapView> {
                 baseY: widget.baseY,
                 pendingTargets: widget.pendingTargets,
                 factionBases: widget.factionBases,
+                ownerColors: widget.ownerColors,
               ),
               columns: map.width,
               sprites: _sprites,

@@ -27,6 +27,25 @@ abstract final class VolcanoFootprint {
     return null;
   }
 
+  /// What a tap on ([x], [y]) means: the cell to act on (the anchor for any
+  /// cell of the volcano) and whether the player has seen it, the volcano
+  /// counting as seen as soon as one of its cells is.
+  static ({GridPosition position, bool isRevealed}) tapTarget(
+    GameMap map,
+    Set<GridPosition> revealed,
+    int x,
+    int y,
+  ) {
+    final anchor = anchorOf(map, x, y);
+    if (anchor == null) {
+      final position = GridPosition(x: x, y: y);
+      return (position: position, isRevealed: revealed.contains(position));
+    }
+    final seen = VolcanicKernelPlacer.footprint(anchor.x, anchor.y)
+        .any((c) => revealed.contains(GridPosition(x: c.$1, y: c.$2)));
+    return (position: anchor, isRevealed: seen);
+  }
+
   /// Gives a volcano saved as a single cell its three parts.
   static void completeLegacy(GameMap map) {
     for (var y = 0; y < map.height; y++) {

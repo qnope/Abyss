@@ -41,6 +41,7 @@ class MapPainter extends CustomPainter {
     final fallback = Paint()..color = AbyssColors.plainBlue;
     final pending = Path();
     final fog = Path();
+    final wide = <int>[];
     for (var i = 0; i < visuals.length; i++) {
       final visual = visuals[i];
       final rect = _cellRect(i);
@@ -50,8 +51,13 @@ class MapPainter extends CustomPainter {
         _drawContent(canvas, visual, rect, image,
             visual.dimmed ? dimmed : image);
       }
+      if (visual.contentSpan > 1) wide.add(i);
       if (visual.pending) pending.addRect(rect.deflate(1));
       if (!visual.revealed) fog.addRect(rect);
+    }
+    // Over every terrain it covers, which the row-major loop draws later.
+    for (final i in wide) {
+      _drawWide(canvas, visuals[i], i, image);
     }
     canvas.drawPath(
       pending,
@@ -89,9 +95,29 @@ class MapPainter extends CustomPainter {
       );
     }
     final sprite = visual.contentSprite;
-    if (sprite != null) {
+    if (sprite != null && visual.contentSpan == 1) {
       _drawSprite(
           canvas, sprites?.svg(sprite), rect.deflate(_contentInset), content);
+    }
+  }
+
+  /// Content spanning several cells (the volcano), with its seal if held.
+  void _drawWide(Canvas canvas, MapCellVisual visual, int index, Paint image) {
+    final origin = _cellRect(index).topLeft;
+    final side = cellSize * visual.contentSpan;
+    final rect = Rect.fromLTWH(origin.dx, origin.dy, side, side);
+    final sprite = visual.contentSprite;
+    if (sprite != null) _drawSprite(canvas, sprites?.svg(sprite), rect, image);
+    final seal = visual.sealColor;
+    if (seal != null) {
+      _drawSprite(
+        canvas,
+        sprites?.svg(volcanoSealSvgPath),
+        rect,
+        Paint()
+          ..filterQuality = FilterQuality.medium
+          ..colorFilter = ColorFilter.mode(seal, BlendMode.modulate),
+      );
     }
   }
 

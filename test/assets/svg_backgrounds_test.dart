@@ -10,6 +10,10 @@ enum SvgFrame {
   /// resource bar.
   transparent,
 
+  /// Transparent all around and in the middle too: a ring drawn over
+  /// another icon.
+  overlay,
+
   /// Rounded square vignette of water, nothing drawn outside it.
   vignette,
 
@@ -32,6 +36,7 @@ const _frames = {
   'factions/': SvgFrame.medallion,
   'terrain/plain.svg': SvgFrame.tile,
   'terrain/volcanic_kernel.svg': SvgFrame.transparent,
+  'terrain/volcanic_kernel_seal.svg': SvgFrame.overlay,
 };
 
 void main() {
@@ -53,9 +58,12 @@ void main() {
       await tester.runAsync(() async {
         final image = await rasterizeSvg(file.readAsStringSync());
         final alpha = await SvgAlphaMap.of(image);
-        expect(alpha.at(32, 32), greaterThan(0), reason: 'empty center');
+        if (frame != SvgFrame.overlay) {
+          expect(alpha.at(32, 32), greaterThan(0), reason: 'empty center');
+        }
         switch (frame) {
           case SvgFrame.transparent:
+          case SvgFrame.overlay:
             expect(alpha.corners, everyElement(0), reason: 'corner drawn');
             expect(alpha.clearBorder, greaterThan(0.5), reason: 'border');
           case SvgFrame.vignette:

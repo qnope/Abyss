@@ -89,8 +89,10 @@ class TurnResult {
   /// predators fought at its end.
   final List<TemporaryObjectiveEnd> temporaryObjectives;
 
-  /// Attacks of factions on the base fought at the end of this turn, in
-  /// the order they were announced. A turn result is never saved.
+  /// Attacks of factions on the human this turn: those on its posts and
+  /// its kernel, fought without warning while the factions played, then
+  /// those on the base fought at its end, in the order they were
+  /// announced. A turn result is never saved.
   final List<FactionAttackReport> attacks;
 
   const TurnResult({

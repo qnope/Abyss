@@ -1,8 +1,6 @@
 import 'dart:math';
 
-import '../faction/faction.dart';
 import '../faction/faction_attack_report.dart';
-import '../faction/faction_personality.dart';
 import '../game/game.dart';
 import '../game/player.dart';
 import '../raid/announced_attack.dart';
@@ -67,23 +65,13 @@ abstract final class AnnouncedAttackResolver {
       action.makeHistoryEntry(game, attacker, result, game.turn)!,
     );
     attacker.raidState.addNoise(action.noiseMade(attacker));
-    return (result: result, report: _report(game, attacker, result));
-  }
-
-  static FactionAttackReport _report(
-    Game game,
-    Player attacker,
-    AttackBaseResult result,
-  ) {
-    final FactionPersonality? personality = <FactionPersonality>[
-      for (final Faction f in game.factions)
-        if (f.id == attacker.id) f.personality,
-    ].firstOrNull;
-    return FactionAttackReport(
-      attackerId: attacker.id,
-      attackerName: attacker.name,
-      personality: personality,
-      entry: AttackBaseEntries.forDefender(game.turn, attacker.name, result),
+    return (
+      result: result,
+      report: FactionAttackReport.of(
+        game,
+        attacker,
+        AttackBaseEntries.forDefender(game.turn, attacker.name, result),
+      ),
     );
   }
 

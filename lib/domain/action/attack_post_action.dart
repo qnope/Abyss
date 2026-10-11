@@ -101,9 +101,10 @@ class AttackPostAction extends Action {
           random: random,
         );
     final DefenceOutcome outcome = defence.settle(owner, random: random);
-    if (fight.isVictory) {
-      PostTakeover.apply(post: post, attacker: player, owner: owner);
-    }
+    final Map<UnitType, int> lost =
+        fight.isVictory
+            ? PostTakeover.apply(post: post, attacker: player, owner: owner)
+            : const <UnitType, int>{};
 
     final AttackBaseResult result = AttackBaseResult.success(
       victory: fight.isVictory,
@@ -122,6 +123,7 @@ class AttackPostAction extends Action {
         player.name,
         result,
         postName: post.name,
+        lostWithPost: lost,
       ),
     );
     return result;

@@ -3133,6 +3133,59 @@ class AppLocalizationsEs extends AppLocalizations {
   String get factionAttackReport => 'Ver el informe';
 
   @override
+  String factionPostTaken(String faction, String post) {
+    return '$faction tomó tu $post';
+  }
+
+  @override
+  String factionPostRepelled(String faction, String post) {
+    return '$faction atacó tu $post: ataque rechazado';
+  }
+
+  @override
+  String get factionPostDescentModuleLost => 'Módulo de Descenso destruido';
+
+  @override
+  String get factionPostPressureCapsuleLost => 'Cápsula Presurizada destruida';
+
+  @override
+  String factionPostUnitsLost(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unidades del nivel $level perdidas',
+      one: '$count unidad del nivel $level perdida',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String factionKernelDamaged(String faction) {
+    return '$faction atacó el Núcleo: un nivel perdido';
+  }
+
+  @override
+  String factionKernelRepelled(String faction) {
+    return '$faction atacó el Núcleo: ataque rechazado';
+  }
+
+  @override
+  String factionKernelTaken(String faction) {
+    return '$faction tomó el Núcleo';
+  }
+
+  @override
+  String factionKernelGarrisonLost(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unidades de la guarnición perdidas',
+      one: '$count unidad de la guarnición perdida',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get tipFactionAttackTitle => 'Una facción te ataca';
 
   @override

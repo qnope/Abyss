@@ -15,17 +15,30 @@ import 'package:abyss/domain/volcano/kernel_garrison.dart';
 
 /// A game against two factions where `owner` holds a Faille (on level 1)
 /// or a Cheminée (on level 2) with its passage building, and `attacker`
-/// stands ready to take it, at turn 12 with the tutorial over.
+/// stands ready to take it, at turn 12 with the tutorial over. With
+/// [humanHolds], the human is the owner.
 class PostWar {
   final Game game;
   final TransitionBaseType kind;
   final int level;
   final GridPosition at;
   final TransitionBase post;
+  final bool humanHolds;
 
-  PostWar._(this.game, this.kind, this.level, this.at, this.post);
+  PostWar._(
+    this.game,
+    this.kind,
+    this.level,
+    this.at,
+    this.post,
+    this.humanHolds,
+  );
 
-  factory PostWar(TransitionBaseType kind, {int mapSeed = 7}) {
+  factory PostWar(
+    TransitionBaseType kind, {
+    int mapSeed = 7,
+    bool humanHolds = false,
+  }) {
     final Game game = GameFactory.newGame(
       playerName: 'Nemo',
       mapSeed: mapSeed,
@@ -43,6 +56,7 @@ class PostWar {
             level,
             GridPosition(x: x, y: y),
             base,
+            humanHolds,
           );
           return war.._setUp();
         }
@@ -52,7 +66,8 @@ class PostWar {
   }
 
   Player get attacker => game.players[game.factions[0].id]!;
-  Player get owner => game.players[game.factions[1].id]!;
+  Player get owner =>
+      humanHolds ? game.humanPlayer : game.players[game.factions[1].id]!;
   Player get human => game.humanPlayer;
 
   BuildingType get passage =>

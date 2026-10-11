@@ -28,6 +28,9 @@ class TransitionBaseName {
       TransitionBaseName(type, rank),
   ];
 
+  /// The level its passage opens onto.
+  int get targetLevel => type == TransitionBaseType.faille ? 2 : 3;
+
   /// What a save stores, such as `faille:0`.
   String get code => '${type.name}:$rank';
 

@@ -1,6 +1,7 @@
 import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
+import 'package:abyss/domain/unit/unit_type.dart';
 
 import 'transition_fight_fixtures.dart';
 
@@ -76,6 +77,7 @@ BaseAssaultEntry baseAssaultEntry({
   required bool defending,
   String? post,
   ({int before, int after})? kernel,
+  Map<UnitType, int> lostWithPost = const {},
 }) => BaseAssaultEntry(
   turn: 14,
   victory: victory,
@@ -93,4 +95,5 @@ BaseAssaultEntry baseAssaultEntry({
   pillaged: const {},
   loot: const {},
   postName: post,
+  lostWithPost: lostWithPost,
 );

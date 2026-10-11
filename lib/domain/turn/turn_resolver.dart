@@ -18,7 +18,7 @@ import 'turn_result.dart';
 class TurnResolver {
   /// [random] drives the raid fights and the random events; pass a seeded
   /// one for a reproducible turn. [attacks] are the attacks on the human
-  /// base fought just before, to report in the result.
+  /// fought this turn, to report in the result.
   TurnResult resolve(
     Game game, {
     Random? random,

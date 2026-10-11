@@ -41,6 +41,7 @@ flutter:
     - assets/icons/tech/
     - assets/icons/events/
     - assets/icons/guide/
+    - assets/icons/factions/
     - assets/illustrations/menu/
     - assets/illustrations/saves/
   fonts:

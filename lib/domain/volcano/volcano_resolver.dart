@@ -23,6 +23,8 @@ class VolcanoTurnOutcome {
 
 /// End-of-turn step of the volcano: fights the wave due this turn, then
 /// announces the next one while the kernel stands between levels 1 and 9.
+/// The first wave a holder (human or faction) ever faces comes at half
+/// strength; it is told apart by the outcomes [VolcanoState] counts.
 abstract final class VolcanoResolver {
   /// From this kernel level on, the game is won and the waves stop.
   static const int winLevel = 10;
@@ -58,6 +60,7 @@ abstract final class VolcanoResolver {
         faction: isFaction,
         factions: factions,
       ),
+      firstWave: state.wavesFought == 0,
     );
     state.announce(wave, endedTurn + 1);
     return VolcanoTurnOutcome(report: report, announced: wave);

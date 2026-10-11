@@ -18,19 +18,33 @@ abstract final class VolcanoWaveFactory {
 
   /// Krakens of a wave on a kernel of [kernelLevel], scaled by
   /// [monsterPercent] (see `Difficulty.monsterPercent`); at least one.
-  static int krakensFor(int kernelLevel, {int monsterPercent = 100}) => max(
-    1,
-    (baseKrakens + krakensPerThreeLevels * kernelLevel ~/ 3) *
-        monsterPercent ~/
-        100,
-  );
+  /// The [firstWave] a kernel holder ever faces is gentler: half the
+  /// krakens, rounded up.
+  static int krakensFor(
+    int kernelLevel, {
+    int monsterPercent = 100,
+    bool firstWave = false,
+  }) {
+    final int krakens = max(
+      1,
+      (baseKrakens + krakensPerThreeLevels * kernelLevel ~/ 3) *
+          monsterPercent ~/
+          100,
+    );
+    return firstWave ? (krakens + 1) ~/ 2 : krakens;
+  }
 
   static MonsterLair fromKernelLevel(
     int kernelLevel, {
     int monsterPercent = 100,
+    bool firstWave = false,
   }) => MonsterLair(
     difficulty: MonsterDifficulty.hard,
     family: MonsterFamily.kraken,
-    unitCount: krakensFor(kernelLevel, monsterPercent: monsterPercent),
+    unitCount: krakensFor(
+      kernelLevel,
+      monsterPercent: monsterPercent,
+      firstWave: firstWave,
+    ),
   );
 }

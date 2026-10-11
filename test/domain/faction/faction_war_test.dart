@@ -18,8 +18,19 @@ void main() {
 
     final attack = war.human.raidState.attacks.single;
     expect(attack.attackerId, war.attacker.id);
-    expect(attack.units, horde);
+    expect(attack.units.keys, horde.keys);
     expect(attack.arrivalTurn, war.game.turn + 2);
+  });
+
+  test('it sends the fewest units that still win, not its whole army', () {
+    final war = warGame();
+    war.see(war.human);
+
+    war.play();
+
+    final sent = war.human.raidState.attacks.single.units[UnitType.harpoonist]!;
+    expect(sent, greaterThan(0));
+    expect(sent, lessThan(horde[UnitType.harpoonist]!));
   });
 
   test('it only strikes on its slot, every few turns', () {
@@ -111,6 +122,6 @@ void main() {
 
     war.play();
 
-    expect(war.human.raidState.attacks.single.units, horde);
+    expect(war.human.raidState.attacks.single.units.keys, horde.keys);
   });
 }

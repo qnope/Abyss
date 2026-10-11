@@ -33,7 +33,10 @@ class PredatorsEffect extends EventEffect {
     required Random random,
   }) {
     final int percent =
-        game.difficulty.monsterPercent *
+        game.difficulty.monsterPercentFor(
+          faction: false,
+          factions: player.id == game.humanPlayerId ? game.factions.length : 0,
+        ) *
         EventRules.predatorsPowerPercent ~/
         100;
     player.eventState.predatorWave = RaidWaveFactory.fromTotalNoise(

@@ -62,8 +62,20 @@ enum Difficulty {
 
   /// Power of the raids and waves that hit a faction when [faction], the
   /// human otherwise.
-  int monsterPercentFor({required bool faction}) =>
-      faction ? monsterPercent * factionMonsterShare ~/ 100 : monsterPercent;
+  ///
+  /// The human's waves are eased by [worldReliefPercent] in a world of
+  /// [factions] factions.
+  int monsterPercentFor({required bool faction, int factions = 0}) =>
+      faction
+          ? monsterPercent * factionMonsterShare ~/ 100
+          : monsterPercent * worldReliefPercent(factions) ~/ 100;
+
+  /// Share of its monsters the human keeps in a world of [factions]
+  /// factions: the map grows with the players, so the road to the volcano
+  /// is longer and the same noise would be paid for longer. Measured so
+  /// that the careful bot keeps its win rate whatever the number of
+  /// factions (see `docs` of the difficulties).
+  static int worldReliefPercent(int factions) => (200 - 5 * factions) ~/ 2;
 
   /// Turns the human is left in peace between two attacks of factions on
   /// its base: the harder the game, the closer they come.

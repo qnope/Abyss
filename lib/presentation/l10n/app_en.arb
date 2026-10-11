@@ -231,6 +231,7 @@
   "actionFailureAttackTooEarly": "Too early to attack a base",
   "actionFailureAttackAlreadyAnnounced": "An attack from this faction is already announced",
   "actionFailureRaidSameTurn": "An attack is already announced for that turn: a monster raid hits then",
+  "actionFailureAttackTooSoon": "The base was attacked too recently: the others wait",
   "actionFailureNoPendingEvent": "No pending event",
   "actionFailureNotThisChoiceTurn": "This choice belongs to another turn",
   "actionFailureNotEnoughStockToTrade": "Not enough stock to trade",

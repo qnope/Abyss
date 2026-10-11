@@ -822,6 +822,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une attaque est déjà annoncée pour ce tour : un raid de monstres frappe alors';
 
   @override
+  String get actionFailureAttackTooSoon =>
+      'La base a été attaquée trop récemment : les autres attendent';
+
+  @override
   String get actionFailureNoPendingEvent => 'Aucun événement en attente';
 
   @override

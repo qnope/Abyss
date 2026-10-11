@@ -822,6 +822,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ya hay un ataque anunciado para ese turno: una incursión de monstruos golpea entonces';
 
   @override
+  String get actionFailureAttackTooSoon =>
+      'La base fue atacada hace muy poco: los demás esperan';
+
+  @override
   String get actionFailureNoPendingEvent => 'Ningún evento pendiente';
 
   @override

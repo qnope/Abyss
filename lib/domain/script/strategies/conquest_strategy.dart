@@ -10,6 +10,7 @@ import '../script_turn.dart';
 import '../../fight/army_planner.dart';
 import 'battle_moves.dart';
 import 'conquest_moves.dart';
+import 'contest_moves.dart';
 import 'event_moves.dart';
 import 'expedition_moves.dart';
 import 'explore_moves.dart';
@@ -52,6 +53,9 @@ class ConquestStrategy extends GameScript {
   /// the expedition force waiting at home defends the base.
   final bool defends;
 
+  /// Whether it takes the posts and the kernel that others hold.
+  final bool contests;
+
   /// Whether it keeps a garrison able to beat the kraken waves.
   final bool guardsKernel;
 
@@ -70,6 +74,7 @@ class ConquestStrategy extends GameScript {
     this.huntsLairs = true,
     this.defends = true,
     this.guardsKernel = true,
+    this.contests = true,
     this.growth = growthOrder,
     this.explorers = 2,
     this.name = 'conquest',
@@ -83,6 +88,7 @@ class ConquestStrategy extends GameScript {
     turn.playEvents(planner);
     final bool alert = turn.player.raidState.isIncoming;
     if (alert && defends) turn.defendBase(planner);
+    if (defends) turn.defendAttacks(planner);
     for (final BuildingType goal in goals) {
       turn.tryPerform(UpgradeBuildingAction(buildingType: goal));
     }
@@ -90,6 +96,7 @@ class ConquestStrategy extends GameScript {
     turn.research();
     if (!alert) {
       turn.advanceConquest(planner, share: conquestShare);
+      if (contests) turn.contest();
       if (huntsLairs) turn.huntLairs(planner);
     }
     turn.growInOrder(growth);

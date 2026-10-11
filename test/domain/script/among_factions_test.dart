@@ -21,6 +21,10 @@ void main() {
     expect(script.factions.toSet(), hasLength(5));
   });
 
+  test('no faction at all is the solo game', () {
+    expect(AmongFactions.drawn(const IdleScript(), 0).factions, isEmpty);
+  });
+
   test('a game against factions runs and the report says who won', () {
     final report = ScriptRunner(
       maxTurns: 10,

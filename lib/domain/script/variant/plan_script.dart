@@ -120,6 +120,7 @@ class PlanScript extends GameScript {
     if (variant.defends && turn.player.raidState.isIncoming) {
       turn.defendBase(const ArmyPlanner());
     }
+    if (variant.defends) turn.defendAttacks(const ArmyPlanner());
     for (final PlanStep step in due) {
       if (turn.isOver) return;
       final bool done = turn.playStep(step, variant);

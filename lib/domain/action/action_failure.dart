@@ -38,6 +38,7 @@ enum ActionFailure {
   attackTooEarly,
   attackAlreadyAnnounced,
   raidSameTurn,
+  attackTooSoon,
 
   // Volcanic kernel.
   noVolcanicKernelHere,

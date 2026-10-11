@@ -2290,6 +2290,12 @@ abstract class AppLocalizations {
   /// **'Retirer'**
   String get volcanoWithdraw;
 
+  /// No description provided for @undefendedPostWarning.
+  ///
+  /// In fr, this message translates to:
+  /// **'{kind, select, faille{Ta Faille} other{Ta Cheminée}} n\'a aucun défenseur au niveau {level}'**
+  String undefendedPostWarning(String kind, int level);
+
   /// No description provided for @volcanoDueWarning.
   ///
   /// In fr, this message translates to:

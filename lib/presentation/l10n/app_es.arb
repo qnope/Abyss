@@ -386,6 +386,7 @@
   "volcanoLevelsLost": "Niveles perdidos ante las oleadas: {count}",
   "volcanoGarrisonUnits": "Poner en guarnición",
   "volcanoWithdraw": "Retirar",
+  "undefendedPostWarning": "{kind, select, faille{Tu Falla} other{Tu Chimenea}} no tiene defensores en el nivel {level}",
   "volcanoDueWarning": "Oleada sobre el Núcleo este turno: {wave}, y sin guarnición. El Núcleo probablemente perderá un nivel.",
   "volcanoStatus": "Núcleo niv. {level}, final del turno: {wave} contra una guarnición de {size}",
   "volcanoRepelled": "Volcán: oleada repelida, {losses}",

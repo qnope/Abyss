@@ -1503,6 +1503,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get volcanoWithdraw => 'Retirar';
 
   @override
+  String undefendedPostWarning(String kind, int level) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'faille': 'Tu Falla',
+      'other': 'Tu Chimenea',
+    });
+    return '$_temp0 no tiene defensores en el nivel $level';
+  }
+
+  @override
   String volcanoDueWarning(String wave) {
     return 'Oleada sobre el Núcleo este turno: $wave, y sin guarnición. El Núcleo probablemente perderá un nivel.';
   }

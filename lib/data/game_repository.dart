@@ -1,5 +1,6 @@
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import '../domain/game/game.dart';
+import '../domain/map/volcano_footprint.dart';
 import '../domain/objective/objective_migration.dart';
 import '../hive_registrar.g.dart';
 
@@ -35,10 +36,11 @@ class GameRepository {
   }
 
   /// Every saved game, those saved before the objectives migrated to
-  /// them.
+  /// them and those saved before the volcano grew to 2x2 completed.
   List<Game> loadAll() {
     final games = _box.values.toList();
     games.forEach(ObjectiveMigration.migrate);
+    games.forEach(VolcanoFootprint.migrate);
     return games;
   }
 

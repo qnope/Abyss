@@ -1,11 +1,13 @@
 import '../../action/fight_monster_action.dart';
 import '../../building/coral_citadel_rampart.dart';
+import '../../fight/combat_side.dart';
 import '../../fight/combatant.dart';
 import '../../fight/combatant_builder.dart';
 import '../../map/cell_content_type.dart';
 import '../../map/grid_position.dart';
 import '../../map/map_cell.dart';
 import '../../map/monster_lair.dart';
+import '../../raid/announced_attack.dart';
 import '../../raid/raid_battle.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
@@ -38,6 +40,30 @@ extension BattleMoves on ScriptTurn {
       boost: defenceBoost,
       share: share,
     );
+  }
+
+  /// Recruits what the base needs to beat the attacks of factions it is
+  /// warned of, with [share] of the stocks at most. Returns whether it
+  /// should hold them all.
+  bool defendAttacks(ArmyPlanner planner, {double share = 1}) {
+    bool holds = true;
+    for (final AnnouncedAttack attack in player.raidState.attacks) {
+      holds =
+          topUp(
+            base: RaidBattle.defendersOf(player),
+            enemy: () => CombatantBuilder.playerCombatantsFrom(
+              attack.units,
+              side: CombatSide.monster,
+            ),
+            allies: _rampart,
+            mixes: defenceMixes,
+            planner: planner,
+            boost: defenceBoost,
+            share: share,
+          ) &&
+          holds;
+    }
+    return holds;
   }
 
   /// Whether the units on the base level and the rampart beat [wave],

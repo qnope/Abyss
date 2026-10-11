@@ -21,16 +21,32 @@ part 'difficulty.g.dart';
 @HiveType(typeId: 49)
 enum Difficulty {
   @HiveField(0)
-  easy(resourcePercent: 110, monsterPercent: 86, factionPercent: 90),
+  easy(
+    resourcePercent: 110,
+    monsterPercent: 86,
+    factionPercent: 90,
+    attackGap: 16,
+  ),
   @HiveField(1)
-  normal(resourcePercent: 100, monsterPercent: 94, factionPercent: 100),
+  normal(
+    resourcePercent: 100,
+    monsterPercent: 94,
+    factionPercent: 100,
+    attackGap: 10,
+  ),
   @HiveField(2)
-  hard(resourcePercent: 95, monsterPercent: 102, factionPercent: 110);
+  hard(
+    resourcePercent: 95,
+    monsterPercent: 102,
+    factionPercent: 110,
+    attackGap: 6,
+  );
 
   const Difficulty({
     required this.resourcePercent,
     required this.monsterPercent,
     required this.factionPercent,
+    required this.attackGap,
   });
 
   /// Production of algae, coral and ore, in percent of the buildings' own.
@@ -48,6 +64,10 @@ enum Difficulty {
   /// human otherwise.
   int monsterPercentFor({required bool faction}) =>
       faction ? monsterPercent * factionMonsterShare ~/ 100 : monsterPercent;
+
+  /// Turns the human is left in peace between two attacks of factions on
+  /// its base: the harder the game, the closer they come.
+  final int attackGap;
 
   /// Same production for a faction, the other way round: the easier the
   /// game, the slower the factions grow.

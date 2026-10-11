@@ -1378,6 +1378,12 @@ abstract class AppLocalizations {
   /// **'Une attaque est déjà annoncée pour ce tour : un raid de monstres frappe alors'**
   String get actionFailureRaidSameTurn;
 
+  /// No description provided for @actionFailureAttackTooSoon.
+  ///
+  /// In fr, this message translates to:
+  /// **'La base a été attaquée trop récemment : les autres attendent'**
+  String get actionFailureAttackTooSoon;
+
   /// No description provided for @actionFailureNoPendingEvent.
   ///
   /// In fr, this message translates to:

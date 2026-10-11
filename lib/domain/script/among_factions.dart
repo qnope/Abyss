@@ -18,7 +18,12 @@ class AmongFactions extends GameScript {
 
   /// [count] factions drawn from the catalogue with [seed].
   factory AmongFactions.drawn(GameScript inner, int count, {int seed = 0}) =>
-      AmongFactions(inner, FactionCatalogue.draw(count, seed: seed));
+      AmongFactions(
+        inner,
+        count == 0
+            ? const <FactionPersonality>[]
+            : FactionCatalogue.draw(count, seed: seed),
+      );
 
   @override
   String get name => '${inner.name}+${factions.length}';

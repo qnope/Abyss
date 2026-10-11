@@ -46,6 +46,7 @@ class TurnResolver {
         random: random,
         difficulty: game.difficulty,
         isFaction: player.id != humanId,
+        factions: game.factions.length,
       );
       final volcanoOutcome = VolcanoResolver.resolve(
         player,
@@ -53,6 +54,7 @@ class TurnResolver {
         random: random,
         difficulty: game.difficulty,
         isFaction: player.id != humanId,
+        factions: game.factions.length,
       );
       final eventOutcome = EventResolver.resolve(
         game,

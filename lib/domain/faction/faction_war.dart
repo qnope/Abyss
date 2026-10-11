@@ -103,9 +103,36 @@ abstract final class FactionWar {
       )) {
         return false;
       }
-      if (_strike(turn, t.player, army)) return true;
+      final Map<UnitType, int> sent = _smallestWinning(army, planner, boost, t);
+      if (_strike(turn, t.player, sent)) return true;
     }
     return false;
+  }
+
+  /// Quarters of [army] sent to war: the fewest that still win, so that a
+  /// faction does not throw its whole army at a weak base.
+  static const int quarters = 4;
+
+  static Map<UnitType, int> _smallestWinning(
+    Map<UnitType, int> army,
+    ArmyPlanner planner,
+    UnitBoost boost,
+    _Target target,
+  ) {
+    Map<UnitType, int> part(int k) => <UnitType, int>{
+      for (final MapEntry<UnitType, int> e in army.entries)
+        e.key: (e.value * k / quarters).ceil(),
+    };
+    for (int k = 1; k < quarters; k++) {
+      if (planner.wins(
+        part(k),
+        () => BaseDefence.fromIntel(target.intel).side,
+        boost: boost,
+      )) {
+        return part(k);
+      }
+    }
+    return army;
   }
 
   /// The units of [level] that [me] sends to war.

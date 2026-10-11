@@ -33,6 +33,7 @@ extension KernelGuardMoves on ScriptTurn {
       level,
       monsterPercent: game.difficulty.monsterPercentFor(
         faction: player.id != game.humanPlayerId,
+        factions: game.factions.length,
       ),
     );
     final Map<UnitType, int> before = _homeCounts();

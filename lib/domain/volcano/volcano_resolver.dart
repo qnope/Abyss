@@ -33,6 +33,7 @@ abstract final class VolcanoResolver {
     Random? random,
     Difficulty difficulty = Difficulty.normal,
     bool isFaction = false,
+    int factions = 0,
   }) {
     final VolcanoState state = player.volcanoState;
     VolcanoReport? report;
@@ -53,7 +54,10 @@ abstract final class VolcanoResolver {
     }
     final MonsterLair wave = VolcanoWaveFactory.fromKernelLevel(
       level,
-      monsterPercent: difficulty.monsterPercentFor(faction: isFaction),
+      monsterPercent: difficulty.monsterPercentFor(
+        faction: isFaction,
+        factions: factions,
+      ),
     );
     state.announce(wave, endedTurn + 1);
     return VolcanoTurnOutcome(report: report, announced: wave);

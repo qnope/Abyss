@@ -50,6 +50,30 @@ void main() {
     });
   });
 
+  group('tapTarget', () {
+    test('a tap on any part targets the anchor', () {
+      final map = _map();
+      final target = VolcanoFootprint.tapTarget(map, {}, 11, 11);
+      expect(target.position, GridPosition(x: 10, y: 10));
+    });
+
+    test('the volcano counts as seen when any of its cells is', () {
+      final map = _map();
+      final seen = {GridPosition(x: 11, y: 11)};
+      expect(VolcanoFootprint.tapTarget(map, seen, 10, 10).isRevealed, isTrue);
+      expect(VolcanoFootprint.tapTarget(map, {}, 10, 10).isRevealed, isFalse);
+    });
+
+    test('another cell targets itself and keeps its own visibility', () {
+      final map = _map();
+      final seen = {GridPosition(x: 3, y: 3)};
+      final target = VolcanoFootprint.tapTarget(map, seen, 3, 3);
+      expect(target.position, GridPosition(x: 3, y: 3));
+      expect(target.isRevealed, isTrue);
+      expect(VolcanoFootprint.tapTarget(map, seen, 4, 4).isRevealed, isFalse);
+    });
+  });
+
   group('completeLegacy', () {
     test('grows a 1x1 kernel saved before the footprint to 2x2', () {
       final map = _map(withParts: false);

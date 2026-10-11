@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/map/cell_content_type.dart';
-import '../../../domain/map/grid_position.dart';
 import '../../../domain/map/map_cell.dart';
+import '../../../domain/map/volcano_footprint.dart';
 import '../../extensions/event_state_extensions.dart';
 import '../../extensions/transition_base_name_extensions.dart';
 import '../../l10n/l10n_extension.dart';
@@ -60,22 +60,30 @@ Widget buildMapTab(
         ),
         pendingTargets: pendingTargets,
         factionBases: level == 1 ? factionBaseColors(game) : const {},
+        ownerColors: kernelOwnerColors(game),
       ),
     ),
   ]);
 }
 
 void _showCellAction(BuildContext context, Game game,
-    GameRepository repository, int x, int y, int level, {
+    GameRepository repository, int tapX, int tapY, int level, {
     required VoidCallback onChanged,
     required ValueChanged<int> onLevelSelected,
 }) {
-  final cell = game.levels[level]!.cellAt(x, y);
   final human = game.humanPlayer;
+  // Any of the four cells of the volcano acts on its anchor.
+  final target = VolcanoFootprint.tapTarget(
+    game.levels[level]!,
+    human.revealedCellsSetOnLevel(level),
+    tapX,
+    tapY,
+  );
+  final x = target.position.x, y = target.position.y;
+  final cell = game.levels[level]!.cellAt(x, y);
   final l10n = context.l10n;
-  if (!human.revealedCellsSetOnLevel(level).contains(
-        GridPosition(x: x, y: y))) {
-    showExplorationFlow(context, game, x, y, level, onChanged);
+  if (!target.isRevealed) {
+    showExplorationFlow(context, game, tapX, tapY, level, onChanged);
     return;
   }
   // A captured kernel is "collected" too, but it keeps its own sheet: that

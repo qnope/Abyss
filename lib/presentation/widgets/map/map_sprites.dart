@@ -56,6 +56,7 @@ class MapSprites {
             family.svgPathAt(difficulty),
         ],
         playerBaseSvgPath,
+        volcanoSealSvgPath,
       };
 
   static Future<MapSprites> _rasterizeAll() async {

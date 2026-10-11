@@ -36,7 +36,7 @@ void main() {
       expect(p.resources[ResourceType.algae]!.maxStorage, 5000);
       expect(p.resources[ResourceType.coral]!.maxStorage, 5000);
       expect(p.resources[ResourceType.ore]!.maxStorage, 5000);
-      expect(p.resources[ResourceType.energy]!.maxStorage, 1000);
+      expect(p.resources[ResourceType.energy]!.maxStorage, 2000);
       expect(p.resources[ResourceType.pearl]!.maxStorage, 100);
     });
 

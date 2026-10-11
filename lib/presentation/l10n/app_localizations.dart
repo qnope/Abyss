@@ -2014,6 +2014,42 @@ abstract class AppLocalizations {
   /// **'Aucune unité. Si une faction attaque, le poste tombe et son module est détruit.'**
   String get mapNoDefenders;
 
+  /// No description provided for @postDefenceThreat.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} : {units, plural, one{{units} combattant} other{{units} combattants}} (rapport du tour {turn})'**
+  String postDefenceThreat(String faction, int units, int turn);
+
+  /// No description provided for @postDefenceIfFalls.
+  ///
+  /// In fr, this message translates to:
+  /// **'{kind, select, faille{Si la Faille tombe} other{Si la Cheminée tombe}}'**
+  String postDefenceIfFalls(String kind);
+
+  /// No description provided for @postDefencePassageLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'{building, select, descentModule{Module de descente détruit} other{Capsule pressurisée détruite}}'**
+  String postDefencePassageLost(String building);
+
+  /// No description provided for @postDefenceUnitsLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} unité du niveau {level} perdue} other{{count} unités du niveau {level} perdues}}'**
+  String postDefenceUnitsLost(int count, int level);
+
+  /// No description provided for @postDefenceReinforcementsLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} renfort en route annulé} other{{count} renforts en route annulés}}'**
+  String postDefenceReinforcementsLost(int count);
+
+  /// No description provided for @postDefenceNoWarning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les factions attaquent les postes sans prévenir.'**
+  String get postDefenceNoWarning;
+
   /// No description provided for @mapSendUnitsToLevel.
   ///
   /// In fr, this message translates to:

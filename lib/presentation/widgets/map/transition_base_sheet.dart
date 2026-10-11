@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/building/building_type.dart';
+import '../../../domain/faction/post_defence.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/transition_base_name_extensions.dart';
@@ -17,6 +18,7 @@ void showTransitionBaseSheet(
   required bool hasBuildingRequirement,
   required BuildingType requiredBuilding,
   required Map<UnitType, int> unitsOnTarget,
+  PostDefence? defence,
   VoidCallback? onAttack,
   VoidCallback? onDescend,
 }) {
@@ -29,6 +31,7 @@ void showTransitionBaseSheet(
             hasBuildingRequirement: hasBuildingRequirement,
             requiredBuilding: requiredBuilding,
             unitsOnTarget: unitsOnTarget,
+            defence: defence,
             onDescend: onDescend,
           )
         : TransitionBaseUncapturedSection(

@@ -7,6 +7,7 @@ import '../building/building.dart';
 import '../building/building_degradation.dart';
 import '../building/building_type.dart';
 import '../event/event_state.dart';
+import '../faction/base_intel.dart';
 import '../history/history_constants.dart';
 import '../history/history_entry.dart';
 import '../map/exploration_order.dart';
@@ -90,6 +91,11 @@ class Player extends HiveObject {
   @HiveField(19)
   bool? savedFallen;
 
+  /// What this player's scouts brought back from the bases of the others,
+  /// by player id; `null` for players saved before the espionage.
+  @HiveField(20)
+  Map<String, BaseIntel>? savedIntel;
+
   Player({
     required this.name,
     String? id,
@@ -150,6 +156,9 @@ class Player extends HiveObject {
         );
 
   bool get hasFallen => savedFallen ?? false;
+
+  /// The reports of this player's scouts, by player id.
+  Map<String, BaseIntel> get intel => savedIntel ??= <String, BaseIntel>{};
 
   /// Whether the headquarters no longer meets what [type] needs.
   bool isDegraded(BuildingType type) =>

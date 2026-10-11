@@ -737,6 +737,18 @@
   "buildingDegradedUnusable": "Unusable: no descent, no garrison, no victory",
   "factionBaseHeadquarters": "Headquarters",
   "factionBaseAttack": "Attack",
+  "factionSpy": "Spy",
+  "factionIntelTitle": "Scout report",
+  "factionIntelNone": "No report on this base. A Scout can bring one back.",
+  "factionIntelFresh": "{turns, plural, one{Fresh for {turns} more turn} other{Fresh for {turns} more turns}}",
+  "@factionIntelFresh": {
+    "placeholders": { "turns": { "type": "int" } }
+  },
+  "factionIntelStale": "Stale report: the base may have changed",
+  "factionIntelRampart": "Rampart",
+  "factionIntelArmy": "Army",
+  "factionIntelNoArmy": "No defenders",
+  "factionIntelStocks": "Stocks",
   "assaultYouAttacked": "You attacked {name}",
   "@assaultYouAttacked": {
     "placeholders": { "name": { "type": "String" } }

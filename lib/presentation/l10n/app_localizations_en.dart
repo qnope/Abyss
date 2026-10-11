@@ -2948,6 +2948,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get factionBaseAttack => 'Attack';
 
   @override
+  String get factionSpy => 'Spy';
+
+  @override
+  String get factionIntelTitle => 'Scout report';
+
+  @override
+  String get factionIntelNone =>
+      'No report on this base. A Scout can bring one back.';
+
+  @override
+  String factionIntelFresh(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: 'Fresh for $turns more turns',
+      one: 'Fresh for $turns more turn',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get factionIntelStale => 'Stale report: the base may have changed';
+
+  @override
+  String get factionIntelRampart => 'Rampart';
+
+  @override
+  String get factionIntelArmy => 'Army';
+
+  @override
+  String get factionIntelNoArmy => 'No defenders';
+
+  @override
+  String get factionIntelStocks => 'Stocks';
+
+  @override
   String assaultYouAttacked(String name) {
     return 'You attacked $name';
   }

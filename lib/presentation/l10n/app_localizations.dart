@@ -4342,6 +4342,60 @@ abstract class AppLocalizations {
   /// **'Attaquer'**
   String get factionBaseAttack;
 
+  /// No description provided for @factionSpy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Espionner'**
+  String get factionSpy;
+
+  /// No description provided for @factionIntelTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rapport d\'éclaireur'**
+  String get factionIntelTitle;
+
+  /// No description provided for @factionIntelNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun rapport sur cette base. Un éclaireur peut en rapporter un.'**
+  String get factionIntelNone;
+
+  /// No description provided for @factionIntelFresh.
+  ///
+  /// In fr, this message translates to:
+  /// **'{turns, plural, one{Valable encore {turns} tour} other{Valable encore {turns} tours}}'**
+  String factionIntelFresh(int turns);
+
+  /// No description provided for @factionIntelStale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rapport périmé : la base a pu changer'**
+  String get factionIntelStale;
+
+  /// No description provided for @factionIntelRampart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rempart'**
+  String get factionIntelRampart;
+
+  /// No description provided for @factionIntelArmy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Armée'**
+  String get factionIntelArmy;
+
+  /// No description provided for @factionIntelNoArmy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun défenseur'**
+  String get factionIntelNoArmy;
+
+  /// No description provided for @factionIntelStocks.
+  ///
+  /// In fr, this message translates to:
+  /// **'Stocks'**
+  String get factionIntelStocks;
+
   /// No description provided for @assaultYouAttacked.
   ///
   /// In fr, this message translates to:

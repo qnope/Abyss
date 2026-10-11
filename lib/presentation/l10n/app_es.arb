@@ -736,6 +736,18 @@
   "buildingDegradedUnusable": "Inutilizable: ni descenso, ni guarnición, ni victoria",
   "factionBaseHeadquarters": "Cuartel general",
   "factionBaseAttack": "Atacar",
+  "factionSpy": "Espiar",
+  "factionIntelTitle": "Informe del explorador",
+  "factionIntelNone": "Sin informe de esta base. Un explorador puede traer uno.",
+  "factionIntelFresh": "{turns, plural, one{Vigente {turns} turno más} other{Vigente {turns} turnos más}}",
+  "@factionIntelFresh": {
+    "placeholders": { "turns": { "type": "int" } }
+  },
+  "factionIntelStale": "Informe caducado: la base pudo cambiar",
+  "factionIntelRampart": "Muralla",
+  "factionIntelArmy": "Ejército",
+  "factionIntelNoArmy": "Sin defensores",
+  "factionIntelStocks": "Reservas",
   "assaultYouAttacked": "Has atacado a {name}",
   "@assaultYouAttacked": {
     "placeholders": { "name": { "type": "String" } }

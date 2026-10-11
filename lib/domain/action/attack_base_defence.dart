@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../building/coral_citadel_rampart.dart';
+import '../faction/base_intel.dart';
 import '../fight/casualty_calculator.dart';
 import '../fight/casualty_split.dart';
 import '../fight/combat_side.dart';
@@ -69,6 +70,22 @@ class BaseDefence {
       ),
       level,
     );
+  }
+
+  /// The defence of a base as a scout reported it: the army and the
+  /// rampart [intel] saw, without the boosts nobody could see. What the
+  /// base really fields can differ once the report is old.
+  factory BaseDefence.fromIntel(BaseIntel intel) {
+    final Combatant? rampart = CoralCitadelRampart.combatantFor(
+      intel.rampartLevel,
+    );
+    return BaseDefence._(intel.army, <Combatant>[
+      ...CombatantBuilder.playerCombatantsFrom(
+        intel.army,
+        side: CombatSide.monster,
+      ),
+      if (rampart != null) _onDefendersSide(rampart),
+    ], RaidBattle.baseLevel);
   }
 
   /// The defence of a volcanic kernel: the garrison, backed by the magma

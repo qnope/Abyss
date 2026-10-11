@@ -33,6 +33,23 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una guía te acompaña en los primeros turnos';
 
   @override
+  String get newGameFactions => 'Facciones rivales';
+
+  @override
+  String get newGameFactionsNone => 'Ninguna: juegas solo contra los monstruos';
+
+  @override
+  String newGameFactionsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count facciones corren contigo hacia el Volcán',
+      one: '$count facción corre contigo hacia el Volcán',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get newGameStart => 'Empezar';
 
   @override

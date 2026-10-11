@@ -64,6 +64,41 @@ void main() {
     bool tutorialSwitch(WidgetTester tester) =>
         tester.widget<Switch>(find.byType(Switch)).value;
 
+    testWidgets('starts against three factions unless told otherwise', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createApp());
+
+      expect(find.text('Factions rivales'), findsOneWidget);
+      expect((await start(tester)).factions, hasLength(3));
+    });
+
+    testWidgets('starts against the number of factions picked', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createApp());
+
+      for (var i = 0; i < 2; i++) {
+        await tester.tap(find.byIcon(Icons.add));
+        await tester.pump();
+      }
+
+      expect((await start(tester)).factions, hasLength(5));
+    });
+
+    testWidgets('starts alone when no faction is picked', (tester) async {
+      await tester.pumpWidget(createApp());
+
+      for (var i = 0; i < 3; i++) {
+        await tester.tap(find.byIcon(Icons.remove));
+        await tester.pump();
+      }
+
+      final game = await start(tester);
+      expect(game.factions, isEmpty);
+      expect(game.players, hasLength(1));
+    });
+
     testWidgets('offers the tutorial, checked for a first game', (
       tester,
     ) async {

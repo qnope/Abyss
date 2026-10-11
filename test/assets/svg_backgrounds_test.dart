@@ -29,6 +29,7 @@ const _frames = {
   'map_content/': SvgFrame.transparent,
   'events/': SvgFrame.transparent,
   'guide/': SvgFrame.medallion,
+  'factions/': SvgFrame.medallion,
   'terrain/plain.svg': SvgFrame.tile,
   'terrain/volcanic_kernel.svg': SvgFrame.transparent,
 };

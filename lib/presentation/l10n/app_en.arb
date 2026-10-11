@@ -8,6 +8,12 @@
   "newGameNameTooShort": "The name must be at least {min} characters long",
   "newGameTutorial": "Tutorial",
   "newGameTutorialHint": "A guide walks you through the first turns",
+  "newGameFactions": "Rival factions",
+  "newGameFactionsNone": "None: you play alone against the monsters",
+  "newGameFactionsCount": "{count, plural, one{{count} faction races you to the volcano} other{{count} factions race you to the volcano}}",
+  "@newGameFactionsCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "newGameStart": "Start",
   "difficultyTitle": "Difficulty",
 

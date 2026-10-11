@@ -6,6 +6,7 @@ import '../../../domain/game/game_factory.dart';
 import '../../../domain/objective/tutorial_offer.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../widgets/common/difficulty_picker.dart';
+import '../../widgets/common/faction_count_picker.dart';
 import '../../widgets/common/labeled_switch.dart';
 import '../game/game_screen.dart';
 
@@ -20,10 +21,12 @@ class NewGameScreen extends StatefulWidget {
 
 class _NewGameScreenState extends State<NewGameScreen> {
   static const _minNameLength = 2;
+  static const _defaultFactions = 3;
 
   final _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   Difficulty _difficulty = Difficulty.normal;
+  int _factions = _defaultFactions;
   late bool _tutorial = TutorialOffer.checkedByDefault(
     widget.repository.loadAll(),
   );
@@ -68,6 +71,11 @@ class _NewGameScreenState extends State<NewGameScreen> {
                   onChanged: (d) => setState(() => _difficulty = d),
                 ),
                 const SizedBox(height: 16),
+                FactionCountPicker(
+                  count: _factions,
+                  onChanged: (n) => setState(() => _factions = n),
+                ),
+                const SizedBox(height: 16),
                 LabeledSwitch(
                   title: l10n.newGameTutorial,
                   subtitle: l10n.newGameTutorialHint,
@@ -104,10 +112,11 @@ class _NewGameScreenState extends State<NewGameScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final name = _controller.text.trim();
-    final game = GameFactory.newSinglePlayer(
+    final game = GameFactory.newGame(
       playerName: name,
       difficulty: _difficulty,
       tutorial: _tutorial,
+      factionCount: _factions,
     );
     CheatCodes.apply(game.humanPlayer);
     await widget.repository.save(game);

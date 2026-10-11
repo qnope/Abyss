@@ -3,19 +3,24 @@ import 'package:abyss/domain/map/map_generator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('every level 3 map keeps its kernel, even with the base on the centre',
+  test('level 3 keeps its kernel and the base stays out of its footprint',
       () {
-    var baseOnCentre = 0;
+    var nudged = 0;
     for (var seed = 0; seed < 300; seed++) {
       final result = MapGenerator.generate(seed: seed, level: 3);
-      if (result.baseX == 10 && result.baseY == 10) baseOnCentre++;
       expect(
         result.map.cellAt(10, 10).content,
         CellContentType.volcanicKernel,
         reason: 'seed=$seed',
       );
+      final onFootprint = result.baseX >= 10 &&
+          result.baseX <= 11 &&
+          result.baseY >= 10 &&
+          result.baseY <= 11;
+      expect(onFootprint, isFalse, reason: 'seed=$seed');
+      if (result.baseX == 9 || result.baseY == 9) nudged++;
     }
-    expect(baseOnCentre, greaterThan(0));
+    expect(nudged, greaterThan(0));
   });
 
   test('level 3 maps carry the 2x2 footprint, other levels none', () {

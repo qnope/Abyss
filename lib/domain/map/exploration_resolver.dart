@@ -3,6 +3,7 @@ import '../tech/tech_effects.dart';
 import 'cell_content_type.dart';
 import 'exploration_result.dart';
 import 'reveal_area_calculator.dart';
+import 'volcano_footprint.dart';
 
 class ExplorationResolver {
   static List<ExplorationResult> resolve(Game game) {
@@ -36,6 +37,8 @@ class ExplorationResolver {
             }
           }
         }
+
+        VolcanoFootprint.revealWhole(map, player, order.level);
 
         results.add(ExplorationResult(
           target: order.target,

@@ -14,9 +14,15 @@ class Resource extends HiveObject {
   @HiveField(3)
   final int maxStorage;
 
+  /// Energy storage: the dearest research (1048 with three branches
+  /// open) must fit. Saves made with the old 1000 cap are lifted on load.
+  static const int minEnergyStorage = 2000;
+
   Resource({
     required this.type,
     required this.amount,
-    this.maxStorage = 500,
-  });
+    int maxStorage = 500,
+  }) : maxStorage = type == ResourceType.energy && maxStorage < minEnergyStorage
+           ? minEnergyStorage
+           : maxStorage;
 }

@@ -30,7 +30,7 @@ class PlayerDefaults {
       ResourceType.energy: Resource(
         type: ResourceType.energy,
         amount: 100,
-        maxStorage: 1000,
+        maxStorage: Resource.minEnergyStorage,
       ),
       ResourceType.pearl: Resource(
         type: ResourceType.pearl,

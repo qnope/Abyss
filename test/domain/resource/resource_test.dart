@@ -24,6 +24,17 @@ void main() {
       expect(r.maxStorage, 1000);
     });
 
+    test('energy storage never drops below the research cost ceiling', () {
+      // A save made when the cap was 1000 must still pay 1048 energy.
+      final r = Resource(
+        type: ResourceType.energy,
+        amount: 0,
+        maxStorage: 1000,
+      );
+      expect(r.maxStorage, Resource.minEnergyStorage);
+      expect(Resource.minEnergyStorage, 2000);
+    });
+
     test('amount is mutable', () {
       final r = Resource(type: ResourceType.ore, amount: 10);
       r.amount = 20;

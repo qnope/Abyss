@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:abyss/domain/action/end_turn_action.dart';
 import 'package:abyss/domain/action/end_turn_action_result.dart';
+import 'package:abyss/domain/faction/faction_attack_report.dart';
 import 'package:abyss/domain/turn/turn_result.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/fight/base_assault_summary_screen.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/announce_attack_helper.dart';
 import '../../../helpers/base_attack_helper.dart';
+import '../../../helpers/history_entry_samples.dart';
 import '../../../helpers/localized_app.dart';
 import '../../../helpers/test_svg_helper.dart';
 
@@ -82,6 +84,26 @@ void main() {
     await t.pumpWidget(_app(_fought(defenders: wall)));
     await _open(t);
     expect(find.text('rival a attaqué : attaque repoussée'), findsOneWidget);
+  });
+
+  testWidgets('a won attack that pillages nothing damages the base', (t) async {
+    final result = TurnResult(
+      changes: const [],
+      previousTurn: 14,
+      newTurn: 15,
+      hadRecruitedUnits: false,
+      attacks: [
+        FactionAttackReport(
+          attackerId: 'nacre',
+          attackerName: 'Nacre',
+          personality: null,
+          entry: baseAssaultEntry(victory: true, defending: true),
+        ),
+      ],
+    );
+    await t.pumpWidget(_app(result));
+    await _open(t);
+    expect(find.text('Nacre a attaqué : base endommagée'), findsOneWidget);
   });
 
   testWidgets('the button opens the report of the fight', (t) async {

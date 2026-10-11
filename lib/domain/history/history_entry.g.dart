@@ -670,13 +670,15 @@ class BaseAssaultEntryAdapter extends TypeAdapter<BaseAssaultEntry> {
       pillaged: (fields[14] as Map).cast<ResourceType, int>(),
       loot: (fields[15] as Map).cast<ResourceType, int>(),
       postName: fields[16] as String?,
+      lostWithPost:
+          fields[17] == null ? {} : (fields[17] as Map).cast<UnitType, int>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, BaseAssaultEntry obj) {
     writer
-      ..writeByte(16)
+      ..writeByte(17)
       ..writeByte(0)
       ..write(obj.turn)
       ..writeByte(2)
@@ -708,7 +710,9 @@ class BaseAssaultEntryAdapter extends TypeAdapter<BaseAssaultEntry> {
       ..writeByte(15)
       ..write(obj.loot)
       ..writeByte(16)
-      ..write(obj.postName);
+      ..write(obj.postName)
+      ..writeByte(17)
+      ..write(obj.lostWithPost);
   }
 
   @override

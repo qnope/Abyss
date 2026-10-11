@@ -12,6 +12,7 @@ import 'action_result.dart';
 import 'action_type.dart';
 import 'announced_attack_resolver.dart';
 import 'end_turn_action_result.dart';
+import 'held_attack_reports.dart';
 
 /// Wraps [TurnResolver] so that ending a turn flows through the uniform
 /// [Action] + [ActionExecutor] pipeline, which then auto-appends the
@@ -19,6 +20,8 @@ import 'end_turn_action_result.dart';
 ///
 /// The attacks of factions announced for this turn are fought first,
 /// after the factions played, with or without the brains (a replay).
+/// They are reported after the attacks the factions made, without
+/// warning, on the posts and the kernel of the human ([HeldAttackReports]).
 class EndTurnAction extends Action {
   /// Drives the raid fights; `null` keeps them unseeded.
   final Random? random;
@@ -43,6 +46,7 @@ class EndTurnAction extends Action {
   ActionResult execute(Game game, Player player) {
     if (playFactions) FactionTurns.playAll(game);
     final attacks = <FactionAttackReport>[
+      ...HeldAttackReports.of(game),
       for (final fought in AnnouncedAttackResolver.fight(game)) fought.report,
     ];
     final result = TurnResolver().resolve(

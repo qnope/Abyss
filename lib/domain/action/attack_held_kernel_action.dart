@@ -1,13 +1,11 @@
 import 'dart:math';
 
-import '../building/building_type.dart';
 import '../fight/combatant_builder.dart';
 import '../fight/fight_engine.dart';
 import '../fight/fight_result.dart';
 import '../game/game.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
-import '../map/map_cell.dart';
 import '../raid/noise_rules.dart';
 import '../tech/tech_effects.dart';
 import '../unit/unit_type.dart';
@@ -24,6 +22,7 @@ import 'attack_transition_base_helpers.dart';
 import 'base_damage.dart';
 import 'fight_casualty_breakdown.dart';
 import 'fight_monster_helpers.dart';
+import 'kernel_takeover.dart';
 
 /// Sends [selectedUnits] of the volcano level against the volcanic kernel
 /// that another player holds, defended by its garrison and the magma
@@ -76,8 +75,8 @@ class AttackHeldKernelAction extends Action {
     final ActionResult validation = validate(game, player);
     if (!validation.isSuccess) return validation;
     final map = game.levels[KernelGarrison.volcanoLevel]!;
-    final MapCell cell = map.cellAt(targetX, targetY);
-    final Player owner = game.players[cell.collectedBy]!;
+    final Player owner =
+        game.players[map.cellAt(targetX, targetY).collectedBy]!;
     _ownerName = owner.name;
 
     final BaseDefence defence = BaseDefence.kernel(owner);
@@ -103,13 +102,17 @@ class AttackHeldKernelAction extends Action {
     final DefenceOutcome outcome = defence.settle(owner, random: random);
     final int before = KernelGarrison.kernelLevelOf(owner);
     final int after = fight.isVictory ? max(0, before - 1) : before;
-    if (fight.isVictory) {
-      owner.buildings[BuildingType.volcanicKernel]!.level = after;
-      if (after == 0) {
-        _loseGarrison(owner);
-        map.setCell(targetX, targetY, cell.copyWith(collectedBy: player.id));
-      }
-    }
+    final Map<UnitType, int> lost =
+        fight.isVictory
+            ? KernelTakeover.apply(
+              map: map,
+              x: targetX,
+              y: targetY,
+              attacker: player,
+              owner: owner,
+              after: after,
+            )
+            : const <UnitType, int>{};
 
     final AttackBaseResult result = AttackBaseResult.success(
       victory: fight.isVictory,
@@ -128,16 +131,10 @@ class AttackHeldKernelAction extends Action {
         player.name,
         result,
         postName: kernelCode,
+        lostWithPost: lost,
       ),
     );
     return result;
-  }
-
-  /// The garrison of the old owner is lost with the kernel.
-  static void _loseGarrison(Player owner) {
-    for (final unit in KernelGarrison.stockOf(owner).values) {
-      unit.count = 0;
-    }
   }
 
   @override

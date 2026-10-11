@@ -22,7 +22,8 @@ import 'faction_war.dart';
 /// It only looks at the posts its own fog has shown. A post is defended by
 /// the units its owner has below it, so it attacks with the fighters of the
 /// level the post stands on. The human is not warned: the attack is
-/// resolved at once and reported in the history.
+/// resolved at once, kept in the history and reported at the end of the
+/// turn.
 abstract final class FactionPostWar {
   /// Levels with a post: the Failles on the first, the Cheminées on the
   /// second.

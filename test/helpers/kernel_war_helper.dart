@@ -14,14 +14,19 @@ import 'package:abyss/domain/volcano/kernel_garrison.dart';
 
 /// A game against two factions at turn 12, tutorial over, where `owner`
 /// holds the volcanic kernel at [kernelLevel] and `attacker` stands ready
-/// on the volcano level.
+/// on the volcano level. With [humanHolds], the human is the owner.
 class KernelWar {
   final Game game;
   final GridPosition at;
+  final bool humanHolds;
 
-  KernelWar._(this.game, this.at);
+  KernelWar._(this.game, this.at, this.humanHolds);
 
-  factory KernelWar({int kernelLevel = 3, int mapSeed = 7}) {
+  factory KernelWar({
+    int kernelLevel = 3,
+    int mapSeed = 7,
+    bool humanHolds = false,
+  }) {
     final Game game = GameFactory.newGame(
       playerName: 'Nemo',
       mapSeed: mapSeed,
@@ -31,7 +36,7 @@ class KernelWar {
     for (var y = 0; y < map.height; y++) {
       for (var x = 0; x < map.width; x++) {
         if (map.cellAt(x, y).content == CellContentType.volcanicKernel) {
-          final war = KernelWar._(game, GridPosition(x: x, y: y));
+          final war = KernelWar._(game, GridPosition(x: x, y: y), humanHolds);
           return war.._setUp(kernelLevel);
         }
       }
@@ -40,7 +45,8 @@ class KernelWar {
   }
 
   Player get attacker => game.players[game.factions[0].id]!;
-  Player get owner => game.players[game.factions[1].id]!;
+  Player get owner =>
+      humanHolds ? game.humanPlayer : game.players[game.factions[1].id]!;
   Player get human => game.humanPlayer;
 
   GameMap get _map => game.levels[KernelGarrison.volcanoLevel]!;

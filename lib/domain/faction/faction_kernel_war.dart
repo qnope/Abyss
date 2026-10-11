@@ -19,7 +19,7 @@ import 'faction_war.dart';
 /// ([FactionWar.planner]). It only looks at a kernel its own fog has shown.
 ///
 /// The kernel of the human is not announced: the attack is resolved at
-/// once and reported in the history.
+/// once, kept in the history and reported at the end of the turn.
 abstract final class FactionKernelWar {
   /// Attacks the held kernel it has seen; returns whether it attacked.
   static bool play(

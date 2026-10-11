@@ -67,6 +67,12 @@ class BaseAssaultEntry extends HistoryEntry {
   @HiveField(16)
   final String? postName;
 
+  /// Units the defender lost with the post or the kernel taken: those of
+  /// the level below the post, or the kernel's garrison. Empty otherwise,
+  /// and in older saves.
+  @HiveField(17, defaultValue: <UnitType, int>{})
+  final Map<UnitType, int> lostWithPost;
+
   BaseAssaultEntry({
     required this.turn,
     required this.victory,
@@ -84,5 +90,6 @@ class BaseAssaultEntry extends HistoryEntry {
     required this.pillaged,
     required this.loot,
     this.postName,
+    this.lostWithPost = const {},
   }) : category = HistoryEntryCategory.assault;
 }

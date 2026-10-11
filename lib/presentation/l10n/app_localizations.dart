@@ -4546,6 +4546,60 @@ abstract class AppLocalizations {
   /// **'Voir le rapport'**
   String get factionAttackReport;
 
+  /// No description provided for @factionPostTaken.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} a pris ta {post}'**
+  String factionPostTaken(String faction, String post);
+
+  /// No description provided for @factionPostRepelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} a attaqué ta {post} : attaque repoussée'**
+  String factionPostRepelled(String faction, String post);
+
+  /// No description provided for @factionPostDescentModuleLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Module de descente détruit'**
+  String get factionPostDescentModuleLost;
+
+  /// No description provided for @factionPostPressureCapsuleLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Capsule pressurisée détruite'**
+  String get factionPostPressureCapsuleLost;
+
+  /// No description provided for @factionPostUnitsLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} unité du niveau {level} perdue} other{{count} unités du niveau {level} perdues}}'**
+  String factionPostUnitsLost(int count, int level);
+
+  /// No description provided for @factionKernelDamaged.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} a attaqué le Noyau : un niveau perdu'**
+  String factionKernelDamaged(String faction);
+
+  /// No description provided for @factionKernelRepelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} a attaqué le Noyau : attaque repoussée'**
+  String factionKernelRepelled(String faction);
+
+  /// No description provided for @factionKernelTaken.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faction} a pris le Noyau'**
+  String factionKernelTaken(String faction);
+
+  /// No description provided for @factionKernelGarrisonLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} unité de la garnison perdue} other{{count} unités de la garnison perdues}}'**
+  String factionKernelGarrisonLost(int count);
+
   /// No description provided for @tipFactionAttackTitle.
   ///
   /// In fr, this message translates to:

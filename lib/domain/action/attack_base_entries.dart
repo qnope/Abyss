@@ -1,4 +1,5 @@
 import '../history/history_entry.dart';
+import '../unit/unit_type.dart';
 import 'attack_base_result.dart';
 
 /// The two history entries of an attack on a base, or on a post when
@@ -12,13 +13,22 @@ abstract final class AttackBaseEntries {
     String? postName,
   }) => _entry(turn, defenderName, r, defending: false, postName: postName);
 
-  /// The entry of the defender, who fielded the base's units.
+  /// The entry of the defender, who fielded the base's units and lost
+  /// [lostWithPost] with the post or the kernel taken.
   static BaseAssaultEntry forDefender(
     int turn,
     String attackerName,
     AttackBaseResult r, {
     String? postName,
-  }) => _entry(turn, attackerName, r, defending: true, postName: postName);
+    Map<UnitType, int> lostWithPost = const {},
+  }) => _entry(
+    turn,
+    attackerName,
+    r,
+    defending: true,
+    postName: postName,
+    lostWithPost: lostWithPost,
+  );
 
   static BaseAssaultEntry _entry(
     int turn,
@@ -26,6 +36,7 @@ abstract final class AttackBaseEntries {
     AttackBaseResult r, {
     required bool defending,
     String? postName,
+    Map<UnitType, int> lostWithPost = const {},
   }) => BaseAssaultEntry(
     turn: turn,
     victory: r.victory,
@@ -43,5 +54,6 @@ abstract final class AttackBaseEntries {
     pillaged: r.damage.pillaged,
     loot: r.damage.loot,
     postName: postName,
+    lostWithPost: lostWithPost,
   );
 }

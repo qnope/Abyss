@@ -3,6 +3,7 @@ import '../game/game.dart';
 import '../game/game_statistics.dart';
 import '../game/game_statistics_calculator.dart';
 import '../game/game_status.dart';
+import '../game/victory_checker.dart';
 import '../resource/resource_type.dart';
 import '../unit/unit_type.dart';
 import 'script_log_entry.dart';
@@ -27,6 +28,9 @@ class ScriptRunReport {
   final List<ScriptLogEntry> log;
   final ScriptMilestones milestones;
 
+  /// Whether a faction tamed the volcano first.
+  final bool factionWon;
+
   const ScriptRunReport({
     required this.scriptName,
     required this.seed,
@@ -39,6 +43,7 @@ class ScriptRunReport {
     required this.resources,
     required this.log,
     required this.milestones,
+    this.factionWon = false,
   });
 
   factory ScriptRunReport.of(
@@ -54,7 +59,10 @@ class ScriptRunReport {
       scriptName: scriptName,
       seed: seed,
       status: game.status,
-      statistics: const GameStatisticsCalculator().compute(game, player: player),
+      statistics: const GameStatisticsCalculator().compute(
+        game,
+        player: player,
+      ),
       turnsPlayed:
           game.status == GameStatus.victory ? game.turn : game.turn - 1,
       totalNoise: player.raidState.totalNoise,
@@ -63,6 +71,9 @@ class ScriptRunReport {
       resources: player.resources.map((t, r) => MapEntry(t, r.amount)),
       log: List<ScriptLogEntry>.unmodifiable(log),
       milestones: milestones ?? ScriptMilestones(),
+      factionWon:
+          VictoryChecker.winnerOf(game)?.id != null &&
+          VictoryChecker.winnerOf(game)!.id != game.humanPlayerId,
     );
   }
 
@@ -73,20 +84,21 @@ class ScriptRunReport {
   int get failedActions => log.where((e) => !e.success).length;
 
   Map<String, Object?> toJson() => <String, Object?>{
-        'script': scriptName,
-        'seed': seed,
-        'status': status.name,
-        'turnsPlayed': turnsPlayed,
-        'raidsRepelled': raidsRepelled,
-        'raidsLost': raidsLost,
-        'monstersDefeated': statistics.monstersDefeated,
-        'totalNoise': totalNoise,
-        'failedActions': failedActions,
-        'buildings': _byName(buildings),
-        'baseUnits': _byName(baseUnits),
-        'resources': _byName(resources),
-        ...milestones.toJson(),
-      };
+    'script': scriptName,
+    'seed': seed,
+    'status': status.name,
+    'factionWon': factionWon,
+    'turnsPlayed': turnsPlayed,
+    'raidsRepelled': raidsRepelled,
+    'raidsLost': raidsLost,
+    'monstersDefeated': statistics.monstersDefeated,
+    'totalNoise': totalNoise,
+    'failedActions': failedActions,
+    'buildings': _byName(buildings),
+    'baseUnits': _byName(baseUnits),
+    'resources': _byName(resources),
+    ...milestones.toJson(),
+  };
 
   static Map<String, int> _byName<T extends Enum>(Map<T, int> values) =>
       values.map((T k, int v) => MapEntry(k.name, v));

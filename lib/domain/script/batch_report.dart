@@ -5,11 +5,14 @@ class BatchReport {
   final List<ScriptRunReport> runs;
 
   BatchReport(List<ScriptRunReport> runs)
-      : runs = List<ScriptRunReport>.unmodifiable(runs);
+    : runs = List<ScriptRunReport>.unmodifiable(runs);
 
   int get games => runs.length;
   int get defeats => runs.where((r) => r.isDefeat).length;
   int get victories => runs.where((r) => r.isVictory).length;
+
+  /// Games a faction won.
+  int get factionVictories => runs.where((r) => r.factionWon).length;
 
   /// Share of games that did not end in defeat, from 0 to 1.
   double get survivalRate => games == 0 ? 0 : (games - defeats) / games;
@@ -48,14 +51,15 @@ class BatchReport {
       games == 0 ? 0 : runs.map(of).fold<num>(0, (a, b) => a + b) / games;
 
   Map<String, Object?> toJson() => <String, Object?>{
-        'games': games,
-        'defeats': defeats,
-        'victories': victories,
-        'survivalRate': survivalRate,
-        'averageTurns': averageTurns,
-        'averageRaidsLost': averageRaidsLost,
-        'averageRaidsRepelled': averageRaidsRepelled,
-        'averageNoise': averageNoise,
-        'earliestDefeat': earliestDefeat,
-      };
+    'games': games,
+    'defeats': defeats,
+    'victories': victories,
+    'factionVictories': factionVictories,
+    'survivalRate': survivalRate,
+    'averageTurns': averageTurns,
+    'averageRaidsLost': averageRaidsLost,
+    'averageRaidsRepelled': averageRaidsRepelled,
+    'averageNoise': averageNoise,
+    'earliestDefeat': earliestDefeat,
+  };
 }

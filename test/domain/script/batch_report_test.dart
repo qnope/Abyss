@@ -95,6 +95,7 @@ void main() {
         'games': 4,
         'defeats': 2,
         'victories': 1,
+        'factionVictories': 0,
         'survivalRate': 0.5,
         'averageTurns': 20.0,
         'averageRaidsLost': 0.75,

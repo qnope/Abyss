@@ -30,9 +30,12 @@ coverage report.
 
 ### App icon
 
-The platform folders (`web/`, `android/`, `ios/`) are not versioned: each
-build job runs `flutter create`, then `.github/scripts/generate_app_icons.sh`
-replaces the default Flutter icon with the Abyss one. The sources live in
+The `ios/` folder is versioned, with the Abyss icon and the three languages
+already in place (bundle id `com.qnope.abyss`; to run on a device, pick your
+own Team under Signing & Capabilities in Xcode). The other platform folders
+(`web/`, `android/`) are not versioned: each build job runs `flutter create`,
+then `.github/scripts/generate_app_icons.sh` replaces the default Flutter icon
+with the Abyss one. The sources live in
 `assets/app_icon/` (SVG, with the rendered PNGs next to them, regenerated
 with `node tool/app_icon_png.js`), and `flutter_launcher_icons.yaml` maps
 them to each platform. Run the script

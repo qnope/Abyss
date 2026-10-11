@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../../domain/turn/turn_result.dart';
-import '../../extensions/resource_type_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
-import '../resource/resource_icon.dart';
 import '../raid/raid_turn_section.dart';
 import '../volcano/volcano_turn_section.dart';
 import 'attack_turn_section.dart';
 import 'event_turn_section.dart';
 import 'exploration_summary_section.dart';
 import 'objective_turn_section.dart';
+import 'resource_change_line.dart';
 import 'summary_line.dart';
 import 'turn_loss_sections.dart';
 
@@ -67,7 +66,47 @@ class _TurnSummaryDialog extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         for (final change in result.changes)
-          _buildResourceLine(l10n, change),
+          ResourceChangeLine(change: change),
+        Flexible(
+          child: Scrollbar(
+            child: SingleChildScrollView(
+              child: _buildEvents(
+                l10n,
+                hasChanges: hasChanges,
+                hasWarnings: hasWarnings,
+                hasLosses: hasLosses,
+                hasExplorations: hasExplorations,
+                showArmy: showArmy,
+                hasRaid: hasRaid,
+                hasVolcano: hasVolcano,
+                hasEvent: hasEvent,
+                hasObjectives: hasObjectives,
+                hasAttacks: hasAttacks,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEvents(
+    AppLocalizations l10n, {
+    required bool hasChanges,
+    required bool hasWarnings,
+    required bool hasLosses,
+    required bool hasExplorations,
+    required bool showArmy,
+    required bool hasRaid,
+    required bool hasVolcano,
+    required bool hasEvent,
+    required bool hasObjectives,
+    required bool hasAttacks,
+  }) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         if (hasWarnings)
           DeactivatedBuildingsSection(buildings: result.deactivatedBuildings),
         if (hasLosses) LostUnitsSection(units: result.lostUnits),
@@ -85,41 +124,6 @@ class _TurnSummaryDialog extends StatelessWidget {
         ],
       ],
     );
-  }
-
-  Widget _buildResourceLine(
-    AppLocalizations l10n,
-    TurnResourceChange change,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          ResourceIcon(type: change.type),
-          const SizedBox(width: 8),
-          Text(change.type.displayName(l10n)),
-          const Spacer(),
-          Text(
-            _formatChange(change),
-            style: TextStyle(color: change.type.color),
-          ),
-          if (change.wasCapped) ...[
-            const SizedBox(width: 4),
-            Text(
-              l10n.turnStorageFull,
-              style: TextStyle(color: AbyssColors.warning),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  String _formatChange(TurnResourceChange change) {
-    if (change.consumed > 0) {
-      return '+${change.produced}/-${change.consumed}';
-    }
-    return '+${change.produced}';
   }
 
   Widget _buildArmySection(AppLocalizations l10n) => SummaryLine(

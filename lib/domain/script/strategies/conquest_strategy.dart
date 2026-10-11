@@ -49,6 +49,10 @@ class ConquestStrategy extends GameScript {
   /// Whether the home army clears the lairs it surely beats.
   final bool huntsLairs;
 
+  /// Whether it also clears lairs while a raid is announced, once the
+  /// base is defended: a faction is nearly always under a raid.
+  final bool huntsUnderRaid;
+
   /// Whether it recruits to hold the announced raids; without it, only
   /// the expedition force waiting at home defends the base.
   final bool defends;
@@ -79,6 +83,7 @@ class ConquestStrategy extends GameScript {
     this.guardsKernel = true,
     this.contests = true,
     this.chasesWrecks = false,
+    this.huntsUnderRaid = false,
     this.growth = growthOrder,
     this.explorers = 2,
     this.name = 'conquest',
@@ -101,8 +106,9 @@ class ConquestStrategy extends GameScript {
     if (!alert) {
       turn.advanceConquest(planner, share: conquestShare);
       if (contests) turn.contest();
-      if (huntsLairs) turn.huntLairs(planner);
+      if (huntsLairs && !huntsUnderRaid) turn.huntLairs(planner);
     }
+    if (huntsLairs && huntsUnderRaid) turn.huntLairs(planner);
     turn.growInOrder(growth);
     _scout(turn);
   }

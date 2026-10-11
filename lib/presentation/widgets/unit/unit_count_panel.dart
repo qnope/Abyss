@@ -24,7 +24,10 @@ class UnitCountPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rows = units.entries.where((e) => e.value > 0).toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
+      ..sort((a, b) {
+        final byCount = b.value.compareTo(a.value);
+        return byCount != 0 ? byCount : a.key.index.compareTo(b.key.index);
+      });
     final total = rows.fold<int>(0, (sum, e) => sum + e.value);
     final alert = rows.isEmpty && emptyMessage != null;
     final textTheme = Theme.of(context).textTheme;
@@ -110,8 +113,8 @@ class _UnitRow extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            width: 40,
+          ConstrainedBox(
+            constraints: const BoxConstraints(minWidth: 40),
             child: Text(
               '$count',
               textAlign: TextAlign.end,

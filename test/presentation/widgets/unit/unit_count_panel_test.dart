@@ -38,6 +38,23 @@ void main() {
     );
   });
 
+  testWidgets('orders equal groups by unit type', (tester) async {
+    await _pump(tester, {UnitType.guardian: 3, UnitType.scout: 3});
+    expect(
+      tester.getTopLeft(find.text('Éclaireur')).dy,
+      lessThan(tester.getTopLeft(find.text('Gardien')).dy),
+    );
+  });
+
+  testWidgets('fits a huge group on a narrow screen', (tester) async {
+    tester.view.physicalSize = const Size(260, 600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await _pump(tester, {UnitType.abyssAdmiral: 123456});
+    expect(find.text('123456'), findsWidgets);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('leaves out the types without unit', (tester) async {
     await _pump(tester, {UnitType.scout: 0, UnitType.guardian: 4});
     expect(find.text('Éclaireur'), findsNothing);

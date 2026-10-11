@@ -1,5 +1,6 @@
 import '../game/game.dart';
 import '../game/player.dart';
+import '../history/history_entry.dart';
 import '../map/grid_position.dart';
 import '../objective/installation_objectives.dart';
 import '../objective/objective_migration.dart';
@@ -17,8 +18,7 @@ abstract final class AttackBaseValidator {
     Player player,
     String targetId,
     Map<UnitType, int> army,
-  ) =>
-      refusal(game, player, targetId) ?? armyFailure(player, army);
+  ) => refusal(game, player, targetId) ?? armyFailure(player, army);
 
   /// Why [player] may not attack [targetId] at all, whatever the army:
   /// the part of [check] a screen can tell before an army is chosen.
@@ -33,7 +33,20 @@ abstract final class AttackBaseValidator {
     if (player.id == game.humanPlayerId && !_hasSeen(player, target)) {
       return ActionFailure.baseNotRevealed;
     }
-    return null;
+    return alreadyHit(game, player, target);
+  }
+
+  /// A player strikes the same opponent once a turn at most, whatever it
+  /// hits (its base, a post or the kernel it holds).
+  static ActionFailure? alreadyHit(Game game, Player player, Player target) {
+    final bool again = player.historyEntries.any(
+      (HistoryEntry e) =>
+          e is BaseAssaultEntry &&
+          !e.defending &&
+          e.turn == game.turn &&
+          e.opponentName == target.name,
+    );
+    return again ? ActionFailure.alreadyAttackedThisTurn : null;
   }
 
   /// Whether [player] is too new for a base war: no one attacks before

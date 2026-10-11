@@ -1384,6 +1384,12 @@ abstract class AppLocalizations {
   /// **'La base a été attaquée trop récemment : les autres attendent'**
   String get actionFailureAttackTooSoon;
 
+  /// No description provided for @actionFailureAlreadyAttackedThisTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet adversaire a déjà été attaqué ce tour-ci'**
+  String get actionFailureAlreadyAttackedThisTurn;
+
   /// No description provided for @actionFailureNoPendingEvent.
   ///
   /// In fr, this message translates to:

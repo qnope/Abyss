@@ -826,6 +826,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'La base fue atacada hace muy poco: los demás esperan';
 
   @override
+  String get actionFailureAlreadyAttackedThisTurn =>
+      'Este rival ya fue atacado este turno';
+
+  @override
   String get actionFailureNoPendingEvent => 'Ningún evento pendiente';
 
   @override

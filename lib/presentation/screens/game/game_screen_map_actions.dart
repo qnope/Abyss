@@ -130,6 +130,7 @@ void _showCellAction(BuildContext context, Game game,
         iconColor: AbyssColors.biolumPurple,
       );
     case CellContentType.transitionBase:
+    case CellContentType.volcanicKernelPart:
     case CellContentType.empty:
       showCellInfoSheet(context, title: l10n.screenPlainTitle(x, y),
         message: l10n.screenNothingToSee);

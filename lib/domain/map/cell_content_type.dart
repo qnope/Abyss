@@ -14,4 +14,8 @@ enum CellContentType {
 
   /// Sunk by a random event for a few turns, never by the map generator.
   @HiveField(7) wreck,
+
+  /// One of the three non-anchor cells of the 2x2 volcano; the anchor
+  /// (`volcanicKernel`) carries all the state.
+  @HiveField(8) volcanicKernelPart,
 }

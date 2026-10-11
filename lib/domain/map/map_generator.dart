@@ -121,6 +121,10 @@ class MapGenerator {
       final x = entry.key.x, y = entry.key.y;
       if (x == baseX && y == baseY) continue;
       final i = y * size + x;
+      if (cells[i].content == CellContentType.volcanicKernel ||
+          cells[i].content == CellContentType.volcanicKernelPart) {
+        continue;
+      }
       cells[i] = cells[i].copyWith(
         content: CellContentType.passage,
         passageName: entry.value,

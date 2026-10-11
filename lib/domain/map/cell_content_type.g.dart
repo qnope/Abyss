@@ -29,6 +29,8 @@ class CellContentTypeAdapter extends TypeAdapter<CellContentType> {
         return CellContentType.volcanicKernel;
       case 7:
         return CellContentType.wreck;
+      case 8:
+        return CellContentType.volcanicKernelPart;
       default:
         return CellContentType.empty;
     }
@@ -53,6 +55,8 @@ class CellContentTypeAdapter extends TypeAdapter<CellContentType> {
         writer.writeByte(6);
       case CellContentType.wreck:
         writer.writeByte(7);
+      case CellContentType.volcanicKernelPart:
+        writer.writeByte(8);
     }
   }
 

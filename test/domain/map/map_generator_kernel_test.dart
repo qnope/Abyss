@@ -17,4 +17,22 @@ void main() {
     }
     expect(baseOnCentre, greaterThan(0));
   });
+
+  test('level 3 maps carry the 2x2 footprint, other levels none', () {
+    for (var seed = 0; seed < 100; seed++) {
+      final map = MapGenerator.generate(seed: seed, level: 3).map;
+      for (final (x, y) in [(11, 10), (10, 11), (11, 11)]) {
+        expect(map.cellAt(x, y).content, CellContentType.volcanicKernelPart,
+            reason: 'seed=$seed');
+      }
+      for (final level in [1, 2]) {
+        final other = MapGenerator.generate(seed: seed, level: level).map;
+        expect(
+          other.cells.where((c) =>
+              c.content == CellContentType.volcanicKernelPart),
+          isEmpty,
+        );
+      }
+    }
+  });
 }

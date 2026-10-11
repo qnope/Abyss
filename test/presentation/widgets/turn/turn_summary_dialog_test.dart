@@ -197,4 +197,39 @@ void main() {
       expect(find.text('Unités perdues'), findsNothing);
     });
   });
+
+  group('overflow', () {
+    setUp(mockSvgAssets);
+    tearDown(clearSvgMocks);
+
+    TurnResult crowded() => _result(
+      changes: [_change(produced: 50)],
+      deactivatedBuildings: List.filled(30, BuildingType.coralMine),
+    );
+
+    testWidgets('scrolls the event list without overflowing', (t) async {
+      t.view.physicalSize = const Size(400, 600);
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      await t.pumpWidget(_app(crowded()));
+      await _open(t);
+      expect(t.takeException(), isNull);
+      expect(find.byType(SingleChildScrollView), findsOneWidget);
+      expect(find.text('Mine de corail').hitTestable(), findsWidgets);
+      expect(find.text('Mine de corail').hitTestable().evaluate().length,
+          lessThan(30));
+    });
+
+    testWidgets('keeps resources and OK visible while scrolling', (t) async {
+      t.view.physicalSize = const Size(400, 600);
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.reset);
+      await t.pumpWidget(_app(crowded()));
+      await _open(t);
+      await t.drag(find.byType(SingleChildScrollView), const Offset(0, -400));
+      await t.pump();
+      expect(find.text('+50').hitTestable(), findsOneWidget);
+      expect(find.text('OK').hitTestable(), findsOneWidget);
+    });
+  });
 }

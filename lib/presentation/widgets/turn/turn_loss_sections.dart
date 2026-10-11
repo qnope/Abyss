@@ -64,7 +64,7 @@ class _LossSection extends StatelessWidget {
         Row(children: [
           Icon(icon, color: color),
           const SizedBox(width: 8),
-          Text(title, style: style),
+          Flexible(child: Text(title, style: style)),
         ]),
         for (final line in lines) Text(line, style: style),
       ],

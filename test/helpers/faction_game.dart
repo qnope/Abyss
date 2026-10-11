@@ -37,7 +37,7 @@ class Factioned extends GameScript {
 Game playFactionGame(
   int factions,
   int turns, {
-  int seed = 4,
+  int seed = 5,
   Difficulty difficulty = Difficulty.normal,
 }) {
   final seeds = Random(seed);

@@ -24,7 +24,7 @@ class TipStack extends StatefulWidget {
 }
 
 class _TipStackState extends State<TipStack> {
-  static const double _peek = 8;
+  static const double _peek = 10;
   static const double _swipeSpeed = 200;
   int _index = 0;
 
@@ -70,9 +70,11 @@ class _TipStackState extends State<TipStack> {
     child: DecoratedBox(
       key: const ValueKey('tip-stack-behind'),
       decoration: BoxDecoration(
-        color: AbyssColors.trench,
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: AbyssColors.surfaceLight),
+        color: depth == 1 ? AbyssColors.oceanFloor : AbyssColors.trench,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AbyssColors.biolumCyan.withValues(alpha: 0.2),
+        ),
       ),
     ),
   );
@@ -86,7 +88,8 @@ class _TipStackState extends State<TipStack> {
       color:
           Theme.of(context).dialogTheme.backgroundColor ??
           Theme.of(context).colorScheme.surface,
-      borderRadius: BorderRadius.circular(28),
+      shape: Theme.of(context).dialogTheme.shape,
+      clipBehavior: Clip.antiAlias,
       child: IllustratedCardBody(
         illustration: widget.tips[_index].id.illustration,
         title: text.title,

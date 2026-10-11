@@ -74,6 +74,30 @@ void main() {
     });
   });
 
+  group('revealWhole', () {
+    test('seeing one part reveals the anchor and the other parts', () {
+      final map = _map();
+      final player = Player(name: 'p')
+        ..addRevealedCell(3, GridPosition(x: 11, y: 11));
+      VolcanoFootprint.revealWhole(map, player, 3);
+      expect(
+        player.revealedCellsSetOnLevel(3),
+        {
+          for (final (x, y) in [(10, 10), (11, 10), (10, 11), (11, 11)])
+            GridPosition(x: x, y: y),
+        },
+      );
+    });
+
+    test('a volcano out of sight stays hidden', () {
+      final map = _map();
+      final player = Player(name: 'p')
+        ..addRevealedCell(3, GridPosition(x: 1, y: 1));
+      VolcanoFootprint.revealWhole(map, player, 3);
+      expect(player.revealedCellsOnLevel(3), hasLength(1));
+    });
+  });
+
   group('completeLegacy', () {
     test('grows a 1x1 kernel saved before the footprint to 2x2', () {
       final map = _map(withParts: false);
@@ -88,6 +112,18 @@ void main() {
       map.setCell(11, 11,
           map.cellAt(11, 11).copyWith(content: CellContentType.ruins));
       VolcanoFootprint.completeLegacy(map);
+      expect(map.cellAt(11, 11).content, CellContentType.volcanicKernelPart);
+    });
+
+    test('leaves a passage or a wreck beside the kernel alone', () {
+      final map = _map(withParts: false);
+      map.setCell(11, 10,
+          map.cellAt(11, 10).copyWith(content: CellContentType.passage));
+      map.setCell(10, 11,
+          map.cellAt(10, 11).copyWith(content: CellContentType.wreck));
+      VolcanoFootprint.completeLegacy(map);
+      expect(map.cellAt(11, 10).content, CellContentType.passage);
+      expect(map.cellAt(10, 11).content, CellContentType.wreck);
       expect(map.cellAt(11, 11).content, CellContentType.volcanicKernelPart);
     });
 

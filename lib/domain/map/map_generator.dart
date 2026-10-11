@@ -26,8 +26,15 @@ class MapGenerator {
     final random = Random(actualSeed);
 
     final center = size ~/ 2;
-    final baseX = center + random.nextInt(_offset * 2 + 1) - _offset;
-    final baseY = center + random.nextInt(_offset * 2 + 1) - _offset;
+    var baseX = center + random.nextInt(_offset * 2 + 1) - _offset;
+    var baseY = center + random.nextInt(_offset * 2 + 1) - _offset;
+    // The volcano covers the centre cell and the three after it: the base
+    // steps aside to the cell before the centre.
+    if (level == 3 &&
+        baseX >= center && baseX < center + VolcanicKernelPlacer.side &&
+        baseY >= center && baseY < center + VolcanicKernelPlacer.side) {
+      baseX = center - 1;
+    }
     final bases = level == 1
         ? StartingBasePlacer.place(
             size: size,

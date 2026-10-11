@@ -6,6 +6,7 @@ import '../history/history_entry.dart';
 import '../map/map_generator.dart';
 import '../map/passage_extractor.dart';
 import '../map/reveal_area_calculator.dart';
+import '../map/volcano_footprint.dart';
 import '../unit/unit.dart';
 import '../unit/unit_type.dart';
 import 'action.dart';
@@ -101,6 +102,7 @@ class DescendAction extends Action {
           mapWidth: map.width,
           mapHeight: map.height,
         );
+    VolcanoFootprint.revealWhole(map, player, targetLevel);
   }
 
   void _transferUnits(Player player, int targetLevel) {

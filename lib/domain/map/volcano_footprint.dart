@@ -1,4 +1,5 @@
 import '../game/game.dart';
+import '../game/player.dart';
 import 'cell_content_type.dart';
 import 'game_map.dart';
 import 'grid_position.dart';
@@ -46,6 +47,28 @@ abstract final class VolcanoFootprint {
     return (position: anchor, isRevealed: seen);
   }
 
+  /// Reveals the whole volcano to [player] on [level] once one of its
+  /// cells is seen, as the map shows it.
+  static void revealWhole(GameMap map, Player player, int level) {
+    final seen = player.revealedCellsSetOnLevel(level);
+    if (seen.isEmpty) return;
+    for (var y = 0; y < map.height; y++) {
+      for (var x = 0; x < map.width; x++) {
+        if (map.cellAt(x, y).content != CellContentType.volcanicKernel) {
+          continue;
+        }
+        final cells = [
+          for (final (fx, fy) in VolcanicKernelPlacer.footprint(x, y))
+            GridPosition(x: fx, y: fy),
+        ];
+        if (!cells.any(seen.contains)) continue;
+        for (final cell in cells) {
+          player.addRevealedCell(level, cell);
+        }
+      }
+    }
+  }
+
   /// Gives a volcano saved as a single cell its three parts.
   static void completeLegacy(GameMap map) {
     for (var y = 0; y < map.height; y++) {
@@ -55,6 +78,11 @@ abstract final class VolcanoFootprint {
         }
         for (final (px, py) in VolcanicKernelPlacer.footprint(x, y).skip(1)) {
           if (px >= map.width || py >= map.height) continue;
+          final held = map.cellAt(px, py).content;
+          if (held == CellContentType.passage ||
+              held == CellContentType.wreck) {
+            continue;
+          }
           map.setCell(
             px,
             py,

@@ -5,7 +5,7 @@ import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/objective/objective_state.dart';
 import 'package:abyss/domain/objective/tip/tip_id.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
-import 'package:abyss/presentation/widgets/tip/tip_card.dart';
+import 'package:abyss/presentation/widgets/tip/tip_stack.dart';
 import 'package:abyss/presentation/widgets/tip/tip_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -93,27 +93,34 @@ void main() {
     await tap(tester, 'next');
     await tap(tester, 'Compris');
     await tap(tester, 'next');
-    expect(find.byType(TipCard), findsNothing);
+    expect(find.byType(TipStack), findsNothing);
     expect(repository.saveCallCount, 1);
   });
 
-  testWidgets('never stacks two tips: the next one waits', (tester) async {
+  testWidgets('stacks the tips that arrive together in one dialog', (
+    tester,
+  ) async {
     game.humanPlayer.eventState.recordDraw(RandomEventType.storm);
     await pump(tester);
     await tap(tester, 'twice');
-    expect(find.byType(TipCard), findsOneWidget);
-    expect(state().seenTips, [TipId.noiseGauge]);
+    expect(find.byType(TipStack), findsOneWidget);
+    expect(find.text('La jauge de bruit'), findsOneWidget);
+    expect(state().seenTips, [TipId.noiseGauge, TipId.events, TipId.storm]);
+    expect(repository.saveCallCount, 1);
 
+    await tap(tester, 'Suivant');
+    await tap(tester, 'Suivant');
     await tap(tester, 'Compris');
+    expect(find.byType(TipStack), findsNothing);
     await tap(tester, 'next');
-    expect(find.text('Les événements'), findsOneWidget);
+    expect(find.byType(TipStack), findsNothing);
   });
 
   testWidgets('nothing opens when the tips are off', (tester) async {
     state().tipsEnabled = false;
     await pump(tester);
     await tap(tester, 'next');
-    expect(find.byType(TipCard), findsNothing);
+    expect(find.byType(TipStack), findsNothing);
     expect(state().seenTips, isEmpty);
     expect(repository.saveCallCount, 0);
   });
@@ -124,7 +131,7 @@ void main() {
     game.status = GameStatus.victory;
     await pump(tester);
     await tap(tester, 'next');
-    expect(find.byType(TipCard), findsNothing);
+    expect(find.byType(TipStack), findsNothing);
     game.status = GameStatus.freePlay;
     await tap(tester, 'next');
     expect(find.text('La jauge de bruit'), findsOneWidget);
@@ -142,7 +149,7 @@ void main() {
     await pump(tester);
     await tap(tester, 'fight');
     expect(find.text('fight'), findsOneWidget);
-    expect(find.byType(TipCard), findsNothing);
+    expect(find.byType(TipStack), findsNothing);
     expect(state().seenTips, isEmpty);
   });
 }

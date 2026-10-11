@@ -9,7 +9,7 @@ import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/screens/game/game_screen_turn_flow.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/event/event_card.dart';
-import 'package:abyss/presentation/widgets/tip/tip_card.dart';
+import 'package:abyss/presentation/widgets/tip/tip_stack.dart';
 import 'package:abyss/presentation/widgets/tip/tip_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -53,7 +53,7 @@ void main() {
     final game = _game(tips: true);
     game.humanPlayer.raidState.addNoise(NoiseRules.threshold ~/ 4 - 1);
     await buildHq(tester, game);
-    expect(find.byType(TipCard), findsOneWidget);
+    expect(find.byType(TipStack), findsOneWidget);
     expect(find.text('La jauge de bruit'), findsOneWidget);
     expect(game.humanPlayer.savedObjectiveState!.seenTips, [TipId.noiseGauge]);
   });
@@ -61,7 +61,7 @@ void main() {
   testWidgets('no tip opens while the tips are off', (tester) async {
     final game = _game(tips: false);
     await buildHq(tester, game);
-    expect(find.byType(TipCard), findsNothing);
+    expect(find.byType(TipStack), findsNothing);
     expect(game.humanPlayer.savedObjectiveState!.seenTips, isEmpty);
   });
 
@@ -101,16 +101,16 @@ void main() {
     );
     await tester.tap(find.text('end'));
     await tester.pumpAndSettle();
-    expect(find.byType(TipCard), findsNothing);
+    expect(find.byType(TipStack), findsNothing);
 
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
     expect(find.byType(EventCard), findsOneWidget);
-    expect(find.byType(TipCard), findsNothing);
+    expect(find.byType(TipStack), findsNothing);
 
     await tester.tap(find.text('Plus tard'));
     await tester.pumpAndSettle();
-    expect(find.byType(TipCard), findsOneWidget);
+    expect(find.byType(TipStack), findsOneWidget);
     expect(find.text('Les événements'), findsOneWidget);
   });
 }

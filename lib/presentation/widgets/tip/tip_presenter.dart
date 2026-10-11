@@ -5,12 +5,11 @@ import '../../../domain/game/game.dart';
 import '../../../domain/game/game_status.dart';
 import '../../../domain/objective/objective_migration.dart';
 import '../../../domain/objective/tip/tip_catalog.dart';
-import 'tip_card.dart';
+import 'tip_stack.dart';
 
-/// Opens the « première fois » tips of the human player of [game], one at
-/// a time: the first unseen one whose situation is there, saved as seen
-/// through [repository] before it shows. The others wait for the next
-/// opportunity.
+/// Opens the « première fois » tips of the human player of [game], all
+/// the unseen ones whose situation is there stacked in one dialog: they
+/// are saved as seen through [repository] before it shows.
 class TipPresenter {
   final Game game;
   final GameRepository repository;
@@ -19,19 +18,23 @@ class TipPresenter {
 
   bool _showing = false;
 
-  /// Opens the next tip, if any; completes once it is closed. Does
-  /// nothing while a tip is open, when the tips are off or once the game
-  /// is over (won or lost, unless the play goes on after the victory).
+  /// Opens the stack of the tips waiting, if any; completes once it is
+  /// closed. Does nothing while a stack is open, when the tips are off
+  /// or once the game is over (won or lost, unless the play goes on
+  /// after the victory).
   Future<void> showNext(BuildContext context) async {
     if (_showing || !_inPlay) return;
     final player = game.humanPlayer;
-    final tip = TipCatalog.nextFor(game, player);
-    if (tip == null) return;
+    final tips = TipCatalog.pendingFor(game, player);
+    if (tips.isEmpty) return;
     _showing = true;
     try {
-      ObjectiveMigration.stateOf(game, player).markSeen(tip.id);
+      final state = ObjectiveMigration.stateOf(game, player);
+      for (final tip in tips) {
+        state.markSeen(tip.id);
+      }
       await repository.save(game);
-      if (context.mounted) await showTipCard(context, tip);
+      if (context.mounted) await showTipStack(context, tips);
     } finally {
       _showing = false;
     }

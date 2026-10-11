@@ -50,6 +50,6 @@ abstract final class AttackHeldKernelValidator {
             .contains(GridPosition(x: x, y: y))) {
       return ActionFailure.baseNotRevealed;
     }
-    return null;
+    return AttackBaseValidator.alreadyHit(game, player, owner);
   }
 }

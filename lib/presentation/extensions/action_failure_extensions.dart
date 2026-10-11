@@ -28,6 +28,8 @@ extension ActionFailureText on ActionFailure {
       l10n.actionFailureAttackAlreadyAnnounced,
     ActionFailure.raidSameTurn => l10n.actionFailureRaidSameTurn,
     ActionFailure.attackTooSoon => l10n.actionFailureAttackTooSoon,
+    ActionFailure.alreadyAttackedThisTurn =>
+      l10n.actionFailureAlreadyAttackedThisTurn,
     ActionFailure.noTransitionBaseHere =>
       l10n.actionFailureNoTransitionBaseHere,
     ActionFailure.baseNotFound => l10n.actionFailureBaseNotFound,

@@ -295,6 +295,7 @@
   "actionFailureAttackAlreadyAnnounced": "Une attaque de cette faction est déjà annoncée",
   "actionFailureRaidSameTurn": "Une attaque est déjà annoncée pour ce tour : un raid de monstres frappe alors",
   "actionFailureAttackTooSoon": "La base a été attaquée trop récemment : les autres attendent",
+  "actionFailureAlreadyAttackedThisTurn": "Cet adversaire a déjà été attaqué ce tour-ci",
   "actionFailureNoPendingEvent": "Aucun événement en attente",
   "actionFailureNotThisChoiceTurn": "Ce n'est pas le tour de ce choix",
   "actionFailureNotEnoughStockToTrade": "Stock insuffisant pour échanger",

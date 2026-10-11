@@ -2212,11 +2212,23 @@ abstract class AppLocalizations {
   /// **'Noyau niveau {level}'**
   String volcanoKernelLevel(int level);
 
-  /// No description provided for @volcanoGarrison.
+  /// No description provided for @volcanoGarrisonTitle.
   ///
   /// In fr, this message translates to:
-  /// **'{count, plural, one{Garnison : {count} unité} other{Garnison : {count} unités}}'**
-  String volcanoGarrison(int count);
+  /// **'Garnison'**
+  String get volcanoGarrisonTitle;
+
+  /// No description provided for @volcanoGarrisonEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune unité en garnison.'**
+  String get volcanoGarrisonEmpty;
+
+  /// No description provided for @volcanoOutsideGarrison.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{Hors garnison, au Niveau {level} : {count} unité} other{Hors garnison, au Niveau {level} : {count} unités}}'**
+  String volcanoOutsideGarrison(int count, int level);
 
   /// No description provided for @volcanoNextWave.
   ///

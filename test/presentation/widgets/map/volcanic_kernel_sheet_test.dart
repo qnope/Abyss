@@ -91,7 +91,8 @@ void main() {
       );
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
-      expect(find.text('Garnison : 0 unité'), findsOneWidget);
+      expect(find.text('Garnison'), findsOneWidget);
+      expect(find.text('Aucune unité en garnison.'), findsOneWidget);
       await tester.tap(find.text('Mettre en garnison'));
       await tester.pumpAndSettle();
       expect(called, isTrue);

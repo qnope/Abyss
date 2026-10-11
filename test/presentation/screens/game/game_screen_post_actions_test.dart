@@ -1,9 +1,11 @@
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/faction/base_intel.dart';
 import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/fight/base_army_selection_screen.dart';
 import 'package:abyss/presentation/screens/game/fight/base_assault_summary_screen.dart';
 import 'package:abyss/presentation/widgets/fight/unit_quantity_row.dart';
+import 'package:abyss/presentation/widgets/map/post_defence_panel.dart';
 import 'package:abyss/presentation/widgets/map/rival_post_sheet.dart';
 import 'package:abyss/presentation/widgets/map/transition_base_captured_section.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +64,29 @@ void main() {
 
     expect(find.byType(RivalPostSheet), findsNothing);
     expect(find.byType(TransitionBaseCapturedSection), findsOneWidget);
+  });
+
+  testWidgets('a post of the human shows its defence', (tester) async {
+    final s = postGame();
+    final human = s.game.humanPlayer..pendingReinforcements.clear();
+    s.post.capturedBy = human.id;
+    human.intel[s.owner.id] = BaseIntel(
+      turn: 9,
+      headquartersLevel: 2,
+      rampartLevel: 0,
+      army: const {UnitType.harpoonist: 35},
+      stocks: const {},
+    );
+    await tester.pumpWidget(factionMapHost(s.game));
+    useTallView(tester);
+    await tapMapCell(tester, s.at.x, s.at.y);
+
+    expect(find.byType(PostDefencePanel), findsOneWidget);
+    expect(
+      find.text('${s.owner.name} : 35 combattants (rapport du tour 9)'),
+      findsOneWidget,
+    );
+    expect(find.text('Module de descente détruit'), findsOneWidget);
   });
 
   testWidgets('launching takes the post, saves and shows the report', (

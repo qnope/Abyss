@@ -1271,6 +1271,61 @@ class AppLocalizationsEs extends AppLocalizations {
       'Sin unidades. Si una facción ataca, el puesto cae y su módulo queda destruido.';
 
   @override
+  String postDefenceThreat(String faction, int units, int turn) {
+    String _temp0 = intl.Intl.pluralLogic(
+      units,
+      locale: localeName,
+      other: '$units combatientes',
+      one: '$units combatiente',
+    );
+    return '$faction: $_temp0 (informe del turno $turn)';
+  }
+
+  @override
+  String postDefenceIfFalls(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'faille': 'Si la Falla cae',
+      'other': 'Si la Chimenea cae',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String postDefencePassageLost(String building) {
+    String _temp0 = intl.Intl.selectLogic(building, {
+      'descentModule': 'Módulo de Descenso destruido',
+      'other': 'Cápsula Presurizada destruida',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String postDefenceUnitsLost(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unidades del nivel $level perdidas',
+      one: '$count unidad del nivel $level perdida',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String postDefenceReinforcementsLost(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count refuerzos en camino cancelados',
+      one: '$count refuerzo en camino cancelado',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get postDefenceNoWarning =>
+      'Las facciones atacan los puestos sin avisar.';
+
+  @override
   String mapSendUnitsToLevel(int level) {
     return 'Enviar unidades al Nivel $level';
   }

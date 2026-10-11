@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/building/building_type.dart';
+import '../../../domain/faction/post_defence.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../unit/unit_count_panel.dart';
+import 'post_defence_panel.dart';
 import 'transition_base_sheet.dart';
 
 class TransitionBaseCapturedSection extends StatelessWidget {
@@ -16,12 +18,16 @@ class TransitionBaseCapturedSection extends StatelessWidget {
   final BuildingType requiredBuilding;
   final Map<UnitType, int> unitsOnTarget;
 
+  /// What the human knows of the post's defence; `null` hides the block.
+  final PostDefence? defence;
+
   const TransitionBaseCapturedSection({
     super.key,
     required this.transitionBase,
     required this.hasBuildingRequirement,
     required this.requiredBuilding,
     required this.unitsOnTarget,
+    this.defence,
     this.onDescend,
   });
 
@@ -30,7 +36,7 @@ class TransitionBaseCapturedSection extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final l10n = context.l10n;
     final targetLevel = transitionBase.targetLevel;
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -57,6 +63,10 @@ class TransitionBaseCapturedSection extends StatelessWidget {
             units: unitsOnTarget,
             emptyMessage: l10n.mapNoDefenders,
           ),
+          if (defence != null) ...[
+            const SizedBox(height: 12),
+            PostDefencePanel(post: transitionBase, defence: defence!),
+          ],
           const Divider(height: 24),
           if (!hasBuildingRequirement) ...[
             Text(

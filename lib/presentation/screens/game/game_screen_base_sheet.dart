@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../data/game_repository.dart';
 import '../../../domain/building/building_type.dart';
+import '../../../domain/faction/post_defence.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
 import '../../../domain/map/transition_base.dart';
@@ -36,6 +37,7 @@ void openTransitionBaseSheet(
     hasBuildingRequirement: _hasBuildingFor(human, base),
     requiredBuilding: _requiredBuildingFor(base),
     unitsOnTarget: _unitsOnLevel(human, base.targetLevel),
+    defence: base.isCaptured ? PostDefence.of(game, human, base) : null,
     onAttack: () => handleAttackTransitionBase(
       context, game, repository, base, x, y, level, onChanged),
     onDescend: () => handleDescend(

@@ -1260,6 +1260,60 @@ class AppLocalizationsEn extends AppLocalizations {
       'No units. If a faction attacks, the post falls and its module is destroyed.';
 
   @override
+  String postDefenceThreat(String faction, int units, int turn) {
+    String _temp0 = intl.Intl.pluralLogic(
+      units,
+      locale: localeName,
+      other: '$units fighters',
+      one: '$units fighter',
+    );
+    return '$faction: $_temp0 (report from turn $turn)';
+  }
+
+  @override
+  String postDefenceIfFalls(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'faille': 'If the Rift falls',
+      'other': 'If the Vent falls',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String postDefencePassageLost(String building) {
+    String _temp0 = intl.Intl.selectLogic(building, {
+      'descentModule': 'Descent Module destroyed',
+      'other': 'Pressure Capsule destroyed',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String postDefenceUnitsLost(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count level $level units lost',
+      one: '$count level $level unit lost',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String postDefenceReinforcementsLost(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count reinforcements on the way cancelled',
+      one: '$count reinforcement on the way cancelled',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get postDefenceNoWarning => 'Factions attack posts without warning.';
+
+  @override
   String mapSendUnitsToLevel(int level) {
     return 'Send units to Level $level';
   }

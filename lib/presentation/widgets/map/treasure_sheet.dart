@@ -99,6 +99,7 @@ class _TreasureSheet extends StatelessWidget {
       case CellContentType.transitionBase:
       case CellContentType.passage:
       case CellContentType.volcanicKernel:
+      case CellContentType.volcanicKernelPart:
         return '';
     }
   }

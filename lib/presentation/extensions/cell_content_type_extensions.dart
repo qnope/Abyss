@@ -12,7 +12,8 @@ extension CellContentTypeExtensions on CellContentType {
     CellContentType.monsterLair => l10n.cellContentMonsterLair,
     CellContentType.transitionBase => l10n.transitionBaseFailleName,
     CellContentType.passage => l10n.cellContentPassage,
-    CellContentType.volcanicKernel => l10n.buildingVolcanicKernelName,
+    CellContentType.volcanicKernel ||
+    CellContentType.volcanicKernelPart => l10n.buildingVolcanicKernelName,
     CellContentType.wreck => RandomEventType.wreck.label(l10n),
   };
 
@@ -26,6 +27,7 @@ extension CellContentTypeExtensions on CellContentType {
     CellContentType.passage => null,
     CellContentType.volcanicKernel =>
       'assets/icons/terrain/volcanic_kernel.svg',
+    CellContentType.volcanicKernelPart => null,
     CellContentType.wreck => RandomEventType.wreck.illustration,
   };
 }

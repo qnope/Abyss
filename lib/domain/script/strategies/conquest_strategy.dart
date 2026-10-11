@@ -59,6 +59,9 @@ class ConquestStrategy extends GameScript {
   /// Whether it keeps a garrison able to beat the kraken waves.
   final bool guardsKernel;
 
+  /// Whether it chases the wrecks whatever the noise they make.
+  final bool chasesWrecks;
+
   /// The order in which it grows the base.
   final List<BuildingType> growth;
 
@@ -75,6 +78,7 @@ class ConquestStrategy extends GameScript {
     this.defends = true,
     this.guardsKernel = true,
     this.contests = true,
+    this.chasesWrecks = false,
     this.growth = growthOrder,
     this.explorers = 2,
     this.name = 'conquest',
@@ -85,7 +89,7 @@ class ConquestStrategy extends GameScript {
     for (final int level in turn.game.levels.keys) {
       turn.collectRevealed(level);
     }
-    turn.playEvents(planner);
+    turn.playEvents(planner, bold: chasesWrecks);
     final bool alert = turn.player.raidState.isIncoming;
     if (alert && defends) turn.defendBase(planner);
     if (defends) turn.defendAttacks(planner);

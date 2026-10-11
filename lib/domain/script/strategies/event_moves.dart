@@ -1,6 +1,7 @@
 import '../../action/choose_event_action.dart';
 import '../../action/collect_treasure_action.dart';
 import '../../action/explore_action.dart';
+import '../../action/recruit_unit_action.dart';
 import '../../event/effects/wreck_sites.dart';
 import '../../event/event_rules.dart';
 import '../../event/event_state.dart';
@@ -23,9 +24,15 @@ import 'recruit_moves.dart';
 extension EventMoves on ScriptTurn {
   /// Answers the event waiting for a choice this turn unless [choose] is
   /// off (a replay that recorded its own), then goes for the wreck.
-  void playEvents(ArmyPlanner planner, {bool choose = true}) {
+  ///
+  /// With [bold], the wreck is chased whatever the noise (see [fetchWreck]).
+  void playEvents(
+    ArmyPlanner planner, {
+    bool choose = true,
+    bool bold = false,
+  }) {
     if (choose) chooseEvent(planner);
-    fetchWreck();
+    fetchWreck(bold: bold);
   }
 
   /// Takes the first option of the event waiting for a choice this turn
@@ -67,10 +74,15 @@ extension EventMoves on ScriptTurn {
 
   /// Searches the wreck in sight, or sends a scout to it while a later
   /// turn is left to search it, as long as the noise keeps the raids away.
-  void fetchWreck() {
+  ///
+  /// A [bold] player (a faction, always under raids, that must not leave
+  /// the wreck to a rival) ignores the noise and recruits the scout it
+  /// lacks.
+  void fetchWreck({bool bold = false}) {
     final EventState state = player.eventState;
     final GridPosition? at = state.wreckPosition;
-    if (at == null || !_quietAfter(EventRules.wreckNoise)) return;
+    if (at == null) return;
+    if (!bold && !_quietAfter(EventRules.wreckNoise)) return;
     const int level = WreckSites.level;
     if (player.revealedCellsOnLevel(level).contains(at)) {
       tryPerform(
@@ -82,6 +94,10 @@ extension EventMoves on ScriptTurn {
         ),
       );
     } else if (number < (state.wreckUntilTurn ?? number)) {
+      final int scouts = player.unitsOnLevel(level)[UnitType.scout]!.count;
+      if (bold && scouts == 0) {
+        tryPerform(RecruitUnitAction(unitType: UnitType.scout, quantity: 1));
+      }
       tryPerform(ExploreAction(targetX: at.x, targetY: at.y, level: level));
     }
   }

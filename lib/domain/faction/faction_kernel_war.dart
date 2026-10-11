@@ -1,3 +1,4 @@
+import '../fight/army_planner.dart';
 import '../action/attack_base_defence.dart';
 import '../action/attack_held_kernel_action.dart';
 import '../fight/unit_boost.dart';
@@ -21,7 +22,10 @@ import 'faction_war.dart';
 /// once and reported in the history.
 abstract final class FactionKernelWar {
   /// Attacks the held kernel it has seen; returns whether it attacked.
-  static bool play(ScriptTurn turn) {
+  static bool play(
+    ScriptTurn turn, [
+    ArmyPlanner planner = FactionWar.planner,
+  ]) {
     final Player me = turn.player;
     final GameMap? map = turn.game.levels[KernelGarrison.volcanoLevel];
     final Map<UnitType, int> army = FactionWar.fightersOn(
@@ -44,7 +48,7 @@ abstract final class FactionKernelWar {
           owner.hasFallen) {
         continue;
       }
-      if (!FactionWar.planner.wins(
+      if (!planner.wins(
         army,
         () => BaseDefence.kernel(owner).side,
         boost: boost,

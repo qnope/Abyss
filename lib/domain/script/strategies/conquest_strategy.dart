@@ -55,6 +55,9 @@ class ConquestStrategy extends GameScript {
   /// Whether it keeps a garrison able to beat the kraken waves.
   final bool guardsKernel;
 
+  /// The order in which it grows the base.
+  final List<BuildingType> growth;
+
   @override
   final String name;
 
@@ -64,6 +67,7 @@ class ConquestStrategy extends GameScript {
     this.huntsLairs = true,
     this.defends = true,
     this.guardsKernel = true,
+    this.growth = growthOrder,
     this.name = 'conquest',
   });
 
@@ -84,29 +88,37 @@ class ConquestStrategy extends GameScript {
       turn.advanceConquest(planner, share: conquestShare);
       if (huntsLairs) turn.huntLairs(planner);
     }
-    turn.growInOrder(growthOrder);
+    turn.growInOrder(growth);
     _scout(turn);
   }
 
   void _scout(ScriptTurn turn) {
-    final bool expedition = turn.ownBase(1) != null &&
+    final bool expedition =
+        turn.ownBase(1) != null &&
         !turn.game.isVolcanicKernelCapturedBy(turn.player.id);
     final int reserve = expedition ? ConquestMoves.expeditionScouts : 0;
     final int home = turn.player.unitsOnLevel(1)[UnitType.scout]!.count;
     final int wanted = reserve + (turn.fullyExplored(1) ? 0 : 2);
     if (home < wanted) {
-      turn.tryPerform(RecruitUnitAction(
-          unitType: UnitType.scout, quantity: wanted - home));
+      turn.tryPerform(
+        RecruitUnitAction(unitType: UnitType.scout, quantity: wanted - home),
+      );
     }
     final int spare = turn.player.unitsOnLevel(1)[UnitType.scout]!.count;
     turn.explore(1, min(2, spare - reserve), (GridPosition p) {
       final bool found = turn.ownBase(1) != null || turn.openBase(1) != null;
       return found ? 0 : 0.3 * _fromCentre(p);
     });
-    turn.explore(2, 2, (GridPosition p) =>
-        turn.openBase(2) == null ? 0.5 * _fromCentre(p) : 0);
-    turn.explore(3, 2, (GridPosition p) =>
-        turn.openKernel() == null ? -1.0 * _fromCentre(p) : 0);
+    turn.explore(
+      2,
+      2,
+      (GridPosition p) => turn.openBase(2) == null ? 0.5 * _fromCentre(p) : 0,
+    );
+    turn.explore(
+      3,
+      2,
+      (GridPosition p) => turn.openKernel() == null ? -1.0 * _fromCentre(p) : 0,
+    );
   }
 
   static int _fromCentre(GridPosition p) =>

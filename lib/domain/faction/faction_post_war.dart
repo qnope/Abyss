@@ -29,14 +29,17 @@ abstract final class FactionPostWar {
   static const List<int> levels = <int>[1, 2];
 
   /// Attacks the weakest beatable post; returns whether it attacked.
-  static bool play(ScriptTurn turn) {
+  static bool play(
+    ScriptTurn turn, [
+    ArmyPlanner planner = FactionWar.planner,
+  ]) {
     final Player me = turn.player;
     final UnitBoost boost = FightMonsterHelpers.unitBoostOf(
       me,
       attacking: true,
     );
     for (final _Post post in _weakestFirst(turn, boost)) {
-      if (!FactionWar.planner.wins(
+      if (!planner.wins(
         post.army,
         () => BaseDefence.post(post.owner, post.base.targetLevel).side,
         boost: boost,

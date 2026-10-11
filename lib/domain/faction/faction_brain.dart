@@ -3,18 +3,18 @@ import '../script/script_turn.dart';
 import '../script/strategies/conquest_strategy.dart';
 import 'faction_kernel_guard.dart';
 import 'faction_personality.dart';
+import 'faction_traits.dart';
 import 'faction_war.dart';
+import 'faction_war_recruit.dart';
 
 /// What a faction plays: the whole game of a careful player, from the
 /// first building to the volcanic kernel at level 10 ([ConquestStrategy]),
 /// and now and then an attack on the weakest base or post it knows
 /// ([FactionWar]).
 ///
-/// Every personality shares it until its own brain exists; it only uses
+/// The traits of the personality bend it ([FactionTraits]); it only uses
 /// the actions of the game, with their costs and checks.
 class FactionBrain extends GameScript {
-  static const ConquestStrategy _conquest = ConquestStrategy(name: 'faction');
-
   final FactionPersonality personality;
 
   const FactionBrain(this.personality);
@@ -24,8 +24,15 @@ class FactionBrain extends GameScript {
 
   @override
   void playTurn(ScriptTurn turn) {
+    final FactionTraits traits = FactionTraits.of(personality);
     FactionWar.play(turn, personality);
-    _conquest.playTurn(turn);
+    ConquestStrategy(
+      name: 'faction',
+      conquestShare: traits.conquestShare,
+      defends: traits.defends,
+      growth: traits.growth,
+    ).playTurn(turn);
+    FactionWarRecruit.play(turn, traits);
     FactionKernelGuard.play(turn);
   }
 }

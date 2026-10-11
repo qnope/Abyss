@@ -20,6 +20,7 @@ import 'faction_personality.dart';
 import 'base_intel.dart';
 import 'faction_kernel_war.dart';
 import 'faction_post_war.dart';
+import 'faction_traits.dart';
 
 /// When and whom a faction attacks. One conservative rule that every
 /// personality shares until its own war brain exists (step 11).
@@ -37,9 +38,6 @@ import 'faction_post_war.dart';
 /// 10): a base whose army changed in the meantime can still surprise the
 /// attacker.
 abstract final class FactionWar {
-  /// Turns between two slots of a faction.
-  static const int cadence = 6;
-
   /// Rehearses the fight before committing: 85 % of 8 rehearsals won.
   static const ArmyPlanner planner = ArmyPlanner();
 
@@ -53,7 +51,7 @@ abstract final class FactionWar {
   /// personalities are spread over the cadence so they do not all strike
   /// at once.
   static bool isDue(int turn, FactionPersonality personality) =>
-      (turn + personality.index) % cadence == 0;
+      (turn + personality.index) % FactionTraits.of(personality).cadence == 0;
 
   /// Bases a faction sends a Scout to in one slot.
   static const int spiesPerSlot = 2;
@@ -65,8 +63,12 @@ abstract final class FactionWar {
     if (!isDue(turn.number, personality)) return;
     if (turn.game.humanPlayer.raidState.hasAttackFrom(turn.player.id)) return;
     _keepAScout(turn.player, turn);
-    if (_raidBases(turn) || FactionPostWar.play(turn)) return;
-    FactionKernelWar.play(turn);
+    final ArmyPlanner planner = FactionTraits.of(personality).planner;
+    final bool attacked =
+        FactionTraits.of(personality).postsFirst
+            ? FactionPostWar.play(turn, planner) || _raidBases(turn, planner)
+            : _raidBases(turn, planner) || FactionPostWar.play(turn, planner);
+    if (!attacked) FactionKernelWar.play(turn, planner);
   }
 
   /// A faction spies before it strikes: it keeps a Scout at home for the
@@ -79,7 +81,7 @@ abstract final class FactionWar {
   }
 
   /// Attacks the weakest beatable base; returns whether it attacked.
-  static bool _raidBases(ScriptTurn turn) {
+  static bool _raidBases(ScriptTurn turn, ArmyPlanner planner) {
     final Player me = turn.player;
     final Map<UnitType, int> army = fightersOn(me, RaidBattle.baseLevel);
     if (army.isEmpty) return false;
@@ -105,12 +107,10 @@ abstract final class FactionWar {
   }
 
   /// The units of [level] that [me] sends to war.
-  static Map<UnitType, int> fightersOn(Player me, int level) =>
-      <UnitType, int>{
-        for (final MapEntry<UnitType, Unit> e in me.unitsOnLevel(level).entries)
-          if (!_stayHome.contains(e.key) && e.value.count > 0)
-            e.key: e.value.count,
-      };
+  static Map<UnitType, int> fightersOn(Player me, int level) => <UnitType, int>{
+    for (final MapEntry<UnitType, Unit> e in me.unitsOnLevel(level).entries)
+      if (!_stayHome.contains(e.key) && e.value.count > 0) e.key: e.value.count,
+  };
 
   /// The bases of the fog of [turn]'s player that a scout has reported on
   /// (a fresh report, or the one a Scout brings back now), the weakest

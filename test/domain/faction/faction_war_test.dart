@@ -1,4 +1,5 @@
 import 'package:abyss/domain/faction/faction_personality.dart';
+import 'package:abyss/domain/faction/faction_traits.dart';
 import 'package:abyss/domain/faction/faction_war.dart';
 import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/domain/objective/objective_migration.dart';
@@ -37,9 +38,10 @@ void main() {
         for (var t = 1; t <= 60; t++)
           if (FactionWar.isDue(t, p)) t,
       ];
-      expect(slots, hasLength(10));
+      final cadence = FactionTraits.of(p).cadence;
+      expect(slots, hasLength(60 ~/ cadence));
       for (var i = 1; i < slots.length; i++) {
-        expect(slots[i] - slots[i - 1], FactionWar.cadence);
+        expect(slots[i] - slots[i - 1], cadence);
       }
     }
   });

@@ -3,13 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
+import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/widgets/map/transition_base_sheet.dart';
 
 Widget _buildOpener({
   required TransitionBase base,
   bool hasBuildingRequirement = true,
   BuildingType requiredBuilding = BuildingType.descentModule,
-  int unitCountOnTarget = 0,
+  Map<UnitType, int> unitsOnTarget = const {},
   VoidCallback? onAttack,
   VoidCallback? onDescend,
 }) {
@@ -22,7 +23,7 @@ Widget _buildOpener({
               level: 1,
               hasBuildingRequirement: hasBuildingRequirement,
               requiredBuilding: requiredBuilding,
-              unitCountOnTarget: unitCountOnTarget,
+              unitsOnTarget: unitsOnTarget,
               onAttack: onAttack,
               onDescend: onDescend),
           child: const Text('Open'),
@@ -137,17 +138,55 @@ void main() {
       );
     });
 
-    testWidgets('shows unit count when units present', (t) async {
+    testWidgets('lists the defenders by type when units present', (t) async {
       final base = TransitionBase(
           type: TransitionBaseType.faille,
           name: 'F1',
           capturedBy: 'p1');
       await t.pumpWidget(_buildOpener(
           base: base,
-          unitCountOnTarget: 15,
+          unitsOnTarget: {UnitType.harpoonist: 12, UnitType.guardian: 3},
           onDescend: () {}));
       await _open(t);
-      expect(find.text('15 unités au Niveau 2'), findsOneWidget);
+      expect(find.text('Défenseurs au Niveau 2'), findsOneWidget);
+      expect(find.text('15'), findsOneWidget);
+      expect(find.text('Harponneur'), findsOneWidget);
+      expect(find.text('12'), findsOneWidget);
+      expect(find.text('Gardien'), findsOneWidget);
+    });
+
+    testWidgets('warns when nobody defends the post', (t) async {
+      final base = TransitionBase(
+          type: TransitionBaseType.faille,
+          name: 'F1',
+          capturedBy: 'p1');
+      await t.pumpWidget(_buildOpener(base: base, onDescend: () {}));
+      await _open(t);
+      expect(find.text('Défenseurs au Niveau 2'), findsOneWidget);
+      expect(find.textContaining('Aucune unité.'), findsOneWidget);
+    });
+
+    testWidgets('a captured cheminee counts the units of level 3', (t) async {
+      final base = TransitionBase(
+          type: TransitionBaseType.cheminee,
+          name: 'C1',
+          capturedBy: 'p1');
+      await t.pumpWidget(_buildOpener(
+          base: base,
+          requiredBuilding: BuildingType.pressureCapsule,
+          unitsOnTarget: {UnitType.scout: 4},
+          onDescend: () {}));
+      await _open(t);
+      expect(find.text('Défenseurs au Niveau 3'), findsOneWidget);
+      expect(find.text('Éclaireur'), findsOneWidget);
+    });
+
+    testWidgets('an uncaptured base shows no defenders', (t) async {
+      final base = TransitionBase(
+          type: TransitionBaseType.faille, name: 'F1');
+      await t.pumpWidget(_buildOpener(base: base));
+      await _open(t);
+      expect(find.textContaining('Défenseurs'), findsNothing);
     });
   });
 }

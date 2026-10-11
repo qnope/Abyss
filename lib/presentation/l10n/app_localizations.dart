@@ -1996,17 +1996,23 @@ abstract class AppLocalizations {
   /// **'Capturée'**
   String get mapCaptured;
 
-  /// No description provided for @mapUnitsOnLevel.
-  ///
-  /// In fr, this message translates to:
-  /// **'{count, plural, one{{count} unité au Niveau {level}} other{{count} unités au Niveau {level}}}'**
-  String mapUnitsOnLevel(int count, int level);
-
   /// No description provided for @mapBuildingRequired.
   ///
   /// In fr, this message translates to:
   /// **'Bâtiment requis pour envoyer des unités : {building}'**
   String mapBuildingRequired(String building);
+
+  /// No description provided for @mapDefendersOnLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Défenseurs au Niveau {level}'**
+  String mapDefendersOnLevel(int level);
+
+  /// No description provided for @mapNoDefenders.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune unité. Si une faction attaque, le poste tombe et son module est détruit.'**
+  String get mapNoDefenders;
 
   /// No description provided for @mapSendUnitsToLevel.
   ///

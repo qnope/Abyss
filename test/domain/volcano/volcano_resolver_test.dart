@@ -23,6 +23,7 @@ void main() {
 
   test('a kernel at level 1 or more draws a kraken wave for next turn', () {
     final player = volcanoPlayer(kernelLevel: 3);
+    player.volcanoState.wavesRepelled = 1;
     final outcome = VolcanoResolver.resolve(player, 40);
     expect(outcome.announced!.family, MonsterFamily.kraken);
     expect(outcome.announced!.unitCount, VolcanoWaveFactory.krakensFor(

@@ -30,6 +30,10 @@ class VolcanoState {
     this.levelsLost = 0,
   });
 
+  /// Waves fought on the kernel since the start of the game, won or lost.
+  /// Zero until the first one, which is drawn at half strength.
+  int get wavesFought => wavesRepelled + levelsLost;
+
   bool get isIncoming => incoming != null && arrivalTurn != null;
 
   void announce(MonsterLair wave, int turn) {

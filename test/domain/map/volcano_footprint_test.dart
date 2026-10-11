@@ -1,0 +1,98 @@
+import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/map/cell_content_type.dart';
+import 'package:abyss/domain/map/game_map.dart';
+import 'package:abyss/domain/map/grid_position.dart';
+import 'package:abyss/domain/map/map_cell.dart';
+import 'package:abyss/domain/map/terrain_type.dart';
+import 'package:abyss/domain/map/volcano_footprint.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+GameMap _map({bool withParts = true}) {
+  final map = GameMap(
+    width: 21,
+    height: 21,
+    cells: List.generate(441, (_) => MapCell(terrain: TerrainType.plain)),
+    seed: 1,
+  );
+  map.setCell(10, 10,
+      map.cellAt(10, 10).copyWith(content: CellContentType.volcanicKernel));
+  if (withParts) {
+    for (final (x, y) in [(11, 10), (10, 11), (11, 11)]) {
+      map.setCell(x, y,
+          map.cellAt(x, y).copyWith(content: CellContentType.volcanicKernelPart));
+    }
+  }
+  return map;
+}
+
+void main() {
+  group('anchorOf', () {
+    test('each of the four cells resolves to the anchor', () {
+      final map = _map();
+      for (final (x, y) in [(10, 10), (11, 10), (10, 11), (11, 11)]) {
+        expect(VolcanoFootprint.anchorOf(map, x, y),
+            GridPosition(x: 10, y: 10), reason: '($x,$y)');
+      }
+    });
+
+    test('any other cell has no anchor', () {
+      final map = _map();
+      expect(VolcanoFootprint.anchorOf(map, 9, 10), isNull);
+      expect(VolcanoFootprint.anchorOf(map, 12, 12), isNull);
+    });
+
+    test('a part with no anchor beside it resolves to nothing', () {
+      final map = _map(withParts: false);
+      map.setCell(15, 15,
+          map.cellAt(15, 15).copyWith(content: CellContentType.volcanicKernelPart));
+      expect(VolcanoFootprint.anchorOf(map, 15, 15), isNull);
+    });
+  });
+
+  group('completeLegacy', () {
+    test('grows a 1x1 kernel saved before the footprint to 2x2', () {
+      final map = _map(withParts: false);
+      VolcanoFootprint.completeLegacy(map);
+      for (final (x, y) in [(11, 10), (10, 11), (11, 11)]) {
+        expect(map.cellAt(x, y).content, CellContentType.volcanicKernelPart);
+      }
+    });
+
+    test('wipes the lair or base a part lands on', () {
+      final map = _map(withParts: false);
+      map.setCell(11, 11,
+          map.cellAt(11, 11).copyWith(content: CellContentType.ruins));
+      VolcanoFootprint.completeLegacy(map);
+      expect(map.cellAt(11, 11).content, CellContentType.volcanicKernelPart);
+    });
+
+    test('leaves a complete footprint and maps without a kernel alone', () {
+      final map = _map();
+      VolcanoFootprint.completeLegacy(map);
+      expect(
+        map.cells.where((c) => c.content == CellContentType.volcanicKernelPart),
+        hasLength(3),
+      );
+      final plain = GameMap(
+        width: 5, height: 5,
+        cells: List.generate(25, (_) => MapCell(terrain: TerrainType.plain)),
+        seed: 1,
+      );
+      VolcanoFootprint.completeLegacy(plain);
+      expect(plain.cells.every((c) => c.content == CellContentType.empty),
+          isTrue);
+    });
+  });
+
+  test('migrate completes the volcano on every level of a game', () {
+    final map = _map(withParts: false);
+    final game = Game(
+      humanPlayerId: 'p',
+      players: {'p': Player(id: 'p', name: 'p')},
+      levels: {3: map},
+    );
+    VolcanoFootprint.migrate(game);
+    expect(map.cellAt(11, 11).content, CellContentType.volcanicKernelPart);
+  });
+}

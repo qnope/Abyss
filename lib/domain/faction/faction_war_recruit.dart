@@ -15,7 +15,8 @@ import 'faction_traits.dart';
 /// alone has nobody to fight, and its stocks go to the race.
 abstract final class FactionWarRecruit {
   static void play(ScriptTurn turn, FactionTraits traits) {
-    if (traits.warShare <= 0 || !_knowsARival(turn)) return;
+    final double share = traits.shareOn(turn.number);
+    if (share <= 0 || !_knowsARival(turn)) return;
     final Map<UnitType, int> mix = <UnitType, int>{
       for (final MapEntry<UnitType, int> e in traits.warMix.entries)
         if (turn.usableMixes(<Map<UnitType, int>>[
@@ -24,7 +25,7 @@ abstract final class FactionWarRecruit {
           e.key: e.value,
     };
     if (mix.isEmpty) return;
-    final int k = turn.affordable(mix, share: traits.warShare);
+    final int k = turn.affordable(mix, share: share);
     if (k > 0) turn.recruitMix(mix, k);
   }
 

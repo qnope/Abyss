@@ -39,7 +39,7 @@ void main() {
           if (FactionWar.isDue(t, p)) t,
       ];
       final cadence = FactionTraits.of(p).cadence;
-      expect(slots, hasLength(60 ~/ cadence));
+      expect(slots.length, inInclusiveRange(60 ~/ cadence, 60 ~/ cadence + 1));
       for (var i = 1; i < slots.length; i++) {
         expect(slots[i] - slots[i - 1], cadence);
       }

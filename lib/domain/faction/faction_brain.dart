@@ -31,8 +31,9 @@ class FactionBrain extends GameScript {
       conquestShare: traits.conquestShare,
       defends: traits.defends,
       growth: traits.growth,
+      explorers: traits.explorers,
     ).playTurn(turn);
     FactionWarRecruit.play(turn, traits);
-    FactionKernelGuard.play(turn);
+    FactionKernelGuard.play(turn, traits.guardShare);
   }
 }

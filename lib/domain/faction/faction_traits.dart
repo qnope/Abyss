@@ -28,7 +28,25 @@ class FactionTraits {
   /// Whether it looks at the posts of the others before their bases.
   final bool postsFirst;
 
+  /// Share of the stocks it puts into war on [turn].
+  double shareOn(int turn) => turn < rushUntil ? rushShare : warShare;
+
   ArmyPlanner get planner => ArmyPlanner(confidence: confidence);
+
+  /// Turn before which [rushShare] replaces [warShare]: an early striker.
+  final int rushUntil;
+
+  /// Share of the stocks put into war while the rush lasts.
+  final double rushShare;
+
+  /// Whether it looks at the kernel others hold before their bases.
+  final bool kernelFirst;
+
+  /// Share of the home fighters sent down to reinforce the kernel it holds.
+  final double guardShare;
+
+  /// Scouts it keeps exploring the level while it is not fully known.
+  final int explorers;
 
   /// The order in which it grows its base.
   final List<BuildingType> growth;
@@ -41,6 +59,11 @@ class FactionTraits {
     this.conquestShare = 0.5,
     this.defends = true,
     this.postsFirst = false,
+    this.rushUntil = 0,
+    this.rushShare = 0,
+    this.kernelFirst = false,
+    this.guardShare = 0.5,
+    this.explorers = 2,
     this.growth = defaultGrowth,
   });
 
@@ -91,11 +114,112 @@ class FactionTraits {
     postsFirst: true,
   );
 
+  /// Strikes first and early, then thins out: the mass eats the algae.
+  static const FactionTraits _horde = FactionTraits(
+    cadence: 4,
+    confidence: 0.7,
+    warMix: <UnitType, int>{UnitType.harpoonist: 3},
+    warShare: 0.05,
+    rushUntil: 30,
+    rushShare: 0.2,
+  );
+
+  /// Slow start, solid rampart, attacks only when sure.
+  static const FactionTraits _guild = FactionTraits(
+    cadence: 12,
+    confidence: 0.95,
+    warMix: <UnitType, int>{UnitType.guardian: 1},
+    warShare: 0.08,
+    growth: <BuildingType>[
+      BuildingType.solarPanel,
+      BuildingType.algaeFarm,
+      BuildingType.coralMine,
+      BuildingType.coralCitadel,
+      BuildingType.oreExtractor,
+      BuildingType.headquarters,
+      BuildingType.laboratory,
+      BuildingType.barracks,
+    ],
+  );
+
+  /// Unseen and small: rare strikes by a handful of saboteurs.
+  static const FactionTraits _monks = FactionTraits(
+    cadence: 12,
+    confidence: 0.9,
+    warMix: <UnitType, int>{UnitType.saboteur: 1},
+    warShare: 0.04,
+  );
+
+  /// Gatherers: they roam, raise the Citadel last and hit the unguarded.
+  static const FactionTraits _nomads = FactionTraits(
+    cadence: 7,
+    confidence: 0.75,
+    warMix: <UnitType, int>{UnitType.harpoonist: 1},
+    warShare: 0.06,
+    explorers: 3,
+    conquestShare: 0.65,
+    guardShare: 0.7,
+    growth: <BuildingType>[
+      BuildingType.headquarters,
+      BuildingType.solarPanel,
+      BuildingType.algaeFarm,
+      BuildingType.coralMine,
+      BuildingType.oreExtractor,
+      BuildingType.barracks,
+      BuildingType.laboratory,
+      BuildingType.coralCitadel,
+    ],
+  );
+
+  /// Numbers: farms and barracks before anything.
+  static const FactionTraits _hive = FactionTraits(
+    cadence: 8,
+    confidence: 0.8,
+    warMix: <UnitType, int>{UnitType.harpoonist: 1},
+    warShare: 0.12,
+    growth: <BuildingType>[
+      BuildingType.algaeFarm,
+      BuildingType.barracks,
+      BuildingType.solarPanel,
+      BuildingType.headquarters,
+      BuildingType.coralMine,
+      BuildingType.oreExtractor,
+      BuildingType.laboratory,
+      BuildingType.coralCitadel,
+    ],
+  );
+
+  /// Race down, over the posts of the others.
+  static const FactionTraits _smiths = FactionTraits(
+    cadence: 8,
+    confidence: 0.8,
+    warMix: <UnitType, int>{UnitType.guardian: 1, UnitType.domeBreaker: 1},
+    warShare: 0.1,
+    conquestShare: 0.65,
+    postsFirst: true,
+  );
+
+  /// Hold the kernel, and take it back from whoever holds it.
+  static const FactionTraits _faithful = FactionTraits(
+    cadence: 5,
+    confidence: 0.85,
+    warMix: <UnitType, int>{UnitType.domeBreaker: 1, UnitType.guardian: 1},
+    warShare: 0.1,
+    kernelFirst: true,
+    guardShare: 0.8,
+  );
+
   static FactionTraits of(FactionPersonality personality) =>
       switch (personality) {
         FactionPersonality.wreckPillagers => _pillagers,
         FactionPersonality.pearlOrder => _order,
         FactionPersonality.anglerCult => _cult,
-        _ => const FactionTraits(),
+        FactionPersonality.murenaHorde => _horde,
+        FactionPersonality.siphonophoreGuild => _guild,
+        FactionPersonality.silenceMonks => _monks,
+        FactionPersonality.currentNomads => _nomads,
+        FactionPersonality.pyrosomeHive => _hive,
+        FactionPersonality.magmaSmiths => _smiths,
+        FactionPersonality.krakenFaithful => _faithful,
       };
 }

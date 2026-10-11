@@ -9,28 +9,28 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/faction_race.dart';
 
 void main() {
+  const personality = FactionPersonality.murenaHorde;
+
   test('left alone, a faction tames the volcano before turn 160', () {
-    var finished = 0;
-    for (var seed = 1; seed <= 6; seed++) {
-      final Game game = playLoneFaction(
-        FactionPersonality.murenaHorde,
-        seed,
-        limit: 160,
+    final games = <Game>[
+      for (var seed = 1; seed <= 6; seed++)
+        playLoneFaction(personality, seed, limit: 160),
+    ];
+    final winners = <Game>[
+      for (final Game g in games)
+        if (VictoryChecker.winnerOf(g) != null) g,
+    ];
+
+    expect(winners.length, greaterThanOrEqualTo(5));
+    for (final Game game in winners) {
+      final Player winner = VictoryChecker.winnerOf(game)!;
+      expect(winner.name, personality.label);
+      expect(winner.buildings[BuildingType.volcanicKernel]!.level, 10);
+      // The human did nothing, so the faction's win is the human's defeat.
+      expect(
+        VictoryChecker.check(game..status = GameStatus.playing),
+        GameStatus.defeat,
       );
-      final Player? winner = VictoryChecker.winnerOf(game);
-      if (winner != null && winner.id != game.humanPlayerId) finished++;
     }
-
-    expect(finished, greaterThanOrEqualTo(5));
-  });
-
-  test('it beats a human who does nothing, and names itself', () {
-    final Game game = playLoneFaction(FactionPersonality.murenaHorde, 3);
-    final Player winner = VictoryChecker.winnerOf(game)!;
-
-    expect(winner.name, FactionPersonality.murenaHorde.label);
-    expect(winner.buildings[BuildingType.volcanicKernel]!.level, 10);
-    expect(VictoryChecker.check(game..status = GameStatus.playing),
-        GameStatus.defeat);
   });
 }

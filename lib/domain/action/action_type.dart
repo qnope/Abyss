@@ -12,6 +12,7 @@ enum ActionType {
   attackBase,
   attackPost,
   announceAttack,
+  spyBase,
   attackVolcanicKernel,
   attackHeldKernel,
   garrisonKernel,

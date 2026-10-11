@@ -9,6 +9,8 @@ import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/objective/objective_migration.dart';
 
+import 'package:abyss/domain/unit/unit_type.dart';
+
 import 'base_attack_helper.dart';
 
 class War {
@@ -49,7 +51,7 @@ War warGame({int from = 12}) {
   }
   final war = War(game);
   ObjectiveMigration.stateOf(game, war.human).tutorialEnabled = false;
-  station(war.attacker, horde);
+  station(war.attacker, {...horde, UnitType.scout: 2});
   station(war.human, {});
   station(war.rival, {});
   return war;

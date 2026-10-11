@@ -12,9 +12,9 @@ Future<void> showFactionRankingSheet(BuildContext context, Game game) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    builder: (_) => FactionRankingSheetBody(
-      standings: FactionStanding.ranking(game),
-    ),
+    builder:
+        (_) =>
+            FactionRankingSheetBody(standings: FactionStanding.ranking(game)),
   );
 }
 

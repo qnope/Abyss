@@ -2985,6 +2985,42 @@ class AppLocalizationsEs extends AppLocalizations {
   String get factionBaseAttack => 'Atacar';
 
   @override
+  String get factionSpy => 'Espiar';
+
+  @override
+  String get factionIntelTitle => 'Informe del explorador';
+
+  @override
+  String get factionIntelNone =>
+      'Sin informe de esta base. Un explorador puede traer uno.';
+
+  @override
+  String factionIntelFresh(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: 'Vigente $turns turnos más',
+      one: 'Vigente $turns turno más',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get factionIntelStale => 'Informe caducado: la base pudo cambiar';
+
+  @override
+  String get factionIntelRampart => 'Muralla';
+
+  @override
+  String get factionIntelArmy => 'Ejército';
+
+  @override
+  String get factionIntelNoArmy => 'Sin defensores';
+
+  @override
+  String get factionIntelStocks => 'Reservas';
+
+  @override
   String assaultYouAttacked(String name) {
     return 'Has atacado a $name';
   }

@@ -7,6 +7,7 @@ import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/event/event_state.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
+import 'package:abyss/domain/faction/base_intel.dart';
 import 'package:abyss/domain/faction/faction_personality.dart';
 import 'package:abyss/domain/fight/combat_side.dart';
 import 'package:abyss/domain/fight/combatant.dart';
@@ -50,6 +51,7 @@ extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
     registerAdapter(AnnouncedAttackAdapter());
     registerAdapter(BaseAssaultEntryAdapter());
+    registerAdapter(BaseIntelAdapter());
     registerAdapter(BuildingAdapter());
     registerAdapter(BuildingEntryAdapter());
     registerAdapter(BuildingTypeAdapter());
@@ -110,6 +112,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
     registerAdapter(AnnouncedAttackAdapter());
     registerAdapter(BaseAssaultEntryAdapter());
+    registerAdapter(BaseIntelAdapter());
     registerAdapter(BuildingAdapter());
     registerAdapter(BuildingEntryAdapter());
     registerAdapter(BuildingTypeAdapter());

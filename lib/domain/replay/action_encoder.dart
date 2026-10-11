@@ -16,6 +16,7 @@ import '../action/recruit_unit_action.dart';
 import '../action/research_tech_action.dart';
 import '../action/garrison_kernel_action.dart';
 import '../action/send_reinforcements_action.dart';
+import '../action/spy_base_action.dart';
 import '../action/unlock_branch_action.dart';
 import '../action/upgrade_building_action.dart';
 import '../tech/tech_option.dart';
@@ -97,6 +98,12 @@ abstract final class ActionEncoder {
         units: a.selectedUnits,
         random: a.random,
       ),
+      SpyBaseAction a => {
+        'do': 'spy',
+        'target': a.targetPlayerId == humanId
+            ? SpyBaseAction.human
+            : a.targetPlayerId,
+      },
       AnnounceAttackAction a => {
         'do': 'announceAttack',
         'units': _unitsOf(a.selectedUnits),

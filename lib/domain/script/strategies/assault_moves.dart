@@ -1,4 +1,5 @@
 import '../../action/announce_attack_action.dart';
+import '../../action/spy_base_action.dart';
 import '../../action/attack_base_action.dart';
 import '../../action/attack_post_action.dart';
 import '../../unit/unit_type.dart';
@@ -29,6 +30,11 @@ extension AssaultMoves on ScriptTurn {
           random: random,
         ),
       );
+
+  /// Sends a Scout to the base of player [targetId], who has to be one
+  /// the player has seen; returns whether the report came back.
+  bool spyOn(String targetId) =>
+      tryPerform(SpyBaseAction(targetPlayerId: targetId));
 
   /// Announces an attack with [army] on the human player, two turns
   /// ahead; returns whether it was announced. Only another player than the

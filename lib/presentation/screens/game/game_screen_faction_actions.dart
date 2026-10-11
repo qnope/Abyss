@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
+import '../../../domain/action/action_executor.dart';
 import '../../../domain/action/attack_base_validator.dart';
+import '../../../domain/action/spy_base_action.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/faction/faction.dart';
 import '../../../domain/game/game.dart';
@@ -39,6 +41,21 @@ void openFactionBaseSheet(
     faction: faction,
     headquartersLevel: target.buildings[BuildingType.headquarters]!.level,
     refusal: AttackBaseValidator.refusal(game, game.humanPlayer, target.id),
+    intel: game.humanPlayer.intel[target.id],
+    turn: game.turn,
+    spyRefusal: SpyBaseAction.refusal(game, game.humanPlayer, target.id),
+    onSpy: () {
+      ActionExecutor().execute(
+        SpyBaseAction(targetPlayerId: target.id),
+        game,
+        game.humanPlayer,
+      );
+      repository.save(game);
+      onChanged();
+      if (context.mounted) {
+        openFactionBaseSheet(context, game, repository, faction, onChanged);
+      }
+    },
     onAttack: () => Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => BaseArmySelectionScreen(

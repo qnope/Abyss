@@ -2982,6 +2982,42 @@ class AppLocalizationsFr extends AppLocalizations {
   String get factionBaseAttack => 'Attaquer';
 
   @override
+  String get factionSpy => 'Espionner';
+
+  @override
+  String get factionIntelTitle => 'Rapport d\'éclaireur';
+
+  @override
+  String get factionIntelNone =>
+      'Aucun rapport sur cette base. Un éclaireur peut en rapporter un.';
+
+  @override
+  String factionIntelFresh(int turns) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: 'Valable encore $turns tours',
+      one: 'Valable encore $turns tour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get factionIntelStale => 'Rapport périmé : la base a pu changer';
+
+  @override
+  String get factionIntelRampart => 'Rempart';
+
+  @override
+  String get factionIntelArmy => 'Armée';
+
+  @override
+  String get factionIntelNoArmy => 'Aucun défenseur';
+
+  @override
+  String get factionIntelStocks => 'Stocks';
+
+  @override
   String assaultYouAttacked(String name) {
     return 'Vous avez attaqué $name';
   }

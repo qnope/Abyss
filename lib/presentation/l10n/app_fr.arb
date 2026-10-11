@@ -1004,6 +1004,18 @@
   "buildingDegradedUnusable": "Inutilisable : ni descente, ni garnison, ni victoire",
   "factionBaseHeadquarters": "Quartier général",
   "factionBaseAttack": "Attaquer",
+  "factionSpy": "Espionner",
+  "factionIntelTitle": "Rapport d'éclaireur",
+  "factionIntelNone": "Aucun rapport sur cette base. Un éclaireur peut en rapporter un.",
+  "factionIntelFresh": "{turns, plural, one{Valable encore {turns} tour} other{Valable encore {turns} tours}}",
+  "@factionIntelFresh": {
+    "placeholders": { "turns": { "type": "int" } }
+  },
+  "factionIntelStale": "Rapport périmé : la base a pu changer",
+  "factionIntelRampart": "Rempart",
+  "factionIntelArmy": "Armée",
+  "factionIntelNoArmy": "Aucun défenseur",
+  "factionIntelStocks": "Stocks",
   "assaultYouAttacked": "Vous avez attaqué {name}",
   "@assaultYouAttacked": {
     "placeholders": { "name": { "type": "String" } }

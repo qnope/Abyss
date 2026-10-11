@@ -17,32 +17,36 @@ class FactionStandingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final personality = standing.personality;
-    final color = personality == null
-        ? AbyssColors.biolumCyan
-        : FactionColors.of(personality);
-    final depth = standing.holdsKernel
-        ? l10n.factionRankingKernel
-        : l10n.factionRankingDepth(standing.deepestLevel);
+    final color =
+        personality == null
+            ? AbyssColors.biolumCyan
+            : FactionColors.of(personality);
+    final depth =
+        standing.holdsKernel
+            ? l10n.factionRankingKernel
+            : l10n.factionRankingDepth(standing.deepestLevel);
     return ListTile(
       leading: Icon(Icons.circle, color: color),
       title: Text(
         standing.isHuman
             ? '${standing.name} (${l10n.factionRankingYou})'
             : standing.name,
-        style: standing.hasFallen
-            ? const TextStyle(color: AbyssColors.disabled)
-            : null,
+        style:
+            standing.hasFallen
+                ? const TextStyle(color: AbyssColors.disabled)
+                : null,
       ),
       subtitle: Text(
         '${l10n.factionRankingHeadquarters(standing.headquartersLevel)}'
         ' - $depth',
       ),
-      trailing: standing.hasFallen
-          ? StatusPill(
-              label: l10n.factionRankingFallen.toUpperCase(),
-              color: AbyssColors.error,
-            )
-          : null,
+      trailing:
+          standing.hasFallen
+              ? StatusPill(
+                label: l10n.factionRankingFallen.toUpperCase(),
+                color: AbyssColors.error,
+              )
+              : null,
     );
   }
 }

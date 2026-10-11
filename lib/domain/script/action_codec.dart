@@ -15,6 +15,7 @@ import '../action/recruit_unit_action.dart';
 import '../action/research_tech_action.dart';
 import '../action/garrison_kernel_action.dart';
 import '../action/send_reinforcements_action.dart';
+import '../action/spy_base_action.dart';
 import '../action/unlock_branch_action.dart';
 import '../action/upgrade_building_action.dart';
 import '../building/building_type.dart';
@@ -88,6 +89,7 @@ abstract final class ActionCodec {
           targetY: f.integer('y'),
           selectedUnits: f.units,
           random: f.rng(r)),
+      'spy' => (_) => SpyBaseAction(targetPlayerId: f.text('target')),
       'announceAttack' => (r) => AnnounceAttackAction(
           selectedUnits: f.units, random: f.rng(r)),
       'attackKernel' => (r) => AttackVolcanicKernelAction(

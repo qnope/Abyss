@@ -43,13 +43,14 @@ class PlayerAdapter extends TypeAdapter<Player> {
         worksite: fields[15] as Worksite?,
       )
       ..savedObjectiveState = fields[18] as ObjectiveState?
-      ..savedFallen = fields[19] as bool?;
+      ..savedFallen = fields[19] as bool?
+      ..savedIntel = (fields[20] as Map?)?.cast<String, BaseIntel>();
   }
 
   @override
   void write(BinaryWriter writer, Player obj) {
     writer
-      ..writeByte(19)
+      ..writeByte(20)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -87,7 +88,9 @@ class PlayerAdapter extends TypeAdapter<Player> {
       ..writeByte(18)
       ..write(obj.savedObjectiveState)
       ..writeByte(19)
-      ..write(obj.savedFallen);
+      ..write(obj.savedFallen)
+      ..writeByte(20)
+      ..write(obj.savedIntel);
   }
 
   @override

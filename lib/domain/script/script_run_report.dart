@@ -87,7 +87,7 @@ class ScriptRunReport {
     'script': scriptName,
     'seed': seed,
     'status': status.name,
-    'factionWon': factionWon,
+    if (factionWon) 'factionWon': true,
     'turnsPlayed': turnsPlayed,
     'raidsRepelled': raidsRepelled,
     'raidsLost': raidsLost,

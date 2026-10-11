@@ -32,6 +32,7 @@ class FactionBrain extends GameScript {
       defends: traits.defends,
       contests: false,
       chasesWrecks: true,
+      huntsUnderRaid: true,
       growth: traits.growth,
       explorers: traits.explorers,
     ).playTurn(turn);

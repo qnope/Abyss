@@ -550,6 +550,8 @@
   "@volcanoLevelsLost": { "placeholders": { "count": { "type": "int" } } },
   "volcanoGarrisonUnits": "Mettre en garnison",
   "volcanoWithdraw": "Retirer",
+  "undefendedPostWarning": "{kind, select, faille{Ta Faille} other{Ta Cheminée}} n'a aucun défenseur au niveau {level}",
+  "@undefendedPostWarning": { "placeholders": { "kind": { "type": "String" }, "level": { "type": "int" } } },
   "volcanoDueWarning": "Vague sur le Noyau ce tour : {wave}, et aucune garnison. Le Noyau perdra probablement un niveau.",
   "@volcanoDueWarning": { "placeholders": { "wave": { "type": "String" } } },
   "volcanoStatus": "Noyau niv. {level}, fin du tour : {wave} contre une garnison de {size}",

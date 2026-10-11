@@ -386,6 +386,7 @@
   "volcanoLevelsLost": "Levels lost to the waves: {count}",
   "volcanoGarrisonUnits": "Garrison units",
   "volcanoWithdraw": "Withdraw",
+  "undefendedPostWarning": "{kind, select, faille{Your Rift} other{Your Vent}} has no defender on level {level}",
   "volcanoDueWarning": "Wave on the Core this turn: {wave}, and no garrison. The Core will probably lose a level.",
   "volcanoStatus": "Core lv. {level}, end of turn: {wave} against a garrison of {size}",
   "volcanoRepelled": "Volcano: wave repelled, {losses}",

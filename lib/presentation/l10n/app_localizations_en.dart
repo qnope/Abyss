@@ -1491,6 +1491,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get volcanoWithdraw => 'Withdraw';
 
   @override
+  String undefendedPostWarning(String kind, int level) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'faille': 'Your Rift',
+      'other': 'Your Vent',
+    });
+    return '$_temp0 has no defender on level $level';
+  }
+
+  @override
   String volcanoDueWarning(String wave) {
     return 'Wave on the Core this turn: $wave, and no garrison. The Core will probably lose a level.';
   }

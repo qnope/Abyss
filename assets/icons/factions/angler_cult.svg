@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs>
+<radialGradient id="acWater" cx="32" cy="34" r="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2B1B4A"/><stop offset="0.55" stop-color="#150E27"/><stop offset="1" stop-color="#05060F"/></radialGradient>
+<radialGradient id="acLure" cx="44" cy="12" r="16" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E1D5FF" stop-opacity="0.95"/><stop offset="0.3" stop-color="#B388FF" stop-opacity="0.5"/><stop offset="1" stop-color="#B388FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="acBulb" cx="44" cy="13" r="4.6" fx="42.6" fy="11.4" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.5" stop-color="#D1C4E9"/><stop offset="1" stop-color="#9575CD"/></radialGradient>
+<linearGradient id="acBody" x1="10" y1="20" x2="52" y2="58" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5E4A8C"/><stop offset="0.5" stop-color="#2E2252"/><stop offset="1" stop-color="#120B24"/></linearGradient>
+</defs>
+<circle cx="32" cy="32" r="30" fill="url(#acWater)" stroke="#B388FF" stroke-width="2"/>
+<circle cx="44" cy="12" r="16" fill="url(#acLure)"/>
+<circle cx="32" cy="32" r="26.5" fill="none" stroke="#4527A0" stroke-width="0.9" stroke-dasharray="2 3"/>
+<path d="M30 24 C30 12 36 8 42.5 11" fill="none" stroke="#9575CD" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="44" cy="13" r="4.4" fill="url(#acBulb)"/>
+<path d="M41 12 C42 10.4 43.6 10 45 10.4" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M9 40 C9 28 18 22 30 22 C42 22 53 28 55 38 C56 46 50 54 38 55 C24 56 9 52 9 40 Z" fill="url(#acBody)" stroke="#7E57C2" stroke-width="1.2"/>
+<path d="M13 34 C18 28 26 26 33 27" fill="none" stroke="#B388FF" stroke-opacity="0.45" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M10 42 C16 46 22 47 29 46 C36 45 44 47 52 44 L53 48 C44 55 24 56 12 50 Z" fill="#0B0618" opacity="0.8"/>
+<path d="M12 45 L15.5 40.5 L18 46 L22 41 L25 47 L30 42 L34 47 L39 42.500 L43 47 L47 43 L51 46" fill="none" stroke="#F3E5F5" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="22" cy="31" r="5.8" fill="#FFF8E1"/>
+<circle cx="22.8" cy="31.4" r="3.2" fill="#B388FF"/>
+<circle cx="23.4" cy="31.6" r="1.7" fill="#0B0618"/>
+<circle cx="21.4" cy="29.4" r="1" fill="#FFFFFF"/>
+<path d="M53 33 L61 28 L59 38 L62 46 L52 44" fill="#4527A0" stroke="#7E57C2" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="17" cy="52" r="1.2" fill="#B388FF" opacity="0.7"/><circle cx="50" cy="58" r="1" fill="#B388FF" opacity="0.6"/><circle cx="12" cy="15" r="1.2" fill="#D1C4E9" opacity="0.5"/>
+</svg>

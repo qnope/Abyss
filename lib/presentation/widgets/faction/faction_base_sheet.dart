@@ -9,6 +9,7 @@ import '../../theme/abyss_colors.dart';
 import '../../theme/faction_colors.dart';
 import '../map/sheet_info_row.dart';
 import 'base_intel_report.dart';
+import 'faction_emblem.dart';
 
 /// Opens the sheet of the base of [faction], whose headquarters stands at
 /// [headquartersLevel]. [refusal] is why the human may not attack it
@@ -78,7 +79,7 @@ class FactionBaseSheet extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.circle, color: color, size: 48),
+            FactionEmblem(personality: faction.personality, size: 64),
             const SizedBox(height: 12),
             Text(
               faction.name,

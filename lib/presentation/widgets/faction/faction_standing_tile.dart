@@ -5,6 +5,7 @@ import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../../theme/faction_colors.dart';
 import '../common/status_pill.dart';
+import 'faction_emblem.dart';
 
 /// One line of the ranking: the colour of the player, its name, what is
 /// known of it, and a pill when it has fallen.
@@ -26,7 +27,10 @@ class FactionStandingTile extends StatelessWidget {
             ? l10n.factionRankingKernel
             : l10n.factionRankingDepth(standing.deepestLevel);
     return ListTile(
-      leading: Icon(Icons.circle, color: color),
+      leading:
+          personality == null
+              ? Icon(Icons.circle, color: color)
+              : FactionEmblem(personality: personality, size: 36),
       title: Text(
         standing.isHuman
             ? '${standing.name} (${l10n.factionRankingYou})'

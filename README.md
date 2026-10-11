@@ -31,7 +31,7 @@ coverage report.
 ### App icon
 
 The `ios/` folder is versioned, with the Abyss icon and the three languages
-already in place (bundle id `com.qnope.abyss`; to run on a device, pick your
+already in place (bundle id `com.morriatech.abyss`; to run on a device, pick your
 own Team under Signing & Capabilities in Xcode). The other platform folders
 (`web/`, `android/`) are not versioned: each build job runs `flutter create`,
 then `.github/scripts/generate_app_icons.sh` replaces the default Flutter icon

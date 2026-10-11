@@ -1257,20 +1257,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mapCaptured => 'Capturada';
 
   @override
-  String mapUnitsOnLevel(int count, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count unidades en el Nivel $level',
-      one: '$count unidad en el Nivel $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String mapBuildingRequired(String building) {
     return 'Edificio necesario para enviar unidades: $building';
   }
+
+  @override
+  String mapDefendersOnLevel(int level) {
+    return 'Defensores en el Nivel $level';
+  }
+
+  @override
+  String get mapNoDefenders =>
+      'Sin unidades. Si una facción ataca, el puesto cae y su módulo queda destruido.';
 
   @override
   String mapSendUnitsToLevel(int level) {

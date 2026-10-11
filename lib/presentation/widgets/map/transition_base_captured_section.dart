@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/building/building_type.dart';
 import '../../../domain/map/transition_base.dart';
+import '../../../domain/unit/unit_type.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../unit/unit_count_panel.dart';
 import 'transition_base_sheet.dart';
 
 class TransitionBaseCapturedSection extends StatelessWidget {
@@ -12,14 +14,14 @@ class TransitionBaseCapturedSection extends StatelessWidget {
   final VoidCallback? onDescend;
   final bool hasBuildingRequirement;
   final BuildingType requiredBuilding;
-  final int unitCountOnTarget;
+  final Map<UnitType, int> unitsOnTarget;
 
   const TransitionBaseCapturedSection({
     super.key,
     required this.transitionBase,
     required this.hasBuildingRequirement,
     required this.requiredBuilding,
-    required this.unitCountOnTarget,
+    required this.unitsOnTarget,
     this.onDescend,
   });
 
@@ -49,15 +51,12 @@ class TransitionBaseCapturedSection extends StatelessWidget {
               color: AbyssColors.pearlWhite,
             ),
           ),
-          if (unitCountOnTarget > 0) ...[
-            const SizedBox(height: 6),
-            Text(
-              l10n.mapUnitsOnLevel(unitCountOnTarget, targetLevel),
-              style: textTheme.bodySmall?.copyWith(
-                color: AbyssColors.onSurfaceDim,
-              ),
-            ),
-          ],
+          const SizedBox(height: 12),
+          UnitCountPanel(
+            title: l10n.mapDefendersOnLevel(targetLevel),
+            units: unitsOnTarget,
+            emptyMessage: l10n.mapNoDefenders,
+          ),
           const Divider(height: 24),
           if (!hasBuildingRequirement) ...[
             Text(

@@ -7,9 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 /// plan `plan85` (a win, played again with other dice and a careful
 /// defence) and the careful script, 160 games each with the random events
 /// and the objective rewards (see `Difficulty`): about 50 % of wins in
-/// easy, 15 % in normal and 5 % in hard. In normal, seed 92 is one of the
-/// plan's wins and seed 49 falls the earliest (turn 55; seed 3 used to,
-/// before the rewards let it hold to turn 111); seed 3 wins in easy and
+/// easy, 15 % in normal and 5 % in hard. In normal, seed 49 is one of the
+/// plan's wins and seed 87 falls the earliest (turn 55; seeds 92 and 49
+/// used to, before the solar panels gave 10 % more energy); seed 3 wins in easy and
 /// falls in normal (seed 2 used to, it now survives easy to turn 120).
 void main() {
   ScriptRunner runner(Difficulty d) =>
@@ -18,7 +18,7 @@ void main() {
   test('the human plan still wins some games', () {
     final run = runner(
       Difficulty.normal,
-    ).run(ScriptLibrary.byName('plan85'), seed: 92);
+    ).run(ScriptLibrary.byName('plan85'), seed: 49);
 
     expect(run.isVictory, isTrue);
   }, timeout: const Timeout(Duration(minutes: 5)));
@@ -26,7 +26,7 @@ void main() {
   test('the human plan can also fall to the raids', () {
     final run = runner(
       Difficulty.normal,
-    ).run(ScriptLibrary.byName('plan85'), seed: 49);
+    ).run(ScriptLibrary.byName('plan85'), seed: 87);
 
     expect(run.isDefeat, isTrue);
     expect(run.turnsPlayed, lessThan(60));

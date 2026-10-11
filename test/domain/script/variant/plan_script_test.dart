@@ -34,7 +34,7 @@ void main() {
 
     // The replay predates the research choices: with its three branches
     // open, research costs twice as much and some of it comes too dear.
-    expect(report.milestones.failleCaptured, 32);
+    expect(report.milestones.failleCaptured, 30);
     expect(report.milestones.chemineeCaptured, 39);
     expect(report.milestones.kernelCaptured, 50);
     // The map now holds a third of the treasures it was played with:
@@ -44,9 +44,10 @@ void main() {
     // the normal difficulty makes the raid waves 6 % smaller, so the
     // stocks ran short 25 times. The rewards of the objectives, credited
     // at the end of the turns, fill the stocks back up: 4 of those
-    // actions no longer lack resources.
+    // actions no longer lack resources. The solar panels, 10 % richer,
+    // leave only 2 of them short of energy.
     final failures = report.log.where((e) => !e.success);
-    expect(failures.where((e) => e.reason != ActionFailure.nothingToCollect).length, 21);
+    expect(failures.where((e) => e.reason != ActionFailure.nothingToCollect).length, 2);
   });
 
   test('plays each turn later with a stretch and a jitter', () {

@@ -31,7 +31,7 @@ void main() {
   setUp(() => resolver = TurnResolver());
 
   test('full consumption scenario over multiple turns', () {
-    // Energy: prod=18, cons=21 => net -3/turn
+    // Energy: prod=19, cons=21 => net -2/turn
     // Algae: prod=50, cons=10 (scouts) => net +40/turn
     final game = _game(
       buildings: {
@@ -43,7 +43,7 @@ void main() {
       resources: {
         ...PlayerDefaults.resources(),
         ResourceType.energy: Resource(
-            type: ResourceType.energy, amount: 60, maxStorage: 1000),
+            type: ResourceType.energy, amount: 40, maxStorage: 2000),
       },
       unitsPerLevel: {1: {
         ...PlayerDefaults.unitsPerLevel()[1]!,
@@ -54,13 +54,13 @@ void main() {
     // Keep random events out too: a cold current would cut the algae.
     player.eventState.schedule(1000);
 
-    // Turn 1: energy 60->57, algae 100->140
+    // Turn 1: energy 40->38, algae 100->140
     var result = resolver.resolve(game);
-    expect(player.resources[ResourceType.energy]!.amount, 57);
+    expect(player.resources[ResourceType.energy]!.amount, 38);
     expect(player.resources[ResourceType.algae]!.amount, 140);
     expect(result.deactivatedBuildings, isEmpty);
 
-    // Turns 2-20: energy drains by 3 each turn
+    // Turns 2-20: energy drains by 2 each turn
     for (var i = 0; i < 19; i++) {
       // Keep raids out of this energy scenario: a pillage would drain it.
       player.raidState.noise = 0;
@@ -70,12 +70,12 @@ void main() {
     expect(player.resources[ResourceType.energy]!.amount, 0);
     expect(player.resources[ResourceType.algae]!.amount, 900);
 
-    // Turn 21: stock=0, available=18 < consumption=21 => deactivation
+    // Turn 21: stock=0, available=19 < consumption=21 => deactivation
     result = resolver.resolve(game);
     expect(result.deactivatedBuildings, isNotEmpty);
     expect(result.deactivatedBuildings, contains(BuildingType.algaeFarm));
     // Deactivated buildings produce nothing
-    expect(player.resources[ResourceType.energy]!.amount, 14);
+    expect(player.resources[ResourceType.energy]!.amount, 0);
     expect(player.resources[ResourceType.algae]!.amount, 890);
   });
 
@@ -94,8 +94,8 @@ void main() {
     expect(player.resources[ResourceType.algae]!.amount, algaeBefore);
   });
 
-  test('consumption exactly equals production', () {
-    // SolarPanel lvl 2 produces 54, total consumption = 54
+  test('consumption below production fills the stock', () {
+    // SolarPanel lvl 2 produces 59, total consumption = 54
     // HQ(18)+SolarPanel(2)+Barracks(18)+AlgaeFarm(10)+OreExtractor(6)
     final game = _game(
       buildings: {
@@ -111,7 +111,7 @@ void main() {
     final result = resolver.resolve(game);
 
     expect(result.deactivatedBuildings, isEmpty);
-    expect(player.resources[ResourceType.energy]!.amount, energyBefore);
+    expect(player.resources[ResourceType.energy]!.amount, energyBefore + 5);
   });
 
   test('deactivation restores next turn when conditions improve', () {

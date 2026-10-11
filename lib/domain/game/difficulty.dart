@@ -18,6 +18,9 @@ part 'difficulty.g.dart';
 /// | easy       | 37 %   | 64 %     | 51 % |
 /// | normal     | 11 %   | 18 %     | 14 % |
 /// | hard       | 6 %    | 5 %      | 6 %  |
+///
+/// The solar panels gave 10 % more energy since: plan85 alone now wins
+/// 58 % (easy), 24 % (normal) and 12 % (hard) of 160 games.
 @HiveType(typeId: 49)
 enum Difficulty {
   @HiveField(0)

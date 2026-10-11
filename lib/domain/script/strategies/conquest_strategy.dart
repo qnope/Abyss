@@ -58,6 +58,9 @@ class ConquestStrategy extends GameScript {
   /// The order in which it grows the base.
   final List<BuildingType> growth;
 
+  /// Scouts kept exploring the base level while it is not fully known.
+  final int explorers;
+
   @override
   final String name;
 
@@ -68,6 +71,7 @@ class ConquestStrategy extends GameScript {
     this.defends = true,
     this.guardsKernel = true,
     this.growth = growthOrder,
+    this.explorers = 2,
     this.name = 'conquest',
   });
 
@@ -98,14 +102,14 @@ class ConquestStrategy extends GameScript {
         !turn.game.isVolcanicKernelCapturedBy(turn.player.id);
     final int reserve = expedition ? ConquestMoves.expeditionScouts : 0;
     final int home = turn.player.unitsOnLevel(1)[UnitType.scout]!.count;
-    final int wanted = reserve + (turn.fullyExplored(1) ? 0 : 2);
+    final int wanted = reserve + (turn.fullyExplored(1) ? 0 : explorers);
     if (home < wanted) {
       turn.tryPerform(
         RecruitUnitAction(unitType: UnitType.scout, quantity: wanted - home),
       );
     }
     final int spare = turn.player.unitsOnLevel(1)[UnitType.scout]!.count;
-    turn.explore(1, min(2, spare - reserve), (GridPosition p) {
+    turn.explore(1, min(explorers, spare - reserve), (GridPosition p) {
       final bool found = turn.ownBase(1) != null || turn.openBase(1) != null;
       return found ? 0 : 0.3 * _fromCentre(p);
     });

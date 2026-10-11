@@ -53,17 +53,22 @@ void main() {
 
   test('the army that fights is the announced one, less what it lost', () {
     final game = playIdleFactionGame(3, 100);
-    final first = announcements(game).first;
-    final announced = first.$2['units'] as Map;
-    final attacker = game.players[first.$2['player']]!;
-    final fight = attacker.historyEntries
-        .whereType<BaseAssaultEntry>()
-        .firstWhere((e) => !e.defending && e.turn == first.$1 + 2);
-
-    expect(fight.units, isNotEmpty);
-    for (final e in fight.units.entries) {
-      expect(e.value, lessThanOrEqualTo(announced[e.key.name] as int));
+    var checked = 0;
+    for (final (turn, action) in announcements(game)) {
+      final announced = action['units'] as Map;
+      final attacker = game.players[action['player']]!;
+      final fights = attacker.historyEntries
+          .whereType<BaseAssaultEntry>()
+          .where((e) => !e.defending && e.turn == turn + 2);
+      for (final fight in fights) {
+        expect(fight.units, isNotEmpty);
+        for (final e in fight.units.entries) {
+          expect(e.value, lessThanOrEqualTo(announced[e.key.name] as int));
+        }
+        checked++;
+      }
     }
+    expect(checked, greaterThan(0));
   });
 
   test('a game with announced attacks replays without any brain', () {

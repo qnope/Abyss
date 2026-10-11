@@ -20,7 +20,7 @@ abstract final class FactionKernelGuard {
   /// Share of the home fighters sent down to the kernel in one turn.
   static const double share = 0.5;
 
-  static void play(ScriptTurn turn) {
+  static void play(ScriptTurn turn, [double share = FactionKernelGuard.share]) {
     final Player me = turn.player;
     if (!turn.game.isVolcanicKernelCapturedBy(me.id)) return;
     final int level = KernelGarrison.kernelLevelOf(me);
@@ -38,14 +38,14 @@ abstract final class FactionKernelGuard {
     )) {
       return;
     }
-    final Map<UnitType, int> sent = _spare(turn);
+    final Map<UnitType, int> sent = _spare(turn, share);
     if (!turn.descend(1, sent)) return;
     turn.descend(2, sent);
   }
 
   /// Half of the home fighters, less what the base needs to hold the raid
   /// announced for this turn.
-  static Map<UnitType, int> _spare(ScriptTurn turn) {
+  static Map<UnitType, int> _spare(ScriptTurn turn, double share) {
     final Map<UnitType, int> home = turn.fightersOn(1)
       ..remove(UnitType.abyssAdmiral);
     final MonsterLair? raid = turn.player.raidState.incoming;

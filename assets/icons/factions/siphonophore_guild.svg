@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs>
+<radialGradient id="sgWater" cx="32" cy="30" r="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3A1A33"/><stop offset="0.6" stop-color="#160B17"/><stop offset="1" stop-color="#05080F"/></radialGradient>
+<radialGradient id="sgGlow" cx="32" cy="30" r="26" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF80AB" stop-opacity="0.5"/><stop offset="0.5" stop-color="#FF80AB" stop-opacity="0.14"/><stop offset="1" stop-color="#FF80AB" stop-opacity="0"/></radialGradient>
+<radialGradient id="sgBell" cx="32" cy="14" r="10" fx="29" fy="11" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.4" stop-color="#F8BBD0"/><stop offset="1" stop-color="#EC407A"/></radialGradient>
+<radialGradient id="sgZoid" cx="0" cy="0" r="1" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F48FB1"/></radialGradient>
+</defs>
+<circle cx="32" cy="32" r="30" fill="url(#sgWater)" stroke="#FF80AB" stroke-width="2"/>
+<circle cx="32" cy="32" r="30" fill="url(#sgGlow)"/>
+<circle cx="32" cy="32" r="26.5" fill="none" stroke="#FF80AB" stroke-opacity="0.45" stroke-width="0.9" stroke-dasharray="2 3"/>
+<path d="M32 22 C20 28 44 32 32 38 C21 43 42 48 32 55" fill="none" stroke="#F48FB1" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M32 22 C20 28 44 32 32 38 C21 43 42 48 32 55" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.8" stroke-linecap="round"/>
+<path d="M22 12 C16 18 18 24 24 27 M42 12 C48 18 46 24 40 27" fill="none" stroke="#F8BBD0" stroke-opacity="0.75" stroke-width="1.2" stroke-linecap="round"/>
+<ellipse cx="32" cy="14" rx="9.500" ry="8" fill="url(#sgBell)" stroke="#AD1457" stroke-width="1"/>
+<path d="M24 14 C25 8 31 6 36 7" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M23 20 C26 23 38 23 41 20" fill="none" stroke="#EC407A" stroke-width="2" stroke-linecap="round"/>
+<circle cx="29" cy="30" r="3.2" fill="url(#sgZoid)" stroke="#AD1457" stroke-width="0.8"/>
+<circle cx="36" cy="35" r="3.2" fill="url(#sgZoid)" stroke="#AD1457" stroke-width="0.8"/>
+<circle cx="28" cy="41" r="3.2" fill="url(#sgZoid)" stroke="#AD1457" stroke-width="0.8"/>
+<circle cx="35.500" cy="47" r="3" fill="url(#sgZoid)" stroke="#AD1457" stroke-width="0.8"/>
+<path d="M18 36 C16 42 18 48 22 51 M46 28 C49 34 48 42 44 48" fill="none" stroke="#F8BBD0" stroke-opacity="0.7" stroke-width="1.1" stroke-linecap="round"/>
+<circle cx="14" cy="26" r="1.3" fill="#F8BBD0" fill-opacity="0.6"/><circle cx="51" cy="20" r="1.6" fill="#F8BBD0" fill-opacity="0.5"/><circle cx="48" cy="52" r="1" fill="#F8BBD0" fill-opacity="0.5"/>
+</svg>

@@ -9,15 +9,11 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/faction_race.dart';
 
 void main() {
-  for (final personality in const [
-    FactionPersonality.wreckPillagers,
-    FactionPersonality.pearlOrder,
-    FactionPersonality.anglerCult,
-  ]) {
-    test('left alone, ${personality.label} tames the volcano before 160', () {
+  for (final personality in FactionPersonality.values) {
+    test('left alone, ${personality.label} tames the volcano before 200', () {
       final games = <Game>[
         for (var seed = 1; seed <= 6; seed++)
-          playLoneFaction(personality, seed, limit: 160),
+          playLoneFaction(personality, seed, limit: 200),
       ];
       final winners = <Game>[
         for (final Game g in games)

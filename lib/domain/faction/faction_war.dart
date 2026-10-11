@@ -63,12 +63,14 @@ abstract final class FactionWar {
     if (!isDue(turn.number, personality)) return;
     if (turn.game.humanPlayer.raidState.hasAttackFrom(turn.player.id)) return;
     _keepAScout(turn.player, turn);
-    final ArmyPlanner planner = FactionTraits.of(personality).planner;
+    final FactionTraits traits = FactionTraits.of(personality);
+    final ArmyPlanner planner = traits.planner;
+    if (traits.kernelFirst && FactionKernelWar.play(turn, planner)) return;
     final bool attacked =
-        FactionTraits.of(personality).postsFirst
+        traits.postsFirst
             ? FactionPostWar.play(turn, planner) || _raidBases(turn, planner)
             : _raidBases(turn, planner) || FactionPostWar.play(turn, planner);
-    if (!attacked) FactionKernelWar.play(turn, planner);
+    if (!attacked && !traits.kernelFirst) FactionKernelWar.play(turn, planner);
   }
 
   /// A faction spies before it strikes: it keeps a Scout at home for the

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/event/effects/wreck_effect.dart';
 import 'package:abyss/domain/event/event_rules.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
@@ -91,5 +92,22 @@ void main() {
     final last = _wreck(turn: 12 + EventRules.wreckTurns);
     scriptTurnOf(last.game).fetchWreck();
     expect(last.player.pendingExplorations, isEmpty);
+  });
+  test('a bold player searches the wreck whatever the noise and raids', () {
+    final w = _wreck(scouts: 0);
+    w.player.raidState.noise = NoiseRules.threshold - 1;
+    w.player.addRevealedCell(1, w.at);
+    scriptTurnOf(w.game).fetchWreck(bold: true);
+    expect(w.game.levels[1]!.cellAt(w.at.x, w.at.y).isCollected, isTrue);
+  });
+
+  test('a bold player recruits the scout it lacks and sends it', () {
+    final w = _wreck(scouts: 0);
+    for (final r in w.player.resources.values) {
+      r.amount = r.maxStorage;
+    }
+    w.player.buildings[BuildingType.barracks]!.level = 1;
+    scriptTurnOf(w.game).fetchWreck(bold: true);
+    expect(w.player.pendingExplorations.single.target, w.at);
   });
 }

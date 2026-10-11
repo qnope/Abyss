@@ -89,9 +89,9 @@ void main() {
       });
       final before = p.resources[ResourceType.energy]!.amount;
       final result = resolver.resolve(_singleGame(p));
-      expect(p.resources[ResourceType.energy]!.amount, before + 50);
+      expect(p.resources[ResourceType.energy]!.amount, before + 55);
       final c = result.changes.firstWhere((c) => c.type == ResourceType.energy);
-      expect(c.produced, 54);
+      expect(c.produced, 59);
       expect(c.consumed, 4);
     });
 

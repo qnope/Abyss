@@ -1052,6 +1052,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonGotIt => 'Compris';
 
   @override
+  String get commonNext => 'Suivant';
+
+  @override
   String get commonSend => 'Envoyer';
 
   @override

@@ -41,6 +41,30 @@ void main() {
     });
   });
 
+  group('TipCatalog.pendingFor', () {
+    List<TipId> pending() =>
+        TipCatalog.pendingFor(game, game.humanPlayer).map((t) => t.id).toList();
+
+    test('every unseen tip that applies, in catalog order', () {
+      game.humanPlayer.eventState.recordDraw(RandomEventType.storm);
+      game.humanPlayer.raidState.addNoise(NoiseRules.threshold ~/ 4);
+      expect(pending(), [
+        TipId.noiseGauge,
+        TipId.events,
+        EventTips.idOf(RandomEventType.storm),
+      ]);
+    });
+
+    test('skips the seen ones, none when the tips are off', () {
+      game.humanPlayer.eventState.recordDraw(RandomEventType.storm);
+      game.humanPlayer.raidState.addNoise(NoiseRules.threshold ~/ 4);
+      state().markSeen(TipId.noiseGauge);
+      expect(pending().first, TipId.events);
+      state().tipsEnabled = false;
+      expect(pending(), isEmpty);
+    });
+  });
+
   group('TipCatalog.nextFor', () {
     test('none while no situation calls for a tip', () {
       expect(next(), isNull);

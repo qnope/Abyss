@@ -1041,6 +1041,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonGotIt => 'Got it';
 
   @override
+  String get commonNext => 'Next';
+
+  @override
   String get commonSend => 'Send';
 
   @override

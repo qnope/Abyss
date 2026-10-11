@@ -20,15 +20,21 @@ abstract final class TipCatalog {
 
   static Tip byId(TipId id) => _byId[id]!;
 
-  /// The first tip [player] has not seen yet whose situation is there in
-  /// [game], `null` when the tips are off or none applies. Only the
-  /// unseen tips are checked.
-  static Tip? nextFor(Game game, Player player) {
+  /// Every tip [player] has not seen yet whose situation is there in
+  /// [game], in catalog order; empty when the tips are off or none
+  /// applies. Only the unseen tips are checked.
+  static List<Tip> pendingFor(Game game, Player player) {
     final state = ObjectiveMigration.stateOf(game, player);
-    if (!state.tipsEnabled) return null;
-    for (final tip in all) {
-      if (!state.hasSeen(tip.id) && tip.appliesTo(game, player)) return tip;
-    }
-    return null;
+    if (!state.tipsEnabled) return const [];
+    return [
+      for (final tip in all)
+        if (!state.hasSeen(tip.id) && tip.appliesTo(game, player)) tip,
+    ];
+  }
+
+  /// The first of the [pendingFor] tips, `null` when there is none.
+  static Tip? nextFor(Game game, Player player) {
+    final pending = pendingFor(game, player);
+    return pending.isEmpty ? null : pending.first;
   }
 }

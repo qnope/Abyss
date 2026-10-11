@@ -1696,6 +1696,12 @@ abstract class AppLocalizations {
   /// **'Compris'**
   String get commonGotIt;
 
+  /// No description provided for @commonNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivant'**
+  String get commonNext;
+
   /// No description provided for @commonSend.
   ///
   /// In fr, this message translates to:

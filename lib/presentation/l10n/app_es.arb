@@ -8,6 +8,12 @@
   "newGameNameTooShort": "El nombre debe tener al menos {min} caracteres",
   "newGameTutorial": "Tutorial",
   "newGameTutorialHint": "Una guía te acompaña en los primeros turnos",
+  "newGameFactions": "Facciones rivales",
+  "newGameFactionsNone": "Ninguna: juegas solo contra los monstruos",
+  "newGameFactionsCount": "{count, plural, one{{count} facción corre contigo hacia el Volcán} other{{count} facciones corren contigo hacia el Volcán}}",
+  "@newGameFactionsCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "newGameStart": "Empezar",
   "difficultyTitle": "Dificultad",
 

@@ -11,6 +11,12 @@
   },
   "newGameTutorial": "Tutoriel",
   "newGameTutorialHint": "Un guide t'accompagne sur les premiers tours",
+  "newGameFactions": "Factions rivales",
+  "newGameFactionsNone": "Aucune : tu joues seul face aux monstres",
+  "newGameFactionsCount": "{count, plural, one{{count} faction court avec toi vers le Volcan} other{{count} factions courent avec toi vers le Volcan}}",
+  "@newGameFactionsCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "newGameStart": "Commencer",
   "difficultyTitle": "Difficulté",
 

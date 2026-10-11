@@ -142,6 +142,24 @@ abstract class AppLocalizations {
   /// **'Un guide t\'accompagne sur les premiers tours'**
   String get newGameTutorialHint;
 
+  /// No description provided for @newGameFactions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Factions rivales'**
+  String get newGameFactions;
+
+  /// No description provided for @newGameFactionsNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune : tu joues seul face aux monstres'**
+  String get newGameFactionsNone;
+
+  /// No description provided for @newGameFactionsCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} faction court avec toi vers le Volcan} other{{count} factions courent avec toi vers le Volcan}}'**
+  String newGameFactionsCount(int count);
+
   /// No description provided for @newGameStart.
   ///
   /// In fr, this message translates to:

@@ -113,7 +113,8 @@ void main() {
         findsOneWidget);
     final level = KernelGarrison.kernelLevelOf(Player(name: 'Nemo'));
     expect(find.text('Núcleo nivel $level'), findsOneWidget);
-    expect(find.text('Guarnición: 0 unidades'), findsOneWidget);
+    expect(find.text('Guarnición'), findsOneWidget);
+    expect(find.text('Ninguna unidad en la guarnición.'), findsOneWidget);
     expect(find.text('Poner en guarnición'), findsOneWidget);
     expect(find.text('Retirar'), findsOneWidget);
   });

@@ -5,6 +5,7 @@ import '../../extensions/monster_lair_extensions.dart';
 import '../../extensions/rampart_texts.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../unit/unit_count_panel.dart';
 
 /// Part of the kernel sheet once it is captured: its level, the magma
 /// rampart, the garrison and the next kraken wave, with the buttons that
@@ -26,6 +27,10 @@ class KernelGarrisonPanel extends StatelessWidget {
     final style = Theme.of(context).textTheme.bodyMedium;
     final level = KernelGarrison.kernelLevelOf(player);
     final size = KernelGarrison.sizeOf(player);
+    final outside = player
+        .unitsOnLevel(KernelGarrison.volcanoLevel)
+        .values
+        .fold<int>(0, (sum, u) => sum + u.count);
     final wave = player.volcanoState.incoming;
     final state = player.volcanoState;
     final l10n = context.l10n;
@@ -36,7 +41,20 @@ class KernelGarrisonPanel extends StatelessWidget {
         if (level > 0)
           Text(l10n.volcanoMagmaRampart(RampartTexts.magma(l10n, level)),
               style: style?.copyWith(color: AbyssColors.coralPink)),
-        Text(l10n.volcanoGarrison(size), style: style),
+        const SizedBox(height: 8),
+        UnitCountPanel(
+          title: l10n.volcanoGarrisonTitle,
+          units: KernelGarrison.of(player),
+          emptyMessage: l10n.volcanoGarrisonEmpty,
+        ),
+        if (outside > 0)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(
+              l10n.volcanoOutsideGarrison(outside, KernelGarrison.volcanoLevel),
+              style: style?.copyWith(color: AbyssColors.onSurfaceDim),
+            ),
+          ),
         if (wave != null) ...[
           const SizedBox(height: 8),
           Text(l10n.volcanoNextWave(wave.waveLabel(l10n)),

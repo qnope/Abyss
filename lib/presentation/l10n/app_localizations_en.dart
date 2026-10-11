@@ -1404,12 +1404,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String volcanoGarrison(int count) {
+  String get volcanoGarrisonTitle => 'Garrison';
+
+  @override
+  String get volcanoGarrisonEmpty => 'No unit in the garrison.';
+
+  @override
+  String volcanoOutsideGarrison(int count, int level) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Garrison: $count units',
-      one: 'Garrison: $count unit',
+      other: 'Outside the garrison, on Level $level: $count units',
+      one: 'Outside the garrison, on Level $level: $count unit',
     );
     return '$_temp0';
   }

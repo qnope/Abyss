@@ -570,7 +570,7 @@
   "guideAdmiralNeedsBarracks": "Para tomar {post, select, faille{una Falla} cheminee{una Chimenea} other{el Núcleo}}, necesitas un Almirante. Sube los Barracones al nivel {level}.",
   "guideAdmiralToRecruit": "Recluta un Almirante: no combate, pero sin él {post, select, faille{la Falla} cheminee{la Chimenea} other{el Núcleo}} no se toma.",
   "guideAdmiralToSend": "Para tomar {post, select, faille{la Falla} cheminee{la Chimenea} other{el Núcleo}}, tu Almirante debe estar en el nivel {level}. Envíalo por tu puesto resaltado en el Mapa.",
-  "guidePostToFind": "Explora el Mapa para encontrar {post, select, faille{una Falla} cheminee{una Chimenea} other{el Núcleo}}.",
+  "guidePostToFind": "{post, select, faille{Explora el Mapa para encontrar una Falla, pero no olvides seguir mejorando tus edificios y tu ejército.} cheminee{Explora el Mapa en el nivel 2 para encontrar una Chimenea, pero no olvides seguir mejorando tus edificios y tu ejército.} other{Explora el Mapa para encontrar el Núcleo.}}",
   "guidePostAssault": "¡{post, select, faille{Una Falla} cheminee{Una Chimenea} other{El Núcleo}}! Tu Almirante debe sobrevivir: cúbrelo con Guardianes.",
   "guidePostAssaultArmy": "{count, plural, =0{Tu escolta basta} one{Envíalo con al menos {count} Arponero} other{Envíalo con al menos {count} Arponeros}}: ganas {wins} veces de {rehearsals}.",
   "guideAdmiralFell": "Victoria, pero tu Almirante cayó: {post, select, faille{la Falla no está tomada} cheminee{la Chimenea no está tomada} other{el Núcleo no está tomado}}. Cúbrelo con Guardianes y vuelve a intentarlo.",

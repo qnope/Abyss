@@ -1,6 +1,5 @@
 import 'package:abyss/domain/fight/assault/assault_target.dart';
 import 'package:abyss/domain/objective/guide/guide_advice.dart';
-import 'package:abyss/domain/objective/guide/guide_campaign_messages.dart';
 import 'package:abyss/domain/objective/guide/guide_message.dart';
 import 'package:abyss/domain/objective/guide/guide_target.dart';
 import 'package:abyss/domain/objective/objective_id.dart';

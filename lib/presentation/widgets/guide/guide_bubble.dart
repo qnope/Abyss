@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/objective/guide/guide_advice.dart';
-import '../../../domain/objective/guide/guide_campaign_messages.dart';
+import '../../../domain/objective/guide/guide_message.dart';
 import '../../extensions/guide_message_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';

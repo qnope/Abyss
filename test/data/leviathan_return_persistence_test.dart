@@ -47,6 +47,7 @@ void main() {
       at: GridPosition(x: 4, y: 6),
       capturedOn: 9,
     );
+    game.leviathanReturn!.markReady(11);
 
     final state = (await reload(game)).leviathanReturn!;
 
@@ -54,6 +55,8 @@ void main() {
     expect(state.level, 1);
     expect(state.at, GridPosition(x: 4, y: 6));
     expect(state.strikeTurn, 12);
+    expect(state.readyTurn, 11);
+    expect(state.dueTurn, 14);
     expect(state.isScheduled, isTrue);
   });
 

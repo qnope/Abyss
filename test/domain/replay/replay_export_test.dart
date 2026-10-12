@@ -45,6 +45,16 @@ void main() {
       expect(ReplayExport.canExport(game), isFalse);
     });
 
+    test('a game saved before the Léviathan return is not exact: its '
+        'replay rebuilds a game that has it', () {
+      final Game game = GameFactory.newSinglePlayer(playerName: 'Nemo')
+        ..leviathanReturn = null;
+
+      expect(game.replay!.exact, isTrue);
+      expect(ReplayExport.isExact(game), isFalse);
+      expect(ReplayExport.toJson(game)['exact'], isFalse);
+    });
+
     test('names the file after the player and the turn', () {
       final Game game = GameFactory.newSinglePlayer(playerName: 'Le Nautile');
 

@@ -87,10 +87,12 @@ class FactionAttackReport {
           ? TransitionBaseName.parse(entry.postName!)
           : null;
 
-  /// The passage building destroyed with the post taken, if any.
+  /// The passage building destroyed with the post taken, if it stood.
   BuildingType? get passageLost {
     final TransitionBaseName? post = this.post;
-    if (post == null || !entry.victory) return null;
+    if (post == null || !entry.victory || !entry.passageDestroyed) {
+      return null;
+    }
     return PostTakeover.passageOf(post.type);
   }
 
@@ -98,10 +100,12 @@ class FactionAttackReport {
   int? get levelBelow => post?.targetLevel;
 
   /// How many units the human lost with the post or the kernel taken:
-  /// those killed defending it and those lost with it; 0 when it held.
+  /// those killed defending it and those lost with it; the defenders
+  /// killed when the kernel only lost a level; 0 when it held.
   int get unitsLost => switch (outcome) {
     AttackOutcome.postTaken ||
     AttackOutcome.kernelTaken => _sum(entry.dead) + _sum(entry.lostWithPost),
+    AttackOutcome.kernelDamaged => _sum(entry.dead),
     _ => 0,
   };
 

@@ -24,6 +24,7 @@ class PostDefencePanel extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final l10n = context.l10n;
     final PostThreat? threat = defence.threat;
+    final passage = defence.passage;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -54,7 +55,8 @@ class PostDefencePanel extends StatelessWidget {
           style: textTheme.titleSmall?.copyWith(color: AbyssColors.coralPink),
         ),
         const SizedBox(height: 4),
-        _LossLine(l10n.postDefencePassageLost(defence.passage.name)),
+        if (passage != null)
+          _LossLine(l10n.postDefencePassageLost(passage.name)),
         if (defence.unitsBelow > 0)
           _LossLine(
             l10n.postDefenceUnitsLost(defence.unitsBelow, post.targetLevel),

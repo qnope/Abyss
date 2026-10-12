@@ -73,6 +73,11 @@ class BaseAssaultEntry extends HistoryEntry {
   @HiveField(17, defaultValue: <UnitType, int>{})
   final Map<UnitType, int> lostWithPost;
 
+  /// Whether the post taken cost the defender its passage building: not
+  /// when it was not built yet. Older saves cannot tell, and say so.
+  @HiveField(18, defaultValue: true)
+  final bool passageDestroyed;
+
   BaseAssaultEntry({
     required this.turn,
     required this.victory,
@@ -91,5 +96,6 @@ class BaseAssaultEntry extends HistoryEntry {
     required this.loot,
     this.postName,
     this.lostWithPost = const {},
+    this.passageDestroyed = true,
   }) : category = HistoryEntryCategory.assault;
 }

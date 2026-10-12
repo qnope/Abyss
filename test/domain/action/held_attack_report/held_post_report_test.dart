@@ -19,8 +19,10 @@ PostWar _struck(
   TransitionBaseType kind, {
   Map<UnitType, int> below = const {UnitType.harpoonist: 5},
   Map<UnitType, int> army = horde,
+  int passage = 2,
 }) {
   final war = PostWar(kind, humanHolds: true);
+  war.human.buildings[war.passage]!.level = passage;
   war.arm(war.attacker, army);
   war.put(war.human, war.below, below);
   ActionExecutor().execute(war.strike(army), war.game, war.attacker);
@@ -64,6 +66,16 @@ void main() {
     expect(report.passageLost, BuildingType.pressureCapsule);
     expect(report.unitsLost, 3);
     expect(report.levelBelow, 3);
+  });
+
+  test('a post taken before its passage was built loses no passage', () {
+    final war = _struck(TransitionBaseType.faille, passage: 0);
+
+    final report = _endTurn(war).attacks.single;
+
+    expect(report.outcome, AttackOutcome.postTaken);
+    expect(report.entry.passageDestroyed, isFalse);
+    expect(report.passageLost, isNull);
   });
 
   test('a post taken with nobody below loses no unit', () {

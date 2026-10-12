@@ -1,56 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/fight/assault/assault_plan.dart';
 import 'package:abyss/domain/fight/assault/assault_target.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
-import 'package:abyss/presentation/widgets/map/transition_base_sheet.dart';
 
 import '../../../domain/fight/assault/assault_test_helper.dart';
-
-Widget _buildOpener({
-  required TransitionBase base,
-  bool hasBuildingRequirement = true,
-  BuildingType requiredBuilding = BuildingType.descentModule,
-  Map<UnitType, int> unitsOnTarget = const {},
-  VoidCallback? onAttack,
-  VoidCallback? onDescend,
-  AssaultPlan? assaultPlan,
-}) {
-  return MaterialApp(
-    home: Scaffold(
-      body: Builder(
-        builder: (ctx) => ElevatedButton(
-          onPressed: () => showTransitionBaseSheet(ctx,
-              transitionBase: base,
-              level: 1,
-              hasBuildingRequirement: hasBuildingRequirement,
-              requiredBuilding: requiredBuilding,
-              unitsOnTarget: unitsOnTarget,
-              onAttack: onAttack,
-              onDescend: onDescend,
-              assaultPlan: assaultPlan),
-          child: const Text('Open'),
-        ),
-      ),
-    ),
-  );
-}
-
-Future<void> _open(WidgetTester t) async {
-  await t.tap(find.text('Open'));
-  await t.pumpAndSettle();
-}
+import 'transition_base_sheet_helper.dart';
 
 void main() {
   group('Uncaptured faille', () {
     testWidgets('shows name, type, difficulty and status', (t) async {
       final base = TransitionBase(
           type: TransitionBaseType.faille, name: 'Faille Alpha');
-      await t.pumpWidget(_buildOpener(base: base));
-      await _open(t);
+      await t.pumpWidget(buildSheetOpener(base: base));
+      await openSheet(t);
       expect(find.text('Faille Alpha'), findsOneWidget);
       expect(find.text('Faille Abyssale'), findsOneWidget);
       expect(find.text('4/5'), findsOneWidget);
@@ -62,9 +27,9 @@ void main() {
       var called = false;
       final base = TransitionBase(
           type: TransitionBaseType.faille, name: 'F1');
-      await t.pumpWidget(_buildOpener(
+      await t.pumpWidget(buildSheetOpener(
           base: base, onAttack: () => called = true));
-      await _open(t);
+      await openSheet(t);
       final btn = t.widget<FilledButton>(
           find.widgetWithText(FilledButton, 'Assaut'));
       expect(btn.onPressed, isNotNull);
@@ -77,7 +42,7 @@ void main() {
         (t) async {
       final base = TransitionBase(
           type: TransitionBaseType.faille, name: 'F1');
-      await t.pumpWidget(_buildOpener(
+      await t.pumpWidget(buildSheetOpener(
         base: base,
         assaultPlan: AssaultPlan.of(
           player: assaultPlayer(stock: {UnitType.abyssAdmiral: 1}),
@@ -86,7 +51,7 @@ void main() {
           army: {UnitType.abyssAdmiral: 1},
         ),
       ));
-      await _open(t);
+      await openSheet(t);
       expect(find.text("PLAN D'ASSAUT"), findsOneWidget);
       expect(find.text('1 Amiral au niveau 1'), findsOneWidget);
       expect(find.text('Assaut'), findsOneWidget);
@@ -95,16 +60,16 @@ void main() {
     testWidgets('shows no plan without one', (t) async {
       final base = TransitionBase(
           type: TransitionBaseType.faille, name: 'F1');
-      await t.pumpWidget(_buildOpener(base: base));
-      await _open(t);
+      await t.pumpWidget(buildSheetOpener(base: base));
+      await openSheet(t);
       expect(find.text("PLAN D'ASSAUT"), findsNothing);
     });
 
     testWidgets('assault disabled when no callback', (t) async {
       final base = TransitionBase(
           type: TransitionBaseType.faille, name: 'F1');
-      await t.pumpWidget(_buildOpener(base: base));
-      await _open(t);
+      await t.pumpWidget(buildSheetOpener(base: base));
+      await openSheet(t);
       final btn = t.widget<FilledButton>(
           find.widgetWithText(FilledButton, 'Assaut'));
       expect(btn.onPressed, isNull);
@@ -115,111 +80,10 @@ void main() {
     testWidgets('shows cheminee type and difficulty', (t) async {
       final base = TransitionBase(
           type: TransitionBaseType.cheminee, name: 'Cheminee Beta');
-      await t.pumpWidget(_buildOpener(base: base));
-      await _open(t);
+      await t.pumpWidget(buildSheetOpener(base: base));
+      await openSheet(t);
       expect(find.text('5/5'), findsOneWidget);
       expect(find.text('Cheminée du Noyau'), findsOneWidget);
-    });
-  });
-
-  group('Captured', () {
-    testWidgets('shows captured status and send button', (t) async {
-      final base = TransitionBase(
-          type: TransitionBaseType.faille,
-          name: 'F1',
-          capturedBy: 'p1');
-      await t.pumpWidget(_buildOpener(
-          base: base, onDescend: () {}));
-      await _open(t);
-      expect(find.text('Capturée'), findsOneWidget);
-      expect(find.text('Envoyer des unités au Niveau 2'),
-          findsOneWidget);
-    });
-
-    testWidgets('descend callback fires', (t) async {
-      var called = false;
-      final base = TransitionBase(
-          type: TransitionBaseType.faille,
-          name: 'F1',
-          capturedBy: 'p1');
-      await t.pumpWidget(_buildOpener(
-          base: base, onDescend: () => called = true));
-      await _open(t);
-      await t.tap(find.text('Envoyer des unités au Niveau 2'));
-      await t.pumpAndSettle();
-      expect(called, isTrue);
-    });
-
-    testWidgets('button disabled when building missing', (t) async {
-      final base = TransitionBase(
-          type: TransitionBaseType.faille,
-          name: 'F1',
-          capturedBy: 'p1');
-      await t.pumpWidget(_buildOpener(
-          base: base,
-          hasBuildingRequirement: false,
-          onDescend: () {}));
-      await _open(t);
-      final btn = t.widget<FilledButton>(find.widgetWithText(
-          FilledButton, 'Envoyer des unités au Niveau 2'));
-      expect(btn.onPressed, isNull);
-      expect(
-        find.text(
-          'Bâtiment requis pour envoyer des unités : Module de Descente',
-        ),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('lists the defenders by type when units present', (t) async {
-      final base = TransitionBase(
-          type: TransitionBaseType.faille,
-          name: 'F1',
-          capturedBy: 'p1');
-      await t.pumpWidget(_buildOpener(
-          base: base,
-          unitsOnTarget: {UnitType.harpoonist: 12, UnitType.guardian: 3},
-          onDescend: () {}));
-      await _open(t);
-      expect(find.text('Défenseurs au Niveau 2'), findsOneWidget);
-      expect(find.text('15'), findsOneWidget);
-      expect(find.text('Harponneur'), findsOneWidget);
-      expect(find.text('12'), findsOneWidget);
-      expect(find.text('Gardien'), findsOneWidget);
-    });
-
-    testWidgets('warns when nobody defends the post', (t) async {
-      final base = TransitionBase(
-          type: TransitionBaseType.faille,
-          name: 'F1',
-          capturedBy: 'p1');
-      await t.pumpWidget(_buildOpener(base: base, onDescend: () {}));
-      await _open(t);
-      expect(find.text('Défenseurs au Niveau 2'), findsOneWidget);
-      expect(find.textContaining('Aucune unité.'), findsOneWidget);
-    });
-
-    testWidgets('a captured cheminee counts the units of level 3', (t) async {
-      final base = TransitionBase(
-          type: TransitionBaseType.cheminee,
-          name: 'C1',
-          capturedBy: 'p1');
-      await t.pumpWidget(_buildOpener(
-          base: base,
-          requiredBuilding: BuildingType.pressureCapsule,
-          unitsOnTarget: {UnitType.scout: 4},
-          onDescend: () {}));
-      await _open(t);
-      expect(find.text('Défenseurs au Niveau 3'), findsOneWidget);
-      expect(find.text('Éclaireur'), findsOneWidget);
-    });
-
-    testWidgets('an uncaptured base shows no defenders', (t) async {
-      final base = TransitionBase(
-          type: TransitionBaseType.faille, name: 'F1');
-      await t.pumpWidget(_buildOpener(base: base));
-      await _open(t);
-      expect(find.textContaining('Défenseurs'), findsNothing);
     });
   });
 }

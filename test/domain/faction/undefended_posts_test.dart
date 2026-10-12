@@ -1,3 +1,5 @@
+import 'package:abyss/domain/building/building.dart';
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/faction/undefended_posts.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
@@ -33,6 +35,13 @@ void main() {
     expect(_of(war), [war.post]);
   });
 
+  test('a post whose passage is at level 0 is not listed: nobody can go '
+      'down yet', () {
+    final war = PostWar(TransitionBaseType.faille, humanHolds: true);
+    war.human.buildings[war.passage]!.level = 0;
+    expect(_of(war), isEmpty);
+  });
+
   test('a post held by someone else is not the player\'s concern', () {
     final war = PostWar(TransitionBaseType.faille);
     expect(_of(war), isEmpty);
@@ -50,6 +59,10 @@ void main() {
     final TransitionBase faille =
         war.game.levels[1]!.cellAt(rift.x, rift.y).transitionBase!
           ..capturedBy = war.human.id;
+    war.human.buildings[BuildingType.descentModule] = Building(
+      type: BuildingType.descentModule,
+      level: 1,
+    );
     expect(_of(war), [faille, war.post]);
   });
 }

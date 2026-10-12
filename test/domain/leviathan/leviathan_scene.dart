@@ -28,7 +28,7 @@ extension LeviathanSceneTurns on PostWar {
   LeviathanReturn get leviathan => game.leviathanReturn!;
 
   /// The turn at the end of which the guardians strike.
-  int get strikeTurn => leviathan.strikeTurn!;
+  int get strikeTurn => leviathan.dueTurn!;
 
   /// Ends turns (the leviathan step only) until [turn] is the current one.
   void playUntil(int turn, {int seed = 3}) {

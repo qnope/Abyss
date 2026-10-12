@@ -44,7 +44,9 @@ void main() {
     expect(report.personality, war.game.factions[0].personality);
     expect(report.entry.rampartBefore, 3);
     expect(report.entry.rampartAfter, 2);
-    expect(report.unitsLost, 0);
+    final int dead = report.entry.dead.values.fold(0, (a, b) => a + b);
+    expect(dead, greaterThan(0));
+    expect(report.unitsLost, dead);
   });
 
   test('a kernel brought to level 0 is taken with its garrison', () {

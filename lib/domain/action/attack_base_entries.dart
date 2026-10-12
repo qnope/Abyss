@@ -14,13 +14,15 @@ abstract final class AttackBaseEntries {
   }) => _entry(turn, defenderName, r, defending: false, postName: postName);
 
   /// The entry of the defender, who fielded the base's units and lost
-  /// [lostWithPost] with the post or the kernel taken.
+  /// [lostWithPost] with the post or the kernel taken, and the passage
+  /// building of the post when [passageDestroyed].
   static BaseAssaultEntry forDefender(
     int turn,
     String attackerName,
     AttackBaseResult r, {
     String? postName,
     Map<UnitType, int> lostWithPost = const {},
+    bool passageDestroyed = true,
   }) => _entry(
     turn,
     attackerName,
@@ -28,6 +30,7 @@ abstract final class AttackBaseEntries {
     defending: true,
     postName: postName,
     lostWithPost: lostWithPost,
+    passageDestroyed: passageDestroyed,
   );
 
   static BaseAssaultEntry _entry(
@@ -37,6 +40,7 @@ abstract final class AttackBaseEntries {
     required bool defending,
     String? postName,
     Map<UnitType, int> lostWithPost = const {},
+    bool passageDestroyed = true,
   }) => BaseAssaultEntry(
     turn: turn,
     victory: r.victory,
@@ -55,5 +59,6 @@ abstract final class AttackBaseEntries {
     loot: r.damage.loot,
     postName: postName,
     lostWithPost: lostWithPost,
+    passageDestroyed: passageDestroyed,
   );
 }

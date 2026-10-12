@@ -1,10 +1,11 @@
-import '../../building/building_type.dart';
+import '../../action/post_takeover.dart';
 import '../../fight/army_planner.dart';
 import '../../fight/combat_side.dart';
 import '../../fight/combatant.dart';
 import '../../fight/unit_boost.dart';
 import '../../leviathan/leviathan_force.dart';
 import '../../leviathan/leviathan_resolver.dart';
+import '../../map/transition_base_type.dart';
 import '../../tech/tech_effects.dart';
 import '../../unit/unit_type.dart';
 import '../script_turn.dart';
@@ -69,8 +70,7 @@ extension LeviathanGuardMoves on ScriptTurn {
   }
 
   bool get _canDescend =>
-      player.buildings[BuildingType.descentModule]!.level > 0 &&
-      !player.isDegraded(BuildingType.descentModule);
+      PostTakeover.passageWorks(player, TransitionBaseType.faille);
 
   /// The defenders fight with the player's boosts, neither attacking nor
   /// behind a rampart.

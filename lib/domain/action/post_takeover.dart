@@ -4,6 +4,9 @@ import '../map/transition_base.dart';
 import '../map/transition_base_type.dart';
 import '../unit/unit.dart';
 import '../unit/unit_type.dart';
+import 'post_loss.dart';
+
+export 'post_loss.dart';
 
 /// What a won attack does to a post: its passage building is destroyed,
 /// the units its owner kept on the level below are lost with it, and the
@@ -18,12 +21,23 @@ abstract final class PostTakeover {
           ? BuildingType.descentModule
           : BuildingType.pressureCapsule;
 
-  /// Applies the takeover; returns the units the owner lost below.
-  static Map<UnitType, int> apply({
+  /// Whether [player] built the passage of [type]: below level 1, nobody
+  /// can go down through the post yet.
+  static bool passageBuilt(Player player, TransitionBaseType type) =>
+      (player.buildings[passageOf(type)]?.level ?? 0) > 0;
+
+  /// Whether units of [player] can go down through a post of [type]: its
+  /// passage built and not degraded.
+  static bool passageWorks(Player player, TransitionBaseType type) =>
+      passageBuilt(player, type) && !player.isDegraded(passageOf(type));
+
+  /// Applies the takeover; returns what the owner lost with the post.
+  static PostLoss apply({
     required TransitionBase post,
     required Player? attacker,
     required Player owner,
   }) {
+    final bool passage = passageBuilt(owner, post.type);
     owner.buildings[passageOf(post.type)]?.level = 0;
     final Map<UnitType, Unit> below =
         owner.unitsPerLevel[post.targetLevel] ?? const <UnitType, Unit>{};
@@ -38,6 +52,6 @@ abstract final class PostTakeover {
       (o) => o.toLevel == post.targetLevel,
     );
     post.capturedBy = attacker?.id;
-    return lost;
+    return PostLoss(units: lost, passage: passage);
   }
 }

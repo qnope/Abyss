@@ -22,7 +22,7 @@ import 'attack_transition_base_helpers.dart';
 import 'base_damage.dart';
 import 'fight_casualty_breakdown.dart';
 import 'fight_monster_helpers.dart';
-import 'post_takeover.dart';
+import 'post_assault_settlement.dart';
 
 /// Sends [selectedUnits] of [level] against the Faille or the Cheminée at
 /// ([targetX], [targetY]) that another player holds, defended by the units
@@ -101,11 +101,6 @@ class AttackPostAction extends Action {
           random: random,
         );
     final DefenceOutcome outcome = defence.settle(owner, random: random);
-    final Map<UnitType, int> lost =
-        fight.isVictory
-            ? PostTakeover.apply(post: post, attacker: player, owner: owner)
-            : const <UnitType, int>{};
-
     final AttackBaseResult result = AttackBaseResult.success(
       victory: fight.isVictory,
       fight: fight,
@@ -117,14 +112,13 @@ class AttackPostAction extends Action {
       defence: outcome,
       damage: BaseDamage.none(owner),
     );
-    owner.addHistoryEntry(
-      AttackBaseEntries.forDefender(
-        game.turn,
-        player.name,
-        result,
-        postName: post.name,
-        lostWithPost: lost,
-      ),
+    PostAssaultSettlement.settle(
+      turn: game.turn,
+      post: post,
+      attacker: player,
+      attackerName: player.name,
+      owner: owner,
+      result: result,
     );
     return result;
   }

@@ -20,7 +20,21 @@ void main() {
       owner: war.owner,
     );
 
-    expect(lost, {UnitType.scout: 2});
+    expect(lost.units, {UnitType.scout: 2});
+    expect(lost.passage, isTrue);
+  });
+
+  test('a post taken before its passage was built destroys none', () {
+    final war = PostWar(TransitionBaseType.faille);
+    war.owner.buildings[war.passage]!.level = 0;
+
+    final lost = PostTakeover.apply(
+      post: war.post,
+      attacker: war.attacker,
+      owner: war.owner,
+    );
+
+    expect(lost.passage, isFalse);
   });
 
   Map<UnitType, int> take(KernelWar war, int after) => KernelTakeover.apply(

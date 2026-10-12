@@ -25,6 +25,12 @@ abstract final class ReplayExport {
   /// Whether [game] kept a journal; games started before it existed did not.
   static bool canExport(Game game) => game.replay != null;
 
+  /// Whether the replay plays [game] exactly: every die recorded, and the
+  /// game no older than the Léviathan return and the gentler first volcano
+  /// wave (`leviathanReturn` set), which the game its replay rebuilds has.
+  static bool isExact(Game game) =>
+      game.replay!.exact && game.leviathanReturn != null;
+
   static Map<String, Object?> toJson(Game game) {
     final ReplayJournal journal = game.replay!;
     final List<int> turns = journal.actions.keys.toList()..sort();
@@ -43,7 +49,7 @@ abstract final class ReplayExport {
       'mapSeed': journal.mapSeed,
       'difficulty': game.difficulty.name,
       'lastTurn': game.turn,
-      'exact': journal.exact,
+      'exact': isExact(game),
       'status': game.status.name,
       'turns': <String, Object?>{
         for (final int t in turns) '$t': journal.actionsOf(t),

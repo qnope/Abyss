@@ -76,6 +76,7 @@ void main() {
     expect(entry.pillaged, {ResourceType.coral: 90});
     expect(entry.loot, {ResourceType.coral: 80});
     expect(entry.lostWithPost, isEmpty);
+    expect(entry.passageDestroyed, isTrue);
   });
 
   test('the post of an assault on a post survives a reload', () async {
@@ -99,6 +100,7 @@ void main() {
         loot: const {},
         postName: 'failleAlpha',
         lostWithPost: const {UnitType.scout: 3},
+        passageDestroyed: false,
       ),
     );
     await GameRepository().save(Game.singlePlayer(player));
@@ -117,5 +119,6 @@ void main() {
 
     expect(entry.postName, 'failleAlpha');
     expect(entry.lostWithPost, {UnitType.scout: 3});
+    expect(entry.passageDestroyed, isFalse);
   });
 }

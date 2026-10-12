@@ -1,10 +1,9 @@
 import 'dart:math';
 
 import '../action/attack_base_defence.dart';
-import '../action/attack_base_entries.dart';
 import '../action/attack_base_result.dart';
 import '../action/base_damage.dart';
-import '../action/post_takeover.dart';
+import '../action/post_assault_settlement.dart';
 import '../faction/faction_attack_report.dart';
 import '../fight/fight_engine.dart';
 import '../fight/fight_result.dart';
@@ -35,14 +34,13 @@ abstract final class LeviathanBattle {
       random: random,
     ).resolve(playerSide: LeviathanForce.of(game), monsterSide: defence.side);
     final DefenceOutcome outcome = defence.settle(human, random: random);
-    final Map<UnitType, int> lost =
-        fight.isVictory
-            ? PostTakeover.apply(post: post, attacker: null, owner: human)
-            : const <UnitType, int>{};
-    final BaseAssaultEntry entry = AttackBaseEntries.forDefender(
-      turn,
-      LeviathanForce.attackerName,
-      AttackBaseResult.success(
+    final BaseAssaultEntry entry = PostAssaultSettlement.settle(
+      turn: turn,
+      post: post,
+      attacker: null,
+      attackerName: LeviathanForce.attackerName,
+      owner: human,
+      result: AttackBaseResult.success(
         victory: fight.isVictory,
         fight: fight,
         sent: const <UnitType, int>{},
@@ -52,10 +50,7 @@ abstract final class LeviathanBattle {
         defence: outcome,
         damage: BaseDamage.none(human),
       ),
-      postName: post.name,
-      lostWithPost: lost,
     );
-    human.addHistoryEntry(entry);
     return FactionAttackReport(
       attackerId: LeviathanForce.attackerName,
       attackerName: LeviathanForce.attackerName,

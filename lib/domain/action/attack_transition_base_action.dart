@@ -9,18 +9,17 @@ import '../game/game.dart';
 import '../game/player.dart';
 import '../tech/tech_effects.dart';
 import '../leviathan/leviathan_resolver.dart';
-import '../map/cell_content_type.dart';
 import '../map/grid_position.dart';
 import '../map/map_cell.dart';
 import '../map/transition_base.dart';
 import '../unit/unit_type.dart';
 import '../history/history_entry.dart';
 import 'action.dart';
-import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
 import 'attack_transition_base_helpers.dart';
 import 'attack_transition_base_result.dart';
+import 'attack_transition_base_validator.dart';
 import 'fight_casualty_breakdown.dart';
 import 'fight_monster_helpers.dart';
 import '../raid/noise_rules.dart';
@@ -48,36 +47,15 @@ class AttackTransitionBaseAction extends Action {
   String get description => 'Assaut base ($targetX, $targetY)';
 
   @override
-  ActionResult validate(Game game, Player player) {
-    final map = game.levels[level];
-    if (map == null) {
-      return const AttackTransitionBaseResult.failure(
-        ActionFailure.mapNotGenerated,
+  ActionResult validate(Game game, Player player) =>
+      AttackTransitionBaseValidator.check(
+        game,
+        player,
+        level,
+        targetX,
+        targetY,
+        selectedUnits,
       );
-    }
-    final MapCell cell = map.cellAt(targetX, targetY);
-    if (cell.content != CellContentType.transitionBase) {
-      return const AttackTransitionBaseResult.failure(
-        ActionFailure.noTransitionBaseHere,
-      );
-    }
-    final TransitionBase? base = cell.transitionBase;
-    if (base == null) {
-      return const AttackTransitionBaseResult.failure(
-        ActionFailure.baseNotFound,
-      );
-    }
-    if (base.isCaptured) {
-      return const AttackTransitionBaseResult.failure(
-        ActionFailure.baseAlreadyCaptured,
-      );
-    }
-    final unitErr = AttackTransitionBaseHelpers.validateUnits(
-      player, level, selectedUnits,
-    );
-    if (unitErr != null) return unitErr;
-    return const ActionResult.success();
-  }
 
   @override
   ActionResult execute(Game game, Player player) {

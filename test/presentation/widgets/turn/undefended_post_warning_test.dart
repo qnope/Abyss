@@ -1,3 +1,5 @@
+import 'package:abyss/domain/building/building.dart';
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -69,6 +71,10 @@ void main() {
     final rift = PostWar(TransitionBaseType.faille).at; // Same map seed.
     war.game.levels[1]!.cellAt(rift.x, rift.y).transitionBase!.capturedBy =
         war.human.id;
+    war.human.buildings[BuildingType.descentModule] = Building(
+      type: BuildingType.descentModule,
+      level: 1,
+    );
     await _confirm(tester, war.game);
     expect(find.text(_failleLine), findsOneWidget);
     expect(find.text(_chemineeLine), findsOneWidget);
@@ -77,6 +83,14 @@ void main() {
   testWidgets('no line once a unit defends the post', (tester) async {
     final war = PostWar(TransitionBaseType.faille, humanHolds: true);
     war.put(war.human, 2, {UnitType.guardian: 1});
+    expect(UndefendedPostWarning.of(war.game, war.human), isNull);
+    await _confirm(tester, war.game);
+    expect(find.text(_failleLine), findsNothing);
+  });
+
+  testWidgets('no line while the passage is at level 0', (tester) async {
+    final war = PostWar(TransitionBaseType.faille, humanHolds: true);
+    war.human.buildings[war.passage]!.level = 0;
     expect(UndefendedPostWarning.of(war.game, war.human), isNull);
     await _confirm(tester, war.game);
     expect(find.text(_failleLine), findsNothing);

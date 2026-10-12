@@ -675,13 +675,14 @@ class BaseAssaultEntryAdapter extends TypeAdapter<BaseAssaultEntry> {
       postName: fields[16] as String?,
       lostWithPost:
           fields[17] == null ? {} : (fields[17] as Map).cast<UnitType, int>(),
+      passageDestroyed: fields[18] == null ? true : fields[18] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, BaseAssaultEntry obj) {
     writer
-      ..writeByte(17)
+      ..writeByte(18)
       ..writeByte(0)
       ..write(obj.turn)
       ..writeByte(2)
@@ -715,7 +716,9 @@ class BaseAssaultEntryAdapter extends TypeAdapter<BaseAssaultEntry> {
       ..writeByte(16)
       ..write(obj.postName)
       ..writeByte(17)
-      ..write(obj.lostWithPost);
+      ..write(obj.lostWithPost)
+      ..writeByte(18)
+      ..write(obj.passageDestroyed);
   }
 
   @override

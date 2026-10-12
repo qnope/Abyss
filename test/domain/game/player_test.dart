@@ -83,6 +83,14 @@ void main() {
       expect(p.unitsOnLevel(2), isEmpty);
     });
 
+    test('unitCountsOnLevel counts the units by type, empty ones left out',
+        () {
+      final p = Player(name: 'A');
+      p.unitsOnLevel(1)[UnitType.guardian]!.count = 4;
+      expect(p.unitCountsOnLevel(1), {UnitType.guardian: 4});
+      expect(p.unitCountsOnLevel(2), isEmpty);
+    });
+
     test('default recruitedUnitTypes and pendingExplorations are empty', () {
       final p = Player(name: 'A');
       expect(p.recruitedUnitTypes, isEmpty);

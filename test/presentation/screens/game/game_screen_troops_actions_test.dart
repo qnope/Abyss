@@ -5,6 +5,10 @@ import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
+import 'package:abyss/domain/map/transition_base.dart';
+import 'package:abyss/domain/map/transition_base_type.dart';
+import 'package:abyss/domain/unit/unit_type.dart';
+import 'package:abyss/domain/volcano/kernel_garrison.dart';
 import 'package:abyss/presentation/screens/game/descent_dialog.dart';
 import 'package:abyss/presentation/screens/game/game_screen_actions.dart';
 import 'package:abyss/presentation/screens/game/game_screen_troops_actions.dart';
@@ -80,6 +84,63 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(DescentDialog), findsOneWidget);
     expect(find.text('Descente vers le Niveau 2'), findsOneWidget);
+  });
+
+  Future<void> openModuleSheet(WidgetTester tester, Game game) async {
+    useTallView(tester);
+    await tester.pumpWidget(buildLauncherHost('go', (ctx) =>
+        showBuildingDetailAction(
+          ctx, game, repo, built(BuildingType.descentModule), () {})));
+    await tester.tap(find.text('go'));
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('the Module sheet lists the units waiting on level 2',
+      (tester) async {
+    final game = scenario();
+    KernelGarrison.stockAt(game.humanPlayer, 2)[UnitType.harpoonist]!.count = 7;
+    KernelGarrison.stockAt(game.humanPlayer, 2)[UnitType.guardian]!.count = 2;
+    await openModuleSheet(tester, game);
+    expect(find.text('Défenseurs au Niveau 2'), findsOneWidget);
+    expect(find.text('9'), findsOneWidget);
+    expect(find.text('Harponneur'), findsOneWidget);
+    expect(find.text('7'), findsOneWidget);
+  });
+
+  testWidgets('the Module sheet warns when level 2 is empty', (tester) async {
+    await openModuleSheet(tester, scenario());
+    expect(find.text('Défenseurs au Niveau 2'), findsOneWidget);
+    expect(find.textContaining('Aucune unité.'), findsOneWidget);
+  });
+
+  testWidgets('the Capsule sheet lists the units waiting on level 3',
+      (tester) async {
+    final game = scenario();
+    game.levels[2] = GameMap(
+      width: 1,
+      height: 1,
+      seed: 0,
+      cells: [
+        MapCell(
+          terrain: TerrainType.plain,
+          content: CellContentType.transitionBase,
+          transitionBase: TransitionBase(
+            type: TransitionBaseType.cheminee,
+            name: 'Cheminée Beta',
+            capturedBy: 'player-1',
+          ),
+        ),
+      ],
+    );
+    KernelGarrison.stockAt(game.humanPlayer, 3)[UnitType.scout]!.count = 5;
+    useTallView(tester);
+    await tester.pumpWidget(buildLauncherHost('go', (ctx) =>
+        showBuildingDetailAction(
+          ctx, game, repo, built(BuildingType.pressureCapsule), () {})));
+    await tester.tap(find.text('go'));
+    await tester.pumpAndSettle();
+    expect(find.text('Défenseurs au Niveau 3'), findsOneWidget);
+    expect(find.text('Éclaireur'), findsOneWidget);
   });
 
   testWidgets('a captured kernel shows its garrison panel', (tester) async {

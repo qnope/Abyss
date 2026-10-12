@@ -107,6 +107,13 @@ void main() {
       expect(_of(war).passage, BuildingType.pressureCapsule);
     });
 
+    test('name no passage building while it is at level 0', () {
+      final war = PostWar(TransitionBaseType.faille, humanHolds: true);
+      war.human.buildings[BuildingType.descentModule]!.level = 0;
+
+      expect(_of(war).passage, isNull);
+    });
+
     test('count the units on the level below', () {
       final war = PostWar(TransitionBaseType.faille, humanHolds: true);
       war.put(war.human, 2, {UnitType.harpoonist: 7, UnitType.guardian: 5});

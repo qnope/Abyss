@@ -23,6 +23,19 @@ void main() {
     expect(find.text('Copier'), findsOneWidget);
   });
 
+  testWidgets('warns that a game older than the Léviathan return may '
+      'replay differently', (tester) async {
+    await tester.pumpWidget(
+      build(
+        GameFactory.newSinglePlayer(playerName: 'Nemo', mapSeed: 1)
+          ..leviathanReturn = null,
+      ),
+    );
+
+    expect(find.textContaining('pourra différer'), findsOneWidget);
+    expect(find.textContaining('à l\'identique'), findsNothing);
+  });
+
   testWidgets('copies the replay as text', (tester) async {
     String? copied;
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(

@@ -32,7 +32,7 @@ const PostThreat _horde = PostThreat(
 
 PostDefence _defence({
   PostThreat? threat,
-  BuildingType passage = BuildingType.descentModule,
+  BuildingType? passage = BuildingType.descentModule,
   int unitsBelow = 0,
   int reinforcements = 0,
 }) => PostDefence(
@@ -92,6 +92,13 @@ void main() {
     expect(find.text('Module de descente détruit'), findsOneWidget);
     expect(find.textContaining('perdue'), findsNothing);
     expect(find.textContaining('annulé'), findsNothing);
+  });
+
+  testWidgets('leaves out the Module when it is not built', (t) async {
+    await _pump(t, _defence(passage: null, unitsBelow: 2));
+
+    expect(find.textContaining('Module de descente'), findsNothing);
+    expect(find.text('2 unités du niveau 2 perdues'), findsOneWidget);
   });
 
   testWidgets('names the Cheminée and its capsule', (t) async {

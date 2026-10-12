@@ -22,13 +22,14 @@ class LeviathanReturnAdapter extends TypeAdapter<LeviathanReturn> {
       at: fields[2] as GridPosition?,
       strikeTurn: (fields[3] as num?)?.toInt(),
       over: fields[4] == null ? false : fields[4] as bool,
+      readyTurn: (fields[5] as num?)?.toInt(),
     );
   }
 
   @override
   void write(BinaryWriter writer, LeviathanReturn obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.postName)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class LeviathanReturnAdapter extends TypeAdapter<LeviathanReturn> {
       ..writeByte(3)
       ..write(obj.strikeTurn)
       ..writeByte(4)
-      ..write(obj.over);
+      ..write(obj.over)
+      ..writeByte(5)
+      ..write(obj.readyTurn);
   }
 
   @override

@@ -1,4 +1,3 @@
-import '../../action/post_takeover.dart';
 import '../../faction/undefended_posts.dart';
 import '../../game/game.dart';
 import '../../game/player.dart';
@@ -37,12 +36,10 @@ abstract final class GuideAlerts {
     );
   }
 
-  /// A post held with nobody below, once its passage building lets units
-  /// go down, unless the objective already asks to go down there.
+  /// A post held with nobody below ([UndefendedPosts]: its passage built),
+  /// unless the objective already asks to go down there.
   static GuideAdvice? _undefended(Game game, Player player, ObjectiveId id) {
     for (final TransitionBase post in UndefendedPosts.of(game, player)) {
-      final passage = PostTakeover.passageOf(post.type);
-      if ((player.buildings[passage]?.level ?? 0) == 0) continue;
       if (id == _descentTo(post.targetLevel)) continue;
       return GuideAdvice(
         GuidePostUndefended(post.type, post.targetLevel),

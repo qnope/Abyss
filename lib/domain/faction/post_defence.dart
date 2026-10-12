@@ -19,8 +19,8 @@ class PostDefence {
   /// The strongest known threat; `null` when no report tells of one.
   final PostThreat? threat;
 
-  /// The building destroyed with the post.
-  final BuildingType passage;
+  /// The building destroyed with the post; `null` while it is not built.
+  final BuildingType? passage;
 
   /// Units on the level below, lost with the post.
   final int unitsBelow;
@@ -40,7 +40,10 @@ class PostDefence {
     final int below = post.targetLevel;
     return PostDefence(
       threat: _threatTo(game, human, post),
-      passage: PostTakeover.passageOf(post.type),
+      passage:
+          PostTakeover.passageBuilt(human, post.type)
+              ? PostTakeover.passageOf(post.type)
+              : null,
       unitsBelow: human
           .unitsOnLevel(below)
           .values

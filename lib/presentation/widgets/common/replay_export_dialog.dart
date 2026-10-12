@@ -58,7 +58,9 @@ class ReplayExportDialog extends StatelessWidget {
       (int sum, List<String> turn) => sum + turn.length,
     );
     final String exactness =
-        game.replay!.exact ? l10n.screenReplayExact : l10n.screenReplayInexact;
+        ReplayExport.isExact(game)
+            ? l10n.screenReplayExact
+            : l10n.screenReplayInexact;
     final String content = l10n.screenReplaySummary(
       ReplayExport.fileName(game),
       l10n.screenReplayActions(actions),

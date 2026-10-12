@@ -76,7 +76,12 @@ void main() {
     );
     final milestones = report.milestones;
 
-    expect(milestones.leviathanStruck, milestones.failleCaptured! + 3);
+    // 3 turns after the capture at the earliest: later when the Module de
+    // descente works after it.
+    expect(
+      milestones.leviathanStruck,
+      greaterThanOrEqualTo(milestones.failleCaptured! + 3),
+    );
     expect(milestones.leviathanHeld, isTrue);
   });
 

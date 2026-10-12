@@ -78,6 +78,8 @@ BaseAssaultEntry baseAssaultEntry({
   String? post,
   ({int before, int after})? kernel,
   Map<UnitType, int> lostWithPost = const {},
+  Map<UnitType, int> dead = const {},
+  bool passageDestroyed = true,
 }) => BaseAssaultEntry(
   turn: 14,
   victory: victory,
@@ -87,7 +89,7 @@ BaseAssaultEntry baseAssaultEntry({
   units: const {},
   survivorsIntact: const {},
   wounded: const {},
-  dead: const {},
+  dead: dead,
   rampartBefore: kernel?.before ?? 2,
   rampartAfter: kernel?.after ?? 0,
   headquartersBefore: 5,
@@ -96,4 +98,5 @@ BaseAssaultEntry baseAssaultEntry({
   loot: const {},
   postName: post,
   lostWithPost: lostWithPost,
+  passageDestroyed: passageDestroyed,
 );

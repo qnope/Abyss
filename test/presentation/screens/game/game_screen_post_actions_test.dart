@@ -1,3 +1,4 @@
+import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/faction/base_intel.dart';
 import 'package:abyss/domain/history/history_entry.dart';
@@ -70,6 +71,10 @@ void main() {
     final s = postGame();
     final human = s.game.humanPlayer..pendingReinforcements.clear();
     s.post.capturedBy = human.id;
+    human.buildings[BuildingType.descentModule] = Building(
+      type: BuildingType.descentModule,
+      level: 1,
+    );
     human.intel[s.owner.id] = BaseIntel(
       turn: 9,
       headquartersLevel: 2,

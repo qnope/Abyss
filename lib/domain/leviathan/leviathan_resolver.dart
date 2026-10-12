@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../action/post_takeover.dart';
 import '../faction/faction_attack_report.dart';
 import '../game/game.dart';
 import '../game/player.dart';
@@ -24,9 +25,10 @@ class LeviathanTurnOutcome {
 }
 
 /// "The Léviathan comes back" ([LeviathanReturn]): scheduled by the first
-/// Faille the human takes, announced by the end of the turn before it
-/// strikes, fought at the end of the turn it strikes, like a volcano
-/// wave. It is cancelled when the human no longer holds the Faille.
+/// Faille the human takes, postponed while its Module de descente does
+/// not work (nobody could defend it), announced by the end of the turn
+/// before it strikes, fought at the end of the turn it strikes, like a
+/// volcano wave. It is cancelled when the human no longer holds the Faille.
 abstract final class LeviathanResolver {
   /// [player] took [base] at [at] on [level] during the current turn.
   static void onCapture(
@@ -49,12 +51,13 @@ abstract final class LeviathanResolver {
       at: at,
       capturedOn: game.turn,
     );
+    _markReady(game, state);
   }
 
   /// The attack the human faces at the end of the current turn, if any.
   static LeviathanAnnouncement? announcedNow(Game game) {
     final LeviathanReturn? state = game.leviathanReturn;
-    if (state == null || state.strikeTurn != game.turn) return null;
+    if (state == null || state.dueTurn != game.turn) return null;
     return _postOf(game, state) == null ? null : _announcement(state);
   }
 
@@ -67,8 +70,11 @@ abstract final class LeviathanResolver {
       return const LeviathanTurnOutcome();
     }
     final int ended = game.turn;
-    final int strike = state.strikeTurn!;
-    if (strike > ended + 1) return const LeviathanTurnOutcome();
+    _markReady(game, state);
+    final int? strike = state.dueTurn;
+    if (strike == null || strike > ended + 1) {
+      return const LeviathanTurnOutcome();
+    }
     final TransitionBase? post = _postOf(game, state);
     if (post == null) {
       state.end();
@@ -81,6 +87,17 @@ abstract final class LeviathanResolver {
     return LeviathanTurnOutcome(
       report: LeviathanBattle.fight(game, post, turn: ended, random: random),
     );
+  }
+
+  /// Records the turn the Module first works while the Faille is held.
+  static void _markReady(Game game, LeviathanReturn state) {
+    if (state.readyTurn != null || _postOf(game, state) == null) return;
+    if (PostTakeover.passageWorks(
+      game.humanPlayer,
+      TransitionBaseType.faille,
+    )) {
+      state.markReady(game.turn);
+    }
   }
 
   /// The Faille, while the human still holds it.
@@ -97,6 +114,6 @@ abstract final class LeviathanResolver {
         postName: state.postName!,
         level: state.level!,
         at: state.at!,
-        turn: state.strikeTurn!,
+        turn: state.dueTurn!,
       );
 }

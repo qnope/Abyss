@@ -92,6 +92,34 @@ void main() {
       expect(launchButton(tester).onPressed, isNotNull);
     });
 
+    testWidgets('shows the assault plan, updated at each unit added',
+        (tester) async {
+      await pumpScreen(tester, buildTransitionScenario().game);
+      expect(find.text("PLAN D'ASSAUT"), findsOneWidget);
+      expect(find.text('Ajoute-le : 1 Amiral au niveau 1'), findsOneWidget);
+
+      await tester.tap(find.descendant(
+        of: find.byWidgetPredicate(
+          (w) => w is UnitQuantityRow && w.type == UnitType.abyssAdmiral,
+        ),
+        matching: find.byIcon(Icons.add),
+      ));
+      await tester.pumpAndSettle();
+      expect(find.text('1 Amiral au niveau 1'), findsOneWidget);
+      expect(find.text('Ajoute-le : 1 Amiral au niveau 1'), findsNothing);
+    });
+
+    testWidgets('keeps the launch button on screen on a small phone',
+        (tester) async {
+      await pumpScreen(tester, buildTransitionScenario().game);
+      tester.view.physicalSize = const Size(390, 844);
+      await tester.pumpAndSettle();
+      expect(
+        find.widgetWithText(ElevatedButton, 'Lancer l\'assaut').hitTestable(),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('cancel pops back', (tester) async {
       await pumpScreen(tester, buildTransitionScenario().game);
       await tester.tap(find.text('Annuler'));

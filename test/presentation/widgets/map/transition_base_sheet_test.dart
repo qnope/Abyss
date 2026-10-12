@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/fight/assault/assault_plan.dart';
+import 'package:abyss/domain/fight/assault/assault_target.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/widgets/map/transition_base_sheet.dart';
+
+import '../../../domain/fight/assault/assault_test_helper.dart';
 
 Widget _buildOpener({
   required TransitionBase base,
@@ -13,6 +17,7 @@ Widget _buildOpener({
   Map<UnitType, int> unitsOnTarget = const {},
   VoidCallback? onAttack,
   VoidCallback? onDescend,
+  AssaultPlan? assaultPlan,
 }) {
   return MaterialApp(
     home: Scaffold(
@@ -25,7 +30,8 @@ Widget _buildOpener({
               requiredBuilding: requiredBuilding,
               unitsOnTarget: unitsOnTarget,
               onAttack: onAttack,
-              onDescend: onDescend),
+              onDescend: onDescend,
+              assaultPlan: assaultPlan),
           child: const Text('Open'),
         ),
       ),
@@ -65,6 +71,33 @@ void main() {
       await t.tap(find.text('Assaut'));
       await t.pumpAndSettle();
       expect(called, isTrue);
+    });
+
+    testWidgets('shows the assault plan above the assault button',
+        (t) async {
+      final base = TransitionBase(
+          type: TransitionBaseType.faille, name: 'F1');
+      await t.pumpWidget(_buildOpener(
+        base: base,
+        assaultPlan: AssaultPlan.of(
+          player: assaultPlayer(stock: {UnitType.abyssAdmiral: 1}),
+          level: 1,
+          target: AssaultTarget.faille,
+          army: {UnitType.abyssAdmiral: 1},
+        ),
+      ));
+      await _open(t);
+      expect(find.text("PLAN D'ASSAUT"), findsOneWidget);
+      expect(find.text('1 Amiral au niveau 1'), findsOneWidget);
+      expect(find.text('Assaut'), findsOneWidget);
+    });
+
+    testWidgets('shows no plan without one', (t) async {
+      final base = TransitionBase(
+          type: TransitionBaseType.faille, name: 'F1');
+      await t.pumpWidget(_buildOpener(base: base));
+      await _open(t);
+      expect(find.text("PLAN D'ASSAUT"), findsNothing);
     });
 
     testWidgets('assault disabled when no callback', (t) async {

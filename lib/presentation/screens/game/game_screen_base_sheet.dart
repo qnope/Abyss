@@ -9,6 +9,7 @@ import '../../../domain/map/transition_base.dart';
 import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../widgets/map/transition_base_sheet.dart';
+import 'game_screen_assault_plan.dart';
 import 'game_screen_faction_actions.dart';
 import 'game_screen_transition_actions.dart';
 
@@ -38,6 +39,7 @@ void openTransitionBaseSheet(
     requiredBuilding: _requiredBuildingFor(base),
     unitsOnTarget: _unitsOnLevel(human, base.targetLevel),
     defence: base.isCaptured ? PostDefence.of(game, human, base) : null,
+    assaultPlan: base.isCaptured ? null : assaultPlanAt(game, level, x, y),
     onAttack: () => handleAttackTransitionBase(
       context, game, repository, base, x, y, level, onChanged),
     onDescend: () => handleDescend(

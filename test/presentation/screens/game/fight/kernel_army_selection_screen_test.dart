@@ -66,6 +66,22 @@ void main() {
       );
     });
 
+    testWidgets('shows the assault plan, updated at each unit added',
+        (tester) async {
+      await tester.pumpWidget(buildApp(
+        repository: FakeGameRepository(),
+        onChanged: () {},
+      ));
+      await tester.pumpAndSettle();
+      expect(find.text("PLAN D'ASSAUT"), findsOneWidget);
+      expect(find.text('Ajoute-le : 1 Amiral au niveau 1'), findsOneWidget);
+      expect(find.textContaining('Ensuite'), findsNothing);
+
+      await tester.tap(find.byIcon(Icons.add).last);
+      await tester.pumpAndSettle();
+      expect(find.text('1 Amiral au niveau 1'), findsOneWidget);
+    });
+
     testWidgets('launch button disabled when no units selected',
         (tester) async {
       await tester.pumpWidget(buildApp(

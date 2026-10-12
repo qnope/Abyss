@@ -4,6 +4,8 @@ import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
+import 'package:abyss/domain/map/transition_base.dart';
+import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/presentation/screens/game/fight/army_selection_screen.dart';
 import 'package:abyss/presentation/screens/game/fight/kernel_army_selection_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -102,11 +104,30 @@ void main() {
       (tester) async {
     await tapCellWith(tester, cellOf(CellContentType.volcanicKernel));
     expect(find.text('Noyau Volcanique'), findsOneWidget);
+    expect(find.text("PLAN D'ASSAUT"), findsOneWidget);
 
+    await tester.ensureVisible(find.text("Lancer l'assaut"));
+    await tester.pumpAndSettle();
     await tester.tap(find.text("Lancer l'assaut"));
     await tester.pumpAndSettle();
 
     expect(find.byType(KernelArmySelectionScreen), findsOneWidget);
+  });
+
+  testWidgets('an uncaptured Faille shows the plan of its assault',
+      (tester) async {
+    await tapCellWith(
+      tester,
+      MapCell(
+        terrain: TerrainType.plain,
+        content: CellContentType.transitionBase,
+        transitionBase: TransitionBase(
+            type: TransitionBaseType.faille, name: 'Faille Alpha'),
+      ),
+    );
+    expect(find.text('Faille Alpha'), findsOneWidget);
+    expect(find.text("PLAN D'ASSAUT"), findsOneWidget);
+    expect(find.text('Ensuite : Module de Descente'), findsOneWidget);
   });
 
   testWidgets('a captured volcanic kernel opens its garrison, not the '

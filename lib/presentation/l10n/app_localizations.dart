@@ -4725,6 +4725,126 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tenue par {name}'**
   String mapHeldBy(String name);
+
+  /// No description provided for @assaultPlanTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'PLAN D\'ASSAUT'**
+  String get assaultPlanTitle;
+
+  /// No description provided for @assaultPlanAdmiral.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un Amiral dans l\'armée'**
+  String get assaultPlanAdmiral;
+
+  /// No description provided for @assaultPlanAdmiralsIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} Amiral} other{{count} Amiraux}} au niveau {level}'**
+  String assaultPlanAdmiralsIn(int count, int level);
+
+  /// No description provided for @assaultPlanAdmiralsLeft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoute-le : {count, plural, one{{count} Amiral} other{{count} Amiraux}} au niveau {level}'**
+  String assaultPlanAdmiralsLeft(int count, int level);
+
+  /// No description provided for @assaultPlanAdmiralRecruit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recrute-en un à la Caserne niveau {level}'**
+  String assaultPlanAdmiralRecruit(int level);
+
+  /// No description provided for @assaultPlanCovered.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'Amiral est couvert'**
+  String get assaultPlanCovered;
+
+  /// No description provided for @assaultPlanGuardians.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{{count} Gardien prend} other{{count} Gardiens prennent}} les coups pour lui'**
+  String assaultPlanGuardians(int count);
+
+  /// No description provided for @assaultPlanUncovered.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans Gardien, il prend les coups le premier'**
+  String get assaultPlanUncovered;
+
+  /// No description provided for @assaultPlanArmy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Armée suffisante'**
+  String get assaultPlanArmy;
+
+  /// No description provided for @assaultPlanArmyHigh.
+  ///
+  /// In fr, this message translates to:
+  /// **'Elle l\'emporte presque toujours'**
+  String get assaultPlanArmyHigh;
+
+  /// No description provided for @assaultPlanArmyRisky.
+  ///
+  /// In fr, this message translates to:
+  /// **'Elle peut échouer : ajoute des unités'**
+  String get assaultPlanArmyRisky;
+
+  /// No description provided for @assaultPlanArmyLow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trop faible : ajoute des unités'**
+  String get assaultPlanArmyLow;
+
+  /// No description provided for @assaultPlanArmyNoAdmiral.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans Amiral, rien n\'est pris'**
+  String get assaultPlanArmyNoAdmiral;
+
+  /// No description provided for @assaultPlanNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ensuite : {building}'**
+  String assaultPlanNext(String building);
+
+  /// No description provided for @assaultPlanHqNeeded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il demande le QG {required}, tu es au QG {current}'**
+  String assaultPlanHqNeeded(int required, int current);
+
+  /// No description provided for @assaultPlanHqReady.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton QG {current} le permet déjà'**
+  String assaultPlanHqReady(int current);
+
+  /// No description provided for @assaultPlanChances.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chances'**
+  String get assaultPlanChances;
+
+  /// No description provided for @assaultPlanRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'{rating, select, high{Élevées} risky{Risquées} other{Faibles}} · {wins} sur {rehearsals}'**
+  String assaultPlanRating(String rating, int wins, int rehearsals);
+
+  /// No description provided for @assaultPlanAdviceLeader.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, one{l\'Amiral} other{les {count} Amiraux}}'**
+  String assaultPlanAdviceLeader(int count);
+
+  /// No description provided for @assaultPlanAdvice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conseil : {leader} avec {escort}'**
+  String assaultPlanAdvice(String leader, String escort);
 }
 
 class _AppLocalizationsDelegate

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/building/building_type.dart';
 import '../../../domain/faction/post_defence.dart';
+import '../../../domain/fight/assault/assault_plan.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/transition_base_name_extensions.dart';
@@ -11,6 +12,8 @@ import '../../theme/abyss_colors.dart';
 import 'transition_base_captured_section.dart';
 import 'transition_base_uncaptured_section.dart';
 
+/// Opens the sheet of [transitionBase] on [level]; [assaultPlan] is the
+/// plan shown before an assault on it, when still to capture.
 void showTransitionBaseSheet(
   BuildContext context, {
   required TransitionBase transitionBase,
@@ -21,6 +24,7 @@ void showTransitionBaseSheet(
   PostDefence? defence,
   VoidCallback? onAttack,
   VoidCallback? onDescend,
+  AssaultPlan? assaultPlan,
 }) {
   showModalBottomSheet<void>(
     context: context,
@@ -36,6 +40,8 @@ void showTransitionBaseSheet(
           )
         : TransitionBaseUncapturedSection(
             transitionBase: transitionBase,
+            level: level,
+            assaultPlan: assaultPlan,
             onAttack: onAttack,
           ),
   );

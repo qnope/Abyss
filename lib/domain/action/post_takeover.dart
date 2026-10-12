@@ -8,6 +8,8 @@ import '../unit/unit_type.dart';
 /// What a won attack does to a post: its passage building is destroyed,
 /// the units its owner kept on the level below are lost with it, and the
 /// attacker holds the post, empty until it builds a passage of its own.
+/// Without attacker (the guardians coming back), the monsters guard it
+/// again.
 abstract final class PostTakeover {
   /// The building that opens [type]: the Module de descente for a Faille,
   /// the Capsule pressurisée for a Cheminée.
@@ -19,7 +21,7 @@ abstract final class PostTakeover {
   /// Applies the takeover; returns the units the owner lost below.
   static Map<UnitType, int> apply({
     required TransitionBase post,
-    required Player attacker,
+    required Player? attacker,
     required Player owner,
   }) {
     owner.buildings[passageOf(post.type)]?.level = 0;
@@ -35,7 +37,7 @@ abstract final class PostTakeover {
     owner.pendingReinforcements.removeWhere(
       (o) => o.toLevel == post.targetLevel,
     );
-    post.capturedBy = attacker.id;
+    post.capturedBy = attacker?.id;
     return lost;
   }
 }

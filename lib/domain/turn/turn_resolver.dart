@@ -5,6 +5,7 @@ import '../faction/faction_fall.dart';
 import '../faction/faction_attack_report.dart';
 import '../game/defeat_checker.dart';
 import '../game/game.dart';
+import '../leviathan/leviathan_resolver.dart';
 import '../map/exploration_resolver.dart';
 import '../map/reinforcement_resolver.dart';
 import '../objective/objective_resolver.dart';
@@ -70,6 +71,7 @@ class TurnResolver {
       }
     }
 
+    final leviathan = LeviathanResolver.resolve(game, random: random);
     FactionFall.apply(game);
     final explorations = ExplorationResolver.resolve(game);
     final reinforcements = ReinforcementResolver.resolve(game);
@@ -101,7 +103,12 @@ class TurnResolver {
       predators: event.predators,
       objectives: objectives[humanId]!,
       temporaryObjectives: TemporaryObjectives.endedBy(event),
-      attacks: attacks,
+      attacks: [
+        ...attacks,
+        if (leviathan.report != null) leviathan.report!,
+      ],
+      leviathan: leviathan.report,
+      announcedLeviathan: leviathan.announced,
     );
   }
 }

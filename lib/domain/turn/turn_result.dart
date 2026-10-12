@@ -2,6 +2,7 @@ import 'package:hive_ce/hive.dart';
 import '../building/building_type.dart';
 import '../event/random_event_type.dart';
 import '../faction/faction_attack_report.dart';
+import '../leviathan/leviathan_announcement.dart';
 import '../map/exploration_result.dart';
 import '../map/monster_lair.dart';
 import '../map/reinforcement_order.dart';
@@ -95,6 +96,14 @@ class TurnResult {
   /// announced. A turn result is never saved.
   final List<FactionAttackReport> attacks;
 
+  /// The guardians' attack on the human's first Faille fought at the end
+  /// of this turn, if any; also the last of [attacks].
+  final FactionAttackReport? leviathan;
+
+  /// The guardians' attack announced at the end of this turn; it strikes
+  /// at the end of the next one.
+  final LeviathanAnnouncement? announcedLeviathan;
+
   const TurnResult({
     required this.changes,
     required this.previousTurn,
@@ -115,5 +124,7 @@ class TurnResult {
     this.objectives = const [],
     this.temporaryObjectives = const [],
     this.attacks = const [],
+    this.leviathan,
+    this.announcedLeviathan,
   });
 }

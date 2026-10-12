@@ -2,6 +2,7 @@ import 'package:hive_ce/hive.dart';
 
 import '../faction/faction.dart';
 import '../faction/faction_personality.dart';
+import '../leviathan/leviathan_return.dart';
 import '../map/cell_content_type.dart';
 import '../map/game_map.dart';
 import '../map/transition_base_type.dart';
@@ -52,6 +53,11 @@ class Game extends HiveObject {
   @HiveField(9)
   List<FactionPersonality>? savedFactions;
 
+  /// The guardians' return to the human's first Faille; `null` for games
+  /// saved before it existed, which never get it.
+  @HiveField(10)
+  LeviathanReturn? leviathanReturn;
+
   Game({
     required this.humanPlayerId,
     required this.players,
@@ -64,6 +70,7 @@ class Game extends HiveObject {
     DateTime? lastPlayedAt,
   }) : savedDifficulty = difficulty,
        savedLastPlayedAt = lastPlayedAt,
+       leviathanReturn = LeviathanReturn(),
        createdAt = createdAt ?? DateTime.now();
 
   factory Game.singlePlayer(

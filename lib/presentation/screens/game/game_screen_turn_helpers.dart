@@ -12,6 +12,7 @@ import '../../../domain/unit/unit_loss_calculator.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/event/event_pending_warning.dart';
+import '../../widgets/leviathan/leviathan_due_warning.dart';
 import '../../widgets/raid/raid_due_warning.dart';
 import '../../widgets/turn/undefended_post_warning.dart';
 import '../../widgets/volcano/volcano_due_warning.dart';
@@ -102,18 +103,21 @@ RaidDueWarning? predatorsDueWarning(
 }
 
 /// Warnings for the end-of-turn confirmation: the raid or the predators
-/// on the base, the kraken wave on an unguarded kernel, the posts nobody
+/// on the base, the guardians on a Faille too weakly held, the kraken
+/// wave on an unguarded kernel, the posts nobody
 /// defends and the event still waiting for a choice, `null` when there is
 /// none.
 Widget? dueWarnings(AppLocalizations l10n, Game game, Player player) {
   final Widget? raid = raidDueWarning(game, player);
   final Widget? predators = predatorsDueWarning(l10n, game, player);
+  final Widget? leviathan = LeviathanDueWarning.of(game, player);
   final Widget? volcano = VolcanoDueWarning.of(game, player);
   final Widget? posts = UndefendedPostWarning.of(game, player);
   final Widget? event = EventPendingWarning.of(player);
   final List<Widget> warnings = <Widget>[
     if (raid != null) raid,
     if (predators != null) predators,
+    if (leviathan != null) leviathan,
     if (volcano != null) volcano,
     if (posts != null) posts,
     if (event != null) event,

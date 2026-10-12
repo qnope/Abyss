@@ -2,6 +2,7 @@ import '../../domain/building/building_type.dart';
 import '../../domain/event/random_event_choice.dart';
 import '../../domain/history/history_entry.dart';
 import '../l10n/app_localizations.dart';
+import 'attacker_name_texts.dart';
 import 'building_type_extensions.dart';
 import 'random_event_type_extensions.dart';
 import 'tech_branch_extensions.dart';
@@ -88,7 +89,7 @@ String _raidTitle(AppLocalizations l10n, RaidEntry entry) {
 }
 
 String _assaultTitle(AppLocalizations l10n, BaseAssaultEntry entry) {
-  final String name = entry.opponentName;
+  final String name = attackerLabel(l10n, entry.opponentName);
   final String? code = entry.postName;
   if (code != null && code != 'volcanicKernel') {
     return _postAssaultTitle(l10n, entry, baseNameLabel(l10n, code));
@@ -108,7 +109,7 @@ String _postAssaultTitle(
   BaseAssaultEntry entry,
   String post,
 ) {
-  final String name = entry.opponentName;
+  final String name = attackerLabel(l10n, entry.opponentName);
   if (entry.defending) {
     return entry.victory
         ? l10n.historyPostSuffered(post, name)

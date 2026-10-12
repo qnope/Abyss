@@ -12,6 +12,10 @@ import 'monster_family_extensions.dart';
 import 'random_event_type_extensions.dart';
 import 'unit_type_extensions.dart';
 
+/// A faction hostile to the player, as the map shows it.
+const String hostileFactionSvgPath =
+    'assets/icons/map_content/faction_hostile.svg';
+
 /// Display primitives for a [TipId].
 extension TipIdDisplay on TipId {
   /// Art of the game shown on the card: the building, unit, monster or
@@ -30,7 +34,11 @@ extension TipIdDisplay on TipId {
     TipId.factionAttack => UnitType.guardian.iconPath,
     TipId.chestAndRuins => CellContentType.ruins.svgPath!,
     TipId.transitionBase || TipId.events => GuideBubble.portraitPath,
-    TipId.descent => BuildingType.descentModule.iconPath,
+    TipId.descent ||
+    TipId.postDefence => BuildingType.descentModule.iconPath,
+    TipId.admiral => UnitType.abyssAdmiral.iconPath,
+    TipId.kernelGarrison => BuildingType.volcanicKernel.iconPath,
+    TipId.postLost => hostileFactionSvgPath,
     TipId.warmCurrent => RandomEventType.warmCurrent.illustration,
     TipId.wreck => RandomEventType.wreck.illustration,
     TipId.predators => RandomEventType.predators.illustration,

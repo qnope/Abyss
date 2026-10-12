@@ -11,6 +11,7 @@ import '../objective_migration.dart';
 import 'guide_advice.dart';
 import 'guide_busy.dart';
 import 'guide_campaign.dart';
+import 'guide_leviathan.dart';
 import 'guide_message.dart';
 import 'guide_raid.dart';
 import 'guide_target.dart';
@@ -18,7 +19,8 @@ import 'guide_targets.dart';
 
 /// The guide of the tutorial: what it says to a player and what its halo
 /// surrounds, read from the state of the game alone, without playing any
-/// move. The tutorial chapter is followed here, the next ones by
+/// move. The guardians striking the Faille ([GuideLeviathan]) come
+/// first; the tutorial chapter is followed here, the next ones by
 /// [GuideCampaign].
 abstract final class GuideAdvisor {
   static const _endTurn = GuideTarget.endTurn();
@@ -27,6 +29,8 @@ abstract final class GuideAdvisor {
   /// its chapter is over.
   static GuideAdvice? of(Game game, Player player) {
     if (!ObjectiveMigration.stateOf(game, player).tutorialEnabled) return null;
+    final GuideAdvice? leviathan = GuideLeviathan.of(game, player);
+    if (leviathan != null) return leviathan;
     final Objective? objective = CurrentObjective.of(game, player);
     if (objective == null) return null;
     if (objective.chapter != ObjectiveChapter.installation) {

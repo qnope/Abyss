@@ -48,4 +48,12 @@ enum TipId {
   coldCurrent,
   @HiveField(20)
   factionAttack,
+  @HiveField(21)
+  admiral,
+  @HiveField(22)
+  postDefence,
+  @HiveField(23)
+  kernelGarrison,
+  @HiveField(24)
+  postLost,
 }

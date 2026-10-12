@@ -3562,4 +3562,105 @@ class AppLocalizationsFr extends AppLocalizations {
   String assaultPlanAdvice(String leader, String escort) {
     return 'Conseil : $leader avec $escort';
   }
+
+  @override
+  String get tipAdmiralTitle => 'L\'Amiral';
+
+  @override
+  String get tipAdmiralLine1 =>
+      'L\'Amiral des Abysses ne combat pas : il commande l\'assaut.';
+
+  @override
+  String get tipAdmiralLine2 =>
+      'Une Faille, une Cheminée ou le Noyau n\'est pris que s\'il survit à l\'assaut.';
+
+  @override
+  String get tipAdmiralLine3 =>
+      'Couvre-le de Gardiens : ils attirent les coups à sa place.';
+
+  @override
+  String get tipPostDefenceTitle => 'Défendre ses postes';
+
+  @override
+  String get tipPostDefenceLine1 =>
+      'Seules tes unités du niveau du dessous défendent un poste.';
+
+  @override
+  String get tipPostDefenceLine2 =>
+      'Les factions attaquent tes postes sans prévenir.';
+
+  @override
+  String get tipPostDefenceLine3 =>
+      'S\'il tombe, ton Module de Descente (ou ta Capsule) est détruit et tes unités d\'en bas sont perdues.';
+
+  @override
+  String get tipKernelGarrisonTitle => 'La garnison du Noyau';
+
+  @override
+  String get tipKernelGarrisonLine1 =>
+      'Contre les Krakens, seule la garnison défend le Noyau.';
+
+  @override
+  String tipKernelGarrisonLine2(int level) {
+    return 'Tes unités restées dehors, au niveau $level, ne combattent pas.';
+  }
+
+  @override
+  String tipKernelGarrisonLine3(String action) {
+    return 'Fais-les entrer avec « $action », sur la fiche du Noyau.';
+  }
+
+  @override
+  String get tipPostLostTitle => 'Poste perdu';
+
+  @override
+  String get tipPostLostLine1 =>
+      'Ton poste est tombé : son Module ou sa Capsule est détruit et tes unités d\'en bas sont perdues.';
+
+  @override
+  String get tipPostLostLine2 => 'Le vainqueur tient désormais le poste.';
+
+  @override
+  String get tipPostLostLine3 =>
+      'Pour le reprendre, mène un nouvel assaut avec un Amiral des Abysses.';
+
+  @override
+  String get leviathanAttackerName => 'Le Léviathan';
+
+  @override
+  String get leviathanBannerTitle =>
+      'Contre-attaque sur la Faille à la fin du tour';
+
+  @override
+  String leviathanBannerForce(int sentinels, int level, int count) {
+    return 'Léviathan + $sentinels Sentinelles · défenseurs niv. $level : $count';
+  }
+
+  @override
+  String leviathanDueWarning(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'seulement $count défenseurs l\'attendent',
+      one: 'seulement $count défenseur l\'attend',
+      zero: 'aucun défenseur ne l\'attend',
+    );
+    return 'Le Léviathan frappe ta Faille à la fin du tour, et $_temp0 au niveau $level.';
+  }
+
+  @override
+  String guideLeviathanReturn(int level) {
+    return 'Le Léviathan revient reprendre sa Faille ! Seules tes unités du niveau $level la défendent. Si elle tombe, ton Module est détruit et tes unités d\'en bas sont perdues.';
+  }
+
+  @override
+  String guideLeviathanReinforce(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Harponneurs',
+      one: '$count Harponneur',
+    );
+    return 'Envoie $_temp0 de plus.';
+  }
 }

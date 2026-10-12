@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/history/history_entry.dart';
+import '../../../extensions/attacker_name_texts.dart';
 import '../../../extensions/transition_base_name_extensions.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../../../widgets/fight/assault_damage_card.dart';
@@ -31,7 +32,7 @@ class BaseAssaultSummaryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final fight = entry.fightResult;
-    final name = entry.opponentName;
+    final name = attackerLabel(l10n, entry.opponentName);
     final defending = entry.defending;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.fightAssaultOn(name))),

@@ -4,6 +4,7 @@ import '../objective_migration.dart';
 import 'base_tips.dart';
 import 'event_tips.dart';
 import 'map_tips.dart';
+import 'post_tips.dart';
 import 'threat_tips.dart';
 import 'tip.dart';
 import 'tip_id.dart';
@@ -12,7 +13,13 @@ import 'tip_id.dart';
 abstract final class TipCatalog {
   /// Every tip, in the order of [TipId]: the first to apply opens first.
   static final List<Tip> all = List.unmodifiable(
-    [...baseTips, ...threatTips, ...mapTips, ...EventTips.all]
+    [
+      ...baseTips,
+      ...threatTips,
+      ...mapTips,
+      ...postTips,
+      ...EventTips.all,
+    ]
       ..sort((a, b) => a.id.index.compareTo(b.id.index)),
   );
 

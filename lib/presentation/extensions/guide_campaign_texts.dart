@@ -29,6 +29,11 @@ extension GuideCampaignText on GuideMessage {
       needed == null
           ? l10n.guideKernelWaveAll(monsters)
           : l10n.guideKernelWaveNeeded(needed),
+    GuideLeviathanReturn(:final level, :final missing) =>
+      missing == 0
+          ? l10n.guideLeviathanReturn(level)
+          : '${l10n.guideLeviathanReturn(level)} '
+                '${l10n.guideLeviathanReinforce(missing)}',
     _ => '',
   };
 }

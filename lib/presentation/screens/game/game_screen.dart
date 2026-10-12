@@ -39,6 +39,12 @@ class _GameScreenState extends State<GameScreen> {
     }
   }
 
+  /// Shows the map of [level].
+  void _openMap(int level) => setState(() {
+        _currentTab = mapTab;
+        if (widget.game.levels.containsKey(level)) _currentLevel = level;
+      });
+
   /// Redraws after a player's action, then opens the tip it may call for.
   void _changed() {
     setState(() {});
@@ -59,7 +65,7 @@ class _GameScreenState extends State<GameScreen> {
             consumption: consumption,
           ),
           GameStatusBars(game: widget.game, player: _human,
-              onOpenEvent: _openPendingEvent),
+              onOpenEvent: _openPendingEvent, onOpenMap: _openMap),
           Expanded(
             child: buildGameTab(
               context,

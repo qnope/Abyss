@@ -19,7 +19,7 @@ class GameStatisticsCalculator {
       switch (entry) {
         case CombatEntry(:final fightResult) when fightResult.isVictory:
           monstersDefeated += fightResult.initialMonsterCount;
-        case CaptureEntry():
+        case CaptureEntry(captured: true):
           basesCaptured++;
         case CollectEntry(:final gains):
           collectedResources += gains.values.fold(0, (a, b) => a + b);

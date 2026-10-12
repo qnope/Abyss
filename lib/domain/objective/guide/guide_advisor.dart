@@ -9,6 +9,8 @@ import '../objective_chapter.dart';
 import '../objective_id.dart';
 import '../objective_migration.dart';
 import 'guide_advice.dart';
+import 'guide_busy.dart';
+import 'guide_campaign.dart';
 import 'guide_message.dart';
 import 'guide_raid.dart';
 import 'guide_target.dart';
@@ -16,7 +18,8 @@ import 'guide_targets.dart';
 
 /// The guide of the tutorial: what it says to a player and what its halo
 /// surrounds, read from the state of the game alone, without playing any
-/// move.
+/// move. The tutorial chapter is followed here, the next ones by
+/// [GuideCampaign].
 abstract final class GuideAdvisor {
   static const _endTurn = GuideTarget.endTurn();
 
@@ -26,12 +29,14 @@ abstract final class GuideAdvisor {
     if (!ObjectiveMigration.stateOf(game, player).tutorialEnabled) return null;
     final Objective? objective = CurrentObjective.of(game, player);
     if (objective == null) return null;
-    if (objective.chapter != ObjectiveChapter.installation) return null;
+    if (objective.chapter != ObjectiveChapter.installation) {
+      return GuideCampaign.of(game, player, objective);
+    }
     final GuideTarget target = GuideTargets.of(player, objective.id)!;
     if (objective.isDone(game, player)) {
       return const GuideAdvice(GuideGoalMet(), _endTurn);
     }
-    final GuideAdvice? busy = _busy(player, target);
+    final GuideAdvice? busy = GuideBusy.of(player, target);
     final GuideTarget reachable = busy?.target ?? target;
     return _raid(game, player, objective.id, reachable) ??
         _exploration(game, player, objective.id) ??
@@ -80,19 +85,6 @@ abstract final class GuideAdvisor {
       GuideWreck(until, hasBarracks: true),
       const GuideTarget.unit(UnitType.scout),
     );
-  }
-
-  /// The worksite or the recruitment [target] asks for, already used this
-  /// turn.
-  static GuideAdvice? _busy(Player player, GuideTarget target) {
-    final int hq = _level(player, BuildingType.headquarters);
-    if (target.building != null && player.worksite.freeBuildSites(hq) <= 0) {
-      return const GuideAdvice(GuideWorksiteTaken(), _endTurn);
-    }
-    if (player.recruitedUnitTypes.contains(target.unit)) {
-      return const GuideAdvice(GuideAlreadyRecruited(), _endTurn);
-    }
-    return null;
   }
 
   static int _level(Player player, BuildingType type) =>

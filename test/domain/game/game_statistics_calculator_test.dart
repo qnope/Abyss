@@ -140,6 +140,20 @@ void main() {
       expect(stats.basesCaptured, 2);
     });
 
+    test('a victory where the admiral fell captures nothing', () {
+      final game = _gameWith(
+        history: [
+          CaptureEntry(
+            turn: 1,
+            transitionBaseName: 'Base A',
+            fightResult: _result(winner: CombatSide.player, monsters: 2),
+            captured: false,
+          ),
+        ],
+      );
+      expect(_calculator.compute(game).basesCaptured, 0);
+    });
+
     test('collect entries sum resources', () {
       final game = _gameWith(
         history: [

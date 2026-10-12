@@ -5,21 +5,25 @@ import '../../extensions/monster_lair_extensions.dart';
 import '../../extensions/rampart_texts.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../guide/guide_halo.dart';
 import '../unit/unit_count_panel.dart';
 
 /// Part of the kernel sheet once it is captured: its level, the magma
 /// rampart, the garrison and the next kraken wave, with the buttons that
-/// move units in and out of the garrison.
+/// move units in and out of the garrison. The guide's halo surrounds the
+/// one that fills the garrison when [guided].
 class KernelGarrisonPanel extends StatelessWidget {
   final Player player;
   final VoidCallback onGarrison;
   final VoidCallback onWithdraw;
+  final bool guided;
 
   const KernelGarrisonPanel({
     super.key,
     required this.player,
     required this.onGarrison,
     required this.onWithdraw,
+    this.guided = false,
   });
 
   @override
@@ -67,9 +71,13 @@ class KernelGarrisonPanel extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: FilledButton(
-                onPressed: onGarrison,
-                child: Text(l10n.volcanoGarrisonUnits),
+              child: GuideHalo(
+                active: guided,
+                radius: 20,
+                child: FilledButton(
+                  onPressed: onGarrison,
+                  child: Text(l10n.volcanoGarrisonUnits),
+                ),
               ),
             ),
             const SizedBox(width: 8),

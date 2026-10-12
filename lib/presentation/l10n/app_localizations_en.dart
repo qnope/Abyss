@@ -947,6 +947,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String historyCaptureMissed(String name) {
+    return 'Not captured: $name';
+  }
+
+  @override
+  String get historyCaptureAdmiralFell => 'Victory, but the Admiral fell';
+
+  @override
   String historyDescentTitle(int level) {
     return 'Descent to Level $level';
   }
@@ -2288,6 +2296,142 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get guideRaidHoldOn =>
       'You\'ve already recruited this turn: end it and hold on.';
+
+  @override
+  String guideAdmiralNeedsBarracks(String post, int level) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'a Rift',
+      'cheminee': 'a Vent',
+      'other': 'the Core',
+    });
+    return 'To take $_temp0, you need an Admiral. Raise the Barracks to level $level.';
+  }
+
+  @override
+  String guideAdmiralToRecruit(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'the Rift',
+      'cheminee': 'the Vent',
+      'other': 'the Core',
+    });
+    return 'Recruit an Admiral: he doesn\'t fight, but without him $_temp0 can\'t be taken.';
+  }
+
+  @override
+  String guideAdmiralToSend(String post, int level) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'the Rift',
+      'cheminee': 'the Vent',
+      'other': 'the Core',
+    });
+    return 'To take $_temp0, your Admiral must be on level $level. Send him down through your highlighted post on the Map.';
+  }
+
+  @override
+  String guidePostToFind(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'a Rift',
+      'cheminee': 'a Vent',
+      'other': 'the Core',
+    });
+    return 'Explore the Map to find $_temp0.';
+  }
+
+  @override
+  String guidePostAssault(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'A Rift',
+      'cheminee': 'A Vent',
+      'other': 'The Core',
+    });
+    return '$_temp0! Your Admiral must survive: cover him with Guardians.';
+  }
+
+  @override
+  String guidePostAssaultArmy(int count, int wins, int rehearsals) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Send him with at least $count Harpooners',
+      one: 'Send him with at least $count Harpooner',
+      zero: 'Your escort is enough',
+    );
+    return '$_temp0: you win $wins times out of $rehearsals.';
+  }
+
+  @override
+  String guideAdmiralFell(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'the Rift',
+      'cheminee': 'the Vent',
+      'other': 'the Core',
+    });
+    return 'Victory, but your Admiral fell: $_temp0 is not taken. Cover him with Guardians and try again.';
+  }
+
+  @override
+  String guidePassageNeedsHq(String passage, int level) {
+    String _temp0 = intl.Intl.selectLogic(passage, {
+      'descentModule': 'The Descent Module',
+      'other': 'The Pressure Capsule',
+    });
+    return '$_temp0 needs Headquarters level $level. Raise your Headquarters first.';
+  }
+
+  @override
+  String guidePostUndefended(String post, int level) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille':
+          'Your Rift is guarded only by your units on level $level. If it falls, your Module is destroyed',
+      'other':
+          'Your Vent is guarded only by your units on level $level. If it falls, your Capsule is destroyed',
+    });
+    return '$_temp0 and your units down there are lost.';
+  }
+
+  @override
+  String guideKernelWaveNeeded(int needed) {
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed units',
+      one: '$needed unit',
+    );
+    return 'The Krakens are coming to take the Core back! Put at least $_temp0 in the garrison before the end of the turn, or the Core loses a level.';
+  }
+
+  @override
+  String guideKernelWaveAll(int monsters) {
+    return '$monsters Krakens are coming to take the Core back! Garrison every unit you can before the end of the turn, or the Core loses a level.';
+  }
+
+  @override
+  String get guideLessonDescentModule =>
+      'Build the Descent Module: it opens your Rift down to level 2.';
+
+  @override
+  String get guideLessonDescendLevel2 =>
+      'Send units down to level 2 through the Rift. Careful: they never come back up.';
+
+  @override
+  String get guideLessonHqLevel8 =>
+      'The Pressure Capsule, which leads to level 3, needs Headquarters level 8. Raise your Headquarters.';
+
+  @override
+  String get guideLessonPressureCapsule =>
+      'Build the Pressure Capsule: it opens your Vent down to level 3.';
+
+  @override
+  String get guideLessonDescendLevel3 =>
+      'Send units down to level 3 through the Vent. Careful: they never come back up.';
+
+  @override
+  String get guideLessonHqLevel10 =>
+      'Headquarters level 10 will let you garrison units in the Core once it is taken. Raise your Headquarters.';
+
+  @override
+  String get guideLessonKernelLevel1 =>
+      'The Core is yours! Build it to level 1: Kraken waves will come, and only its garrison will defend it.';
 
   @override
   String get tutorialGuideSwitch => 'Tutorial guide';

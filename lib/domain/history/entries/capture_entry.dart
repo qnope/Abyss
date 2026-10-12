@@ -1,7 +1,8 @@
 part of '../history_entry.dart';
 
 /// History entry recording the capture of a transition base, or of the
-/// volcanic kernel.
+/// volcanic kernel; or a victory there that captured nothing, the Abyss
+/// Admiral fallen ([captured] false).
 ///
 /// Carries the full [FightResult] so the combat can be replayed from the
 /// history view, same pattern as [CombatEntry].
@@ -30,6 +31,11 @@ class CaptureEntry extends HistoryEntry {
   @HiveField(5)
   final FightResult fightResult;
 
+  /// Whether the base was taken: false when the assault was won but every
+  /// Abyss Admiral fell. Older saves only recorded captures.
+  @HiveField(6, defaultValue: true)
+  final bool captured;
+
   /// The [transitionBaseName] of the capture of the volcanic kernel.
   static const String volcanicKernel = 'volcanicKernel';
 
@@ -38,6 +44,7 @@ class CaptureEntry extends HistoryEntry {
     required this.transitionBaseName,
     required this.fightResult,
     this.subtitle,
+    this.captured = true,
   }) : category = HistoryEntryCategory.capture,
        title = '';
 

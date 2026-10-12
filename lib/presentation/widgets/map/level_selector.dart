@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../guide/guide_halo.dart';
+import '../guide/guide_scope.dart';
 import 'map_level_info.dart';
 
 /// Horizontal row of level chips for switching between map depths.
 ///
 /// Purely presentational — no domain logic. The parent owns the
-/// [currentLevel] and reacts to [onLevelSelected].
+/// [currentLevel] and reacts to [onLevelSelected]. The guide's halo
+/// surrounds the chip of the level its target cell lies on, unless shown.
 class LevelSelector extends StatelessWidget {
   const LevelSelector({
     super.key,
@@ -22,6 +25,7 @@ class LevelSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final int? guided = GuideScope.of(context)?.level;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -30,12 +34,18 @@ class LevelSelector extends StatelessWidget {
           for (final level in MapLevelInfo.levels)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: _LevelChip(
-                label: l10n.mapLevelChip(
-                    level, MapLevelInfo.nameOf(l10n, level)),
-                isActive: level == currentLevel,
-                isUnlocked: unlockedLevels.contains(level),
-                onTap: () => onLevelSelected(level),
+              child: GuideHalo(
+                active: level == guided && level != currentLevel,
+                radius: 8,
+                child: _LevelChip(
+                  label: l10n.mapLevelChip(
+                    level,
+                    MapLevelInfo.nameOf(l10n, level),
+                  ),
+                  isActive: level == currentLevel,
+                  isUnlocked: unlockedLevels.contains(level),
+                  onTap: () => onLevelSelected(level),
+                ),
               ),
             ),
         ],

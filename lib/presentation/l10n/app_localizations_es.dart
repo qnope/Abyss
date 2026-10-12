@@ -957,6 +957,14 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String historyCaptureMissed(String name) {
+    return 'Sin captura: $name';
+  }
+
+  @override
+  String get historyCaptureAdmiralFell => 'Victoria, pero el Almirante cayó';
+
+  @override
   String historyDescentTitle(int level) {
     return 'Descenso al Nivel $level';
   }
@@ -2323,6 +2331,142 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get guideRaidHoldOn =>
       'Ya has reclutado este turno: termínalo y aguanta.';
+
+  @override
+  String guideAdmiralNeedsBarracks(String post, int level) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'una Falla',
+      'cheminee': 'una Chimenea',
+      'other': 'el Núcleo',
+    });
+    return 'Para tomar $_temp0, necesitas un Almirante. Sube los Barracones al nivel $level.';
+  }
+
+  @override
+  String guideAdmiralToRecruit(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'la Falla',
+      'cheminee': 'la Chimenea',
+      'other': 'el Núcleo',
+    });
+    return 'Recluta un Almirante: no combate, pero sin él $_temp0 no se toma.';
+  }
+
+  @override
+  String guideAdmiralToSend(String post, int level) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'la Falla',
+      'cheminee': 'la Chimenea',
+      'other': 'el Núcleo',
+    });
+    return 'Para tomar $_temp0, tu Almirante debe estar en el nivel $level. Envíalo por tu puesto resaltado en el Mapa.';
+  }
+
+  @override
+  String guidePostToFind(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'una Falla',
+      'cheminee': 'una Chimenea',
+      'other': 'el Núcleo',
+    });
+    return 'Explora el Mapa para encontrar $_temp0.';
+  }
+
+  @override
+  String guidePostAssault(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'Una Falla',
+      'cheminee': 'Una Chimenea',
+      'other': 'El Núcleo',
+    });
+    return '¡$_temp0! Tu Almirante debe sobrevivir: cúbrelo con Guardianes.';
+  }
+
+  @override
+  String guidePostAssaultArmy(int count, int wins, int rehearsals) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Envíalo con al menos $count Arponeros',
+      one: 'Envíalo con al menos $count Arponero',
+      zero: 'Tu escolta basta',
+    );
+    return '$_temp0: ganas $wins veces de $rehearsals.';
+  }
+
+  @override
+  String guideAdmiralFell(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'la Falla no está tomada',
+      'cheminee': 'la Chimenea no está tomada',
+      'other': 'el Núcleo no está tomado',
+    });
+    return 'Victoria, pero tu Almirante cayó: $_temp0. Cúbrelo con Guardianes y vuelve a intentarlo.';
+  }
+
+  @override
+  String guidePassageNeedsHq(String passage, int level) {
+    String _temp0 = intl.Intl.selectLogic(passage, {
+      'descentModule': 'El Módulo de descenso',
+      'other': 'La Cápsula presurizada',
+    });
+    return '$_temp0 requiere el Cuartel General de nivel $level. Sube primero tu Cuartel General.';
+  }
+
+  @override
+  String guidePostUndefended(String post, int level) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille':
+          'Tu Falla solo la defienden tus unidades del nivel $level. Si cae, tu Módulo queda destruido',
+      'other':
+          'Tu Chimenea solo la defienden tus unidades del nivel $level. Si cae, tu Cápsula queda destruida',
+    });
+    return '$_temp0 y tus unidades de abajo se pierden.';
+  }
+
+  @override
+  String guideKernelWaveNeeded(int needed) {
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed unidades',
+      one: '$needed unidad',
+    );
+    return '¡Los Krakens vienen a recuperar el Núcleo! Pon al menos $_temp0 en guarnición antes del final del turno, o el Núcleo pierde un nivel.';
+  }
+
+  @override
+  String guideKernelWaveAll(int monsters) {
+    return '¡$monsters Krakens vienen a recuperar el Núcleo! Pon en guarnición todas las unidades que puedas antes del final del turno, o el Núcleo pierde un nivel.';
+  }
+
+  @override
+  String get guideLessonDescentModule =>
+      'Construye el Módulo de descenso: abre tu Falla hacia el nivel 2.';
+
+  @override
+  String get guideLessonDescendLevel2 =>
+      'Envía unidades al nivel 2 por la Falla. Cuidado: no vuelven a subir.';
+
+  @override
+  String get guideLessonHqLevel8 =>
+      'La Cápsula presurizada, que lleva al nivel 3, requiere el Cuartel General de nivel 8. Sube tu Cuartel General.';
+
+  @override
+  String get guideLessonPressureCapsule =>
+      'Construye la Cápsula presurizada: abre tu Chimenea hacia el nivel 3.';
+
+  @override
+  String get guideLessonDescendLevel3 =>
+      'Envía unidades al nivel 3 por la Chimenea. Cuidado: no vuelven a subir.';
+
+  @override
+  String get guideLessonHqLevel10 =>
+      'El Cuartel General de nivel 10 te permitirá poner unidades en guarnición en el Núcleo, una vez tomado. Sube tu Cuartel General.';
+
+  @override
+  String get guideLessonKernelLevel1 =>
+      '¡El Núcleo es tuyo! Constrúyelo al nivel 1: vendrán oleadas de Krakens, y solo su guarnición lo defenderá.';
 
   @override
   String get tutorialGuideSwitch => 'Guía del tutorial';

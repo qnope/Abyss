@@ -1564,6 +1564,18 @@ abstract class AppLocalizations {
   /// **'{turns, plural, one{Victoire en {turns} tour} other{Victoire en {turns} tours}}'**
   String historyCaptureVictory(int turns);
 
+  /// No description provided for @historyCaptureMissed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de prise : {name}'**
+  String historyCaptureMissed(String name);
+
+  /// No description provided for @historyCaptureAdmiralFell.
+  ///
+  /// In fr, this message translates to:
+  /// **'Victoire, mais l\'Amiral est tombé'**
+  String get historyCaptureAdmiralFell;
+
   /// No description provided for @historyDescentTitle.
   ///
   /// In fr, this message translates to:
@@ -3345,6 +3357,114 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tu as déjà recruté ce tour : termine-le et tiens bon.'**
   String get guideRaidHoldOn;
+
+  /// No description provided for @guideAdmiralNeedsBarracks.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour prendre {post, select, faille{une Faille} cheminee{une Cheminée} other{le Noyau}}, il faut un Amiral. Monte la Caserne au niveau {level}.'**
+  String guideAdmiralNeedsBarracks(String post, int level);
+
+  /// No description provided for @guideAdmiralToRecruit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recrute un Amiral : il ne se bat pas, mais sans lui {post, select, faille{la Faille ne se prend pas} cheminee{la Cheminée ne se prend pas} other{le Noyau ne se prend pas}}.'**
+  String guideAdmiralToRecruit(String post);
+
+  /// No description provided for @guideAdmiralToSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour prendre {post, select, faille{la Faille} cheminee{la Cheminée} other{le Noyau}}, ton Amiral doit être au niveau {level}. Envoie-le par ton poste entouré sur la Carte.'**
+  String guideAdmiralToSend(String post, int level);
+
+  /// No description provided for @guidePostToFind.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explore la Carte pour trouver {post, select, faille{une Faille} cheminee{une Cheminée} other{le Noyau}}.'**
+  String guidePostToFind(String post);
+
+  /// No description provided for @guidePostAssault.
+  ///
+  /// In fr, this message translates to:
+  /// **'{post, select, faille{Une Faille} cheminee{Une Cheminée} other{Le Noyau}} ! Ton Amiral doit survivre : couvre-le de Gardiens.'**
+  String guidePostAssault(String post);
+
+  /// No description provided for @guidePostAssaultArmy.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{Ton escorte suffit} one{Envoie-le avec au moins {count} Harponneur} other{Envoie-le avec au moins {count} Harponneurs}} : tu gagnes {wins} fois sur {rehearsals}.'**
+  String guidePostAssaultArmy(int count, int wins, int rehearsals);
+
+  /// No description provided for @guideAdmiralFell.
+  ///
+  /// In fr, this message translates to:
+  /// **'Victoire, mais ton Amiral est tombé : {post, select, faille{la Faille n\'est pas prise} cheminee{la Cheminée n\'est pas prise} other{le Noyau n\'est pas pris}}. Couvre-le de Gardiens et recommence.'**
+  String guideAdmiralFell(String post);
+
+  /// No description provided for @guidePassageNeedsHq.
+  ///
+  /// In fr, this message translates to:
+  /// **'{passage, select, descentModule{Le Module de descente} other{La Capsule pressurisée}} demande le QG {level}. Monte d\'abord ton QG.'**
+  String guidePassageNeedsHq(String passage, int level);
+
+  /// No description provided for @guidePostUndefended.
+  ///
+  /// In fr, this message translates to:
+  /// **'{post, select, faille{Ta Faille n\'est gardée que par tes unités du niveau {level}. Si elle tombe, ton Module est détruit} other{Ta Cheminée n\'est gardée que par tes unités du niveau {level}. Si elle tombe, ta Capsule est détruite}} et tes unités d\'en bas sont perdues.'**
+  String guidePostUndefended(String post, int level);
+
+  /// No description provided for @guideKernelWaveNeeded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les Krakens viennent reprendre le Noyau ! Mets au moins {needed, plural, one{{needed} unité} other{{needed} unités}} en garnison avant la fin du tour, sinon le Noyau perd un niveau.'**
+  String guideKernelWaveNeeded(int needed);
+
+  /// No description provided for @guideKernelWaveAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'{monsters} Krakens viennent reprendre le Noyau ! Mets en garnison toutes les unités que tu peux avant la fin du tour, sinon le Noyau perd un niveau.'**
+  String guideKernelWaveAll(int monsters);
+
+  /// No description provided for @guideLessonDescentModule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis le Module de descente : il ouvre ta Faille vers le niveau 2.'**
+  String get guideLessonDescentModule;
+
+  /// No description provided for @guideLessonDescendLevel2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoie des unités au niveau 2 par la Faille. Attention, elles ne remontent pas.'**
+  String get guideLessonDescendLevel2;
+
+  /// No description provided for @guideLessonHqLevel8.
+  ///
+  /// In fr, this message translates to:
+  /// **'La Capsule pressurisée, qui mène au niveau 3, demande le QG 8. Monte ton QG.'**
+  String get guideLessonHqLevel8;
+
+  /// No description provided for @guideLessonPressureCapsule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Construis la Capsule pressurisée : elle ouvre ta Cheminée vers le niveau 3.'**
+  String get guideLessonPressureCapsule;
+
+  /// No description provided for @guideLessonDescendLevel3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoie des unités au niveau 3 par la Cheminée. Attention, elles ne remontent pas.'**
+  String get guideLessonDescendLevel3;
+
+  /// No description provided for @guideLessonHqLevel10.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le QG 10 te laissera mettre des unités en garnison dans le Noyau, une fois pris. Monte ton QG.'**
+  String get guideLessonHqLevel10;
+
+  /// No description provided for @guideLessonKernelLevel1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Noyau est à toi ! Construis-le au niveau 1 : des vagues de Krakens viendront, et seule sa garnison le défendra.'**
+  String get guideLessonKernelLevel1;
 
   /// No description provided for @tutorialGuideSwitch.
   ///

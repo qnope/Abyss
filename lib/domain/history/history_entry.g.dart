@@ -355,13 +355,14 @@ class CaptureEntryAdapter extends TypeAdapter<CaptureEntry> {
       transitionBaseName: fields[4] as String,
       fightResult: fields[5] as FightResult,
       subtitle: fields[3] as String?,
+      captured: fields[6] == null ? true : fields[6] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, CaptureEntry obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.turn)
       ..writeByte(3)
@@ -369,7 +370,9 @@ class CaptureEntryAdapter extends TypeAdapter<CaptureEntry> {
       ..writeByte(4)
       ..write(obj.transitionBaseName)
       ..writeByte(5)
-      ..write(obj.fightResult);
+      ..write(obj.fightResult)
+      ..writeByte(6)
+      ..write(obj.captured);
   }
 
   @override

@@ -55,6 +55,7 @@ Widget? troopsSectionFor(
           handleGarrisonKernel(
             context, game, repository, onChanged, withdraw: true);
         },
+        guided: isGarrisonGuided(game),
       );
     default:
       return null;

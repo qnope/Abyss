@@ -123,11 +123,12 @@ class AttackVolcanicKernelAction extends Action {
     Game game, Player player, ActionResult result, int turn,
   ) {
     if (result is! AttackVolcanicKernelResult) return null;
-    if (!result.captured || result.fight == null) return null;
+    if (!result.victory || result.fight == null) return null;
     return CaptureEntry(
       turn: turn,
       transitionBaseName: CaptureEntry.volcanicKernel,
       fightResult: result.fight!,
+      captured: result.captured,
     );
   }
 

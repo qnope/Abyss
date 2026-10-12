@@ -4,6 +4,7 @@ import '../../../domain/building/building.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/map/captured_base_finder.dart';
+import '../../widgets/unit/unit_count_panel.dart';
 import '../../widgets/volcano/kernel_garrison_panel.dart';
 import '../../extensions/transition_base_name_extensions.dart';
 import '../../l10n/l10n_extension.dart';
@@ -28,7 +29,7 @@ Widget? troopsSectionFor(
       final level = building.type == BuildingType.descentModule ? 1 : 2;
       final captured = CapturedBaseFinder.on(game, level, human.id);
       if (captured == null) return null;
-      return FilledButton.icon(
+      final button = FilledButton.icon(
         icon: const Icon(Icons.arrow_downward),
         label: Text(context.l10n.screenDescendThrough(
           captured.base.displayName(context.l10n),
@@ -41,6 +42,18 @@ Widget? troopsSectionFor(
             onChanged: onChanged, onLevelSelected: (_) {},
           );
         },
+      );
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          UnitCountPanel(
+            title: context.l10n.mapDefendersOnLevel(captured.base.targetLevel),
+            units: human.unitCountsOnLevel(captured.base.targetLevel),
+            emptyMessage: context.l10n.mapNoDefenders,
+          ),
+          const SizedBox(height: 12),
+          button,
+        ],
       );
     case BuildingType.volcanicKernel:
       if (!game.isVolcanicKernelCapturedBy(human.id)) return null;

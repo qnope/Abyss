@@ -7,7 +7,6 @@ import '../../../domain/game/game.dart';
 import '../../../domain/game/player.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../../domain/map/transition_base_type.dart';
-import '../../../domain/unit/unit_type.dart';
 import '../../widgets/map/transition_base_sheet.dart';
 import 'game_screen_assault_plan.dart';
 import 'game_screen_faction_actions.dart';
@@ -37,7 +36,7 @@ void openTransitionBaseSheet(
     transitionBase: base, level: level,
     hasBuildingRequirement: _hasBuildingFor(human, base),
     requiredBuilding: _requiredBuildingFor(base),
-    unitsOnTarget: _unitsOnLevel(human, base.targetLevel),
+    unitsOnTarget: human.unitCountsOnLevel(base.targetLevel),
     defence: base.isCaptured ? PostDefence.of(game, human, base) : null,
     assaultPlan: base.isCaptured ? null : assaultPlanAt(game, level, x, y),
     onAttack: () => handleAttackTransitionBase(
@@ -56,7 +55,3 @@ BuildingType _requiredBuildingFor(TransitionBase base) =>
     base.type == TransitionBaseType.faille
         ? BuildingType.descentModule
         : BuildingType.pressureCapsule;
-
-Map<UnitType, int> _unitsOnLevel(Player player, int level) => {
-      for (final e in player.unitsOnLevel(level).entries) e.key: e.value.count,
-    };

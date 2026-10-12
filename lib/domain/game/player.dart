@@ -174,6 +174,12 @@ class Player extends HiveObject {
 
   Map<UnitType, Unit> unitsOnLevel(int level) => unitsPerLevel[level] ?? {};
 
+  /// Units on [level] by type, the empty types left out.
+  Map<UnitType, int> unitCountsOnLevel(int level) => <UnitType, int>{
+        for (final MapEntry<UnitType, Unit> e in unitsOnLevel(level).entries)
+          if (e.value.count > 0) e.key: e.value.count,
+      };
+
   List<GridPosition> revealedCellsOnLevel(int level) =>
       revealedCellsPerLevel[level] ?? [];
 

@@ -59,7 +59,7 @@ Widget buildMapTab(
         ),
         pendingTargets: pendingTargets,
         factionBases: level == 1 ? factionBaseColors(game) : const {},
-        ownerColors: kernelOwnerColors(game),
+        ownerColors: kernelOwnerColors(game), level: level,
       ),
     ),
   ]);

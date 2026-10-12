@@ -1,8 +1,13 @@
+import '../../building/building_type.dart';
+import '../../fight/assault/assault_target.dart';
+import '../../map/transition_base_type.dart';
 import '../objective_id.dart';
 
+part 'guide_campaign_messages.dart';
+
 /// What the guide of the tutorial, the octopus archivist, says: one lesson
-/// per objective of the tutorial, then a word for each situation that
-/// holds an objective back. The presentation words it from its figures.
+/// per objective it follows, then a word for each situation that holds an
+/// objective back, or that threatens what was taken. The presentation words it from its figures.
 sealed class GuideMessage {
   const GuideMessage();
 

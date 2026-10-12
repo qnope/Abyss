@@ -8,7 +8,8 @@ import '../fight/assault_plan_panel.dart';
 import '../volcano/kernel_garrison_panel.dart';
 
 /// [player] is the human player; the garrison panel only shows once the
-/// kernel is captured; [assaultPlan], the plan of an assault from
+/// kernel is captured, its garrison button surrounded by the guide's halo
+/// when [garrisonGuided]; [assaultPlan], the plan of an assault from
 /// [level], only before.
 void showVolcanicKernelSheet(
   BuildContext context, {
@@ -19,6 +20,7 @@ void showVolcanicKernelSheet(
   required VoidCallback onWithdraw,
   AssaultPlan? assaultPlan,
   required int level,
+  bool garrisonGuided = false,
 }) {
   showModalBottomSheet<void>(
     context: context,
@@ -31,6 +33,7 @@ void showVolcanicKernelSheet(
       onWithdraw: onWithdraw,
       assaultPlan: assaultPlan,
       level: level,
+      garrisonGuided: garrisonGuided,
     ),
   );
 }
@@ -43,6 +46,7 @@ class _VolcanicKernelSheet extends StatelessWidget {
   final VoidCallback onWithdraw;
   final AssaultPlan? assaultPlan;
   final int level;
+  final bool garrisonGuided;
 
   const _VolcanicKernelSheet({
     required this.isCaptured,
@@ -52,6 +56,7 @@ class _VolcanicKernelSheet extends StatelessWidget {
     required this.onWithdraw,
     required this.assaultPlan,
     required this.level,
+    required this.garrisonGuided,
   });
 
   @override
@@ -89,6 +94,7 @@ class _VolcanicKernelSheet extends StatelessWidget {
               player: player,
               onGarrison: () => _closeThen(context, onGarrison),
               onWithdraw: () => _closeThen(context, onWithdraw),
+              guided: garrisonGuided,
             )
           else ...[
             if (plan != null) ...[

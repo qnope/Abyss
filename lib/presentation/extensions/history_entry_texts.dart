@@ -34,11 +34,7 @@ extension HistoryEntryTexts on HistoryEntry {
           ? l10n.historyCombatVictory(lair.level)
           : l10n.historyCombatDefeat(lair.level),
     TurnEndEntry(:final turn) => l10n.historyTurnEndTitle(turn),
-    final CaptureEntry entry => l10n.historyCaptureTitle(
-      entry.isVolcanicKernel
-          ? BuildingType.volcanicKernel.displayName(l10n)
-          : baseNameLabel(l10n, entry.transitionBaseName),
-    ),
+    final CaptureEntry entry => _captureTitle(l10n, entry),
     DescentEntry(:final targetLevel) => l10n.historyDescentTitle(targetLevel),
     ReinforcementEntry(:final targetLevel) => l10n.historyReinforcementTitle(
       targetLevel,
@@ -52,6 +48,7 @@ extension HistoryEntryTexts on HistoryEntry {
 
   /// Detail under the title, `null` when the entry has none.
   String? displaySubtitle(AppLocalizations l10n) => switch (this) {
+    CaptureEntry(captured: false) => l10n.historyCaptureAdmiralFell,
     CaptureEntry(:final fightResult) => l10n.historyCaptureVictory(
       fightResult.turnCount,
     ),
@@ -62,6 +59,15 @@ extension HistoryEntryTexts on HistoryEntry {
     final EventEntry entry => _eventChoice(l10n, entry),
     _ => null,
   };
+}
+
+String _captureTitle(AppLocalizations l10n, CaptureEntry entry) {
+  final String name = entry.isVolcanicKernel
+      ? BuildingType.volcanicKernel.displayName(l10n)
+      : baseNameLabel(l10n, entry.transitionBaseName);
+  return entry.captured
+      ? l10n.historyCaptureTitle(name)
+      : l10n.historyCaptureMissed(name);
 }
 
 String _researchTitle(AppLocalizations l10n, ResearchEntry entry) {

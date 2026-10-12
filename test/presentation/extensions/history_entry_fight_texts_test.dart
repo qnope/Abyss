@@ -54,6 +54,21 @@ void main() {
     expect(base.displaySubtitle(en), 'Victory in 2 turns');
   });
 
+  test('titles a victory where the admiral fell, base not captured', () {
+    final fell = CaptureEntry(
+      turn: 6,
+      transitionBaseName: 'faille:0',
+      fightResult: captureEntry('faille:0').fightResult,
+      captured: false,
+    );
+    expect(fell.displayTitle(fr), 'Pas de prise : Faille Alpha');
+    expect(fell.displayTitle(en), 'Not captured: Alpha Rift');
+    expect(fell.displayTitle(es), 'Sin captura: Falla Alfa');
+    expect(fell.displaySubtitle(fr), "Victoire, mais l'Amiral est tombé");
+    expect(fell.displaySubtitle(en), 'Victory, but the Admiral fell');
+    expect(fell.displaySubtitle(es), 'Victoria, pero el Almirante cayó');
+  });
+
   test('counts the units of a descent and of reinforcements', () {
     final descent = DescentEntry(turn: 1, targetLevel: 2, unitCount: 1);
     expect(descent.displayTitle(fr), 'Descente au Niveau 2');

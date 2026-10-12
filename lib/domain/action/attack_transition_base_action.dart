@@ -31,7 +31,7 @@ class AttackTransitionBaseAction extends Action {
   final int level;
   final Map<UnitType, int> selectedUnits;
   final Random? random;
-  String? _capturedBaseName;
+  String? _baseName;
 
   AttackTransitionBaseAction({
     required this.targetX,
@@ -121,9 +121,9 @@ class AttackTransitionBaseAction extends Action {
     );
     final bool captured = victory && admiralAlive;
 
+    _baseName = base.name;
     if (captured) {
       base.capturedBy = player.id;
-      _capturedBaseName = base.name;
       LeviathanResolver.onCapture(game, player,
           base: base, level: level, at: GridPosition(x: targetX, y: targetY));
     }
@@ -147,11 +147,12 @@ class AttackTransitionBaseAction extends Action {
     int turn,
   ) {
     if (result is! AttackTransitionBaseResult) return null;
-    if (!result.captured || result.fight == null) return null;
+    if (!result.victory || result.fight == null) return null;
     return CaptureEntry(
       turn: turn,
-      transitionBaseName: _capturedBaseName ?? '',
+      transitionBaseName: _baseName ?? '',
       fightResult: result.fight!,
+      captured: result.captured,
     );
   }
 

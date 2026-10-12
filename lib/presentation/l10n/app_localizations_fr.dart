@@ -958,6 +958,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String historyCaptureMissed(String name) {
+    return 'Pas de prise : $name';
+  }
+
+  @override
+  String get historyCaptureAdmiralFell => 'Victoire, mais l\'Amiral est tombé';
+
+  @override
   String historyDescentTitle(int level) {
     return 'Descente au Niveau $level';
   }
@@ -2319,6 +2327,142 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get guideRaidHoldOn =>
       'Tu as déjà recruté ce tour : termine-le et tiens bon.';
+
+  @override
+  String guideAdmiralNeedsBarracks(String post, int level) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'une Faille',
+      'cheminee': 'une Cheminée',
+      'other': 'le Noyau',
+    });
+    return 'Pour prendre $_temp0, il faut un Amiral. Monte la Caserne au niveau $level.';
+  }
+
+  @override
+  String guideAdmiralToRecruit(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'la Faille ne se prend pas',
+      'cheminee': 'la Cheminée ne se prend pas',
+      'other': 'le Noyau ne se prend pas',
+    });
+    return 'Recrute un Amiral : il ne se bat pas, mais sans lui $_temp0.';
+  }
+
+  @override
+  String guideAdmiralToSend(String post, int level) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'la Faille',
+      'cheminee': 'la Cheminée',
+      'other': 'le Noyau',
+    });
+    return 'Pour prendre $_temp0, ton Amiral doit être au niveau $level. Envoie-le par ton poste entouré sur la Carte.';
+  }
+
+  @override
+  String guidePostToFind(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'une Faille',
+      'cheminee': 'une Cheminée',
+      'other': 'le Noyau',
+    });
+    return 'Explore la Carte pour trouver $_temp0.';
+  }
+
+  @override
+  String guidePostAssault(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'Une Faille',
+      'cheminee': 'Une Cheminée',
+      'other': 'Le Noyau',
+    });
+    return '$_temp0 ! Ton Amiral doit survivre : couvre-le de Gardiens.';
+  }
+
+  @override
+  String guidePostAssaultArmy(int count, int wins, int rehearsals) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Envoie-le avec au moins $count Harponneurs',
+      one: 'Envoie-le avec au moins $count Harponneur',
+      zero: 'Ton escorte suffit',
+    );
+    return '$_temp0 : tu gagnes $wins fois sur $rehearsals.';
+  }
+
+  @override
+  String guideAdmiralFell(String post) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille': 'la Faille n\'est pas prise',
+      'cheminee': 'la Cheminée n\'est pas prise',
+      'other': 'le Noyau n\'est pas pris',
+    });
+    return 'Victoire, mais ton Amiral est tombé : $_temp0. Couvre-le de Gardiens et recommence.';
+  }
+
+  @override
+  String guidePassageNeedsHq(String passage, int level) {
+    String _temp0 = intl.Intl.selectLogic(passage, {
+      'descentModule': 'Le Module de descente',
+      'other': 'La Capsule pressurisée',
+    });
+    return '$_temp0 demande le QG $level. Monte d\'abord ton QG.';
+  }
+
+  @override
+  String guidePostUndefended(String post, int level) {
+    String _temp0 = intl.Intl.selectLogic(post, {
+      'faille':
+          'Ta Faille n\'est gardée que par tes unités du niveau $level. Si elle tombe, ton Module est détruit',
+      'other':
+          'Ta Cheminée n\'est gardée que par tes unités du niveau $level. Si elle tombe, ta Capsule est détruite',
+    });
+    return '$_temp0 et tes unités d\'en bas sont perdues.';
+  }
+
+  @override
+  String guideKernelWaveNeeded(int needed) {
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed unités',
+      one: '$needed unité',
+    );
+    return 'Les Krakens viennent reprendre le Noyau ! Mets au moins $_temp0 en garnison avant la fin du tour, sinon le Noyau perd un niveau.';
+  }
+
+  @override
+  String guideKernelWaveAll(int monsters) {
+    return '$monsters Krakens viennent reprendre le Noyau ! Mets en garnison toutes les unités que tu peux avant la fin du tour, sinon le Noyau perd un niveau.';
+  }
+
+  @override
+  String get guideLessonDescentModule =>
+      'Construis le Module de descente : il ouvre ta Faille vers le niveau 2.';
+
+  @override
+  String get guideLessonDescendLevel2 =>
+      'Envoie des unités au niveau 2 par la Faille. Attention, elles ne remontent pas.';
+
+  @override
+  String get guideLessonHqLevel8 =>
+      'La Capsule pressurisée, qui mène au niveau 3, demande le QG 8. Monte ton QG.';
+
+  @override
+  String get guideLessonPressureCapsule =>
+      'Construis la Capsule pressurisée : elle ouvre ta Cheminée vers le niveau 3.';
+
+  @override
+  String get guideLessonDescendLevel3 =>
+      'Envoie des unités au niveau 3 par la Cheminée. Attention, elles ne remontent pas.';
+
+  @override
+  String get guideLessonHqLevel10 =>
+      'Le QG 10 te laissera mettre des unités en garnison dans le Noyau, une fois pris. Monte ton QG.';
+
+  @override
+  String get guideLessonKernelLevel1 =>
+      'Le Noyau est à toi ! Construis-le au niveau 1 : des vagues de Krakens viendront, et seule sa garnison le défendra.';
 
   @override
   String get tutorialGuideSwitch => 'Guide du tutoriel';

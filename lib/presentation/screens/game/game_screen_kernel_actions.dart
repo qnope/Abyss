@@ -3,6 +3,7 @@ import '../../../data/game_repository.dart';
 import '../../../domain/action/action_executor.dart';
 import '../../../domain/action/garrison_kernel_action.dart';
 import '../../../domain/game/game.dart';
+import '../../../domain/objective/guide/guide_advisor.dart';
 import '../../../domain/volcano/kernel_garrison.dart';
 import '../../extensions/action_failure_extensions.dart';
 import '../../l10n/l10n_extension.dart';
@@ -29,6 +30,7 @@ void openVolcanicKernelSheet(
     player: game.humanPlayer,
     level: level,
     assaultPlan: isCaptured ? null : assaultPlanAt(game, level, x, y),
+    garrisonGuided: isGarrisonGuided(game),
     onAttack: () => handleAttackVolcanicKernel(
         context, game, repository, x, y, level, onChanged),
     onGarrison: () =>
@@ -37,6 +39,11 @@ void openVolcanicKernelSheet(
         context, game, repository, onChanged, withdraw: true),
   );
 }
+
+/// Whether the guide asks the human player of [game] to fill the
+/// kernel's garrison: its sheets then surround the button.
+bool isGarrisonGuided(Game game) =>
+    GuideAdvisor.of(game, game.humanPlayer)?.target.garrison ?? false;
 
 void handleAttackVolcanicKernel(
   BuildContext context,

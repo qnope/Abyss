@@ -30,6 +30,7 @@ void _kernel(BuildContext context, {required bool captured}) =>
       context,
       isCaptured: captured,
       player: Player(name: 'Nemo'),
+      level: 3,
       onAttack: () {},
       onGarrison: () {},
       onWithdraw: () {},

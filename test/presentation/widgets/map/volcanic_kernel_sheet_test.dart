@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/fight/assault/assault_plan.dart';
+import 'package:abyss/domain/fight/assault/assault_target.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/widgets/map/volcanic_kernel_sheet.dart';
 
 void main() {
@@ -8,6 +11,7 @@ void main() {
     required bool isCaptured,
     VoidCallback? onAttack,
     VoidCallback? onGarrison,
+    AssaultPlan? assaultPlan,
   }) {
     return MaterialApp(
       home: Scaffold(
@@ -20,6 +24,8 @@ void main() {
               onAttack: onAttack ?? () {},
               onGarrison: onGarrison ?? () {},
               onWithdraw: () {},
+              level: 3,
+              assaultPlan: assaultPlan,
             ),
             child: const Text('Open'),
           ),
@@ -40,6 +46,23 @@ void main() {
       await tester.pumpWidget(buildOpener(isCaptured: false));
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
+      expect(find.text("Lancer l'assaut"), findsOneWidget);
+    });
+
+    testWidgets('when not captured shows the assault plan', (tester) async {
+      await tester.pumpWidget(buildOpener(
+        isCaptured: false,
+        assaultPlan: AssaultPlan.of(
+          player: Player(name: 'Nemo'),
+          level: 1,
+          target: AssaultTarget.kernel,
+          army: const {UnitType.abyssAdmiral: 1},
+          maxHarpoonists: 1,
+        ),
+      ));
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      expect(find.text("PLAN D'ASSAUT"), findsOneWidget);
       expect(find.text("Lancer l'assaut"), findsOneWidget);
     });
 

@@ -3311,4 +3311,114 @@ class AppLocalizationsEs extends AppLocalizations {
   String mapHeldBy(String name) {
     return 'En manos de $name';
   }
+
+  @override
+  String get assaultPlanTitle => 'PLAN DE ASALTO';
+
+  @override
+  String get assaultPlanAdmiral => 'Un Almirante en el ejército';
+
+  @override
+  String assaultPlanAdmiralsIn(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Almirantes',
+      one: '$count Almirante',
+    );
+    return '$_temp0 en el nivel $level';
+  }
+
+  @override
+  String assaultPlanAdmiralsLeft(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Almirantes',
+      one: '$count Almirante',
+    );
+    return 'Añádelo: $_temp0 en el nivel $level';
+  }
+
+  @override
+  String assaultPlanAdmiralRecruit(int level) {
+    return 'Recluta uno en los Barracones nivel $level';
+  }
+
+  @override
+  String get assaultPlanCovered => 'El Almirante está cubierto';
+
+  @override
+  String assaultPlanGuardians(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Guardianes reciben',
+      one: '$count Guardián recibe',
+    );
+    return '$_temp0 los golpes por él';
+  }
+
+  @override
+  String get assaultPlanUncovered =>
+      'Sin Guardián, recibe los golpes el primero';
+
+  @override
+  String get assaultPlanArmy => 'Ejército suficiente';
+
+  @override
+  String get assaultPlanArmyHigh => 'Gana casi siempre';
+
+  @override
+  String get assaultPlanArmyRisky => 'Puede fallar: añade unidades';
+
+  @override
+  String get assaultPlanArmyLow => 'Demasiado débil: añade unidades';
+
+  @override
+  String get assaultPlanArmyNoAdmiral => 'Sin Almirante, no se toma nada';
+
+  @override
+  String assaultPlanNext(String building) {
+    return 'Después: $building';
+  }
+
+  @override
+  String assaultPlanHqNeeded(int required, int current) {
+    return 'Requiere el CG $required, estás en el CG $current';
+  }
+
+  @override
+  String assaultPlanHqReady(int current) {
+    return 'Tu CG $current ya lo permite';
+  }
+
+  @override
+  String get assaultPlanChances => 'Probabilidades';
+
+  @override
+  String assaultPlanRating(String rating, int wins, int rehearsals) {
+    String _temp0 = intl.Intl.selectLogic(rating, {
+      'high': 'Altas',
+      'risky': 'Arriesgadas',
+      'other': 'Bajas',
+    });
+    return '$_temp0 · $wins de $rehearsals';
+  }
+
+  @override
+  String assaultPlanAdviceLeader(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'los $count Almirantes',
+      one: 'el Almirante',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String assaultPlanAdvice(String leader, String escort) {
+    return 'Consejo: $leader con $escort';
+  }
 }

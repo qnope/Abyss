@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import '../../../domain/fight/assault/assault_plan.dart';
 import '../../../domain/game/player.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../common/raster_svg.dart';
+import '../fight/assault_plan_panel.dart';
 import '../volcano/kernel_garrison_panel.dart';
 
 /// [player] is the human player; the garrison panel only shows once the
-/// kernel is captured.
+/// kernel is captured; [assaultPlan], the plan of an assault from
+/// [level], only before.
 void showVolcanicKernelSheet(
   BuildContext context, {
   required bool isCaptured,
@@ -14,6 +17,8 @@ void showVolcanicKernelSheet(
   required VoidCallback onAttack,
   required VoidCallback onGarrison,
   required VoidCallback onWithdraw,
+  AssaultPlan? assaultPlan,
+  required int level,
 }) {
   showModalBottomSheet<void>(
     context: context,
@@ -24,6 +29,8 @@ void showVolcanicKernelSheet(
       onAttack: onAttack,
       onGarrison: onGarrison,
       onWithdraw: onWithdraw,
+      assaultPlan: assaultPlan,
+      level: level,
     ),
   );
 }
@@ -34,6 +41,8 @@ class _VolcanicKernelSheet extends StatelessWidget {
   final VoidCallback onAttack;
   final VoidCallback onGarrison;
   final VoidCallback onWithdraw;
+  final AssaultPlan? assaultPlan;
+  final int level;
 
   const _VolcanicKernelSheet({
     required this.isCaptured,
@@ -41,13 +50,16 @@ class _VolcanicKernelSheet extends StatelessWidget {
     required this.onAttack,
     required this.onGarrison,
     required this.onWithdraw,
+    required this.assaultPlan,
+    required this.level,
   });
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final l10n = context.l10n;
-    return Padding(
+    final AssaultPlan? plan = assaultPlan;
+    return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -78,11 +90,16 @@ class _VolcanicKernelSheet extends StatelessWidget {
               onGarrison: () => _closeThen(context, onGarrison),
               onWithdraw: () => _closeThen(context, onWithdraw),
             )
-          else
+          else ...[
+            if (plan != null) ...[
+              AssaultPlanPanel(plan: plan, level: level),
+              const SizedBox(height: 16),
+            ],
             FilledButton(
               onPressed: () => _closeThen(context, onAttack),
               child: Text(l10n.fightLaunchAssault),
             ),
+          ],
         ],
       ),
     );

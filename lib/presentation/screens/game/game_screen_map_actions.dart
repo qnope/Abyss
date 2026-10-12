@@ -13,7 +13,6 @@ import '../../widgets/map/game_map_view.dart';
 import '../../widgets/map/level_selector.dart';
 import '../../widgets/map/monster_lair_sheet.dart';
 import '../../widgets/map/treasure_sheet.dart';
-import '../../widgets/map/volcanic_kernel_sheet.dart';
 import '../../widgets/faction/faction_base_colors.dart';
 import 'game_screen_base_sheet.dart';
 import 'game_screen_collect_messages.dart';
@@ -145,18 +144,8 @@ void _showCellAction(BuildContext context, Game game,
     case CellContentType.volcanicKernel when _heldByRival(game, cell):
       openRivalKernelSheet(context, game, repository, x, y, onChanged);
     case CellContentType.volcanicKernel:
-      showVolcanicKernelSheet(
-        context,
-        isCaptured: cell.collectedBy == human.id,
-        player: human,
-        onAttack: () => handleAttackVolcanicKernel(
-          context, game, repository, x, y, level, onChanged,
-        ),
-        onGarrison: () =>
-            handleGarrisonKernel(context, game, repository, onChanged),
-        onWithdraw: () => handleGarrisonKernel(
-          context, game, repository, onChanged, withdraw: true),
-      );
+      openVolcanicKernelSheet(context, game, repository, x, y, level,
+          isCaptured: cell.collectedBy == human.id, onChanged: onChanged);
   }
 }
 

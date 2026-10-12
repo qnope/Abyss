@@ -47,6 +47,21 @@ void main() {
       'n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !',
     );
     expect(
+      const GuidePostToFind(kernel).text(fr),
+      'Explore la Carte au niveau 3 pour trouver le Noyau, mais n\'oublie '
+      'pas de continuer à améliorer tes bâtiments et ton armée !',
+    );
+    expect(
+      const GuidePostToFind(kernel).text(en),
+      'Explore the Map on level 3 to find the Core, but don\'t forget to '
+      'keep upgrading your buildings and your army!',
+    );
+    expect(
+      const GuidePostToFind(kernel).text(es),
+      'Explora el Mapa en el nivel 3 para encontrar el Núcleo, pero no '
+      'olvides seguir mejorando tus edificios y tu ejército.',
+    );
+    expect(
       const GuidePostToFind(AssaultTarget.cheminee).text(en),
       'Explore the Map on level 2 to find a Vent, but don\'t forget to keep '
       'upgrading your buildings and your army!',

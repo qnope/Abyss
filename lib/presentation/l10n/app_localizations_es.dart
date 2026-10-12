@@ -2376,7 +2376,8 @@ class AppLocalizationsEs extends AppLocalizations {
           'Explora el Mapa para encontrar una Falla, pero no olvides seguir mejorando tus edificios y tu ejército.',
       'cheminee':
           'Explora el Mapa en el nivel 2 para encontrar una Chimenea, pero no olvides seguir mejorando tus edificios y tu ejército.',
-      'other': 'Explora el Mapa para encontrar el Núcleo.',
+      'other':
+          'Explora el Mapa en el nivel 3 para encontrar el Núcleo, pero no olvides seguir mejorando tus edificios y tu ejército.',
     });
     return '$_temp0';
   }

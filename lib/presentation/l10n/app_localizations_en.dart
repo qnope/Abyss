@@ -2341,7 +2341,8 @@ class AppLocalizationsEn extends AppLocalizations {
           'Explore the Map to find a Rift, but don\'t forget to keep upgrading your buildings and your army!',
       'cheminee':
           'Explore the Map on level 2 to find a Vent, but don\'t forget to keep upgrading your buildings and your army!',
-      'other': 'Explore the Map to find the Core.',
+      'other':
+          'Explore the Map on level 3 to find the Core, but don\'t forget to keep upgrading your buildings and your army!',
     });
     return '$_temp0';
   }

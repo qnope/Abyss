@@ -2373,7 +2373,8 @@ class AppLocalizationsFr extends AppLocalizations {
           'Explore la Carte pour trouver une Faille, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !',
       'cheminee':
           'Explore la Carte au niveau 2 pour trouver une Cheminée, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !',
-      'other': 'Explore la Carte pour trouver le Noyau.',
+      'other':
+          'Explore la Carte au niveau 3 pour trouver le Noyau, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !',
     });
     return '$_temp0';
   }

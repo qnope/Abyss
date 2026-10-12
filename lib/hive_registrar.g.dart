@@ -19,6 +19,7 @@ import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/domain/history/history_entry_category.dart';
+import 'package:abyss/domain/leviathan/leviathan_return.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/exploration_order.dart';
 import 'package:abyss/domain/map/game_map.dart';
@@ -75,6 +76,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(GameStatusAdapter());
     registerAdapter(GridPositionAdapter());
     registerAdapter(HistoryEntryCategoryAdapter());
+    registerAdapter(LeviathanReturnAdapter());
     registerAdapter(MapCellAdapter());
     registerAdapter(MonsterDifficultyAdapter());
     registerAdapter(MonsterFamilyAdapter());
@@ -136,6 +138,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(GameStatusAdapter());
     registerAdapter(GridPositionAdapter());
     registerAdapter(HistoryEntryCategoryAdapter());
+    registerAdapter(LeviathanReturnAdapter());
     registerAdapter(MapCellAdapter());
     registerAdapter(MonsterDifficultyAdapter());
     registerAdapter(MonsterFamilyAdapter());

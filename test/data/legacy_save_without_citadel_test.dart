@@ -12,6 +12,7 @@ import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/building/coral_citadel_rampart.dart';
 import 'package:abyss/domain/game/difficulty.dart';
 import 'package:abyss/domain/game/game.dart';
+import 'package:abyss/domain/leviathan/leviathan_return.dart';
 import 'package:abyss/domain/game/game_status.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/raid/raid_state.dart';
@@ -58,6 +59,7 @@ void _registerAdapters() {
   Hive.registerAdapter(GameStatusAdapter());
   Hive.registerAdapter(RaidStateAdapter());
   Hive.registerAdapter(VolcanoStateAdapter());
+  Hive.registerAdapter(LeviathanReturnAdapter());
   Hive.registerAdapter(RandomEventTypeAdapter());
   Hive.registerAdapter(EventStateAdapter());
   Hive.registerAdapter(ObjectiveIdAdapter());
@@ -89,8 +91,8 @@ void main() {
 
   test('legacy save without coralCitadel loads without crashing', () async {
     // Simulate a save made before task 01 added the coralCitadel entry.
-    final legacyBuildings = PlayerDefaults.buildings()
-      ..remove(BuildingType.coralCitadel);
+    final legacyBuildings =
+        PlayerDefaults.buildings()..remove(BuildingType.coralCitadel);
     final player = Player(
       id: 'legacy-uuid',
       name: 'Legacy',

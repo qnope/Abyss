@@ -8,7 +8,9 @@ import '../fight/guardian_factory.dart';
 import '../game/game.dart';
 import '../game/player.dart';
 import '../tech/tech_effects.dart';
+import '../leviathan/leviathan_resolver.dart';
 import '../map/cell_content_type.dart';
+import '../map/grid_position.dart';
 import '../map/map_cell.dart';
 import '../map/transition_base.dart';
 import '../unit/unit_type.dart';
@@ -122,6 +124,8 @@ class AttackTransitionBaseAction extends Action {
     if (captured) {
       base.capturedBy = player.id;
       _capturedBaseName = base.name;
+      LeviathanResolver.onCapture(game, player,
+          base: base, level: level, at: GridPosition(x: targetX, y: targetY));
     }
 
     return AttackTransitionBaseResult.success(

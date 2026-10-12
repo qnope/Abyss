@@ -1,4 +1,6 @@
+import 'package:abyss/domain/fight/assault/assault_target.dart';
 import 'package:abyss/domain/objective/guide/guide_advice.dart';
+import 'package:abyss/domain/objective/guide/guide_campaign_messages.dart';
 import 'package:abyss/domain/objective/guide/guide_message.dart';
 import 'package:abyss/domain/objective/guide/guide_target.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
@@ -29,9 +31,9 @@ void main() {
       'corail puis l\'Extracteur de minerai, un par tour. Regarde bien : '
       'chaque niveau coûte plus cher que le précédent.';
 
-  Widget bubble(GuideAdvice? advice) => MaterialApp(
+  Widget bubble(GuideAdvice? advice, {int turn = 1}) => MaterialApp(
     theme: AbyssTheme.create(),
-    home: Scaffold(body: GuideBubble(advice: advice)),
+    home: Scaffold(body: GuideBubble(advice: advice, turn: turn)),
   );
 
   testWidgets('shows nothing without advice', (tester) async {
@@ -87,7 +89,7 @@ void main() {
     testWidgets('speaks ${locale.languageCode}', (tester) async {
       await tester.pumpWidget(
         localizedApp(
-          const Scaffold(body: GuideBubble(advice: first)),
+          const Scaffold(body: GuideBubble(advice: first, turn: 1)),
           locale: locale,
         ),
       );
@@ -97,4 +99,38 @@ void main() {
       expect(find.text(gotIt), findsOneWidget);
     });
   }
+
+  group('on the next turn', () {
+    const explore = GuideAdvice(
+      GuidePostToFind(AssaultTarget.faille),
+      GuideTarget.map(),
+    );
+    const exploreText =
+        'Explore la Carte pour trouver une Faille, mais n\'oublie pas de '
+        'continuer à améliorer tes bâtiments et ton armée !';
+
+    testWidgets('« Explore la carte » comes back after « Compris »', (
+      tester,
+    ) async {
+      await tester.pumpWidget(bubble(explore, turn: 3));
+      await tester.tap(find.text('Compris'));
+      await tester.pump();
+      expect(find.text(exploreText), findsNothing);
+
+      await tester.pumpWidget(bubble(explore, turn: 3));
+      expect(find.text(exploreText), findsNothing);
+
+      await tester.pumpWidget(bubble(explore, turn: 4));
+      expect(find.text(exploreText), findsOneWidget);
+    });
+
+    testWidgets('any other advice stays hidden', (tester) async {
+      await tester.pumpWidget(bubble(first, turn: 3));
+      await tester.tap(find.text('Compris'));
+      await tester.pump();
+
+      await tester.pumpWidget(bubble(first, turn: 4));
+      expect(find.text(firstText), findsNothing);
+    });
+  });
 }

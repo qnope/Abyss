@@ -13,6 +13,10 @@ class FactionTraits {
   /// Share of rehearsals the faction must win before it attacks.
   final double confidence;
 
+  /// Every this many slots, the faction goes for the human it has seen
+  /// and can beat, whatever weaker bases it knows.
+  final int grudgeEvery;
+
   /// What it recruits for war, in this ratio.
   final Map<UnitType, int> warMix;
 
@@ -54,6 +58,7 @@ class FactionTraits {
   const FactionTraits({
     this.cadence = 6,
     this.confidence = 0.85,
+    this.grudgeEvery = 3,
     this.warMix = const <UnitType, int>{},
     this.warShare = 0,
     this.conquestShare = 0.5,
@@ -82,6 +87,7 @@ class FactionTraits {
   static const FactionTraits _pillagers = FactionTraits(
     cadence: 5,
     confidence: 0.8,
+    grudgeEvery: 2,
     warMix: <UnitType, int>{UnitType.harpoonist: 2, UnitType.saboteur: 1},
     warShare: 0.1,
     defends: true,
@@ -118,6 +124,7 @@ class FactionTraits {
   static const FactionTraits _horde = FactionTraits(
     cadence: 4,
     confidence: 0.7,
+    grudgeEvery: 2,
     warMix: <UnitType, int>{UnitType.harpoonist: 3},
     warShare: 0.05,
     rushUntil: 30,

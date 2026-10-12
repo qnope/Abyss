@@ -1,6 +1,7 @@
 import '../script/game_script.dart';
 import '../script/script_turn.dart';
 import '../script/strategies/conquest_strategy.dart';
+import 'faction_exploration.dart';
 import 'faction_kernel_guard.dart';
 import 'faction_personality.dart';
 import 'faction_traits.dart';
@@ -35,6 +36,7 @@ class FactionBrain extends GameScript {
       huntsUnderRaid: true,
       growth: traits.growth,
       explorers: traits.explorers,
+      scoutBias: FactionExploration.forTurn,
     ).playTurn(turn);
     FactionWarRecruit.play(turn, traits);
     FactionKernelGuard.play(turn, traits.guardShare);

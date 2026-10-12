@@ -4965,6 +4965,138 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Conseil : {leader} avec {escort}'**
   String assaultPlanAdvice(String leader, String escort);
+
+  /// No description provided for @tipAdmiralTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'Amiral'**
+  String get tipAdmiralTitle;
+
+  /// No description provided for @tipAdmiralLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'Amiral des Abysses ne combat pas : il commande l\'assaut.'**
+  String get tipAdmiralLine1;
+
+  /// No description provided for @tipAdmiralLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une Faille, une Cheminée ou le Noyau n\'est pris que s\'il survit à l\'assaut.'**
+  String get tipAdmiralLine2;
+
+  /// No description provided for @tipAdmiralLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couvre-le de Gardiens : ils attirent les coups à sa place.'**
+  String get tipAdmiralLine3;
+
+  /// No description provided for @tipPostDefenceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Défendre ses postes'**
+  String get tipPostDefenceTitle;
+
+  /// No description provided for @tipPostDefenceLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seules tes unités du niveau du dessous défendent un poste.'**
+  String get tipPostDefenceLine1;
+
+  /// No description provided for @tipPostDefenceLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les factions attaquent tes postes sans prévenir.'**
+  String get tipPostDefenceLine2;
+
+  /// No description provided for @tipPostDefenceLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'S\'il tombe, ton Module de Descente (ou ta Capsule) est détruit et tes unités d\'en bas sont perdues.'**
+  String get tipPostDefenceLine3;
+
+  /// No description provided for @tipKernelGarrisonTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La garnison du Noyau'**
+  String get tipKernelGarrisonTitle;
+
+  /// No description provided for @tipKernelGarrisonLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contre les Krakens, seule la garnison défend le Noyau.'**
+  String get tipKernelGarrisonLine1;
+
+  /// No description provided for @tipKernelGarrisonLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes unités restées dehors, au niveau {level}, ne combattent pas.'**
+  String tipKernelGarrisonLine2(int level);
+
+  /// No description provided for @tipKernelGarrisonLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fais-les entrer avec « {action} », sur la fiche du Noyau.'**
+  String tipKernelGarrisonLine3(String action);
+
+  /// No description provided for @tipPostLostTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poste perdu'**
+  String get tipPostLostTitle;
+
+  /// No description provided for @tipPostLostLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton poste est tombé : son Module ou sa Capsule est détruit et tes unités d\'en bas sont perdues.'**
+  String get tipPostLostLine1;
+
+  /// No description provided for @tipPostLostLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le vainqueur tient désormais le poste.'**
+  String get tipPostLostLine2;
+
+  /// No description provided for @tipPostLostLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour le reprendre, mène un nouvel assaut avec un Amiral des Abysses.'**
+  String get tipPostLostLine3;
+
+  /// No description provided for @leviathanAttackerName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Léviathan'**
+  String get leviathanAttackerName;
+
+  /// No description provided for @leviathanBannerTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contre-attaque sur la Faille à la fin du tour'**
+  String get leviathanBannerTitle;
+
+  /// No description provided for @leviathanBannerForce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Léviathan + {sentinels} Sentinelles · défenseurs niv. {level} : {count}'**
+  String leviathanBannerForce(int sentinels, int level, int count);
+
+  /// No description provided for @leviathanDueWarning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Léviathan frappe ta Faille à la fin du tour, et {count, plural, =0{aucun défenseur ne l\'attend} one{seulement {count} défenseur l\'attend} other{seulement {count} défenseurs l\'attendent}} au niveau {level}.'**
+  String leviathanDueWarning(int count, int level);
+
+  /// No description provided for @guideLeviathanReturn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Léviathan revient reprendre sa Faille ! Seules tes unités du niveau {level} la défendent. Si elle tombe, ton Module est détruit et tes unités d\'en bas sont perdues.'**
+  String guideLeviathanReturn(int level);
+
+  /// No description provided for @guideLeviathanReinforce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoie {count, plural, one{{count} Harponneur} other{{count} Harponneurs}} de plus.'**
+  String guideLeviathanReinforce(int count);
 }
 
 class _AppLocalizationsDelegate

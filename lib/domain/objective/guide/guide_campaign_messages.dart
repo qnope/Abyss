@@ -101,3 +101,16 @@ class GuideKernelWave extends GuideMessage {
   @override
   List<Object> get _figures => [monsters, needed ?? -1];
 }
+
+/// The guardians come back at the end of the turn to take the Faille,
+/// held by the units on [level]: [missing] Harpoonists more would make
+/// it hold, 0 when it should hold or when no number would.
+class GuideLeviathanReturn extends GuideMessage {
+  final int level;
+  final int missing;
+
+  const GuideLeviathanReturn(this.level, {this.missing = 0});
+
+  @override
+  List<Object> get _figures => [level, missing];
+}

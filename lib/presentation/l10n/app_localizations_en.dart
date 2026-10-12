@@ -3528,4 +3528,105 @@ class AppLocalizationsEn extends AppLocalizations {
   String assaultPlanAdvice(String leader, String escort) {
     return 'Advice: $leader with $escort';
   }
+
+  @override
+  String get tipAdmiralTitle => 'The Admiral';
+
+  @override
+  String get tipAdmiralLine1 =>
+      'The Abyss Admiral does not fight: he leads the assault.';
+
+  @override
+  String get tipAdmiralLine2 =>
+      'A Rift, a Vent or the Core is taken only if he survives the assault.';
+
+  @override
+  String get tipAdmiralLine3 =>
+      'Cover him with Guardians: they draw the blows in his place.';
+
+  @override
+  String get tipPostDefenceTitle => 'Defending your posts';
+
+  @override
+  String get tipPostDefenceLine1 =>
+      'Only your units on the level below defend a post.';
+
+  @override
+  String get tipPostDefenceLine2 =>
+      'Factions attack your posts without warning.';
+
+  @override
+  String get tipPostDefenceLine3 =>
+      'If it falls, your Descent Module (or Capsule) is destroyed and your units down there are lost.';
+
+  @override
+  String get tipKernelGarrisonTitle => 'The Core\'s garrison';
+
+  @override
+  String get tipKernelGarrisonLine1 =>
+      'Against the Krakens, only the garrison defends the Core.';
+
+  @override
+  String tipKernelGarrisonLine2(int level) {
+    return 'Your units left outside, on level $level, do not fight.';
+  }
+
+  @override
+  String tipKernelGarrisonLine3(String action) {
+    return 'Move them in with \"$action\", on the Core\'s sheet.';
+  }
+
+  @override
+  String get tipPostLostTitle => 'Post lost';
+
+  @override
+  String get tipPostLostLine1 =>
+      'Your post fell: its Module or Capsule is destroyed and your units down there are lost.';
+
+  @override
+  String get tipPostLostLine2 => 'The winner now holds the post.';
+
+  @override
+  String get tipPostLostLine3 =>
+      'To take it back, lead a new assault with an Abyss Admiral.';
+
+  @override
+  String get leviathanAttackerName => 'The Leviathan';
+
+  @override
+  String get leviathanBannerTitle =>
+      'Counter-attack on the Rift at the end of the turn';
+
+  @override
+  String leviathanBannerForce(int sentinels, int level, int count) {
+    return 'Leviathan + $sentinels Sentinels · level $level defenders: $count';
+  }
+
+  @override
+  String leviathanDueWarning(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'only $count defenders await it',
+      one: 'only $count defender awaits it',
+      zero: 'no defender awaits it',
+    );
+    return 'The Leviathan strikes your Rift at the end of the turn, and $_temp0 on level $level.';
+  }
+
+  @override
+  String guideLeviathanReturn(int level) {
+    return 'The Leviathan is coming back to take its Rift! Only your units on level $level defend it. If it falls, your Module is destroyed and your units down there are lost.';
+  }
+
+  @override
+  String guideLeviathanReinforce(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count more Harpooners',
+      one: '$count more Harpooner',
+    );
+    return 'Send $_temp0.';
+  }
 }

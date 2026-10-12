@@ -55,6 +55,14 @@ class TipIdAdapter extends TypeAdapter<TipId> {
         return TipId.coldCurrent;
       case 20:
         return TipId.factionAttack;
+      case 21:
+        return TipId.admiral;
+      case 22:
+        return TipId.postDefence;
+      case 23:
+        return TipId.kernelGarrison;
+      case 24:
+        return TipId.postLost;
       default:
         return TipId.noiseGauge;
     }
@@ -105,6 +113,14 @@ class TipIdAdapter extends TypeAdapter<TipId> {
         writer.writeByte(19);
       case TipId.factionAttack:
         writer.writeByte(20);
+      case TipId.admiral:
+        writer.writeByte(21);
+      case TipId.postDefence:
+        writer.writeByte(22);
+      case TipId.kernelGarrison:
+        writer.writeByte(23);
+      case TipId.postLost:
+        writer.writeByte(24);
     }
   }
 

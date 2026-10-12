@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/building/building_type.dart';
 import '../../../domain/faction/faction_attack_report.dart';
+import '../../extensions/attacker_name_texts.dart';
 import '../../extensions/transition_base_name_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
@@ -38,7 +39,7 @@ class AttackReportLines extends StatelessWidget {
   }
 
   (IconData, String, Color) _headline(AppLocalizations l10n) {
-    final name = report.attackerName;
+    final name = attackerLabel(l10n, report.attackerName);
     return switch (report.outcome) {
       AttackOutcome.repelled => (
         Icons.shield,

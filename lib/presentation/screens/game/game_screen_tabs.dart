@@ -9,6 +9,9 @@ import 'game_screen_actions.dart';
 import 'game_screen_map_actions.dart';
 import 'game_screen_tech_actions.dart';
 
+/// Index of the map in the bottom bar.
+const int mapTab = 1;
+
 /// Content of the tab [tab] of the game screen, in the order of the
 /// bottom bar: the base, the map of [currentLevel], the army, the
 /// research. [onChanged] redraws the screen after a player's action.
@@ -31,7 +34,7 @@ Widget buildGameTab(
           (b) =>
               showBuildingDetailAction(context, game, repository, b, onChanged),
     ),
-    1 => buildMapTab(
+    mapTab => buildMapTab(
       context,
       game,
       repository,

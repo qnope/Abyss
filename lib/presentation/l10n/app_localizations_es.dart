@@ -3565,4 +3565,105 @@ class AppLocalizationsEs extends AppLocalizations {
   String assaultPlanAdvice(String leader, String escort) {
     return 'Consejo: $leader con $escort';
   }
+
+  @override
+  String get tipAdmiralTitle => 'El Almirante';
+
+  @override
+  String get tipAdmiralLine1 =>
+      'El Almirante del Abismo no combate: dirige el asalto.';
+
+  @override
+  String get tipAdmiralLine2 =>
+      'Una Falla, una Chimenea o el Núcleo solo se toma si sobrevive al asalto.';
+
+  @override
+  String get tipAdmiralLine3 =>
+      'Cúbrelo con algún Guardián: atrae los golpes en su lugar.';
+
+  @override
+  String get tipPostDefenceTitle => 'Defender tus puestos';
+
+  @override
+  String get tipPostDefenceLine1 =>
+      'Solo tus unidades del nivel de abajo defienden un puesto.';
+
+  @override
+  String get tipPostDefenceLine2 =>
+      'Las facciones atacan tus puestos sin avisar.';
+
+  @override
+  String get tipPostDefenceLine3 =>
+      'Si cae, tu Módulo de Descenso (o tu Cápsula) queda destruido y tus unidades de abajo se pierden.';
+
+  @override
+  String get tipKernelGarrisonTitle => 'La guarnición del Núcleo';
+
+  @override
+  String get tipKernelGarrisonLine1 =>
+      'Contra los Krakens, solo la guarnición defiende el Núcleo.';
+
+  @override
+  String tipKernelGarrisonLine2(int level) {
+    return 'Tus unidades que quedan fuera, en el nivel $level, no combaten.';
+  }
+
+  @override
+  String tipKernelGarrisonLine3(String action) {
+    return 'Hazlas entrar con «$action», en la ficha del Núcleo.';
+  }
+
+  @override
+  String get tipPostLostTitle => 'Puesto perdido';
+
+  @override
+  String get tipPostLostLine1 =>
+      'Tu puesto cayó: su Módulo o su Cápsula queda destruido y tus unidades de abajo se pierden.';
+
+  @override
+  String get tipPostLostLine2 => 'El vencedor ahora ocupa el puesto.';
+
+  @override
+  String get tipPostLostLine3 =>
+      'Para recuperarlo, lanza un nuevo asalto con un Almirante del Abismo.';
+
+  @override
+  String get leviathanAttackerName => 'El Leviatán';
+
+  @override
+  String get leviathanBannerTitle =>
+      'Contraataque sobre la Falla al final del turno';
+
+  @override
+  String leviathanBannerForce(int sentinels, int level, int count) {
+    return 'Leviatán + $sentinels Centinelas · defensores niv. $level: $count';
+  }
+
+  @override
+  String leviathanDueWarning(int count, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'solo $count defensores lo esperan',
+      one: 'solo $count defensor lo espera',
+      zero: 'ningún defensor lo espera',
+    );
+    return 'El Leviatán ataca tu Falla al final del turno, y $_temp0 en el nivel $level.';
+  }
+
+  @override
+  String guideLeviathanReturn(int level) {
+    return '¡El Leviatán vuelve a recuperar su Falla! Solo tus unidades del nivel $level la defienden. Si cae, tu Módulo queda destruido y tus unidades de abajo se pierden.';
+  }
+
+  @override
+  String guideLeviathanReinforce(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Arponeros más',
+      one: '$count Arponero más',
+    );
+    return 'Envía $_temp0.';
+  }
 }

@@ -5,6 +5,7 @@ import '../l10n/app_localizations.dart';
 import 'tip_base_texts.dart';
 import 'tip_event_texts.dart';
 import 'tip_map_texts.dart';
+import 'tip_post_texts.dart';
 import 'tip_text.dart';
 import 'tip_threat_texts.dart';
 
@@ -40,6 +41,10 @@ extension TipIdText on TipId {
     TipId.chestAndRuins => chestAndRuinsTip(l10n),
     TipId.transitionBase => transitionBaseTip(l10n),
     TipId.descent => descentTip(l10n),
+    TipId.admiral => admiralTip(l10n),
+    TipId.postDefence => postDefenceTip(l10n),
+    TipId.kernelGarrison => kernelGarrisonTip(l10n),
+    TipId.postLost => postLostTip(l10n),
     TipId.events => eventsTip(l10n),
     TipId.warmCurrent => eventTip(RandomEventType.warmCurrent, l10n),
     TipId.wreck => eventTip(RandomEventType.wreck, l10n),

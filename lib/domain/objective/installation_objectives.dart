@@ -65,6 +65,12 @@ const List<Objective> installationObjectives = [
     goal: ExploredAroundBaseGoal(),
   ),
   Objective(
+    id: ObjectiveId.solarPanelLevel2,
+    chapter: _chapter,
+    reward: _reward,
+    goal: BuildingLevelGoal(BuildingType.solarPanel, 2),
+  ),
+  Objective(
     id: ObjectiveId.laboratoryAndResearch,
     chapter: _chapter,
     reward: _reward,

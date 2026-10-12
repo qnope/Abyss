@@ -1770,6 +1770,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get objectiveSolarPanel => 'Build the Solar Panel';
 
   @override
+  String get objectiveSolarPanelLevel2 => 'Upgrade the Solar Panel to level 2';
+
+  @override
   String objectiveBarracksAndScouts(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -2174,6 +2177,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get guideLessonSolarPanel =>
       'The Extractor uses energy, and the Barracks will too. Without energy, they stop. Build the Solar Panel.';
+
+  @override
+  String get guideLessonSolarPanelLevel2 =>
+      'Energy runs out fast: every new building draws on it, and research will too. Raise the Solar Panel to level 2 before starting research.';
 
   @override
   String guideLessonHqLevel2(int level) {

@@ -50,6 +50,7 @@ void main() {
         'Monte le QG au niveau 2',
         'Construis la Caserne et recrute 2 Éclaireurs',
         'Explore une case autour de la base',
+        'Améliore le Panneau solaire au niveau 2',
         'Construis le Laboratoire et lance une recherche',
         'Repousse le premier raid',
         'Prends un repaire',

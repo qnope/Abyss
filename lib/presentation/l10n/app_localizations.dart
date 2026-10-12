@@ -2662,6 +2662,12 @@ abstract class AppLocalizations {
   /// **'Construis le Panneau solaire'**
   String get objectiveSolarPanel;
 
+  /// No description provided for @objectiveSolarPanelLevel2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Améliore le Panneau solaire au niveau 2'**
+  String get objectiveSolarPanelLevel2;
+
   /// No description provided for @objectiveBarracksAndScouts.
   ///
   /// In fr, this message translates to:
@@ -3243,6 +3249,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'L\'Extracteur consomme de l\'énergie, et la Caserne en consommera aussi. Sans énergie, ils s\'arrêtent. Construis le Panneau solaire.'**
   String get guideLessonSolarPanel;
+
+  /// No description provided for @guideLessonSolarPanelLevel2.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'énergie tombe vite à 0 : chaque nouveau bâtiment en consomme, et la recherche aussi. Passe le Panneau solaire au niveau 2 avant de lancer la recherche.'**
+  String get guideLessonSolarPanelLevel2;
 
   /// No description provided for @guideLessonHqLevel2.
   ///

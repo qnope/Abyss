@@ -39,6 +39,7 @@ extension ObjectiveDisplay on Objective {
     ObjectiveId.algaeFarm => l10n.objectiveAlgaeFarm,
     ObjectiveId.mines => l10n.objectiveMines,
     ObjectiveId.solarPanel => l10n.objectiveSolarPanel,
+    ObjectiveId.solarPanelLevel2 => l10n.objectiveSolarPanelLevel2,
     ObjectiveId.barracksAndScouts => l10n.objectiveBarracksAndScouts(figure),
     ObjectiveId.explore => l10n.objectiveExplore,
     ObjectiveId.laboratoryAndResearch => l10n.objectiveLaboratoryAndResearch,

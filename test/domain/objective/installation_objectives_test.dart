@@ -2,6 +2,7 @@ import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/map/exploration_order.dart';
 import 'package:abyss/domain/map/exploration_resolver.dart';
 import 'package:abyss/domain/map/grid_position.dart';
+import 'package:abyss/domain/objective/installation_objectives.dart';
 import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/domain/tech/tech_branch.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -39,6 +40,22 @@ void main() {
       expectProgress(game, ObjectiveId.solarPanel, 0, 1);
       setBuilding(game.humanPlayer, BuildingType.solarPanel, 1);
       expectProgress(game, ObjectiveId.solarPanel, 1, 1);
+    });
+
+    test('solarPanelLevel2: Panneau solaire au niveau 2', () {
+      final game = objectiveGame();
+      setBuilding(game.humanPlayer, BuildingType.solarPanel, 1);
+      expectProgress(game, ObjectiveId.solarPanelLevel2, 1, 2);
+      setBuilding(game.humanPlayer, BuildingType.solarPanel, 2);
+      expectProgress(game, ObjectiveId.solarPanelLevel2, 2, 2);
+    });
+
+    test('solarPanelLevel2 est donné juste avant la technologie', () {
+      final ids = [for (final o in installationObjectives) o.id];
+      expect(
+        ids.indexOf(ObjectiveId.solarPanelLevel2),
+        ids.indexOf(ObjectiveId.laboratoryAndResearch) - 1,
+      );
     });
 
     test('hqLevel2: QG au niveau 2, progression par niveau', () {

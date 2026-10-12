@@ -21,9 +21,8 @@ abstract final class GuideTargets {
           ? BuildingType.oreExtractor
           : BuildingType.coralMine,
     ),
-    ObjectiveId.solarPanel => const GuideTarget.building(
-      BuildingType.solarPanel,
-    ),
+    ObjectiveId.solarPanel || ObjectiveId.solarPanelLevel2 =>
+      const GuideTarget.building(BuildingType.solarPanel),
     ObjectiveId.barracksAndScouts =>
       _built(player, BuildingType.barracks)
           ? const GuideTarget.unit(UnitType.scout)

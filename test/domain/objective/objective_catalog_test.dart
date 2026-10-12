@@ -45,7 +45,7 @@ void main() {
         ObjectiveChapter.values.map(
           (c) => ObjectiveCatalog.ofChapter(c).length,
         ),
-        [9, 3, 3, 4, 3, 2],
+        [10, 3, 3, 4, 3, 2],
       );
       expect(
         ObjectiveCatalog.ofChapter(ObjectiveChapter.rift).map((o) => o.id),

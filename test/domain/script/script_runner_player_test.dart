@@ -10,22 +10,24 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/two_player_game.dart';
 
-// Captured from the runner before it could play any player.
+// Captured from the runner before it could play any player; recaptured
+// when the tutorial gained its Solar Panel level 2 step.
 const String _conquestSeed1Turn30 =
     '{"script":"conquest","seed":1,"status":"playing","turnsPlayed":30,'
-    '"raidsRepelled":4,"raidsLost":1,"monstersDefeated":35,"totalNoise"'
-    ':341,"failedActions":0,"buildings":{"headquarters":8,"algaeFarm":4'
-    ',"coralMine":4,"oreExtractor":4,"solarPanel":4,"laboratory":4,"bar'
-    'racks":3,"coralCitadel":0,"descentModule":1,"pressureCapsule":0,"v'
-    'olcanicKernel":0},"baseUnits":{"scout":4,"harpoonist":31,"guardian'
-    '":10,"domeBreaker":0,"abyssAdmiral":1,"saboteur":0},"resources":{"'
-    'algae":5000,"coral":777,"ore":1945,"energy":181,"pearl":15},"faill'
-    'eCaptured":29,"chemineeCaptured":null,"kernelCaptured":null,"levia'
-    'thanStruck":null,"leviathanHeld":null,"raids":[{"turn":13,"monster'
-    's":26,"level":1,"victory":false},{"turn":20,"monsters":52,"level":'
-    '1,"victory":true},{"turn":23,"monsters":16,"level":2,"victory":tru'
-    'e},{"turn":25,"monsters":50,"level":2,"victory":true},{"turn":28,"'
-    'monsters":31,"level":3,"victory":true}],"waves":[]}';
+    '"raidsRepelled":4,"raidsLost":2,"monstersDefeated":0,"totalNoise":'
+    '320,"failedActions":0,"buildings":{"headquarters":7,"algaeFarm":4,'
+    '"coralMine":4,"oreExtractor":4,"solarPanel":4,"laboratory":3,"barr'
+    'acks":3,"coralCitadel":0,"descentModule":0,"pressureCapsule":0,"vo'
+    'lcanicKernel":0},"baseUnits":{"scout":0,"harpoonist":3,"guardian":'
+    '0,"domeBreaker":0,"abyssAdmiral":1,"saboteur":0},"resources":{"alg'
+    'ae":5000,"coral":713,"ore":2047,"energy":355,"pearl":10},"failleCa'
+    'ptured":null,"chemineeCaptured":null,"kernelCaptured":null,"leviat'
+    'hanStruck":null,"leviathanHeld":null,"raids":[{"turn":13,"monsters'
+    '":26,"level":1,"victory":false},{"turn":20,"monsters":20,"level":1'
+    ',"victory":true},{"turn":22,"monsters":38,"level":2,"victory":true'
+    '},{"turn":25,"monsters":14,"level":2,"victory":false},{"turn":27,"'
+    'monsters":15,"level":2,"victory":true},{"turn":29,"monsters":34,"l'
+    'evel":3,"victory":true}],"waves":[]}';
 
 void main() {
   test('the human conquest of seed 1 still reports the same 30 turns', () {

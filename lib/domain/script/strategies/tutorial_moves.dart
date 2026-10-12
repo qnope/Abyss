@@ -57,6 +57,8 @@ extension TutorialMoves on ScriptTurn {
         _recruitScouts();
       case ObjectiveId.explore:
         explore(1, 1, (_) => 0);
+      case ObjectiveId.solarPanelLevel2:
+        _raise(BuildingType.solarPanel, 2);
       case ObjectiveId.laboratoryAndResearch:
         _raise(BuildingType.laboratory, 1);
         research();

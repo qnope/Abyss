@@ -52,6 +52,7 @@ extension GuideLessonText on ObjectiveId {
     ObjectiveId.algaeFarm => l10n.guideLessonAlgaeFarm,
     ObjectiveId.mines => l10n.guideLessonMines,
     ObjectiveId.solarPanel => l10n.guideLessonSolarPanel,
+    ObjectiveId.solarPanelLevel2 => l10n.guideLessonSolarPanelLevel2,
     ObjectiveId.hqLevel2 => l10n.guideLessonHqLevel2(_figure),
     ObjectiveId.barracksAndScouts => l10n.guideLessonBarracksAndScouts(_figure),
     ObjectiveId.explore => l10n.guideLessonExplore,

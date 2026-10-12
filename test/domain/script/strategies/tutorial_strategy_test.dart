@@ -43,8 +43,8 @@ void main() {
     _play(const TutorialStrategy(), game, 12);
 
     final completed = game.humanPlayer.savedObjectiveState!.completed;
-    expect(completed.take(8), <ObjectiveId>[
-      for (final objective in installationObjectives.take(8)) objective.id,
+    expect(completed.take(9), <ObjectiveId>[
+      for (final objective in installationObjectives.take(9)) objective.id,
     ]);
   });
 

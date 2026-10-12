@@ -91,7 +91,7 @@ void main() {
         (sum, objective) => sum + objective.reward.length,
       );
       expect(find.byType(ResourceIcon), findsNWidgets(rewarded));
-      expect(find.text('+30'), findsNWidgets(9));
+      expect(find.text('+30'), findsNWidgets(10));
     });
 
     testWidgets('lists the active temporary objectives first', (tester) async {

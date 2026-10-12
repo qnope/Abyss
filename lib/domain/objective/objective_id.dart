@@ -19,6 +19,9 @@ enum ObjectiveId {
   barracksAndScouts,
   @HiveField(6)
   explore,
+  // Added after the others: its Hive field keeps saved games readable.
+  @HiveField(24)
+  solarPanelLevel2,
   @HiveField(7)
   laboratoryAndResearch,
   @HiveField(8)

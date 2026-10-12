@@ -61,6 +61,8 @@ class ObjectiveIdAdapter extends TypeAdapter<ObjectiveId> {
         return ObjectiveId.kernelLevel5;
       case 23:
         return ObjectiveId.kernelLevel10;
+      case 24:
+        return ObjectiveId.solarPanelLevel2;
       default:
         return ObjectiveId.hqLevel1;
     }
@@ -117,6 +119,8 @@ class ObjectiveIdAdapter extends TypeAdapter<ObjectiveId> {
         writer.writeByte(22);
       case ObjectiveId.kernelLevel10:
         writer.writeByte(23);
+      case ObjectiveId.solarPanelLevel2:
+        writer.writeByte(24);
     }
   }
 

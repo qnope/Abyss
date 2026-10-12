@@ -38,7 +38,23 @@ void main() {
   test('the post to find, then to assault', () {
     expect(
       const GuidePostToFind(faille).text(fr),
-      'Explore la Carte pour trouver une Faille.',
+      'Explore la Carte pour trouver une Faille, mais n\'oublie pas de '
+      'continuer à améliorer tes bâtiments et ton armée !',
+    );
+    expect(
+      const GuidePostToFind(AssaultTarget.cheminee).text(fr),
+      'Explore la Carte au niveau 2 pour trouver une Cheminée, mais '
+      'n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !',
+    );
+    expect(
+      const GuidePostToFind(AssaultTarget.cheminee).text(en),
+      'Explore the Map on level 2 to find a Vent, but don\'t forget to keep '
+      'upgrading your buildings and your army!',
+    );
+    expect(
+      const GuidePostToFind(AssaultTarget.cheminee).text(es),
+      'Explora el Mapa en el nivel 2 para encontrar una Chimenea, pero no '
+      'olvides seguir mejorando tus edificios y tu ejército.',
     );
     expect(
       const GuidePostAssault(faille, harpoonists: 14).text(fr),

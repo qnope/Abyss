@@ -2369,11 +2369,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String guidePostToFind(String post) {
     String _temp0 = intl.Intl.selectLogic(post, {
-      'faille': 'une Faille',
-      'cheminee': 'une Cheminée',
-      'other': 'le Noyau',
+      'faille':
+          'Explore la Carte pour trouver une Faille, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !',
+      'cheminee':
+          'Explore la Carte au niveau 2 pour trouver une Cheminée, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !',
+      'other': 'Explore la Carte pour trouver le Noyau.',
     });
-    return 'Explore la Carte pour trouver $_temp0.';
+    return '$_temp0';
   }
 
   @override

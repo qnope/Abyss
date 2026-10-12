@@ -127,6 +127,26 @@ void main() {
       expect(bob.pendingExplorations, isEmpty);
     });
 
+    test('results only report the human player explorations', () {
+      final map = _buildMap();
+      final alice = _player(id: 'alice');
+      final bob = _player(
+        id: 'bob',
+        pendingExplorations: [
+          ExplorationOrder(target: GridPosition(x: 7, y: 7)),
+        ],
+      );
+      final game = Game(
+        humanPlayerId: alice.id,
+        players: {alice.id: alice, bob.id: bob},
+      )..levels = {1: map};
+
+      final results = ExplorationResolver.resolve(game);
+
+      expect(results, isEmpty);
+      expect(bob.revealedCells.contains(GridPosition(x: 7, y: 7)), isTrue);
+    });
+
     test('player without pending orders is untouched', () {
       final map = _buildMap();
       final alice = _player(

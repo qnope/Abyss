@@ -40,6 +40,8 @@ class ExplorationResolver {
 
         VolcanoFootprint.revealWhole(map, player, order.level);
 
+        // Factions reveal too, but only the human's finds are reported.
+        if (player.id != game.humanPlayerId) continue;
         results.add(ExplorationResult(
           target: order.target,
           newCellsRevealed: newCells,

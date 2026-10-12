@@ -77,7 +77,7 @@ class _GameScreenState extends State<GameScreen> {
               onChanged: _changed,
             ),
           ),
-          GuideBubble(advice: guide),
+          GuideBubble(advice: guide, turn: widget.game.turn),
         ],
       ),
       bottomNavigationBar: GameBottomBar(

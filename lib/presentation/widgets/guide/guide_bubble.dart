@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/objective/guide/guide_advice.dart';
+import '../../../domain/objective/guide/guide_campaign_messages.dart';
 import '../../extensions/guide_message_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
@@ -8,14 +9,17 @@ import '../common/raster_svg.dart';
 
 /// The guide of the tutorial, the octopus archivist, and what it says, at
 /// the bottom of the game screen. Its button hides it until the advice
-/// changes. Shows nothing without [advice].
+/// changes, or, for an exploration, until the next turn. Shows nothing without [advice].
 class GuideBubble extends StatefulWidget {
   static const portraitPath = 'assets/icons/guide/octopus_archivist.svg';
   static const portraitSize = 64.0;
 
   final GuideAdvice? advice;
 
-  const GuideBubble({super.key, required this.advice});
+  /// The current turn: an exploration to do comes back at each new one.
+  final int turn;
+
+  const GuideBubble({super.key, required this.advice, required this.turn});
 
   @override
   State<GuideBubble> createState() => _GuideBubbleState();
@@ -27,7 +31,9 @@ class _GuideBubbleState extends State<GuideBubble> {
   @override
   void didUpdateWidget(GuideBubble oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.advice?.message != widget.advice?.message) {
+    final exploring = widget.advice?.message is GuidePostToFind;
+    if (oldWidget.advice?.message != widget.advice?.message ||
+        (exploring && oldWidget.turn != widget.turn)) {
       _dismissed = false;
     }
   }

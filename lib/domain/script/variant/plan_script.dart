@@ -8,6 +8,7 @@ import '../../fight/army_planner.dart';
 import '../strategies/kernel_guard_moves.dart';
 import '../strategies/battle_moves.dart';
 import '../strategies/event_moves.dart';
+import '../strategies/leviathan_guard_moves.dart';
 import 'plan_moves.dart';
 import 'plan_step.dart';
 import 'replay_variant.dart';
@@ -28,8 +29,7 @@ class PlanScript extends GameScript {
   final Map<int, int> endTurnSeeds;
   List<PlanStep> _pending;
 
-  /// Whether the delays of the variant are still to be drawn, from the
-  /// game's own dice on the first turn.
+  /// Whether the variant's delays are still to be drawn (game dice, turn 1).
   bool _undrawn;
 
   @override
@@ -125,12 +125,11 @@ class PlanScript extends GameScript {
       if (turn.isOver) return;
       final bool done = turn.playStep(step, variant);
       final bool late = turn.number - step.turn >= variant.patience;
-      if (done || late && !step.persistent) {
-        _pending.remove(step);
-      }
+      if (done || late && !step.persistent) _pending.remove(step);
     }
     if (variant.defends && !turn.isOver) {
       turn.guardKernel(const ArmyPlanner());
+      turn.guardFaille();
     }
   }
 

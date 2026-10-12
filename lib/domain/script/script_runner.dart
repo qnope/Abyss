@@ -81,9 +81,14 @@ class ScriptRunner {
           ),
           game,
           game.humanPlayer);
-      final raid = end is EndTurnActionResult ? end.turnResult?.raid : null;
-      if (raid != null && player.id == game.humanPlayerId) {
-        milestones.raids.add(ScriptRaid.of(raid));
+      final turnResult = end is EndTurnActionResult ? end.turnResult : null;
+      if (turnResult != null && player.id == game.humanPlayerId) {
+        if (turnResult.raid != null) {
+          milestones.raids.add(ScriptRaid.of(turnResult.raid!));
+        }
+        milestones
+          ..observeWave(turnResult.volcano)
+          ..observeLeviathan(turnResult.leviathan);
       }
     }
     return ScriptRunReport.of(

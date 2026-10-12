@@ -1,8 +1,11 @@
+import '../faction/faction_attack_report.dart';
 import '../game/game.dart';
 import '../map/transition_base_type.dart';
 import '../raid/raid_report.dart';
+import '../volcano/volcano_report.dart';
 
-/// One raid of a scripted game, as the turn summary showed it.
+/// One raid of a scripted game, or one kraken wave on its kernel, as the
+/// turn summary showed it.
 class ScriptRaid {
   final int turn;
   final int monsters;
@@ -23,6 +26,13 @@ class ScriptRaid {
         victory: report.victory,
       );
 
+  factory ScriptRaid.ofWave(VolcanoReport report) => ScriptRaid(
+        turn: report.turn,
+        monsters: report.wave.totalCount,
+        monsterLevel: report.wave.level,
+        victory: report.victory,
+      );
+
   Map<String, Object> toJson() => <String, Object>{
         'turn': turn,
         'monsters': monsters,
@@ -31,13 +41,19 @@ class ScriptRaid {
       };
 }
 
-/// First turn each step of the road to the volcano was reached, and every
-/// raid of the game.
+/// First turn each step of the road to the volcano was reached, every
+/// raid of the game, and the guardians' strike back at the first Faille.
 class ScriptMilestones {
   int? failleCaptured;
   int? chemineeCaptured;
   int? kernelCaptured;
+
+  /// Turn the guardians struck the first Faille back, if they did, and
+  /// whether it held.
+  int? leviathanStruck;
+  bool? leviathanHeld;
   final List<ScriptRaid> raids = <ScriptRaid>[];
+  final List<ScriptRaid> waves = <ScriptRaid>[];
 
   ScriptMilestones();
 
@@ -53,10 +69,25 @@ class ScriptMilestones {
     }
   }
 
+  /// Notes the kraken wave of [report], if a turn ended on one.
+  void observeWave(VolcanoReport? report) {
+    if (report != null) waves.add(ScriptRaid.ofWave(report));
+  }
+
+  /// Notes the guardians' strike [report], if a turn ended on one.
+  void observeLeviathan(FactionAttackReport? report) {
+    if (report == null) return;
+    leviathanStruck = report.entry.turn;
+    leviathanHeld = report.outcome == AttackOutcome.repelled;
+  }
+
   Map<String, Object?> toJson() => <String, Object?>{
         'failleCaptured': failleCaptured,
         'chemineeCaptured': chemineeCaptured,
         'kernelCaptured': kernelCaptured,
+        'leviathanStruck': leviathanStruck,
+        'leviathanHeld': leviathanHeld,
         'raids': raids.map((ScriptRaid r) => r.toJson()).toList(),
+        'waves': waves.map((ScriptRaid r) => r.toJson()).toList(),
       };
 }

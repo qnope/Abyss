@@ -13,6 +13,7 @@ import 'package:abyss/domain/script/among_factions.dart';
 import 'package:abyss/domain/script/batch_report.dart';
 import 'package:abyss/domain/script/batch_runner.dart';
 import 'package:abyss/domain/script/script_library.dart';
+import 'package:abyss/domain/script/script_run_report.dart';
 import 'package:abyss/domain/script/script_runner.dart';
 
 Future<void> main(List<String> args) async {
@@ -45,6 +46,11 @@ Future<void> main(List<String> args) async {
     '${report.victories}/$games wins '
     '(${(100 * report.victories / games).toStringAsFixed(0)} %), '
     '${report.factionVictories} won by a faction, '
-    '${report.defeats - report.factionVictories} fell to the raids',
+    '${report.defeats - report.factionVictories} fell to the raids, '
+    'Léviathan ${report.milestone((r) => r.milestones.leviathanStruck).games}'
+    ' strikes, ${report.milestone(_moduleLost).games} Modules lost',
   );
 }
+
+int? _moduleLost(ScriptRunReport r) =>
+    r.milestones.leviathanHeld == false ? r.milestones.leviathanStruck : null;

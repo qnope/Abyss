@@ -75,6 +75,25 @@ extension BattleMoves on ScriptTurn {
         boost: defenceBoost,
       );
 
+  /// Whether the base still beats the announced raid and every attack it
+  /// is warned of, with [planner]'s confidence, once [away] has left it.
+  bool holdsWithout(Map<UnitType, int> away, ArmyPlanner planner) {
+    final Map<UnitType, int> left = <UnitType, int>{
+      for (final e in RaidBattle.defendersOf(player).entries)
+        e.key: e.value - (away[e.key] ?? 0),
+    };
+    final MonsterLair? wave = player.raidState.incoming;
+    return <List<Combatant> Function()>[
+      if (wave != null) () => CombatantBuilder.monsterCombatantsFrom(wave),
+      for (final AnnouncedAttack a in player.raidState.attacks)
+        () => CombatantBuilder.playerCombatantsFrom(
+              a.units,
+              side: CombatSide.monster,
+            ),
+    ].every((enemy) => planner.wins(left, enemy,
+        allies: _rampart, boost: defenceBoost));
+  }
+
   /// The Coral Citadel rampart that backs the base, if built.
   List<Combatant> Function()? get _rampart {
     if (CoralCitadelRampart.combatantOf(player.buildings) == null) return null;

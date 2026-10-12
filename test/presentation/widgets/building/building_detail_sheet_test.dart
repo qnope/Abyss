@@ -10,6 +10,34 @@ import '../../../helpers/test_svg_helper.dart';
 import 'building_detail_sheet_harness.dart';
 
 void main() {
+  group('BuildingDetailSheet on a small screen', () {
+    setUp(mockSvgAssets);
+    tearDown(clearSvgMocks);
+
+    testWidgets('scrolls down to the upgrade button under tall troops',
+        (t) async {
+      t.view.physicalSize = const Size(360, 640);
+      t.view.devicePixelRatio = 1.0;
+      addTearDown(t.view.reset);
+      var upgraded = false;
+      await t.pumpWidget(buildSheetApp(
+        building: hq(1),
+        troops: const SizedBox(height: 900),
+        onUpgrade: () => upgraded = true,
+      ));
+      await openSheet(t);
+      final button = find.byType(ElevatedButton).last;
+      await t.scrollUntilVisible(
+        button,
+        100,
+        scrollable: find.byType(Scrollable).last,
+      );
+      await t.tap(button);
+      expect(upgraded, isTrue);
+      expect(t.takeException(), isNull);
+    });
+  });
+
   group('BuildingDetailSheet headquarters', () {
     setUp(mockSvgAssets);
     tearDown(clearSvgMocks);

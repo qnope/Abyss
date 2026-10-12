@@ -75,7 +75,7 @@ class _BuildingDetailSheet extends StatelessWidget {
     final color = building.type.color;
     final isBuilt = building.level > 0;
 
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
       child: Column(
         mainAxisSize: MainAxisSize.min,

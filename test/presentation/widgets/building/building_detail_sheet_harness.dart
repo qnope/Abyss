@@ -20,6 +20,7 @@ Widget buildSheetApp({
   bool isVolcanicKernelCaptured = false,
   Worksite? worksite,
   VoidCallback? onUpgrade,
+  Widget? troops,
   Locale locale = AbyssLocale.fr,
 }) {
   return localizedApp(
@@ -34,6 +35,7 @@ Widget buildSheetApp({
             allBuildings: allBuildings ?? {building.type: building},
             worksite: worksite ?? Worksite(),
             isVolcanicKernelCaptured: isVolcanicKernelCaptured,
+            troops: troops,
             onUpgrade: onUpgrade ?? () {},
           ),
           child: const Text('Open'),

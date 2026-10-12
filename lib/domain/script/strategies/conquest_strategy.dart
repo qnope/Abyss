@@ -73,6 +73,10 @@ class ConquestStrategy extends GameScript {
   /// Scouts kept exploring the base level while it is not fully known.
   final int explorers;
 
+  /// What the scouts of the base level add to a target while nothing is
+  /// found yet; the default sends them away from the middle of the map.
+  final double Function(ScriptTurn turn, GridPosition target)? scoutBias;
+
   @override
   final String name;
 
@@ -87,6 +91,7 @@ class ConquestStrategy extends GameScript {
     this.huntsUnderRaid = false,
     this.growth = growthOrder,
     this.explorers = 2,
+    this.scoutBias,
     this.name = 'conquest',
   });
 
@@ -130,7 +135,8 @@ class ConquestStrategy extends GameScript {
     final int spare = turn.player.unitsOnLevel(1)[UnitType.scout]!.count;
     turn.explore(1, min(explorers, spare - reserve), (GridPosition p) {
       final bool found = turn.ownBase(1) != null || turn.openBase(1) != null;
-      return found ? 0 : 0.3 * _fromCentre(p);
+      if (found) return 0;
+      return scoutBias?.call(turn, p) ?? 0.3 * _fromCentre(p);
     });
     turn.explore(
       2,

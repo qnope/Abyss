@@ -53,6 +53,17 @@ abstract final class FactionWar {
   static bool isDue(int turn, FactionPersonality personality) =>
       (turn + personality.index) % FactionTraits.of(personality).cadence == 0;
 
+  /// Whether [turn] is a slot where the faction of [personality] holds its
+  /// grudge: it goes for the human it can beat before any weaker base. One
+  /// slot in [FactionTraits.grudgeEvery], counted from the turn alone so a
+  /// replay needs no memory of it.
+  static bool isGrudgeSlot(int turn, FactionPersonality personality) {
+    if (!isDue(turn, personality)) return false;
+    final FactionTraits traits = FactionTraits.of(personality);
+    return (turn + personality.index) ~/ traits.cadence % traits.grudgeEvery ==
+        0;
+  }
+
   /// Bases a faction sends a Scout to in one slot.
   static const int spiesPerSlot = 2;
 
@@ -65,11 +76,18 @@ abstract final class FactionWar {
     _keepAScout(turn.player, turn);
     final FactionTraits traits = FactionTraits.of(personality);
     final ArmyPlanner planner = traits.planner;
-    if (traits.kernelFirst && FactionKernelWar.play(turn, planner)) return;
+    final bool grudge = isGrudgeSlot(turn.number, personality);
+    if (traits.kernelFirst &&
+        !grudge &&
+        FactionKernelWar.play(turn, planner)) {
+      return;
+    }
     final bool attacked =
-        traits.postsFirst
-            ? FactionPostWar.play(turn, planner) || _raidBases(turn, planner)
-            : _raidBases(turn, planner) || FactionPostWar.play(turn, planner);
+        traits.postsFirst && !grudge
+            ? FactionPostWar.play(turn, planner) ||
+                _raidBases(turn, planner, grudge: grudge)
+            : _raidBases(turn, planner, grudge: grudge) ||
+                FactionPostWar.play(turn, planner);
     if (!attacked && !traits.kernelFirst) FactionKernelWar.play(turn, planner);
   }
 
@@ -83,7 +101,11 @@ abstract final class FactionWar {
   }
 
   /// Attacks the weakest beatable base; returns whether it attacked.
-  static bool _raidBases(ScriptTurn turn, ArmyPlanner planner) {
+  static bool _raidBases(
+    ScriptTurn turn,
+    ArmyPlanner planner, {
+    required bool grudge,
+  }) {
     final Player me = turn.player;
     final Map<UnitType, int> army = fightersOn(me, RaidBattle.baseLevel);
     if (army.isEmpty) return false;
@@ -95,12 +117,13 @@ abstract final class FactionWar {
       army,
       boost: boost,
     );
-    for (final _Target t in _weakestFirst(turn, ours)) {
+    for (final _Target t in _weakestFirst(turn, ours, grudge: grudge)) {
       if (!planner.wins(
         army,
         () => BaseDefence.fromIntel(t.intel).side,
         boost: boost,
       )) {
+        if (grudge && _isHuman(turn, t.player)) continue;
         return false;
       }
       final Map<UnitType, int> sent = _smallestWinning(army, planner, boost, t);
@@ -145,7 +168,11 @@ abstract final class FactionWar {
   /// (a fresh report, or the one a Scout brings back now), the weakest
   /// defence first. It spies at most [spiesPerSlot] bases a slot, the
   /// nearest first.
-  static List<_Target> _weakestFirst(ScriptTurn turn, List<Combatant> ours) {
+  static List<_Target> _weakestFirst(
+    ScriptTurn turn,
+    List<Combatant> ours, {
+    bool grudge = false,
+  }) {
     final Player me = turn.player;
     final Set<GridPosition> seen =
         me.revealedCellsOnLevel(RaidBattle.baseLevel).toSet();
@@ -155,7 +182,12 @@ abstract final class FactionWar {
             !p.hasFallen &&
             seen.contains(GridPosition(x: p.baseX, y: p.baseY)))
           p,
-    ]..sort((a, b) => _distance(me, a).compareTo(_distance(me, b)));
+    ]..sort((a, b) {
+      if (grudge && _isHuman(turn, a) != _isHuman(turn, b)) {
+        return _isHuman(turn, a) ? -1 : 1;
+      }
+      return _distance(me, a).compareTo(_distance(me, b));
+    });
     final List<_Target> targets = <_Target>[];
     int spies = 0;
     for (final Player p in known) {
@@ -168,11 +200,17 @@ abstract final class FactionWar {
       targets.add(_Target(p, intel!, ours));
     }
     targets.sort((a, b) {
+      if (grudge && _isHuman(turn, a.player) != _isHuman(turn, b.player)) {
+        return _isHuman(turn, a.player) ? -1 : 1;
+      }
       final int byStrength = a.strength.compareTo(b.strength);
       return byStrength != 0 ? byStrength : a.player.id.compareTo(b.player.id);
     });
     return targets;
   }
+
+  static bool _isHuman(ScriptTurn turn, Player p) =>
+      p.id == turn.game.humanPlayerId;
 
   static bool _strike(ScriptTurn turn, Player target, Map<UnitType, int> army) {
     if (target.id == turn.game.humanPlayerId) {

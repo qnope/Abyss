@@ -16,6 +16,7 @@ import 'expedition_moves.dart';
 import 'explore_moves.dart';
 import 'growth_moves.dart';
 import 'kernel_guard_moves.dart';
+import 'leviathan_guard_moves.dart';
 
 /// "Conquête": plays a whole game the way a careful player would, from
 /// the first building to the volcanic kernel at level 10.
@@ -109,6 +110,7 @@ class ConquestStrategy extends GameScript {
       if (huntsLairs && !huntsUnderRaid) turn.huntLairs(planner);
     }
     if (huntsLairs && huntsUnderRaid) turn.huntLairs(planner);
+    if (defends) turn.guardFaille();
     turn.growInOrder(growth);
     _scout(turn);
   }

@@ -20,11 +20,12 @@ const String _conquestSeed1Turn30 =
     'olcanicKernel":0},"baseUnits":{"scout":4,"harpoonist":31,"guardian'
     '":10,"domeBreaker":0,"abyssAdmiral":1,"saboteur":0},"resources":{"'
     'algae":5000,"coral":777,"ore":1945,"energy":181,"pearl":15},"faill'
-    'eCaptured":29,"chemineeCaptured":null,"kernelCaptured":null,"raids'
-    '":[{"turn":13,"monsters":26,"level":1,"victory":false},{"turn":20,'
-    '"monsters":52,"level":1,"victory":true},{"turn":23,"monsters":16,"'
-    'level":2,"victory":true},{"turn":25,"monsters":50,"level":2,"victo'
-    'ry":true},{"turn":28,"monsters":31,"level":3,"victory":true}]}';
+    'eCaptured":29,"chemineeCaptured":null,"kernelCaptured":null,"levia'
+    'thanStruck":null,"leviathanHeld":null,"raids":[{"turn":13,"monster'
+    's":26,"level":1,"victory":false},{"turn":20,"monsters":52,"level":'
+    '1,"victory":true},{"turn":23,"monsters":16,"level":2,"victory":tru'
+    'e},{"turn":25,"monsters":50,"level":2,"victory":true},{"turn":28,"'
+    'monsters":31,"level":3,"victory":true}],"waves":[]}';
 
 void main() {
   test('the human conquest of seed 1 still reports the same 30 turns', () {

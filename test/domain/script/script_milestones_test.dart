@@ -3,9 +3,16 @@ import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/script/batch_runner.dart';
 import 'package:abyss/domain/script/idle_script.dart';
+import 'package:abyss/domain/script/script_library.dart';
 import 'package:abyss/domain/script/script_milestones.dart';
 import 'package:abyss/domain/script/script_runner.dart';
+import 'package:abyss/domain/volcano/volcano_report.dart';
+import 'package:abyss/domain/volcano/volcano_wave_factory.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/post_attack_helper.dart';
+import '../../helpers/transition_fight_fixtures.dart';
+import '../leviathan/leviathan_scene.dart';
 
 void main() {
   test('notes the first turn a Faille is held, and only the first', () {
@@ -42,5 +49,58 @@ void main() {
     expect(fall.games, 2);
     expect(fall.averageTurn, report.earliestDefeat);
     expect(report.milestone((r) => r.milestones.kernelCaptured).games, 0);
+  });
+
+  test('notes when the guardians struck the Faille back, and the outcome', () {
+    final kept = leviathanScene();
+    kept.put(kept.human, 2, wall);
+    final lost = leviathanScene();
+    final milestones = ScriptMilestones()..observeLeviathan(null);
+    expect(milestones.leviathanStruck, isNull);
+    expect(milestones.leviathanHeld, isNull);
+
+    kept.playUntil(kept.strikeTurn);
+    milestones.observeLeviathan(kept.endTurn().report);
+    expect(milestones.leviathanStruck, kept.strikeTurn);
+    expect(milestones.leviathanHeld, isTrue);
+    lost.playUntil(lost.strikeTurn);
+    milestones.observeLeviathan(lost.endTurn().report);
+    expect(milestones.leviathanHeld, isFalse);
+    expect(milestones.toJson()['leviathanHeld'], isFalse);
+  });
+
+  test('the careful bot holds the Faille the guardians strike back', () {
+    final report = ScriptRunner(maxTurns: 45).run(
+      ScriptLibrary.byName('conquest'),
+      seed: 1,
+    );
+    final milestones = report.milestones;
+
+    expect(milestones.leviathanStruck, milestones.failleCaptured! + 3);
+    expect(milestones.leviathanHeld, isTrue);
+  });
+
+  test('records every kraken wave fought on the kernel', () {
+    final wave = VolcanoWaveFactory.fromKernelLevel(2);
+    VolcanoReport report(bool victory) => VolcanoReport(
+      turn: 70,
+      victory: victory,
+      wave: wave,
+      fight: buildTestFight(playerWins: victory),
+      kernelLevel: 2,
+      defenders: const {},
+      survivorsIntact: const {},
+      wounded: const {},
+      dead: const {},
+    );
+    final milestones = ScriptMilestones()
+      ..observeWave(null)
+      ..observeWave(report(true))
+      ..observeWave(report(false));
+
+    expect(milestones.waves.map((w) => w.victory), [true, false]);
+    expect(milestones.waves.first.monsters, wave.totalCount);
+    expect(milestones.waves.first.monsterLevel, wave.level);
+    expect(milestones.toJson()['waves'], hasLength(2));
   });
 }

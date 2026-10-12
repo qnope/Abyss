@@ -42,10 +42,10 @@ import 'dart:math';
 import 'package:abyss/domain/game/difficulty.dart';
 import 'package:abyss/domain/script/batch_report.dart';
 import 'package:abyss/domain/script/batch_runner.dart';
+import 'package:abyss/domain/script/batch_summary.dart';
 import 'package:abyss/domain/script/game_script.dart';
 import 'package:abyss/domain/script/scenario_parser.dart';
 import 'package:abyss/domain/script/script_library.dart';
-import 'package:abyss/domain/script/script_run_report.dart';
 import 'package:abyss/domain/script/script_runner.dart';
 import 'package:abyss/domain/script/variant/plan_script.dart';
 import 'package:abyss/domain/script/variant/replay_variant.dart';
@@ -120,33 +120,5 @@ void _printRuns(BatchReport report) {
   }
 }
 
-void _printSummary(String name, BatchReport report) {
-  String pct(double v) => '${(v * 100).toStringAsFixed(0)} %';
-  String avg(double v) => v.toStringAsFixed(1);
-  stdout
-    ..writeln('Stratégie : $name, ${report.games} parties')
-    ..writeln('Survie : ${pct(report.survivalRate)} '
-        '(${report.defeats} défaites, ${report.victories} victoires)')
-    ..writeln('Tours joués en moyenne : ${avg(report.averageTurns)}')
-    ..writeln('Raids repoussés / perdus en moyenne : '
-        '${avg(report.averageRaidsRepelled)} / ${avg(report.averageRaidsLost)}')
-    ..writeln('Bruit total moyen : ${avg(report.averageNoise)}')
-    ..writeln('Première défaite : tour ${report.earliestDefeat ?? '-'}');
-  _printMilestone(report, 'Faille prise', (r) => r.milestones.failleCaptured);
-  _printMilestone(
-      report, 'Cheminée prise', (r) => r.milestones.chemineeCaptured);
-  _printMilestone(report, 'Noyau pris', (r) => r.milestones.kernelCaptured);
-  _printMilestone(
-      report, 'Victoire', (r) => r.isVictory ? r.turnsPlayed : null);
-}
-
-void _printMilestone(
-  BatchReport report,
-  String label,
-  int? Function(ScriptRunReport) turnOf,
-) {
-  final m = report.milestone(turnOf);
-  if (m.games == 0) return;
-  stdout.writeln('$label : ${m.games}/${report.games} parties, '
-      'tour ${m.averageTurn!.toStringAsFixed(1)} en moyenne');
-}
+void _printSummary(String name, BatchReport report) =>
+    BatchSummary.linesOf(name, report).forEach(stdout.writeln);

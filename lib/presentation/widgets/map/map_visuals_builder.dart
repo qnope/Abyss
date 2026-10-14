@@ -3,13 +3,16 @@ import 'package:flutter/painting.dart';
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/game_map.dart';
 import '../../../domain/map/grid_position.dart';
+import '../../../domain/map/map_cell.dart';
+import '../../../domain/map/post_holder.dart';
 import '../../../domain/map/volcanic_kernel_placer.dart';
 import 'map_cell_visual.dart';
 
 /// Builds the visual description of every cell of [gameMap], row by row.
 ///
 /// [ownerColors] gives the seal colour of each player who can hold the
-/// volcano, by player id.
+/// volcano, by player id. [passageHolders] tells who holds the post above
+/// each passage of this level, by position.
 List<MapCellVisual> buildMapVisuals({
   required GameMap gameMap,
   required Set<GridPosition> revealedCells,
@@ -19,6 +22,7 @@ List<MapCellVisual> buildMapVisuals({
   Set<(int, int)> pendingTargets = const {},
   Map<GridPosition, Color> factionBases = const {},
   Map<String, Color> ownerColors = const {},
+  Map<GridPosition, PostHolder> passageHolders = const {},
 }) {
   final revealed = _withWholeVolcano(gameMap, revealedCells);
   return [
@@ -29,13 +33,18 @@ List<MapCellVisual> buildMapVisuals({
           isRevealed: revealed.contains(GridPosition(x: x, y: y)),
           isBase: x == baseX && y == baseY,
           hasPendingExploration: pendingTargets.contains((x, y)),
-          isCapturedTransitionBase:
-              gameMap.cellAt(x, y).transitionBase?.capturedBy ==
-                  humanPlayerId,
+          postHolder: _holderAt(gameMap.cellAt(x, y), humanPlayerId,
+              passageHolders[GridPosition(x: x, y: y)]),
           factionColor: factionBases[GridPosition(x: x, y: y)],
           sealColor: ownerColors[gameMap.cellAt(x, y).collectedBy],
         ),
   ];
+}
+
+/// Who holds the post on [cell], or the post above its passage.
+PostHolder? _holderAt(MapCell cell, String humanId, PostHolder? above) {
+  final base = cell.transitionBase;
+  return base != null ? PostHolder.of(base, humanId) : above;
 }
 
 /// The volcano is seen whole as soon as one of its cells is.

@@ -3,6 +3,7 @@ import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/map_cell.dart';
+import '../../../domain/map/post_holder.dart';
 import '../../../domain/map/volcano_footprint.dart';
 import '../../extensions/event_state_extensions.dart';
 import '../../extensions/transition_base_name_extensions.dart';
@@ -60,6 +61,8 @@ Widget buildMapTab(
         pendingTargets: pendingTargets,
         factionBases: level == 1 ? factionBaseColors(game) : const {},
         ownerColors: kernelOwnerColors(game), level: level,
+        passageHolders:
+            PostHolder.passagesBelow(game.levels[level - 1], human.id),
       ),
     ),
   ]);

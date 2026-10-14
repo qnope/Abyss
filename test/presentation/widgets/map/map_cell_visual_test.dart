@@ -4,6 +4,7 @@ import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/monster_difficulty.dart';
 import 'package:abyss/domain/map/monster_lair.dart';
+import 'package:abyss/domain/map/post_holder.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
@@ -11,10 +12,13 @@ import 'package:abyss/presentation/extensions/random_event_type_extensions.dart'
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 
 void main() {
-  MapCell cellWith(CellContentType content, {String? collectedBy}) => MapCell(
+  MapCell cellWith(CellContentType content,
+          {String? collectedBy, String? passageName}) =>
+      MapCell(
         terrain: TerrainType.plain,
         content: content,
         collectedBy: collectedBy,
+        passageName: passageName,
         lair: content == CellContentType.monsterLair
             ? const MonsterLair(
                 difficulty: MonsterDifficulty.hard, unitCount: 100)
@@ -72,25 +76,33 @@ void main() {
       expect(v.contentSprite, 'assets/icons/map_content/monster_hard.svg');
     });
 
-    test('passage shows the passage glow without sprite', () {
+    test('a passage shows the arrival lit by who holds the post above', () {
+      final v = MapCellVisual.from(
+        cellWith(CellContentType.passage, passageName: 'cheminee:0'),
+        isRevealed: true,
+        postHolder: PostHolder.faction,
+      );
+      expect(v.contentSprite, 'assets/icons/posts/passage_cheminee_faction.svg');
+      expect(v.glow, MapGlow.none);
+    });
+
+    test('a passage of an unknown post is a guarded Faille arrival', () {
       final v = MapCellVisual.from(
         cellWith(CellContentType.passage),
         isRevealed: true,
       );
-      expect(v.glow, MapGlow.passage);
-      expect(v.contentSprite, isNull);
+      expect(v.contentSprite, 'assets/icons/posts/passage_faille_guarded.svg');
     });
 
-    test('transition base glow depends on capture', () {
+    test('a transition base shows the illustration of its holder', () {
       final cell = cellWith(CellContentType.transitionBase);
-      final hostile = MapCellVisual.from(cell, isRevealed: true);
-      final captured = MapCellVisual.from(
-        cell,
-        isRevealed: true,
-        isCapturedTransitionBase: true,
-      );
-      expect(hostile.glow, MapGlow.hostileBase);
-      expect(captured.glow, MapGlow.capturedBase);
+      String? sprite(PostHolder? holder) => MapCellVisual.from(cell,
+              isRevealed: true, postHolder: holder)
+          .contentSprite;
+      expect(sprite(null), 'assets/icons/posts/faille_guarded.svg');
+      expect(sprite(PostHolder.human), 'assets/icons/posts/faille_player.svg');
+      expect(sprite(PostHolder.faction), 'assets/icons/posts/faille_faction.svg');
+      expect(MapCellVisual.from(cell, isRevealed: true).glow, MapGlow.none);
     });
 
     test('a hidden wreck shows through the fog with its halo', () {

@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 import '../../theme/abyss_colors.dart';
 import 'map_cell_visual.dart';
@@ -34,36 +34,10 @@ void _paintGlow(Canvas canvas, MapGlow glow) {
       Shadow.convertRadiusToSigma(_blurRadius),
     );
   canvas.drawCircle(center, radius + _spread, shadow);
-  if (glow == MapGlow.passage || glow == MapGlow.wreck) {
-    final core = Paint()..color = color.withValues(alpha: 0.3);
-    canvas.drawCircle(center, radius, core);
-    return;
-  }
-  _paintBolt(canvas, center, color);
-}
-
-void _paintBolt(Canvas canvas, Offset center, Color color) {
-  const icon = Icons.electric_bolt;
-  final painter = TextPainter(
-    textDirection: TextDirection.ltr,
-    text: TextSpan(
-      text: String.fromCharCode(icon.codePoint),
-      style: TextStyle(
-        fontFamily: icon.fontFamily,
-        package: icon.fontPackage,
-        fontSize: _coreDiameter,
-        color: color,
-      ),
-    ),
-  )..layout();
-  final offset = center - Offset(painter.width / 2, painter.height / 2);
-  painter.paint(canvas, offset);
-  painter.dispose();
+  canvas.drawCircle(center, radius, Paint()..color = color.withValues(alpha: 0.3));
 }
 
 Color _glowColor(MapGlow glow) => switch (glow) {
-      MapGlow.passage => AbyssColors.biolumPurple,
       MapGlow.wreck => AbyssColors.energyYellow,
-      MapGlow.capturedBase => AbyssColors.biolumCyan,
-      MapGlow.hostileBase || MapGlow.none => AbyssColors.error,
+      MapGlow.none => AbyssColors.error,
     };

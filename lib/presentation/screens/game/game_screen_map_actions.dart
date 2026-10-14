@@ -6,9 +6,9 @@ import '../../../domain/map/map_cell.dart';
 import '../../../domain/map/post_holder.dart';
 import '../../../domain/map/volcano_footprint.dart';
 import '../../extensions/event_state_extensions.dart';
+import '../../extensions/post_holder_extensions.dart';
 import '../../extensions/transition_base_name_extensions.dart';
 import '../../l10n/l10n_extension.dart';
-import '../../theme/abyss_colors.dart';
 import '../../widgets/map/cell_info_sheet.dart';
 import '../../widgets/map/game_map_view.dart';
 import '../../widgets/map/level_selector.dart';
@@ -136,9 +136,8 @@ void _showCellAction(BuildContext context, Game game,
             ? l10n.screenUnknownPassage
             : baseNameLabel(l10n, name)),
         message: l10n.screenPassageMessage,
-        icon: Icons.blur_circular,
-        iconColor: AbyssColors.biolumPurple,
-      );
+        illustration: passageIllustration(
+            game.levels[level - 1], x, y, human.id, name));
     case CellContentType.transitionBase:
     case CellContentType.volcanicKernelPart:
     case CellContentType.empty:

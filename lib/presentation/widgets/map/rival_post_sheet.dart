@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/action/action_failure.dart';
+import '../../../domain/map/post_holder.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../extensions/action_failure_extensions.dart';
 import '../../l10n/l10n_extension.dart';
@@ -57,7 +58,10 @@ class RivalPostSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (post != null)
-              TransitionBaseHeader(transitionBase: post!)
+              TransitionBaseHeader(
+                transitionBase: post!,
+                holder: PostHolder.faction,
+              )
             else
               const _KernelHeader(),
             const SizedBox(height: 12),

@@ -1,3 +1,4 @@
+import '../../domain/map/game_map.dart';
 import '../../domain/map/post_holder.dart';
 import '../../domain/map/transition_base_name.dart';
 import '../../domain/map/transition_base_type.dart';
@@ -40,3 +41,18 @@ String passageSvgPath(String? passageName, PostHolder holder) =>
             TransitionBaseType.faille)
         .passageSvgPathFor(holder);
 
+/// The arrival of the passage at ([x], [y]), lit by whoever holds the post
+/// at the same place on the level [above], as [humanId] sees it.
+String passageIllustration(
+  GameMap? above,
+  int x,
+  int y,
+  String humanId,
+  String? passageName,
+) {
+  final base = above?.cellAt(x, y).transitionBase;
+  return passageSvgPath(
+    passageName,
+    base == null ? PostHolder.guardians : PostHolder.of(base, humanId),
+  );
+}

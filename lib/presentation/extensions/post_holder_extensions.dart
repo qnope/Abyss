@@ -1,4 +1,5 @@
 import '../../domain/map/game_map.dart';
+import '../../domain/objective/objective_id.dart';
 import '../../domain/map/post_holder.dart';
 import '../../domain/map/transition_base_name.dart';
 import '../../domain/map/transition_base_type.dart';
@@ -55,4 +56,15 @@ String passageIllustration(
     passageName,
     base == null ? PostHolder.guardians : PostHolder.of(base, humanId),
   );
+}
+
+extension ObjectivePostIllustration on ObjectiveId {
+  /// The post an objective asks to take, still guarded, if it is one.
+  String? get postIllustration => switch (this) {
+    ObjectiveId.takeFaille =>
+      TransitionBaseType.faille.svgPathFor(PostHolder.guardians),
+    ObjectiveId.takeCheminee =>
+      TransitionBaseType.cheminee.svgPathFor(PostHolder.guardians),
+    _ => null,
+  };
 }

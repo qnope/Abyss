@@ -31,6 +31,7 @@ const _frames = {
   'tech/': SvgFrame.medallion,
   'resources/': SvgFrame.transparent,
   'map_content/': SvgFrame.transparent,
+  'posts/': SvgFrame.transparent,
   'events/': SvgFrame.transparent,
   'guide/': SvgFrame.medallion,
   'factions/': SvgFrame.medallion,

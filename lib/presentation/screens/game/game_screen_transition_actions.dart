@@ -57,6 +57,7 @@ void handleDescend(
       availableUnits: human.unitsOnLevel(level),
       targetLevel: transitionBase.targetLevel,
       transitionBaseName: transitionBase.displayName(context.l10n),
+      baseType: transitionBase.type,
       onConfirm: (selected) => _executeDescent(
         context, game, repository, x, y, level, selected,
         targetLevel: transitionBase.targetLevel,
@@ -114,6 +115,7 @@ void handleSendReinforcements(
       availableUnits: human.unitsOnLevel(level),
       targetLevel: transitionBase.targetLevel,
       transitionBaseName: transitionBase.displayName(context.l10n),
+      baseType: transitionBase.type,
       onConfirm: (selected) => _executeReinforcements(
         context, game, repository, x, y, level, selected,
         targetLevel: transitionBase.targetLevel,

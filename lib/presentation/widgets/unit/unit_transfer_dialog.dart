@@ -3,6 +3,7 @@ import '../../../domain/unit/unit.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
 import '../fight/unit_quantity_row.dart';
 
 /// Dialog picking how many units of each type in [availableUnits] to
@@ -14,6 +15,9 @@ import '../fight/unit_quantity_row.dart';
 class UnitTransferDialog extends StatefulWidget {
   final String title;
   final String? subtitle;
+
+  /// SVG drawn before the title, such as the post the units go through.
+  final String? illustration;
   final Widget? notice;
   final Map<UnitType, Unit> availableUnits;
   final String Function(int total) confirmLabel;
@@ -23,6 +27,7 @@ class UnitTransferDialog extends StatefulWidget {
     super.key,
     required this.title,
     this.subtitle,
+    this.illustration,
     this.notice,
     required this.availableUnits,
     required this.confirmLabel,
@@ -80,6 +85,17 @@ class _UnitTransferDialogState extends State<UnitTransferDialog> {
   }
 
   Widget _title(TextTheme textTheme) {
+    final art = widget.illustration;
+    final text = _titleText(textTheme);
+    if (art == null) return text;
+    return Row(children: [
+      RasterSvg(assetPath: art, size: 48),
+      const SizedBox(width: 12),
+      Flexible(child: text),
+    ]);
+  }
+
+  Widget _titleText(TextTheme textTheme) {
     final subtitle = widget.subtitle;
     if (subtitle == null) return Text(widget.title);
     return Column(

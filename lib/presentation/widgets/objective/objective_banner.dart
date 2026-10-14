@@ -5,9 +5,11 @@ import '../../../domain/game/player.dart';
 import '../../../domain/objective/current_objective.dart';
 import '../../../domain/objective/temporary/temporary_objectives.dart';
 import '../../extensions/objective_extensions.dart';
+import '../../extensions/post_holder_extensions.dart';
 import '../../extensions/temporary_objective_kind_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../common/raster_svg.dart';
 
 /// Thin strip under the status bars: the objective the player is on, its
 /// chapter and its progress, and the temporary objectives of the events.
@@ -44,7 +46,10 @@ class ObjectiveBanner extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(12, 0, 12, 6),
           child: Row(
             children: [
-              Icon(Icons.flag, size: 16, color: color),
+              if (objective.id.postIllustration case final String art)
+                RasterSvg(assetPath: art, size: 20)
+              else
+                Icon(Icons.flag, size: 16, color: color),
               const SizedBox(width: 8),
               Text(
                 objective.chapter.title(l10n),

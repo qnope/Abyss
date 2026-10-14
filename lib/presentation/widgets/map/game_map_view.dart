@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/map/game_map.dart';
 import '../../../domain/map/grid_position.dart';
+import '../../../domain/map/post_holder.dart';
 import '../guide/guide_cell_halo.dart';
 import 'map_painter.dart';
 import 'map_sprites.dart';
@@ -21,6 +22,9 @@ class GameMapView extends StatefulWidget {
   /// Seal colour of each player who can hold the volcano, by player id.
   final Map<String, Color> ownerColors;
 
+  /// Who holds the post above each passage of [gameMap], by position.
+  final Map<GridPosition, PostHolder> passageHolders;
+
   /// Level of [gameMap], where the guide's halo may surround a cell.
   final int level;
 
@@ -35,6 +39,7 @@ class GameMapView extends StatefulWidget {
     this.pendingTargets = const {},
     this.factionBases = const {},
     this.ownerColors = const {},
+    this.passageHolders = const {},
     this.level = 1,
   });
 
@@ -124,6 +129,7 @@ class _GameMapViewState extends State<GameMapView> {
                 pendingTargets: widget.pendingTargets,
                 factionBases: widget.factionBases,
                 ownerColors: widget.ownerColors,
+                passageHolders: widget.passageHolders,
               ),
               columns: map.width,
               sprites: _sprites,

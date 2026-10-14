@@ -6,6 +6,7 @@ import '../../../domain/map/monster_family.dart';
 import '../../../domain/map/terrain_type.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../extensions/monster_family_extensions.dart';
+import '../../extensions/post_holder_extensions.dart';
 import '../../extensions/terrain_type_extensions.dart';
 import '../common/svg_raster_cache.dart';
 import 'map_cell_visual.dart';
@@ -55,6 +56,7 @@ class MapSprites {
           for (final family in MonsterFamily.availableAt(3))
             family.svgPathAt(difficulty),
         ],
+        ...postSvgPaths,
         playerBaseSvgPath,
         volcanoSealSvgPath,
       };

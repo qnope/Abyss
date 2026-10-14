@@ -12,7 +12,7 @@ void main() {
   /// A fresh list of the same two cells, as each rebuild of the map makes.
   List<MapCellVisual> cells() => [
         MapCellVisual(terrainSprite: plain, revealed: true),
-        MapCellVisual(terrainSprite: plain, glow: MapGlow.passage),
+        MapCellVisual(terrainSprite: plain, glow: MapGlow.wreck),
       ];
 
   MapPainter painter(List<MapCellVisual> visuals, {int columns = 2}) =>

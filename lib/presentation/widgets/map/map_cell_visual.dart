@@ -2,16 +2,18 @@ import 'package:flutter/painting.dart';
 
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/map_cell.dart';
+import '../../../domain/map/post_holder.dart';
 import '../../../domain/map/volcanic_kernel_placer.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../extensions/monster_lair_extensions.dart';
+import '../../extensions/post_holder_extensions.dart';
 import '../../extensions/terrain_type_extensions.dart';
 
 const playerBaseSvgPath = 'assets/icons/map_content/player_base.svg';
 const volcanoSealSvgPath = 'assets/icons/terrain/volcanic_kernel_seal.svg';
 
 /// Glowing marker drawn under a cell's content.
-enum MapGlow { none, passage, capturedBase, hostileBase, wreck }
+enum MapGlow { none, wreck }
 
 /// Everything needed to draw one map cell, decoupled from widgets so the
 /// whole map can be painted in a single pass.
@@ -54,7 +56,7 @@ class MapCellVisual {
     required bool isRevealed,
     bool isBase = false,
     bool hasPendingExploration = false,
-    bool isCapturedTransitionBase = false,
+    PostHolder? postHolder,
     Color? factionColor,
     Color? sealColor,
   }) {
@@ -71,9 +73,10 @@ class MapCellVisual {
     }
     return MapCellVisual(
       terrainSprite: terrain,
-      contentSprite: _contentSprite(cell, isBase || factionColor != null),
+      contentSprite: _contentSprite(
+          cell, isBase || factionColor != null, postHolder ?? PostHolder.guardians),
       factionColor: factionColor,
-      glow: _glow(cell, isCapturedTransitionBase),
+      glow: _isBeacon(cell) ? MapGlow.wreck : MapGlow.none,
       // The volcano is never greyed out: its seal says who holds it.
       dimmed: cell.collectedBy != null &&
           cell.content != CellContentType.volcanicKernel,
@@ -88,9 +91,15 @@ class MapCellVisual {
     );
   }
 
-  static String? _contentSprite(MapCell cell, bool isBase) {
-    if (cell.content == CellContentType.passage ||
-        cell.content == CellContentType.transitionBase ||
+  static String? _contentSprite(MapCell cell, bool isBase, PostHolder holder) {
+    final base = cell.transitionBase;
+    if (cell.content == CellContentType.transitionBase && base != null) {
+      return base.type.svgPathFor(holder);
+    }
+    if (cell.content == CellContentType.passage) {
+      return passageSvgPath(cell.passageName, holder);
+    }
+    if (cell.content == CellContentType.transitionBase ||
         cell.content == CellContentType.volcanicKernelPart) {
       return null;
     }
@@ -104,16 +113,6 @@ class MapCellVisual {
   /// Content seen through the fog: a wreck not searched yet.
   static bool _isBeacon(MapCell cell) =>
       cell.content == CellContentType.wreck && !cell.isCollected;
-
-  static MapGlow _glow(MapCell cell, bool isCaptured) {
-    if (_isBeacon(cell)) return MapGlow.wreck;
-    return switch (cell.content) {
-      CellContentType.passage => MapGlow.passage,
-      CellContentType.transitionBase =>
-        isCaptured ? MapGlow.capturedBase : MapGlow.hostileBase,
-      _ => MapGlow.none,
-    };
-  }
 
   @override
   bool operator ==(Object other) =>

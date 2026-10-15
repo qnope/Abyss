@@ -5,6 +5,7 @@ import 'package:abyss/domain/map/monster_lair.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/fight/army_selection_screen.dart';
 import 'package:abyss/presentation/screens/game/fight/fight_summary_screen.dart';
+import 'package:abyss/presentation/screens/game/game_screen_fight_actions.dart';
 import 'package:abyss/presentation/widgets/fight/selection_summary_card.dart';
 
 import '../../../../domain/action/fight_monster_action_helper.dart';
@@ -105,14 +106,23 @@ void main() {
       expect(button.onPressed, isNotNull);
     });
 
-    testWidgets('launch button saves and navigates to FightSummaryScreen',
+    testWidgets('launch button saves, returns, then opens FightSummaryScreen',
         (tester) async {
       final repository = FakeGameRepository();
       int onChangedCalls = 0;
-      await tester.pumpWidget(buildApp(
-        repository: repository,
-        onChanged: () => onChangedCalls++,
+      final scenario = createFightScenario(
+        stock: const {UnitType.scout: 3},
+      );
+      await tester.pumpWidget(MaterialApp(
+        home: Builder(
+          builder: (context) => ElevatedButton(
+            onPressed: () => openArmySelection(context, scenario.game,
+                repository, 1, 1, lair, () => onChangedCalls++, level: 1),
+            child: const Text('open'),
+          ),
+        ),
       ));
+      await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
       await tester.tap(find.byIcon(Icons.add).first);
@@ -126,6 +136,7 @@ void main() {
 
       expect(repository.saveCallCount, 1);
       expect(onChangedCalls, 1);
+      expect(find.byType(ArmySelectionScreen), findsNothing);
       expect(find.byType(FightSummaryScreen), findsOneWidget);
     });
 

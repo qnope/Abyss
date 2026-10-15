@@ -3,6 +3,7 @@ import '../../../data/game_repository.dart';
 import '../../../domain/action/action_executor.dart';
 import '../../../domain/action/garrison_kernel_action.dart';
 import '../../../domain/game/game.dart';
+import '../../../domain/map/map_cell.dart';
 import '../../../domain/objective/guide/guide_advisor.dart';
 import '../../../domain/volcano/kernel_garrison.dart';
 import '../../extensions/action_failure_extensions.dart';
@@ -107,3 +108,9 @@ Future<void> handleGarrisonKernel(
   ));
   onChanged();
 }
+
+/// Whether another player than the human holds the kernel of [cell].
+bool isKernelHeldByRival(Game game, MapCell cell) =>
+    cell.collectedBy != null &&
+    cell.collectedBy != game.humanPlayerId &&
+    game.players[cell.collectedBy] != null;

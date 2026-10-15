@@ -12,15 +12,19 @@ class MapTokenDrawer {
   /// Width of the ring, in logical pixels.
   static const ringWidth = 1.5;
 
-  final _water = Paint()..color = AbyssColors.deepNavy;
+  final _water = Paint();
   final _image = Paint()..filterQuality = FilterQuality.medium;
   final _ring = Paint()
     ..style = PaintingStyle.stroke
-    ..strokeWidth = ringWidth
-    ..color = AbyssColors.biolumCyan;
+    ..strokeWidth = ringWidth;
 
-  /// Draws a token filling [rect], showing [image] once it is loaded.
-  void draw(Canvas canvas, Rect rect, ui.Image? image) {
+  /// Draws a token filling [rect], showing [image] once it is loaded, at
+  /// [opacity] (set on the paints, never through a layer).
+  void draw(Canvas canvas, Rect rect, ui.Image? image, {double opacity = 1}) {
+    if (opacity <= 0) return;
+    _water.color = AbyssColors.deepNavy.withValues(alpha: opacity);
+    _image.color = Color.fromRGBO(0, 0, 0, opacity);
+    _ring.color = AbyssColors.biolumCyan.withValues(alpha: opacity);
     final radius = rect.shortestSide / 2;
     final center = rect.center;
     canvas.drawCircle(center, radius, _water);

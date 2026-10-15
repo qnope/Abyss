@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../domain/map/game_map.dart';
 import '../../../domain/map/grid_position.dart';
 import '../../../domain/map/post_holder.dart';
+import 'effects/map_effects.dart';
+import 'map_cell_at.dart';
 import 'map_cell_visual.dart';
 import 'map_layers.dart';
 import 'map_painter.dart';
@@ -31,6 +33,9 @@ class GameMapView extends StatefulWidget {
   /// Level of [gameMap], where the guide's halo may surround a cell.
   final int level;
 
+  /// Effects played over the map; a tap on the map ends the one playing.
+  final MapEffects? effects;
+
   const GameMapView({
     super.key,
     required this.gameMap,
@@ -44,6 +49,7 @@ class GameMapView extends StatefulWidget {
     this.ownerColors = const {},
     this.passageHolders = const {},
     this.level = 1,
+    this.effects,
   });
 
   @override
@@ -54,8 +60,7 @@ class _GameMapViewState extends State<GameMapView> {
   final _controller = TransformationController();
   MapSprites? _sprites;
 
-  static const _defaultVisibleCells = 8.0;
-  static const _maxVisibleCells = 1.0;
+  static const _defaultVisibleCells = 8.0, _maxVisibleCells = 1.0;
 
   @override
   void initState() {
@@ -96,15 +101,11 @@ class _GameMapViewState extends State<GameMapView> {
   @override
   Widget build(BuildContext context) {
     final map = widget.gameMap;
-    final gridSize = Size(map.width * cellSize, map.height * cellSize);
     final screenWidth = MediaQuery.of(context).size.width;
-    final minScale = screenWidth / gridSize.width;
-    final maxScale = screenWidth / (_maxVisibleCells * cellSize);
-
     return MapViewport(
       controller: _controller,
-      minScale: minScale,
-      maxScale: maxScale,
+      minScale: screenWidth / (map.width * cellSize),
+      maxScale: screenWidth / (_maxVisibleCells * cellSize),
       onTapUp: widget.onCellTap == null ? null : _handleTap,
       builder: (context, clock, viewport) => MapLayers(
         visuals: _visuals(),
@@ -116,6 +117,7 @@ class _GameMapViewState extends State<GameMapView> {
         level: widget.level,
         pendingTargets: widget.pendingTargets,
         scoutOriginOf: _scoutOrigin,
+        effects: widget.effects,
       ),
     );
   }
@@ -138,10 +140,10 @@ class _GameMapViewState extends State<GameMapView> {
       revealed: widget.revealedCells);
 
   void _handleTap(TapUpDetails details) {
-    final x = details.localPosition.dx ~/ cellSize;
-    final y = details.localPosition.dy ~/ cellSize;
-    final map = widget.gameMap;
-    if (x < 0 || y < 0 || x >= map.width || y >= map.height) return;
-    widget.onCellTap!(x, y);
+    final effects = widget.effects;
+    if (effects != null && effects.isPlaying) return effects.finish();
+    final cell = mapCellAt(details.localPosition,
+        width: widget.gameMap.width, height: widget.gameMap.height);
+    if (cell != null) widget.onCellTap!(cell.$1, cell.$2);
   }
 }

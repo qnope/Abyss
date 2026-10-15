@@ -3,6 +3,7 @@ import '../../../data/game_repository.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
 import '../../widgets/building/building_list_view.dart';
+import '../../widgets/map/effects/map_effects.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import '../../widgets/unit/army_list_view.dart';
 import 'game_screen_actions.dart';
@@ -14,7 +15,8 @@ const int mapTab = 1;
 
 /// Content of the tab [tab] of the game screen, in the order of the
 /// bottom bar: the base, the map of [currentLevel], the army, the
-/// research. [onChanged] redraws the screen after a player's action.
+/// research. [onChanged] redraws the screen after a player's action;
+/// [effects] plays its consequences on the map.
 Widget buildGameTab(
   BuildContext context,
   Game game,
@@ -23,6 +25,7 @@ Widget buildGameTab(
   required int currentLevel,
   required ValueChanged<int> onLevelSelected,
   required VoidCallback onChanged,
+  MapEffects? effects,
 }) {
   final human = game.humanPlayer;
   return switch (tab) {
@@ -42,6 +45,7 @@ Widget buildGameTab(
       unlockedLevels: game.levels.keys.toSet(),
       onLevelSelected: onLevelSelected,
       onChanged: onChanged,
+      effects: effects,
     ),
     2 => ArmyListView(
       unitsPerLevel: human.unitsPerLevel,

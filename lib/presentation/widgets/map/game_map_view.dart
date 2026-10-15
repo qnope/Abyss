@@ -8,6 +8,7 @@ import 'map_painter.dart';
 import 'map_sprites.dart';
 import 'map_viewport.dart';
 import 'map_visuals_builder.dart';
+import 'scout_origin.dart';
 
 class GameMapView extends StatefulWidget {
   final GameMap gameMap;
@@ -79,18 +80,12 @@ class _GameMapViewState extends State<GameMapView> {
     );
   }
 
-  void _centerOnBase() {
-    final size = MediaQuery.of(context).size;
-    final scale = size.width / (_defaultVisibleCells * cellSize);
-    final centerX = widget.baseX ?? widget.gameMap.width ~/ 2;
-    final centerY = widget.baseY ?? widget.gameMap.height ~/ 2;
-    final basePixelX = centerX * cellSize;
-    final basePixelY = centerY * cellSize;
-    final dx = size.width / 2 - (basePixelX + cellSize / 2) * scale;
-    final dy = size.height / 2 - (basePixelY + cellSize / 2) * scale;
-    _controller.value = Matrix4.translationValues(dx, dy, 0)
-      ..scaleByDouble(scale, scale, 1, 1);
-  }
+  void _centerOnBase() => _controller.value = MapViewport.centeredOn(
+        MediaQuery.of(context).size,
+        (widget.baseX ?? widget.gameMap.width ~/ 2,
+            widget.baseY ?? widget.gameMap.height ~/ 2),
+        visibleCells: _defaultVisibleCells,
+      );
 
   @override
   void dispose() {
@@ -119,6 +114,8 @@ class _GameMapViewState extends State<GameMapView> {
         transform: _controller,
         viewport: viewport,
         level: widget.level,
+        pendingTargets: widget.pendingTargets,
+        scoutOriginOf: _scoutOrigin,
       ),
     );
   }
@@ -134,6 +131,11 @@ class _GameMapViewState extends State<GameMapView> {
         ownerColors: widget.ownerColors,
         passageHolders: widget.passageHolders,
       );
+
+  (int, int) _scoutOrigin((int, int) target) => scoutOrigin(target,
+      base: widget.baseX == null ? null : (widget.baseX!, widget.baseY!),
+      passageHolders: widget.passageHolders,
+      revealed: widget.revealedCells);
 
   void _handleTap(TapUpDetails details) {
     final x = details.localPosition.dx ~/ cellSize;

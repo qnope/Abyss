@@ -6,9 +6,11 @@ import 'map_ambience_painter.dart';
 import 'map_cell_visual.dart';
 import 'map_painter.dart';
 import 'map_sprites.dart';
+import 'scout_token_layer.dart';
 
 /// The stacked layers of a map, in map coordinates: the still map, the
-/// moving contents above it, then the guide's halo.
+/// moving contents above it, the scouts sent exploring, then the guide's
+/// halo.
 ///
 /// Each painted layer has its own repaint boundary, so the ambience
 /// [clock] and panning ([transform]) never repaint the still map.
@@ -25,6 +27,12 @@ class MapLayers extends StatelessWidget {
   /// Level of the map, where the guide's halo may surround a cell.
   final int level;
 
+  /// Cells of the map the scouts were sent to, still to be explored.
+  final Set<(int, int)> pendingTargets;
+
+  /// The cell a scout sent to a target sets off from.
+  final (int, int) Function((int, int) target) scoutOriginOf;
+
   const MapLayers({
     super.key,
     required this.visuals,
@@ -33,6 +41,8 @@ class MapLayers extends StatelessWidget {
     required this.transform,
     required this.viewport,
     required this.level,
+    required this.scoutOriginOf,
+    this.pendingTargets = const {},
     this.sprites,
   });
 
@@ -60,6 +70,11 @@ class MapLayers extends StatelessWidget {
             viewport: viewport,
           ),
         ),
+      ),
+      ScoutTokenLayer(
+        targets: pendingTargets,
+        originOf: scoutOriginOf,
+        size: size,
       ),
       GuideCellHalo(level: level, cellSize: cellSize),
     ]);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../ambience/ambience_clock.dart';
 import '../ambience/ambience_clock_scope.dart';
+import 'map_content_drawer.dart';
 import 'map_snow_layer.dart';
 
 /// Builds the layers of a map from the ambience [clock] they share and
@@ -29,6 +30,20 @@ class MapViewport extends StatelessWidget {
     required this.builder,
     this.onTapUp,
   });
+
+  /// The transform showing [cell] in the middle of a [screen], zoomed
+  /// so that [visibleCells] cells fit across it.
+  static Matrix4 centeredOn(
+    Size screen,
+    (int, int) cell, {
+    required double visibleCells,
+  }) {
+    final scale = screen.width / (visibleCells * cellSize);
+    final dx = screen.width / 2 - (cell.$1 + 0.5) * cellSize * scale;
+    final dy = screen.height / 2 - (cell.$2 + 0.5) * cellSize * scale;
+    return Matrix4.translationValues(dx, dy, 0)
+      ..scaleByDouble(scale, scale, 1, 1);
+  }
 
   @override
   Widget build(BuildContext context) => AmbienceClockScope(

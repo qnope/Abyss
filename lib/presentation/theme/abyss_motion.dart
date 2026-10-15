@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/animation.dart';
 
 /// Durations and curves of every animation of the game, so the sea moves
@@ -57,6 +59,11 @@ abstract final class AbyssMotion {
 
   /// A token swimming from one cell to another.
   static const swim = Duration(milliseconds: 900);
+
+  /// A token swimming [cells] cells away: [swim] for a neighbour, longer
+  /// for a farther cell, but never more than three times as long.
+  static Duration swimOver(double cells) =>
+      swim * math.sqrt(cells).clamp(1.0, 3.0);
 
   /// One beat of a staged event: a wind-up, a flash, a shake.
   static const eventStep = Duration(milliseconds: 300);

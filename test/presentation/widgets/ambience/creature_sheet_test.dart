@@ -35,6 +35,15 @@ void main() {
     }
   });
 
+  testWidgets('building a sheet leaves its bitmap to its owner', (
+    tester,
+  ) async {
+    final bitmap = (await tester.runAsync(() => square(64)))!;
+    await tester.runAsync(() => CreatureSheet.build(bitmap, undulation: wave));
+    expect(bitmap.debugDisposed, isFalse);
+    bitmap.dispose();
+  });
+
   test('frames are read row by row', () {
     final sheet = CreatureSheet(_NoImage(), undulation: wave);
     const px = CreatureSheet.pixels * 1.0;

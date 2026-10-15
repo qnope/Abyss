@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
 
+import '../common/copied_image_shader.dart';
 import 'creature_undulation.dart';
 
 /// The frames of a living creature undulating, pre-rendered once from
@@ -52,10 +53,8 @@ class CreatureSheet {
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
     final source = bitmap.width.toDouble();
-    final shader = ui.ImageShader(bitmap, TileMode.clamp, TileMode.clamp,
-        Matrix4.identity().storage,
-        filterQuality: FilterQuality.medium);
-    final paint = Paint()..shader = shader;
+    final shader = CopiedImageShader(bitmap);
+    final paint = Paint()..shader = shader.shader;
     final texture = [
       for (final rest in undulation.restVertices()) rest * source,
     ];

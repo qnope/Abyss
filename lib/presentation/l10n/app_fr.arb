@@ -1208,5 +1208,7 @@
   "guideLeviathanReturn": "Le Léviathan revient reprendre sa Faille ! Seules tes unités du niveau {level} la défendent. Si elle tombe, ton Module est détruit et tes unités d'en bas sont perdues.",
   "@guideLeviathanReturn": {"placeholders": {"level": {"type": "int"}}},
   "guideLeviathanReinforce": "Envoie {count, plural, one{{count} Harponneur} other{{count} Harponneurs}} de plus.",
-  "@guideLeviathanReinforce": {"placeholders": {"count": {"type": "int"}}}
+  "@guideLeviathanReinforce": {"placeholders": {"count": {"type": "int"}}},
+  "turnStorySkip": "Passer ›",
+  "@turnStorySkip": {"description": "Button skipping the story of the end of a turn told on the map, before its summary."}
 }

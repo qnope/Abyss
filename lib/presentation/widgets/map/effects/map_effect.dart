@@ -17,6 +17,9 @@ abstract class MapEffect {
   /// Bitmaps the effect draws, rasterized before it starts.
   Set<String> get imagePaths => const {};
 
+  /// The cell the map centres on as the effect plays, if any.
+  (int, int)? get focus => null;
+
   /// The effect placed on the map shown by [stage].
   MapEffectRun stage(MapStage stage);
 }

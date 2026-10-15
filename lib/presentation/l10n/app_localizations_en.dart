@@ -3639,4 +3639,7 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return 'Send $_temp0.';
   }
+
+  @override
+  String get turnStorySkip => 'Skip ›';
 }

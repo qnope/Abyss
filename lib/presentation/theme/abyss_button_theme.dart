@@ -52,4 +52,14 @@ abstract final class AbyssButtonTheme {
       ),
     );
   }
+
+  /// An outlined button lying over the map, on deep water so it reads
+  /// over any cell.
+  static ButtonStyle overMap() => OutlinedButton.styleFrom(
+        foregroundColor: AbyssColors.biolumCyan,
+        backgroundColor: AbyssColors.deepNavy.withValues(alpha: 0.85),
+        side: const BorderSide(color: AbyssColors.biolumCyan, width: 1.5),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      );
 }

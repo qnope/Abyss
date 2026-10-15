@@ -3674,4 +3674,7 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return 'Envoie $_temp0 de plus.';
   }
+
+  @override
+  String get turnStorySkip => 'Passer ›';
 }

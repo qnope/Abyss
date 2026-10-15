@@ -3676,4 +3676,7 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return 'Envía $_temp0.';
   }
+
+  @override
+  String get turnStorySkip => 'Saltar ›';
 }

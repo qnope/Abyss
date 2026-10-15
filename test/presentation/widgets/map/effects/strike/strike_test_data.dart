@@ -4,11 +4,13 @@ import 'package:abyss/domain/fight/fight_result.dart';
 import 'package:abyss/domain/fight/fight_turn_summary.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 
-/// A fight won or lost by [sent], the player dealing [damage] per turn.
+/// A fight won or lost by [sent], the player dealing [damage] and taking
+/// [taken] (nothing by default) on each turn.
 FightMonsterResult strikeResult({
   bool victory = true,
   Map<UnitType, int> sent = const {UnitType.harpoonist: 3},
   List<int> damage = const [7, 4],
+  List<int>? taken,
 }) =>
     FightMonsterResult.success(
       victory: victory,
@@ -22,7 +24,7 @@ FightMonsterResult strikeResult({
               attacksPlayed: 1,
               critCount: 0,
               damageDealtByPlayer: dealt,
-              damageDealtByMonster: 0,
+              damageDealtByMonster: taken?[i] ?? 0,
               playerAliveAtEnd: 1,
               monsterAliveAtEnd: 0,
               playerHpAtEnd: 1,

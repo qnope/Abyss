@@ -4,6 +4,7 @@ import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/extensions/monster_lair_extensions.dart';
 import 'package:abyss/presentation/extensions/unit_type_extensions.dart';
 import 'package:abyss/presentation/widgets/map/effects/strike/map_strike.dart';
+import 'package:abyss/presentation/widgets/map/effects/strike/strike_round.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'strike_test_data.dart';
@@ -26,10 +27,19 @@ void main() {
       expect(strike.imagePaths, {UnitType.harpoonist.iconPath});
     });
 
-    test('splits the damage dealt over the two lunges', () {
+    test('plays one round per turn, with what both sides lost', () {
       final strike = MapStrike.of(
-          target: (0, 0), lair: lair, result: strikeResult(damage: [7, 4]));
-      expect(strike.hits, [6, 5]);
+        target: (0, 0),
+        lair: lair,
+        result: strikeResult(damage: [7, 4, 0, 9, 2], taken: [1, 0, 3, 2, 5]),
+      );
+      expect(strike.rounds, const [
+        StrikeRound(dealt: 7, taken: 1),
+        StrikeRound(dealt: 4, taken: 0),
+        StrikeRound(dealt: 0, taken: 3),
+        StrikeRound(dealt: 9, taken: 2),
+        StrikeRound(dealt: 2, taken: 5),
+      ]);
     });
 
     test('tells a victory from a defeat', () {
@@ -47,11 +57,5 @@ void main() {
         isFalse,
       );
     });
-  });
-
-  test('split shares a total between parts, the first ones larger', () {
-    expect(MapStrike.split(11, 2), [6, 5]);
-    expect(MapStrike.split(0, 2), [0, 0]);
-    expect(MapStrike.split(7, 3), [3, 2, 2]);
   });
 }

@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   const swim = Duration(milliseconds: 900);
   const timeline = StrikeTimeline(swim: swim, hits: 2);
-  const lunge = StrikeTimeline.lunge;
+  const lunge = AbyssMotion.eventStep;
 
   test('swims, lunges once per hit, settles the outcome, then vanishes',
       () {
@@ -44,5 +44,29 @@ void main() {
     const still = StrikeTimeline(swim: Duration.zero, hits: 2);
     expect(still.swimAt(Duration.zero), 1);
     expect(still.hitAt(0), lunge ~/ 2);
+  });
+
+  test('a short fight lunges at the usual pace', () {
+    expect(timeline.lunge, AbyssMotion.eventStep);
+  });
+
+  test('a long fight lunges faster to keep within the rounds budget', () {
+    const long = StrikeTimeline(swim: swim, hits: 20);
+    expect(long.lunge, lessThan(AbyssMotion.eventStep));
+    expect(long.lunge * 20, lessThanOrEqualTo(StrikeTimeline.roundsBudget));
+    expect(long.hitAt(19), swim + long.lunge * 19 + long.lunge ~/ 2);
+  });
+
+  test('a very long fight never lunges faster than the quickest pace', () {
+    const endless = StrikeTimeline(swim: swim, hits: 200);
+    expect(endless.lunge, StrikeTimeline.quickestLunge);
+  });
+
+  test('a hit shows until the next one lands, at most a fade', () {
+    const long = StrikeTimeline(swim: swim, hits: 20);
+    expect(long.showsHit(0, long.hitAt(0)), isTrue);
+    expect(long.showsHit(0, long.hitAt(1)), isFalse);
+    expect(long.showsHit(19, long.hitAt(19) + AbyssMotion.fade), isFalse);
+    expect(timeline.showsHit(0, timeline.hitAt(0) - lunge ~/ 4), isFalse);
   });
 }

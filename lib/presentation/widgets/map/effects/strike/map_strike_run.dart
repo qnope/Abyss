@@ -15,9 +15,10 @@ import 'strike_geometry.dart';
 import 'strike_marks.dart';
 import 'strike_timeline.dart';
 
-/// A [MapStrike] placed on a map: each hit flashes the lair white, shakes
-/// the map and floats the damage up; a defeated monster shrinks and
-/// fades over the dimmed remains the still map shows.
+/// A [MapStrike] placed on a map: each round's hit flashes the lair
+/// white, shakes the map and floats up what each side lost, over the lair
+/// and over the army's token; a defeated monster shrinks and fades over
+/// the dimmed remains the still map shows.
 class MapStrikeRun implements MapEffectRun {
   /// How long the lair flashes after a hit.
   static const flashLength = AbyssMotion.tap;
@@ -46,7 +47,7 @@ class MapStrikeRun implements MapEffectRun {
           swim: geometry.origin == geometry.approach
               ? Duration.zero
               : MapTokenTrip.durationOf(geometry.origin, geometry.approach),
-          hits: strike.hits.length,
+          hits: strike.rounds.length,
         );
 
   @override
@@ -54,7 +55,7 @@ class MapStrikeRun implements MapEffectRun {
 
   @override
   Offset shakeAt(Duration elapsed) {
-    for (var i = 0; i < strike.hits.length; i++) {
+    for (var i = 0; i < strike.rounds.length; i++) {
       final since = timeline.sinceHit(i, elapsed);
       if (since == null || since >= shakeLength) continue;
       final p = since.inMicroseconds / shakeLength.inMicroseconds;
@@ -75,12 +76,18 @@ class MapStrikeRun implements MapEffectRun {
     _token.draw(canvas, token, stage.image(strike.lead.iconPath),
         opacity: opacity);
     _marks.badge(canvas, token, strike.count, opacity);
-    for (final (i, damage) in strike.hits.indexed) {
-      final since = timeline.sinceHit(i, elapsed);
-      if (damage <= 0 || since == null || since >= AbyssMotion.fade) continue;
-      _marks.damage(canvas, geometry.lairRect.topCenter, damage,
-          since.inMicroseconds / AbyssMotion.fade.inMicroseconds);
+    final army = geometry.tokenRect(swim: 1).topCenter;
+    for (final (i, round) in strike.rounds.indexed) {
+      if (!timeline.showsHit(i, elapsed)) continue;
+      final progress = timeline.sinceHit(i, elapsed)!.inMicroseconds /
+          AbyssMotion.fade.inMicroseconds;
+      _loss(canvas, geometry.lairRect.topCenter, round.dealt, progress);
+      _loss(canvas, army, round.taken, progress);
     }
+  }
+
+  void _loss(Canvas canvas, Offset from, int damage, double progress) {
+    if (damage > 0) _marks.damage(canvas, from, damage, progress);
   }
 
   /// The monster: on a victory, alive over its dimmed remains until it
@@ -106,7 +113,7 @@ class MapStrikeRun implements MapEffectRun {
   }
 
   double _flashAt(Duration elapsed) {
-    for (var i = 0; i < strike.hits.length; i++) {
+    for (var i = 0; i < strike.rounds.length; i++) {
       final since = timeline.sinceHit(i, elapsed);
       if (since == null || since >= flashLength) continue;
       return 0.8 * (1 - since.inMicroseconds / flashLength.inMicroseconds);

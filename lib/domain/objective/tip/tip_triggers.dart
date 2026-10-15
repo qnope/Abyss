@@ -3,6 +3,7 @@ import '../../event/random_event_type.dart';
 import '../../game/defeat_checker.dart';
 import '../../game/game.dart';
 import '../../game/player.dart';
+import '../../history/history_entry.dart';
 import '../../map/cell_content_type.dart';
 import '../../map/map_cell.dart';
 import '../../raid/noise_rules.dart';
@@ -53,9 +54,10 @@ abstract final class TipTriggers {
         cell.lair?.family != null,
   );
 
-  /// A faction announced an attack on the base.
-  static bool factionAttack(Game game, Player player) =>
-      player.raidState.attacks.isNotEmpty;
+  /// A faction attacked the base: it strikes without warning, so the tip
+  /// comes after the first attack.
+  static bool factionAttack(Game game, Player player) => player.historyEntries
+      .any((e) => e is BaseAssaultEntry && e.defending && e.postName == null);
 
   static bool volcanoWave(Game game, Player player) =>
       player.volcanoState.isIncoming;

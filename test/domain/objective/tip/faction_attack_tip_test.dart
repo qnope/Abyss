@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/announce_attack_helper.dart';
 import '../../../helpers/base_attack_helper.dart';
+import '../../../helpers/history_entry_samples.dart';
 import '../../../helpers/two_player_game.dart';
 
 void main() {
@@ -27,17 +28,33 @@ void main() {
     expect(TipCatalog.byId(TipId.factionAttack).category, TipCategory.threats);
   });
 
-  test('none while no attack is announced', () {
+  void attacked({String? post}) => two.human.addHistoryEntry(
+    baseAssaultEntry(victory: true, defending: true, post: post),
+  );
+
+  test('none while no faction has attacked the base', () {
     expect(next(), isNull);
   });
 
-  test('opens at the first announced attack', () {
-    announce().execute(two.game, two.rival);
+  test('none for an attack of the human on another base', () {
+    two.human.addHistoryEntry(
+      baseAssaultEntry(victory: true, defending: false),
+    );
+    expect(next(), isNull);
+  });
+
+  test('none for an attack on a post', () {
+    attacked(post: 'Faille Beta');
+    expect(next(), isNull);
+  });
+
+  test('opens after the first attack on the base', () {
+    attacked();
     expect(next(), TipId.factionAttack);
   });
 
   test('opens once: seen, it never comes back', () {
-    announce().execute(two.game, two.rival);
+    attacked();
     ObjectiveMigration.stateOf(
       two.game,
       two.human,
@@ -46,7 +63,7 @@ void main() {
   });
 
   test('stays shut while the tips are off', () {
-    announce().execute(two.game, two.rival);
+    attacked();
     ObjectiveMigration.stateOf(two.game, two.human).tipsEnabled = false;
     expect(next(), isNull);
   });

@@ -17,21 +17,12 @@ import '../../../helpers/history_entry_samples.dart';
 import '../../../helpers/localized_app.dart';
 import '../../../helpers/test_svg_helper.dart';
 
-/// The result of the turn the announced attack is fought; the human holds
-/// [defenders] on the base by then.
+/// The result of the turn a faction attacks; the human holds [defenders]
+/// on the base.
 TurnResult _fought({Map<UnitType, int> defenders = const {}}) {
   final two = announceGame();
-  station(two.human, {});
-  announce().execute(two.game, two.rival);
-  EndTurnAction(
-    random: Random(1),
-    playFactions: false,
-  ).execute(two.game, two.human);
-  EndTurnAction(
-    random: Random(1),
-    playFactions: false,
-  ).execute(two.game, two.human);
   station(two.human, defenders);
+  announce().execute(two.game, two.rival);
   final result = EndTurnAction(
     random: Random(1),
     playFactions: false,

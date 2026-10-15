@@ -9,19 +9,22 @@ import '../../../helpers/announce_attack_helper.dart';
 import '../../../helpers/base_attack_helper.dart';
 
 void main() {
-  test('an announcement lands two turns ahead with its exact army', () {
-    final two = announceGame();
+  test(
+    'an attack lands at the end of the turn it is decided, without warning',
+    () {
+      final two = announceGame();
 
-    final result = announce(
-      army: {UnitType.harpoonist: 25},
-    ).execute(two.game, two.rival);
+      final result = announce(
+        army: {UnitType.harpoonist: 25},
+      ).execute(two.game, two.rival);
 
-    expect(result.isSuccess, isTrue);
-    final attack = pendingOf(two).single;
-    expect(attack.attackerId, two.rival.id);
-    expect(attack.arrivalTurn, 14);
-    expect(attack.units, {UnitType.harpoonist: 25});
-  });
+      expect(result.isSuccess, isTrue);
+      final attack = pendingOf(two).single;
+      expect(attack.attackerId, two.rival.id);
+      expect(attack.arrivalTurn, 12);
+      expect(attack.units, {UnitType.harpoonist: 25});
+    },
+  );
 
   test('the army stays on the base until the attack', () {
     final two = announceGame();
@@ -56,7 +59,7 @@ void main() {
     final two = announceGame();
     two.human.raidState.announce(
       const MonsterLair(difficulty: MonsterDifficulty.easy, unitCount: 3),
-      14,
+      12,
     );
 
     expect(

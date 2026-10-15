@@ -34,13 +34,10 @@ void main() {
     expect(_endTurn(two).attacks, isEmpty);
   });
 
-  test('the turn of the fight reports the attack with its faction', () {
+  test('the turn the faction attacks reports it with its faction', () {
     final two = _factionGame();
     station(two.human, {});
     announce().execute(two.game, two.rival);
-    expect(_endTurn(two).attacks, isEmpty);
-    expect(_endTurn(two).attacks, isEmpty);
-
     final attacks = _endTurn(two).attacks;
 
     expect(attacks, hasLength(1));
@@ -57,8 +54,6 @@ void main() {
     final two = _factionGame();
     station(two.human, {});
     announce().execute(two.game, two.rival);
-    _endTurn(two);
-    _endTurn(two);
     station(two.human, wall);
 
     final report = _endTurn(two).attacks.single;
@@ -71,8 +66,6 @@ void main() {
     final two = _factionGame();
     station(two.human, {});
     announce().execute(two.game, two.rival);
-    _endTurn(two);
-    _endTurn(two);
     for (final resource in two.human.resources.values) {
       resource.amount = 0;
     }
@@ -86,8 +79,6 @@ void main() {
     final two = announceGame();
     station(two.human, {});
     announce().execute(two.game, two.rival);
-    _endTurn(two);
-    _endTurn(two);
 
     expect(_endTurn(two).attacks.single.personality, isNull);
   });

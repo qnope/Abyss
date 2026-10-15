@@ -19,28 +19,23 @@ List<BaseAssaultEntry> assaults(TwoPlayerGame two) =>
     two.human.historyEntries.whereType<BaseAssaultEntry>().toList();
 
 void main() {
-  test('the attack is fought at the end of the turn it was announced for', () {
+  test('the attack is fought at the end of the turn it is decided', () {
     final two = announceGame();
     station(two.human, {});
     announce().execute(two.game, two.rival);
 
     endTurn(two);
-    endTurn(two);
-    expect(assaults(two), isEmpty);
-    expect(pendingOf(two), hasLength(1));
 
-    endTurn(two);
     expect(assaults(two), hasLength(1));
+    expect(assaults(two).single.turn, 12);
     expect(pendingOf(two), isEmpty);
-    expect(two.game.turn, 15);
+    expect(two.game.turn, 13);
   });
 
-  test('the units standing on the human base at that time defend', () {
+  test('the units standing on the human base when the turn ends defend', () {
     final two = announceGame();
     station(two.human, {});
     announce().execute(two.game, two.rival);
-    endTurn(two);
-    endTurn(two);
     station(two.human, wall);
 
     endTurn(two);
@@ -58,8 +53,6 @@ void main() {
     final hq = two.human.buildings[BuildingType.headquarters]!.level;
 
     endTurn(two);
-    endTurn(two);
-    endTurn(two);
 
     final entry = assaults(two).single;
     expect(entry.victory, isTrue);
@@ -73,8 +66,6 @@ void main() {
     announce().execute(two.game, two.rival);
 
     endTurn(two);
-    endTurn(two);
-    endTurn(two);
 
     final mine = two.rival.historyEntries.whereType<BaseAssaultEntry>();
     expect(mine.single.defending, isFalse);
@@ -87,8 +78,6 @@ void main() {
     announce().execute(two.game, two.rival);
     final hq = two.human.buildings[BuildingType.headquarters]!.level;
 
-    endTurn(two);
-    endTurn(two);
     station(two.human, wall);
     endTurn(two);
 
@@ -102,8 +91,6 @@ void main() {
     two.rival.savedFallen = true;
 
     endTurn(two);
-    endTurn(two);
-    endTurn(two);
 
     expect(assaults(two), isEmpty);
     expect(pendingOf(two), isEmpty);
@@ -114,8 +101,6 @@ void main() {
     station(two.human, {});
     announce().execute(two.game, two.rival);
 
-    endTurn(two);
-    endTurn(two);
     station(two.rival, {UnitType.harpoonist: 10});
     endTurn(two);
 
@@ -127,8 +112,6 @@ void main() {
     final two = announceGame();
     announce().execute(two.game, two.rival);
 
-    endTurn(two);
-    endTurn(two);
     station(two.rival, {});
     endTurn(two);
 

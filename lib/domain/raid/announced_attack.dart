@@ -4,8 +4,8 @@ import '../unit/unit_type.dart';
 
 part 'announced_attack.g.dart';
 
-/// An attack of a faction on the human base, announced two turns before it
-/// is fought, with the army it will send.
+/// An attack of a faction on the human base, decided during the faction's
+/// turn and fought at the end of that same turn, with the army it sends.
 ///
 /// The army stays on the attacker's base until the fight, and goes with
 /// the units it still has then. The [seed] drives the fight, so the same

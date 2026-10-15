@@ -10,7 +10,7 @@ import '../../helpers/base_attack_helper.dart';
 import '../../helpers/faction_war_helper.dart';
 
 void main() {
-  test('it announces an attack on the human it has seen and can beat', () {
+  test('it attacks the human it has seen and can beat, this very turn', () {
     final war = warGame();
     war.see(war.human);
 
@@ -19,7 +19,7 @@ void main() {
     final attack = war.human.raidState.attacks.single;
     expect(attack.attackerId, war.attacker.id);
     expect(attack.units.keys, horde.keys);
-    expect(attack.arrivalTurn, war.game.turn + 2);
+    expect(attack.arrivalTurn, war.game.turn);
   });
 
   test('it sends the fewest units that still win, not its whole army', () {

@@ -8,7 +8,7 @@ import 'map_cell_visual.dart';
 import 'map_centring.dart';
 import 'map_layers.dart';
 import 'map_painter.dart';
-import 'map_sprites.dart';
+import 'map_sprites_loading.dart';
 import 'map_viewport.dart';
 import 'map_visuals_builder.dart';
 import 'scout_origin.dart';
@@ -58,9 +58,8 @@ class GameMapView extends StatefulWidget {
   State<GameMapView> createState() => _GameMapViewState();
 }
 
-class _GameMapViewState extends State<GameMapView> with MapCentring {
-  MapSprites? _sprites;
-
+class _GameMapViewState extends State<GameMapView>
+    with MapCentring, MapSpritesLoading {
   static const _maxVisibleCells = 1.0;
 
   @override
@@ -69,13 +68,6 @@ class _GameMapViewState extends State<GameMapView> with MapCentring {
 
   @override
   MapEffects? get effects => widget.effects;
-
-  @override
-  void initState() {
-    super.initState();
-    _sprites = MapSprites.ready;
-    if (_sprites == null) _loadSprites();
-  }
 
   @override
   void didChangeDependencies() {
@@ -87,15 +79,6 @@ class _GameMapViewState extends State<GameMapView> with MapCentring {
   void didUpdateWidget(GameMapView oldWidget) {
     super.didUpdateWidget(oldWidget);
     centre();
-  }
-
-  void _loadSprites() {
-    MapSprites.load().then(
-      (sprites) {
-        if (mounted) setState(() => _sprites = sprites);
-      },
-      onError: (Object error) => debugPrint('Map sprites failed: $error'),
-    );
   }
 
   @override
@@ -110,7 +93,7 @@ class _GameMapViewState extends State<GameMapView> with MapCentring {
       builder: (context, clock, viewport) => MapLayers(
         visuals: _visuals(),
         columns: map.width,
-        sprites: _sprites,
+        sprites: sprites,
         clock: clock,
         transform: controller,
         viewport: viewport,

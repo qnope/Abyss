@@ -40,6 +40,10 @@ abstract final class AbyssMotion {
   /// A bubble rising from a working building.
   static const bubbleCycle = Duration(seconds: 3);
 
+  /// A living creature (the kraken, a hard lair) undulating its
+  /// tentacles or tail once.
+  static const swimCycle = Duration(seconds: 2);
+
   /// Every ambient cycle.
   static const ambientCycles = [
     bobCycle,
@@ -47,6 +51,7 @@ abstract final class AbyssMotion {
     swayCycle,
     pulseCycle,
     bubbleCycle,
+    swimCycle,
   ];
 
   /// After this long, every ambient motion is back where it started.

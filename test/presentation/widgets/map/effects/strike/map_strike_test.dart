@@ -33,12 +33,12 @@ void main() {
         lair: lair,
         result: strikeResult(damage: [7, 4, 0, 9, 2], taken: [1, 0, 3, 2, 5]),
       );
-      expect(strike.rounds, const [
-        StrikeRound(dealt: 7, taken: 1),
-        StrikeRound(dealt: 4, taken: 0),
-        StrikeRound(dealt: 0, taken: 3),
-        StrikeRound(dealt: 9, taken: 2),
-        StrikeRound(dealt: 2, taken: 5),
+      expect(strike.rounds, const <StrikeRound>[
+        (dealt: 7, taken: 1),
+        (dealt: 4, taken: 0),
+        (dealt: 0, taken: 3),
+        (dealt: 9, taken: 2),
+        (dealt: 2, taken: 5),
       ]);
     });
 

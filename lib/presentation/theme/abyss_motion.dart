@@ -18,6 +18,9 @@ abstract final class AbyssMotion {
   /// A change worth a glance, such as a floating "+N".
   static const emphasis = Duration(milliseconds: 400);
 
+  /// A "+N" or "−N" rising from a value that changed, then fading.
+  static const deltaFloat = Duration(milliseconds: 1200);
+
   // Ambient cycles: each divides [ambientLoop], so they all loop together.
 
   /// A creature floating up and down.

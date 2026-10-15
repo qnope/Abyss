@@ -17,6 +17,7 @@ import '../../widgets/map/treasure_sheet.dart';
 import '../../widgets/faction/faction_base_colors.dart';
 import 'game_screen_base_sheet.dart';
 import 'game_screen_collect_messages.dart';
+import 'game_screen_collected_cell.dart';
 import 'game_screen_exploration_flow.dart';
 import 'game_screen_faction_actions.dart';
 import 'game_screen_fight_actions.dart';
@@ -88,10 +89,7 @@ void _showCellAction(BuildContext context, Game game,
   // A captured kernel is "collected" too, but it keeps its own sheet: that
   // is where the garrison is managed.
   if (cell.isCollected && cell.content != CellContentType.volcanicKernel) {
-    showCellInfoSheet(context,
-      title: l10n.screenAlreadyVisitedTitle,
-      message: l10n.screenAlreadyVisitedMessage,
-      icon: Icons.check_circle_outline);
+    showCollectedCellSheet(context, game, cell);
     return;
   }
   if (x == human.baseX && y == human.baseY) {

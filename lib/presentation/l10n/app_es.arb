@@ -672,6 +672,8 @@
   "screenGarrisonSize": "{count, plural, one{Guarnición: {count} unidad} other{Guarnición: {count} unidades}}",
   "screenAlreadyVisitedTitle": "Ya visitado",
   "screenAlreadyVisitedMessage": "Ya has pasado por aquí",
+  "screenTakenByRivalTitle": "Tomado por {name}",
+  "screenTakenByRivalMessage": "Ya no queda nada que tomar aquí",
   "screenYourBaseTitle": "Tu base",
   "screenYourBaseMessage": "Tu cuartel general",
   "screenPlainTitle": "Llanura ({x}, {y})",

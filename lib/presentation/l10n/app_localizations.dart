@@ -3391,7 +3391,7 @@ abstract class AppLocalizations {
   /// No description provided for @guidePostToFind.
   ///
   /// In fr, this message translates to:
-  /// **'Explore la Carte pour trouver {post, select, faille{une Faille} cheminee{une Cheminée} other{le Noyau}}.'**
+  /// **'{post, select, faille{Explore la Carte pour trouver une Faille, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !} cheminee{Explore la Carte au niveau 2 pour trouver une Cheminée, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !} other{Explore la Carte au niveau 3 pour trouver le Noyau, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !}}'**
   String guidePostToFind(String post);
 
   /// No description provided for @guidePostAssault.
@@ -3993,6 +3993,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Vous êtes déjà venu par ici'**
   String get screenAlreadyVisitedMessage;
+
+  /// No description provided for @screenTakenByRivalTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pris par {name}'**
+  String screenTakenByRivalTitle(String name);
+
+  /// No description provided for @screenTakenByRivalMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il n\'y a plus rien à prendre ici'**
+  String get screenTakenByRivalMessage;
 
   /// No description provided for @screenYourBaseTitle.
   ///

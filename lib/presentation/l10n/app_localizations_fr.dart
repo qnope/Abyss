@@ -2830,6 +2830,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get screenAlreadyVisitedMessage => 'Vous êtes déjà venu par ici';
 
   @override
+  String screenTakenByRivalTitle(String name) {
+    return 'Pris par $name';
+  }
+
+  @override
+  String get screenTakenByRivalMessage => 'Il n\'y a plus rien à prendre ici';
+
+  @override
   String get screenYourBaseTitle => 'Votre base';
 
   @override

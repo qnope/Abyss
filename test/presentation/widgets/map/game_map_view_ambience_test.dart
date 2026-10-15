@@ -3,6 +3,7 @@ import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/map_ambience_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_snow_painter.dart';
+import 'package:abyss/presentation/widgets/map/scout_token_layer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -14,7 +15,8 @@ void main() {
   tearDown(() => clearSvgMocks());
 
   Future<void> pumpView(WidgetTester tester,
-      {void Function(int x, int y)? onCellTap}) async {
+      {void Function(int x, int y)? onCellTap,
+      Set<(int, int)> pendingTargets = const {}}) async {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
         body: GameMapView(
@@ -24,6 +26,7 @@ void main() {
           baseY: 10,
           humanPlayerId: 'human',
           onCellTap: onCellTap,
+          pendingTargets: pendingTargets,
         ),
       ),
     ));
@@ -65,9 +68,22 @@ void main() {
     expect(tester.getSize(snow), tester.getSize(find.byType(InteractiveViewer)));
   });
 
+  testWidgets('scouts sent wait on their targets, set off from the base', (
+    tester,
+  ) async {
+    await pumpView(tester, pendingTargets: {(11, 11)});
+    final layer = tester.widget<ScoutTokenLayer>(find.byType(ScoutTokenLayer));
+    expect(layer.targets, {(11, 11)});
+    expect(layer.originOf((11, 11)), (10, 10));
+    expect(find.ancestor(
+        of: find.byType(ScoutTokenLayer),
+        matching: find.byType(RepaintBoundary)), findsWidgets);
+  });
+
   testWidgets('taps still reach the cell under the pointer', (tester) async {
     (int, int)? tapped;
-    await pumpView(tester, onCellTap: (x, y) => tapped = (x, y));
+    await pumpView(tester,
+        onCellTap: (x, y) => tapped = (x, y), pendingTargets: {(10, 10)});
     final viewer = find.byType(InteractiveViewer);
     final matrix =
         tester.widget<InteractiveViewer>(viewer).transformationController!.value;

@@ -34,4 +34,11 @@ void main() {
       AbyssMotion.swim,
     );
   });
+
+  test('a longer swim takes longer, within bounds', () {
+    expect(AbyssMotion.swimOver(0), AbyssMotion.swim);
+    expect(AbyssMotion.swimOver(1), AbyssMotion.swim);
+    expect(AbyssMotion.swimOver(4), AbyssMotion.swim * 2);
+    expect(AbyssMotion.swimOver(100), AbyssMotion.swim * 3);
+  });
 }

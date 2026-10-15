@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/map/cell_content_type.dart';
-import '../../../domain/map/map_cell.dart';
 import '../../../domain/map/post_holder.dart';
 import '../../../domain/map/volcano_footprint.dart';
 import '../../extensions/event_state_extensions.dart';
@@ -10,6 +9,7 @@ import '../../extensions/post_holder_extensions.dart';
 import '../../extensions/transition_base_name_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../widgets/map/cell_info_sheet.dart';
+import '../../widgets/map/effects/map_effects.dart';
 import '../../widgets/map/game_map_view.dart';
 import '../../widgets/map/level_selector.dart';
 import '../../widgets/map/monster_lair_sheet.dart';
@@ -27,6 +27,7 @@ Widget buildMapTab(
   required int currentLevel, required Set<int> unlockedLevels,
   required ValueChanged<int> onLevelSelected,
   required VoidCallback onChanged,
+  MapEffects? effects,
 }) {
   final human = game.humanPlayer;
   final level = game.levels.containsKey(currentLevel) ? currentLevel : 1;
@@ -37,28 +38,24 @@ Widget buildMapTab(
   return Column(children: [
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: LevelSelector(
-        currentLevel: level,
-        unlockedLevels: unlockedLevels,
-        onLevelSelected: onLevelSelected,
-      ),
+      child: LevelSelector(currentLevel: level,
+          unlockedLevels: unlockedLevels, onLevelSelected: onLevelSelected),
     ),
     Expanded(
       child: GameMapView(
         gameMap: game.levels[level]!,
         revealedCells: human.revealedCellsSetOnLevel(level),
         baseX: level == 1 ? human.baseX : null,
-        baseY: level == 1 ? human.baseY : null,
-        humanPlayerId: human.id,
+        baseY: level == 1 ? human.baseY : null, humanPlayerId: human.id,
         onCellTap: (x, y) => _showCellAction(
           context, game, repository, x, y, level,
           onChanged: () {
             repository.save(game);
             onChanged();
           },
-          onLevelSelected: onLevelSelected,
+          onLevelSelected: onLevelSelected, effects: effects,
         ),
-        pendingTargets: pendingTargets,
+        pendingTargets: pendingTargets, effects: effects,
         factionBases: level == 1 ? factionBaseColors(game) : const {},
         ownerColors: kernelOwnerColors(game), level: level,
         passageHolders:
@@ -71,7 +68,7 @@ Widget buildMapTab(
 void _showCellAction(BuildContext context, Game game,
     GameRepository repository, int tapX, int tapY, int level, {
     required VoidCallback onChanged,
-    required ValueChanged<int> onLevelSelected,
+    required ValueChanged<int> onLevelSelected, MapEffects? effects,
 }) {
   final human = game.humanPlayer;
   // Any of the four cells of the volcano acts on its anchor.
@@ -125,7 +122,7 @@ void _showCellAction(BuildContext context, Game game,
         lair: cell.lair!,
         onPrepareFight: () => openArmySelection(
             context, game, repository, x, y, cell.lair!, onChanged,
-            level: level));
+            level: level, effects: effects));
     case CellContentType.transitionBase when base != null:
       openTransitionBaseSheet(context, game, repository, base, x, y, level,
           onChanged: onChanged, onLevelSelected: onLevelSelected);
@@ -143,16 +140,10 @@ void _showCellAction(BuildContext context, Game game,
     case CellContentType.empty:
       showCellInfoSheet(context, title: l10n.screenPlainTitle(x, y),
         message: l10n.screenNothingToSee);
-    case CellContentType.volcanicKernel when _heldByRival(game, cell):
+    case CellContentType.volcanicKernel when isKernelHeldByRival(game, cell):
       openRivalKernelSheet(context, game, repository, x, y, onChanged);
     case CellContentType.volcanicKernel:
       openVolcanicKernelSheet(context, game, repository, x, y, level,
           isCaptured: cell.collectedBy == human.id, onChanged: onChanged);
   }
 }
-
-/// Whether another player than the human holds the kernel of [cell].
-bool _heldByRival(Game game, MapCell cell) =>
-    cell.collectedBy != null &&
-    cell.collectedBy != game.humanPlayerId &&
-    game.players[cell.collectedBy] != null;

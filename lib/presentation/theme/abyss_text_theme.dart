@@ -24,6 +24,13 @@ abstract final class AbyssTextTheme {
     height: 1.2,
   );
 
+  /// A mark drawn over the map, such as a damage number or a badge.
+  static const mapMark = TextStyle(
+    fontFamily: _fontFamily,
+    fontWeight: FontWeight.w700,
+    height: 1,
+  );
+
   static TextTheme create() {
     return const TextTheme(
       displayLarge: TextStyle(

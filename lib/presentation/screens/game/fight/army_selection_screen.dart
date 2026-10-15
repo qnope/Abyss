@@ -14,8 +14,9 @@ import '../../../widgets/fight/monster_preview.dart';
 import '../../../widgets/fight/selection_summary_card.dart';
 import '../../../widgets/fight/unit_quantity_row.dart';
 import 'army_selection_summary.dart';
-import 'fight_summary_screen.dart';
 
+/// Chooses the army attacking [lair], then fights and pops with the
+/// [FightMonsterResult].
 class ArmySelectionScreen extends StatefulWidget {
   final Game game;
   final GameRepository repository;
@@ -124,15 +125,6 @@ class _ArmySelectionScreenState extends State<ArmySelectionScreen> {
     await widget.repository.save(widget.game);
     widget.onChanged();
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => FightSummaryScreen(
-          result: result as FightMonsterResult,
-          lair: widget.lair,
-          targetX: widget.targetX,
-          targetY: widget.targetY,
-        ),
-      ),
-    );
+    Navigator.of(context).pop(result as FightMonsterResult);
   }
 }

@@ -8,6 +8,7 @@ import '../../widgets/common/game_status_bars.dart';
 import '../../widgets/resource/resource_bar.dart';
 import '../../widgets/guide/guide_bubble.dart';
 import '../../widgets/guide/guide_scope.dart';
+import '../../widgets/map/effects/map_effects.dart';
 import '../../widgets/tip/tip_presenter.dart';
 import 'game_screen_end_turn.dart';
 import 'game_screen_event_actions.dart';
@@ -31,6 +32,7 @@ class _GameScreenState extends State<GameScreen> {
   int _currentLevel = 1;
   late final TipPresenter _tips =
       TipPresenter(game: widget.game, repository: widget.repository);
+  final MapEffects _effects = MapEffects();
   Player get _human => widget.game.humanPlayer;
 
   void _selectLevel(int level) {
@@ -75,6 +77,7 @@ class _GameScreenState extends State<GameScreen> {
               currentLevel: _currentLevel,
               onLevelSelected: _selectLevel,
               onChanged: _changed,
+              effects: _effects,
             ),
           ),
           GuideBubble(advice: guide, turn: widget.game.turn),
@@ -97,6 +100,12 @@ class _GameScreenState extends State<GameScreen> {
     setState(() {});
     await showTurnOutcome(context, widget.game, widget.repository, result,
         _changed, tips: _tips);
+  }
+
+  @override
+  void dispose() {
+    _effects.dispose();
+    super.dispose();
   }
 
   void _openPendingEvent() {

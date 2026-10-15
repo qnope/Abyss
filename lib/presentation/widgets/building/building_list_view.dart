@@ -5,6 +5,7 @@ import '../../../domain/building/building_type.dart';
 import '../../../domain/resource/resource.dart';
 import '../../../domain/resource/resource_type.dart';
 import '../../../domain/worksite/worksite.dart';
+import '../ambience/ambience_clock_scope.dart';
 import '../guide/guide_card_halo.dart';
 import '../guide/guide_scope.dart';
 import 'building_card.dart';
@@ -25,7 +26,11 @@ class BuildingListView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      AmbienceClockScope(builder: (context, _) => _list(context));
+
+  /// The cards, whose icons share the clock of the scope above.
+  Widget _list(BuildContext context) {
     return ListView.builder(
       itemCount: buildings.length + 1,
       itemBuilder: (context, index) {
@@ -49,6 +54,7 @@ class BuildingListView extends StatelessWidget {
               (target) => target.isBuilding(building.type),
             ),
             child: BuildingCard(
+              key: ValueKey(building.type),
               building: building,
               onTap: () => onBuildingTap(building),
               missingHeadquarters: BuildingDegradation.missingHeadquarters(

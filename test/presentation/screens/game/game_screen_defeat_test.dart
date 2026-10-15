@@ -9,11 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 const _lastChance = 'Si ce raid est perdu, la partie est terminée.';
 
 void main() {
+  reduceMotionInEveryTest();
   setUp(mockSvgAssets);
   tearDown(clearSvgMocks);
 

@@ -47,6 +47,7 @@ void _setLargeScreen(WidgetTester tester) {
 }
 
 void main() {
+  reduceMotionInEveryTest();
   late FakeGameRepository repo;
   setUp(() { mockSvgAssets(); repo = FakeGameRepository(); });
   tearDown(clearSvgMocks);

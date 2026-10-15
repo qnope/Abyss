@@ -2,7 +2,9 @@ import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/fight/transition_army_selection_screen.dart';
+import 'package:abyss/presentation/screens/game/fight/transition_fight_summary_screen.dart';
 import 'package:abyss/presentation/screens/game/game_screen_transition_actions.dart';
+import 'package:abyss/presentation/screens/game/game_screen_transition_attack.dart';
 import 'package:abyss/presentation/widgets/fight/unit_quantity_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -70,6 +72,24 @@ void main() {
         ctx, g, repo, faille(g), kFailleX, kFailleY, 1, () => changed++));
     expect(find.byType(TransitionArmySelectionScreen), findsOneWidget);
     expect(find.text('Assaut : Faille Alpha'), findsOneWidget);
+  });
+
+  testWidgets('a launched attack opens its report in place of the selection',
+      (tester) async {
+    final g = scenario();
+    await open(tester, (ctx) => handleAttackTransitionBase(
+        ctx, g, repo, faille(g), kFailleX, kFailleY, 1, () => changed++));
+    await pickOneScout(tester);
+    final admiral = find.byWidgetPredicate(
+        (w) => w is UnitQuantityRow && w.type == UnitType.abyssAdmiral);
+    tester.widget<UnitQuantityRow>(admiral).onChanged(1);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Lancer l\'assaut'));
+    await tester.pumpAndSettle();
+
+    expect(changed, 1);
+    expect(find.byType(TransitionArmySelectionScreen), findsNothing);
+    expect(find.byType(TransitionFightSummaryScreen), findsOneWidget);
   });
 
   group('handleDescend', () {

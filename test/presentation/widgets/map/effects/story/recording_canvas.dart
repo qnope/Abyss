@@ -10,6 +10,9 @@ class RecordingCanvas implements Canvas {
   /// Where each image was drawn, with its paint's colour.
   final images = <(Rect, Color)>[];
 
+  /// The colour filter of each image's paint, in the order of [images].
+  final imageFilters = <ColorFilter?>[];
+
   /// Every rectangle and image destination, in drawing order.
   final order = <Rect>[];
 
@@ -22,6 +25,7 @@ class RecordingCanvas implements Canvas {
   @override
   void drawImageRect(ui.Image image, Rect src, Rect dst, Paint paint) {
     images.add((dst, paint.color));
+    imageFilters.add(paint.colorFilter);
     order.add(dst);
   }
 

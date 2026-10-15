@@ -23,7 +23,7 @@ void main() {
       expect(strike.target, (3, 4));
       expect(strike.lead, UnitType.harpoonist);
       expect(strike.count, 5);
-      expect(strike.lairSprite, lair.svgPath);
+      expect(strike.targetSprite, lair.svgPath);
       expect(strike.imagePaths, {UnitType.harpoonist.iconPath});
     });
 

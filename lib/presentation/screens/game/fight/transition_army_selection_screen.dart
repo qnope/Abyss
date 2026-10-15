@@ -12,8 +12,9 @@ import '../../../extensions/action_failure_extensions.dart';
 import '../../../extensions/transition_base_name_extensions.dart';
 import '../../../l10n/l10n_extension.dart';
 import 'assault_selection_body.dart';
-import 'transition_fight_summary_screen.dart';
 
+/// Lets the player choose the army assaulting a transition base; once
+/// launched, it pops with the [AttackTransitionBaseResult].
 class TransitionArmySelectionScreen extends StatefulWidget {
   final Game game;
   final GameRepository repository;
@@ -96,15 +97,6 @@ class _TransitionArmySelectionScreenState
     await widget.repository.save(widget.game);
     widget.onChanged();
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => TransitionFightSummaryScreen(
-          result: result as AttackTransitionBaseResult,
-          transitionBase: widget.transitionBase,
-          targetX: widget.targetX,
-          targetY: widget.targetY,
-        ),
-      ),
-    );
+    Navigator.of(context).pop(result as AttackTransitionBaseResult);
   }
 }

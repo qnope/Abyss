@@ -3994,6 +3994,18 @@ abstract class AppLocalizations {
   /// **'Vous êtes déjà venu par ici'**
   String get screenAlreadyVisitedMessage;
 
+  /// No description provided for @screenTakenByRivalTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pris par {name}'**
+  String screenTakenByRivalTitle(String name);
+
+  /// No description provided for @screenTakenByRivalMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il n\'y a plus rien à prendre ici'**
+  String get screenTakenByRivalMessage;
+
   /// No description provided for @screenYourBaseTitle.
   ///
   /// In fr, this message translates to:

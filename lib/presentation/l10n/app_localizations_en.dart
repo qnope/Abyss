@@ -2797,6 +2797,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get screenAlreadyVisitedMessage => 'You have already been here';
 
   @override
+  String screenTakenByRivalTitle(String name) {
+    return 'Taken by $name';
+  }
+
+  @override
+  String get screenTakenByRivalMessage => 'There is nothing left to take here';
+
+  @override
   String get screenYourBaseTitle => 'Your base';
 
   @override

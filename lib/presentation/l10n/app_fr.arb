@@ -928,6 +928,13 @@
   "@screenGarrisonSize": { "placeholders": { "count": { "type": "int" } } },
   "screenAlreadyVisitedTitle": "Déjà visité",
   "screenAlreadyVisitedMessage": "Vous êtes déjà venu par ici",
+  "screenTakenByRivalTitle": "Pris par {name}",
+  "@screenTakenByRivalTitle": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "screenTakenByRivalMessage": "Il n'y a plus rien à prendre ici",
   "screenYourBaseTitle": "Votre base",
   "screenYourBaseMessage": "Votre quartier général",
   "screenPlainTitle": "Plaine ({x}, {y})",

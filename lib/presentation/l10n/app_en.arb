@@ -673,6 +673,8 @@
   "screenGarrisonSize": "{count, plural, one{Garrison: {count} unit} other{Garrison: {count} units}}",
   "screenAlreadyVisitedTitle": "Already visited",
   "screenAlreadyVisitedMessage": "You have already been here",
+  "screenTakenByRivalTitle": "Taken by {name}",
+  "screenTakenByRivalMessage": "There is nothing left to take here",
   "screenYourBaseTitle": "Your base",
   "screenYourBaseMessage": "Your headquarters",
   "screenPlainTitle": "Plain ({x}, {y})",

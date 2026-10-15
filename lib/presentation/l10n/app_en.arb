@@ -889,5 +889,11 @@
   "leviathanDueWarning": "The Leviathan strikes your Rift at the end of the turn, and {count, plural, =0{no defender awaits it} one{only {count} defender awaits it} other{only {count} defenders await it}} on level {level}.",
   "guideLeviathanReturn": "The Leviathan is coming back to take its Rift! Only your units on level {level} defend it. If it falls, your Module is destroyed and your units down there are lost.",
   "guideLeviathanReinforce": "Send {count, plural, one{{count} more Harpooner} other{{count} more Harpooners}}.",
-  "turnStorySkip": "Skip ›"
+  "turnStorySkip": "Skip ›",
+  "defeatCauseTitle": "What happened",
+  "defeatCauseRaid": "Turn {turn}: {wave} against {defenders, plural, =0{no defender} =1{1 defender} other{{defenders} defenders}}",
+  "defeatAdviceRaiseAnArmy": "Your base was empty. Build the Barracks and recruit Harpooners as soon as a raid is announced.",
+  "defeatAdviceMoreDefenders": "Against your last raid, it took about {needed} Harpooners. You had {defenders, plural, =0{no defender} =1{1 defender} other{{defenders} defenders}}.",
+  "defeatAdviceTooStrong": "Your last raid called for more than {max} Harpooners: keep the noise gauge lower and raise the Citadel's rampart.",
+  "defeatAdviceWrongUnits": "You had enough defenders, but not the right ones."
 }

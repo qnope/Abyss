@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../data/game_repository.dart';
+import '../../../domain/game/defeat_analysis.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/game_statistics_calculator.dart';
 import '../../../domain/game/player.dart';
@@ -21,11 +22,13 @@ String? _factionWinner(Game game) {
 /// Route to the defeat screen of a lost [game]. The game is over: the
 /// only way out is the main menu.
 Route<void> defeatRoute(Game game, GameRepository repository) {
+  final String? winner = _factionWinner(game);
   return MaterialPageRoute<void>(
     builder: (context) => DefeatScreen(
       statistics: const GameStatisticsCalculator().compute(game),
       fallTurn: game.turn - 1,
-      winnerName: _factionWinner(game),
+      winnerName: winner,
+      analysis: winner == null ? DefeatAnalysis.of(game) : null,
       onExport: () => showReplayExportDialog(context, game),
       onReturnToMenu: () => Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute<void>(

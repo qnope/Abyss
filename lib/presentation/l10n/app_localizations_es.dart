@@ -3687,4 +3687,44 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get turnStorySkip => 'Saltar ›';
+
+  @override
+  String get defeatCauseTitle => 'Lo que pasó';
+
+  @override
+  String defeatCauseRaid(int turn, String wave, int defenders) {
+    String _temp0 = intl.Intl.pluralLogic(
+      defenders,
+      locale: localeName,
+      other: '$defenders defensores',
+      one: '1 defensor',
+      zero: 'ningún defensor',
+    );
+    return 'Turno $turn: $wave contra $_temp0';
+  }
+
+  @override
+  String get defeatAdviceRaiseAnArmy =>
+      'Tu base estaba vacía. Construye los Barracones y recluta Arponeros en cuanto se anuncie una incursión.';
+
+  @override
+  String defeatAdviceMoreDefenders(int needed, int defenders) {
+    String _temp0 = intl.Intl.pluralLogic(
+      defenders,
+      locale: localeName,
+      other: '$defenders defensores',
+      one: '1 defensor',
+      zero: 'ningún defensor',
+    );
+    return 'Contra tu última incursión hacían falta unos $needed Arponeros. Tenías $_temp0.';
+  }
+
+  @override
+  String defeatAdviceTooStrong(int max) {
+    return 'Tu última incursión pedía más de $max Arponeros: mantén más baja la barra de ruido y mejora la muralla de la Ciudadela.';
+  }
+
+  @override
+  String get defeatAdviceWrongUnits =>
+      'Tenías suficientes defensores, pero no los adecuados.';
 }

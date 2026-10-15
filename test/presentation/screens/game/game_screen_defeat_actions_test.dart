@@ -1,5 +1,6 @@
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_factory.dart';
+import 'package:abyss/domain/history/history_entry.dart';
 import 'package:abyss/presentation/screens/game/defeat_screen.dart';
 import 'package:abyss/presentation/screens/game/game_screen_defeat_actions.dart';
 import 'package:abyss/presentation/screens/menu/main_menu_screen.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/history_entry_samples.dart';
 import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
@@ -16,9 +18,11 @@ void main() {
   setUp(mockSvgAssets);
   tearDown(clearSvgMocks);
 
-  Future<Game> openDefeat(WidgetTester tester) async {
+  Future<Game> openDefeat(WidgetTester tester,
+      {List<HistoryEntry> history = const []}) async {
     final game = GameFactory.newSinglePlayer(playerName: 'Nemo', mapSeed: 1)
       ..turn = 9;
+    game.humanPlayer.historyEntries.addAll(history);
     await tester.pumpWidget(MaterialApp(
       theme: AbyssTheme.create(),
       home: Builder(
@@ -69,5 +73,13 @@ void main() {
     expect(find.byType(DefeatScreen), findsNothing);
     expect(Navigator.of(tester.element(find.byType(MainMenuScreen))).canPop(),
         isFalse);
+  });
+
+  testWidgets('explains a fall to the raids from the history',
+      (tester) async {
+    await openDefeat(tester, history: [raidEntry(victory: false)]);
+
+    final screen = tester.widget<DefeatScreen>(find.byType(DefeatScreen));
+    expect(screen.analysis?.raids.single.turn, 11);
   });
 }

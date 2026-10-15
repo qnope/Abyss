@@ -888,5 +888,11 @@
   "leviathanDueWarning": "El Leviatán ataca tu Falla al final del turno, y {count, plural, =0{ningún defensor lo espera} one{solo {count} defensor lo espera} other{solo {count} defensores lo esperan}} en el nivel {level}.",
   "guideLeviathanReturn": "¡El Leviatán vuelve a recuperar su Falla! Solo tus unidades del nivel {level} la defienden. Si cae, tu Módulo queda destruido y tus unidades de abajo se pierden.",
   "guideLeviathanReinforce": "Envía {count, plural, one{{count} Arponero más} other{{count} Arponeros más}}.",
-  "turnStorySkip": "Saltar ›"
+  "turnStorySkip": "Saltar ›",
+  "defeatCauseTitle": "Lo que pasó",
+  "defeatCauseRaid": "Turno {turn}: {wave} contra {defenders, plural, =0{ningún defensor} =1{1 defensor} other{{defenders} defensores}}",
+  "defeatAdviceRaiseAnArmy": "Tu base estaba vacía. Construye los Barracones y recluta Arponeros en cuanto se anuncie una incursión.",
+  "defeatAdviceMoreDefenders": "Contra tu última incursión hacían falta unos {needed} Arponeros. Tenías {defenders, plural, =0{ningún defensor} =1{1 defensor} other{{defenders} defensores}}.",
+  "defeatAdviceTooStrong": "Tu última incursión pedía más de {max} Arponeros: mantén más baja la barra de ruido y mejora la muralla de la Ciudadela.",
+  "defeatAdviceWrongUnits": "Tenías suficientes defensores, pero no los adecuados."
 }

@@ -28,6 +28,9 @@ class GameOverScreen extends StatelessWidget {
   final Color titleColor;
   final String subtitle;
   final GameStatistics statistics;
+
+  /// Shown above the statistics, such as the cause of a defeat.
+  final Widget? details;
   final List<GameOverAction> actions;
 
   const GameOverScreen({
@@ -37,6 +40,7 @@ class GameOverScreen extends StatelessWidget {
     required this.titleColor,
     required this.subtitle,
     required this.statistics,
+    this.details,
     required this.actions,
   });
 
@@ -67,6 +71,7 @@ class GameOverScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const Divider(height: 32),
+              if (details != null) ...[details!, const SizedBox(height: 16)],
               GameStatisticsCard(statistics: statistics),
               const SizedBox(height: 32),
               for (final action in actions) _button(action),

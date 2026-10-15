@@ -1,4 +1,8 @@
+import 'package:abyss/domain/game/defeat_analysis.dart';
 import 'package:abyss/domain/game/game_statistics.dart';
+import 'package:abyss/domain/map/monster_difficulty.dart';
+import 'package:abyss/domain/map/monster_lair.dart';
+import 'package:abyss/presentation/widgets/game_over/defeat_cause_card.dart';
 import 'package:abyss/presentation/screens/game/defeat_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +27,14 @@ void main() {
     VoidCallback? onMenu,
     VoidCallback? onExport,
     String? winnerName,
+    DefeatAnalysis? analysis,
   }) => MaterialApp(
         theme: AbyssTheme.create(),
         home: DefeatScreen(
           statistics: statistics,
           fallTurn: 26,
           winnerName: winnerName,
+          analysis: analysis,
           onReturnToMenu: onMenu ?? () {},
           onExport: onExport,
         ),
@@ -83,5 +89,31 @@ void main() {
     await tester.pumpWidget(build());
     await tester.pumpAndSettle();
     expect(find.text('Exporter la partie'), findsNothing);
+  });
+
+  testWidgets('explains the fall when it has an analysis', (tester) async {
+    await tester.pumpWidget(build(
+      analysis: const DefeatAnalysis(
+        raids: [
+          LostRaid(
+            turn: 26,
+            wave: MonsterLair(
+              difficulty: MonsterDifficulty.easy,
+              unitCount: 20,
+            ),
+            defenders: 0,
+          ),
+        ],
+        advice: DefeatAdvice.raiseAnArmy,
+      ),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.byType(DefeatCauseCard), findsOneWidget);
+  });
+
+  testWidgets('shows no explanation without an analysis', (tester) async {
+    await tester.pumpWidget(build());
+    await tester.pumpAndSettle();
+    expect(find.byType(DefeatCauseCard), findsNothing);
   });
 }

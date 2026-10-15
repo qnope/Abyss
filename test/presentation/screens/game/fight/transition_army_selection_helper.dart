@@ -1,3 +1,4 @@
+import 'package:abyss/domain/action/attack_transition_base_result.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
@@ -23,10 +24,14 @@ class ArmySelectionHarness {
   final FakeGameRepository repo = FakeGameRepository();
   int changedCount = 0;
 
+  /// What the screen returned once launched, if it did.
+  AttackTransitionBaseResult? result;
+
   Future<void> pump(WidgetTester tester, Game game) async {
     useTallView(tester);
-    await tester.pumpWidget(buildLauncherHost('open', (ctx) {
-      Navigator.of(ctx).push(MaterialPageRoute<void>(
+    await tester.pumpWidget(buildLauncherHost('open', (ctx) async {
+      result = await Navigator.of(ctx)
+          .push(MaterialPageRoute<AttackTransitionBaseResult>(
         builder: (_) => TransitionArmySelectionScreen(
           game: game,
           repository: repo,

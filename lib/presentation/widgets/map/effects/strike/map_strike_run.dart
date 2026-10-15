@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/painting.dart';
@@ -15,10 +16,10 @@ import 'strike_geometry.dart';
 import 'strike_marks.dart';
 import 'strike_timeline.dart';
 
-/// A [MapStrike] placed on a map: each round's hit flashes the lair
-/// white, shakes the map and floats up what each side lost, over the lair
-/// and over the army's token; a defeated monster shrinks and fades over
-/// the dimmed remains the still map shows.
+/// A [MapStrike] placed on a map: each round's hit flashes the target
+/// white, shakes the map and floats up what each side lost, over the
+/// target and over the army's token; a defeated monster shrinks and fades
+/// over the dimmed remains the still map shows, a taken place lights up.
 class MapStrikeRun implements MapEffectRun {
   /// How long the lair flashes after a hit.
   static const flashLength = AbyssMotion.tap;
@@ -31,6 +32,9 @@ class MapStrikeRun implements MapEffectRun {
 
   /// Size a defeated monster shrinks to, as a share of its own.
   static const shrunk = 0.3;
+
+  /// Strongest light of a taken place, at the middle of the outcome.
+  static const capturedGlow = 0.8;
 
   final MapStrike strike;
   final MapStage stage;
@@ -61,7 +65,7 @@ class MapStrikeRun implements MapEffectRun {
 
   @override
   void paint(Canvas canvas, Duration elapsed) {
-    _paintLair(canvas, elapsed);
+    _paintTarget(canvas, elapsed);
     final token = geometry.tokenRect(
       swim: timeline.swimAt(elapsed),
       reach: timeline.reachAt(elapsed),
@@ -84,14 +88,16 @@ class MapStrikeRun implements MapEffectRun {
     if (damage > 0) _marks.damage(canvas, from, damage, progress);
   }
 
-  /// The monster: on a victory, alive over its dimmed remains until it
-  /// shrinks and fades away; flashing white as each hit lands.
-  void _paintLair(Canvas canvas, Duration elapsed) {
-    final sprite = stage.image(strike.lairSprite);
+  /// The target, flashing white as each hit lands. A beaten monster stays
+  /// alive over its dimmed remains until it shrinks and fades away; a
+  /// taken place stays as the map draws it and lights up in cyan.
+  void _paintTarget(Canvas canvas, Duration elapsed) {
+    final sprite = stage.image(strike.targetSprite);
     if (sprite == null) return;
     var body = geometry.lairRect;
-    if (strike.victory) {
-      final gone = AbyssMotion.exit.transform(timeline.outcomeAt(elapsed));
+    final outcome = strike.victory ? timeline.outcomeAt(elapsed) : 0.0;
+    if (strike.victory && strike.fades) {
+      final gone = AbyssMotion.exit.transform(outcome);
       body = Rect.fromCenter(
           center: body.center,
           width: body.width * (1 - (1 - shrunk) * gone),
@@ -99,10 +105,20 @@ class MapStrikeRun implements MapEffectRun {
       _lair.color = Color.fromRGBO(0, 0, 0, 1 - gone);
       _draw(canvas, sprite, body, _lair);
     }
-    final flash = _flashAt(elapsed);
-    if (flash <= 0) return;
-    _flash.colorFilter = ColorFilter.mode(
-        AbyssColors.daylight.withValues(alpha: flash), BlendMode.srcIn);
+    _tint(canvas, sprite, body, AbyssColors.daylight, _flashAt(elapsed));
+    if (strike.victory && !strike.fades) {
+      _tint(canvas, sprite, body, AbyssColors.biolumCyan,
+          capturedGlow * math.sin(math.pi * outcome));
+    }
+  }
+
+  /// Draws [sprite] over [body] all in [color], at [opacity].
+  void _tint(Canvas canvas, ui.Image sprite, Rect body, Color color,
+      double opacity) {
+    if (opacity <= 0) return;
+    _flash
+      ..color = Color.fromRGBO(0, 0, 0, opacity)
+      ..colorFilter = ColorFilter.mode(color, BlendMode.srcIn);
     _draw(canvas, sprite, body, _flash);
   }
 

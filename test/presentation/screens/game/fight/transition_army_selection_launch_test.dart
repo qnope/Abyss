@@ -1,6 +1,5 @@
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/fight/transition_army_selection_screen.dart';
-import 'package:abyss/presentation/screens/game/fight/transition_fight_summary_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../integration/transition_test_helper.dart';
@@ -22,7 +21,7 @@ void main() {
       expect(find.text('open'), findsOneWidget);
     });
 
-    testWidgets('launch saves, notifies and opens the summary',
+    testWidgets('launch saves, notifies and returns the assault',
         (tester) async {
       final game = buildTransitionScenario().game;
       await screen.pump(tester, game);
@@ -34,11 +33,11 @@ void main() {
       expect(screen.repo.saveCallCount, 1);
       expect(screen.changedCount, 1);
       expect(find.byType(TransitionArmySelectionScreen), findsNothing);
-      expect(find.byType(TransitionFightSummaryScreen), findsOneWidget);
-      expect(
-        find.text('BASE CAPTURÉE'),
-        faille(game).isCaptured ? findsOneWidget : findsNothing,
-      );
+      expect(find.text('open'), findsOneWidget);
+      expect(screen.result?.isSuccess, isTrue);
+      expect(screen.result?.captured, faille(game).isCaptured);
+      expect(screen.result?.sent,
+          {UnitType.abyssAdmiral: 1, UnitType.domeBreaker: 30});
     });
 
     testWidgets('failed assault shows the reason and stays',

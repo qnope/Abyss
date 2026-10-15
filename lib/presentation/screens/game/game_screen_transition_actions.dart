@@ -11,33 +11,7 @@ import '../../../domain/replay/seeded_random.dart';
 import '../../extensions/transition_base_name_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import 'descent_dialog.dart';
-import 'fight/transition_army_selection_screen.dart';
 import 'reinforcement_dialog.dart';
-
-void handleAttackTransitionBase(
-  BuildContext context,
-  Game game,
-  GameRepository repository,
-  TransitionBase transitionBase,
-  int x,
-  int y,
-  int level,
-  VoidCallback onChanged,
-) {
-  Navigator.of(context).push(
-    MaterialPageRoute<void>(
-      builder: (_) => TransitionArmySelectionScreen(
-        game: game,
-        repository: repository,
-        targetX: x,
-        targetY: y,
-        level: level,
-        transitionBase: transitionBase,
-        onChanged: onChanged,
-      ),
-    ),
-  );
-}
 
 void handleDescend(
   BuildContext context,

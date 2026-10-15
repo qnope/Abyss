@@ -125,7 +125,8 @@ void _showCellAction(BuildContext context, Game game,
             level: level, effects: effects));
     case CellContentType.transitionBase when base != null:
       openTransitionBaseSheet(context, game, repository, base, x, y, level,
-          onChanged: onChanged, onLevelSelected: onLevelSelected);
+          onChanged: onChanged, onLevelSelected: onLevelSelected,
+          effects: effects);
     case CellContentType.passage:
       final name = cell.passageName;
       showCellInfoSheet(context,

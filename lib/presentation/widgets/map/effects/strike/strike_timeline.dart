@@ -32,7 +32,11 @@ class StrikeTimeline {
   const StrikeTimeline({required this.swim, required this.hits});
 
   /// One lunge: forward to the lair and back.
-  Duration get lunge {
+  Duration get lunge => lungeFor(hits);
+
+  /// The lunge of a fight of [hits] rounds: the usual one, shortened in
+  /// a long fight so its rounds keep within [roundsBudget].
+  static Duration lungeFor(int hits) {
     if (hits == 0 || usualLunge * hits <= roundsBudget) return usualLunge;
     final share = roundsBudget ~/ hits;
     return share < quickestLunge ? quickestLunge : share;

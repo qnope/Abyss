@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/painting.dart';
 
 import '../../common/svg_raster_cache.dart';
+import '../map_cell_visual.dart';
 import '../map_sprites.dart';
 
 /// Something the map plays once over its cells: an attack on a lair,
@@ -49,4 +50,7 @@ class MapStage {
   /// The bitmap of the SVG at [path], or `null` while it loads.
   ui.Image? image(String path) =>
       sprites?.svg(path) ?? SvgRasterCache.peek(path);
+
+  /// The bitmap of [glow], or `null` while it loads.
+  ui.Image? glow(MapGlow glow) => sprites?.glow(glow);
 }

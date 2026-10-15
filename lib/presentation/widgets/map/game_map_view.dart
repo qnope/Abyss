@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../domain/map/game_map.dart';
 import '../../../domain/map/grid_position.dart';
 import '../../../domain/map/post_holder.dart';
-import '../guide/guide_cell_halo.dart';
+import 'map_cell_visual.dart';
+import 'map_layers.dart';
 import 'map_painter.dart';
 import 'map_sprites.dart';
+import 'map_viewport.dart';
 import 'map_visuals_builder.dart';
 
 class GameMapView extends StatefulWidget {
@@ -48,7 +50,7 @@ class GameMapView extends StatefulWidget {
 }
 
 class _GameMapViewState extends State<GameMapView> {
-  late final TransformationController _controller;
+  final _controller = TransformationController();
   MapSprites? _sprites;
 
   static const _defaultVisibleCells = 8.0;
@@ -57,7 +59,6 @@ class _GameMapViewState extends State<GameMapView> {
   @override
   void initState() {
     super.initState();
-    _controller = TransformationController();
     _sprites = MapSprites.ready;
     if (_sprites == null) _loadSprites();
   }
@@ -87,12 +88,8 @@ class _GameMapViewState extends State<GameMapView> {
     final basePixelY = centerY * cellSize;
     final dx = size.width / 2 - (basePixelX + cellSize / 2) * scale;
     final dy = size.height / 2 - (basePixelY + cellSize / 2) * scale;
-    _controller.value = Matrix4(
-      scale, 0, 0, 0,
-      0, scale, 0, 0,
-      0, 0, 1, 0,
-      dx, dy, 0, 1,
-    );
+    _controller.value = Matrix4.translationValues(dx, dy, 0)
+      ..scaleByDouble(scale, scale, 1, 1);
   }
 
   @override
@@ -109,36 +106,34 @@ class _GameMapViewState extends State<GameMapView> {
     final minScale = screenWidth / gridSize.width;
     final maxScale = screenWidth / (_maxVisibleCells * cellSize);
 
-    return InteractiveViewer(
-      constrained: false,
-      transformationController: _controller,
+    return MapViewport(
+      controller: _controller,
       minScale: minScale,
       maxScale: maxScale,
-      child: GestureDetector(
-        onTapUp: widget.onCellTap == null ? null : _handleTap,
-        child: Stack(children: [RepaintBoundary(
-          child: CustomPaint(
-            size: gridSize,
-            painter: MapPainter(
-              visuals: buildMapVisuals(
-                gameMap: map,
-                revealedCells: widget.revealedCells,
-                humanPlayerId: widget.humanPlayerId,
-                baseX: widget.baseX,
-                baseY: widget.baseY,
-                pendingTargets: widget.pendingTargets,
-                factionBases: widget.factionBases,
-                ownerColors: widget.ownerColors,
-                passageHolders: widget.passageHolders,
-              ),
-              columns: map.width,
-              sprites: _sprites,
-            ),
-          ),
-        ), GuideCellHalo(level: widget.level, cellSize: cellSize)]),
+      onTapUp: widget.onCellTap == null ? null : _handleTap,
+      builder: (context, clock, viewport) => MapLayers(
+        visuals: _visuals(),
+        columns: map.width,
+        sprites: _sprites,
+        clock: clock,
+        transform: _controller,
+        viewport: viewport,
+        level: widget.level,
       ),
     );
   }
+
+  List<MapCellVisual> _visuals() => buildMapVisuals(
+        gameMap: widget.gameMap,
+        revealedCells: widget.revealedCells,
+        humanPlayerId: widget.humanPlayerId,
+        baseX: widget.baseX,
+        baseY: widget.baseY,
+        pendingTargets: widget.pendingTargets,
+        factionBases: widget.factionBases,
+        ownerColors: widget.ownerColors,
+        passageHolders: widget.passageHolders,
+      );
 
   void _handleTap(TapUpDetails details) {
     final x = details.localPosition.dx ~/ cellSize;

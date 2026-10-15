@@ -13,6 +13,7 @@ import '../../../helpers/kernel_war_helper.dart';
 import '../../../helpers/map_tab_harness.dart';
 import '../../../helpers/test_svg_helper.dart';
 import '../../../helpers/transition_fight_fixtures.dart' show useTallView;
+import '../../../helpers/reduced_motion.dart';
 
 KernelWar _siege({int turn = 12}) {
   final war = KernelWar(kernelLevel: 0);
@@ -23,6 +24,7 @@ KernelWar _siege({int turn = 12}) {
 }
 
 void main() {
+  reduceMotionInEveryTest();
   setUp(mockSvgAssets);
   tearDown(clearSvgMocks);
 

@@ -55,13 +55,15 @@ class MarineSnowField {
     this._driftLaps,
   );
 
-  /// Builds the same field for the same [seed].
-  factory MarineSnowField({int seed = 11}) {
+  /// Builds the same field for the same [seed]. A [density] below 1
+  /// keeps that share of the flakes of each layer, for a lighter snow.
+  factory MarineSnowField({int seed = 11, double density = 1}) {
     final random = math.Random(seed);
     const specs = [(26, 0.9, 1, 0.3), (16, 1.4, 2, 0.4), (8, 2.0, 3, 0.48)];
     final layers = <SnowLayer>[];
     var start = 0;
-    for (final (count, radius, laps, alpha) in specs) {
+    for (final (full, radius, laps, alpha) in specs) {
+      final count = (full * density).round();
       layers.add(
         SnowLayer(
           start: start,

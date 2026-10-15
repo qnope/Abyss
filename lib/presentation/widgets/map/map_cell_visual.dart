@@ -8,12 +8,15 @@ import '../../extensions/cell_content_type_extensions.dart';
 import '../../extensions/monster_lair_extensions.dart';
 import '../../extensions/post_holder_extensions.dart';
 import '../../extensions/terrain_type_extensions.dart';
+import '../ambience/ambient_motion.dart';
+import 'map_cell_motion.dart';
 
 const playerBaseSvgPath = 'assets/icons/map_content/player_base.svg';
 const volcanoSealSvgPath = 'assets/icons/terrain/volcanic_kernel_seal.svg';
 
-/// Glowing marker drawn under a cell's content.
-enum MapGlow { none, wreck }
+/// Glowing marker drawn under a cell's content: the halo of a wreck, or
+/// the light a post or the volcano pulses.
+enum MapGlow { none, wreck, post, volcano }
 
 /// Everything needed to draw one map cell, decoupled from widgets so the
 /// whole map can be painted in a single pass.
@@ -38,6 +41,10 @@ class MapCellVisual {
   /// cell: a wreck must be seen to be explored.
   final bool aboveFog;
 
+  /// How the content and its glow idle. Anything but still is drawn by
+  /// the ambience layer instead of the static map.
+  final AmbientMotion motion;
+
   const MapCellVisual({
     required this.terrainSprite,
     this.contentSprite,
@@ -49,6 +56,7 @@ class MapCellVisual {
     this.contentSpan = 1,
     this.sealColor,
     this.factionColor,
+    this.motion = AmbientMotion.still,
   });
 
   factory MapCellVisual.from(
@@ -69,23 +77,27 @@ class MapCellVisual {
         glow: beacon ? MapGlow.wreck : MapGlow.none,
         pending: hasPendingExploration,
         aboveFog: beacon,
+        motion: beacon ? AmbientMotion.sway : AmbientMotion.still,
       );
     }
+    final isHome = isBase || factionColor != null;
+    final sprite =
+        _contentSprite(cell, isHome, postHolder ?? PostHolder.guardians);
+    final volcano = cell.content == CellContentType.volcanicKernel;
+    // The volcano is never greyed out: its seal says who holds it.
+    final dimmed = cell.collectedBy != null && !volcano;
+    final motion = dimmed || sprite == null
+        ? AmbientMotion.still
+        : contentMotionOf(cell.content, isHome: isHome);
     return MapCellVisual(
       terrainSprite: terrain,
-      contentSprite: _contentSprite(
-          cell, isBase || factionColor != null, postHolder ?? PostHolder.guardians),
+      contentSprite: sprite,
       factionColor: factionColor,
-      glow: _isBeacon(cell) ? MapGlow.wreck : MapGlow.none,
-      // The volcano is never greyed out: its seal says who holds it.
-      dimmed: cell.collectedBy != null &&
-          cell.content != CellContentType.volcanicKernel,
-      contentSpan: cell.content == CellContentType.volcanicKernel
-          ? VolcanicKernelPlacer.side
-          : 1,
-      sealColor: cell.content == CellContentType.volcanicKernel
-          ? sealColor
-          : null,
+      glow: _isBeacon(cell) ? MapGlow.wreck : pulseGlowOf(cell.content, motion),
+      dimmed: dimmed,
+      motion: motion,
+      contentSpan: volcano ? VolcanicKernelPlacer.side : 1,
+      sealColor: volcano ? sealColor : null,
       revealed: true,
       pending: hasPendingExploration,
     );
@@ -104,9 +116,7 @@ class MapCellVisual {
       return null;
     }
     if (isBase) return playerBaseSvgPath;
-    if (cell.content == CellContentType.monsterLair) {
-      return cell.lair?.svgPath;
-    }
+    if (cell.content == CellContentType.monsterLair) return cell.lair?.svgPath;
     return cell.content.svgPath;
   }
 
@@ -126,9 +136,11 @@ class MapCellVisual {
       other.aboveFog == aboveFog &&
       other.contentSpan == contentSpan &&
       other.sealColor == sealColor &&
-      other.factionColor == factionColor;
+      other.factionColor == factionColor &&
+      other.motion == motion;
 
   @override
   int get hashCode => Object.hash(terrainSprite, contentSprite, glow, dimmed,
-        revealed, pending, aboveFog, contentSpan, sealColor, factionColor);
+      revealed, pending, aboveFog, contentSpan, sealColor, factionColor,
+      motion);
 }

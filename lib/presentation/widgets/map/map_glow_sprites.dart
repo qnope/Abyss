@@ -39,5 +39,7 @@ void _paintGlow(Canvas canvas, MapGlow glow) {
 
 Color _glowColor(MapGlow glow) => switch (glow) {
       MapGlow.wreck => AbyssColors.energyYellow,
+      MapGlow.post => AbyssColors.biolumCyan,
+      MapGlow.volcano => AbyssColors.coralPink,
       MapGlow.none => AbyssColors.error,
     };

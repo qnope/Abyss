@@ -17,8 +17,10 @@ import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import '../../../helpers/fake_game_repository.dart';
 import '../../../helpers/test_svg_helper.dart';
+import '../../../helpers/reduced_motion.dart';
 
 void main() {
+  reduceMotionInEveryTest();
   group('GameScreen', () {
     late Game game;
     late FakeGameRepository repository;

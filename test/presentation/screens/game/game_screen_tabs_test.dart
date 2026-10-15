@@ -19,8 +19,10 @@ import '../../../helpers/fake_game_repository.dart';
 import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/localized_app.dart';
 import '../../../helpers/test_svg_helper.dart';
+import '../../../helpers/reduced_motion.dart';
 
 void main() {
+  reduceMotionInEveryTest();
   setUp(mockSvgAssets);
   tearDown(clearSvgMocks);
 

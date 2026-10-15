@@ -58,7 +58,7 @@ Game harnessGame(
   return Game.singlePlayer(player)..levels = {1: map};
 }
 
-/// Hosts [buildMapTab] for [game] in a themed app.
+/// Hosts [buildMapTab] for [game] in a themed app, motion reduced.
 Widget mapTabHost(
   Game game, {
   GameRepository? repository,
@@ -67,6 +67,11 @@ Widget mapTabHost(
 }) {
   return MaterialApp(
     theme: AbyssTheme.create(),
+    // The map stands still, so `pumpAndSettle` can settle on it.
+    builder: (context, child) => MediaQuery(
+      data: MediaQuery.of(context).copyWith(disableAnimations: true),
+      child: child!,
+    ),
     home: Scaffold(
       body: Builder(
         builder: (context) => buildMapTab(

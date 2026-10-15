@@ -5,6 +5,7 @@ import 'package:abyss/domain/map/map_generator.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
@@ -19,6 +20,7 @@ void main() {
     String humanPlayerId = 'human-uuid',
     void Function(int x, int y)? onCellTap,
   }) async {
+    reduceMotion(tester);
     final result = MapGenerator.generate(seed: 42);
     await tester.pumpWidget(
       MaterialApp(
@@ -107,6 +109,7 @@ void main() {
 
     testWidgets('no cell is marked as base when baseX/baseY are null',
         (tester) async {
+      reduceMotion(tester);
       final result = MapGenerator.generate(seed: 42);
       await tester.pumpWidget(
         MaterialApp(

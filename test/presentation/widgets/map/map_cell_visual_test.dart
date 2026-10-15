@@ -83,7 +83,7 @@ void main() {
         postHolder: PostHolder.faction,
       );
       expect(v.contentSprite, 'assets/icons/posts/passage_cheminee_faction.svg');
-      expect(v.glow, MapGlow.none);
+      expect(v.glow, MapGlow.post);
     });
 
     test('a passage of an unknown post is a guarded Faille arrival', () {
@@ -102,7 +102,7 @@ void main() {
       expect(sprite(null), 'assets/icons/posts/faille_guarded.svg');
       expect(sprite(PostHolder.human), 'assets/icons/posts/faille_player.svg');
       expect(sprite(PostHolder.faction), 'assets/icons/posts/faille_faction.svg');
-      expect(MapCellVisual.from(cell, isRevealed: true).glow, MapGlow.none);
+      expect(MapCellVisual.from(cell, isRevealed: true).glow, MapGlow.post);
     });
 
     test('a hidden wreck shows through the fog with its halo', () {

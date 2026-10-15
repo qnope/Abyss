@@ -18,8 +18,10 @@ import '../../../helpers/map_tab_harness.dart';
 import '../../../helpers/post_map_harness.dart';
 import '../../../helpers/test_svg_helper.dart';
 import '../../../helpers/transition_fight_fixtures.dart' show useTallView;
+import '../../../helpers/reduced_motion.dart';
 
 void main() {
+  reduceMotionInEveryTest();
   setUp(mockSvgAssets);
   tearDown(clearSvgMocks);
 

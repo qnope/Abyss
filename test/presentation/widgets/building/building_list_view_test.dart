@@ -5,10 +5,12 @@ import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/building/building_list_view.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
   group('BuildingListView', () {
+    reduceMotionInEveryTest();
     setUp(mockSvgAssets);
     tearDown(clearSvgMocks);
 

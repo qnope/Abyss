@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 Game _game({required bool tips}) => Game.singlePlayer(
@@ -22,6 +23,7 @@ Game _game({required bool tips}) => Game.singlePlayer(
 );
 
 void main() {
+  reduceMotionInEveryTest();
   late FakeGameRepository repository;
 
   setUp(() {

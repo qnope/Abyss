@@ -11,9 +11,11 @@ import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
+  reduceMotionInEveryTest();
   group('GameScreen Army tab', () {
     late FakeGameRepository repository;
 

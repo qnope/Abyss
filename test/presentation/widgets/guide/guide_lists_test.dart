@@ -9,10 +9,12 @@ import 'package:abyss/presentation/widgets/unit/unit_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 import 'guide_widget_helpers.dart';
 
 void main() {
+  reduceMotionInEveryTest();
   setUp(mockSvgAssets);
   tearDown(clearSvgMocks);
 

@@ -32,8 +32,17 @@ abstract final class AbyssMotion {
   /// A glow brightening and dimming.
   static const pulseCycle = Duration(seconds: 3);
 
+  /// A bubble rising from a working building.
+  static const bubbleCycle = Duration(seconds: 3);
+
   /// Every ambient cycle.
-  static const ambientCycles = [bobCycle, breatheCycle, swayCycle, pulseCycle];
+  static const ambientCycles = [
+    bobCycle,
+    breatheCycle,
+    swayCycle,
+    pulseCycle,
+    bubbleCycle,
+  ];
 
   /// After this long, every ambient motion is back where it started.
   static const ambientLoop = Duration(seconds: 60);

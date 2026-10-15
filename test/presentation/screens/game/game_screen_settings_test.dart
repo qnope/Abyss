@@ -18,6 +18,7 @@ import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 void main() {
+  reduceMotionInEveryTest();
   group('GameScreen settings dialog', () {
     late Game game;
     late FakeGameRepository repository;

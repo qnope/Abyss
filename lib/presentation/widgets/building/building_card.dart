@@ -3,8 +3,8 @@ import '../../../domain/building/building.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
-import 'building_icon.dart';
 import 'degraded_badge.dart';
+import 'lively_building_icon.dart';
 
 class BuildingCard extends StatelessWidget {
   final Building building;
@@ -41,11 +41,10 @@ class BuildingCard extends StatelessWidget {
   Widget _buildContent(BuildContext context, TextTheme textTheme) {
     return Row(
       children: [
-        BuildingIcon(
+        LivelyBuildingIcon(
           type: building.type,
-          size: 40,
-          greyscale: !_isBuilt,
-          faded: !_isBuilt,
+          level: building.level,
+          active: missingHeadquarters == null,
         ),
         const SizedBox(width: 16),
         Column(

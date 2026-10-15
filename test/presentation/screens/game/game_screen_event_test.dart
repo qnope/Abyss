@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 /// Game of turn 3 whose 4 survivors wait for a choice.
@@ -26,6 +27,7 @@ int _harpoonists(Game game) =>
     game.humanPlayer.unitsOnLevel(1)[UnitType.harpoonist]!.count;
 
 void main() {
+  reduceMotionInEveryTest();
   late FakeGameRepository repository;
 
   setUp(() {

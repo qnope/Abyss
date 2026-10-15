@@ -7,13 +7,12 @@ import 'package:flutter_test/flutter_test.dart';
 /// plan `plan85` (a win, played again with other dice and a careful
 /// defence) and the careful script, 160 games each with the random events
 /// and the objective rewards (see `Difficulty`): about 50 % of wins in
-/// easy, 15 % in normal and 5 % in hard. In normal, seed 1 is one of the
-/// plan's wins and seed 39 falls the earliest of the first 40 (turn 64;
-/// seeds 49 and 5 used to, before the guardians waited for a working
-/// Module de descente, seed 87 before they came back to the first Faille,
-/// and seeds 92 and 49 before the solar panels gave 10 % more energy);
-/// seed 3 wins in easy and falls in normal (seed 2 used to, it now
-/// survives easy to turn 120).
+/// easy, 15 % in normal and 5 % in hard. In normal, seed 2 is one of the
+/// plan's wins and seed 1 falls the earliest of the first 80 (turn 53,
+/// short of the loot that used to pay for its defenders, since a repelled
+/// raid brings two turns of production at most); seed 4 wins in easy and
+/// falls in normal. Seeds 1, 39 and 3 played these parts before the raids
+/// grew with the defence of the base.
 void main() {
   ScriptRunner runner(Difficulty d) =>
       ScriptRunner(maxTurns: 120, difficulty: d);
@@ -21,7 +20,7 @@ void main() {
   test('the human plan still wins some games', () {
     final run = runner(
       Difficulty.normal,
-    ).run(ScriptLibrary.byName('plan85'), seed: 1);
+    ).run(ScriptLibrary.byName('plan85'), seed: 2);
 
     expect(run.isVictory, isTrue);
   }, timeout: const Timeout(Duration(minutes: 5)));
@@ -29,7 +28,7 @@ void main() {
   test('the human plan can also fall to the raids', () {
     final run = runner(
       Difficulty.normal,
-    ).run(ScriptLibrary.byName('plan85'), seed: 39);
+    ).run(ScriptLibrary.byName('plan85'), seed: 1);
 
     expect(run.isDefeat, isTrue);
     expect(run.turnsPlayed, lessThan(70));
@@ -38,10 +37,10 @@ void main() {
   test('the same plan and dice win in easy and fall in normal', () {
     final easy = runner(
       Difficulty.easy,
-    ).run(ScriptLibrary.byName('plan85'), seed: 3);
+    ).run(ScriptLibrary.byName('plan85'), seed: 4);
     final normal = runner(
       Difficulty.normal,
-    ).run(ScriptLibrary.byName('plan85'), seed: 3);
+    ).run(ScriptLibrary.byName('plan85'), seed: 4);
 
     expect(easy.isVictory, isTrue);
     expect(normal.isDefeat, isTrue);

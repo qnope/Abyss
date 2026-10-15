@@ -18,6 +18,13 @@ void expectShared(MonsterLair wave, int generic) {
   );
 }
 
+void expectSameWave(MonsterLair a, MonsterLair b) {
+  expect(
+    [a.difficulty, a.family, a.unitCount, a.secondFamily, a.secondCount],
+    [b.difficulty, b.family, b.unitCount, b.secondFamily, b.secondCount],
+  );
+}
+
 void main() {
   test('weak waves hold at least 5 level 1 monsters', () {
     final wave = RaidWaveFactory.fromTotalNoise(10, random: Random(1));
@@ -66,5 +73,49 @@ void main() {
       final wave = RaidWaveFactory.fromTotalNoise(50, random: Random(seed));
       expect(wave.groups.keys, isNot(contains(MonsterFamily.colossus)));
     }
+  });
+
+  group('a strong defence', () {
+    test('without defenders, the wave follows the noise alone', () {
+      final noise = RaidWaveFactory.fromTotalNoise(50, random: Random(1));
+      final same = RaidWaveFactory.fromTotalNoise(
+        50,
+        random: Random(1),
+        defenceStrength: 0,
+      );
+      expectSameWave(same, noise);
+    });
+
+    test('draws a wave of 75 % of its strength when it beats the noise', () {
+      final wave = RaidWaveFactory.fromTotalNoise(
+        50,
+        random: Random(1),
+        defenceStrength: 40,
+      );
+      expect(RaidWaveFactory.defenceSharePercent, 75);
+      expectShared(wave, 30 ~/ 2); // 30 power of level 2 monsters
+      expect(wave.difficulty, MonsterDifficulty.medium);
+    });
+
+    test('a weak defence leaves the noise in charge', () {
+      final noise = RaidWaveFactory.fromTotalNoise(200, random: Random(1));
+      final weak = RaidWaveFactory.fromTotalNoise(
+        200,
+        random: Random(1),
+        defenceStrength: 10,
+      );
+      expectSameWave(weak, noise);
+    });
+
+    test('the difficulty scales the defence share too', () {
+      final wave = RaidWaveFactory.fromTotalNoise(
+        0,
+        random: Random(1),
+        defenceStrength: 40,
+        monsterPercent: 50,
+      );
+      expectShared(wave, 15);
+      expect(wave.difficulty, MonsterDifficulty.easy);
+    });
   });
 }

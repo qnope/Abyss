@@ -26,13 +26,15 @@ void main() {
   });
 
   test('a strong garrison wins, keeps its units and earns loot', () {
-    final player = raidPlayer(units: {UnitType.harpoonist: 30});
+    final player =
+        raidPlayer(units: {UnitType.harpoonist: 30}, headquartersLevel: 1);
     final report = RaidBattle.fight(
         player: player, wave: wave, turn: 10, random: Random(1));
     expect(report.victory, isTrue);
     expect(report.defenders, {UnitType.harpoonist: 30});
     expect(report.pillaged, isEmpty);
-    expect(report.loot[ResourceType.coral], inInclusiveRange(150, 250));
+    // Two turns of the headquarters' 15 coral.
+    expect(report.loot[ResourceType.coral], 30);
     final dead = report.dead[UnitType.harpoonist] ?? 0;
     expect(unitsOnBase(player), 30 - dead);
   });

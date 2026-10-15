@@ -5,11 +5,13 @@ import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 
-/// Player with 1000 of every resource, the given units on the base level
-/// and a Coral Citadel at [citadelLevel].
+/// Player with 1000 of every resource, the given units on the base level,
+/// a Coral Citadel at [citadelLevel] and a headquarters at
+/// [headquartersLevel], whose income caps the loot of a raid.
 Player raidPlayer({
   Map<UnitType, int> units = const {},
   int citadelLevel = 0,
+  int headquartersLevel = 0,
 }) {
   final player = Player(
     id: 'p1',
@@ -21,6 +23,8 @@ Player raidPlayer({
   );
   player.buildings[BuildingType.coralCitadel] =
       Building(type: BuildingType.coralCitadel, level: citadelLevel);
+  player.buildings[BuildingType.headquarters] =
+      Building(type: BuildingType.headquarters, level: headquartersLevel);
   units.forEach((type, count) => player.unitsOnLevel(1)[type]!.count = count);
   return player;
 }

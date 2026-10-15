@@ -45,9 +45,10 @@ void main() {
     // stocks ran short 25 times. The rewards of the objectives, credited
     // at the end of the turns, fill the stocks back up: 4 of those
     // actions no longer lack resources. The solar panels, 10 % richer,
-    // leave only 2 of them short of energy.
+    // leave only 2 of them short of energy. A repelled raid brings two
+    // turns of production at most, so 3 more actions lack resources.
     final failures = report.log.where((e) => !e.success);
-    expect(failures.where((e) => e.reason != ActionFailure.nothingToCollect).length, 2);
+    expect(failures.where((e) => e.reason != ActionFailure.nothingToCollect).length, 5);
   });
 
   test('plays each turn later with a stretch and a jitter', () {

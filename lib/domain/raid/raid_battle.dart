@@ -9,6 +9,7 @@ import '../fight/fight_engine.dart';
 import '../fight/fight_result.dart';
 import '../game/player.dart';
 import '../map/monster_lair.dart';
+import '../resource/production_calculator.dart';
 import '../resource/resource_type.dart';
 import '../tech/tech_effects.dart';
 import '../unit/unit_type.dart';
@@ -68,10 +69,16 @@ abstract final class RaidBattle {
       dead: breakdown.dead,
       loot: victory
           ? FightMonsterHelpers.applyLoot(player, tech.boostLoot(
-              RaidSpoils.loot(
-                wave.difficulty,
-                random: random,
-                percent: lootPercent,
+              RaidSpoils.capToProduction(
+                RaidSpoils.loot(
+                  wave.difficulty,
+                  random: random,
+                  percent: lootPercent,
+                ),
+                ProductionCalculator.fromBuildings(
+                  player.buildings,
+                  techBranches: player.techBranches,
+                ),
               )))
           : const <ResourceType, int>{},
       pillaged: victory

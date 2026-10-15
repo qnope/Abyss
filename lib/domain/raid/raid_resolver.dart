@@ -4,6 +4,7 @@ import '../game/difficulty.dart';
 import '../game/player.dart';
 import '../map/monster_lair.dart';
 import '../tech/tech_effects.dart';
+import 'defence_strength.dart';
 import 'noise_rules.dart';
 import 'raid_battle.dart';
 import 'raid_report.dart';
@@ -57,6 +58,7 @@ abstract final class RaidResolver {
         faction: isFaction,
         factions: factions,
       ),
+      defenceStrength: DefenceStrength.of(player),
     );
     int arrival = max(
       endedTurn + TechEffects.of(player).raidWarningTurns,

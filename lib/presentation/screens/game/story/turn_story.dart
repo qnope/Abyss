@@ -1,19 +1,20 @@
 import '../../../../domain/game/game.dart';
-import '../../../../domain/map/cell_content_type.dart';
-import '../../../../domain/map/game_map.dart';
 import '../../../../domain/map/volcanic_kernel_placer.dart';
 import '../../../../domain/turn/turn_result.dart';
 import '../../../../domain/volcano/kernel_garrison.dart';
 import '../../../extensions/monster_lair_extensions.dart';
 import '../../../widgets/map/effects/story/map_siege.dart';
 import '../../../widgets/map/effects/strike/strike_round.dart';
+import 'attack_chapter.dart';
 import 'story_chapter.dart';
+import 'story_places.dart';
 import 'turn_story_fog.dart';
 import 'turn_story_snapshot.dart';
 
 /// What the map tells at the end of a turn, before its summary: the fog
 /// lifting from the cells the scouts saw, then the raids fought on the
-/// base, then the wave fought on the volcano.
+/// base, then the wave fought on the volcano, then the attacks of the
+/// factions (and of the guardians) on the human, as they were fought.
 class TurnStory {
   final List<StoryChapter> chapters;
 
@@ -38,7 +39,8 @@ class TurnStory {
             ),
           ),
       if (result.volcano case final wave?)
-        if (_kernelOf(game.levels[KernelGarrison.volcanoLevel], human.id)
+        if (StoryPlaces.kernelOf(
+                game.levels[KernelGarrison.volcanoLevel], human.id)
             case final kernel?)
           StoryChapter(
             level: KernelGarrison.volcanoLevel,
@@ -50,24 +52,11 @@ class TurnStory {
               rounds: roundsOf(wave.fight),
             ),
           ),
+      for (final attack in result.attacks)
+        if (attackChapter(game, attack) case final chapter?) chapter,
     ]);
   }
 
   /// Whether there is nothing to tell.
   bool get isEmpty => chapters.isEmpty;
-
-  /// The volcano of [map] held by [playerId], or else the first one.
-  static (int, int)? _kernelOf(GameMap? map, String playerId) {
-    if (map == null) return null;
-    (int, int)? first;
-    for (var y = 0; y < map.height; y++) {
-      for (var x = 0; x < map.width; x++) {
-        final cell = map.cellAt(x, y);
-        if (cell.content != CellContentType.volcanicKernel) continue;
-        if (cell.collectedBy == playerId) return (x, y);
-        first ??= (x, y);
-      }
-    }
-    return first;
-  }
 }

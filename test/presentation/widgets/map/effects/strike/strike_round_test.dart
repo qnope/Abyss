@@ -15,4 +15,13 @@ void main() {
   test('no fight, no round', () {
     expect(roundsOf(null), isEmpty);
   });
+
+  test('a defence reads the fight from the side attacked', () {
+    final fight = strikeResult(damage: [7, 4], taken: [1, 3]).fight;
+    expect(defenceRoundsOf(fight), const <StrikeRound>[
+      (dealt: 1, taken: 7),
+      (dealt: 3, taken: 4),
+    ]);
+    expect(defenceRoundsOf(null), isEmpty);
+  });
 }

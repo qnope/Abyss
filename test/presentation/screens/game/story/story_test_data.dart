@@ -1,3 +1,4 @@
+import 'package:abyss/domain/faction/faction_attack_report.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
@@ -91,7 +92,12 @@ VolcanoReport storyVolcano({required bool victory}) => VolcanoReport(
       dead: const {},
     );
 
-TurnResult storyResult({RaidReport? raid, VolcanoReport? volcano}) =>
+TurnResult storyResult({
+  RaidReport? raid,
+  VolcanoReport? volcano,
+  List<FactionAttackReport> attacks = const [],
+  FactionAttackReport? leviathan,
+}) =>
     TurnResult(
       changes: const [],
       previousTurn: 3,
@@ -99,4 +105,6 @@ TurnResult storyResult({RaidReport? raid, VolcanoReport? volcano}) =>
       hadRecruitedUnits: false,
       raid: raid,
       volcano: volcano,
+      attacks: attacks,
+      leviathan: leviathan,
     );

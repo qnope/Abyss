@@ -89,7 +89,7 @@ class MapSiegeRun implements MapEffectRun {
           pushed: siege.victory ? outcome : 0,
           breach: siege.victory ? 0 : outcome);
       _token.draw(canvas, rect, sprite,
-          opacity: opacity, ring: AbyssColors.error);
+          opacity: opacity, ring: siege.attackerRing);
     }
     _paintLosses(canvas, elapsed);
   }

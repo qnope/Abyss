@@ -39,6 +39,9 @@ abstract final class AbyssColors {
   // Terrain
   static const Color plainBlue = Color(0x6642A5F5);
 
+  /// Opacity of the [abyssBlack] fog over the cells not yet seen.
+  static const double fogOpacity = 0.7;
+
   // Functional
   static const Color success = Color(0xFF69F0AE);
   static const Color warning = Color(0xFFFFD740);

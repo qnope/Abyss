@@ -10,9 +10,11 @@ import '../../widgets/guide/guide_bubble.dart';
 import '../../widgets/guide/guide_scope.dart';
 import '../../widgets/map/effects/map_effects.dart';
 import '../../widgets/tip/tip_presenter.dart';
+import '../../widgets/turn/story_skip_button.dart';
 import 'game_screen_end_turn.dart';
 import 'game_screen_event_actions.dart';
 import 'game_screen_settings_actions.dart';
+import 'game_screen_story.dart';
 import 'game_screen_tabs.dart';
 import 'game_screen_turn_flow.dart';
 import 'game_screen_turn_helpers.dart';
@@ -33,6 +35,9 @@ class _GameScreenState extends State<GameScreen> {
   late final TipPresenter _tips =
       TipPresenter(game: widget.game, repository: widget.repository);
   final MapEffects _effects = MapEffects();
+
+  /// The story of the turn being told on the map, if any.
+  Future<void>? _story;
   Player get _human => widget.game.humanPlayer;
 
   void _selectLevel(int level) {
@@ -69,16 +74,24 @@ class _GameScreenState extends State<GameScreen> {
           GameStatusBars(game: widget.game, player: _human,
               onOpenEvent: _openPendingEvent, onOpenMap: _openMap),
           Expanded(
-            child: buildGameTab(
-              context,
-              widget.game,
-              widget.repository,
-              tab: _currentTab,
-              currentLevel: _currentLevel,
-              onLevelSelected: _selectLevel,
-              onChanged: _changed,
-              effects: _effects,
-            ),
+            child: Stack(fit: StackFit.expand, children: [
+              buildGameTab(
+                context,
+                widget.game,
+                widget.repository,
+                tab: _currentTab,
+                currentLevel: _currentLevel,
+                onLevelSelected: _selectLevel,
+                onChanged: _changed,
+                effects: _effects,
+              ),
+              if (_story != null)
+                Positioned(
+                  right: 16,
+                  bottom: 16,
+                  child: StorySkipButton(onPressed: _effects.skip),
+                ),
+            ]),
           ),
           GuideBubble(advice: guide, turn: widget.game.turn),
         ],
@@ -93,11 +106,18 @@ class _GameScreenState extends State<GameScreen> {
     ));
   }
 
+  /// Ends the turn, tells its story on the map, then shows its outcome.
+  /// The map stays open once the story is told, under the summary.
   Future<void> _nextTurn() async {
-    final result =
-        await confirmAndEndTurn(context, widget.game, widget.repository);
+    final result = await confirmAndEndTurn(
+        context, widget.game, widget.repository,
+        observe: watchTurnStory(context, widget.game, _effects,
+            showLevel: _openMap, onTold: (story) => _story = story));
     if (result == null || !mounted) return;
     setState(() {});
+    await _story;
+    if (!mounted) return;
+    setState(() => _story = null);
     await showTurnOutcome(context, widget.game, widget.repository, result,
         _changed, tips: _tips);
   }

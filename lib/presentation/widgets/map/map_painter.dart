@@ -68,7 +68,9 @@ class MapPainter extends CustomPainter {
     );
     canvas.drawPath(
       fog,
-      Paint()..color = AbyssColors.abyssBlack.withValues(alpha: 0.7),
+      Paint()
+        ..color = AbyssColors.abyssBlack
+            .withValues(alpha: AbyssColors.fogOpacity),
     );
     // The few cells seen through the fog (a wreck), over it.
     for (final i in beacons) {

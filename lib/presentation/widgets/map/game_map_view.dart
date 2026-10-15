@@ -5,6 +5,7 @@ import '../../../domain/map/post_holder.dart';
 import 'effects/map_effects.dart';
 import 'map_cell_at.dart';
 import 'map_cell_visual.dart';
+import 'map_centring.dart';
 import 'map_layers.dart';
 import 'map_painter.dart';
 import 'map_sprites.dart';
@@ -33,7 +34,8 @@ class GameMapView extends StatefulWidget {
   /// Level of [gameMap], where the guide's halo may surround a cell.
   final int level;
 
-  /// Effects played over the map; a tap on the map ends the one playing.
+  /// Effects played over the map; a tap on the map skips the one playing,
+  /// and the map centres on what each one is about.
   final MapEffects? effects;
 
   const GameMapView({
@@ -56,11 +58,17 @@ class GameMapView extends StatefulWidget {
   State<GameMapView> createState() => _GameMapViewState();
 }
 
-class _GameMapViewState extends State<GameMapView> {
-  final _controller = TransformationController();
+class _GameMapViewState extends State<GameMapView> with MapCentring {
   MapSprites? _sprites;
 
-  static const _defaultVisibleCells = 8.0, _maxVisibleCells = 1.0;
+  static const _maxVisibleCells = 1.0;
+
+  @override
+  (int, int) get home => (widget.baseX ?? widget.gameMap.width ~/ 2,
+      widget.baseY ?? widget.gameMap.height ~/ 2);
+
+  @override
+  MapEffects? get effects => widget.effects;
 
   @override
   void initState() {
@@ -72,8 +80,13 @@ class _GameMapViewState extends State<GameMapView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Centered before the first frame, so the map never shows a jump.
-    if (_controller.value.isIdentity()) _centerOnBase();
+    centre();
+  }
+
+  @override
+  void didUpdateWidget(GameMapView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    centre();
   }
 
   void _loadSprites() {
@@ -85,25 +98,12 @@ class _GameMapViewState extends State<GameMapView> {
     );
   }
 
-  void _centerOnBase() => _controller.value = MapViewport.centeredOn(
-        MediaQuery.of(context).size,
-        (widget.baseX ?? widget.gameMap.width ~/ 2,
-            widget.baseY ?? widget.gameMap.height ~/ 2),
-        visibleCells: _defaultVisibleCells,
-      );
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final map = widget.gameMap;
     final screenWidth = MediaQuery.of(context).size.width;
     return MapViewport(
-      controller: _controller,
+      controller: controller,
       minScale: screenWidth / (map.width * cellSize),
       maxScale: screenWidth / (_maxVisibleCells * cellSize),
       onTapUp: widget.onCellTap == null ? null : _handleTap,
@@ -112,7 +112,7 @@ class _GameMapViewState extends State<GameMapView> {
         columns: map.width,
         sprites: _sprites,
         clock: clock,
-        transform: _controller,
+        transform: controller,
         viewport: viewport,
         level: widget.level,
         pendingTargets: widget.pendingTargets,
@@ -141,7 +141,7 @@ class _GameMapViewState extends State<GameMapView> {
 
   void _handleTap(TapUpDetails details) {
     final effects = widget.effects;
-    if (effects != null && effects.isPlaying) return effects.finish();
+    if (effects != null && effects.isPlaying) return effects.skip();
     final cell = mapCellAt(details.localPosition,
         width: widget.gameMap.width, height: widget.gameMap.height);
     if (cell != null) widget.onCellTap!(cell.$1, cell.$2);

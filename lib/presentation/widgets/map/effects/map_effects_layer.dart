@@ -73,6 +73,8 @@ class _MapEffectsLayerState extends State<MapEffectsLayer>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _reduced = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    // An effect may wait for this layer to come on screen.
+    if (widget.effects.current != _effect) _changed();
   }
 
   void _changed() {

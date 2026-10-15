@@ -14,7 +14,8 @@ import 'token/map_tokens_painter.dart';
 /// to that target, then waits in a corner of it; scouts already sent when
 /// the layer appears wait there at once, as they do when the player asks
 /// for fewer animations. A scout whose target is no longer among
-/// [targets] (its exploration is over) leaves the map.
+/// [targets] (its exploration is over) leaves the layer at once: the
+/// story of the turn (`MapFogLift`) fades it out.
 ///
 /// New scouts are told apart from the targets the layer saw last, not
 /// from the previous widget, as the game changes its lists in place.
@@ -94,8 +95,8 @@ class _ScoutTokenLayerState extends State<ScoutTokenLayer>
     setState(() => _drop(target));
   }
 
-  /// The scout's exploration is over. It vanishes for now; a fade could
-  /// start from here, as [target] is the cell it leaves.
+  /// The scout's exploration is over: it leaves this layer at once, as
+  /// the story of the turn fades it out with the fog it lifts.
   void _leave((int, int) target) => _drop(target);
 
   void _drop((int, int) target) {

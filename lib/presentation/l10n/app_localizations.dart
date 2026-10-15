@@ -5109,6 +5109,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Envoie {count, plural, one{{count} Harponneur} other{{count} Harponneurs}} de plus.'**
   String guideLeviathanReinforce(int count);
+
+  /// Button skipping the story of the end of a turn told on the map, before its summary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passer ›'**
+  String get turnStorySkip;
 }
 
 class _AppLocalizationsDelegate

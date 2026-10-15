@@ -2,9 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
 import '../ambience/ambient_motion.dart';
+import '../ambience/creature_sheet.dart';
+import 'living_creatures.dart';
 import 'map_ambience_cells.dart';
 import 'map_cell_visual.dart';
 import 'map_content_drawer.dart';
+import 'map_creature_sheets.dart';
 import 'map_sprites.dart';
 
 export 'map_ambience_cells.dart';
@@ -31,7 +34,11 @@ class MapAmbiencePainter extends CustomPainter {
   /// Size of the screen area the map is seen through.
   final Size viewport;
 
+  /// The undulating sheet of a living creature's sprite, if built.
+  final CreatureSheet? Function(String sprite) creatureSheetOf;
+
   final MapContentDrawer _drawer;
+  final _creature = Paint()..filterQuality = FilterQuality.medium;
   final List<int> _animated;
 
   MapAmbiencePainter({
@@ -41,6 +48,7 @@ class MapAmbiencePainter extends CustomPainter {
     required this.transform,
     required this.viewport,
     this.sprites,
+    this.creatureSheetOf = MapCreatureSheets.peek,
   })  : _drawer = MapContentDrawer(sprites),
         _animated = animatedCells(visuals),
         super(repaint: Listenable.merge([clock, transform]));
@@ -55,9 +63,22 @@ class MapAmbiencePainter extends CustomPainter {
       final area = MapContentDrawer.areaOf(visual, i, columns);
       if (!area.overlaps(visible)) continue;
       final phase = AmbientMotion.phaseOf(i % columns, i ~/ columns);
-      _drawer.drawContent(canvas, visual, area,
-          pose: visual.motion.at(seconds, phase: phase));
+      final pose = visual.motion.at(seconds, phase: phase);
+      final sheet = _sheetOf(visual);
+      if (sheet == null) {
+        _drawer.drawContent(canvas, visual, area, pose: pose);
+        continue;
+      }
+      final body = MapContentDrawer.bodyOf(visual, area);
+      final frame = sheet.undulation.frameAt(seconds, phase: phase);
+      pose.paint(canvas, body,
+          () => sheet.draw(canvas, frame, body, _creature));
     }
+  }
+
+  CreatureSheet? _sheetOf(MapCellVisual visual) {
+    final sprite = visual.contentSprite;
+    return isLivingCreature(sprite) ? creatureSheetOf(sprite!) : null;
   }
 
   @override
@@ -67,6 +88,7 @@ class MapAmbiencePainter extends CustomPainter {
       oldDelegate.clock != clock ||
       oldDelegate.transform != transform ||
       oldDelegate.viewport != viewport ||
+      oldDelegate.creatureSheetOf != creatureSheetOf ||
       !listEquals(oldDelegate.visuals, visuals);
 
   @override

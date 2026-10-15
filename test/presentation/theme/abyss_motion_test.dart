@@ -19,6 +19,10 @@ void main() {
     }
   });
 
+  test('a living creature swims through one of the ambient cycles', () {
+    expect(AbyssMotion.ambientCycles, contains(AbyssMotion.swimCycle));
+  });
+
   test('the ambient frame caps clocks near 30 per second', () {
     final perSecond = 1e6 / AbyssMotion.ambientFrame.inMicroseconds;
     expect(perSecond, closeTo(30, 1));

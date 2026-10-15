@@ -57,6 +57,11 @@ class MapContentDrawer {
     return Rect.fromLTWH(cell.left, cell.top, side, side);
   }
 
+  /// Where the sprite of [visual] lies in its [area]: centred in its
+  /// cell, or over the whole area of a wide content.
+  static Rect bodyOf(MapCellVisual visual, Rect area) =>
+      visual.contentSpan == 1 ? area.deflate(_contentInset) : area;
+
   /// Draws [sprite] into [dst], or nothing while it is not loaded.
   void drawSprite(Canvas canvas, ui.Image? sprite, Rect dst, Paint paint) {
     if (sprite != null) canvas.drawImageRect(sprite, spriteSrc, dst, paint);
@@ -76,8 +81,7 @@ class MapContentDrawer {
       _glow.color = Color.fromRGBO(0, 0, 0, opacity);
       drawSprite(canvas, sprites?.glow(visual.glow), area, _glow);
     }
-    final body =
-        visual.contentSpan == 1 ? area.deflate(_contentInset) : area;
+    final body = bodyOf(visual, area);
     pose.paint(canvas, body, () => _drawBody(canvas, visual, body));
   }
 

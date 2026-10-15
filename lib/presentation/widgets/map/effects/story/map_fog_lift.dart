@@ -8,13 +8,18 @@ import 'fog_lift_run.dart';
 /// exploration over, fade away with it.
 ///
 /// The still map below already shows those cells seen: the lift covers
-/// them as the fog does, then fades.
+/// them as the fog does, then fades. The [beacons], wrecks seen through
+/// the fog, stay drawn above it meanwhile.
 class MapFogLift extends MapEffect {
   /// The cells seen, with the sprite of their terrain.
   final Map<(int, int), String> cells;
 
   /// Cells where a scout waited for its exploration.
   final Set<(int, int)> scouts;
+
+  /// Cells of [cells] whose content shows through the fog, with its
+  /// sprite: a wreck not searched yet.
+  final Map<(int, int), String> beacons;
 
   @override
   final (int, int) focus;
@@ -23,10 +28,12 @@ class MapFogLift extends MapEffect {
     required this.cells,
     required this.focus,
     this.scouts = const {},
+    this.beacons = const {},
   });
 
   @override
-  Set<String> get imagePaths => {...cells.values, UnitType.scout.iconPath};
+  Set<String> get imagePaths =>
+      {...cells.values, ...beacons.values, UnitType.scout.iconPath};
 
   @override
   MapEffectRun stage(MapStage stage) => FogLiftRun(this, stage: stage);

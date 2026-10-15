@@ -1,3 +1,7 @@
+import 'package:abyss/domain/map/cell_content_type.dart';
+import 'package:abyss/domain/map/map_cell.dart';
+import 'package:abyss/domain/map/terrain_type.dart';
+import 'package:abyss/presentation/extensions/cell_content_type_extensions.dart';
 import 'package:abyss/presentation/extensions/monster_lair_extensions.dart';
 import 'package:abyss/presentation/screens/game/story/turn_story.dart';
 import 'package:abyss/presentation/screens/game/story/turn_story_snapshot.dart';
@@ -27,6 +31,20 @@ void main() {
     expect(lift.cells.keys.toSet(), {(8, 5), (9, 5), (9, 6)});
     expect(lift.scouts, {(8, 5)});
     expect(lift.focus, (8, 5));
+  });
+
+  test('a wreck not searched yet stays seen above the lifting fog', () {
+    final game = storyGame();
+    final map = game.levels[1]!;
+    final wreck = MapCell(
+        terrain: TerrainType.plain, content: CellContentType.wreck);
+    map.setCell(8, 5, wreck);
+    map.setCell(9, 5, wreck.copyWith(collectedBy: 'Nemo'));
+    final before = TurnStorySnapshot.of(game.humanPlayer);
+    revealAfterTurn(game, 1, [(8, 5), (9, 5), (9, 6)]);
+    final story = TurnStory.plan(game, before, storyResult());
+    final lift = story.chapters.single.effect as MapFogLift;
+    expect(lift.beacons, {(8, 5): CellContentType.wreck.svgPath});
   });
 
   test('the fog lifts on the level where the most cells were seen', () {

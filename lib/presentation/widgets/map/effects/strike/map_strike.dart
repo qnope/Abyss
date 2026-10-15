@@ -7,19 +7,17 @@ import '../map_effect.dart';
 import 'map_strike_run.dart';
 import 'strike_geometry.dart';
 import 'strike_lead.dart';
+import 'strike_round.dart';
 
 /// An army attacking the lair on [target]: a token showing its [lead]
 /// unit and its [count] swims beside the lair, lunges at it once per
-/// entry of [hits] (the damage each one deals), then the monster fades
-/// away on a [victory], or the token retreats.
+/// turn of the fight (its [rounds]), then the monster fades away on a
+/// [victory], or the token retreats.
 class MapStrike extends MapEffect {
-  /// Number of lunges of an attack.
-  static const lunges = 2;
-
   final (int, int) target;
   final UnitType lead;
   final int count;
-  final List<int> hits;
+  final List<StrikeRound> rounds;
   final bool victory;
 
   /// Sprite of the lair's monster.
@@ -29,7 +27,7 @@ class MapStrike extends MapEffect {
     required this.target,
     required this.lead,
     required this.count,
-    required this.hits,
+    required this.rounds,
     required this.victory,
     required this.lairSprite,
   });
@@ -40,25 +38,20 @@ class MapStrike extends MapEffect {
     required MonsterLair lair,
     required FightMonsterResult result,
   }) {
-    final damage = result.fight?.turnSummaries
-            .fold<int>(0, (sum, turn) => sum + turn.damageDealtByPlayer) ??
-        0;
     return MapStrike(
       target: target,
       lead: strikeLeadOf(result.sent) ?? UnitType.scout,
       count: result.sent.values.fold(0, (sum, count) => sum + count),
-      hits: split(damage, lunges),
+      rounds: [
+        for (final turn in result.fight?.turnSummaries ?? const [])
+          StrikeRound(
+              dealt: turn.damageDealtByPlayer,
+              taken: turn.damageDealtByMonster),
+      ],
       victory: result.victory,
       lairSprite: lair.svgPath,
     );
   }
-
-  /// [total] shared between [parts] as evenly as can be, the first parts
-  /// taking what is left over.
-  static List<int> split(int total, int parts) => [
-        for (var i = 0; i < parts; i++)
-          total ~/ parts + (i < total % parts ? 1 : 0),
-      ];
 
   @override
   Set<String> get imagePaths => {lead.iconPath};

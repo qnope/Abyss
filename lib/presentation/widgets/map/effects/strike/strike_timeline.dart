@@ -5,9 +5,17 @@ import '../../../../theme/abyss_motion.dart';
 /// When each step of an attack on a lair happens: the army's token swims
 /// next to the lair, lunges at it once per hit, the outcome settles (the
 /// monster fades away, or the token retreats), then the token vanishes.
+///
+/// A long fight lunges faster, so its hits keep within [roundsBudget].
 class StrikeTimeline {
-  /// One lunge: forward to the lair and back.
-  static const lunge = AbyssMotion.eventStep;
+  /// The usual lunge: forward to the lair and back.
+  static const usualLunge = AbyssMotion.eventStep;
+
+  /// The quickest lunge of a very long fight.
+  static const quickestLunge = Duration(milliseconds: 120);
+
+  /// How long the lunges of a long fight last together.
+  static const roundsBudget = Duration(seconds: 4);
 
   /// The defeated monster fading away, or the token retreating.
   static const outcome = AbyssMotion.fade;
@@ -22,6 +30,13 @@ class StrikeTimeline {
   final int hits;
 
   const StrikeTimeline({required this.swim, required this.hits});
+
+  /// One lunge: forward to the lair and back.
+  Duration get lunge {
+    if (hits == 0 || usualLunge * hits <= roundsBudget) return usualLunge;
+    final share = roundsBudget ~/ hits;
+    return share < quickestLunge ? quickestLunge : share;
+  }
 
   Duration get _outcomeStart => swim + lunge * hits;
 
@@ -47,6 +62,14 @@ class StrikeTimeline {
   Duration? sinceHit(int index, Duration t) {
     final since = t - hitAt(index);
     return since.isNegative ? null : since;
+  }
+
+  /// Whether hit [index] still shows at [t]: from when it lands until
+  /// the next one does, a [AbyssMotion.fade] at most.
+  bool showsHit(int index, Duration t) {
+    final since = sinceHit(index, t);
+    if (since == null || since >= AbyssMotion.fade) return false;
+    return index + 1 >= hits || sinceHit(index + 1, t) == null;
   }
 
   /// How far along the outcome is at [t], from 0 to 1.

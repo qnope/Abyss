@@ -17,7 +17,7 @@ void main() {
   MapEffectRun runOf({bool victory = true}) => MapStrike.of(
         target: (5, 5),
         lair: lair,
-        result: strikeResult(victory: victory),
+        result: strikeResult(victory: victory, taken: const [2, 0]),
       ).stage(MapStage(originOf: (_) => (0, 5)));
 
   test('lasts the swim from the origin, two lunges and the outcome', () {

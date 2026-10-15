@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../data/game_repository.dart';
 import '../../../../domain/action/action_executor.dart';
 import '../../../../domain/action/attack_base_action.dart';
-import '../../../../domain/action/attack_base_entries.dart';
 import '../../../../domain/action/attack_base_result.dart';
 import '../../../../domain/action/attack_held_kernel_action.dart';
 import '../../../../domain/action/attack_post_action.dart';
@@ -16,10 +15,10 @@ import '../../../widgets/fight/army_selection_actions.dart';
 import '../../../widgets/fight/selection_summary_card.dart';
 import '../../../widgets/fight/unit_quantity_row.dart';
 import 'army_selection_summary.dart';
-import 'base_assault_summary_screen.dart';
 
 /// Picks the army of the base level to send against the base of
-/// [target], then settles the assault and shows its report. No admiral is
+/// [target], then settles the assault and pops with its result: whoever
+/// opened it plays it and shows its report. No admiral is
 /// needed to attack a base. With [post], it is the Faille or Cheminée
 /// there that [target] holds which is attacked, with the units of the
 /// level it stands on.
@@ -94,14 +93,6 @@ class _BaseArmySelectionScreenState extends State<BaseArmySelectionScreen> {
     );
   }
 
-  String _postName(({int x, int y, int level}) post) => widget.kernel
-      ? AttackHeldKernelAction.kernelCode
-      : widget.game
-      .levels[post.level]!
-      .cellAt(post.x, post.y)
-      .transitionBase!
-      .name;
-
   Future<void> _launch() async {
     final post = widget.post;
     final action = post == null
@@ -138,17 +129,6 @@ class _BaseArmySelectionScreenState extends State<BaseArmySelectionScreen> {
     await widget.repository.save(widget.game);
     widget.onChanged();
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => BaseAssaultSummaryScreen(
-          entry: AttackBaseEntries.forAttacker(
-            widget.game.turn,
-            widget.target.name,
-            result as AttackBaseResult,
-            postName: post == null ? null : _postName(post),
-          ),
-        ),
-      ),
-    );
+    Navigator.of(context).pop(result as AttackBaseResult);
   }
 }

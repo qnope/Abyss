@@ -32,7 +32,8 @@ void openTransitionBaseSheet(
   final human = game.humanPlayer;
   final holder = base.capturedBy;
   if (holder != null && holder != human.id && game.players[holder] != null) {
-    openRivalPostSheet(context, game, repository, base, x, y, level, onChanged);
+    openRivalPostSheet(context, game, repository, base, x, y, level, onChanged,
+        effects: effects);
     return;
   }
   showTransitionBaseSheet(context,

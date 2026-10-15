@@ -10,8 +10,10 @@ import '../../../../domain/replay/seeded_random.dart';
 import '../../../extensions/action_failure_extensions.dart';
 import '../../../l10n/l10n_extension.dart';
 import 'assault_selection_body.dart';
-import 'kernel_fight_summary_screen.dart';
 
+/// Picks the army to send against the volcano the kraken guards, then
+/// settles the assault and pops with its result: whoever opened it plays
+/// it and shows its report.
 class KernelArmySelectionScreen extends StatefulWidget {
   final Game game;
   final GameRepository repository;
@@ -92,14 +94,6 @@ class _KernelArmySelectionScreenState
     await widget.repository.save(widget.game);
     widget.onChanged();
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => KernelFightSummaryScreen(
-          result: result as AttackVolcanicKernelResult,
-          targetX: widget.targetX,
-          targetY: widget.targetY,
-        ),
-      ),
-    );
+    Navigator.of(context).pop(result as AttackVolcanicKernelResult);
   }
 }

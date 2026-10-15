@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/painting.dart';
@@ -10,6 +9,7 @@ import '../../map_content_drawer.dart';
 import '../../token/map_token_drawer.dart';
 import '../../token/map_token_trip.dart';
 import '../map_effect.dart';
+import '../map_jolt.dart';
 import 'map_strike.dart';
 import 'strike_geometry.dart';
 import 'strike_marks.dart';
@@ -54,15 +54,10 @@ class MapStrikeRun implements MapEffectRun {
   Duration get duration => timeline.total;
 
   @override
-  Offset shakeAt(Duration elapsed) {
-    for (var i = 0; i < strike.rounds.length; i++) {
-      final since = timeline.sinceHit(i, elapsed);
-      if (since == null || since >= shakeLength) continue;
-      final p = since.inMicroseconds / shakeLength.inMicroseconds;
-      return Offset(math.sin(p * 6 * math.pi) * shakeAmplitude * (1 - p), 0);
-    }
-    return Offset.zero;
-  }
+  Offset shakeAt(Duration elapsed) => mapJolt(
+      timeline.pace.sinceLastHit(elapsed),
+      length: shakeLength,
+      amplitude: shakeAmplitude);
 
   @override
   void paint(Canvas canvas, Duration elapsed) {
@@ -79,8 +74,7 @@ class MapStrikeRun implements MapEffectRun {
     final army = geometry.tokenRect(swim: 1).topCenter;
     for (final (i, round) in strike.rounds.indexed) {
       if (!timeline.showsHit(i, elapsed)) continue;
-      final progress = timeline.sinceHit(i, elapsed)!.inMicroseconds /
-          AbyssMotion.fade.inMicroseconds;
+      final progress = timeline.pace.fadeOf(i, elapsed)!;
       _loss(canvas, geometry.lairRect.topCenter, round.dealt, progress);
       _loss(canvas, army, round.taken, progress);
     }
@@ -113,12 +107,9 @@ class MapStrikeRun implements MapEffectRun {
   }
 
   double _flashAt(Duration elapsed) {
-    for (var i = 0; i < strike.rounds.length; i++) {
-      final since = timeline.sinceHit(i, elapsed);
-      if (since == null || since >= flashLength) continue;
-      return 0.8 * (1 - since.inMicroseconds / flashLength.inMicroseconds);
-    }
-    return 0;
+    final since = timeline.pace.sinceLastHit(elapsed);
+    if (since == null || since >= flashLength) return 0;
+    return 0.8 * (1 - since.inMicroseconds / flashLength.inMicroseconds);
   }
 
   static void _draw(Canvas canvas, ui.Image sprite, Rect body, Paint paint) {

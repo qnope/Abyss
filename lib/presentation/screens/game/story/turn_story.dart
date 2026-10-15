@@ -6,6 +6,7 @@ import '../../../../domain/turn/turn_result.dart';
 import '../../../../domain/volcano/kernel_garrison.dart';
 import '../../../extensions/monster_lair_extensions.dart';
 import '../../../widgets/map/effects/story/map_siege.dart';
+import '../../../widgets/map/effects/strike/strike_round.dart';
 import 'story_chapter.dart';
 import 'turn_story_fog.dart';
 import 'turn_story_snapshot.dart';
@@ -33,6 +34,7 @@ class TurnStory {
               place: (human.baseX, human.baseY),
               victory: raid.victory,
               attackerSprite: raid.wave.svgPath,
+              rounds: roundsOf(raid.fight),
             ),
           ),
       if (result.volcano case final wave?)
@@ -45,6 +47,7 @@ class TurnStory {
               span: VolcanicKernelPlacer.side,
               victory: wave.victory,
               attackerSprite: wave.wave.svgPath,
+              rounds: roundsOf(wave.fight),
             ),
           ),
     ]);

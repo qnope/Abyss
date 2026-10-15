@@ -1,10 +1,12 @@
 import 'dart:math' as math;
 
 import '../../../../theme/abyss_motion.dart';
+import '../strike/fight_pace.dart';
 
 /// When each step of a siege happens: an alert rings around the place
-/// besieged, the attackers close in, the outcome lands (they are pushed
-/// back, or they break in), then the map rests a moment.
+/// besieged, the attackers close in, clash with its defenders once per
+/// round of the fight, the outcome lands (they are pushed back, or they
+/// break in), then the map rests a moment.
 class SiegeTimeline {
   /// The alert ringing twice around the place.
   static final alert = AbyssMotion.eventStep * 2;
@@ -18,10 +20,16 @@ class SiegeTimeline {
   /// The rest before what comes next.
   static const rest = AbyssMotion.storyPause;
 
-  const SiegeTimeline();
+  /// Number of rounds of the fight, one clash each.
+  final int rounds;
 
-  /// When the outcome lands, as the attackers reach the place.
-  Duration get impact => alert + approach;
+  const SiegeTimeline({this.rounds = 0});
+
+  /// The clashes, once the attackers are close.
+  FightPace get clashes => FightPace(start: alert + approach, rounds: rounds);
+
+  /// When the outcome lands, after the last clash.
+  Duration get impact => clashes.end;
 
   /// How long the whole siege lasts.
   Duration get total => impact + outcome + rest;

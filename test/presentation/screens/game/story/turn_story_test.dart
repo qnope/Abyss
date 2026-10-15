@@ -7,6 +7,7 @@ import 'package:abyss/presentation/screens/game/story/turn_story.dart';
 import 'package:abyss/presentation/screens/game/story/turn_story_snapshot.dart';
 import 'package:abyss/presentation/widgets/map/effects/story/map_fog_lift.dart';
 import 'package:abyss/presentation/widgets/map/effects/story/map_siege.dart';
+import 'package:abyss/presentation/widgets/map/effects/strike/strike_round.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'story_test_data.dart';
@@ -69,6 +70,7 @@ void main() {
     expect(siege.victory, isFalse);
     expect(siege.attackerSprite, storyWave.svgPath);
     expect(siege.focus, (5, 5));
+    expect(siege.rounds, [(dealt: 10, taken: 5), (dealt: 7, taken: 3)]);
   });
 
   test('a wave fought on the kernel plays on its level, over the volcano',
@@ -83,5 +85,7 @@ void main() {
     expect(siege.place, storyKernel);
     expect(siege.span, 2);
     expect(siege.victory, isTrue);
+    expect(siege.rounds, roundsOf(storyVolcano(victory: true).fight));
+    expect(siege.rounds, hasLength(2));
   });
 }

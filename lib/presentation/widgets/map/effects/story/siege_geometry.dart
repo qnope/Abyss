@@ -18,6 +18,10 @@ class SiegeGeometry {
   /// How far they stop from the place's edge, in cells.
   static const halt = 0.35;
 
+  /// Share of the way from where they halted to the place's edge a
+  /// lunge reaches.
+  static const lungeReach = 0.8;
+
   /// How far they are pushed back, in cells beyond where they halted.
   static const push = 1.5;
 
@@ -33,15 +37,20 @@ class SiegeGeometry {
   /// Half the side of the place.
   double get radius => span * cellSize / 2;
 
-  /// Attacker [index] after [approach] of its way in (0 to 1), pushed
-  /// back [pushed] of the way, or [breach] of its way into the place.
+  /// Attacker [index] after [approach] of its way in (0 to 1), lunging
+  /// [reach] of the way at the place, pushed back [pushed] of the way, or
+  /// [breach] of its way into the place.
   Rect attackerRect(int index,
-      {required double approach, double pushed = 0, double breach = 0}) {
+      {required double approach,
+      double reach = 0,
+      double pushed = 0,
+      double breach = 0}) {
     final angle = -math.pi / 2 + index * 2 * math.pi / attackers + 0.4;
     final direction = Offset(math.cos(angle), math.sin(angle));
     final halted = radius + halt * cellSize;
     final far = radius + start * cellSize;
     var distance = far + (halted - far) * AbyssMotion.travel.transform(approach);
+    distance -= halt * cellSize * lungeReach * reach;
     distance += push * cellSize * AbyssMotion.enter.transform(pushed);
     distance -= halted * AbyssMotion.exit.transform(breach);
     final side = cellSize * MapTokenTrip.swimScale;

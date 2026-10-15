@@ -27,11 +27,11 @@ void main() {
 
   test('the gap runs from the last attack fought on the base', () {
     final gap = Difficulty.normal.attackGap;
-    final early = announceGame(turn: 14);
+    final early = announceGame(turn: 14 + gap - 1);
     early.human.addHistoryEntry(
       baseAssaultEntry(victory: true, defending: true),
     );
-    final late = announceGame(turn: 14 + gap - 1);
+    final late = announceGame(turn: 14 + gap);
     late.human.addHistoryEntry(
       baseAssaultEntry(victory: true, defending: true),
     );

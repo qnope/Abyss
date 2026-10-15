@@ -49,7 +49,7 @@ void main() {
     expect(
       live.humanPlayer.historyEntries.whereType<BaseAssaultEntry>(),
       hasLength(1),
-      reason: 'announced at 10 or later, fought two turns on',
+      reason: 'decided at 10 or later, fought the same turn',
     );
     final json = ReplayExport.toJson(live);
     final journalled = (json['turns'] as Map).values
@@ -67,17 +67,5 @@ void main() {
       replayed.humanPlayer.historyEntries.whereType<BaseAssaultEntry>(),
       hasLength(1),
     );
-  });
-
-  test('a replay stopped between the announcement and the fight agrees', () {
-    final live = [
-      for (var turns = 11; turns < 18; turns++)
-        _playWithAnnouncement(turns, announceFrom: 10),
-    ].firstWhere((g) => g.humanPlayer.raidState.attacks.isNotEmpty);
-
-    final replayed = replayOn(ReplayExport.toJson(live));
-
-    expect(replayed.humanPlayer.raidState.attacks, hasLength(1));
-    expect(both(replayed), both(live));
   });
 }

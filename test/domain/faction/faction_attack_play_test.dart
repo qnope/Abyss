@@ -16,7 +16,7 @@ Map<String, Object?> everyone(Game g) => {
   for (final f in g.factions) f.id: snapshotOf(g, of: g.players[f.id]),
 };
 
-/// The turns of the announcements the journal holds, and their armies.
+/// The turns of the attacks the journal holds, and their armies.
 List<(int, Map<String, Object?>)> announcements(Game g) => [
   for (final t in g.replay!.actions.keys.toList()..sort())
     for (final a in g.replay!.actionsOf(t))
@@ -31,7 +31,7 @@ void main() {
     expect(game.replay!.exact, isTrue);
   });
 
-  test('a faction attacks an idle human two turns after announcing it', () {
+  test('a faction attacks an idle human the very turn it decides to', () {
     final game = playIdleFactionGame(3, 100);
     final announced = announcements(game);
     final fights =
@@ -44,14 +44,14 @@ void main() {
     expect(fights, isNotEmpty);
     for (final fight in fights) {
       expect(
-        announced.map((a) => a.$1 + 2),
+        announced.map((a) => a.$1),
         contains(fight.turn),
-        reason: 'fought on the turn it was announced for',
+        reason: 'fought at the end of the turn it was decided',
       );
     }
   });
 
-  test('the army that fights is the announced one, less what it lost', () {
+  test('the army that fights is the one decided, less what it lost', () {
     final game = playIdleFactionGame(3, 100);
     var checked = 0;
     for (final (turn, action) in announcements(game)) {
@@ -59,7 +59,7 @@ void main() {
       final attacker = game.players[action['player']]!;
       final fights = attacker.historyEntries
           .whereType<BaseAssaultEntry>()
-          .where((e) => !e.defending && e.turn == turn + 2);
+          .where((e) => !e.defending && e.turn == turn);
       for (final fight in fights) {
         expect(fight.units, isNotEmpty);
         for (final e in fight.units.entries) {

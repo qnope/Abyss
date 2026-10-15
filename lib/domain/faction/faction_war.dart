@@ -28,8 +28,8 @@ import 'faction_traits.dart';
 /// Once in a while, on a slot of its own, a faction looks at the bases its
 /// fog has shown. If its fighters would beat the defence of the weakest of
 /// them in at least [planner]'s confidence of its rehearsals, it attacks:
-/// another faction at once, the human with an announcement two turns
-/// ahead. It never has two attacks of its own pending.
+/// another faction at once, the human at the end of the turn, without
+/// warning. It never has two attacks of its own pending.
 ///
 /// When no base is worth attacking it looks at the posts of the others
 /// ([FactionPostWar]).

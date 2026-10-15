@@ -11,8 +11,9 @@ import 'action_result.dart';
 import 'action_type.dart';
 import 'announce_attack_validator.dart';
 
-/// A faction announces an attack on the human base, to be fought at the
-/// end of the turn [leadTurns] turns from now, with [selectedUnits].
+/// A faction attacks the human base with [selectedUnits]: the attack is
+/// fought at the end of the turn it is decided, without any warning, like
+/// the attacks of the human on the others.
 ///
 /// The army stays on the base of the faction, which still defends with it,
 /// until the fight: like in any attack on a base, it only leaves for the
@@ -20,8 +21,9 @@ import 'announce_attack_validator.dart';
 /// dice of the fight are [random]'s seed, so a replay fights the same
 /// battle.
 class AnnounceAttackAction extends Action {
-  /// Turns between the announcement and the fight, as for a monster raid.
-  static const int leadTurns = 2;
+  /// Turns between the decision and the fight: none, the human is not
+  /// warned.
+  static const int leadTurns = 0;
 
   final Map<UnitType, int> selectedUnits;
   final Random? random;

@@ -7,6 +7,7 @@ import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
 
 Game _buildGame({int seed = 42}) {
@@ -40,6 +41,7 @@ void main() {
       final game = _buildGame();
       expect(game.levels[1], isNotNull);
 
+      reduceMotion(tester);
       await tester.pumpWidget(createApp(game));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Carte'));
@@ -53,6 +55,7 @@ void main() {
         (tester) async {
       final game = _buildGame(seed: 42);
 
+      reduceMotion(tester);
       await tester.pumpWidget(createApp(game));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Carte'));
@@ -66,6 +69,7 @@ void main() {
     testWidgets('map dimensions match generator output', (tester) async {
       final game = _buildGame();
 
+      reduceMotion(tester);
       await tester.pumpWidget(createApp(game));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Carte'));

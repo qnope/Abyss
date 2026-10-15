@@ -3,6 +3,7 @@ import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/presentation/extensions/random_event_type_extensions.dart';
 import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
+import 'package:abyss/presentation/widgets/ambience/ambient_motion.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
@@ -61,5 +62,18 @@ void main() {
       MapCellVisual(terrainSprite: plain, revealed: true),
     ]);
     expect(painter, paintsExactlyCountTimes(#drawImageRect, 3));
+  });
+
+  testWidgets('contents that move are left to the ambience layer', (
+    tester,
+  ) async {
+    final painter = await painterOf(tester, [
+      MapCellVisual(terrainSprite: plain, contentSprite: wreck,
+          revealed: true, motion: AmbientMotion.bob),
+      MapCellVisual(terrainSprite: plain, contentSprite: wreck,
+          glow: MapGlow.wreck, aboveFog: true, motion: AmbientMotion.sway),
+    ]);
+    // The two terrains only: no content, no halo.
+    expect(painter, paintsExactlyCountTimes(#drawImageRect, 2));
   });
 }

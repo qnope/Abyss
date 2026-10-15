@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/fight/kernel_army_selection_screen.dart';
-import 'package:abyss/presentation/screens/game/fight/kernel_fight_summary_screen.dart';
+import 'package:abyss/domain/action/attack_volcanic_kernel_result.dart';
 
 import '../../../../domain/action/fight_monster_action_helper.dart';
 import '../../../../helpers/fake_game_repository.dart';
@@ -16,6 +16,7 @@ void main() {
   Widget buildApp({
     required FakeGameRepository repository,
     required VoidCallback onChanged,
+    ValueChanged<AttackVolcanicKernelResult?>? onResult,
     Map<UnitType, int> stock = const {
       UnitType.abyssAdmiral: 1,
       UnitType.scout: 3,
@@ -26,14 +27,23 @@ void main() {
       content: CellContentType.volcanicKernel,
       withLair: false,
     );
+    final screen = KernelArmySelectionScreen(
+      game: scenario.game,
+      repository: repository,
+      targetX: 1,
+      targetY: 1,
+      level: 1,
+      onChanged: onChanged,
+    );
+    if (onResult == null) return MaterialApp(home: screen);
     return MaterialApp(
-      home: KernelArmySelectionScreen(
-        game: scenario.game,
-        repository: repository,
-        targetX: 1,
-        targetY: 1,
-        level: 1,
-        onChanged: onChanged,
+      home: Builder(
+        builder: (context) => TextButton(
+          onPressed: () async => onResult(await Navigator.of(context)
+              .push<AttackVolcanicKernelResult>(
+                  MaterialPageRoute(builder: (_) => screen))),
+          child: const Text('go'),
+        ),
       ),
     );
   }
@@ -113,15 +123,18 @@ void main() {
       expect(button.onPressed, isNull);
     });
 
-    testWidgets('launch navigates to KernelFightSummaryScreen',
+    testWidgets('launch settles the assault and pops with its result',
         (tester) async {
       final repository = FakeGameRepository();
       int calls = 0;
+      AttackVolcanicKernelResult? result;
       await tester.pumpWidget(buildApp(
         repository: repository,
         onChanged: () => calls++,
+        onResult: (r) => result = r,
         stock: const {UnitType.abyssAdmiral: 1, UnitType.scout: 3},
       ));
+      await tester.tap(find.text('go'));
       await tester.pumpAndSettle();
 
       // Select the admiral (second row after scout)
@@ -137,7 +150,9 @@ void main() {
 
       expect(repository.saveCallCount, 1);
       expect(calls, 1);
-      expect(find.byType(KernelFightSummaryScreen), findsOneWidget);
+      expect(find.byType(KernelArmySelectionScreen), findsNothing);
+      expect(result?.isSuccess, isTrue);
+      expect(result?.sent, {UnitType.abyssAdmiral: 1});
     });
   });
 }

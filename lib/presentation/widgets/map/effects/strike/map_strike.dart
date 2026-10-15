@@ -1,7 +1,10 @@
+import '../../../../../domain/action/attack_base_result.dart';
 import '../../../../../domain/action/attack_transition_base_result.dart';
+import '../../../../../domain/action/attack_volcanic_kernel_result.dart';
 import '../../../../../domain/action/fight_monster_result.dart';
 import '../../../../../domain/fight/fight_result.dart';
 import '../../../../../domain/map/monster_lair.dart';
+import '../../../../../domain/map/volcanic_kernel_placer.dart';
 import '../../../../../domain/unit/unit_type.dart';
 import '../../../../extensions/monster_lair_extensions.dart';
 import '../../../../extensions/unit_type_extensions.dart';
@@ -29,6 +32,9 @@ class MapStrike extends MapEffect {
   /// place stays and lights up instead.
   final bool fades;
 
+  /// Cells the target covers, per side: the volcano covers 2x2.
+  final int span;
+
   const MapStrike({
     required this.target,
     required this.lead,
@@ -37,6 +43,7 @@ class MapStrike extends MapEffect {
     required this.victory,
     required this.targetSprite,
     this.fades = true,
+    this.span = 1,
   });
 
   /// The [fight] of the army [sent] against what is drawn as
@@ -48,6 +55,7 @@ class MapStrike extends MapEffect {
     required Map<UnitType, int> sent,
     required bool victory,
     bool fades = true,
+    int span = 1,
   }) : this(
           target: target,
           lead: strikeLeadOf(sent) ?? UnitType.scout,
@@ -56,6 +64,7 @@ class MapStrike extends MapEffect {
           victory: victory,
           targetSprite: targetSprite,
           fades: fades,
+          span: span,
         );
 
   /// The attack on [lair], at [target], that ended in [result].
@@ -88,6 +97,42 @@ class MapStrike extends MapEffect {
         fades: false,
       );
 
+  /// The assault on another player's base, or on a place they hold,
+  /// drawn as [sprite] over [span] cells from [target], that ended in
+  /// [result].
+  factory MapStrike.onBase({
+    required (int, int) target,
+    required String sprite,
+    required AttackBaseResult result,
+    int span = 1,
+  }) =>
+      MapStrike.fought(
+        target: target,
+        targetSprite: sprite,
+        fight: result.fight,
+        sent: result.sent,
+        victory: result.victory,
+        fades: false,
+        span: span,
+      );
+
+  /// The assault on the volcano the kraken guards, drawn as [sprite] from
+  /// [target], its top left cell, that ended in [result].
+  factory MapStrike.onVolcano({
+    required (int, int) target,
+    required String sprite,
+    required AttackVolcanicKernelResult result,
+  }) =>
+      MapStrike.fought(
+        target: target,
+        targetSprite: sprite,
+        fight: result.fight,
+        sent: result.sent,
+        victory: result.victory,
+        fades: false,
+        span: VolcanicKernelPlacer.side,
+      );
+
   @override
   Set<String> get imagePaths => {lead.iconPath};
 
@@ -95,6 +140,7 @@ class MapStrike extends MapEffect {
   MapEffectRun stage(MapStage stage) => MapStrikeRun(
         this,
         stage: stage,
-        geometry: StrikeGeometry(origin: stage.originOf(target), target: target),
+        geometry: StrikeGeometry(
+            origin: stage.originOf(target), target: target, span: span),
       );
 }

@@ -12,8 +12,9 @@ import '../../../domain/action/attack_post_validator.dart';
 import '../../../domain/volcano/kernel_garrison.dart';
 import '../../../domain/map/transition_base.dart';
 import '../../widgets/faction/faction_base_sheet.dart';
+import '../../widgets/map/effects/map_effects.dart';
 import '../../widgets/map/rival_post_sheet.dart';
-import 'fight/base_army_selection_screen.dart';
+import 'game_screen_rival_attack.dart';
 
 /// The faction whose base stands on ([x], [y]) of the first level, if any.
 Faction? factionBaseAt(Game game, int x, int y) {
@@ -27,14 +28,15 @@ Faction? factionBaseAt(Game game, int x, int y) {
 }
 
 /// Opens the sheet of the base of [faction]; its attack button leads to
-/// the army selection.
+/// the army selection, and the assault plays on the map through [effects].
 void openFactionBaseSheet(
   BuildContext context,
   Game game,
   GameRepository repository,
   Faction faction,
-  VoidCallback onChanged,
-) {
+  VoidCallback onChanged, {
+  MapEffects? effects,
+}) {
   final Player target = game.players[faction.id]!;
   showFactionBaseSheet(
     context,
@@ -53,25 +55,18 @@ void openFactionBaseSheet(
       repository.save(game);
       onChanged();
       if (context.mounted) {
-        openFactionBaseSheet(context, game, repository, faction, onChanged);
+        openFactionBaseSheet(context, game, repository, faction, onChanged,
+            effects: effects);
       }
     },
-    onAttack: () => Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => BaseArmySelectionScreen(
-          game: game,
-          repository: repository,
-          target: target,
-          onChanged: onChanged,
-        ),
-      ),
-    ),
+    onAttack: () => handleRivalAssault(
+        context, game, repository, target, onChanged, effects: effects),
   );
 }
 
 /// Opens the sheet of the [post] at ([x], [y]) of [level] that another
 /// player holds; its attack button leads to the army selection of the
-/// level.
+/// level; the assault plays on the map through [effects].
 void openRivalPostSheet(
   BuildContext context,
   Game game,
@@ -80,39 +75,33 @@ void openRivalPostSheet(
   int x,
   int y,
   int level,
-  VoidCallback onChanged,
-) {
+  VoidCallback onChanged, {
+  MapEffects? effects,
+}) {
   final Player owner = game.players[post.capturedBy]!;
   showRivalPostSheet(
     context,
     post: post,
     ownerName: owner.name,
     refusal: AttackPostValidator.refusal(game, game.humanPlayer, level, x, y),
-    onAttack: () => Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => BaseArmySelectionScreen(
-          game: game,
-          repository: repository,
-          target: owner,
-          post: (x: x, y: y, level: level),
-          onChanged: onChanged,
-        ),
-      ),
-    ),
+    onAttack: () => handleRivalAssault(
+        context, game, repository, owner, onChanged,
+        post: (x: x, y: y, level: level), effects: effects),
   );
 }
 
 /// Opens the sheet of the volcanic kernel at ([x], [y]) that another
 /// player holds; its attack button leads to the army selection of the
-/// volcano level.
+/// volcano level; the assault plays on the map through [effects].
 void openRivalKernelSheet(
   BuildContext context,
   Game game,
   GameRepository repository,
   int x,
   int y,
-  VoidCallback onChanged,
-) {
+  VoidCallback onChanged, {
+  MapEffects? effects,
+}) {
   final Player owner = game.players[game.levels[KernelGarrison.volcanoLevel]!
       .cellAt(x, y)
       .collectedBy]!;
@@ -121,17 +110,9 @@ void openRivalKernelSheet(
     post: null,
     ownerName: owner.name,
     refusal: AttackHeldKernelValidator.refusal(game, game.humanPlayer, x, y),
-    onAttack: () => Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => BaseArmySelectionScreen(
-          game: game,
-          repository: repository,
-          target: owner,
-          post: (x: x, y: y, level: KernelGarrison.volcanoLevel),
-          kernel: true,
-          onChanged: onChanged,
-        ),
-      ),
-    ),
+    onAttack: () => handleRivalAssault(
+        context, game, repository, owner, onChanged,
+        post: (x: x, y: y, level: KernelGarrison.volcanoLevel),
+        kernel: true, effects: effects),
   );
 }

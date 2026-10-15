@@ -103,7 +103,8 @@ void _showCellAction(BuildContext context, Game game,
   }
   final faction = level == 1 ? factionBaseAt(game, x, y) : null;
   if (faction != null) {
-    openFactionBaseSheet(context, game, repository, faction, onChanged);
+    openFactionBaseSheet(context, game, repository, faction, onChanged,
+        effects: effects);
     return;
   }
   final base = cell.transitionBase;
@@ -141,10 +142,9 @@ void _showCellAction(BuildContext context, Game game,
     case CellContentType.empty:
       showCellInfoSheet(context, title: l10n.screenPlainTitle(x, y),
         message: l10n.screenNothingToSee);
-    case CellContentType.volcanicKernel when isKernelHeldByRival(game, cell):
-      openRivalKernelSheet(context, game, repository, x, y, onChanged);
     case CellContentType.volcanicKernel:
       openVolcanicKernelSheet(context, game, repository, x, y, level,
-          isCaptured: cell.collectedBy == human.id, onChanged: onChanged);
+          isCaptured: cell.collectedBy == human.id, onChanged: onChanged,
+          effects: effects);
   }
 }

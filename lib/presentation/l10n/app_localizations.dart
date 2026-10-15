@@ -3391,7 +3391,7 @@ abstract class AppLocalizations {
   /// No description provided for @guidePostToFind.
   ///
   /// In fr, this message translates to:
-  /// **'Explore la Carte pour trouver {post, select, faille{une Faille} cheminee{une Cheminée} other{le Noyau}}.'**
+  /// **'{post, select, faille{Explore la Carte pour trouver une Faille, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !} cheminee{Explore la Carte au niveau 2 pour trouver une Cheminée, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !} other{Explore la Carte au niveau 3 pour trouver le Noyau, mais n\'oublie pas de continuer à améliorer tes bâtiments et ton armée !}}'**
   String guidePostToFind(String post);
 
   /// No description provided for @guidePostAssault.
@@ -4660,42 +4660,6 @@ abstract class AppLocalizations {
   /// **'La base tient bon'**
   String get assaultBaseIntact;
 
-  /// No description provided for @factionAttackBanner.
-  ///
-  /// In fr, this message translates to:
-  /// **'{faction} attaque : fin du tour {turn}, {remaining, plural, =0{ce tour} one{dans {remaining} tour} other{dans {remaining} tours}}'**
-  String factionAttackBanner(String faction, int turn, int remaining);
-
-  /// No description provided for @factionAttackArmy.
-  ///
-  /// In fr, this message translates to:
-  /// **'Armée : {units}'**
-  String factionAttackArmy(String units);
-
-  /// No description provided for @factionAttackSheetTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Attaque de {faction}'**
-  String factionAttackSheetTitle(String faction);
-
-  /// No description provided for @factionAttackSheetArrival.
-  ///
-  /// In fr, this message translates to:
-  /// **'Frappe la base à la fin du tour {turn}'**
-  String factionAttackSheetArrival(int turn);
-
-  /// No description provided for @factionAttackSheetArmy.
-  ///
-  /// In fr, this message translates to:
-  /// **'Armée envoyée'**
-  String get factionAttackSheetArmy;
-
-  /// No description provided for @factionAttackSheetHint.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les unités du niveau 1 et le rempart défendront la base.'**
-  String get factionAttackSheetHint;
-
   /// No description provided for @factionAttackRepelled.
   ///
   /// In fr, this message translates to:
@@ -4777,19 +4741,19 @@ abstract class AppLocalizations {
   /// No description provided for @tipFactionAttackTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Une faction t\'attaque'**
+  /// **'Une faction t\'a attaqué'**
   String get tipFactionAttackTitle;
 
   /// No description provided for @tipFactionAttackLine1.
   ///
   /// In fr, this message translates to:
-  /// **'Une faction rivale a envoyé son armée : elle frappera ta base à la date annoncée.'**
+  /// **'Une faction rivale a frappé ta base sans prévenir, comme tu peux le faire chez elle.'**
   String get tipFactionAttackLine1;
 
   /// No description provided for @tipFactionAttackLine2.
   ///
   /// In fr, this message translates to:
-  /// **'Touche le bandeau pour voir sa composition exacte et prépare tes défenseurs du niveau 1.'**
+  /// **'La prochaine peut tomber n\'importe quel tour : garde des défenseurs au niveau 1 et un bon rempart.'**
   String get tipFactionAttackLine2;
 
   /// No description provided for @tipFactionAttackLine3.

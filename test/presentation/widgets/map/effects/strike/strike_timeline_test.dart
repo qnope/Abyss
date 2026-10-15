@@ -69,4 +69,11 @@ void main() {
     expect(long.showsHit(19, long.hitAt(19) + AbyssMotion.fade), isFalse);
     expect(timeline.showsHit(0, timeline.hitAt(0) - lunge ~/ 4), isFalse);
   });
+
+  test('lungeFor paces any fight like a strike of as many hits', () {
+    for (final hits in [0, 2, 20, 200]) {
+      expect(StrikeTimeline.lungeFor(hits),
+          StrikeTimeline(swim: swim, hits: hits).lunge);
+    }
+  });
 }

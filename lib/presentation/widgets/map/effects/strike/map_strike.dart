@@ -42,13 +42,7 @@ class MapStrike extends MapEffect {
       target: target,
       lead: strikeLeadOf(result.sent) ?? UnitType.scout,
       count: result.sent.values.fold(0, (sum, count) => sum + count),
-      rounds: [
-        for (final turn in result.fight?.turnSummaries ?? const [])
-          (
-            dealt: turn.damageDealtByPlayer,
-            taken: turn.damageDealtByMonster,
-          ),
-      ],
+      rounds: roundsOf(result.fight),
       victory: result.victory,
       lairSprite: lair.svgPath,
     );

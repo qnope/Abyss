@@ -25,6 +25,13 @@ void main() {
         isNot(base.attackerRect(1, approach: 1).center));
   });
 
+  test('lunging, they come closer without reaching the place', () {
+    final near = distance(base.attackerRect(0, approach: 1));
+    final lunged = distance(base.attackerRect(0, approach: 1, reach: 1));
+    expect(lunged, lessThan(near));
+    expect(lunged, greaterThan(base.radius));
+  });
+
   test('repelled, they are pushed back; winning, they reach the place', () {
     final near = distance(base.attackerRect(0, approach: 1));
     expect(distance(base.attackerRect(0, approach: 1, pushed: 1)),

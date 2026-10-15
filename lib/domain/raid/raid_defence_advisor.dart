@@ -51,6 +51,17 @@ abstract final class RaidDefenceAdvisor {
     return _lastAnswer = added == null ? null : have + added;
   }
 
+  /// Harpoonists alone, backed by the rampart, that beat [wave] on
+  /// [player]'s base; `null` when even [maxAdded] would not hold.
+  static int? harpoonistsAlone(Player player, MonsterLair wave) =>
+      planner.smallestWinning(
+        maxAdded,
+        (int k) => <UnitType, int>{UnitType.harpoonist: k},
+        () => CombatantBuilder.monsterCombatantsFrom(wave),
+        boost: FightMonsterHelpers.unitBoostOf(player, defendingBase: true),
+        allies: _rampartOf(player),
+      );
+
   static String? _lastKey;
   static int? _lastAnswer;
 

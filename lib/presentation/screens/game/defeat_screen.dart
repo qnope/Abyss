@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/game/defeat_analysis.dart';
 import '../../../domain/game/defeat_checker.dart';
 import '../../../domain/game/game_statistics.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../../widgets/game_over/defeat_cause_card.dart';
 import 'game_over_screen.dart';
 
 /// Shown when the base falls after too many raids lost in a row.
@@ -16,6 +18,10 @@ class DefeatScreen extends StatelessWidget {
   /// Name of the faction that tamed the volcano first; `null` when the
   /// base fell to raids.
   final String? winnerName;
+
+  /// Why the base fell to the raids; `null` when a faction won, or when
+  /// no lost raid is left in the history.
+  final DefeatAnalysis? analysis;
   final VoidCallback onReturnToMenu;
 
   /// Shares the lost game as a replay; hidden when `null`.
@@ -26,6 +32,7 @@ class DefeatScreen extends StatelessWidget {
     required this.statistics,
     required this.fallTurn,
     this.winnerName,
+    this.analysis,
     required this.onReturnToMenu,
     this.onExport,
   });
@@ -41,6 +48,7 @@ class DefeatScreen extends StatelessWidget {
           ? l10n.gameOverDefeatSubtitle(fallTurn, DefeatChecker.lostRaidsLimit)
           : l10n.gameOverFactionWonSubtitle(winnerName!, fallTurn),
       statistics: statistics,
+      details: analysis == null ? null : DefeatCauseCard(analysis: analysis!),
       actions: [
         GameOverAction(
           label: l10n.gameOverBackToMenu,

@@ -1207,5 +1207,14 @@
   "guideLeviathanReinforce": "Envoie {count, plural, one{{count} Harponneur} other{{count} Harponneurs}} de plus.",
   "@guideLeviathanReinforce": {"placeholders": {"count": {"type": "int"}}},
   "turnStorySkip": "Passer ›",
-  "@turnStorySkip": {"description": "Button skipping the story of the end of a turn told on the map, before its summary."}
+  "@turnStorySkip": {"description": "Button skipping the story of the end of a turn told on the map, before its summary."},
+  "defeatCauseTitle": "Ce qui s'est passé",
+  "defeatCauseRaid": "Tour {turn} : {wave} contre {defenders, plural, =0{aucun défenseur} =1{1 défenseur} other{{defenders} défenseurs}}",
+  "@defeatCauseRaid": {"placeholders": {"turn": {"type": "int"}, "wave": {"type": "String"}, "defenders": {"type": "int"}}},
+  "defeatAdviceRaiseAnArmy": "Ta base était vide. Construis la Caserne et recrute des Harponneurs dès qu'un raid est annoncé.",
+  "defeatAdviceMoreDefenders": "Contre ton dernier raid, il fallait environ {needed} Harponneurs. Tu avais {defenders, plural, =0{aucun défenseur} =1{1 défenseur} other{{defenders} défenseurs}}.",
+  "@defeatAdviceMoreDefenders": {"placeholders": {"needed": {"type": "int"}, "defenders": {"type": "int"}}},
+  "defeatAdviceTooStrong": "Ton dernier raid demandait plus de {max} Harponneurs : garde la jauge de bruit plus basse et monte le rempart de la Citadelle.",
+  "@defeatAdviceTooStrong": {"placeholders": {"max": {"type": "int"}}},
+  "defeatAdviceWrongUnits": "Tu avais assez de défenseurs, mais pas les bons."
 }

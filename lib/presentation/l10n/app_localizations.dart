@@ -5091,6 +5091,42 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Passer ›'**
   String get turnStorySkip;
+
+  /// No description provided for @defeatCauseTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce qui s\'est passé'**
+  String get defeatCauseTitle;
+
+  /// No description provided for @defeatCauseRaid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour {turn} : {wave} contre {defenders, plural, =0{aucun défenseur} =1{1 défenseur} other{{defenders} défenseurs}}'**
+  String defeatCauseRaid(int turn, String wave, int defenders);
+
+  /// No description provided for @defeatAdviceRaiseAnArmy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta base était vide. Construis la Caserne et recrute des Harponneurs dès qu\'un raid est annoncé.'**
+  String get defeatAdviceRaiseAnArmy;
+
+  /// No description provided for @defeatAdviceMoreDefenders.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contre ton dernier raid, il fallait environ {needed} Harponneurs. Tu avais {defenders, plural, =0{aucun défenseur} =1{1 défenseur} other{{defenders} défenseurs}}.'**
+  String defeatAdviceMoreDefenders(int needed, int defenders);
+
+  /// No description provided for @defeatAdviceTooStrong.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton dernier raid demandait plus de {max} Harponneurs : garde la jauge de bruit plus basse et monte le rempart de la Citadelle.'**
+  String defeatAdviceTooStrong(int max);
+
+  /// No description provided for @defeatAdviceWrongUnits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu avais assez de défenseurs, mais pas les bons.'**
+  String get defeatAdviceWrongUnits;
 }
 
 class _AppLocalizationsDelegate

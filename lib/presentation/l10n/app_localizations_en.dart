@@ -3616,4 +3616,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get turnStorySkip => 'Skip ›';
+
+  @override
+  String get defeatCauseTitle => 'What happened';
+
+  @override
+  String defeatCauseRaid(int turn, String wave, int defenders) {
+    String _temp0 = intl.Intl.pluralLogic(
+      defenders,
+      locale: localeName,
+      other: '$defenders defenders',
+      one: '1 defender',
+      zero: 'no defender',
+    );
+    return 'Turn $turn: $wave against $_temp0';
+  }
+
+  @override
+  String get defeatAdviceRaiseAnArmy =>
+      'Your base was empty. Build the Barracks and recruit Harpooners as soon as a raid is announced.';
+
+  @override
+  String defeatAdviceMoreDefenders(int needed, int defenders) {
+    String _temp0 = intl.Intl.pluralLogic(
+      defenders,
+      locale: localeName,
+      other: '$defenders defenders',
+      one: '1 defender',
+      zero: 'no defender',
+    );
+    return 'Against your last raid, it took about $needed Harpooners. You had $_temp0.';
+  }
+
+  @override
+  String defeatAdviceTooStrong(int max) {
+    return 'Your last raid called for more than $max Harpooners: keep the noise gauge lower and raise the Citadel\'s rampart.';
+  }
+
+  @override
+  String get defeatAdviceWrongUnits =>
+      'You had enough defenders, but not the right ones.';
 }

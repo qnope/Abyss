@@ -20,7 +20,7 @@ const String _conquestSeed1Turn30 =
     'acks":3,"coralCitadel":0,"descentModule":0,"pressureCapsule":0,"vo'
     'lcanicKernel":0},"baseUnits":{"scout":0,"harpoonist":3,"guardian":'
     '0,"domeBreaker":0,"abyssAdmiral":1,"saboteur":0},"resources":{"alg'
-    'ae":5000,"coral":713,"ore":2047,"energy":355,"pearl":10},"failleCa'
+    'ae":5000,"coral":709,"ore":1342,"energy":355,"pearl":10},"failleCa'
     'ptured":null,"chemineeCaptured":null,"kernelCaptured":null,"leviat'
     'hanStruck":null,"leviathanHeld":null,"raids":[{"turn":13,"monsters'
     '":26,"level":1,"victory":false},{"turn":20,"monsters":20,"level":1'

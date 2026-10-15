@@ -24,6 +24,23 @@ abstract final class RaidSpoils {
     );
   }
 
+  /// Turns of production a repelled raid brings back, at most.
+  static const int lootTurnsCap = 2;
+
+  /// [loot] with algae, coral and ore cut to [lootTurnsCap] turns of
+  /// [production]; pearls are left as they are.
+  static Map<ResourceType, int> capToProduction(
+    Map<ResourceType, int> loot,
+    Map<ResourceType, int> production,
+  ) {
+    return loot.map((ResourceType t, int v) => MapEntry(
+          t,
+          t == ResourceType.pearl
+              ? v
+              : min(v, lootTurnsCap * (production[t] ?? 0)),
+        ));
+  }
+
   /// Removes [rate] of every stock but pearls and returns what was taken.
   static Map<ResourceType, int> pillage(
     Map<ResourceType, Resource> resources, {

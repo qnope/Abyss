@@ -5,28 +5,40 @@ import '../map/monster_difficulty.dart';
 import '../map/monster_family.dart';
 import '../map/monster_lair.dart';
 
-/// Builds the monster wave of a raid from the noise made so far.
+/// Builds the monster wave of a raid from the noise made so far, or from
+/// the strength of the base when that is the larger.
 ///
 /// The wave power is `totalNoise × powerPer100Noise / 100` (about noise
-/// ÷ 2.8). Weak waves are made of level 1 monsters; stronger ones switch to
+/// ÷ 2.8), or [defenceSharePercent] % of the `DefenceStrength` of the
+/// base when that is more, so a large garrison is never left in peace.
+/// Weak waves are made of level 1 monsters; stronger ones switch to
 /// fewer, tougher monsters. The power is shared between two families
 /// drawn at random, each turned into its own number of monsters.
 abstract final class RaidWaveFactory {
   /// Wave power earned by every 100 points of noise, before the
   /// difficulty scales it (see `Difficulty.monsterPercent`).
   static const int powerPer100Noise = 36;
+
+  /// Share of the base's strength a wave matches, at least.
+  static const int defenceSharePercent = 75;
   static const int minMonsters = 5;
   static const int mediumFromPower = 30;
   static const int hardFromPower = 80;
 
   /// [monsterPercent] scales the power, so a harder game also switches
-  /// sooner to tougher monsters.
+  /// sooner to tougher monsters. [defenceStrength] is the
+  /// `DefenceStrength` of the base the wave strikes.
   static MonsterLair fromTotalNoise(
     int totalNoise, {
     Random? random,
     int monsterPercent = 100,
+    int defenceStrength = 0,
   }) {
-    final int power = totalNoise * powerPer100Noise * monsterPercent ~/ 10000;
+    final int raw = max(
+      totalNoise * powerPer100Noise,
+      defenceStrength * defenceSharePercent,
+    );
+    final int power = raw * monsterPercent ~/ 10000;
     final MonsterDifficulty level =
         power >= hardFromPower
             ? MonsterDifficulty.hard

@@ -80,11 +80,12 @@ void main() {
       Map<ResourceType, int> lootOf(Player player) => RaidBattle.fight(
               player: player, wave: wave, turn: 10, random: Random(1))
           .loot;
-      final plain = lootOf(raidPlayer(units: {UnitType.harpoonist: 30}));
-      final raider = lootOf(_with(raidPlayer(units: {UnitType.harpoonist: 30}),
-          TechBranch.explorer, [_a, _a]));
+      Player garrison() =>
+          raidPlayer(units: {UnitType.harpoonist: 30}, headquartersLevel: 1);
+      final plain = lootOf(garrison());
+      final raider = lootOf(_with(garrison(), TechBranch.explorer, [_a, _a]));
 
-      expect(plain, isNotEmpty);
+      expect(plain[ResourceType.coral], greaterThan(0));
       for (final type in plain.keys) {
         expect(raider[type], plain[type]! * 150 ~/ 100);
       }

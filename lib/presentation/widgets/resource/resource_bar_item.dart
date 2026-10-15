@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/resource/resource.dart';
 import '../../extensions/resource_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import '../ambience/delta_float.dart';
 import 'animated_resource_amount.dart';
 import 'resource_icon.dart';
 
@@ -33,12 +34,15 @@ class ResourceBarItem extends StatelessWidget {
             children: [
               ResourceIcon(type: resource.type, size: 20),
               const SizedBox(width: 4),
-              AnimatedResourceAmount(
-                amount: resource.amount,
-                baseColor: color,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+              DeltaFloat(
+                value: resource.amount,
+                child: AnimatedResourceAmount(
+                  amount: resource.amount,
+                  baseColor: color,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                 ),
               ),
             ],

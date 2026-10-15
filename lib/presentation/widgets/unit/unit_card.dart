@@ -5,6 +5,8 @@ import '../../extensions/unit_type_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../ambience/delta_float.dart';
+import '../ambience/increase_pop.dart';
 import 'unit_icon.dart';
 
 class UnitCard extends StatelessWidget {
@@ -58,11 +60,16 @@ class UnitCard extends StatelessWidget {
   Widget _buildContent(BuildContext context, TextTheme textTheme) {
     return Row(
       children: [
-        UnitIcon(
-          type: unitType,
-          size: 40,
-          greyscale: !isUnlocked,
-          faded: !isUnlocked,
+        IncreasePop(
+          value: _totalCount,
+          size: const Size.square(40),
+          glowColor: unitType.color,
+          child: UnitIcon(
+            type: unitType,
+            size: 40,
+            greyscale: !isUnlocked,
+            faded: !isUnlocked,
+          ),
         ),
         const SizedBox(width: 16),
         Column(
@@ -77,10 +84,13 @@ class UnitCard extends StatelessWidget {
               ),
             ),
             if (isUnlocked)
-              Text(
-                _subtitle(context.l10n),
-                style: textTheme.bodySmall?.copyWith(
-                  color: AbyssColors.onSurfaceDim,
+              DeltaFloat(
+                value: _totalCount,
+                child: Text(
+                  _subtitle(context.l10n),
+                  style: textTheme.bodySmall?.copyWith(
+                    color: AbyssColors.onSurfaceDim,
+                  ),
                 ),
               )
             else

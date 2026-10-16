@@ -4,7 +4,6 @@ import '../action/announce_attack_action.dart';
 import '../action/attack_base_action.dart';
 import '../action/attack_base_defence.dart';
 import '../action/fight_monster_helpers.dart';
-import '../action/recruit_unit_action.dart';
 import '../fight/army_planner.dart';
 import '../fight/combatant.dart';
 import '../fight/combatant_builder.dart';
@@ -20,6 +19,7 @@ import 'faction_personality.dart';
 import 'base_intel.dart';
 import 'faction_kernel_war.dart';
 import 'faction_post_war.dart';
+import 'faction_spy_scout.dart';
 import 'faction_traits.dart';
 
 /// When and whom a faction attacks. One conservative rule that every
@@ -73,7 +73,7 @@ abstract final class FactionWar {
   static void play(ScriptTurn turn, FactionPersonality personality) {
     if (!isDue(turn.number, personality)) return;
     if (turn.game.humanPlayer.raidState.hasAttackFrom(turn.player.id)) return;
-    _keepAScout(turn.player, turn);
+    FactionSpyScout.keep(turn, personality);
     final FactionTraits traits = FactionTraits.of(personality);
     final ArmyPlanner planner = traits.planner;
     final bool grudge = isGrudgeSlot(turn.number, personality);
@@ -89,15 +89,6 @@ abstract final class FactionWar {
             : _raidBases(turn, planner, grudge: grudge) ||
                 FactionPostWar.play(turn, planner);
     if (!attacked && !traits.kernelFirst) FactionKernelWar.play(turn, planner);
-  }
-
-  /// A faction spies before it strikes: it keeps a Scout at home for the
-  /// slot, whatever the exploration left.
-  static void _keepAScout(Player me, ScriptTurn turn) {
-    final int scouts =
-        me.unitsOnLevel(RaidBattle.baseLevel)[UnitType.scout]?.count ?? 0;
-    if (scouts > 0) return;
-    turn.tryPerform(RecruitUnitAction(unitType: UnitType.scout, quantity: 1));
   }
 
   /// Attacks the weakest beatable base; returns whether it attacked.

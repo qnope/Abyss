@@ -1,12 +1,8 @@
-import 'dart:math';
-
-import '../../action/recruit_unit_action.dart';
 import '../../action/upgrade_building_action.dart';
 import '../../building/building_type.dart';
 import '../../map/grid_position.dart';
 import '../../tech/tech_branch.dart';
 import '../../tech/tech_option.dart';
-import '../../unit/unit_type.dart';
 import '../game_script.dart';
 import '../script_turn.dart';
 import '../../fight/army_planner.dart';
@@ -14,11 +10,11 @@ import 'battle_moves.dart';
 import 'conquest_moves.dart';
 import 'contest_moves.dart';
 import 'event_moves.dart';
-import 'expedition_moves.dart';
 import 'explore_moves.dart';
 import 'growth_moves.dart';
 import 'kernel_guard_moves.dart';
 import 'leviathan_guard_moves.dart';
+import 'scout_moves.dart';
 
 /// "Conquête": plays a whole game the way a careful player would, from
 /// the first building to the volcanic kernel at level 10.
@@ -75,6 +71,15 @@ class ConquestStrategy extends GameScript {
   /// Scouts kept exploring the base level while it is not fully known.
   final int explorers;
 
+  /// Scouts an expedition keeps on the deepest level it reaches.
+  final int deepScouts;
+
+  /// Explorations a turn on levels 2 and 3.
+  final int deepExplorers;
+
+  /// Whether scouts go down ahead of the army, ready or not.
+  final bool scoutsAhead;
+
   /// What the scouts of the base level add to a target while nothing is
   /// found yet; the default sends them away from the middle of the map.
   final double Function(ScriptTurn turn, GridPosition target)? scoutBias;
@@ -97,6 +102,9 @@ class ConquestStrategy extends GameScript {
     this.huntsUnderRaid = false,
     this.growth = growthOrder,
     this.explorers = 2,
+    this.deepScouts = ConquestMoves.expeditionScouts,
+    this.deepExplorers = 2,
+    this.scoutsAhead = false,
     this.scoutBias,
     this.researchPlan = GrowthMoves.researchPlan,
     this.researchPicks = GrowthMoves.picks,
@@ -118,7 +126,8 @@ class ConquestStrategy extends GameScript {
     if (guardsKernel) turn.guardKernel(planner);
     turn.research(plan: researchPlan, picks: researchPicks);
     if (!alert) {
-      turn.advanceConquest(planner, share: conquestShare);
+      turn.advanceConquest(planner,
+          share: conquestShare, scouts: deepScouts);
       if (contests) turn.contest();
       if (huntsLairs && !huntsUnderRaid) turn.huntLairs(planner);
     }
@@ -128,36 +137,11 @@ class ConquestStrategy extends GameScript {
     _scout(turn);
   }
 
-  void _scout(ScriptTurn turn) {
-    final bool expedition =
-        turn.ownBase(1) != null &&
-        !turn.game.isVolcanicKernelCapturedBy(turn.player.id);
-    final int reserve = expedition ? ConquestMoves.expeditionScouts : 0;
-    final int home = turn.player.unitsOnLevel(1)[UnitType.scout]!.count;
-    final int wanted = reserve + (turn.fullyExplored(1) ? 0 : explorers);
-    if (home < wanted) {
-      turn.tryPerform(
-        RecruitUnitAction(unitType: UnitType.scout, quantity: wanted - home),
+  void _scout(ScriptTurn turn) => turn.scout(
+        explorers: explorers,
+        deepScouts: deepScouts,
+        deepExplorers: deepExplorers,
+        scoutsAhead: scoutsAhead,
+        bias: scoutBias,
       );
-    }
-    final int spare = turn.player.unitsOnLevel(1)[UnitType.scout]!.count;
-    turn.explore(1, min(explorers, spare - reserve), (GridPosition p) {
-      final bool found = turn.ownBase(1) != null || turn.openBase(1) != null;
-      if (found) return 0;
-      return scoutBias?.call(turn, p) ?? 0.3 * _fromCentre(p);
-    });
-    turn.explore(
-      2,
-      2,
-      (GridPosition p) => turn.openBase(2) == null ? 0.5 * _fromCentre(p) : 0,
-    );
-    turn.explore(
-      3,
-      2,
-      (GridPosition p) => turn.openKernel() == null ? -1.0 * _fromCentre(p) : 0,
-    );
-  }
-
-  static int _fromCentre(GridPosition p) =>
-      max((p.x - 10).abs(), (p.y - 10).abs());
 }

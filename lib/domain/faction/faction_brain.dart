@@ -5,6 +5,7 @@ import 'faction_exploration.dart';
 import 'faction_kernel_guard.dart';
 import 'faction_personality.dart';
 import 'faction_research.dart';
+import 'faction_scouting.dart';
 import 'faction_traits.dart';
 import 'faction_war.dart';
 import 'faction_war_recruit.dart';
@@ -37,6 +38,9 @@ class FactionBrain extends GameScript {
       huntsUnderRaid: true,
       growth: traits.growth,
       explorers: traits.explorers,
+      deepScouts: FactionScouting.deepScoutsOf(personality),
+      deepExplorers: FactionScouting.deepExplorers,
+      scoutsAhead: true,
       scoutBias: FactionExploration.forTurn,
       researchPlan: FactionResearch.planOf(personality),
       researchPicks: FactionResearch.picksOf(personality),

@@ -4,6 +4,8 @@ import '../../action/recruit_unit_action.dart';
 import '../../action/upgrade_building_action.dart';
 import '../../building/building_type.dart';
 import '../../map/grid_position.dart';
+import '../../tech/tech_branch.dart';
+import '../../tech/tech_option.dart';
 import '../../unit/unit_type.dart';
 import '../game_script.dart';
 import '../script_turn.dart';
@@ -77,6 +79,10 @@ class ConquestStrategy extends GameScript {
   /// found yet; the default sends them away from the middle of the map.
   final double Function(ScriptTurn turn, GridPosition target)? scoutBias;
 
+  /// The research plan and the options of its choice nodes.
+  final List<TechBranch> researchPlan;
+  final Map<TechBranch, List<TechOption>> researchPicks;
+
   @override
   final String name;
 
@@ -92,6 +98,8 @@ class ConquestStrategy extends GameScript {
     this.growth = growthOrder,
     this.explorers = 2,
     this.scoutBias,
+    this.researchPlan = GrowthMoves.researchPlan,
+    this.researchPicks = GrowthMoves.picks,
     this.name = 'conquest',
   });
 
@@ -108,7 +116,7 @@ class ConquestStrategy extends GameScript {
       turn.tryPerform(UpgradeBuildingAction(buildingType: goal));
     }
     if (guardsKernel) turn.guardKernel(planner);
-    turn.research();
+    turn.research(plan: researchPlan, picks: researchPicks);
     if (!alert) {
       turn.advanceConquest(planner, share: conquestShare);
       if (contests) turn.contest();

@@ -4,6 +4,7 @@ import '../../action/descend_action.dart';
 import '../../fight/combatant.dart';
 import '../../fight/guardian_factory.dart';
 import '../../map/cell_content_type.dart';
+import '../../map/game_map.dart';
 import '../../map/grid_position.dart';
 import '../../map/map_cell.dart';
 import '../../map/transition_base_type.dart';
@@ -39,6 +40,14 @@ extension ExpeditionMoves on ScriptTurn {
       3,
       (MapCell c) =>
           c.content == CellContentType.volcanicKernel && !c.isCollected));
+
+  /// Whether the fog shows a cell of the volcanic kernel, held or not.
+  bool kernelSeen() {
+    final GameMap? map = game.levels[3];
+    if (map == null) return false;
+    return player.revealedCellsOnLevel(3).any((GridPosition p) =>
+        map.cellAt(p.x, p.y).content == CellContentType.volcanicKernel);
+  }
 
   /// Fighting units of [level] (scouts aside, they only explore).
   Map<UnitType, int> fightersOn(int level) => <UnitType, int>{

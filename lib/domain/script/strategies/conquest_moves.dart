@@ -24,18 +24,20 @@ extension ConquestMoves on ScriptTurn {
   static const int expeditionScouts = 4;
 
   /// Plays the next step of the conquest, with [share] of the stocks at
-  /// most for the recruits it needs.
-  void advanceConquest(ArmyPlanner planner, {double share = 0.5}) {
+  /// most for the recruits it needs and [scouts] going down with the army.
+  void advanceConquest(ArmyPlanner planner,
+      {double share = 0.5, int scouts = expeditionScouts}) {
     if (game.isVolcanicKernelCapturedBy(player.id)) return;
     if (_built(BuildingType.pressureCapsule)) {
       final GridPosition? kernel = openKernel();
       if (kernel != null && assault(3, kernel, planner)) return;
-      _bringDown(planner, null, <int>[1, 2], share);
+      _bringDown(planner, null, <int>[1, 2], share, scouts);
     } else if (_built(BuildingType.descentModule)) {
       if (ownBase(2) != null) return;
       final GridPosition? cheminee = openBase(2);
       if (cheminee != null && assault(2, cheminee, planner)) return;
-      _bringDown(planner, TransitionBaseType.cheminee, <int>[1], share);
+      _bringDown(
+          planner, TransitionBaseType.cheminee, <int>[1], share, scouts);
     } else if (ownBase(1) == null) {
       final GridPosition? faille = openBase(1);
       if (faille == null) return;
@@ -47,9 +49,10 @@ extension ConquestMoves on ScriptTurn {
 
   /// Sends the expedition down [path] (levels to leave, in order) once the
   /// forces there and below beat the guardians of [type] (the kernel when
-  /// `null`); recruits towards it meanwhile.
+  /// `null`), with up to [wanted] scouts below; recruits towards it
+  /// meanwhile.
   void _bringDown(ArmyPlanner planner, TransitionBaseType? type,
-      List<int> path, double share) {
+      List<int> path, double share, int wanted) {
     final int bottom = path.last + 1;
     final Map<UnitType, int> below = <UnitType, int>{};
     for (int level = path.first + 1; level <= bottom; level++) {
@@ -58,7 +61,7 @@ extension ConquestMoves on ScriptTurn {
     final int scoutsBelow =
         player.unitsOnLevel(bottom)[UnitType.scout]?.count ?? 0;
     final int scoutsHome = player.unitsOnLevel(1)[UnitType.scout]?.count ?? 0;
-    final int scouts = (expeditionScouts - scoutsBelow).clamp(0, scoutsHome);
+    final int scouts = (wanted - scoutsBelow).clamp(0, scoutsHome);
     final Map<UnitType, int> sent;
     if (readyFor(type, bottom, planner)) {
       if (scoutsBelow > 1) return;

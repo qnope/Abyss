@@ -1,3 +1,5 @@
+import '../../action/action.dart';
+import '../../action/action_failure.dart';
 import '../../action/research_tech_action.dart';
 import '../../action/unlock_branch_action.dart';
 import '../../action/upgrade_building_action.dart';
@@ -28,21 +30,37 @@ extension GrowthMoves on ScriptTurn {
     TechBranch.resources,
   ];
 
-  /// Unlocks and researches the next nodes of [researchPlan] it can pay.
-  void research() {
+  /// Unlocks and researches the next nodes of [plan] it can pay, with the
+  /// options of [picks]. An Explorer node it cannot pay is passed over
+  /// for the next entry; any other shortfall waits for a later turn.
+  void research({
+    List<TechBranch> plan = researchPlan,
+    Map<TechBranch, List<TechOption>> picks = GrowthMoves.picks,
+  }) {
     final Map<TechBranch, int> planned = <TechBranch, int>{};
-    for (final TechBranch branch in researchPlan) {
+    for (final TechBranch branch in plan) {
       final int target = (planned[branch] ?? 0) + 1;
       planned[branch] = target;
       final state = player.techBranches[branch]!;
       if (state.researchLevel >= target) continue;
-      if (!state.unlocked &&
-          !tryPerform(UnlockBranchAction(branch: branch))) {
-        return;
+      if (!state.unlocked) {
+        final Action unlock = UnlockBranchAction(branch: branch);
+        if (!tryPerform(unlock)) {
+          if (_passesOver(branch, unlock)) continue;
+          return;
+        }
       }
-      if (!tryPerform(researchNext(branch))) return;
+      final Action next = researchNext(branch, picks: picks);
+      if (!tryPerform(next) && !_passesOver(branch, next)) return;
     }
   }
+
+  /// Whether the plan goes on past [step] of [branch]: only an Explorer
+  /// node short of resources is passed over.
+  bool _passesOver(TechBranch branch, Action step) =>
+      branch == TechBranch.explorer &&
+      !isOver &&
+      step.validate(game, player).reason == ActionFailure.notEnoughResources;
 
   /// Options a defensive player takes at the choice nodes 2 and 4.
   static const Map<TechBranch, List<TechOption>> picks = {
@@ -52,7 +70,10 @@ extension GrowthMoves on ScriptTurn {
   };
 
   /// Research of the next node of [branch], with the option of [picks].
-  ResearchTechAction researchNext(TechBranch branch) {
+  ResearchTechAction researchNext(
+    TechBranch branch, {
+    Map<TechBranch, List<TechOption>> picks = GrowthMoves.picks,
+  }) {
     final int level = player.techBranches[branch]!.researchLevel + 1;
     final TechOption option = TechTree.isChoiceLevel(level)
         ? picks[branch]![TechTree.choiceIndex(level)]

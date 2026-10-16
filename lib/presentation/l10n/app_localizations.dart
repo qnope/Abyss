@@ -3385,8 +3385,8 @@ abstract class AppLocalizations {
   /// No description provided for @guideAdmiralToSend.
   ///
   /// In fr, this message translates to:
-  /// **'Pour prendre {post, select, faille{la Faille} cheminee{la Cheminée} other{le Noyau}}, ton Amiral doit être au niveau {level}. Envoie-le par ton poste entouré sur la Carte.'**
-  String guideAdmiralToSend(String post, int level);
+  /// **'Pour prendre {post, select, faille{la Faille} cheminee{la Cheminée} other{le Noyau}}, ton Amiral doit descendre au niveau {level}. Il est au niveau {from} : envoie-le par ta {passage, select, faille{Faille} other{Cheminée}}, entourée sur la Carte au niveau {from}.'**
+  String guideAdmiralToSend(String post, int level, int from, String passage);
 
   /// No description provided for @guidePostToFind.
   ///

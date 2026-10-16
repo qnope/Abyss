@@ -1,4 +1,5 @@
 import '../../domain/fight/assault/assault_rehearsals.dart';
+import '../../domain/map/transition_base_type.dart';
 import '../../domain/objective/guide/guide_message.dart';
 import '../l10n/app_localizations.dart';
 
@@ -12,10 +13,8 @@ extension GuideCampaignText on GuideMessage {
     GuideAdmiralToRecruit(:final target) => l10n.guideAdmiralToRecruit(
       target.name,
     ),
-    GuideAdmiralToSend(:final target, :final level) => l10n.guideAdmiralToSend(
-      target.name,
-      level,
-    ),
+    GuideAdmiralToSend(:final target, :final level, :final from) => l10n
+        .guideAdmiralToSend(target.name, level, from, _passageOn(from)),
     GuidePostToFind(:final target) => l10n.guidePostToFind(target.name),
     final GuidePostAssault assault => assault._text(l10n),
     GuideAdmiralFell(:final target) => l10n.guideAdmiralFell(target.name),
@@ -36,6 +35,11 @@ extension GuideCampaignText on GuideMessage {
                 '${l10n.guideLeviathanReinforce(missing)}',
     _ => '',
   };
+
+  /// The post a level opens downwards by: the Faille, then the Cheminée.
+  static String _passageOn(int level) => level == 1
+      ? TransitionBaseType.faille.name
+      : TransitionBaseType.cheminee.name;
 }
 
 extension on GuidePostAssault {

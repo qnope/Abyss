@@ -22,15 +22,17 @@ class GuideAdmiralToRecruit extends GuideMessage {
   List<Object> get _figures => [target];
 }
 
-/// The Abyss Admiral must go down to [level] to assault [target].
+/// The Abyss Admiral must go down to [level] to assault [target]; it is
+/// on [from], and goes down by the post held there.
 class GuideAdmiralToSend extends GuideMessage {
   final AssaultTarget target;
   final int level;
+  final int from;
 
-  const GuideAdmiralToSend(this.target, this.level);
+  const GuideAdmiralToSend(this.target, this.level, {required this.from});
 
   @override
-  List<Object> get _figures => [target, level];
+  List<Object> get _figures => [target, level, from];
 }
 
 /// No [target] in sight yet: explore to find one.

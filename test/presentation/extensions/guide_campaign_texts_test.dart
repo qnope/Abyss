@@ -25,8 +25,24 @@ void main() {
       'prend pas.',
     );
     expect(
-      const GuideAdmiralToSend(kernel, 3).text(fr),
-      allOf(contains('le Noyau'), contains('niveau 3')),
+      const GuideAdmiralToSend(kernel, 3, from: 2).text(fr),
+      'Pour prendre le Noyau, ton Amiral doit descendre au niveau 3. Il est '
+      'au niveau 2 : envoie-le par ta Cheminée, entourée sur la Carte au '
+      'niveau 2.',
+    );
+    expect(
+      const GuideAdmiralToSend(kernel, 3, from: 1).text(fr),
+      contains('Il est au niveau 1 : envoie-le par ta Faille'),
+    );
+    expect(
+      const GuideAdmiralToSend(AssaultTarget.cheminee, 2, from: 1).text(en),
+      'To take the Vent, your Admiral must go down to level 2. He is on '
+      'level 1: send him through your Rift, highlighted on the Map on '
+      'level 1.',
+    );
+    expect(
+      const GuideAdmiralToSend(kernel, 3, from: 2).text(es),
+      contains('Está en el nivel 2: envíalo por tu Chimenea'),
     );
     expect(
       const GuideAdmiralNeedsBarracks(AssaultTarget.cheminee, 2).text(en),

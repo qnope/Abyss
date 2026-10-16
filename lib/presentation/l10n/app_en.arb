@@ -569,7 +569,7 @@
   "guideRaidHoldOn": "You've already recruited this turn: end it and hold on.",
   "guideAdmiralNeedsBarracks": "To take {post, select, faille{a Rift} cheminee{a Vent} other{the Core}}, you need an Admiral. Raise the Barracks to level {level}.",
   "guideAdmiralToRecruit": "Recruit an Admiral: he doesn't fight, but without him {post, select, faille{the Rift} cheminee{the Vent} other{the Core}} can't be taken.",
-  "guideAdmiralToSend": "To take {post, select, faille{the Rift} cheminee{the Vent} other{the Core}}, your Admiral must be on level {level}. Send him down through your highlighted post on the Map.",
+  "guideAdmiralToSend": "To take {post, select, faille{the Rift} cheminee{the Vent} other{the Core}}, your Admiral must go down to level {level}. He is on level {from}: send him through your {passage, select, faille{Rift} other{Vent}}, highlighted on the Map on level {from}.",
   "guidePostToFind": "{post, select, faille{Explore the Map to find a Rift, but don't forget to keep upgrading your buildings and your army!} cheminee{Explore the Map on level 2 to find a Vent, but don't forget to keep upgrading your buildings and your army!} other{Explore the Map on level 3 to find the Core, but don't forget to keep upgrading your buildings and your army!}}",
   "guidePostAssault": "{post, select, faille{A Rift} cheminee{A Vent} other{The Core}}! Your Admiral must survive: cover him with Guardians.",
   "guidePostAssaultArmy": "{count, plural, =0{Your escort is enough} one{Send him with at least {count} Harpooner} other{Send him with at least {count} Harpooners}}: you win {wins} times out of {rehearsals}.",

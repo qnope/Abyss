@@ -27,7 +27,7 @@ void main() {
       expect(
         adviceOf(game),
         GuideAdvice(
-          const GuideAdmiralToSend(cheminee, 2),
+          const GuideAdmiralToSend(cheminee, 2, from: 1),
           GuideTarget.cell(1, GridPosition(x: 7, y: 5)),
         ),
       );
@@ -79,8 +79,21 @@ void main() {
       expect(
         adviceOf(game),
         GuideAdvice(
-          const GuideAdmiralToSend(kernel, 3),
+          const GuideAdmiralToSend(kernel, 3, from: 2),
           GuideTarget.cell(2, GridPosition(x: 3, y: 3)),
+        ),
+      );
+    });
+
+    test('an admiral on level 1 first goes down by the Faille', () {
+      final game = campaignGame(ObjectiveId.takeKernel);
+      setUnits(game.humanPlayer, UnitType.abyssAdmiral, 1);
+      placePost(game, 1, 7, 5, held: true);
+      expect(
+        adviceOf(game),
+        GuideAdvice(
+          const GuideAdmiralToSend(kernel, 3, from: 1),
+          GuideTarget.cell(1, GridPosition(x: 7, y: 5)),
         ),
       );
     });

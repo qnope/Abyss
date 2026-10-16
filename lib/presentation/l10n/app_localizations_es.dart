@@ -2360,13 +2360,17 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String guideAdmiralToSend(String post, int level) {
+  String guideAdmiralToSend(String post, int level, int from, String passage) {
     String _temp0 = intl.Intl.selectLogic(post, {
       'faille': 'la Falla',
       'cheminee': 'la Chimenea',
       'other': 'el Núcleo',
     });
-    return 'Para tomar $_temp0, tu Almirante debe estar en el nivel $level. Envíalo por tu puesto resaltado en el Mapa.';
+    String _temp1 = intl.Intl.selectLogic(passage, {
+      'faille': 'Falla',
+      'other': 'Chimenea',
+    });
+    return 'Para tomar $_temp0, tu Almirante debe bajar al nivel $level. Está en el nivel $from: envíalo por tu $_temp1, resaltada en el Mapa en el nivel $from.';
   }
 
   @override

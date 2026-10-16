@@ -24,7 +24,7 @@ abstract final class GuideAssault {
     if (admiralLevel == null) return _recruit(player, target);
     if (admiralLevel < level) {
       return GuideAdvice(
-        GuideAdmiralToSend(target, level),
+        GuideAdmiralToSend(target, level, from: admiralLevel),
         GuideMap.heldPostOn(game, player, admiralLevel) ??
             const GuideTarget.map(),
       );

@@ -1,7 +1,6 @@
 import '../../action/recruit_unit_action.dart';
 import '../../building/building_type.dart';
 import '../../fight/combatant.dart';
-import '../../fight/guardian_factory.dart';
 import '../../map/grid_position.dart';
 import '../../map/transition_base_type.dart';
 import '../../unit/unit_type.dart';
@@ -9,6 +8,7 @@ import '../script_turn.dart';
 import '../../fight/army_planner.dart';
 import 'expedition_moves.dart';
 import 'recruit_moves.dart';
+import 'siege_moves.dart';
 
 /// The road to the volcano: a Faille on the base level, a Cheminée on
 /// level 2, then the volcanic kernel at the centre of level 3.
@@ -25,13 +25,21 @@ extension ConquestMoves on ScriptTurn {
 
   /// Plays the next step of the conquest, with [share] of the stocks at
   /// most for the recruits it needs and [scouts] going down with the army.
+  /// With [besiegesHeldKernel] (factions only), the army of the volcano
+  /// level is sized against a kernel another player holds high
+  /// ([SiegeMoves.hotKernelDefence]) instead of its starting guardians.
   void advanceConquest(ArmyPlanner planner,
-      {double share = 0.5, int scouts = expeditionScouts}) {
+      {double share = 0.5,
+      int scouts = expeditionScouts,
+      bool besiegesHeldKernel = false}) {
     if (game.isVolcanicKernelCapturedBy(player.id)) return;
     if (_built(BuildingType.pressureCapsule)) {
       final GridPosition? kernel = openKernel();
       if (kernel != null && assault(3, kernel, planner)) return;
-      _bringDown(planner, null, <int>[1, 2], share, scouts);
+      _bringDown(planner, null, <int>[1, 2], share, scouts,
+          enemy: besiegesHeldKernel && kernel == null
+              ? hotKernelDefence()
+              : null);
     } else if (_built(BuildingType.descentModule)) {
       if (ownBase(2) != null) return;
       final GridPosition? cheminee = openBase(2);
@@ -49,27 +57,30 @@ extension ConquestMoves on ScriptTurn {
 
   /// Sends the expedition down [path] (levels to leave, in order) once the
   /// forces there and below beat the guardians of [type] (the kernel when
-  /// `null`), with up to [wanted] scouts below; recruits towards it
-  /// meanwhile.
+  /// `null`), or [enemy] without admiral when given, with up to [wanted]
+  /// scouts below; recruits towards it meanwhile. The whole [path] is
+  /// walked in the same turn.
   void _bringDown(ArmyPlanner planner, TransitionBaseType? type,
-      List<int> path, double share, int wanted) {
+      List<int> path, double share, int wanted,
+      {List<Combatant> Function()? enemy}) {
     final int bottom = path.last + 1;
     final Map<UnitType, int> below = <UnitType, int>{};
     for (int level = path.first + 1; level <= bottom; level++) {
       fightersOn(level).forEach((t, n) => below[t] = (below[t] ?? 0) + n);
     }
+    if (enemy != null) below.remove(UnitType.abyssAdmiral);
     final int scoutsBelow =
         player.unitsOnLevel(bottom)[UnitType.scout]?.count ?? 0;
     final int scoutsHome = player.unitsOnLevel(1)[UnitType.scout]?.count ?? 0;
     final int scouts = (wanted - scoutsBelow).clamp(0, scoutsHome);
     final Map<UnitType, int> sent;
-    if (readyFor(type, bottom, planner)) {
+    if (readyFor(type, bottom, planner, enemy: enemy)) {
       if (scoutsBelow > 1) return;
       sent = <UnitType, int>{UnitType.scout: scouts};
-    } else if (readyFor(type, 1, planner, extra: below)) {
-      sent = _part(planner, type, below)..[UnitType.scout] = scouts;
+    } else if (readyFor(type, 1, planner, extra: below, enemy: enemy)) {
+      sent = _part(planner, type, below, enemy)..[UnitType.scout] = scouts;
     } else {
-      _prepare(planner, type, below, share);
+      _prepare(planner, type, below, share, enemy);
       return;
     }
     if (!descend(1, sent)) return;
@@ -81,10 +92,11 @@ extension ConquestMoves on ScriptTurn {
   }
 
   /// Smallest share of the home fighters that, joined to [below], beats
-  /// the guardians of [type].
+  /// the guardians of [type], or [enemy] without admiral when given.
   Map<UnitType, int> _part(ArmyPlanner planner, TransitionBaseType? type,
-      Map<UnitType, int> below) {
+      Map<UnitType, int> below, List<Combatant> Function()? enemy) {
     final Map<UnitType, int> home = fightersOn(1);
+    if (enemy != null) home.remove(UnitType.abyssAdmiral);
     final bool admiralBelow = (below[UnitType.abyssAdmiral] ?? 0) > 0;
     Map<UnitType, int> part(int k) => <UnitType, int>{
           for (final e in home.entries)
@@ -98,39 +110,38 @@ extension ConquestMoves on ScriptTurn {
                   for (final t in UnitType.values)
                     t: (part(k)[t] ?? 0) + (below[t] ?? 0),
                 },
-            _enemyOf(type),
+            enemy ?? ExpeditionMoves.guardiansOf(type),
             boost: attackBoost,
-            needsAdmiral: true) ??
+            needsAdmiral: enemy == null) ??
         20;
     return part(k);
   }
 
   /// Recruits an admiral if the force lacks one, then the cheapest units
-  /// that let the home army, with [extra], beat the guardians of [type].
+  /// that let the home army, with [extra], beat the guardians of [type];
+  /// against [enemy], when given, no admiral is needed.
   void _prepare(ArmyPlanner planner, TransitionBaseType? type,
-      Map<UnitType, int> extra, double share) {
+      Map<UnitType, int> extra, double share,
+      [List<Combatant> Function()? enemy]) {
     final Map<UnitType, int> base = fightersOn(1);
     extra.forEach((t, n) => base[t] = (base[t] ?? 0) + n);
-    if ((base[UnitType.abyssAdmiral] ?? 0) <= 0) {
+    if (enemy != null) {
+      base.remove(UnitType.abyssAdmiral);
+    } else if ((base[UnitType.abyssAdmiral] ?? 0) <= 0) {
       tryPerform(
           RecruitUnitAction(unitType: UnitType.abyssAdmiral, quantity: 1));
       return;
     }
     topUp(
       base: base,
-      enemy: _enemyOf(type),
+      enemy: enemy ?? ExpeditionMoves.guardiansOf(type),
       mixes: assaultMixes,
       planner: planner,
       boost: attackBoost,
-      needsAdmiral: true,
+      needsAdmiral: enemy == null,
       share: share,
     );
   }
-
-  static List<Combatant> Function() _enemyOf(TransitionBaseType? type) =>
-      type == null
-          ? GuardianFactory.forVolcanicKernel
-          : () => GuardianFactory.forType(type);
 
   bool _built(BuildingType type) => player.buildings[type]!.level > 0;
 }

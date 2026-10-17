@@ -46,6 +46,15 @@ void main() {
     expect(war.holder, war.human.id);
   });
 
+  test('a player besieges a kernel held high, with no faction cap', () {
+    final war = kernel.KernelWar(kernelLevel: 9);
+    war.put(war.human, KernelGarrison.volcanoLevel, kernel.horde);
+    war.garrison(kernel.smallGarrison);
+
+    expect(_turnOf(war).contest(), isTrue);
+    expect(war.kernelOf(war.owner), 8);
+  });
+
   test('with nothing held by others there is nothing to contest', () {
     final war = kernel.KernelWar(kernelLevel: 1);
     war.put(war.human, KernelGarrison.volcanoLevel, kernel.horde);

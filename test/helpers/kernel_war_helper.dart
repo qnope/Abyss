@@ -1,6 +1,7 @@
 import 'package:abyss/domain/action/attack_held_kernel_action.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/faction/faction_personality.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_factory.dart';
 import 'package:abyss/domain/game/player.dart';
@@ -14,7 +15,8 @@ import 'package:abyss/domain/volcano/kernel_garrison.dart';
 
 /// A game against two factions at turn 12, tutorial over, where `owner`
 /// holds the volcanic kernel at [kernelLevel] and `attacker` stands ready
-/// on the volcano level. With [humanHolds], the human is the owner.
+/// on the volcano level. With [humanHolds], the human is the owner;
+/// [personalities] pins the two factions.
 class KernelWar {
   final Game game;
   final GridPosition at;
@@ -26,11 +28,13 @@ class KernelWar {
     int kernelLevel = 3,
     int mapSeed = 7,
     bool humanHolds = false,
+    List<FactionPersonality>? personalities,
   }) {
     final Game game = GameFactory.newGame(
       playerName: 'Nemo',
       mapSeed: mapSeed,
       factionCount: 2,
+      personalities: personalities,
     )..turn = 12;
     final GameMap map = game.levels[KernelGarrison.volcanoLevel]!;
     for (var y = 0; y < map.height; y++) {
@@ -76,8 +80,9 @@ class KernelWar {
     }
   }
 
-  void put(Player player, int level, Map<UnitType, int> units) => units
-      .forEach((t, n) => KernelGarrison.stockAt(player, level)[t]!.count = n);
+  void put(Player player, int level, Map<UnitType, int> units) => units.forEach(
+    (t, n) => KernelGarrison.stockAt(player, level)[t]!.count = n,
+  );
 
   int count(Player player, int level, UnitType type) =>
       KernelGarrison.stockAt(player, level)[type]!.count;

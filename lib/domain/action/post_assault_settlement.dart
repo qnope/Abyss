@@ -24,6 +24,7 @@ abstract final class PostAssaultSettlement {
         result.victory
             ? PostTakeover.apply(post: post, attacker: attacker, owner: owner)
             : PostLoss.none;
+    if (result.victory) owner.raidState.postLostTurn = turn;
     final BaseAssaultEntry entry = AttackBaseEntries.forDefender(
       turn,
       attackerName,

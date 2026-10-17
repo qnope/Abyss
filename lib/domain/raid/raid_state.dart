@@ -41,6 +41,11 @@ class RaidState {
   @HiveField(7)
   final List<AnnouncedAttack> attacks;
 
+  /// Turn this player last lost a Faille or a Cheminée, `null` when it
+  /// never did; spaces the factions' attacks on the human's posts.
+  @HiveField(8)
+  int? postLostTurn;
+
   RaidState({
     this.noise = 0,
     this.totalNoise = 0,
@@ -50,6 +55,7 @@ class RaidState {
     this.raidsRepelled = 0,
     this.raidsLost = 0,
     List<AnnouncedAttack>? attacks,
+    this.postLostTurn,
   }) : attacks = attacks ?? <AnnouncedAttack>[];
 
   bool get isIncoming => incoming != null && arrivalTurn != null;

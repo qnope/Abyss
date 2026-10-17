@@ -4624,6 +4624,66 @@ abstract class AppLocalizations {
   /// **'Inutilisable : ni descente, ni garnison, ni victoire'**
   String get buildingDegradedUnusable;
 
+  /// No description provided for @factionOriginWreckPillagers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des forbans qui ont fait du Naufrage un métier : ils vivent de ce que les autres coques ont perdu.'**
+  String get factionOriginWreckPillagers;
+
+  /// No description provided for @factionOriginPearlOrder.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'équipage d\'un navire-chantier, pour qui une perle se mérite avec le temps.'**
+  String get factionOriginPearlOrder;
+
+  /// No description provided for @factionOriginAnglerCult.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des pèlerins qui ont vu, en coulant, la lanterne d\'une baudroie dans le noir : chaque passage tenu est un autel.'**
+  String get factionOriginAnglerCult;
+
+  /// No description provided for @factionOriginMurenaHorde.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un navire corsaire qui frappe comme la murène, depuis sa crevasse : tôt, fort, sans prévenir.'**
+  String get factionOriginMurenaHorde;
+
+  /// No description provided for @factionOriginSiphonophoreGuild.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un consortium de marchands, mille petits métiers qui ne font qu\'un corps.'**
+  String get factionOriginSiphonophoreGuild;
+
+  /// No description provided for @factionOriginSilenceMonks.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un monastère flottant : ils ont compris les premiers que les abysses écoutent.'**
+  String get factionOriginSilenceMonks;
+
+  /// No description provided for @factionOriginCurrentNomads.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une flottille de pêcheurs sans port, qui suit les courants et ne bâtit jamais de rempart.'**
+  String get factionOriginCurrentNomads;
+
+  /// No description provided for @factionOriginPyrosomeHive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le navire le plus bondé de la flotte, qui brille d\'être nombreux.'**
+  String get factionOriginPyrosomeHive;
+
+  /// No description provided for @factionOriginMagmaSmiths.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'équipage d\'une fonderie flottante : pour eux, le Volcan n\'est pas un foyer, c\'est une forge.'**
+  String get factionOriginMagmaSmiths;
+
+  /// No description provided for @factionOriginKrakenFaithful.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ils ont vu une ombre à tentacules monter de la Fosse pendant le Naufrage, et l\'ont prise pour un dieu.'**
+  String get factionOriginKrakenFaithful;
+
   /// No description provided for @factionBaseHeadquarters.
   ///
   /// In fr, this message translates to:

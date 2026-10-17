@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/faction/faction_standing.dart';
+import '../../extensions/faction_personality_extensions.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
 import '../../theme/faction_colors.dart';
+import '../common/lore_text.dart';
 import '../common/status_pill.dart';
 import 'faction_emblem.dart';
 
 /// One line of the ranking: the colour of the player, its name, what is
-/// known of it, and a pill when it has fallen.
+/// known of it, where a discovered faction comes from, and a pill when it
+/// has fallen.
 class FactionStandingTile extends StatelessWidget {
   final FactionStanding standing;
 
@@ -40,9 +43,20 @@ class FactionStandingTile extends StatelessWidget {
                 ? const TextStyle(color: AbyssColors.disabled)
                 : null,
       ),
-      subtitle: Text(
-        '${l10n.factionRankingHeadquarters(standing.headquartersLevel)}'
-        ' - $depth',
+      subtitle: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${l10n.factionRankingHeadquarters(standing.headquartersLevel)}'
+            ' - $depth',
+          ),
+          if (personality != null && standing.discovered)
+            LoreText(
+              personality.origin(l10n),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+        ],
       ),
       trailing:
           standing.hasFallen

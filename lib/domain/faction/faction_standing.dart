@@ -1,6 +1,8 @@
 import '../building/building_type.dart';
 import '../game/game.dart';
 import '../game/player.dart';
+import '../map/grid_position.dart';
+import '../raid/raid_battle.dart';
 import 'faction_personality.dart';
 
 /// What the human knows of a player in the ranking: only public facts,
@@ -17,6 +19,9 @@ class FactionStanding {
   final bool holdsKernel;
   final bool hasFallen;
 
+  /// Whether the human has seen the player's base; always for the human.
+  final bool discovered;
+
   const FactionStanding({
     required this.name,
     this.personality,
@@ -24,6 +29,7 @@ class FactionStanding {
     required this.deepestLevel,
     required this.holdsKernel,
     required this.hasFallen,
+    required this.discovered,
   });
 
   bool get isHuman => personality == null;
@@ -49,6 +55,10 @@ class FactionStanding {
       deepestLevel: deepest,
       holdsKernel: holdsKernel,
       hasFallen: player.hasFallen,
+      discovered: player.id == game.humanPlayerId ||
+          game.humanPlayer
+              .revealedCellsOnLevel(RaidBattle.baseLevel)
+              .contains(GridPosition(x: player.baseX, y: player.baseY)),
     );
   }
 

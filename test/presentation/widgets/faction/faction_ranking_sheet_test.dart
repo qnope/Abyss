@@ -1,6 +1,9 @@
 import 'package:abyss/domain/faction/faction_standing.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_factory.dart';
+import 'package:abyss/domain/map/grid_position.dart';
+import 'package:abyss/presentation/extensions/faction_personality_extensions.dart';
+import 'package:abyss/presentation/widgets/common/lore_text.dart';
 import 'package:abyss/presentation/widgets/common/settings_dialog.dart';
 import 'package:abyss/presentation/widgets/common/status_pill.dart';
 import 'package:abyss/presentation/widgets/faction/faction_ranking_sheet.dart';
@@ -8,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_game_repository.dart';
+import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/localized_app.dart';
 import '../../../helpers/sheet_opener.dart';
 
@@ -42,6 +46,26 @@ void main() {
     )));
     expect(find.byType(StatusPill), findsOneWidget);
     expect(find.text('TOMBÉE'), findsOneWidget);
+  });
+
+  testWidgets('tells the origin of a discovered faction only', (tester) async {
+    final game = _game(2);
+    final seen = game.factions.first;
+    final hidden = game.factions.last;
+    final base = game.players[seen.id]!;
+    game.humanPlayer.addRevealedCell(
+      1,
+      GridPosition(x: base.baseX, y: base.baseY),
+    );
+    await tester.pumpWidget(localizedApp(Scaffold(
+      body: FactionRankingSheetBody(standings: FactionStanding.ranking(game)),
+    )));
+    expect(
+      find.widgetWithText(LoreText, seen.personality.origin(fr)),
+      findsOneWidget,
+    );
+    expect(find.text(hidden.personality.origin(fr)), findsNothing);
+    expect(find.byType(LoreText), findsOneWidget);
   });
 
   group('the settings entry', () {

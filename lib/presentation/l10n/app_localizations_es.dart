@@ -3277,6 +3277,46 @@ class AppLocalizationsEs extends AppLocalizations {
       'Inutilizable: ni descenso, ni guarnición, ni victoria';
 
   @override
+  String get factionOriginWreckPillagers =>
+      'Filibusteros que hicieron del Naufragio un oficio: viven de lo que perdieron los demás cascos.';
+
+  @override
+  String get factionOriginPearlOrder =>
+      'La tripulación de un barco astillero, para quien una perla se gana con el tiempo.';
+
+  @override
+  String get factionOriginAnglerCult =>
+      'Peregrinos que, al hundirse, vieron el farol de un rape en la oscuridad: cada paso que defienden es un altar.';
+
+  @override
+  String get factionOriginMurenaHorde =>
+      'Un barco corsario que golpea como la morena, desde su grieta: pronto, fuerte y sin avisar.';
+
+  @override
+  String get factionOriginSiphonophoreGuild =>
+      'Un consorcio de mercaderes, mil pequeños oficios que forman un solo cuerpo.';
+
+  @override
+  String get factionOriginSilenceMonks =>
+      'Un monasterio flotante: fueron los primeros en comprender que el abismo escucha.';
+
+  @override
+  String get factionOriginCurrentNomads =>
+      'Una flotilla de pescadores sin puerto, que sigue las corrientes y nunca levanta murallas.';
+
+  @override
+  String get factionOriginPyrosomeHive =>
+      'El barco más abarrotado de la flota, que brilla por ser muchos.';
+
+  @override
+  String get factionOriginMagmaSmiths =>
+      'La tripulación de una fundición flotante: para ellos, el Volcán no es un hogar, es una forja.';
+
+  @override
+  String get factionOriginKrakenFaithful =>
+      'Vieron una sombra con tentáculos subir de la Fosa durante el Naufragio, y la tomaron por un dios.';
+
+  @override
   String get factionBaseHeadquarters => 'Cuartel general';
 
   @override

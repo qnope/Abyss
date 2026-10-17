@@ -3275,6 +3275,46 @@ class AppLocalizationsFr extends AppLocalizations {
       'Inutilisable : ni descente, ni garnison, ni victoire';
 
   @override
+  String get factionOriginWreckPillagers =>
+      'Des forbans qui ont fait du Naufrage un métier : ils vivent de ce que les autres coques ont perdu.';
+
+  @override
+  String get factionOriginPearlOrder =>
+      'L\'équipage d\'un navire-chantier, pour qui une perle se mérite avec le temps.';
+
+  @override
+  String get factionOriginAnglerCult =>
+      'Des pèlerins qui ont vu, en coulant, la lanterne d\'une baudroie dans le noir : chaque passage tenu est un autel.';
+
+  @override
+  String get factionOriginMurenaHorde =>
+      'Un navire corsaire qui frappe comme la murène, depuis sa crevasse : tôt, fort, sans prévenir.';
+
+  @override
+  String get factionOriginSiphonophoreGuild =>
+      'Un consortium de marchands, mille petits métiers qui ne font qu\'un corps.';
+
+  @override
+  String get factionOriginSilenceMonks =>
+      'Un monastère flottant : ils ont compris les premiers que les abysses écoutent.';
+
+  @override
+  String get factionOriginCurrentNomads =>
+      'Une flottille de pêcheurs sans port, qui suit les courants et ne bâtit jamais de rempart.';
+
+  @override
+  String get factionOriginPyrosomeHive =>
+      'Le navire le plus bondé de la flotte, qui brille d\'être nombreux.';
+
+  @override
+  String get factionOriginMagmaSmiths =>
+      'L\'équipage d\'une fonderie flottante : pour eux, le Volcan n\'est pas un foyer, c\'est une forge.';
+
+  @override
+  String get factionOriginKrakenFaithful =>
+      'Ils ont vu une ombre à tentacules monter de la Fosse pendant le Naufrage, et l\'ont prise pour un dieu.';
+
+  @override
   String get factionBaseHeadquarters => 'Quartier général';
 
   @override

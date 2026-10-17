@@ -814,7 +814,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionFailureAttackTooSoon =>
-      'The base was attacked too recently: the others wait';
+      'You attacked this opponent too recently: wait a few turns';
 
   @override
   String get actionFailureAlreadyAttackedThisTurn =>

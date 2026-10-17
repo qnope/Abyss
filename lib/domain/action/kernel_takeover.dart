@@ -8,7 +8,7 @@ import '../volcano/kernel_garrison.dart';
 /// What a won attack does to a held kernel: it loses one level and, when
 /// it reaches level 0, the attacker holds it and the garrison of the old
 /// owner is lost with it. The owner keeps the turn of its loss, which
-/// spaces the next sieges of the human (`KernelSiegeGap`).
+/// holds back the kraken wave of that turn.
 abstract final class KernelTakeover {
   /// Takes [owner]'s kernel at ([x], [y]) of the volcano level of [game]
   /// down to [after]; returns the units of the garrison the owner lost.

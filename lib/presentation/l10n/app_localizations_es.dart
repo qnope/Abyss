@@ -823,7 +823,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get actionFailureAttackTooSoon =>
-      'La base fue atacada hace muy poco: los demás esperan';
+      'Atacaste a este rival hace muy poco: espera unos turnos';
 
   @override
   String get actionFailureAlreadyAttackedThisTurn =>

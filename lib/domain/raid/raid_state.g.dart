@@ -25,9 +25,9 @@ class RaidStateAdapter extends TypeAdapter<RaidState> {
       raidsRepelled: fields[5] == null ? 0 : (fields[5] as num).toInt(),
       raidsLost: fields[6] == null ? 0 : (fields[6] as num).toInt(),
       attacks: (fields[7] as List?)?.cast<AnnouncedAttack>(),
-      postLostTurn: (fields[8] as num?)?.toInt(),
-      kernelHotTurn: (fields[9] as num?)?.toInt(),
       kernelSiegeLostTurn: (fields[10] as num?)?.toInt(),
+      postAttackTurns: (fields[11] as Map?)?.cast<String, int>(),
+      kernelAttackTurns: (fields[12] as Map?)?.cast<String, int>(),
     );
   }
 
@@ -51,12 +51,12 @@ class RaidStateAdapter extends TypeAdapter<RaidState> {
       ..write(obj.raidsLost)
       ..writeByte(7)
       ..write(obj.attacks)
-      ..writeByte(8)
-      ..write(obj.postLostTurn)
-      ..writeByte(9)
-      ..write(obj.kernelHotTurn)
       ..writeByte(10)
-      ..write(obj.kernelSiegeLostTurn);
+      ..write(obj.kernelSiegeLostTurn)
+      ..writeByte(11)
+      ..write(obj.postAttackTurns)
+      ..writeByte(12)
+      ..write(obj.kernelAttackTurns);
   }
 
   @override

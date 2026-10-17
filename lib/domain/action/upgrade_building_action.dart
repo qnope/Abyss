@@ -2,7 +2,6 @@ import 'action.dart';
 import 'action_failure.dart';
 import 'action_result.dart';
 import 'action_type.dart';
-import 'kernel_siege_gap.dart';
 import '../building/building_cost_calculator.dart';
 import '../building/building_type.dart';
 import '../game/game.dart';
@@ -65,8 +64,7 @@ class UpgradeBuildingAction extends Action {
     for (final entry in costs.entries) {
       player.resources[entry.key]!.amount -= entry.value;
     }
-    final int level = ++player.buildings[buildingType]!.level;
-    KernelSiegeGap.onUpgrade(game, player, buildingType, level);
+    player.buildings[buildingType]!.level++;
     player.worksite.upgrades++;
     return ActionResult.success();
   }

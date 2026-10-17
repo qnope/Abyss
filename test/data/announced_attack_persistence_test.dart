@@ -73,5 +73,17 @@ void main() {
     expect(state.noise, 7);
     expect(state.lostInARow, 1);
     expect(state.attacks, isEmpty);
+    expect(state.postLostTurn, isNull);
+  });
+
+  test('the turn of the last post lost survives a save and a reload', () {
+    final writer = BinaryWriterImpl(Hive);
+    RaidStateAdapter().write(writer, RaidState()..postLostTurn = 33);
+
+    final state = RaidStateAdapter().read(
+      BinaryReaderImpl(writer.toBytes(), Hive),
+    );
+
+    expect(state.postLostTurn, 33);
   });
 }

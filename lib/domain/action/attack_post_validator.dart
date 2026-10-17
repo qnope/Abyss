@@ -7,6 +7,7 @@ import '../map/transition_base.dart';
 import '../unit/unit_type.dart';
 import 'action_failure.dart';
 import 'attack_base_validator.dart';
+import 'post_attack_gap.dart';
 
 /// The rules that say whether [player] may attack a post, a Faille or a
 /// Cheminée, that another player holds.
@@ -54,6 +55,9 @@ abstract final class AttackPostValidator {
             .revealedCellsOnLevel(level)
             .contains(GridPosition(x: x, y: y))) {
       return ActionFailure.baseNotRevealed;
+    }
+    if (PostAttackGap.isTooSoon(game, player, owner)) {
+      return ActionFailure.attackTooSoon;
     }
     return AttackBaseValidator.alreadyHit(game, player, owner);
   }

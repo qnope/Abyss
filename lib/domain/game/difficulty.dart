@@ -29,6 +29,7 @@ enum Difficulty {
     monsterPercent: 86,
     factionPercent: 90,
     attackGap: 16,
+    postGap: 16,
   ),
   @HiveField(1)
   normal(
@@ -36,6 +37,7 @@ enum Difficulty {
     monsterPercent: 94,
     factionPercent: 100,
     attackGap: 10,
+    postGap: 12,
   ),
   @HiveField(2)
   hard(
@@ -43,6 +45,7 @@ enum Difficulty {
     monsterPercent: 102,
     factionPercent: 110,
     attackGap: 6,
+    postGap: 6,
   );
 
   const Difficulty({
@@ -50,6 +53,7 @@ enum Difficulty {
     required this.monsterPercent,
     required this.factionPercent,
     required this.attackGap,
+    required this.postGap,
   });
 
   /// Production of algae, coral and ore, in percent of the buildings' own.
@@ -83,6 +87,10 @@ enum Difficulty {
   /// Turns the human is left in peace between two attacks of factions on
   /// its base: the harder the game, the closer they come.
   final int attackGap;
+
+  /// Turns a faction waits, after the human lost a Faille or a Cheminée,
+  /// before it may attack another of the human's posts.
+  final int postGap;
 
   /// Same production for a faction, the other way round: the easier the
   /// game, the slower the factions grow.

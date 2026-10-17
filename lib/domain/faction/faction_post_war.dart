@@ -1,5 +1,6 @@
 import '../action/attack_base_defence.dart';
 import '../action/fight_monster_helpers.dart';
+import '../action/post_attack_gap.dart';
 import '../fight/army_planner.dart';
 import '../fight/combatant.dart';
 import '../fight/combatant_builder.dart';
@@ -74,7 +75,8 @@ abstract final class FactionPostWar {
             map.cellAt(at.x, at.y).content != CellContentType.transitionBase ||
             owner == null ||
             owner.id == turn.player.id ||
-            owner.hasFallen) {
+            owner.hasFallen ||
+            PostAttackGap.isTooSoon(game, turn.player, owner)) {
           continue;
         }
         posts.add(_Post(level, at, base, owner, army, ours));

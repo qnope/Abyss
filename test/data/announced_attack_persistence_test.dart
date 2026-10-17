@@ -73,28 +73,38 @@ void main() {
     expect(state.noise, 7);
     expect(state.lostInARow, 1);
     expect(state.attacks, isEmpty);
-    expect(state.postLostTurn, isNull);
-    expect(state.kernelHotTurn, isNull);
+    expect(state.postAttackTurns, isEmpty);
+    expect(state.kernelAttackTurns, isEmpty);
     expect(state.kernelSiegeLostTurn, isNull);
   });
 
-  test('the turn of the last post lost survives a save and a reload', () {
-    final writer = BinaryWriterImpl(Hive);
-    RaidStateAdapter().write(writer, RaidState()..postLostTurn = 33);
+  test('a raid state saved with the old gaps drops them', () {
+    final writer =
+        BinaryWriterImpl(Hive)
+          ..writeByte(3)
+          ..writeByte(8)
+          ..write(33)
+          ..writeByte(9)
+          ..write(21)
+          ..writeByte(10)
+          ..write(34);
 
     final state = RaidStateAdapter().read(
       BinaryReaderImpl(writer.toBytes(), Hive),
     );
 
-    expect(state.postLostTurn, 33);
+    expect(state.postAttackTurns, isEmpty);
+    expect(state.kernelAttackTurns, isEmpty);
+    expect(state.kernelSiegeLostTurn, 34);
   });
 
-  test('the turns that space the sieges survive a save and a reload', () {
+  test('the turns of the last attacks survive a save and a reload', () {
     final writer = BinaryWriterImpl(Hive);
     RaidStateAdapter().write(
       writer,
       RaidState()
-        ..kernelHotTurn = 21
+        ..postAttackTurns['p1'] = 21
+        ..kernelAttackTurns['p2'] = 22
         ..kernelSiegeLostTurn = 34,
     );
 
@@ -102,7 +112,9 @@ void main() {
       BinaryReaderImpl(writer.toBytes(), Hive),
     );
 
-    expect(state.kernelHotTurn, 21);
+    state.postAttackTurns['p3'] = 23;
+    expect(state.postAttackTurns, {'p1': 21, 'p3': 23});
+    expect(state.kernelAttackTurns, {'p2': 22});
     expect(state.kernelSiegeLostTurn, 34);
   });
 }

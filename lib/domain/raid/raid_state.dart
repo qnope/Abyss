@@ -41,20 +41,23 @@ class RaidState {
   @HiveField(7)
   final List<AnnouncedAttack> attacks;
 
-  /// Turn this player last lost a Faille or a Cheminée, `null` when it
-  /// never did; spaces the factions' attacks on the human's posts.
-  @HiveField(8)
-  int? postLostTurn;
-
-  /// Turn this player's kernel last reached the hot level of a siege,
-  /// `null` when it never did; spaces the factions' sieges of the human.
-  @HiveField(9)
-  int? kernelHotTurn;
+  // Fields 8 and 9 held the old gaps after a lost post and a hot kernel;
+  // they stay unused so that old saves still load.
 
   /// Turn this player last lost a siege of its kernel, `null` when it
-  /// never did; spaces the factions' sieges of the human.
+  /// never did; holds back the kraken wave of that turn.
   @HiveField(10)
   int? kernelSiegeLostTurn;
+
+  /// Turn this player last attacked the posts of each player, by id;
+  /// empty for a player saved before (`AttackCooldown`).
+  @HiveField(11)
+  final Map<String, int> postAttackTurns;
+
+  /// Turn this player last besieged the kernel of each player, by id;
+  /// empty for a player saved before (`AttackCooldown`).
+  @HiveField(12)
+  final Map<String, int> kernelAttackTurns;
 
   RaidState({
     this.noise = 0,
@@ -65,10 +68,12 @@ class RaidState {
     this.raidsRepelled = 0,
     this.raidsLost = 0,
     List<AnnouncedAttack>? attacks,
-    this.postLostTurn,
-    this.kernelHotTurn,
     this.kernelSiegeLostTurn,
-  }) : attacks = attacks ?? <AnnouncedAttack>[];
+    Map<String, int>? postAttackTurns,
+    Map<String, int>? kernelAttackTurns,
+  }) : attacks = attacks ?? <AnnouncedAttack>[],
+       postAttackTurns = postAttackTurns ?? <String, int>{},
+       kernelAttackTurns = kernelAttackTurns ?? <String, int>{};
 
   bool get isIncoming => incoming != null && arrivalTurn != null;
 

@@ -22,9 +22,11 @@ part 'difficulty.g.dart';
 /// The solar panels gave 10 % more energy since: plan85 alone now wins
 /// 58 % (easy), 24 % (normal) and 12 % (hard) of 160 games.
 ///
-/// Among 3 factions (`balance_factions`, 160 games, 120 turns), with the
-/// gaps below, conquest wins 32 % (easy), 11 % (normal) and 1 % (hard);
-/// the plans of a human win, made on a map without factions, win none.
+/// Among 3 factions (`balance_factions`, 160 games, 120 turns), when the
+/// posts and the kernel of the human were spaced by difficulty (before
+/// `AttackCooldown`), conquest won 32 % (easy), 11 % (normal) and 1 %
+/// (hard); the plans of a human win, made on a map without factions, won
+/// none.
 @HiveType(typeId: 49)
 enum Difficulty {
   @HiveField(0)
@@ -33,8 +35,6 @@ enum Difficulty {
     monsterPercent: 86,
     factionPercent: 90,
     attackGap: 16,
-    postGap: 16,
-    kernelGap: 12,
   ),
   @HiveField(1)
   normal(
@@ -42,8 +42,6 @@ enum Difficulty {
     monsterPercent: 94,
     factionPercent: 100,
     attackGap: 10,
-    postGap: 14,
-    kernelGap: 12,
   ),
   @HiveField(2)
   hard(
@@ -51,8 +49,6 @@ enum Difficulty {
     monsterPercent: 102,
     factionPercent: 110,
     attackGap: 6,
-    postGap: 6,
-    kernelGap: 6,
   );
 
   const Difficulty({
@@ -60,8 +56,6 @@ enum Difficulty {
     required this.monsterPercent,
     required this.factionPercent,
     required this.attackGap,
-    required this.postGap,
-    required this.kernelGap,
   });
 
   /// Production of algae, coral and ore, in percent of the buildings' own.
@@ -95,15 +89,6 @@ enum Difficulty {
   /// Turns the human is left in peace between two attacks of factions on
   /// its base: the harder the game, the closer they come.
   final int attackGap;
-
-  /// Turns a faction waits, after the human lost a Faille or a Cheminée,
-  /// before it may attack another of the human's posts.
-  final int postGap;
-
-  /// Turns a faction waits, after the human's kernel reached the hot level
-  /// of a siege or after the human lost a siege, before it may besiege
-  /// the human's kernel.
-  final int kernelGap;
 
   /// Same production for a faction, the other way round: the easier the
   /// game, the slower the factions grow.

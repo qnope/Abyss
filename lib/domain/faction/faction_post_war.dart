@@ -1,6 +1,6 @@
 import '../action/attack_base_defence.dart';
+import '../action/attack_cooldown.dart';
 import '../action/fight_monster_helpers.dart';
-import '../action/post_attack_gap.dart';
 import '../fight/army_planner.dart';
 import '../fight/combatant.dart';
 import '../fight/combatant_builder.dart';
@@ -76,7 +76,7 @@ abstract final class FactionPostWar {
             owner == null ||
             owner.id == turn.player.id ||
             owner.hasFallen ||
-            PostAttackGap.isTooSoon(game, turn.player, owner)) {
+            AttackCooldown.onPosts(game, turn.player, owner)) {
           continue;
         }
         posts.add(_Post(level, at, base, owner, army, ours));

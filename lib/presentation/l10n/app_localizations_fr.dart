@@ -823,7 +823,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get actionFailureAttackTooSoon =>
-      'La base a été attaquée trop récemment : les autres attendent';
+      'Vous avez attaqué cet adversaire trop récemment : attendez quelques tours';
 
   @override
   String get actionFailureAlreadyAttackedThisTurn =>

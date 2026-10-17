@@ -3,10 +3,12 @@ import '../history/history_entry.dart';
 import '../map/transition_base.dart';
 import 'attack_base_entries.dart';
 import 'attack_base_result.dart';
+import 'attack_cooldown.dart';
 import 'post_takeover.dart';
 
 /// The end of an attack on a post: the takeover ([PostTakeover]) when the
-/// attacker won, then the report its [owner] keeps of the fight.
+/// attacker won, then the report its [owner] keeps of the fight. The
+/// attack, whatever its outcome, starts the [AttackCooldown] of a player.
 abstract final class PostAssaultSettlement {
   /// Settles [result] of [attackerName]'s attack on [post], held by
   /// [owner], during [turn]: [attacker] takes it on a win (`null` for the
@@ -24,7 +26,7 @@ abstract final class PostAssaultSettlement {
         result.victory
             ? PostTakeover.apply(post: post, attacker: attacker, owner: owner)
             : PostLoss.none;
-    if (result.victory) owner.raidState.postLostTurn = turn;
+    if (attacker != null) AttackCooldown.postAttacked(turn, attacker, owner);
     final BaseAssaultEntry entry = AttackBaseEntries.forDefender(
       turn,
       attackerName,

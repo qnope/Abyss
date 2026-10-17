@@ -22,7 +22,7 @@ import 'attack_transition_base_helpers.dart';
 import 'base_damage.dart';
 import 'fight_casualty_breakdown.dart';
 import 'fight_monster_helpers.dart';
-import 'kernel_takeover.dart';
+import 'kernel_assault_settlement.dart';
 
 /// Sends [selectedUnits] of the volcano level against the volcanic kernel
 /// that another player holds, defended by its garrison and the magma
@@ -102,18 +102,6 @@ class AttackHeldKernelAction extends Action {
     final DefenceOutcome outcome = defence.settle(owner, random: random);
     final int before = KernelGarrison.kernelLevelOf(owner);
     final int after = fight.isVictory ? max(0, before - 1) : before;
-    final Map<UnitType, int> lost =
-        fight.isVictory
-            ? KernelTakeover.apply(
-              game: game,
-              x: targetX,
-              y: targetY,
-              attacker: player,
-              owner: owner,
-              after: after,
-            )
-            : const <UnitType, int>{};
-
     final AttackBaseResult result = AttackBaseResult.success(
       victory: fight.isVictory,
       fight: fight,
@@ -125,14 +113,14 @@ class AttackHeldKernelAction extends Action {
       defence: outcome,
       damage: BaseDamage.kernel(before: before, after: after),
     );
-    owner.addHistoryEntry(
-      AttackBaseEntries.forDefender(
-        game.turn,
-        player.name,
-        result,
-        postName: kernelCode,
-        lostWithPost: lost,
-      ),
+    KernelAssaultSettlement.settle(
+      game: game,
+      x: targetX,
+      y: targetY,
+      attacker: player,
+      owner: owner,
+      result: result,
+      postName: kernelCode,
     );
     return result;
   }

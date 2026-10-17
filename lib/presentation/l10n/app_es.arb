@@ -231,7 +231,7 @@
   "actionFailureAttackTooEarly": "Demasiado pronto para atacar una base",
   "actionFailureAttackAlreadyAnnounced": "Ya hay un ataque de esta facción anunciado",
   "actionFailureRaidSameTurn": "Ya hay un ataque anunciado para ese turno: una incursión de monstruos golpea entonces",
-  "actionFailureAttackTooSoon": "La base fue atacada hace muy poco: los demás esperan",
+  "actionFailureAttackTooSoon": "Atacaste a este rival hace muy poco: espera unos turnos",
   "actionFailureAlreadyAttackedThisTurn": "Este rival ya fue atacado este turno",
   "actionFailureNoPendingEvent": "Ningún evento pendiente",
   "actionFailureNotThisChoiceTurn": "Esta elección corresponde a otro turno",

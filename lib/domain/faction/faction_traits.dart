@@ -56,7 +56,7 @@ class FactionTraits {
   final List<BuildingType> growth;
 
   const FactionTraits({
-    this.cadence = 6,
+    this.cadence = 5,
     this.confidence = 0.85,
     this.grudgeEvery = 3,
     this.warMix = const <UnitType, int>{},
@@ -85,7 +85,7 @@ class FactionTraits {
 
   /// Raiders: they pay for the race with what they take.
   static const FactionTraits _pillagers = FactionTraits(
-    cadence: 5,
+    cadence: 4,
     confidence: 0.8,
     grudgeEvery: 2,
     warMix: <UnitType, int>{UnitType.harpoonist: 2, UnitType.saboteur: 1},
@@ -95,8 +95,8 @@ class FactionTraits {
 
   /// A timer: economy and walls first, few and heavy attacks.
   static const FactionTraits _order = FactionTraits(
-    cadence: 9,
-    confidence: 0.9,
+    cadence: 7,
+    confidence: 0.85,
     warMix: <UnitType, int>{UnitType.guardian: 1, UnitType.domeBreaker: 1},
     warShare: 0.1,
     growth: <BuildingType>[
@@ -113,7 +113,7 @@ class FactionTraits {
 
   /// Holds posts: it takes the others' before their bases.
   static const FactionTraits _cult = FactionTraits(
-    cadence: 5,
+    cadence: 4,
     confidence: 0.8,
     warMix: <UnitType, int>{UnitType.guardian: 1, UnitType.harpoonist: 1},
     warShare: 0.2,
@@ -122,7 +122,7 @@ class FactionTraits {
 
   /// Strikes first and early, then thins out: the mass eats the algae.
   static const FactionTraits _horde = FactionTraits(
-    cadence: 4,
+    cadence: 3,
     confidence: 0.7,
     grudgeEvery: 2,
     warMix: <UnitType, int>{UnitType.harpoonist: 3},
@@ -133,8 +133,8 @@ class FactionTraits {
 
   /// Slow start, solid rampart, attacks only when sure.
   static const FactionTraits _guild = FactionTraits(
-    cadence: 12,
-    confidence: 0.95,
+    cadence: 9,
+    confidence: 0.85,
     warMix: <UnitType, int>{UnitType.guardian: 1},
     warShare: 0.08,
     growth: <BuildingType>[
@@ -151,15 +151,15 @@ class FactionTraits {
 
   /// Unseen and small: rare strikes by a handful of saboteurs.
   static const FactionTraits _monks = FactionTraits(
-    cadence: 12,
-    confidence: 0.9,
+    cadence: 9,
+    confidence: 0.85,
     warMix: <UnitType, int>{UnitType.saboteur: 1},
     warShare: 0.04,
   );
 
   /// Gatherers: they roam, raise the Citadel last and hit the unguarded.
   static const FactionTraits _nomads = FactionTraits(
-    cadence: 7,
+    cadence: 5,
     confidence: 0.75,
     warMix: <UnitType, int>{UnitType.harpoonist: 1},
     warShare: 0.06,
@@ -180,7 +180,7 @@ class FactionTraits {
 
   /// Numbers: farms and barracks before anything.
   static const FactionTraits _hive = FactionTraits(
-    cadence: 8,
+    cadence: 6,
     confidence: 0.8,
     warMix: <UnitType, int>{UnitType.harpoonist: 1},
     warShare: 0.12,
@@ -198,7 +198,7 @@ class FactionTraits {
 
   /// Race down, over the posts of the others.
   static const FactionTraits _smiths = FactionTraits(
-    cadence: 8,
+    cadence: 6,
     confidence: 0.8,
     warMix: <UnitType, int>{UnitType.guardian: 1, UnitType.domeBreaker: 1},
     warShare: 0.1,
@@ -208,7 +208,7 @@ class FactionTraits {
 
   /// Hold the kernel, and take it back from whoever holds it.
   static const FactionTraits _faithful = FactionTraits(
-    cadence: 5,
+    cadence: 4,
     confidence: 0.85,
     warMix: <UnitType, int>{UnitType.domeBreaker: 1, UnitType.guardian: 1},
     warShare: 0.1,

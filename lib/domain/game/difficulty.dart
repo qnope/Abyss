@@ -21,6 +21,10 @@ part 'difficulty.g.dart';
 ///
 /// The solar panels gave 10 % more energy since: plan85 alone now wins
 /// 58 % (easy), 24 % (normal) and 12 % (hard) of 160 games.
+///
+/// Among 3 factions (`balance_factions`, 160 games, 120 turns), with the
+/// gaps below, conquest wins 32 % (easy), 11 % (normal) and 1 % (hard);
+/// the plans of a human win, made on a map without factions, win none.
 @HiveType(typeId: 49)
 enum Difficulty {
   @HiveField(0)
@@ -38,8 +42,8 @@ enum Difficulty {
     monsterPercent: 94,
     factionPercent: 100,
     attackGap: 10,
-    postGap: 12,
-    kernelGap: 10,
+    postGap: 14,
+    kernelGap: 12,
   ),
   @HiveField(2)
   hard(

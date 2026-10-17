@@ -26,7 +26,7 @@ ActionFailure? _refusal(KernelWar war) =>
 void main() {
   test('the harder the game, the closer the sieges of the kernel', () {
     expect(Difficulty.easy.kernelGap, 12);
-    expect(Difficulty.normal.kernelGap, 10);
+    expect(Difficulty.normal.kernelGap, 12);
     expect(Difficulty.hard.kernelGap, 6);
   });
 

@@ -47,12 +47,14 @@ abstract final class FactionKernelGuard {
   }
 
   /// [share] of the home fighters, less what the base needs to hold the
-  /// raid announced, or else the next one ([_nextRaid]).
+  /// raid announced, or else every one the noise can raise next
+  /// ([_nextRaids]).
   static Map<UnitType, int> _spare(ScriptTurn turn, double share) {
     final Map<UnitType, int> home = turn.fightersOn(1)
       ..remove(UnitType.abyssAdmiral);
-    final MonsterLair raid =
-        turn.player.raidState.incoming ?? _nextRaid(turn);
+    final MonsterLair? incoming = turn.player.raidState.incoming;
+    final List<MonsterLair> raids =
+        incoming == null ? _nextRaids(turn) : <MonsterLair>[incoming];
     for (final double part in <double>[share, share / 2, 0.1]) {
       final Map<UnitType, int> sent = <UnitType, int>{
         for (final MapEntry<UnitType, int> e in home.entries)
@@ -62,11 +64,13 @@ abstract final class FactionKernelGuard {
         for (final MapEntry<UnitType, int> e in home.entries)
           e.key: e.value - sent[e.key]!,
       };
-      if (FactionWar.planner.wins(
-        kept,
-        () => CombatantBuilder.monsterCombatantsFrom(raid),
-        allies: _rampart(turn.player),
-        boost: turn.defenceBoost,
+      if (raids.every(
+        (MonsterLair raid) => FactionWar.planner.wins(
+          kept,
+          () => CombatantBuilder.monsterCombatantsFrom(raid),
+          allies: _rampart(turn.player),
+          boost: turn.defenceBoost,
+        ),
       )) {
         return sent;
       }
@@ -74,13 +78,12 @@ abstract final class FactionKernelGuard {
     return const <UnitType, int>{};
   }
 
-  /// The wave the noise of [turn]'s player raises next, before the share
-  /// of the base's own strength (`RaidResolver`), which the units kept
-  /// home are sized to beat anyway.
-  static MonsterLair _nextRaid(ScriptTurn turn) =>
-      RaidWaveFactory.fromTotalNoise(
+  /// The waves the noise of [turn]'s player can raise next, one for each
+  /// pair of families, before the share of the base's own strength
+  /// (`RaidResolver`), which the units kept home are sized to beat anyway.
+  static List<MonsterLair> _nextRaids(ScriptTurn turn) =>
+      RaidWaveFactory.everyFromTotalNoise(
         turn.player.raidState.totalNoise,
-        random: turn.random,
         monsterPercent: turn.game.difficulty.monsterPercentFor(faction: true),
       );
 

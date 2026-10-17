@@ -1,6 +1,10 @@
+import 'dart:math';
+
+import 'package:abyss/domain/action/action_executor.dart';
 import 'package:abyss/domain/building/building.dart';
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/faction/faction_kernel_guard.dart';
+import 'package:abyss/domain/faction/faction_turn.dart';
 import 'package:abyss/domain/map/game_map.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/domain/volcano/kernel_garrison.dart';
@@ -55,6 +59,27 @@ void main() {
     FactionKernelGuard.play(d.turn(), 0.7);
 
     expect(d.count(1, UnitType.harpoonist), greaterThan(550 - 385));
+  });
+
+  test('the base keeps the same whatever families the dice would draw', () {
+    final kept = <int>{
+      for (var seed = 0; seed < 12; seed++)
+        (() {
+          final d = _holder(home: 550, noise: 1500);
+          FactionKernelGuard.play(
+            FactionTurn(
+              game: d.war.game,
+              player: d.war.attacker,
+              executor: ActionExecutor(),
+              seeds: Random(seed),
+            ),
+            0.7,
+          );
+          return d.count(1, UnitType.harpoonist);
+        })(),
+    };
+
+    expect(kept, hasLength(1));
   });
 
   test('a strong garrison keeps the home army home', () {

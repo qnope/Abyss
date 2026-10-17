@@ -34,6 +34,43 @@ abstract final class RaidWaveFactory {
     int monsterPercent = 100,
     int defenceStrength = 0,
   }) {
+    final (MonsterDifficulty level, int generic) = _sizeOf(
+      totalNoise,
+      monsterPercent,
+      defenceStrength,
+    );
+    final List<MonsterFamily> families = List<MonsterFamily>.of(
+      MonsterFamily.availableAt(MonsterUnitStats.levelFor(level)),
+    )..shuffle(random ?? Random());
+    return _wave(level, generic, families[0], families[1]);
+  }
+
+  /// Every wave [fromTotalNoise] can draw for the same noise, one for each
+  /// pair of families, so a defence can be checked against all of them.
+  static List<MonsterLair> everyFromTotalNoise(
+    int totalNoise, {
+    int monsterPercent = 100,
+  }) {
+    final (MonsterDifficulty level, int generic) = _sizeOf(
+      totalNoise,
+      monsterPercent,
+      0,
+    );
+    final List<MonsterFamily> families = MonsterFamily.availableAt(
+      MonsterUnitStats.levelFor(level),
+    );
+    return <MonsterLair>[
+      for (final MonsterFamily a in families)
+        for (final MonsterFamily b in families)
+          if (a != b) _wave(level, generic, a, b),
+    ];
+  }
+
+  static (MonsterDifficulty, int) _sizeOf(
+    int totalNoise,
+    int monsterPercent,
+    int defenceStrength,
+  ) {
     final int raw = max(
       totalNoise * powerPer100Noise,
       defenceStrength * defenceSharePercent,
@@ -45,17 +82,22 @@ abstract final class RaidWaveFactory {
             : power >= mediumFromPower
             ? MonsterDifficulty.medium
             : MonsterDifficulty.easy;
-    final int generic = max(power ~/ _costOf(level), minMonsters);
-    final List<MonsterFamily> families = List<MonsterFamily>.of(
-      MonsterFamily.availableAt(MonsterUnitStats.levelFor(level)),
-    )..shuffle(random ?? Random());
+    return (level, max(power ~/ _costOf(level), minMonsters));
+  }
+
+  static MonsterLair _wave(
+    MonsterDifficulty level,
+    int generic,
+    MonsterFamily first,
+    MonsterFamily second,
+  ) {
     final int firstShare = (generic + 1) ~/ 2;
     return MonsterLair(
       difficulty: level,
-      family: families[0],
-      unitCount: MonsterUnitStats.countFor(families[0], firstShare),
-      secondFamily: families[1],
-      secondCount: MonsterUnitStats.countFor(families[1], generic - firstShare),
+      family: first,
+      unitCount: MonsterUnitStats.countFor(first, firstShare),
+      secondFamily: second,
+      secondCount: MonsterUnitStats.countFor(second, generic - firstShare),
     );
   }
 

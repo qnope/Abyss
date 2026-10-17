@@ -57,10 +57,8 @@ abstract final class FactionKernelWar {
     );
     if (army.isEmpty) return false;
     final GridPosition? at = seenKernel(turn);
-    if (at == null) return false;
-    final GameMap map = turn.game.levels[KernelGarrison.volcanoLevel]!;
-    final Player? owner = turn.game.players[map.cellAt(at.x, at.y).collectedBy];
-    if (owner == null || owner.id == me.id || owner.hasFallen) return false;
+    final Player? owner = at == null ? null : _holderAt(turn, at);
+    if (at == null || owner == null) return false;
     final int level = KernelGarrison.kernelLevelOf(owner);
     if (hot != null && KernelSiege.isHot(level) != hot) return false;
     if (hot == true && KernelSiege.isCapped(turn.game, owner)) return false;
@@ -81,6 +79,22 @@ abstract final class FactionKernelWar {
         random: turn.random,
       ),
     );
+  }
+
+  /// The other living player holding the kernel the fog of [turn]'s
+  /// player has shown, if any.
+  static Player? holderOf(ScriptTurn turn) {
+    final GridPosition? at = seenKernel(turn);
+    return at == null ? null : _holderAt(turn, at);
+  }
+
+  static Player? _holderAt(ScriptTurn turn, GridPosition at) {
+    final GameMap map = turn.game.levels[KernelGarrison.volcanoLevel]!;
+    final Player? owner = turn.game.players[map.cellAt(at.x, at.y).collectedBy];
+    if (owner == null || owner.id == turn.player.id || owner.hasFallen) {
+      return null;
+    }
+    return owner;
   }
 
   /// The anchor of the kernel when the fog of [turn]'s player has shown

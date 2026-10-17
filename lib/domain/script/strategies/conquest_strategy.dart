@@ -84,6 +84,9 @@ class ConquestStrategy extends GameScript {
   /// found yet; the default sends them away from the middle of the map.
   final double Function(ScriptTurn turn, GridPosition target)? scoutBias;
 
+  /// Whether the volcano army is sized against a kernel held high by another.
+  final bool besiegesHeldKernel;
+
   /// The research plan and the options of its choice nodes.
   final List<TechBranch> researchPlan;
   final Map<TechBranch, List<TechOption>> researchPicks;
@@ -106,6 +109,7 @@ class ConquestStrategy extends GameScript {
     this.deepExplorers = 2,
     this.scoutsAhead = false,
     this.scoutBias,
+    this.besiegesHeldKernel = false,
     this.researchPlan = GrowthMoves.researchPlan,
     this.researchPicks = GrowthMoves.picks,
     this.name = 'conquest',
@@ -127,7 +131,8 @@ class ConquestStrategy extends GameScript {
     turn.research(plan: researchPlan, picks: researchPicks);
     if (!alert) {
       turn.advanceConquest(planner,
-          share: conquestShare, scouts: deepScouts);
+          share: conquestShare, scouts: deepScouts,
+          besiegesHeldKernel: besiegesHeldKernel);
       if (contests) turn.contest();
       if (huntsLairs && !huntsUnderRaid) turn.huntLairs(planner);
     }

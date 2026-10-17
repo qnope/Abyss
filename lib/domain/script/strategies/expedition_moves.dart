@@ -60,9 +60,8 @@ extension ExpeditionMoves on ScriptTurn {
   bool assault(int level, GridPosition p, ArmyPlanner planner) {
     final MapCell cell = game.levels[level]!.cellAt(p.x, p.y);
     final bool kernel = cell.content == CellContentType.volcanicKernel;
-    final List<Combatant> Function() enemy = kernel
-        ? GuardianFactory.forVolcanicKernel
-        : () => GuardianFactory.forType(cell.transitionBase!.type);
+    final List<Combatant> Function() enemy =
+        guardiansOf(kernel ? null : cell.transitionBase!.type);
     final Map<UnitType, int> all = fightersOn(level);
     if ((all[UnitType.abyssAdmiral] ?? 0) <= 0) return false;
     Map<UnitType, int> share(int k) => <UnitType, int>{
@@ -91,21 +90,29 @@ extension ExpeditionMoves on ScriptTurn {
   }
 
   /// Whether the fighters of [level] would beat the guardians of [type],
-  /// or of the volcanic kernel when [type] is `null`.
+  /// or of the volcanic kernel when [type] is `null`; or [enemy], when
+  /// given, without their admiral (a siege does not take it).
   bool readyFor(TransitionBaseType? type, int level, ArmyPlanner planner,
-      {Map<UnitType, int> extra = const <UnitType, int>{}}) {
+      {Map<UnitType, int> extra = const <UnitType, int>{},
+      List<Combatant> Function()? enemy}) {
     final Map<UnitType, int> army = fightersOn(level);
     extra.forEach((t, n) => army[t] = (army[t] ?? 0) + n);
+    if (enemy != null) {
+      army.remove(UnitType.abyssAdmiral);
+      return army.isNotEmpty &&
+          planner.wins(army, enemy, boost: attackBoost);
+    }
     if ((army[UnitType.abyssAdmiral] ?? 0) <= 0) return false;
-    return planner.wins(
-      army,
+    return planner.wins(army, guardiansOf(type),
+        boost: attackBoost, needsAdmiral: true);
+  }
+
+  /// The guardians of a transition base of [type], or of the volcanic
+  /// kernel when [type] is `null`.
+  static List<Combatant> Function() guardiansOf(TransitionBaseType? type) =>
       type == null
           ? GuardianFactory.forVolcanicKernel
-          : () => GuardianFactory.forType(type),
-      boost: attackBoost,
-      needsAdmiral: true,
-    );
-  }
+          : () => GuardianFactory.forType(type);
 
   /// Takes [units] of [fromLevel] down through the player's base there.
   bool descend(int fromLevel, Map<UnitType, int> units) {

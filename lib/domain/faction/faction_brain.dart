@@ -42,6 +42,7 @@ class FactionBrain extends GameScript {
       deepExplorers: FactionScouting.deepExplorers,
       scoutsAhead: true,
       scoutBias: FactionExploration.forTurn,
+      besiegesHeldKernel: true,
       researchPlan: FactionResearch.planOf(personality),
       researchPicks: FactionResearch.picksOf(personality),
     ).playTurn(turn);

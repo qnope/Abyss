@@ -2,6 +2,7 @@ import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/faction/faction_standing.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/game_factory.dart';
+import 'package:abyss/domain/map/grid_position.dart';
 import 'package:abyss/domain/map/transition_base.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -62,5 +63,17 @@ void main() {
     expect(ranking.first.personality, game.factions[1].personality);
     expect(ranking.last.personality, game.factions[0].personality);
     expect(ranking.last.hasFallen, isTrue);
+  });
+
+  test('a faction is discovered once the human has seen its base', () {
+    final game = _game(2);
+    final faction = game.players[game.factions.first.id]!;
+    expect(FactionStanding.of(game, game.humanPlayer).discovered, isTrue);
+    expect(FactionStanding.of(game, faction).discovered, isFalse);
+    game.humanPlayer.addRevealedCell(
+      1,
+      GridPosition(x: faction.baseX, y: faction.baseY),
+    );
+    expect(FactionStanding.of(game, faction).discovered, isTrue);
   });
 }

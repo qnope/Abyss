@@ -3239,6 +3239,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'Unusable: no descent, no garrison, no victory';
 
   @override
+  String get factionOriginWreckPillagers =>
+      'Freebooters who made a trade of the Sinking: they live off what the other hulls lost.';
+
+  @override
+  String get factionOriginPearlOrder =>
+      'The crew of a shipyard vessel, for whom a pearl is earned with time.';
+
+  @override
+  String get factionOriginAnglerCult =>
+      'Pilgrims who, as they sank, saw an anglerfish\'s lantern in the dark: every passage they hold is an altar.';
+
+  @override
+  String get factionOriginMurenaHorde =>
+      'A privateer ship that strikes like the moray from its crevice: early, hard, without warning.';
+
+  @override
+  String get factionOriginSiphonophoreGuild =>
+      'A consortium of merchants, a thousand small trades that make a single body.';
+
+  @override
+  String get factionOriginSilenceMonks =>
+      'A floating monastery: they were the first to understand that the abyss listens.';
+
+  @override
+  String get factionOriginCurrentNomads =>
+      'A flotilla of fishermen without a port, who follow the currents and never build a rampart.';
+
+  @override
+  String get factionOriginPyrosomeHive =>
+      'The most crowded ship of the fleet, which shines by its sheer numbers.';
+
+  @override
+  String get factionOriginMagmaSmiths =>
+      'The crew of a floating foundry: to them, the Volcano is not a hearth, it is a forge.';
+
+  @override
+  String get factionOriginKrakenFaithful =>
+      'They saw a tentacled shadow rise from the Trench during the Sinking, and took it for a god.';
+
+  @override
   String get factionBaseHeadquarters => 'Headquarters';
 
   @override

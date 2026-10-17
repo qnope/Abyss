@@ -1,12 +1,16 @@
 import 'package:abyss/domain/action/action_failure.dart';
 import 'package:abyss/domain/faction/base_intel.dart';
+import 'package:abyss/domain/faction/faction.dart';
 import 'package:abyss/domain/game/game_factory.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
+import 'package:abyss/presentation/extensions/faction_personality_extensions.dart';
+import 'package:abyss/presentation/widgets/common/lore_text.dart';
 import 'package:abyss/presentation/widgets/faction/faction_base_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/l10n_fixtures.dart';
 import '../../../helpers/sheet_opener.dart';
 
 BaseIntel _intel({int turn = 3}) => BaseIntel(
@@ -17,7 +21,8 @@ BaseIntel _intel({int turn = 3}) => BaseIntel(
   stocks: {ResourceType.coral: 120},
 );
 
-Future<void> _open(
+/// Opens the sheet of the first faction of a new game, and returns it.
+Future<Faction> _open(
   WidgetTester tester, {
   BaseIntel? intel,
   int turn = 4,
@@ -29,12 +34,13 @@ Future<void> _open(
     mapSeed: 7,
     factionCount: 1,
   );
+  final faction = game.factions.first;
   await openSheet(
     tester,
     const Locale('fr'),
     (context) => showFactionBaseSheet(
       context,
-      faction: game.factions.first,
+      faction: faction,
       headquartersLevel: 2,
       refusal: null,
       intel: intel,
@@ -44,9 +50,22 @@ Future<void> _open(
       onAttack: () {},
     ),
   );
+  return faction;
 }
 
 void main() {
+  testWidgets('tells where the faction comes from, under its name', (
+    tester,
+  ) async {
+    final faction = await _open(tester);
+    final origin = faction.personality.origin(fr);
+    expect(find.widgetWithText(LoreText, origin), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text(origin)).dy,
+      greaterThan(tester.getTopLeft(find.text(faction.name)).dy),
+    );
+  });
+
   testWidgets('without a report, it says so and offers to spy', (tester) async {
     await _open(tester);
     expect(find.textContaining('Aucun rapport'), findsOneWidget);

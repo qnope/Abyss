@@ -51,7 +51,16 @@ void main() {
       expect(ResourceType.coral.flavorText(fr), contains('bâtir'));
       expect(ResourceType.ore.flavorText(fr), contains('forger'));
       expect(ResourceType.energy.flavorText(fr), contains('alimenter'));
-      expect(ResourceType.pearl.flavorText(fr), contains('rares'));
+      expect(ResourceType.pearl.flavorText(fr), contains('ruines'));
+    });
+
+    test('tells where the pearls are born', () {
+      expect(
+        ResourceType.pearl.flavorText(fr),
+        startsWith('Nées dans les Failles et les Cheminées'),
+      );
+      expect(ResourceType.pearl.flavorText(en), contains('Rifts'));
+      expect(ResourceType.pearl.flavorText(es), contains('Fallas'));
     });
   });
 

@@ -21,6 +21,17 @@ extension ObjectiveChapterDisplay on ObjectiveChapter {
     ObjectiveChapter.awakening => l10n.chapterAwakening,
   };
 
+  /// Line of lore told under the chapter's title, e.g. "Le récif a ses
+  /// propres créatures, et elles écoutent. Tiens ton dôme."
+  String lore(AppLocalizations l10n) => switch (this) {
+    ObjectiveChapter.installation => l10n.chapterInstallationLore,
+    ObjectiveChapter.reef => l10n.chapterReefLore,
+    ObjectiveChapter.rift => l10n.chapterRiftLore,
+    ObjectiveChapter.chimney => l10n.chapterChimneyLore,
+    ObjectiveChapter.kernel => l10n.chapterKernelLore,
+    ObjectiveChapter.awakening => l10n.chapterAwakeningLore,
+  };
+
   /// Name of the chapter after its number, e.g. "2. Le récif".
   String numberedTitle(AppLocalizations l10n) =>
       l10n.chapterNumbered(index + 1, title(l10n));

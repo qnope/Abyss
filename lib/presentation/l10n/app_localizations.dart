@@ -241,7 +241,7 @@ abstract class AppLocalizations {
   /// No description provided for @buildingSolarPanelDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Capte l\'énergie solaire pour alimenter vos installations.'**
+  /// **'Capte les rayons pâles qui atteignent encore le récif pour alimenter vos installations.'**
   String get buildingSolarPanelDescription;
 
   /// No description provided for @buildingLaboratoryName.
@@ -301,7 +301,7 @@ abstract class AppLocalizations {
   /// No description provided for @buildingVolcanicKernelDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Le cœur brûlant des abysses. Construisez-le au niveau 10 pour remporter la victoire. Sa garnison se gère ici, ou depuis sa case sur la carte.'**
+  /// **'La forge des Anciens, au cœur des abysses. Rallumez-la jusqu\'à son dixième feu (niveau 10) pour remporter la victoire. Sa garnison se gère ici, ou depuis sa case sur la carte.'**
   String get buildingVolcanicKernelDescription;
 
   /// No description provided for @unitScoutName.
@@ -505,7 +505,7 @@ abstract class AppLocalizations {
   /// No description provided for @resourcePearlFlavor.
   ///
   /// In fr, this message translates to:
-  /// **'Gemmes rares trouvées dans les ruines et les repaires, et récoltées chaque tour dans les failles et cheminées capturées.'**
+  /// **'Nées dans les Failles et les Cheminées, là où le feu du Volcan rencontre le froid. On en trouve dans les ruines et les repaires, et les postes tenus en récoltent chaque tour.'**
   String get resourcePearlFlavor;
 
   /// No description provided for @monsterFamilyGenericLabel.
@@ -2782,6 +2782,42 @@ abstract class AppLocalizations {
   /// **'Le réveil'**
   String get chapterAwakening;
 
+  /// No description provided for @chapterInstallationLore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton dôme vient de se poser. Fais-le vivre sans réveiller la Fosse.'**
+  String get chapterInstallationLore;
+
+  /// No description provided for @chapterReefLore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le récif a ses propres créatures, et elles écoutent. Tiens ton dôme.'**
+  String get chapterReefLore;
+
+  /// No description provided for @chapterRiftLore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sous le récif, un Léviathan garde chaque Faille. Qui descend ne remonte pas.'**
+  String get chapterRiftLore;
+
+  /// No description provided for @chapterChimneyLore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les tours-forges des Anciens fument encore. Derrière le Titan, la route du Noyau.'**
+  String get chapterChimneyLore;
+
+  /// No description provided for @chapterKernelLore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Seigneur du Noyau dort sur le cœur de la Fosse. Prends sa place, et le Volcan ouvrira l\'œil.'**
+  String get chapterKernelLore;
+
+  /// No description provided for @chapterAwakeningLore.
+  ///
+  /// In fr, this message translates to:
+  /// **'À chaque feu rallumé, le Kraken remonte. Au dixième, la Fosse s\'éclaire : le Volcan est dompté.'**
+  String get chapterAwakeningLore;
+
   /// No description provided for @chapterNumbered.
   ///
   /// In fr, this message translates to:
@@ -3520,11 +3556,23 @@ abstract class AppLocalizations {
   /// **'{raids, plural, one{Votre base est tombée à la fin du tour {turn}, après {raids} raid perdu d\'affilée.} other{Votre base est tombée à la fin du tour {turn}, après {raids} raids perdus d\'affilée.}}'**
   String gameOverDefeatSubtitle(int turn, int raids);
 
+  /// No description provided for @gameOverDefeatLore.
+  ///
+  /// In fr, this message translates to:
+  /// **'La Fosse a repris ton dôme. L\'archiviste ajoute une ligne à ses registres.'**
+  String get gameOverDefeatLore;
+
   /// No description provided for @gameOverFactionWonSubtitle.
   ///
   /// In fr, this message translates to:
   /// **'{name} a dompté le Volcan au tour {turn}.'**
   String gameOverFactionWonSubtitle(String name, int turn);
+
+  /// No description provided for @gameOverFactionWonLore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton dôme vivra désormais de sa lumière.'**
+  String get gameOverFactionWonLore;
 
   /// No description provided for @gameOverVictoryTitle.
   ///
@@ -3537,6 +3585,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Vous avez conquis le Noyau Volcanique !'**
   String get gameOverVictorySubtitle;
+
+  /// No description provided for @gameOverVictoryLore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Volcan est dompté : ses courants chauds remontent jusqu\'au récif, et les autres dômes vivront de ta lumière.'**
+  String get gameOverVictoryLore;
 
   /// No description provided for @gameOverContinueFreePlay.
   ///

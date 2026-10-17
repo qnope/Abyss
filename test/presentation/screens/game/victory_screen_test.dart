@@ -47,6 +47,17 @@ void main() {
       );
     });
 
+    testWidgets('tells the lore of the tamed volcano', (tester) async {
+      await tester.pumpWidget(buildScreen());
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text('Le Volcan est dompté : ses courants chauds remontent '
+            "jusqu'au récif, et les autres dômes vivront de ta lumière."),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('displays the statistics with correct values',
         (tester) async {
       await tester.pumpWidget(buildScreen());
@@ -65,6 +76,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      await tester.ensureVisible(find.text('Continuer en mode libre'));
+
       await tester.tap(find.text('Continuer en mode libre'));
       expect(called, isTrue);
     });
@@ -76,6 +89,8 @@ void main() {
         buildScreen(onMenu: () => called = true),
       );
       await tester.pumpAndSettle();
+
+      await tester.ensureVisible(find.text('Retour au menu'));
 
       await tester.tap(find.text('Retour au menu'));
       expect(called, isTrue);

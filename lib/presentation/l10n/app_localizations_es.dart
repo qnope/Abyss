@@ -96,7 +96,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get buildingSolarPanelDescription =>
-      'Capta la energía solar para alimentar tus instalaciones.';
+      'Capta los pálidos rayos que aún alcanzan el arrecife para alimentar tus instalaciones.';
 
   @override
   String get buildingLaboratoryName => 'Laboratorio';
@@ -131,7 +131,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get buildingVolcanicKernelDescription =>
-      'El corazón ardiente del abismo. Constrúyelo hasta el nivel 10 para lograr la victoria. Su guarnición se gestiona aquí, o desde su casilla en el mapa.';
+      'La forja de los Antiguos, en el corazón del abismo. Reavívala hasta su décimo fuego (nivel 10) para lograr la victoria. Su guarnición se gestiona aquí, o desde su casilla en el mapa.';
 
   @override
   String get unitScoutName => 'Explorador';
@@ -289,7 +289,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get resourcePearlFlavor =>
-      'Gemas raras halladas en ruinas y guaridas, y recogidas cada turno en las fallas y chimeneas capturadas.';
+      'Nacen en las Fallas y las Chimeneas, donde el fuego del Volcán se encuentra con el frío. Se hallan en ruinas y guaridas, y los puestos que controlas las recogen cada turno.';
 
   @override
   String get monsterFamilyGenericLabel => 'Merodeadores';
@@ -1870,6 +1870,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chapterAwakening => 'El despertar';
 
   @override
+  String get chapterInstallationLore =>
+      'Tu cúpula acaba de posarse. Hazla vivir sin despertar a la Fosa.';
+
+  @override
+  String get chapterReefLore =>
+      'El arrecife tiene sus propias criaturas, y escuchan. Defiende tu cúpula.';
+
+  @override
+  String get chapterRiftLore =>
+      'Bajo el arrecife, un Leviatán guarda cada Falla. Quien desciende no vuelve a subir.';
+
+  @override
+  String get chapterChimneyLore =>
+      'Las torres-forja de los Antiguos aún humean. Tras el Titán, el camino al Núcleo.';
+
+  @override
+  String get chapterKernelLore =>
+      'El Señor del Núcleo duerme sobre el corazón de la Fosa. Ocupa su lugar, y el Volcán abrirá el ojo.';
+
+  @override
+  String get chapterAwakeningLore =>
+      'Con cada fuego reavivado, el Kraken sube. Al décimo, la Fosa se ilumina: el Volcán está domado.';
+
+  @override
   String chapterNumbered(int number, String title) {
     return '$number. $title';
   }
@@ -2516,15 +2540,27 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get gameOverDefeatLore =>
+      'La Fosa ha recuperado tu cúpula. El archivista añade una línea a sus registros.';
+
+  @override
   String gameOverFactionWonSubtitle(String name, int turn) {
     return '$name domó el Volcán en el turno $turn.';
   }
+
+  @override
+  String get gameOverFactionWonLore =>
+      'Desde ahora, tu cúpula vivirá de su luz.';
 
   @override
   String get gameOverVictoryTitle => '¡VICTORIA!';
 
   @override
   String get gameOverVictorySubtitle => '¡Has conquistado el Núcleo Volcánico!';
+
+  @override
+  String get gameOverVictoryLore =>
+      'El Volcán está domado: sus corrientes cálidas suben hasta el arrecife, y las demás cúpulas vivirán de tu luz.';
 
   @override
   String get gameOverContinueFreePlay => 'Continuar en modo libre';

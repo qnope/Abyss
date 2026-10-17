@@ -25,6 +25,7 @@ class VictoryScreen extends StatelessWidget {
       title: l10n.gameOverVictoryTitle,
       titleColor: AbyssColors.warning,
       subtitle: l10n.gameOverVictorySubtitle,
+      lore: l10n.gameOverVictoryLore,
       statistics: statistics,
       actions: [
         GameOverAction(

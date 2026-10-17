@@ -96,7 +96,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get buildingSolarPanelDescription =>
-      'Capte l\'énergie solaire pour alimenter vos installations.';
+      'Capte les rayons pâles qui atteignent encore le récif pour alimenter vos installations.';
 
   @override
   String get buildingLaboratoryName => 'Laboratoire';
@@ -131,7 +131,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get buildingVolcanicKernelDescription =>
-      'Le cœur brûlant des abysses. Construisez-le au niveau 10 pour remporter la victoire. Sa garnison se gère ici, ou depuis sa case sur la carte.';
+      'La forge des Anciens, au cœur des abysses. Rallumez-la jusqu\'à son dixième feu (niveau 10) pour remporter la victoire. Sa garnison se gère ici, ou depuis sa case sur la carte.';
 
   @override
   String get unitScoutName => 'Éclaireur';
@@ -291,7 +291,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get resourcePearlFlavor =>
-      'Gemmes rares trouvées dans les ruines et les repaires, et récoltées chaque tour dans les failles et cheminées capturées.';
+      'Nées dans les Failles et les Cheminées, là où le feu du Volcan rencontre le froid. On en trouve dans les ruines et les repaires, et les postes tenus en récoltent chaque tour.';
 
   @override
   String get monsterFamilyGenericLabel => 'Rôdeurs';
@@ -1870,6 +1870,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chapterAwakening => 'Le réveil';
 
   @override
+  String get chapterInstallationLore =>
+      'Ton dôme vient de se poser. Fais-le vivre sans réveiller la Fosse.';
+
+  @override
+  String get chapterReefLore =>
+      'Le récif a ses propres créatures, et elles écoutent. Tiens ton dôme.';
+
+  @override
+  String get chapterRiftLore =>
+      'Sous le récif, un Léviathan garde chaque Faille. Qui descend ne remonte pas.';
+
+  @override
+  String get chapterChimneyLore =>
+      'Les tours-forges des Anciens fument encore. Derrière le Titan, la route du Noyau.';
+
+  @override
+  String get chapterKernelLore =>
+      'Le Seigneur du Noyau dort sur le cœur de la Fosse. Prends sa place, et le Volcan ouvrira l\'œil.';
+
+  @override
+  String get chapterAwakeningLore =>
+      'À chaque feu rallumé, le Kraken remonte. Au dixième, la Fosse s\'éclaire : le Volcan est dompté.';
+
+  @override
   String chapterNumbered(int number, String title) {
     return '$number. $title';
   }
@@ -2513,9 +2537,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get gameOverDefeatLore =>
+      'La Fosse a repris ton dôme. L\'archiviste ajoute une ligne à ses registres.';
+
+  @override
   String gameOverFactionWonSubtitle(String name, int turn) {
     return '$name a dompté le Volcan au tour $turn.';
   }
+
+  @override
+  String get gameOverFactionWonLore =>
+      'Ton dôme vivra désormais de sa lumière.';
 
   @override
   String get gameOverVictoryTitle => 'VICTOIRE !';
@@ -2523,6 +2555,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get gameOverVictorySubtitle =>
       'Vous avez conquis le Noyau Volcanique !';
+
+  @override
+  String get gameOverVictoryLore =>
+      'Le Volcan est dompté : ses courants chauds remontent jusqu\'au récif, et les autres dômes vivront de ta lumière.';
 
   @override
   String get gameOverContinueFreePlay => 'Continuer en mode libre';

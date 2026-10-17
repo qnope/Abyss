@@ -95,7 +95,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get buildingSolarPanelDescription =>
-      'Captures solar energy to power your facilities.';
+      'Catches the pale rays that still reach the reef to power your facilities.';
 
   @override
   String get buildingLaboratoryName => 'Laboratory';
@@ -130,7 +130,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get buildingVolcanicKernelDescription =>
-      'The burning heart of the abyss. Build it to level 10 to win. Its garrison is managed here, or from its cell on the map.';
+      'The forge of the Ancients, at the heart of the abyss. Rekindle it up to its tenth fire (level 10) to win. Its garrison is managed here, or from its cell on the map.';
 
   @override
   String get unitScoutName => 'Scout';
@@ -287,7 +287,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resourcePearlFlavor =>
-      'Rare gems found in ruins and lairs, and gathered every turn in captured rifts and vents.';
+      'Born in the Rifts and the Vents, where the Volcano\'s fire meets the cold. They lie in ruins and lairs, and the posts you hold gather some every turn.';
 
   @override
   String get monsterFamilyGenericLabel => 'Prowlers';
@@ -1843,6 +1843,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chapterAwakening => 'The Awakening';
 
   @override
+  String get chapterInstallationLore =>
+      'Your dome has just settled. Keep it alive without waking the Trench.';
+
+  @override
+  String get chapterReefLore =>
+      'The reef has creatures of its own, and they are listening. Hold your dome.';
+
+  @override
+  String get chapterRiftLore =>
+      'Beneath the reef, a Leviathan guards every Rift. Whoever goes down never comes back up.';
+
+  @override
+  String get chapterChimneyLore =>
+      'The forge-towers of the Ancients still smoke. Beyond the Titan lies the road to the Core.';
+
+  @override
+  String get chapterKernelLore =>
+      'The Lord of the Core sleeps on the heart of the Trench. Take his place, and the Volcano will open its eye.';
+
+  @override
+  String get chapterAwakeningLore =>
+      'With every fire rekindled, the Kraken rises. At the tenth, the Trench lights up: the Volcano is tamed.';
+
+  @override
   String chapterNumbered(int number, String title) {
     return '$number. $title';
   }
@@ -2481,15 +2505,27 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get gameOverDefeatLore =>
+      'The Trench has taken your dome back. The archivist adds a line to the records.';
+
+  @override
   String gameOverFactionWonSubtitle(String name, int turn) {
     return '$name tamed the Volcano at turn $turn.';
   }
+
+  @override
+  String get gameOverFactionWonLore =>
+      'From now on, your dome will live on their light.';
 
   @override
   String get gameOverVictoryTitle => 'VICTORY!';
 
   @override
   String get gameOverVictorySubtitle => 'You have conquered the Volcanic Core!';
+
+  @override
+  String get gameOverVictoryLore =>
+      'The Volcano is tamed: its warm currents rise all the way to the reef, and the other domes will live on your light.';
 
   @override
   String get gameOverContinueFreePlay => 'Continue in free play';

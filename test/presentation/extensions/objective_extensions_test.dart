@@ -30,6 +30,30 @@ void main() {
       expect(ObjectiveChapter.installation.title(es), 'Instalación');
     });
 
+    test('tells the lore of each chapter in French', () {
+      expect(ObjectiveChapter.values.map((c) => c.lore(fr)), [
+        'Ton dôme vient de se poser. Fais-le vivre sans réveiller la Fosse.',
+        'Le récif a ses propres créatures, et elles écoutent. Tiens ton dôme.',
+        'Sous le récif, un Léviathan garde chaque Faille. '
+            'Qui descend ne remonte pas.',
+        'Les tours-forges des Anciens fument encore. '
+            'Derrière le Titan, la route du Noyau.',
+        'Le Seigneur du Noyau dort sur le cœur de la Fosse. '
+            "Prends sa place, et le Volcan ouvrira l'œil.",
+        'À chaque feu rallumé, le Kraken remonte. '
+            "Au dixième, la Fosse s'éclaire : le Volcan est dompté.",
+      ]);
+    });
+
+    test('tells a distinct lore line in English and Spanish', () {
+      for (final l10n in [en, es]) {
+        final lines = ObjectiveChapter.values.map((c) => c.lore(l10n));
+        expect(lines.toSet(), hasLength(ObjectiveChapter.values.length));
+      }
+      expect(ObjectiveChapter.rift.lore(en), contains('Leviathan'));
+      expect(ObjectiveChapter.awakening.lore(es), contains('Kraken'));
+    });
+
     test('numbers them from 1', () {
       expect(
         ObjectiveChapter.installation.numberedTitle(fr),

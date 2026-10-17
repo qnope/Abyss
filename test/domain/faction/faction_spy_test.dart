@@ -1,4 +1,5 @@
 import 'package:abyss/domain/action/spy_base_action.dart';
+import 'package:abyss/domain/faction/faction_war.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -75,5 +76,6 @@ void main() {
   });
 }
 
-bool isDue(War war) => war.game.factions.isNotEmpty &&
-    (war.game.turn + war.game.factions[0].personality.index) % 6 == 0;
+bool isDue(War war) =>
+    war.game.factions.isNotEmpty &&
+    FactionWar.isDue(war.game.turn, war.game.factions[0].personality);

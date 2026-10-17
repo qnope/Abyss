@@ -1,6 +1,7 @@
 import '../action/attack_base_defence.dart';
 import '../action/attack_held_kernel_action.dart';
 import '../action/fight_monster_helpers.dart';
+import '../action/kernel_siege_gap.dart';
 import '../fight/army_planner.dart';
 import '../game/player.dart';
 import '../map/game_map.dart';
@@ -20,7 +21,8 @@ import 'kernel_siege.dart';
 /// A faction besieges a kernel held at [KernelSiege.hotLevel] or more
 /// with [besiegeHot], before any base, and one below with [besiegeCold];
 /// [play] keeps the plain rule, whatever the level, for the reference
-/// scripts (`ContestMoves`).
+/// scripts (`ContestMoves`). Both siege paths leave the human's kernel
+/// alone while [KernelSiegeGap] spaces it.
 ///
 /// The kernel of the human is not announced: the attack is resolved at
 /// once, kept in the history and reported at the end of the turn.
@@ -62,6 +64,9 @@ abstract final class FactionKernelWar {
     final int level = KernelGarrison.kernelLevelOf(owner);
     if (hot != null && KernelSiege.isHot(level) != hot) return false;
     if (hot == true && KernelSiege.isCapped(turn.game, owner)) return false;
+    if (hot != null && KernelSiegeGap.isTooSoon(turn.game, me, owner)) {
+      return false;
+    }
     final ArmyPlanner judge =
         hot == true ? KernelSiege.plannerFor(planner, level) : planner;
     if (!judge.wins(

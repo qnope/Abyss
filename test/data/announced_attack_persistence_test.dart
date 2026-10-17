@@ -74,6 +74,8 @@ void main() {
     expect(state.lostInARow, 1);
     expect(state.attacks, isEmpty);
     expect(state.postLostTurn, isNull);
+    expect(state.kernelHotTurn, isNull);
+    expect(state.kernelSiegeLostTurn, isNull);
   });
 
   test('the turn of the last post lost survives a save and a reload', () {
@@ -85,5 +87,22 @@ void main() {
     );
 
     expect(state.postLostTurn, 33);
+  });
+
+  test('the turns that space the sieges survive a save and a reload', () {
+    final writer = BinaryWriterImpl(Hive);
+    RaidStateAdapter().write(
+      writer,
+      RaidState()
+        ..kernelHotTurn = 21
+        ..kernelSiegeLostTurn = 34,
+    );
+
+    final state = RaidStateAdapter().read(
+      BinaryReaderImpl(writer.toBytes(), Hive),
+    );
+
+    expect(state.kernelHotTurn, 21);
+    expect(state.kernelSiegeLostTurn, 34);
   });
 }

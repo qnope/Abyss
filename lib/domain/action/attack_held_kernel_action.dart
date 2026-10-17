@@ -105,7 +105,7 @@ class AttackHeldKernelAction extends Action {
     final Map<UnitType, int> lost =
         fight.isVictory
             ? KernelTakeover.apply(
-              map: map,
+              game: game,
               x: targetX,
               y: targetY,
               attacker: player,

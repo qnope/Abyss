@@ -46,6 +46,16 @@ class RaidState {
   @HiveField(8)
   int? postLostTurn;
 
+  /// Turn this player's kernel last reached the hot level of a siege,
+  /// `null` when it never did; spaces the factions' sieges of the human.
+  @HiveField(9)
+  int? kernelHotTurn;
+
+  /// Turn this player last lost a siege of its kernel, `null` when it
+  /// never did; spaces the factions' sieges of the human.
+  @HiveField(10)
+  int? kernelSiegeLostTurn;
+
   RaidState({
     this.noise = 0,
     this.totalNoise = 0,
@@ -56,6 +66,8 @@ class RaidState {
     this.raidsLost = 0,
     List<AnnouncedAttack>? attacks,
     this.postLostTurn,
+    this.kernelHotTurn,
+    this.kernelSiegeLostTurn,
   }) : attacks = attacks ?? <AnnouncedAttack>[];
 
   bool get isIncoming => incoming != null && arrivalTurn != null;

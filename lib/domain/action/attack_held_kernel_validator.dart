@@ -7,6 +7,7 @@ import '../unit/unit_type.dart';
 import '../volcano/kernel_garrison.dart';
 import 'action_failure.dart';
 import 'attack_base_validator.dart';
+import 'kernel_siege_gap.dart';
 
 /// The rules that say whether [player] may attack the volcanic kernel
 /// another player holds.
@@ -49,6 +50,9 @@ abstract final class AttackHeldKernelValidator {
             .revealedCellsOnLevel(KernelGarrison.volcanoLevel)
             .contains(GridPosition(x: x, y: y))) {
       return ActionFailure.baseNotRevealed;
+    }
+    if (KernelSiegeGap.isTooSoon(game, player, owner)) {
+      return ActionFailure.attackTooSoon;
     }
     return AttackBaseValidator.alreadyHit(game, player, owner);
   }

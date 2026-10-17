@@ -47,6 +47,9 @@ class DefeatScreen extends StatelessWidget {
       subtitle: winnerName == null
           ? l10n.gameOverDefeatSubtitle(fallTurn, DefeatChecker.lostRaidsLimit)
           : l10n.gameOverFactionWonSubtitle(winnerName!, fallTurn),
+      lore: winnerName == null
+          ? l10n.gameOverDefeatLore
+          : l10n.gameOverFactionWonLore,
       statistics: statistics,
       details: analysis == null ? null : DefeatCauseCard(analysis: analysis!),
       actions: [

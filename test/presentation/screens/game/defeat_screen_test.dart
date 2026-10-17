@@ -61,6 +61,27 @@ void main() {
     expect(find.textContaining('Votre base est tombée'), findsNothing);
   });
 
+  testWidgets('tells the lore of a dome the Trench took', (tester) async {
+    await tester.pumpWidget(build());
+    await tester.pumpAndSettle();
+    expect(
+      find.text("La Fosse a repris ton dôme. L'archiviste ajoute une ligne "
+          'à ses registres.'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('vivra désormais'), findsNothing);
+  });
+
+  testWidgets('tells the lore of a faction victory', (tester) async {
+    await tester.pumpWidget(build(winnerName: 'La Horde des Murènes'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Ton dôme vivra désormais de sa lumière.'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('La Fosse a repris'), findsNothing);
+  });
+
   testWidgets('shows the raid statistics', (tester) async {
     await tester.pumpWidget(build());
     await tester.pumpAndSettle();
@@ -73,6 +94,7 @@ void main() {
     await tester.pumpWidget(build(onMenu: () => called = true));
     await tester.pumpAndSettle();
     expect(find.text('Continuer en mode libre'), findsNothing);
+    await tester.ensureVisible(find.text('Retour au menu'));
     await tester.tap(find.text('Retour au menu'));
     expect(called, isTrue);
   });
@@ -81,6 +103,7 @@ void main() {
     var exported = false;
     await tester.pumpWidget(build(onExport: () => exported = true));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Exporter la partie'));
     await tester.tap(find.text('Exporter la partie'));
     expect(exported, isTrue);
   });

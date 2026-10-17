@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/game/game_statistics.dart';
 import '../../theme/abyss_colors.dart';
+import '../../widgets/common/lore_text.dart';
 import '../../widgets/common/raster_svg.dart';
 import '../../widgets/game_over/game_statistics_card.dart';
 
@@ -20,13 +21,17 @@ class GameOverAction {
   });
 }
 
-/// End-of-game layout: an emblem, a title, a subtitle, the statistics and
-/// the actions. Victory and defeat are two configurations of it.
+/// End-of-game layout: an emblem, a title, a subtitle, a line of lore,
+/// the statistics and the actions. Victory and defeat are two
+/// configurations of it.
 class GameOverScreen extends StatelessWidget {
   final String emblemAsset;
   final String title;
   final Color titleColor;
   final String subtitle;
+
+  /// A line of the game's lore told under the subtitle; none when `null`.
+  final String? lore;
   final GameStatistics statistics;
 
   /// Shown above the statistics, such as the cause of a defeat.
@@ -39,6 +44,7 @@ class GameOverScreen extends StatelessWidget {
     required this.title,
     required this.titleColor,
     required this.subtitle,
+    this.lore,
     required this.statistics,
     this.details,
     required this.actions,
@@ -70,6 +76,10 @@ class GameOverScreen extends StatelessWidget {
                     ?.copyWith(color: AbyssColors.onSurfaceDim),
                 textAlign: TextAlign.center,
               ),
+              if (lore != null) ...[
+                const SizedBox(height: 12),
+                LoreText(lore!, textAlign: TextAlign.center),
+              ],
               const Divider(height: 32),
               if (details != null) ...[details!, const SizedBox(height: 16)],
               GameStatisticsCard(statistics: statistics),

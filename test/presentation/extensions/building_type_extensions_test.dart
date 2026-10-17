@@ -24,6 +24,14 @@ void main() {
           'Cápsula Presurizada');
     });
 
+    test('the solar panel catches the pale rays reaching the reef', () {
+      expect(
+        BuildingType.solarPanel.description(fr),
+        'Capte les rayons pâles qui atteignent encore le récif pour '
+        'alimenter vos installations.',
+      );
+    });
+
     test('the pressure capsule keeps its accent in French', () {
       expect(BuildingType.pressureCapsule.displayName(fr),
           'Capsule Pressurisée');
@@ -72,9 +80,11 @@ void main() {
       expect(BuildingType.volcanicKernel.displayName(en), 'Volcanic Core');
     });
 
-    test('description speaks of the burning heart, with its accents', () {
+    test('description speaks of the forge of the Ancients', () {
       expect(BuildingType.volcanicKernel.description(fr),
-          startsWith('Le cœur brûlant des abysses.'));
+          startsWith('La forge des Anciens, au cœur des abysses.'));
+      expect(BuildingType.volcanicKernel.description(en),
+          contains('tenth fire (level 10)'));
     });
 
     test('iconPath is not empty', () {

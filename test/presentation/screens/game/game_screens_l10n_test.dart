@@ -70,6 +70,7 @@ void main() {
           'in a row.'),
       findsOneWidget,
     );
+    expect(find.textContaining('The Trench has taken'), findsOneWidget);
     expect(find.text('Back to menu'), findsOneWidget);
     expect(find.text('Export the game'), findsOneWidget);
     expect(find.text('Turns played: 27'), findsOneWidget);
@@ -87,6 +88,7 @@ void main() {
     ));
     expect(find.text('¡VICTORIA!'), findsOneWidget);
     expect(find.text('¡Has conquistado el Núcleo Volcánico!'), findsOneWidget);
+    expect(find.textContaining('El Volcán está domado'), findsOneWidget);
     expect(find.text('Continuar en modo libre'), findsOneWidget);
     expect(find.text('Monstruos vencidos: 40'), findsOneWidget);
   });

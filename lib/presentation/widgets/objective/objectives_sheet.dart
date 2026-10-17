@@ -15,6 +15,7 @@ import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
 import '../common/sheet_drag_handle.dart';
 import 'objective_row.dart';
+import 'objective_section_header.dart';
 
 /// Opens the modal bottom sheet of every objective of [player].
 Future<void> showObjectivesSheet(
@@ -68,7 +69,7 @@ class ObjectivesSheetBody extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                 children: [
                   if (temporary.isNotEmpty) ...[
-                    _header(context, l10n.objectiveEventHeader),
+                    ObjectiveSectionHeader(title: l10n.objectiveEventHeader),
                     for (final objective in temporary)
                       ObjectiveRow(
                         title: objective.displayTitle(l10n),
@@ -76,7 +77,10 @@ class ObjectivesSheetBody extends StatelessWidget {
                       ),
                   ],
                   for (final chapter in ObjectiveChapter.values) ...[
-                    _header(context, chapter.numberedTitle(l10n)),
+                    ObjectiveSectionHeader(
+                      title: chapter.numberedTitle(l10n),
+                      lore: chapter.lore(l10n),
+                    ),
                     for (final objective in ObjectiveCatalog.ofChapter(chapter))
                       _row(l10n, objective, state, current),
                   ],
@@ -108,9 +112,4 @@ class ObjectivesSheetBody extends StatelessWidget {
       reward: objective.reward,
     );
   }
-
-  Widget _header(BuildContext context, String text) => Padding(
-    padding: const EdgeInsets.only(top: 12, bottom: 4),
-    child: Text(text, style: Theme.of(context).textTheme.titleSmall),
-  );
 }

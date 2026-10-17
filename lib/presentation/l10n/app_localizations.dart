@@ -2854,6 +2854,12 @@ abstract class AppLocalizations {
   /// **'Événements'**
   String get tipCategoryEvents;
 
+  /// No description provided for @tipCategoryArchives.
+  ///
+  /// In fr, this message translates to:
+  /// **'Archives'**
+  String get tipCategoryArchives;
+
   /// No description provided for @tipNoiseGaugeTitle.
   ///
   /// In fr, this message translates to:
@@ -5163,6 +5169,126 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Pour le reprendre, mène un nouvel assaut avec un Amiral des Abysses.'**
   String get tipPostLostLine3;
+
+  /// No description provided for @tipAbyssListensTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les abysses écoutent'**
+  String get tipAbyssListensTitle;
+
+  /// No description provided for @tipAbyssListensLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dans l\'eau, tout s\'entend : un chantier, une recrue, un combat, et même un dôme qui dort.'**
+  String get tipAbyssListensLine1;
+
+  /// No description provided for @tipAbyssListensLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quand le bruit dépasse ce que la Fosse tolère, ses créatures montent à leur tour.'**
+  String get tipAbyssListensLine2;
+
+  /// No description provided for @tipAbyssListensLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un dôme qui perd trois raids de suite s\'éteint : seule la Fosse éteint.'**
+  String get tipAbyssListensLine3;
+
+  /// No description provided for @tipRivalColoniesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les colonies rivales'**
+  String get tipRivalColoniesTitle;
+
+  /// No description provided for @tipRivalColoniesLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les autres navires du Naufrage se sont posés le même jour que toi.'**
+  String get tipRivalColoniesLine1;
+
+  /// No description provided for @tipRivalColoniesLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque dôme a gardé les manies de son équipage : forbans, moines, forgerons, pèlerins…'**
+  String get tipRivalColoniesLine2;
+
+  /// No description provided for @tipRivalColoniesLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous connaissent la promesse du Noyau, et tous courent vers le Volcan.'**
+  String get tipRivalColoniesLine3;
+
+  /// No description provided for @tipAncientsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les Anciens et leurs perles'**
+  String get tipAncientsTitle;
+
+  /// No description provided for @tipAncientsLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avant le Naufrage, les Anciens vivaient dans la Fosse : ils ont laissé ses ruines, ses passages et le Noyau.'**
+  String get tipAncientsLine1;
+
+  /// No description provided for @tipAncientsLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les perles naissent là où le feu du Volcan rencontre le froid, et ouvraient leurs machines.'**
+  String get tipAncientsLine2;
+
+  /// No description provided for @tipAncientsLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un passage des Anciens se revendique : c\'est pourquoi il faut un Amiral.'**
+  String get tipAncientsLine3;
+
+  /// No description provided for @tipForgeTowersTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les tours-forges'**
+  String get tipForgeTowersTitle;
+
+  /// No description provided for @tipForgeTowersLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sous le récif, le jour s\'arrête : les Colosses y dorment, dans les ruines des Anciens.'**
+  String get tipForgeTowersLine1;
+
+  /// No description provided for @tipForgeTowersLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les Cheminées sont leurs tours-forges, et leurs golems de magma sont redevenus sauvages.'**
+  String get tipForgeTowersLine2;
+
+  /// No description provided for @tipForgeTowersLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un Titan volcanique veille au sommet de chacune, un œil ouvert sur le noir.'**
+  String get tipForgeTowersLine3;
+
+  /// No description provided for @tipAwakeningTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le réveil'**
+  String get tipAwakeningTitle;
+
+  /// No description provided for @tipAwakeningLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Noyau pris n\'est qu\'une forge froide : il faut le rallumer feu après feu, dix en tout.'**
+  String get tipAwakeningLine1;
+
+  /// No description provided for @tipAwakeningLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque feu chasse le Kraken des chambres de magma, et il remonte enlacer le Noyau.'**
+  String get tipAwakeningLine2;
+
+  /// No description provided for @tipAwakeningLine3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au dixième feu, la chaleur remonte jusqu\'au récif : le Volcan est dompté.'**
+  String get tipAwakeningLine3;
 
   /// No description provided for @leviathanAttackerName.
   ///

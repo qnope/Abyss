@@ -21,6 +21,7 @@ void main() {
         'Menaces',
         'Carte',
         'Événements',
+        'Archives',
       ]);
       expect(TipCategory.threats.label(en), 'Threats');
       expect(TipCategory.events.label(es), 'Eventos');

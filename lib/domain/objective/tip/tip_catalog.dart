@@ -1,6 +1,7 @@
 import '../../game/game.dart';
 import '../../game/player.dart';
 import '../objective_migration.dart';
+import 'archive_tips.dart';
 import 'base_tips.dart';
 import 'event_tips.dart';
 import 'map_tips.dart';
@@ -19,6 +20,7 @@ abstract final class TipCatalog {
       ...mapTips,
       ...postTips,
       ...EventTips.all,
+      ...archiveTips,
     ]
       ..sort((a, b) => a.id.index.compareTo(b.id.index)),
   );

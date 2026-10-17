@@ -63,6 +63,16 @@ class TipIdAdapter extends TypeAdapter<TipId> {
         return TipId.kernelGarrison;
       case 24:
         return TipId.postLost;
+      case 25:
+        return TipId.abyssListens;
+      case 26:
+        return TipId.rivalColonies;
+      case 27:
+        return TipId.ancients;
+      case 28:
+        return TipId.forgeTowers;
+      case 29:
+        return TipId.awakening;
       default:
         return TipId.noiseGauge;
     }
@@ -121,6 +131,16 @@ class TipIdAdapter extends TypeAdapter<TipId> {
         writer.writeByte(23);
       case TipId.postLost:
         writer.writeByte(24);
+      case TipId.abyssListens:
+        writer.writeByte(25);
+      case TipId.rivalColonies:
+        writer.writeByte(26);
+      case TipId.ancients:
+        writer.writeByte(27);
+      case TipId.forgeTowers:
+        writer.writeByte(28);
+      case TipId.awakening:
+        writer.writeByte(29);
     }
   }
 

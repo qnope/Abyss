@@ -55,12 +55,17 @@ class FactionStanding {
       deepestLevel: deepest,
       holdsKernel: holdsKernel,
       hasFallen: player.hasFallen,
-      discovered: player.id == game.humanPlayerId ||
-          game.humanPlayer
-              .revealedCellsOnLevel(RaidBattle.baseLevel)
-              .contains(GridPosition(x: player.baseX, y: player.baseY)),
+      discovered: isDiscoveredBy(game.humanPlayer, player),
     );
   }
+
+  /// Whether [viewer] has revealed the base cell of [player]; always for
+  /// its own base.
+  static bool isDiscoveredBy(Player viewer, Player player) =>
+      player.id == viewer.id ||
+      viewer
+          .revealedCellsOnLevel(RaidBattle.baseLevel)
+          .contains(GridPosition(x: player.baseX, y: player.baseY));
 
   /// The human and the factions, the most advanced first (kernel, depth,
   /// headquarters); the fallen last. Empty in a game without factions.

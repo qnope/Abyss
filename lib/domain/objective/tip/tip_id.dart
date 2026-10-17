@@ -3,7 +3,8 @@ import 'package:hive_ce/hive.dart';
 part 'tip_id.g.dart';
 
 /// Every « première fois » tip card, in the order they are offered when
-/// several situations call for one at once.
+/// several situations call for one at once: the Archives, last, come
+/// after the cards that explain the game.
 @HiveType(typeId: 55)
 enum TipId {
   @HiveField(0)
@@ -56,4 +57,14 @@ enum TipId {
   kernelGarrison,
   @HiveField(24)
   postLost,
+  @HiveField(25)
+  abyssListens,
+  @HiveField(26)
+  rivalColonies,
+  @HiveField(27)
+  ancients,
+  @HiveField(28)
+  forgeTowers,
+  @HiveField(29)
+  awakening,
 }

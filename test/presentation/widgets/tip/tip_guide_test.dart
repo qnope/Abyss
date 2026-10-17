@@ -17,7 +17,8 @@ void main() {
   final state =
       ObjectiveState()
         ..markSeen(TipId.lair)
-        ..markSeen(TipId.noiseGauge);
+        ..markSeen(TipId.noiseGauge)
+        ..markSeen(TipId.rivalColonies);
 
   Future<void> open(WidgetTester tester) async {
     await tester.pumpWidget(
@@ -45,15 +46,32 @@ void main() {
     expect(find.text('Guide'), findsOneWidget);
     expect(find.text('La jauge de bruit'), findsOneWidget);
     expect(find.text('Les repaires'), findsOneWidget);
+    expect(find.text('Les colonies rivales'), findsOneWidget);
     expect(find.text('Un raid approche'), findsNothing);
-    expect(find.text('???'), findsNWidgets(TipId.values.length - 2));
+    expect(find.text('???'), findsNWidgets(TipId.values.length - 3));
   });
 
   testWidgets('groups the tips by section', (tester) async {
     await open(tester);
-    for (final label in ['Base', 'Menaces', 'Carte', 'Événements']) {
+    final labels = ['Base', 'Menaces', 'Carte', 'Événements', 'Archives'];
+    for (final label in labels) {
       expect(find.text(label), findsOneWidget);
     }
+  });
+
+  testWidgets('closes on the Archives, below every other section', (
+    tester,
+  ) async {
+    await open(tester);
+    final archives = tester.getTopLeft(find.text('Archives')).dy;
+    expect(
+      archives,
+      greaterThan(tester.getTopLeft(find.text('Événements')).dy),
+    );
+    expect(
+      tester.getTopLeft(find.text('Les colonies rivales')).dy,
+      greaterThan(archives),
+    );
   });
 
   testWidgets('tapping a tip seen reopens its card', (tester) async {
@@ -77,10 +95,22 @@ void main() {
   });
 
   for (final (locale, words) in [
-    (AbyssLocale.en, ['Guide', 'Threats', 'Map', 'Events', 'Lairs', 'Close']),
+    (
+      AbyssLocale.en,
+      ['Guide', 'Threats', 'Map', 'Events', 'Archives', 'Lairs', 'Close'],
+    ),
     (
       AbyssLocale.es,
-      ['Guía', 'Amenazas', 'Mapa', 'Eventos', 'Las guaridas', 'Cerrar'],
+      [
+        'Guía',
+        'Amenazas',
+        'Mapa',
+        'Eventos',
+        'Archivos',
+        'Las guaridas',
+        'Las colonias rivales',
+        'Cerrar',
+      ],
     ),
   ]) {
     testWidgets('speaks ${locale.languageCode}', (tester) async {

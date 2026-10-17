@@ -1914,6 +1914,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tipCategoryEvents => 'Eventos';
 
   @override
+  String get tipCategoryArchives => 'Archivos';
+
+  @override
   String get tipNoiseGaugeTitle => 'El medidor de ruido';
 
   @override
@@ -3690,6 +3693,81 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get tipPostLostLine3 =>
       'Para recuperarlo, lanza un nuevo asalto con un Almirante del Abismo.';
+
+  @override
+  String get tipAbyssListensTitle => 'Los abismos escuchan';
+
+  @override
+  String get tipAbyssListensLine1 =>
+      'En el agua, todo se oye: una obra, un recluta, un combate, e incluso una cúpula que duerme.';
+
+  @override
+  String get tipAbyssListensLine2 =>
+      'Cuando el ruido supera lo que la Fosa tolera, sus criaturas suben a su vez.';
+
+  @override
+  String get tipAbyssListensLine3 =>
+      'Una cúpula que pierde tres incursiones seguidas se apaga: solo la Fosa apaga.';
+
+  @override
+  String get tipRivalColoniesTitle => 'Las colonias rivales';
+
+  @override
+  String get tipRivalColoniesLine1 =>
+      'Los demás barcos del Naufragio se posaron el mismo día que tú.';
+
+  @override
+  String get tipRivalColoniesLine2 =>
+      'Cada cúpula conservó las manías de su tripulación: filibusteros, monjes, forjadores, peregrinos…';
+
+  @override
+  String get tipRivalColoniesLine3 =>
+      'Todos conocen la promesa del Núcleo, y todos corren hacia el Volcán.';
+
+  @override
+  String get tipAncientsTitle => 'Los Antiguos y sus perlas';
+
+  @override
+  String get tipAncientsLine1 =>
+      'Antes del Naufragio, los Antiguos vivían en la Fosa: dejaron sus ruinas, sus pasos y el Núcleo.';
+
+  @override
+  String get tipAncientsLine2 =>
+      'Las perlas nacen donde el fuego del Volcán se encuentra con el frío, y abrían sus máquinas.';
+
+  @override
+  String get tipAncientsLine3 =>
+      'Un paso de los Antiguos se reclama: por eso hace falta un Almirante.';
+
+  @override
+  String get tipForgeTowersTitle => 'Las torres-forja';
+
+  @override
+  String get tipForgeTowersLine1 =>
+      'Bajo el arrecife, el día se acaba: los Colosos duermen allí, en las ruinas de los Antiguos.';
+
+  @override
+  String get tipForgeTowersLine2 =>
+      'Las Chimeneas son sus torres-forja, y sus gólems de magma han vuelto a ser salvajes.';
+
+  @override
+  String get tipForgeTowersLine3 =>
+      'Un Titán volcánico vigila en la cima de cada una, con un ojo abierto a la oscuridad.';
+
+  @override
+  String get tipAwakeningTitle => 'El despertar';
+
+  @override
+  String get tipAwakeningLine1 =>
+      'El Núcleo tomado no es más que una forja fría: hay que reavivarlo fuego a fuego, diez en total.';
+
+  @override
+  String get tipAwakeningLine2 =>
+      'Cada fuego expulsa al Kraken de las cámaras de magma, y sube a enroscarse en el Núcleo.';
+
+  @override
+  String get tipAwakeningLine3 =>
+      'Al décimo fuego, el calor sube hasta el arrecife: el Volcán está domado.';
 
   @override
   String get leviathanAttackerName => 'El Leviatán';

@@ -5,12 +5,13 @@ import '../../../domain/objective/objective_migration.dart';
 import '../../../domain/objective/objective_state.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../theme/abyss_colors.dart';
+import '../opening/opening_story.dart';
 import '../tip/tip_guide.dart';
 import 'labeled_switch.dart';
 
 /// The guide and tip switches of the human player of [game], each change
-/// saved with the game through [repository] right away, and the way to
-/// the Guide of the tips already seen.
+/// saved with the game through [repository] right away, the way to the
+/// Guide of the tips already seen and the way to the opening story.
 class GuideSettings extends StatefulWidget {
   const GuideSettings({
     super.key,
@@ -57,6 +58,15 @@ class _GuideSettingsState extends State<GuideSettings> {
           leading: const Icon(Icons.menu_book, color: AbyssColors.biolumCyan),
           title: Text(l10n.tutorialReviewTips),
           onTap: () => showTipGuide(context, _state),
+        ),
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(
+            Icons.auto_stories,
+            color: AbyssColors.biolumCyan,
+          ),
+          title: Text(l10n.openingStorySettings),
+          onTap: () => showOpeningStory(context),
         ),
       ],
     );

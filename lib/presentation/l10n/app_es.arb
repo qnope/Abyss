@@ -928,5 +928,20 @@
   "defeatAdviceRaiseAnArmy": "Tu base estaba vacía. Construye los Barracones y recluta Arponeros en cuanto se anuncie una incursión.",
   "defeatAdviceMoreDefenders": "Contra tu última incursión hacían falta unos {needed} Arponeros. Tenías {defenders, plural, =0{ningún defensor} =1{1 defensor} other{{defenders} defensores}}.",
   "defeatAdviceTooStrong": "Tu última incursión pedía más de {max} Arponeros: mantén más baja la barra de ruido y mejora la muralla de la Ciudadela.",
-  "defeatAdviceWrongUnits": "Tenías suficientes defensores, pero no los adecuados."
+  "defeatAdviceWrongUnits": "Tenías suficientes defensores, pero no los adecuados.",
+  "openingStorySettings": "La historia del juego",
+  "openingStorySkip": "Saltar",
+  "openingStoryDive": "Sumergirse",
+  "openingSinkingTitle": "El Gran Naufragio",
+  "openingSinkingLine1": "El mundo de arriba se ha vuelto inhabitable. Los últimos barcos hundieron sus cúpulas hasta el arrecife, donde aún llega la luz del día.",
+  "openingSinkingLine2": "Tu cúpula acaba de posarse allí, sobre la Fosa.",
+  "openingListensTitle": "Los abismos escuchan",
+  "openingListensLine1": "El arrecife es estrecho, y los abismos escuchan.",
+  "openingListensLine2": "Cada obra, cada recluta, cada combate atrae a las criaturas de la Fosa.",
+  "openingCoreTitle": "El Núcleo apagado",
+  "openingCoreLine1": "Allá en el fondo duerme el Núcleo Volcánico, la forja de los Antiguos. Apagado, dejó la Fosa a los monstruos.",
+  "openingCoreLine2": "Cada colonia quiere ser la primera en reavivarlo.",
+  "openingGoalTitle": "Tu meta",
+  "openingGoalLine1": "Toma una Falla, desciende, cruza una Chimenea y toma el Núcleo.",
+  "openingGoalLine2": "Reavívalo hasta su décimo fuego antes que las colonias rivales: doma el Volcán."
 }

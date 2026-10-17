@@ -5367,6 +5367,96 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tu avais assez de défenseurs, mais pas les bons.'**
   String get defeatAdviceWrongUnits;
+
+  /// Settings entry telling the opening story of the game again.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'histoire du jeu'**
+  String get openingStorySettings;
+
+  /// Button closing the opening story at once, whatever its card.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passer'**
+  String get openingStorySkip;
+
+  /// Button of the last card of the opening story of a new game: starts playing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plonger'**
+  String get openingStoryDive;
+
+  /// No description provided for @openingSinkingTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Grand Naufrage'**
+  String get openingSinkingTitle;
+
+  /// No description provided for @openingSinkingLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le monde d\'en haut est devenu invivable. Les derniers navires ont coulé leurs dômes jusqu\'au récif, là où le jour arrive encore.'**
+  String get openingSinkingLine1;
+
+  /// No description provided for @openingSinkingLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton dôme vient de s\'y poser, au-dessus de la Fosse.'**
+  String get openingSinkingLine2;
+
+  /// No description provided for @openingListensTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les abysses écoutent'**
+  String get openingListensTitle;
+
+  /// No description provided for @openingListensLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le récif est étroit, et les abysses écoutent.'**
+  String get openingListensLine1;
+
+  /// No description provided for @openingListensLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque chantier, chaque recrue, chaque combat attire les créatures de la Fosse.'**
+  String get openingListensLine2;
+
+  /// No description provided for @openingCoreTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Noyau éteint'**
+  String get openingCoreTitle;
+
+  /// No description provided for @openingCoreLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout au fond dort le Noyau Volcanique, la forge des Anciens. Éteint, il a laissé la Fosse aux monstres.'**
+  String get openingCoreLine1;
+
+  /// No description provided for @openingCoreLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque colonie veut le rallumer la première.'**
+  String get openingCoreLine2;
+
+  /// No description provided for @openingGoalTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton but'**
+  String get openingGoalTitle;
+
+  /// No description provided for @openingGoalLine1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prends une Faille, descends, franchis une Cheminée et prends le Noyau.'**
+  String get openingGoalLine1;
+
+  /// No description provided for @openingGoalLine2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rallume-le jusqu\'à son dixième feu avant les colonies rivales : dompte le Volcan.'**
+  String get openingGoalLine2;
 }
 
 class _AppLocalizationsDelegate

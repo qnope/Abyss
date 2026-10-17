@@ -20,7 +20,7 @@ PostWar _humanPost({int? ago}) {
 void main() {
   test('the harder the game, the closer the attacks on the posts', () {
     expect(Difficulty.easy.postGap, 16);
-    expect(Difficulty.normal.postGap, 12);
+    expect(Difficulty.normal.postGap, 14);
     expect(Difficulty.hard.postGap, 6);
   });
 

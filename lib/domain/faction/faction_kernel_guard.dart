@@ -3,6 +3,7 @@ import '../fight/combatant.dart';
 import '../fight/combatant_builder.dart';
 import '../game/player.dart';
 import '../map/monster_lair.dart';
+import '../raid/raid_wave_factory.dart';
 import '../script/script_turn.dart';
 import '../script/strategies/expedition_moves.dart';
 import '../unit/unit_type.dart';
@@ -15,7 +16,9 @@ import 'faction_war.dart';
 /// lose to the next kraken wave, half of the fighters idling on its base go
 /// down to reinforce it. The conquest strategy only sends the units it has
 /// just recruited, which leaves a big home army useless while the kernel
-/// falls.
+/// falls. What goes down stays there, so the base keeps what holds the
+/// raid announced, or the one its noise will bring next: a lost kraken
+/// wave costs a kernel level, three lost raids the whole faction.
 abstract final class FactionKernelGuard {
   /// Share of the home fighters sent down to the kernel in one turn.
   static const double share = 0.5;
@@ -43,18 +46,18 @@ abstract final class FactionKernelGuard {
     turn.descend(2, sent);
   }
 
-  /// Half of the home fighters, less what the base needs to hold the raid
-  /// announced for this turn.
+  /// [share] of the home fighters, less what the base needs to hold the
+  /// raid announced, or else the next one ([_nextRaid]).
   static Map<UnitType, int> _spare(ScriptTurn turn, double share) {
     final Map<UnitType, int> home = turn.fightersOn(1)
       ..remove(UnitType.abyssAdmiral);
-    final MonsterLair? raid = turn.player.raidState.incoming;
+    final MonsterLair raid =
+        turn.player.raidState.incoming ?? _nextRaid(turn);
     for (final double part in <double>[share, share / 2, 0.1]) {
       final Map<UnitType, int> sent = <UnitType, int>{
         for (final MapEntry<UnitType, int> e in home.entries)
           e.key: (e.value * part).floor(),
       };
-      if (raid == null) return sent;
       final Map<UnitType, int> kept = <UnitType, int>{
         for (final MapEntry<UnitType, int> e in home.entries)
           e.key: e.value - sent[e.key]!,
@@ -70,6 +73,16 @@ abstract final class FactionKernelGuard {
     }
     return const <UnitType, int>{};
   }
+
+  /// The wave the noise of [turn]'s player raises next, before the share
+  /// of the base's own strength (`RaidResolver`), which the units kept
+  /// home are sized to beat anyway.
+  static MonsterLair _nextRaid(ScriptTurn turn) =>
+      RaidWaveFactory.fromTotalNoise(
+        turn.player.raidState.totalNoise,
+        random: turn.random,
+        monsterPercent: turn.game.difficulty.monsterPercentFor(faction: true),
+      );
 
   static List<Combatant> Function()? _rampart(Player me) {
     final Combatant? c = CoralCitadelRampart.combatantOf(me.buildings);

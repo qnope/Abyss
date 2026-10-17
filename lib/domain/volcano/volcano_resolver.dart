@@ -25,6 +25,9 @@ class VolcanoTurnOutcome {
 /// announces the next one while the kernel stands between levels 1 and 9.
 /// The first wave a holder (human or faction) ever faces comes at half
 /// strength; it is told apart by the outcomes [VolcanoState] counts.
+/// A wave due the turn the kernel lost a siege (the factions play before
+/// this step) is held back one turn, so a won siege costs one level only;
+/// it is called off when the siege took the kernel.
 abstract final class VolcanoResolver {
   /// From this kernel level on, the game is won and the waves stop.
   static const int winLevel = 10;
@@ -39,7 +42,17 @@ abstract final class VolcanoResolver {
   }) {
     final VolcanoState state = player.volcanoState;
     VolcanoReport? report;
-    if (state.isIncoming && state.arrivalTurn! <= endedTurn) {
+    final bool due = state.isIncoming && state.arrivalTurn! <= endedTurn;
+    if (due && player.raidState.kernelSiegeLostTurn == endedTurn) {
+      // A siege that took the kernel leaves the wave nothing to retake.
+      if (KernelGarrison.kernelLevelOf(player) < 1) {
+        state.clearIncoming();
+        return const VolcanoTurnOutcome();
+      }
+      state.announce(state.incoming!, endedTurn + 1);
+      return VolcanoTurnOutcome(announced: state.incoming);
+    }
+    if (due) {
       report = VolcanoBattle.fight(
         player: player,
         wave: state.incoming!,

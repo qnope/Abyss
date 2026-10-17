@@ -26,13 +26,15 @@ class RaidStateAdapter extends TypeAdapter<RaidState> {
       raidsLost: fields[6] == null ? 0 : (fields[6] as num).toInt(),
       attacks: (fields[7] as List?)?.cast<AnnouncedAttack>(),
       postLostTurn: (fields[8] as num?)?.toInt(),
+      kernelHotTurn: (fields[9] as num?)?.toInt(),
+      kernelSiegeLostTurn: (fields[10] as num?)?.toInt(),
     );
   }
 
   @override
   void write(BinaryWriter writer, RaidState obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.noise)
       ..writeByte(1)
@@ -50,7 +52,11 @@ class RaidStateAdapter extends TypeAdapter<RaidState> {
       ..writeByte(7)
       ..write(obj.attacks)
       ..writeByte(8)
-      ..write(obj.postLostTurn);
+      ..write(obj.postLostTurn)
+      ..writeByte(9)
+      ..write(obj.kernelHotTurn)
+      ..writeByte(10)
+      ..write(obj.kernelSiegeLostTurn);
   }
 
   @override

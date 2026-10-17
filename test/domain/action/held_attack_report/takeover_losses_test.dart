@@ -2,7 +2,6 @@ import 'package:abyss/domain/action/kernel_takeover.dart';
 import 'package:abyss/domain/action/post_takeover.dart';
 import 'package:abyss/domain/map/transition_base_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
-import 'package:abyss/domain/volcano/kernel_garrison.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/kernel_war_helper.dart';
@@ -38,7 +37,7 @@ void main() {
   });
 
   Map<UnitType, int> take(KernelWar war, int after) => KernelTakeover.apply(
-    map: war.game.levels[KernelGarrison.volcanoLevel]!,
+    game: war.game,
     x: war.at.x,
     y: war.at.y,
     attacker: war.attacker,

@@ -30,6 +30,7 @@ enum Difficulty {
     factionPercent: 90,
     attackGap: 16,
     postGap: 16,
+    kernelGap: 12,
   ),
   @HiveField(1)
   normal(
@@ -38,6 +39,7 @@ enum Difficulty {
     factionPercent: 100,
     attackGap: 10,
     postGap: 12,
+    kernelGap: 10,
   ),
   @HiveField(2)
   hard(
@@ -46,6 +48,7 @@ enum Difficulty {
     factionPercent: 110,
     attackGap: 6,
     postGap: 6,
+    kernelGap: 6,
   );
 
   const Difficulty({
@@ -54,6 +57,7 @@ enum Difficulty {
     required this.factionPercent,
     required this.attackGap,
     required this.postGap,
+    required this.kernelGap,
   });
 
   /// Production of algae, coral and ore, in percent of the buildings' own.
@@ -91,6 +95,11 @@ enum Difficulty {
   /// Turns a faction waits, after the human lost a Faille or a Cheminée,
   /// before it may attack another of the human's posts.
   final int postGap;
+
+  /// Turns a faction waits, after the human's kernel reached the hot level
+  /// of a siege or after the human lost a siege, before it may besiege
+  /// the human's kernel.
+  final int kernelGap;
 
   /// Same production for a faction, the other way round: the easier the
   /// game, the slower the factions grow.

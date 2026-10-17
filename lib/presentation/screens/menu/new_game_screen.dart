@@ -9,6 +9,7 @@ import '../../widgets/common/difficulty_picker.dart';
 import '../../widgets/common/faction_count_picker.dart';
 import '../../widgets/common/labeled_switch.dart';
 import '../game/game_screen.dart';
+import 'opening_story_screen.dart';
 
 class NewGameScreen extends StatefulWidget {
   final GameRepository repository;
@@ -123,11 +124,9 @@ class _NewGameScreenState extends State<NewGameScreen> {
 
     if (!mounted) return;
 
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute<void>(
-        builder: (_) => GameScreen(game: game, repository: widget.repository),
-      ),
-      (_) => false,
+    startWithOpeningStory(
+      Navigator.of(context),
+      (_) => GameScreen(game: game, repository: widget.repository),
     );
   }
 }

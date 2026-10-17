@@ -3814,4 +3814,57 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get defeatAdviceWrongUnits =>
       'You had enough defenders, but not the right ones.';
+
+  @override
+  String get openingStorySettings => 'The story of the game';
+
+  @override
+  String get openingStorySkip => 'Skip';
+
+  @override
+  String get openingStoryDive => 'Dive in';
+
+  @override
+  String get openingSinkingTitle => 'The Great Sinking';
+
+  @override
+  String get openingSinkingLine1 =>
+      'The world above has become unlivable. The last ships sank their domes down to the reef, where daylight still reaches.';
+
+  @override
+  String get openingSinkingLine2 =>
+      'Your dome has just settled there, above the Trench.';
+
+  @override
+  String get openingListensTitle => 'The abyss listens';
+
+  @override
+  String get openingListensLine1 =>
+      'The reef is narrow, and the abyss listens.';
+
+  @override
+  String get openingListensLine2 =>
+      'Every worksite, every recruit, every fight draws the creatures of the Trench.';
+
+  @override
+  String get openingCoreTitle => 'The Cold Core';
+
+  @override
+  String get openingCoreLine1 =>
+      'Far below sleeps the Volcanic Core, the forge of the Ancients. Gone cold, it left the Trench to the monsters.';
+
+  @override
+  String get openingCoreLine2 =>
+      'Every colony wants to be the first to rekindle it.';
+
+  @override
+  String get openingGoalTitle => 'Your goal';
+
+  @override
+  String get openingGoalLine1 =>
+      'Take a Rift, go down, cross a Vent and take the Core.';
+
+  @override
+  String get openingGoalLine2 =>
+      'Rekindle it up to its tenth fire before the rival colonies: tame the Volcano.';
 }

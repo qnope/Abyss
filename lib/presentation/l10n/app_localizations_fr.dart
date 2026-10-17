@@ -3849,4 +3849,56 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get defeatAdviceWrongUnits =>
       'Tu avais assez de défenseurs, mais pas les bons.';
+
+  @override
+  String get openingStorySettings => 'L\'histoire du jeu';
+
+  @override
+  String get openingStorySkip => 'Passer';
+
+  @override
+  String get openingStoryDive => 'Plonger';
+
+  @override
+  String get openingSinkingTitle => 'Le Grand Naufrage';
+
+  @override
+  String get openingSinkingLine1 =>
+      'Le monde d\'en haut est devenu invivable. Les derniers navires ont coulé leurs dômes jusqu\'au récif, là où le jour arrive encore.';
+
+  @override
+  String get openingSinkingLine2 =>
+      'Ton dôme vient de s\'y poser, au-dessus de la Fosse.';
+
+  @override
+  String get openingListensTitle => 'Les abysses écoutent';
+
+  @override
+  String get openingListensLine1 =>
+      'Le récif est étroit, et les abysses écoutent.';
+
+  @override
+  String get openingListensLine2 =>
+      'Chaque chantier, chaque recrue, chaque combat attire les créatures de la Fosse.';
+
+  @override
+  String get openingCoreTitle => 'Le Noyau éteint';
+
+  @override
+  String get openingCoreLine1 =>
+      'Tout au fond dort le Noyau Volcanique, la forge des Anciens. Éteint, il a laissé la Fosse aux monstres.';
+
+  @override
+  String get openingCoreLine2 => 'Chaque colonie veut le rallumer la première.';
+
+  @override
+  String get openingGoalTitle => 'Ton but';
+
+  @override
+  String get openingGoalLine1 =>
+      'Prends une Faille, descends, franchis une Cheminée et prends le Noyau.';
+
+  @override
+  String get openingGoalLine2 =>
+      'Rallume-le jusqu\'à son dixième feu avant les colonies rivales : dompte le Volcan.';
 }

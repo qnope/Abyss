@@ -3851,4 +3851,57 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get defeatAdviceWrongUnits =>
       'Tenías suficientes defensores, pero no los adecuados.';
+
+  @override
+  String get openingStorySettings => 'La historia del juego';
+
+  @override
+  String get openingStorySkip => 'Saltar';
+
+  @override
+  String get openingStoryDive => 'Sumergirse';
+
+  @override
+  String get openingSinkingTitle => 'El Gran Naufragio';
+
+  @override
+  String get openingSinkingLine1 =>
+      'El mundo de arriba se ha vuelto inhabitable. Los últimos barcos hundieron sus cúpulas hasta el arrecife, donde aún llega la luz del día.';
+
+  @override
+  String get openingSinkingLine2 =>
+      'Tu cúpula acaba de posarse allí, sobre la Fosa.';
+
+  @override
+  String get openingListensTitle => 'Los abismos escuchan';
+
+  @override
+  String get openingListensLine1 =>
+      'El arrecife es estrecho, y los abismos escuchan.';
+
+  @override
+  String get openingListensLine2 =>
+      'Cada obra, cada recluta, cada combate atrae a las criaturas de la Fosa.';
+
+  @override
+  String get openingCoreTitle => 'El Núcleo apagado';
+
+  @override
+  String get openingCoreLine1 =>
+      'Allá en el fondo duerme el Núcleo Volcánico, la forja de los Antiguos. Apagado, dejó la Fosa a los monstruos.';
+
+  @override
+  String get openingCoreLine2 =>
+      'Cada colonia quiere ser la primera en reavivarlo.';
+
+  @override
+  String get openingGoalTitle => 'Tu meta';
+
+  @override
+  String get openingGoalLine1 =>
+      'Toma una Falla, desciende, cruza una Chimenea y toma el Núcleo.';
+
+  @override
+  String get openingGoalLine2 =>
+      'Reavívalo hasta su décimo fuego antes que las colonias rivales: doma el Volcán.';
 }

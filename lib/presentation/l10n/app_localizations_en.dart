@@ -1887,6 +1887,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tipCategoryEvents => 'Events';
 
   @override
+  String get tipCategoryArchives => 'Archives';
+
+  @override
   String get tipNoiseGaugeTitle => 'The noise gauge';
 
   @override
@@ -3653,6 +3656,81 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tipPostLostLine3 =>
       'To take it back, lead a new assault with an Abyss Admiral.';
+
+  @override
+  String get tipAbyssListensTitle => 'The abyss listens';
+
+  @override
+  String get tipAbyssListensLine1 =>
+      'In the water, everything carries: a worksite, a recruit, a fight, even a sleeping dome.';
+
+  @override
+  String get tipAbyssListensLine2 =>
+      'When the noise goes beyond what the Trench tolerates, its creatures rise in turn.';
+
+  @override
+  String get tipAbyssListensLine3 =>
+      'A dome that loses three raids in a row goes dark: only the Trench puts a dome out.';
+
+  @override
+  String get tipRivalColoniesTitle => 'The rival colonies';
+
+  @override
+  String get tipRivalColoniesLine1 =>
+      'The other ships of the Sinking settled on the same day as you.';
+
+  @override
+  String get tipRivalColoniesLine2 =>
+      'Each dome kept the habits of its crew: freebooters, monks, smiths, pilgrims…';
+
+  @override
+  String get tipRivalColoniesLine3 =>
+      'They all know the promise of the Core, and they all race toward the Volcano.';
+
+  @override
+  String get tipAncientsTitle => 'The Ancients and their pearls';
+
+  @override
+  String get tipAncientsLine1 =>
+      'Before the Sinking, the Ancients lived in the Trench: they left its ruins, its passages and the Core.';
+
+  @override
+  String get tipAncientsLine2 =>
+      'Pearls are born where the Volcano\'s fire meets the cold, and they once opened their machines.';
+
+  @override
+  String get tipAncientsLine3 =>
+      'A passage of the Ancients must be claimed: that is why it takes an Admiral.';
+
+  @override
+  String get tipForgeTowersTitle => 'The forge-towers';
+
+  @override
+  String get tipForgeTowersLine1 =>
+      'Beneath the reef, daylight ends: the Colossi sleep there, in the ruins of the Ancients.';
+
+  @override
+  String get tipForgeTowersLine2 =>
+      'The Vents are their forge-towers, and their magma golems have gone wild again.';
+
+  @override
+  String get tipForgeTowersLine3 =>
+      'A volcanic Titan keeps watch atop each one, one eye open on the dark.';
+
+  @override
+  String get tipAwakeningTitle => 'The awakening';
+
+  @override
+  String get tipAwakeningLine1 =>
+      'The captured Core is only a cold forge: it must be rekindled fire after fire, ten in all.';
+
+  @override
+  String get tipAwakeningLine2 =>
+      'Each fire drives the Kraken out of the magma chambers, and it rises to coil around the Core.';
+
+  @override
+  String get tipAwakeningLine3 =>
+      'At the tenth fire, the heat rises all the way to the reef: the Volcano is tamed.';
 
   @override
   String get leviathanAttackerName => 'The Leviathan';

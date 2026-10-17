@@ -3,12 +3,15 @@ import '../../domain/event/random_event_type.dart';
 import '../../domain/map/cell_content_type.dart';
 import '../../domain/map/monster_difficulty.dart';
 import '../../domain/map/monster_family.dart';
+import '../../domain/map/post_holder.dart';
+import '../../domain/map/transition_base_type.dart';
 import '../../domain/objective/tip/tip_id.dart';
 import '../../domain/unit/unit_type.dart';
 import '../widgets/guide/guide_bubble.dart';
 import 'building_type_extensions.dart';
 import 'cell_content_type_extensions.dart';
 import 'monster_family_extensions.dart';
+import 'post_holder_extensions.dart';
 import 'random_event_type_extensions.dart';
 import 'unit_type_extensions.dart';
 
@@ -16,10 +19,15 @@ import 'unit_type_extensions.dart';
 const String hostileFactionSvgPath =
     'assets/icons/map_content/faction_hostile.svg';
 
+/// A faction's dome as the map shows it before any war.
+const String neutralFactionSvgPath =
+    'assets/icons/map_content/faction_neutral.svg';
+
 /// Display primitives for a [TipId].
 extension TipIdDisplay on TipId {
   /// Art of the game shown on the card: the building, unit, monster or
-  /// event it explains, the guide's portrait when none fits.
+  /// event it explains, the guide's portrait when none fits; for the
+  /// Archives, what the lore tells of.
   String get illustration => switch (this) {
     TipId.noiseGauge => MonsterDifficulty.easy.svgPath,
     TipId.worksites => BuildingType.headquarters.iconPath,
@@ -46,5 +54,11 @@ extension TipIdDisplay on TipId {
     TipId.survivors => RandomEventType.survivors.illustration,
     TipId.caravan => RandomEventType.caravan.illustration,
     TipId.coldCurrent => RandomEventType.coldCurrent.illustration,
+    TipId.abyssListens => MonsterFamily.swarm.svgPathAt(MonsterDifficulty.hard),
+    TipId.rivalColonies => neutralFactionSvgPath,
+    TipId.ancients => TransitionBaseType.faille.svgPathFor(PostHolder.human),
+    TipId.forgeTowers =>
+      TransitionBaseType.cheminee.svgPathFor(PostHolder.guardians),
+    TipId.awakening => krakenSvgPath,
   };
 }

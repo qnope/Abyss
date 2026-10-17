@@ -2,6 +2,7 @@ import '../../domain/event/random_event_type.dart';
 import '../../domain/objective/tip/tip_category.dart';
 import '../../domain/objective/tip/tip_id.dart';
 import '../l10n/app_localizations.dart';
+import 'tip_archive_texts.dart';
 import 'tip_base_texts.dart';
 import 'tip_event_texts.dart';
 import 'tip_map_texts.dart';
@@ -16,6 +17,7 @@ extension TipCategoryLabel on TipCategory {
     TipCategory.threats => l10n.tipCategoryThreats,
     TipCategory.map => l10n.tipCategoryMap,
     TipCategory.events => l10n.tipCategoryEvents,
+    TipCategory.archives => l10n.tipCategoryArchives,
   };
 }
 
@@ -53,5 +55,10 @@ extension TipIdText on TipId {
     TipId.survivors => eventTip(RandomEventType.survivors, l10n),
     TipId.caravan => eventTip(RandomEventType.caravan, l10n),
     TipId.coldCurrent => eventTip(RandomEventType.coldCurrent, l10n),
+    TipId.abyssListens => abyssListensTip(l10n),
+    TipId.rivalColonies => rivalColoniesTip(l10n),
+    TipId.ancients => ancientsTip(l10n),
+    TipId.forgeTowers => forgeTowersTip(l10n),
+    TipId.awakening => awakeningTip(l10n),
   };
 }

@@ -21,7 +21,9 @@ void main() {
     }
     for (final glow in MapGlow.values.where((g) => g != MapGlow.none)) {
       expect(sprites!.glow(glow), isNotNull, reason: glow.name);
+      expect(sprites.pool(glow), isNotNull, reason: glow.name);
     }
+    expect(sprites!.shadow.width, greaterThan(0));
     final again = await tester.runAsync(MapSprites.load);
     expect(identical(again, sprites), isTrue);
   });

@@ -13,6 +13,7 @@ import '../map/map_cell_visual.dart';
 import '../map/map_painter.dart';
 import '../map/map_projection.dart';
 import '../map/map_sprites.dart';
+import '../map/map_standing_painter.dart';
 import '../unit/unit_card.dart';
 import 'greyable_icon_paths.dart';
 
@@ -106,16 +107,27 @@ class _MapPage extends StatelessWidget {
     ];
     const columns = 8;
     final rows = (visuals.length / columns).ceil();
+    final size = MapProjection.sizeOf(columns, rows);
     return Transform.translate(
       offset: MapProjection.originOf(rows),
-      child: CustomPaint(
-        size: MapProjection.sizeOf(columns, rows),
-        painter: MapPainter(
-          visuals: visuals,
-          columns: columns,
-          sprites: MapSprites.ready,
+      child: Stack(children: [
+        CustomPaint(
+          size: size,
+          painter: MapPainter(
+              visuals: visuals, columns: columns, sprites: MapSprites.ready),
         ),
-      ),
+        CustomPaint(
+          size: size,
+          painter: MapStandingPainter(
+            visuals: visuals,
+            columns: columns,
+            sprites: MapSprites.ready,
+            clock: const AlwaysStoppedAnimation(0),
+            transform: ValueNotifier(Matrix4.identity()),
+            viewport: size,
+          ),
+        ),
+      ]),
     );
   }
 }

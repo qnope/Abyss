@@ -9,6 +9,7 @@ import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
+import 'package:abyss/presentation/widgets/map/map_standing_painter.dart';
 import 'package:abyss/presentation/widgets/unit/unit_card.dart';
 import 'package:abyss/presentation/widgets/warm_up/game_warm_up.dart';
 import 'package:abyss/presentation/widgets/warm_up/greyable_icon_paths.dart';
@@ -78,7 +79,7 @@ void main() {
     expect(find.textContaining('0123456789'), findsNWidgets(3));
   });
 
-  testWidgets('map page paints every sprite and every glow', (tester) async {
+  testWidgets('map page paints every sprite, glow and shadow', (tester) async {
     await showPage(tester, 2);
     expect(tester.takeException(), isNull);
     final paint = tester.widget<CustomPaint>(find.byWidgetPredicate(
@@ -96,5 +97,9 @@ void main() {
     expect(paint.size, MapProjection.sizeOf(painter.columns, rows));
     expect(visuals.map((v) => v.terrainSprite),
         containsAll(TerrainType.plain.tileSvgPaths));
+    final standing = tester.widget<CustomPaint>(find.byWidgetPredicate(
+        (w) => w is CustomPaint && w.painter is MapStandingPainter));
+    expect((standing.painter! as MapStandingPainter).visuals, same(visuals));
+    expect(standing.size, paint.size);
   });
 }

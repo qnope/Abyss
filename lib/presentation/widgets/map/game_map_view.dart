@@ -8,6 +8,7 @@ import 'map_centring.dart';
 import 'map_layers.dart';
 import 'map_projection.dart';
 import 'map_sprites_loading.dart';
+import 'map_standing_hit.dart';
 import 'map_viewport.dart';
 import 'map_visuals_builder.dart';
 import 'scout_origin.dart';
@@ -125,13 +126,16 @@ class _GameMapViewState extends State<GameMapView>
       passageHolders: widget.passageHolders,
       revealed: widget.revealedCells);
 
+  /// Reports the cell of the sprite standing under the tap, whose top
+  /// overlaps the cells behind, or else the cell under it.
   void _handleTap(TapUpDetails details) {
     final effects = widget.effects;
     if (effects != null && effects.isPlaying) return effects.skip();
-    final cell = MapProjection.cellAt(
-        details.localPosition - MapProjection.originOf(rows),
-        columns: widget.gameMap.width,
-        rows: rows);
+    final point = details.localPosition - MapProjection.originOf(rows);
+    final columns = widget.gameMap.width;
+    final cell =
+        standingCellAt(point, visuals: _visuals(), columns: columns) ??
+            MapProjection.cellAt(point, columns: columns, rows: rows);
     if (cell != null) widget.onCellTap!(cell.$1, cell.$2);
   }
 }

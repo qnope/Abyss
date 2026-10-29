@@ -11,6 +11,7 @@ import '../../extensions/terrain_type_extensions.dart';
 import '../common/svg_raster_cache.dart';
 import 'map_cell_visual.dart';
 import 'map_glow_sprites.dart';
+import 'map_floor_sprites.dart';
 
 /// Bitmaps of every map sprite, rasterized once and shared by all maps.
 ///
@@ -25,8 +26,12 @@ class MapSprites {
 
   final Map<String, ui.Image> _svgs;
   final Map<MapGlow, ui.Image> _glows;
+  final Map<MapGlow, ui.Image> _pools;
 
-  const MapSprites._(this._svgs, this._glows);
+  /// The soft contact shadow laid under every standing content.
+  final ui.Image shadow;
+
+  const MapSprites._(this._svgs, this._glows, this._pools, this.shadow);
 
   /// Loads the shared sprites, rasterizing them on first use only.
   static Future<MapSprites> load() {
@@ -46,6 +51,9 @@ class MapSprites {
   ui.Image? svg(String path) => _svgs[path];
 
   ui.Image? glow(MapGlow glow) => _glows[glow];
+
+  /// The pool of light [glow] casts on the floor around a content.
+  ui.Image? pool(MapGlow glow) => _pools[glow];
 
   static Set<String> get svgPaths => {
         for (final terrain in TerrainType.values) ...[
@@ -73,9 +81,12 @@ class MapSprites {
     final glowImages = await Future.wait(
       glows.map((g) => rasterizeGlow(g, spriteSize)),
     );
+    final poolImages = await Future.wait(glows.map(rasterizePool));
     return MapSprites._(
       Map.fromIterables(paths, svgImages),
       Map.fromIterables(glows, glowImages),
+      Map.fromIterables(glows, poolImages),
+      await rasterizeShadow(),
     );
   }
 }

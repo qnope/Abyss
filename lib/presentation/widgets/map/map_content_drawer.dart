@@ -5,22 +5,28 @@ import 'package:flutter/rendering.dart';
 import '../ambience/ambient_motion.dart';
 import '../ambience/sprite_motion.dart';
 import 'map_cell_visual.dart';
+import 'map_content_spot.dart';
+import 'map_flat_contents.dart';
 import 'map_projection.dart';
+import 'map_floor_sprites.dart';
 import 'map_sprites.dart';
 
 /// Side of a map cell, in logical pixels.
 const cellSize = 48.0;
 
-/// Draws the content of map cells (glow, faction ring, sprite, seal) the
-/// same way for the static map and the ambience layer above it.
+/// Draws the content of map cells: a hole lying flat on its diamond, or
+/// a content standing up over its glow, shadow and ring on the floor.
 ///
 /// Its paints are made once and reused for every cell it draws.
 class MapContentDrawer {
   final MapSprites? sprites;
 
-  /// Side of a one-cell content sprite, centred in its cell.
+  /// Side of a content sprite on the flat map, as effects draw it.
   static const contentSize = 28.0;
-  static const _contentInset = (cellSize - contentSize) / 2;
+
+  /// How far a hole lying flat reaches past each side of its cell, as a
+  /// share of the cell.
+  static const flatBleed = 0.08;
 
   static final spriteSrc = Rect.fromLTWH(
     0,
@@ -29,11 +35,15 @@ class MapContentDrawer {
     MapSprites.spriteSize.toDouble(),
   );
 
+  static final _floorSrc = Rect.fromLTWH(
+      0, 0, floorSpriteSize.toDouble(), floorSpriteSize.toDouble());
+
   final _image = Paint()..filterQuality = FilterQuality.medium;
   final _dimmed = Paint()
     ..filterQuality = FilterQuality.medium
     ..color = const Color.fromRGBO(0, 0, 0, 0.3);
   final _glow = Paint()..filterQuality = FilterQuality.medium;
+  final _shadow = Paint()..filterQuality = FilterQuality.low;
   final _seal = Paint()..filterQuality = FilterQuality.medium;
   final _ring = Paint()
     ..style = PaintingStyle.stroke
@@ -55,40 +65,73 @@ class MapContentDrawer {
       MapProjection.standingOf((index % columns, index ~/ columns),
           span: visual.contentSpan);
 
-  /// Where the sprite of [visual] lies in its [area]: inset from its
-  /// glow, or over the whole area of a wide content.
-  static Rect bodyOf(MapCellVisual visual, Rect area) =>
-      visual.contentSpan == 1 ? area.deflate(_contentInset) : area;
+  /// Where a hole lying flat on [cell] is drawn on the flat map, before
+  /// [MapProjection.isometric] lays it on its diamond.
+  static Rect flatOf((int, int) cell) => Rect.fromLTWH(
+        cell.$1 * cellSize,
+        cell.$2 * cellSize,
+        cellSize,
+        cellSize,
+      ).inflate(flatBleed * cellSize);
 
   /// Draws [sprite] into [dst], or nothing while it is not loaded.
   void drawSprite(Canvas canvas, ui.Image? sprite, Rect dst, Paint paint) {
     if (sprite != null) canvas.drawImageRect(sprite, spriteSrc, dst, paint);
   }
 
-  /// Draws the content of [visual] over [area] in [pose]: its glow stays
-  /// put (a pulsing one at the pose's glow opacity), the rest moves.
-  void drawContent(
+  /// Draws what [visual] lays on the floor at [spot]: the pool of its
+  /// glow (a pulsing one at the [pose]'s glow), the shadow of a standing
+  /// content, then the ring of a faction's base.
+  void drawFloor(
     Canvas canvas,
     MapCellVisual visual,
-    Rect area, {
+    MapContentSpot spot, {
     SpriteMotion pose = SpriteMotion.rest,
   }) {
     if (visual.glow != MapGlow.none) {
       final opacity =
           visual.motion == AmbientMotion.pulse ? pose.glow : 1.0;
       _glow.color = Color.fromRGBO(0, 0, 0, opacity);
-      drawSprite(canvas, sprites?.glow(visual.glow), area, _glow);
+      _drawOnFloor(canvas, sprites?.pool(visual.glow), spot.glow, _glow);
     }
-    final body = bodyOf(visual, area);
-    pose.paint(canvas, body, () => _drawBody(canvas, visual, body));
-  }
-
-  void _drawBody(Canvas canvas, MapCellVisual visual, Rect body) {
+    if (visual.standsUp) {
+      _drawOnFloor(canvas, sprites?.shadow, spot.shadow, _shadow);
+    }
     final ring = visual.factionColor;
     if (ring != null) {
       _ring.color = ring;
-      canvas.drawCircle(body.center, body.shortestSide / 2 + 3, _ring);
+      canvas.drawOval(spot.ring, _ring);
     }
+  }
+
+  /// Draws [visual] standing in [area] in [pose]: its sprite, dimmed once
+  /// collected, under the seal of a held volcano.
+  void drawStanding(
+    Canvas canvas,
+    MapCellVisual visual,
+    Rect area, {
+    SpriteMotion pose = SpriteMotion.rest,
+  }) {
+    if (pose.isRest) return _drawBody(canvas, visual, area);
+    pose.paint(canvas, area, () => _drawBody(canvas, visual, area));
+  }
+
+  /// Draws the hole of [visual] lying flat on the diamond of [cell].
+  void drawFlat(Canvas canvas, MapCellVisual visual, (int, int) cell) {
+    final sprite = sprites?.svg(visual.contentSprite!);
+    if (sprite == null) return;
+    canvas
+      ..save()
+      ..transform(MapProjection.isometric);
+    drawSprite(canvas, sprite, flatOf(cell), visual.dimmed ? _dimmed : _image);
+    canvas.restore();
+  }
+
+  void _drawOnFloor(Canvas canvas, ui.Image? image, Rect dst, Paint paint) {
+    if (image != null) canvas.drawImageRect(image, _floorSrc, dst, paint);
+  }
+
+  void _drawBody(Canvas canvas, MapCellVisual visual, Rect body) {
     final sprite = visual.contentSprite;
     if (sprite != null) {
       drawSprite(canvas, sprites?.svg(sprite), body,

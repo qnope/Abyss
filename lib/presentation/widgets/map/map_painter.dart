@@ -2,20 +2,22 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../theme/abyss_colors.dart';
-import '../ambience/ambient_motion.dart';
 import 'map_cell_visual.dart';
 import 'map_content_drawer.dart';
+import 'map_flat_contents.dart';
 import 'map_projection.dart';
 import 'map_sprites.dart';
 
 export 'map_content_drawer.dart' show cellSize;
 
-/// Paints the still map in one pass, in projection coordinates: the
-/// diamond tile of every cell, the still contents standing on them, then
-/// a single path for exploration markers and another for the fog.
+/// Paints the still floor of the map in one pass, in projection
+/// coordinates: the diamond tile of every cell, the holes lying flat on
+/// them, then a single path for exploration markers and another for the
+/// fog.
 ///
-/// Contents that move are left out: the ambience layer above draws them,
-/// so nothing is drawn twice and panning never repaints this map.
+/// Whatever stands (still or moving, through the fog or not) and every
+/// glow, shadow and ring are left to the standing layer above, which
+/// draws them back to front: panning never repaints this map.
 class MapPainter extends CustomPainter {
   /// How far a floor tile is drawn past its box, so that neighbours
   /// overlap and no seam shows between them.
@@ -41,8 +43,7 @@ class MapPainter extends CustomPainter {
     final fallback = Paint()..color = AbyssColors.plainBlue;
     final pending = Path();
     final fog = Path();
-    final standing = <int>[];
-    final beacons = <int>[];
+    final flat = <int>[];
     for (var i = 0; i < visuals.length; i++) {
       final visual = visuals[i];
       final cell = (i % columns, i ~/ columns);
@@ -50,9 +51,7 @@ class MapPainter extends CustomPainter {
       image == null
           ? canvas.drawPath(MapProjection.diamondOf(cell), fallback)
           : drawer.drawSprite(canvas, image, _tileOf(cell), terrain);
-      if (visual.motion == AmbientMotion.still) {
-        (visual.aboveFog ? beacons : standing).add(i);
-      }
+      if (visual.liesFlat) flat.add(i);
       if (visual.pending) {
         pending.addPath(MapProjection.diamondOf(cell, inset: 1), Offset.zero);
       }
@@ -60,10 +59,9 @@ class MapPainter extends CustomPainter {
         fog.addPath(MapProjection.diamondOf(cell, inset: -0.5), Offset.zero);
       }
     }
-    // Over every tile, which a content standing on its cell overlaps.
-    for (final i in standing) {
-      drawer.drawContent(
-          canvas, visuals[i], MapContentDrawer.areaOf(visuals[i], i, columns));
+    // Over every tile, as a hole reaches a little past its diamond.
+    for (final i in flat) {
+      drawer.drawFlat(canvas, visuals[i], (i % columns, i ~/ columns));
     }
     canvas.drawPath(
       pending,
@@ -79,11 +77,6 @@ class MapPainter extends CustomPainter {
             .withValues(alpha: AbyssColors.fogOpacity)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, fogBlur),
     );
-    // The few cells seen through the fog (a wreck), over it.
-    for (final i in beacons) {
-      drawer.drawContent(
-          canvas, visuals[i], MapContentDrawer.areaOf(visuals[i], i, columns));
-    }
   }
 
   /// The box the tile of [cell] is drawn in: its tile box, a hair larger.

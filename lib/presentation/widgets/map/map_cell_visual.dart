@@ -42,8 +42,8 @@ class MapCellVisual {
   /// cell: a wreck must be seen to be explored.
   final bool aboveFog;
 
-  /// How the content and its glow idle. Anything but still is drawn by
-  /// the ambience layer instead of the static map.
+  /// How the content and its glow idle, as the standing layer draws
+  /// them: a hole lying flat never moves, only its glow pulses.
   final AmbientMotion motion;
 
   const MapCellVisual({

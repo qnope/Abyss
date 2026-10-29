@@ -6,12 +6,13 @@ import 'package:abyss/presentation/theme/faction_colors.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_visuals_builder.dart';
-import 'package:abyss/presentation/widgets/map/map_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
+import 'package:abyss/presentation/widgets/map/map_sprites.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/map_tab_harness.dart';
+import 'map_standing_probe.dart';
 
 void main() {
   final colour = FactionColors.of(FactionPersonality.anglerCult);
@@ -61,21 +62,23 @@ void main() {
         isFalse);
   });
 
-  test('the painter rings the base in the colour of its faction', () {
-    final painter = MapPainter(
-      visuals: [
-        MapCellVisual(
-          terrainSprite: 'x',
-          revealed: true,
-          factionColor: colour,
-        ),
-      ],
-      columns: 1,
-    );
-    final centre = MapProjection.standingOf((0, 0)).center;
+  testWidgets('the standing layer rings the base on the floor in its colour',
+      (tester) async {
+    final sprites = await tester.runAsync(MapSprites.load);
+    final painter = standingPainterOf([
+      MapCellVisual(terrainSprite: 'x', revealed: true, factionColor: colour),
+    ], columns: 1, sprites: sprites);
+    final centre = MapProjection.centreOf((0, 0));
     expect(
-      (Canvas canvas) => painter.paint(canvas, MapProjection.sizeOf(1, 1)),
-      paints..circle(color: colour, x: centre.dx, y: centre.dy),
+      paintOf(painter),
+      paints
+        ..something((method, args) {
+          if (method != #drawOval) return false;
+          final ring = args[0] as Rect;
+          return ring.center == centre &&
+              ring.width == 2 * ring.height &&
+              (args[1] as Paint).color.toARGB32() == colour.toARGB32();
+        }),
     );
   });
 

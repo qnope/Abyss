@@ -3,6 +3,7 @@ import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/widgets/ambience/ambient_motion.dart';
 import 'package:abyss/presentation/widgets/ambience/creature_sheet.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
+import 'package:abyss/presentation/widgets/map/map_content_fade.dart';
 import 'package:abyss/presentation/widgets/map/map_creature_sheets.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
@@ -36,6 +37,7 @@ MapStandingPainter standingPainterOf(
   ValueNotifier<double>? clock,
   ValueNotifier<Matrix4>? transform,
   Size? viewport,
+  MapContentFade? fade,
   CreatureSheet? Function(String sprite) creatureSheetOf =
       MapCreatureSheets.peek,
 }) =>
@@ -47,6 +49,7 @@ MapStandingPainter standingPainterOf(
       transform: transform ?? TransformationController(),
       viewport: viewport ??
           MapProjection.sizeOf(columns, visuals.length ~/ columns),
+      fade: fade,
       creatureSheetOf: creatureSheetOf,
     );
 

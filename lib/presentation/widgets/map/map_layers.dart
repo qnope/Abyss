@@ -11,8 +11,9 @@ import 'map_sprites.dart';
 import 'map_standing_painter.dart';
 import 'scout_token_layer.dart';
 
-/// The stacked layers of a map: the still floor, the contents standing
-/// on it (back to front, over the fog), the scouts sent exploring, the
+/// The stacked layers of a map: the still floor, what the [effects] lay
+/// on it, the contents standing on it (back to front, over the fog, those
+/// an effect fades faded), the scouts sent exploring, the rest of the
 /// [effects] played over the map (which may shake it all), then the
 /// guide's halo.
 ///
@@ -61,14 +62,7 @@ class MapLayers extends StatelessWidget {
     final rows = columns == 0 ? 0 : visuals.length ~/ columns;
     final size = MapProjection.sizeOf(columns, rows);
     final effects = this.effects;
-    final stack = Stack(clipBehavior: Clip.none, children: [
-      RepaintBoundary(
-        child: CustomPaint(
-          size: size,
-          painter: MapPainter(
-              visuals: visuals, columns: columns, sprites: sprites),
-        ),
-      ),
+    final standing = [
       RepaintBoundary(
         child: CustomPaint(
           size: size,
@@ -79,6 +73,7 @@ class MapLayers extends StatelessWidget {
             clock: clock,
             transform: transform,
             viewport: viewport,
+            fade: effects?.fade,
           ),
         ),
       ),
@@ -87,12 +82,26 @@ class MapLayers extends StatelessWidget {
         originOf: scoutOriginOf,
         size: size,
       ),
-      if (effects != null)
+    ];
+    final stack = Stack(clipBehavior: Clip.none, children: [
+      RepaintBoundary(
+        child: CustomPaint(
+          size: size,
+          painter: MapPainter(
+              visuals: visuals, columns: columns, sprites: sprites),
+        ),
+      ),
+      if (effects == null)
+        ...standing
+      else
         MapEffectsLayer(
           effects: effects,
           size: size,
           originOf: scoutOriginOf,
           sprites: sprites,
+          columns: columns,
+          rows: rows,
+          child: Stack(clipBehavior: Clip.none, children: standing),
         ),
       GuideCellHalo(level: level, boxOf: MapProjection.tileRectOf),
     ]);

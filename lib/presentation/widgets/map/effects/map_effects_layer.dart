@@ -6,16 +6,22 @@ import 'map_effect.dart';
 import 'map_effect_painter.dart';
 import 'map_effects.dart';
 
-/// Plays the effects of [effects] over a map, in projection coordinates.
+/// Plays the effects of [effects] on a map, in projection coordinates,
+/// around the layers of [child]: what an effect lays on the floor under
+/// them, the rest over them, the contents it fades told to the map.
 ///
 /// One animation runs the effect playing; once it ends, the effect is
 /// over. When the player asks for fewer animations, every effect is over
-/// as soon as it starts. Never catches a tap.
+/// as soon as it starts. Never catches a tap itself.
 class MapEffectsLayer extends StatefulWidget {
   final MapEffects effects;
 
-  /// Size of the map.
+  /// Size of the map, and in cells if known.
   final Size size;
+  final int? columns, rows;
+
+  /// The layers of the map the effects play around, if any.
+  final Widget? child;
 
   /// The cell the player's units sent to a target set off from.
   final (int, int) Function((int, int) target) originOf;
@@ -29,6 +35,9 @@ class MapEffectsLayer extends StatefulWidget {
     required this.size,
     required this.originOf,
     this.sprites,
+    this.columns,
+    this.rows,
+    this.child,
   });
 
   @override
@@ -46,7 +55,7 @@ class _MapEffectsLayerState extends State<MapEffectsLayer>
   void initState() {
     super.initState();
     _progress = AnimationController(vsync: this)
-      ..addListener(_shake)
+      ..addListener(_tick)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) widget.effects.finish();
       });
@@ -83,10 +92,11 @@ class _MapEffectsLayerState extends State<MapEffectsLayer>
     if (effect != null && _reduced) return widget.effects.finish();
     _progress.stop();
     widget.effects.shake.value = Offset.zero;
+    widget.effects.fade.clear();
     setState(() {
       _effect = effect;
-      _run = effect?.stage(
-          MapStage(originOf: widget.originOf, sprites: widget.sprites));
+      _run = effect?.stage(MapStage(originOf: widget.originOf,
+          sprites: widget.sprites, columns: widget.columns, rows: widget.rows));
     });
     final run = _run;
     if (effect == null || run == null) return;
@@ -98,32 +108,41 @@ class _MapEffectsLayerState extends State<MapEffectsLayer>
       ..forward(from: 0);
   }
 
-  void _shake() {
+  /// Shakes the map and fades its contents as the effect plays.
+  void _tick() {
     final run = _run;
     if (run == null) return;
-    widget.effects.shake.value =
-        run.shakeAt(run.duration * _progress.value);
+    final elapsed = run.duration * _progress.value;
+    widget.effects.shake.value = run.shakeAt(elapsed);
+    widget.effects.fade.fade(run.fadedCells, run.contentOpacityAt(elapsed));
   }
 
   @override
   void dispose() {
     _detach(widget.effects);
+    widget.effects.fade.clear();
     _progress.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final run = _run;
-    return IgnorePointer(
-      child: RepaintBoundary(
-        child: CustomPaint(
-          size: widget.size,
-          painter: run == null
-              ? null
-              : MapEffectPainter(run: run, progress: _progress),
-        ),
-      ),
-    );
+    final run = _run, child = widget.child;
+    return Stack(
+        alignment: Alignment.topLeft, clipBehavior: Clip.none, children: [
+      _paint(run == null
+          ? null
+          : MapEffectFloorPainter(run: run, progress: _progress)),
+      if (child != null) child,
+      _paint(run == null
+          ? null
+          : MapEffectPainter(run: run, progress: _progress)),
+    ]);
   }
+
+  Widget _paint(CustomPainter? painter) => IgnorePointer(
+        child: RepaintBoundary(
+          child: CustomPaint(size: widget.size, painter: painter),
+        ),
+      );
 }

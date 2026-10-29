@@ -140,7 +140,6 @@ class MapStrike extends MapEffect {
   MapEffectRun stage(MapStage stage) => MapStrikeRun(
         this,
         stage: stage,
-        geometry: StrikeGeometry(
-            origin: stage.originOf(target), target: target, span: span),
+        geometry: StrikeGeometry.staged(stage, target, span: span),
       );
 }

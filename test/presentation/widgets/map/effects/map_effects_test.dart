@@ -10,7 +10,7 @@ import '../../../../helpers/reduced_motion.dart';
 
 const _length = Duration(milliseconds: 500);
 
-class _Run implements MapEffectRun {
+class _Run extends MapEffectRun {
   @override
   Duration get duration => _length;
 

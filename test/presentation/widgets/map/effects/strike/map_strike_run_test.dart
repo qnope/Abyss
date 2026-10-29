@@ -21,13 +21,13 @@ void main() {
       ).stage(MapStage(originOf: (_) => (0, 5)));
 
   test('lasts the swim from the origin, two lunges and the outcome', () {
-    final swim = MapTokenTrip.durationOf((0, 5), (4, 5));
+    final swim = MapTokenTrip.durationOf((0, 5), (4, 6));
     expect(runOf().duration,
         StrikeTimeline(swim: swim, hits: 2).total);
   });
 
   test('shakes the map only right after each hit', () {
-    final swim = MapTokenTrip.durationOf((0, 5), (4, 5));
+    final swim = MapTokenTrip.durationOf((0, 5), (4, 6));
     final timeline = StrikeTimeline(swim: swim, hits: 2);
     final run = runOf();
     expect(run.shakeAt(swim), Offset.zero);

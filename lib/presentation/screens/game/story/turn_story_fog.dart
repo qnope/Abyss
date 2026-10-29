@@ -1,7 +1,6 @@
 import '../../../../domain/game/game.dart';
 import '../../../../domain/map/cell_content_type.dart';
 import '../../../../domain/map/map_cell.dart';
-import '../../../extensions/cell_content_type_extensions.dart';
 import '../../../widgets/map/effects/story/map_fog_lift.dart';
 import '../../../widgets/map/map_scatter.dart';
 import 'story_chapter.dart';
@@ -33,19 +32,16 @@ StoryChapter? fogLiftChapter(Game game, TurnStorySnapshot before) {
       scouts: scouts,
       beacons: {
         for (final (x, y) in seen)
-          if (_beaconOf(map.cellAt(x, y)) case final sprite?) (x, y): sprite,
+          if (_isBeacon(map.cellAt(x, y))) (x, y),
       },
       focus: scouts.isNotEmpty ? scouts.first : _middleOf(seen),
     ),
   );
 }
 
-/// The sprite [cell] shows through the fog, if any: a wreck not
-/// searched yet.
-String? _beaconOf(MapCell cell) =>
-    cell.content == CellContentType.wreck && !cell.isCollected
-        ? cell.content.svgPath
-        : null;
+/// Whether [cell] shows through the fog: a wreck not searched yet.
+bool _isBeacon(MapCell cell) =>
+    cell.content == CellContentType.wreck && !cell.isCollected;
 
 /// The cell of [cells] nearest their middle.
 (int, int) _middleOf(Set<(int, int)> cells) {

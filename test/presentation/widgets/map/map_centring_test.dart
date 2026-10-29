@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../helpers/test_svg_helper.dart';
 import 'map_view_geometry.dart';
 
-class _Run implements MapEffectRun {
+class _Run extends MapEffectRun {
   @override
   Duration get duration => const Duration(seconds: 1);
 

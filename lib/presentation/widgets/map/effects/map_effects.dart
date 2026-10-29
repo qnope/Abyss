@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/painting.dart';
 
+import '../map_content_fade.dart';
 import 'map_effect.dart';
 import 'strike/map_strike.dart';
 
@@ -21,6 +22,9 @@ class MapEffects extends ChangeNotifier {
 
   /// How far the map is shaken, set by the layer as an effect plays.
   final ValueNotifier<Offset> shake = ValueNotifier(Offset.zero);
+
+  /// The contents the effect playing fades, set by the layer.
+  final MapContentFade fade = MapContentFade();
 
   /// The effect playing, if any.
   MapEffect? get current => _current;
@@ -88,6 +92,7 @@ class MapEffects extends ChangeNotifier {
   void dispose() {
     finish();
     shake.dispose();
+    fade.dispose();
     super.dispose();
   }
 }

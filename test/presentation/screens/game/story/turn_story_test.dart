@@ -1,7 +1,6 @@
 import 'package:abyss/domain/map/cell_content_type.dart';
 import 'package:abyss/domain/map/map_cell.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
-import 'package:abyss/presentation/extensions/cell_content_type_extensions.dart';
 import 'package:abyss/presentation/extensions/monster_lair_extensions.dart';
 import 'package:abyss/presentation/screens/game/story/turn_story.dart';
 import 'package:abyss/presentation/screens/game/story/turn_story_snapshot.dart';
@@ -51,7 +50,7 @@ void main() {
     revealAfterTurn(game, 1, [(8, 5), (9, 5), (9, 6)]);
     final story = TurnStory.plan(game, before, storyResult());
     final lift = story.chapters.single.effect as MapFogLift;
-    expect(lift.beacons, {(8, 5): CellContentType.wreck.svgPath});
+    expect(lift.beacons, {(8, 5)});
   });
 
   test('the fog lifts on the level where the most cells were seen', () {

@@ -26,7 +26,7 @@ import 'strike_timeline.dart';
 /// The army's token swims on the flat map ([StrikeGeometry]) and stands
 /// upright where it projects; the target is drawn exactly where the
 /// standing layer draws it.
-class MapStrikeRun implements MapEffectRun {
+class MapStrikeRun extends MapEffectRun {
   /// How long the lair flashes after a hit.
   static const flashLength = AbyssMotion.tap;
 

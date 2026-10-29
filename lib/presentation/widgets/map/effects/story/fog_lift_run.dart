@@ -4,26 +4,26 @@ import '../../../../../domain/unit/unit_type.dart';
 import '../../../../extensions/unit_type_extensions.dart';
 import '../../../../theme/abyss_colors.dart';
 import '../../../../theme/abyss_motion.dart';
-import '../../map_cell_visual.dart';
 import '../../map_content_drawer.dart';
-import '../../map_content_spot.dart';
 import '../../map_painter.dart';
 import '../../map_projection.dart';
-import '../../map_standing_order.dart';
 import '../../token/map_token_drawer.dart';
 import '../../token/map_token_trip.dart';
 import '../map_effect.dart';
 import 'map_fog_lift.dart';
 
 /// A [MapFogLift] placed on a map: each cell seen is first drawn as the
-/// still map draws a cell in the fog (its floor tile on its diamond, the
-/// cyan diamond of a scout's target, the fog over them, the scout waiting
-/// on its edge), held a moment, then all of it fades out. A wreck seen
-/// through the fog stands above it as the standing layer draws it, back
-/// to front, fading with it as the one of the map below shows through.
+/// map draws a cell in the fog, held a moment, then all of it fades out.
+///
+/// Its floor tile on its diamond, the cyan diamond of a scout's target
+/// and the fog over them lie on the floor, under the contents standing
+/// on the map: those of the cells seen stay hidden meanwhile, then fade
+/// in as the fog lifts ([fadedCells]), all but the wrecks seen through
+/// the fog, which stand above it all along. The scouts waiting on their
+/// edge are drawn over the map.
 ///
 /// Every box and path is made once, so a frame allocates next to nothing.
-class FogLiftRun implements MapEffectRun {
+class FogLiftRun extends MapEffectRun {
   /// How long the fog holds before lifting.
   static const hold = AbyssMotion.storyPause;
 
@@ -39,8 +39,8 @@ class FogLiftRun implements MapEffectRun {
   /// The diamonds of the cells seen, and those of the scouts' targets.
   final Path _floor = Path(), _marks = Path();
 
-  /// The wrecks seen through the fog, back to front.
-  final List<(String, MapContentSpot)> _beacons;
+  @override
+  final Set<(int, int)> fadedCells;
 
   /// The scouts waiting on their targets.
   final List<Rect> _scouts;
@@ -59,7 +59,7 @@ class FogLiftRun implements MapEffectRun {
           for (final MapEntry(key: cell, value: tile) in fog.cells.entries)
             (tile, MapPainter.tileOf(cell)),
         ],
-        _beacons = _beaconsOf(fog.beacons),
+        fadedCells = fog.cells.keys.toSet().difference(fog.beacons),
         _scouts = [
           for (final cell in fog.scouts)
             MapProjection.upright(MapTokenTrip.restingRect(cell)),
@@ -70,14 +70,6 @@ class FogLiftRun implements MapEffectRun {
         _marks.addPath(MapProjection.diamondOf(cell, inset: 1), Offset.zero);
       }
     }
-  }
-
-  static List<(String, MapContentSpot)> _beaconsOf(
-      Map<(int, int), String> beacons) {
-    final cells = beacons.keys.toList()
-      ..sort((a, b) =>
-          compareStandingRanks(standingRankOf(a), standingRankOf(b)));
-    return [for (final c in cells) (beacons[c]!, MapContentSpot.at(c))];
   }
 
   @override
@@ -93,8 +85,12 @@ class FogLiftRun implements MapEffectRun {
     return 1 - AbyssMotion.exit.transform(share.clamp(0.0, 1.0));
   }
 
+  /// The contents of the cells seen show as the fog leaves them.
   @override
-  void paint(Canvas canvas, Duration elapsed) {
+  double contentOpacityAt(Duration elapsed) => 1 - opacityAt(elapsed);
+
+  @override
+  void paintFloor(Canvas canvas, Duration elapsed) {
     final opacity = opacityAt(elapsed);
     if (opacity <= 0) return;
     _image.color = Color.fromRGBO(0, 0, 0, opacity);
@@ -113,25 +109,15 @@ class FogLiftRun implements MapEffectRun {
     canvas
       ..drawPath(_marks, _mark)
       ..drawPath(_floor, _fog);
-    _paintBeacons(canvas);
+  }
+
+  @override
+  void paint(Canvas canvas, Duration elapsed) {
+    final opacity = opacityAt(elapsed);
+    if (opacity <= 0) return;
     final scout = stage.image(UnitType.scout.iconPath);
     for (var i = 0; i < _scouts.length; i++) {
       _token.draw(canvas, _scouts[i], scout, opacity: opacity);
-    }
-  }
-
-  /// Draws the wrecks seen through the fog as the standing layer does:
-  /// first their pools and shadows on the floor, then the wrecks.
-  void _paintBeacons(Canvas canvas) {
-    for (var i = 0; i < _beacons.length; i++) {
-      final spot = _beacons[i].$2;
-      _drawer
-        ..drawOnFloor(canvas, stage.pool(MapGlow.wreck), spot.glow, _image)
-        ..drawOnFloor(canvas, stage.shadow, spot.shadow, _image);
-    }
-    for (var i = 0; i < _beacons.length; i++) {
-      final (sprite, spot) = _beacons[i];
-      _drawer.drawSprite(canvas, stage.image(sprite), spot.area, _image);
     }
   }
 }

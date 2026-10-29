@@ -24,7 +24,7 @@ import 'siege_timeline.dart';
 /// Everything is placed on the flat map ([SiegeGeometry]): the rings and
 /// flashes around the place lie on the floor through the projection, as
 /// ellipses; the attackers stand upright where they project.
-class MapSiegeRun implements MapEffectRun {
+class MapSiegeRun extends MapEffectRun {
   /// How far the map shakes as the attackers break in, in logical pixels.
   static const shakeAmplitude = 4.0;
 

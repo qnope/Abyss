@@ -26,15 +26,32 @@ abstract class MapEffect {
 }
 
 /// An effect placed on a map, painted as its time runs.
-abstract interface class MapEffectRun {
+///
+/// Most of it is painted over the map; what lies on the floor may be
+/// painted under the contents standing on it ([paintFloor]), and the
+/// contents of some cells may fade meanwhile ([fadedCells]).
+abstract class MapEffectRun {
   /// How long the effect plays.
   Duration get duration;
 
   /// How far the whole map is shaken [elapsed] into the effect.
   Offset shakeAt(Duration elapsed);
 
-  /// Paints the effect [elapsed] into it, in projection coordinates.
+  /// Paints the effect [elapsed] into it over the map, in projection
+  /// coordinates.
   void paint(Canvas canvas, Duration elapsed);
+
+  /// Paints what the effect lays on the floor [elapsed] into it, under
+  /// the contents standing on the map: nothing by default.
+  void paintFloor(Canvas canvas, Duration elapsed) {}
+
+  /// Cells whose standing content shows at [contentOpacityAt] as the
+  /// effect plays: none by default.
+  Set<(int, int)> get fadedCells => const {};
+
+  /// How much the contents of [fadedCells] show [elapsed] into the
+  /// effect: 0 hidden, 1 whole.
+  double contentOpacityAt(Duration elapsed) => 1;
 }
 
 /// What an effect needs to know of the map playing it.
@@ -45,7 +62,15 @@ class MapStage {
   /// The cell the player's units sent to a target set off from.
   final (int, int) Function((int, int) target) originOf;
 
-  const MapStage({required this.originOf, this.sprites});
+  /// Size of the map in cells, or `null` when unknown.
+  final int? columns, rows;
+
+  const MapStage({
+    required this.originOf,
+    this.sprites,
+    this.columns,
+    this.rows,
+  });
 
   /// The bitmap of the SVG at [path], or `null` while it loads.
   ui.Image? image(String path) =>

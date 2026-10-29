@@ -26,20 +26,22 @@ void main() {
   );
   final run = lift.stage(MapStage(originOf: (cell) => cell)) as FogLiftRun;
 
-  RecordingCanvas paintAt(FogLiftRun run, Duration elapsed) {
+  /// The floor part of [run] painted [elapsed] into it.
+  RecordingCanvas floorAt(FogLiftRun run, Duration elapsed) {
     final canvas = RecordingCanvas();
-    run.paint(canvas, elapsed);
+    run.paintFloor(canvas, elapsed);
     return canvas;
   }
 
   /// The paths of fog drawn [elapsed] into the lift, with their colour.
   List<(Path, Color)> fogAt(Duration elapsed) => [
-        for (final (path, color, _) in paintAt(run, elapsed).paths)
+        for (final (path, color, _) in floorAt(run, elapsed).paths)
           if (_rgb(color) == _rgb(AbyssColors.abyssBlack) && color.a < 1)
             (path, color),
       ];
 
-  test('starts as the fog of the still map, over the seen diamonds', () {
+  test('starts as the fog of the still map, over the seen diamonds, on '
+      'the floor', () {
     final (fog, color) = fogAt(Duration.zero).single;
     expect(color.a, closeTo(AbyssColors.fogOpacity, 0.01));
     for (final cell in seen) {
@@ -52,7 +54,7 @@ void main() {
   testWidgets('lays the floor tile of each cell on its diamond, under the '
       'fog', (tester) async {
     final image = await tester.runAsync(() => createTestImage());
-    final canvas = paintAt(lift.stage(FogLiftStage(image!)) as FogLiftRun,
+    final canvas = floorAt(lift.stage(FogLiftStage(image!)) as FogLiftRun,
         Duration.zero);
     final fog =
         canvas.order.lastIndexOf(fogAt(Duration.zero).single.$1.getBounds());
@@ -62,15 +64,19 @@ void main() {
     }
   });
 
-  test("outlines a scout's target in a cyan diamond, the scout waiting on "
-      'its edge', () {
-    final canvas = paintAt(run, Duration.zero);
+  test("outlines a scout's target in a cyan diamond on the floor, the "
+      'scout waiting on its edge over the map', () {
+    final canvas = floorAt(run, Duration.zero);
     final (mark, _, _) = canvas.paths.singleWhere((p) =>
         p.$3 == PaintingStyle.stroke &&
         _rgb(p.$2) == _rgb(AbyssColors.biolumCyan));
     expect(mark.contains(MapProjection.centreOf((2, 3))), isTrue);
     expect(mark.contains(MapProjection.centreOf((3, 3))), isFalse);
-    expect(canvas.discs, [
+    expect(canvas.discs, isEmpty);
+    final over = RecordingCanvas();
+    run.paint(over, Duration.zero);
+    expect(over.paths, isEmpty, reason: 'no floor drawn over the map');
+    expect(over.discs, [
       MapProjection.toScreen(MapTokenTrip.restingRect((2, 3)).center),
     ]);
   });
@@ -99,7 +105,9 @@ void main() {
   test('paints every moment on a real canvas', () {
     for (var ms = 0; ms <= run.duration.inMilliseconds; ms += 50) {
       final recorder = ui.PictureRecorder();
-      run.paint(Canvas(recorder), Duration(milliseconds: ms));
+      final canvas = Canvas(recorder);
+      run.paintFloor(canvas, Duration(milliseconds: ms));
+      run.paint(canvas, Duration(milliseconds: ms));
       recorder.endRecording().dispose();
     }
   });

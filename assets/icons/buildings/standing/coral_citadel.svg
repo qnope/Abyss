@@ -1,0 +1,409 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="citadelWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F3A5F"/><stop offset="0.5" stop-color="#132238"/><stop offset="1" stop-color="#0A0E1A"/></linearGradient>
+<linearGradient id="citadelRay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCE4EC" stop-opacity="0.22"/><stop offset="0.6" stop-color="#FCE4EC" stop-opacity="0.07"/><stop offset="1" stop-color="#FCE4EC" stop-opacity="0"/></linearGradient>
+<linearGradient id="citadelSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A9BBE"/><stop offset="0.25" stop-color="#4A6E95"/><stop offset="0.7" stop-color="#213A58"/><stop offset="1" stop-color="#0B1322"/></linearGradient>
+<radialGradient id="citadelPeb" cx="0.35" cy="0.3" r="0.75"><stop offset="0" stop-color="#CFD8DC"/><stop offset="0.5" stop-color="#78909C"/><stop offset="1" stop-color="#2E3B44"/></radialGradient>
+<linearGradient id="citadelAlgae" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#0E5A3C"/><stop offset="0.5" stop-color="#2ECC8A"/><stop offset="1" stop-color="#9CFFD0"/></linearGradient>
+<linearGradient id="citadelShell" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.4" stop-color="#E0F7FA"/><stop offset="1" stop-color="#9FB4C4"/></linearGradient>
+<linearGradient id="citadelPink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8BBD0"/><stop offset="0.3" stop-color="#F48FB1"/><stop offset="0.75" stop-color="#C2185B"/><stop offset="1" stop-color="#6D0F3C"/></linearGradient>
+<linearGradient id="citadelPinkH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FCE4EC"/><stop offset="0.3" stop-color="#F48FB1"/><stop offset="0.75" stop-color="#C2185B"/><stop offset="1" stop-color="#6D0F3C"/></linearGradient>
+<linearGradient id="citadelMerlon" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCE4EC"/><stop offset="1" stop-color="#D81B60"/></linearGradient>
+<linearGradient id="citadelNavy" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3949AB"/><stop offset="0.6" stop-color="#1A237E"/><stop offset="1" stop-color="#0D1142"/></linearGradient>
+<radialGradient id="citadelCrystal" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.35" stop-color="#E0F7FA"/><stop offset="0.8" stop-color="#B388FF"/><stop offset="1" stop-color="#7C4DFF"/></radialGradient>
+<radialGradient id="citadelNacre" cx="0.4" cy="0.3" r="0.8"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.4" stop-color="#E0F7FA"/><stop offset="0.75" stop-color="#B2EBF2"/><stop offset="1" stop-color="#7986CB"/></radialGradient>
+<radialGradient id="citadelWindow" cx="0.5" cy="0.5" r="0.6"><stop offset="0" stop-color="#FFFDE7"/><stop offset="0.5" stop-color="#FFD740"/><stop offset="1" stop-color="#FF8F00"/></radialGradient>
+<linearGradient id="citadelGate" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3E1A00"/><stop offset="0.5" stop-color="#FF8F00"/><stop offset="1" stop-color="#FFE082"/></linearGradient>
+<linearGradient id="citadelCoral" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#AD1457"/><stop offset="0.6" stop-color="#FF6E91"/><stop offset="1" stop-color="#FFB2C8"/></linearGradient>
+<linearGradient id="citadelStone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.25"/><stop offset="1" stop-color="#6D0F3C" stop-opacity="0.35"/></linearGradient>
+</defs>
+<!-- tour gauche -->
+<g>
+<rect x="8.5" y="20" width="10" height="30.5" rx="0.6" fill="url(#citadelPinkH)" stroke="#4A0A28" stroke-width="0.6"/>
+<rect x="15.8" y="22.2" width="2.2" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="24.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="17.4" y="24.4" width="0.6" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="26.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="28.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="10.6" y="31" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="31" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="17.4" y="31" width="0.6" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="10.6" y="33.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="33.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="17.4" y="33.2" width="0.6" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="10.6" y="35.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="35.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="10.6" y="37.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="37.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="17.4" y="39.8" width="0.6" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="42" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="17.4" y="42" width="0.6" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="10.6" y="44.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="44.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="17.4" y="44.2" width="0.6" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="14" y="46.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="17.4" y="46.4" width="0.6" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="17.4" y="48.6" width="0.6" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<path d="M9.5 21 V49.5" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="0.5"/>
+<ellipse cx="13.5" cy="20" rx="5.3" ry="1.2" fill="#E57AA3" stroke="#4A0A28" stroke-width="0.45"/>
+<rect x="8.2" y="17.7" width="2.1" height="2.2" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M8.5 18.1 H10" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="11.7" y="17.7" width="2.1" height="2.2" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M12 18.1 H13.5" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="15.2" y="17.7" width="2.1" height="2.2" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M15.5 18.1 H17" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<path d="M8.5 27 Q13.5 28 18.5 27" fill="none" stroke="#FCE4EC" stroke-opacity="0.7" stroke-width="0.5"/>
+<ellipse cx="13.5" cy="31.3" rx="3.6" ry="4.68" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="13.5" cy="31.3" rx="2.94" ry="3.82" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="13.5" cy="31.3" rx="2.28" ry="2.96" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M12.5 33.1 V30.5 A1 1 0 0 1 14.5 30.5 V33.1 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M13.5 29.9 V32.9" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<ellipse cx="13.5" cy="39.3" rx="3.6" ry="4.68" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="13.5" cy="39.3" rx="2.94" ry="3.82" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="13.5" cy="39.3" rx="2.28" ry="2.96" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M12.5 41.1 V38.5 A1 1 0 0 1 14.5 38.5 V41.1 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M13.5 37.9 V40.9" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<ellipse cx="10" cy="46.28" rx="1.62" ry="1.62" fill="#B388FF" fill-opacity="0.08"/>
+<ellipse cx="10" cy="46.28" rx="1.32" ry="1.32" fill="#B388FF" fill-opacity="0.17"/>
+<ellipse cx="10" cy="46.28" rx="1.03" ry="1.03" fill="#B388FF" fill-opacity="0.25"/>
+<path d="M9.37 47 L9.64 45.56 L10 44.93 L10.41 45.65 L10.63 47 Z" fill="url(#citadelCrystal)" stroke="#4A148C" stroke-width="0.3" stroke-linejoin="round" transform="rotate(-25 10 47)"/>
+<path d="M10 44.93 L9.87 46.82" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.25" transform="rotate(-25 10 47)"/>
+<path d="M10.27 44.66 v0.8 M9.91 45.02 h0.8" stroke="#FFFFFF" stroke-width="0.3" stroke-linecap="round" transform="rotate(-25 10 47)"/>
+<path d="M9 50 C9.44 48.35 8.12 47.14 9.33 45.6" fill="none" stroke="#4A0A28" stroke-width="1.21" stroke-linecap="round"/>
+<path d="M9 50 C9.44 48.35 8.12 47.14 9.33 45.6" fill="none" stroke="url(#citadelCoral)" stroke-width="0.77" stroke-linecap="round"/>
+<path d="M9 50 C10.54 48.68 11.42 47.8 11.86 46.48" fill="none" stroke="#4A0A28" stroke-width="1.21" stroke-linecap="round"/>
+<path d="M9 50 C10.54 48.68 11.42 47.8 11.86 46.48" fill="none" stroke="url(#citadelCoral)" stroke-width="0.77" stroke-linecap="round"/>
+<path d="M9.66 48.02 C10.76 47.58 11.09 46.81 10.87 45.71" fill="none" stroke="#4A0A28" stroke-width="1.21" stroke-linecap="round"/>
+<path d="M9.66 48.02 C10.76 47.58 11.09 46.81 10.87 45.71" fill="none" stroke="url(#citadelCoral)" stroke-width="0.77" stroke-linecap="round"/>
+<path d="M9 50 C8.01 49.12 7.35 48.46 7.46 47.14" fill="none" stroke="#4A0A28" stroke-width="1.21" stroke-linecap="round"/>
+<path d="M9 50 C8.01 49.12 7.35 48.46 7.46 47.14" fill="none" stroke="url(#citadelCoral)" stroke-width="0.77" stroke-linecap="round"/>
+<circle cx="9.33" cy="45.6" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="11.86" cy="46.48" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="10.87" cy="45.71" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="7.46" cy="47.14" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="10.32" cy="48.24" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="8.45" cy="48.68" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="11.53" cy="47.25" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="9.11" cy="46.92" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+</g>
+<!-- tour droite -->
+<g>
+<rect x="45.5" y="20" width="10" height="30.5" rx="0.6" fill="url(#citadelPinkH)" stroke="#4A0A28" stroke-width="0.6"/>
+<rect x="49.4" y="22.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="52.8" y="22.2" width="2.2" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.6" y="24.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="24.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.6" y="26.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.6" y="28.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="28.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="31" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.6" y="33.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="33.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.6" y="35.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="35.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.6" y="37.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="39.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="42" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.6" y="44.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="44.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.6" y="46.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="46.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.6" y="48.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="51" y="48.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<path d="M46.5 21 V49.5" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="0.5"/>
+<ellipse cx="50.5" cy="20" rx="5.3" ry="1.2" fill="#E57AA3" stroke="#4A0A28" stroke-width="0.45"/>
+<rect x="45.2" y="17.7" width="2.1" height="2.2" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M45.5 18.1 H47" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="48.7" y="17.7" width="2.1" height="2.2" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M49 18.1 H50.5" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="52.2" y="17.7" width="2.1" height="2.2" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M52.5 18.1 H54" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<path d="M45.5 27 Q50.5 28 55.5 27" fill="none" stroke="#FCE4EC" stroke-opacity="0.7" stroke-width="0.5"/>
+<ellipse cx="50.5" cy="31.3" rx="3.6" ry="4.68" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="50.5" cy="31.3" rx="2.94" ry="3.82" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="50.5" cy="31.3" rx="2.28" ry="2.96" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M49.5 33.1 V30.5 A1 1 0 0 1 51.5 30.5 V33.1 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M50.5 29.9 V32.9" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<ellipse cx="50.5" cy="39.3" rx="3.6" ry="4.68" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="50.5" cy="39.3" rx="2.94" ry="3.82" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="50.5" cy="39.3" rx="2.28" ry="2.96" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M49.5 41.1 V38.5 A1 1 0 0 1 51.5 38.5 V41.1 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M50.5 37.9 V40.9" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<ellipse cx="54" cy="46.28" rx="1.62" ry="1.62" fill="#B388FF" fill-opacity="0.08"/>
+<ellipse cx="54" cy="46.28" rx="1.32" ry="1.32" fill="#B388FF" fill-opacity="0.17"/>
+<ellipse cx="54" cy="46.28" rx="1.03" ry="1.03" fill="#B388FF" fill-opacity="0.25"/>
+<path d="M53.37 47 L53.64 45.56 L54 44.93 L54.41 45.65 L54.63 47 Z" fill="url(#citadelCrystal)" stroke="#4A148C" stroke-width="0.3" stroke-linejoin="round" transform="rotate(25 54 47)"/>
+<path d="M54 44.93 L53.87 46.82" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.25" transform="rotate(25 54 47)"/>
+<path d="M54.27 44.66 v0.8 M53.91 45.02 h0.8" stroke="#FFFFFF" stroke-width="0.3" stroke-linecap="round" transform="rotate(25 54 47)"/>
+<path d="M55 50 C54.56 48.35 55.88 47.14 54.67 45.6" fill="none" stroke="#4A0A28" stroke-width="1.21" stroke-linecap="round"/>
+<path d="M55 50 C54.56 48.35 55.88 47.14 54.67 45.6" fill="none" stroke="url(#citadelCoral)" stroke-width="0.77" stroke-linecap="round"/>
+<path d="M55 50 C53.46 48.68 52.58 47.8 52.14 46.48" fill="none" stroke="#4A0A28" stroke-width="1.21" stroke-linecap="round"/>
+<path d="M55 50 C53.46 48.68 52.58 47.8 52.14 46.48" fill="none" stroke="url(#citadelCoral)" stroke-width="0.77" stroke-linecap="round"/>
+<path d="M54.34 48.02 C53.24 47.58 52.91 46.81 53.13 45.71" fill="none" stroke="#4A0A28" stroke-width="1.21" stroke-linecap="round"/>
+<path d="M54.34 48.02 C53.24 47.58 52.91 46.81 53.13 45.71" fill="none" stroke="url(#citadelCoral)" stroke-width="0.77" stroke-linecap="round"/>
+<path d="M55 50 C55.99 49.12 56.65 48.46 56.54 47.14" fill="none" stroke="#4A0A28" stroke-width="1.21" stroke-linecap="round"/>
+<path d="M55 50 C55.99 49.12 56.65 48.46 56.54 47.14" fill="none" stroke="url(#citadelCoral)" stroke-width="0.77" stroke-linecap="round"/>
+<circle cx="54.67" cy="45.6" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="52.14" cy="46.48" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="53.13" cy="45.71" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="56.54" cy="47.14" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="53.68" cy="48.24" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="55.55" cy="48.68" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="52.47" cy="47.25" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="54.89" cy="46.92" r="0.35" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+</g>
+<!-- donjon central -->
+<g>
+<rect x="23.5" y="15" width="17" height="35.5" rx="0.6" fill="url(#citadelPinkH)" stroke="#4A0A28" stroke-width="0.6"/>
+<rect x="27.4" y="17.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="30.8" y="17.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="37.6" y="17.2" width="2.4" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="35.8" y="19.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="39.2" y="19.4" width="0.8" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="25.6" y="21.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="29" y="21.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="32.4" y="21.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="35.8" y="21.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="39.2" y="21.6" width="0.8" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="25.6" y="23.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="29" y="23.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="32.4" y="23.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="35.8" y="23.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="25.6" y="26" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="29" y="26" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="32.4" y="26" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="39.2" y="26" width="0.8" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="25.6" y="28.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="29" y="28.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="35.8" y="28.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="39.2" y="28.2" width="0.8" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="25.6" y="30.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="29" y="30.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="32.4" y="30.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="25.6" y="32.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="29" y="32.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="32.4" y="32.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="35.8" y="32.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="39.2" y="32.6" width="0.8" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="27.4" y="34.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="30.8" y="34.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="34.2" y="34.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="37.6" y="34.8" width="2.4" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<path d="M24.6 16 V35" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="0.5"/>
+<ellipse cx="32" cy="15" rx="8.8" ry="1.3" fill="#E57AA3" stroke="#4A0A28" stroke-width="0.45"/>
+<rect x="23.2" y="12.6" width="2.3" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M23.5 13 H25.2" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="26.9" y="12.6" width="2.3" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M27.2 13 H28.9" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="30.6" y="12.6" width="2.3" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M30.9 13 H32.6" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="34.3" y="12.6" width="2.3" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M34.6 13 H36.3" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="38" y="12.6" width="2.3" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M38.3 13 H40" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<path d="M23.5 23 Q32 24.2 40.5 23" fill="none" stroke="#FCE4EC" stroke-opacity="0.7" stroke-width="0.5"/>
+<ellipse cx="28.5" cy="27.4" rx="3.6" ry="4.94" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="28.5" cy="27.4" rx="2.94" ry="4.03" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="28.5" cy="27.4" rx="2.28" ry="3.13" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M27.5 29.3 V26.5 A1 1 0 0 1 29.5 26.5 V29.3 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M28.5 25.9 V29.1" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<ellipse cx="35.5" cy="27.4" rx="3.6" ry="4.94" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="35.5" cy="27.4" rx="2.94" ry="4.03" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="35.5" cy="27.4" rx="2.28" ry="3.13" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M34.5 29.3 V26.5 A1 1 0 0 1 36.5 26.5 V29.3 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M35.5 25.9 V29.1" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<ellipse cx="32" cy="19.6" rx="3.96" ry="4.16" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="32" cy="19.6" rx="3.23" ry="3.4" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="32" cy="19.6" rx="2.51" ry="2.63" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M30.9 21.2 V19.1 A1.1 1.1 0 0 1 33.1 19.1 V21.2 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M32 18.4 V21" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<path d="M25.9 31.5 H29.1 V36.22 L27.5 37.5 L25.9 36.22 Z" fill="url(#citadelNavy)" stroke="#0A0E1A" stroke-width="0.35" stroke-linejoin="round"/>
+<path d="M26.2 31.9 V35.9" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="0.3"/>
+<path d="M27.5 33.3 L28.3 34.5 L27.5 35.7 L26.7 34.5 Z" fill="#FF6E91" stroke="#FFB2C8" stroke-width="0.2"/>
+<rect x="25.6" y="31" width="3.8" height="0.7" rx="0.2" fill="#FFD740" stroke="#4A0A28" stroke-width="0.25"/>
+<path d="M34.9 31.5 H38.1 V36.22 L36.5 37.5 L34.9 36.22 Z" fill="url(#citadelNavy)" stroke="#0A0E1A" stroke-width="0.35" stroke-linejoin="round"/>
+<path d="M35.2 31.9 V35.9" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="0.3"/>
+<path d="M36.5 33.3 L37.3 34.5 L36.5 35.7 L35.7 34.5 Z" fill="#FF6E91" stroke="#FFB2C8" stroke-width="0.2"/>
+<rect x="34.6" y="31" width="3.8" height="0.7" rx="0.2" fill="#FFD740" stroke="#4A0A28" stroke-width="0.25"/>
+<ellipse cx="26" cy="35.98" rx="1.17" ry="1.17" fill="#B388FF" fill-opacity="0.08"/>
+<ellipse cx="26" cy="35.98" rx="0.96" ry="0.96" fill="#B388FF" fill-opacity="0.17"/>
+<ellipse cx="26" cy="35.98" rx="0.74" ry="0.74" fill="#B388FF" fill-opacity="0.25"/>
+<path d="M25.55 36.5 L25.74 35.46 L26 35.01 L26.29 35.53 L26.46 36.5 Z" fill="url(#citadelCrystal)" stroke="#4A148C" stroke-width="0.3" stroke-linejoin="round" transform="rotate(-20 26 36.5)"/>
+<path d="M26 35.01 L25.9 36.37" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.25" transform="rotate(-20 26 36.5)"/>
+<path d="M26.2 34.81 v0.8 M25.94 35.07 h0.8" stroke="#FFFFFF" stroke-width="0.3" stroke-linecap="round" transform="rotate(-20 26 36.5)"/>
+<ellipse cx="38.5" cy="20.02" rx="1.08" ry="1.08" fill="#B388FF" fill-opacity="0.08"/>
+<ellipse cx="38.5" cy="20.02" rx="0.88" ry="0.88" fill="#B388FF" fill-opacity="0.17"/>
+<ellipse cx="38.5" cy="20.02" rx="0.68" ry="0.68" fill="#B388FF" fill-opacity="0.25"/>
+<path d="M38.08 20.5 L38.26 19.54 L38.5 19.12 L38.77 19.6 L38.92 20.5 Z" fill="url(#citadelCrystal)" stroke="#4A148C" stroke-width="0.3" stroke-linejoin="round" transform="rotate(20 38.5 20.5)"/>
+<path d="M38.5 19.12 L38.41 20.38" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.25" transform="rotate(20 38.5 20.5)"/>
+<path d="M38.68 18.94 v0.8 M38.44 19.18 h0.8" stroke="#FFFFFF" stroke-width="0.3" stroke-linecap="round" transform="rotate(20 38.5 20.5)"/>
+<rect x="28.5" y="8.5" width="7" height="7" rx="0.4" fill="url(#citadelPinkH)" stroke="#4A0A28" stroke-width="0.5"/>
+<path d="M29.3 9.2 V14.5" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="0.4"/>
+<rect x="28.2" y="6.8" width="1.6" height="1.7" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M28.5 7.2 H29.5" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="31" y="6.8" width="1.6" height="1.7" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M31.3 7.2 H32.3" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="33.8" y="6.8" width="1.6" height="1.7" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M34.1 7.2 H35.1" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<path d="M28.4 6.9 A3.6 3.6 0 0 1 35.6 6.9 Z" fill="url(#citadelNacre)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M29.2 6.4 A2.9 2.9 0 0 1 31.2 4.1" fill="none" stroke="#B388FF" stroke-opacity="0.7" stroke-width="0.35"/>
+<path d="M30.2 6.4 A2 2 0 0 1 31.8 5" fill="none" stroke="#FFB2C8" stroke-opacity="0.8" stroke-width="0.3"/>
+<path d="M33 4.4 A2.6 2.6 0 0 1 34.6 6.4" fill="none" stroke="#80DEEA" stroke-opacity="0.7" stroke-width="0.3"/>
+<path d="M32 3.2 V1.9" stroke="#FFD740" stroke-width="0.5" stroke-linecap="round"/>
+<path d="M32.2 2.1 L35 2.9 L32.2 3.7 Z" fill="#FF6E91" stroke="#4A0A28" stroke-width="0.25"/>
+<ellipse cx="32" cy="11.7" rx="2.88" ry="3.64" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="32" cy="11.7" rx="2.35" ry="2.97" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="32" cy="11.7" rx="1.82" ry="2.31" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M31.2 13.1 V11.1 A0.8 0.8 0 0 1 32.8 11.1 V13.1 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M32 10.7 V12.9" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<path d="M24 14.6 V10.8 M24.2 11 L27 11.8 L24.2 12.6 Z" fill="#1A237E" stroke="#1A237E" stroke-width="0.35"/>
+<path d="M40 14.6 V10.8 M39.8 11 L37 11.8 L39.8 12.6 Z" fill="#1A237E" stroke="#1A237E" stroke-width="0.35"/>
+</g>
+<!-- rempart corallien -->
+<g>
+<ellipse cx="32" cy="50.6" rx="28" ry="2.6" fill="#000000" fill-opacity="0.45"/>
+<rect x="11" y="37" width="42" height="13.5" fill="url(#citadelPink)" stroke="#4A0A28" stroke-width="0.6"/>
+<rect x="14.9" y="38.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="18.3" y="38.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="25.1" y="38.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="31.9" y="38.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="42.1" y="38.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="45.5" y="38.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="48.9" y="38.8" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="19.9" y="41" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="23.3" y="41" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="30.1" y="41" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="33.5" y="41" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="36.9" y="41" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.1" y="41" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="50.5" y="41" width="2" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="16.5" y="43.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="23.3" y="43.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="30.1" y="43.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="36.9" y="43.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="40.3" y="43.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="43.7" y="43.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.1" y="43.2" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="26.7" y="45.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="47.1" y="45.4" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="13.1" y="47.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="16.5" y="47.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="19.9" y="47.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="23.3" y="47.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="26.7" y="47.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="30.1" y="47.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="33.5" y="47.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="36.9" y="47.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="40.3" y="47.6" width="2.9" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<rect x="50.5" y="47.6" width="2" height="1.8" rx="0.4" fill="url(#citadelStone)" stroke="#4A0A28" stroke-opacity="0.4" stroke-width="0.25"/>
+<path d="M11.5 37.6 H52.5" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="0.45"/>
+<rect x="10.4" y="35.6" width="43.2" height="1.8" rx="0.3" fill="#E57AA3" stroke="#4A0A28" stroke-width="0.45"/>
+<rect x="11" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M11.3 34 H13.1" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="14.8" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M15.1 34 H16.9" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="18.6" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M18.9 34 H20.7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="22.4" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M22.7 34 H24.5" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="26.2" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M26.5 34 H28.3" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="30" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M30.3 34 H32.1" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="33.8" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M34.1 34 H35.9" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="37.6" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M37.9 34 H39.7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="41.4" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M41.7 34 H43.5" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="45.2" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M45.5 34 H47.3" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<rect x="49" y="33.6" width="2.4" height="2.3" rx="0.25" fill="url(#citadelMerlon)" stroke="#4A0A28" stroke-width="0.4"/>
+<path d="M49.3 34 H51.1" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.3"/>
+<ellipse cx="20" cy="42.6" rx="3.24" ry="4.16" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="20" cy="42.6" rx="2.65" ry="3.4" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="20" cy="42.6" rx="2.05" ry="2.63" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M19.1 44.2 V41.9 A0.9 0.9 0 0 1 20.9 41.9 V44.2 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M20 41.4 V44" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<ellipse cx="44" cy="42.6" rx="3.24" ry="4.16" fill="#FFD740" fill-opacity="0.09"/>
+<ellipse cx="44" cy="42.6" rx="2.65" ry="3.4" fill="#FFD740" fill-opacity="0.19"/>
+<ellipse cx="44" cy="42.6" rx="2.05" ry="2.63" fill="#FFD740" fill-opacity="0.28"/>
+<path d="M43.1 44.2 V41.9 A0.9 0.9 0 0 1 44.9 41.9 V44.2 Z" fill="url(#citadelWindow)" stroke="#4A0A28" stroke-width="0.35"/>
+<path d="M44 41.4 V44" stroke="#4A0A28" stroke-opacity="0.6" stroke-width="0.25"/>
+<ellipse cx="15" cy="47.96" rx="1.44" ry="1.44" fill="#B388FF" fill-opacity="0.08"/>
+<ellipse cx="15" cy="47.96" rx="1.18" ry="1.18" fill="#B388FF" fill-opacity="0.17"/>
+<ellipse cx="15" cy="47.96" rx="0.91" ry="0.91" fill="#B388FF" fill-opacity="0.25"/>
+<path d="M14.44 48.6 L14.68 47.32 L15 46.76 L15.36 47.4 L15.56 48.6 Z" fill="url(#citadelCrystal)" stroke="#4A148C" stroke-width="0.3" stroke-linejoin="round" transform="rotate(20 15 48.6)"/>
+<path d="M15 46.76 L14.88 48.44" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.25" transform="rotate(20 15 48.6)"/>
+<path d="M15.24 46.52 v0.8 M14.92 46.84 h0.8" stroke="#FFFFFF" stroke-width="0.3" stroke-linecap="round" transform="rotate(20 15 48.6)"/>
+<ellipse cx="49.5" cy="48.24" rx="1.26" ry="1.26" fill="#B388FF" fill-opacity="0.08"/>
+<ellipse cx="49.5" cy="48.24" rx="1.03" ry="1.03" fill="#B388FF" fill-opacity="0.17"/>
+<ellipse cx="49.5" cy="48.24" rx="0.8" ry="0.8" fill="#B388FF" fill-opacity="0.25"/>
+<path d="M49.01 48.8 L49.22 47.68 L49.5 47.19 L49.82 47.75 L49.99 48.8 Z" fill="url(#citadelCrystal)" stroke="#4A148C" stroke-width="0.3" stroke-linejoin="round" transform="rotate(-15 49.5 48.8)"/>
+<path d="M49.5 47.19 L49.4 48.66" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.25" transform="rotate(-15 49.5 48.8)"/>
+<path d="M49.71 46.98 v0.8 M49.43 47.26 h0.8" stroke="#FFFFFF" stroke-width="0.3" stroke-linecap="round" transform="rotate(-15 49.5 48.8)"/>
+<ellipse cx="39.5" cy="45.96" rx="0.99" ry="0.99" fill="#B388FF" fill-opacity="0.08"/>
+<ellipse cx="39.5" cy="45.96" rx="0.81" ry="0.81" fill="#B388FF" fill-opacity="0.17"/>
+<ellipse cx="39.5" cy="45.96" rx="0.63" ry="0.63" fill="#B388FF" fill-opacity="0.25"/>
+<path d="M39.12 46.4 L39.28 45.52 L39.5 45.14 L39.75 45.58 L39.89 46.4 Z" fill="url(#citadelCrystal)" stroke="#4A148C" stroke-width="0.3" stroke-linejoin="round" transform="rotate(10 39.5 46.4)"/>
+<path d="M39.5 45.14 L39.42 46.29" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.25" transform="rotate(10 39.5 46.4)"/>
+<path d="M39.67 44.97 v0.8 M39.45 45.19 h0.8" stroke="#FFFFFF" stroke-width="0.3" stroke-linecap="round" transform="rotate(10 39.5 46.4)"/>
+<path d="M24.5 50.2 C24.86 48.85 23.78 47.86 24.77 46.6" fill="none" stroke="#4A0A28" stroke-width="0.99" stroke-linecap="round"/>
+<path d="M24.5 50.2 C24.86 48.85 23.78 47.86 24.77 46.6" fill="none" stroke="url(#citadelCoral)" stroke-width="0.63" stroke-linecap="round"/>
+<path d="M24.5 50.2 C25.76 49.12 26.48 48.4 26.84 47.32" fill="none" stroke="#4A0A28" stroke-width="0.99" stroke-linecap="round"/>
+<path d="M24.5 50.2 C25.76 49.12 26.48 48.4 26.84 47.32" fill="none" stroke="url(#citadelCoral)" stroke-width="0.63" stroke-linecap="round"/>
+<path d="M25.04 48.58 C25.94 48.22 26.21 47.59 26.03 46.69" fill="none" stroke="#4A0A28" stroke-width="0.99" stroke-linecap="round"/>
+<path d="M25.04 48.58 C25.94 48.22 26.21 47.59 26.03 46.69" fill="none" stroke="url(#citadelCoral)" stroke-width="0.63" stroke-linecap="round"/>
+<path d="M24.5 50.2 C23.69 49.48 23.15 48.94 23.24 47.86" fill="none" stroke="#4A0A28" stroke-width="0.99" stroke-linecap="round"/>
+<path d="M24.5 50.2 C23.69 49.48 23.15 48.94 23.24 47.86" fill="none" stroke="url(#citadelCoral)" stroke-width="0.63" stroke-linecap="round"/>
+<circle cx="24.77" cy="46.6" r="0.29" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="26.84" cy="47.32" r="0.29" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="26.03" cy="46.69" r="0.29" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="23.24" cy="47.86" r="0.29" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="25.58" cy="48.76" r="0.29" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="24.05" cy="49.12" r="0.29" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="26.57" cy="47.95" r="0.29" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="24.59" cy="47.68" r="0.29" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<path d="M42 50.3 C41.68 49.1 42.64 48.22 41.76 47.1" fill="none" stroke="#4A0A28" stroke-width="0.88" stroke-linecap="round"/>
+<path d="M42 50.3 C41.68 49.1 42.64 48.22 41.76 47.1" fill="none" stroke="url(#citadelCoral)" stroke-width="0.56" stroke-linecap="round"/>
+<path d="M42 50.3 C40.88 49.34 40.24 48.7 39.92 47.74" fill="none" stroke="#4A0A28" stroke-width="0.88" stroke-linecap="round"/>
+<path d="M42 50.3 C40.88 49.34 40.24 48.7 39.92 47.74" fill="none" stroke="url(#citadelCoral)" stroke-width="0.56" stroke-linecap="round"/>
+<path d="M41.52 48.86 C40.72 48.54 40.48 47.98 40.64 47.18" fill="none" stroke="#4A0A28" stroke-width="0.88" stroke-linecap="round"/>
+<path d="M41.52 48.86 C40.72 48.54 40.48 47.98 40.64 47.18" fill="none" stroke="url(#citadelCoral)" stroke-width="0.56" stroke-linecap="round"/>
+<path d="M42 50.3 C42.72 49.66 43.2 49.18 43.12 48.22" fill="none" stroke="#4A0A28" stroke-width="0.88" stroke-linecap="round"/>
+<path d="M42 50.3 C42.72 49.66 43.2 49.18 43.12 48.22" fill="none" stroke="url(#citadelCoral)" stroke-width="0.56" stroke-linecap="round"/>
+<circle cx="41.76" cy="47.1" r="0.26" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="39.92" cy="47.74" r="0.26" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="40.64" cy="47.18" r="0.26" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="43.12" cy="48.22" r="0.26" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="41.04" cy="49.02" r="0.26" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="42.4" cy="49.34" r="0.26" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="40.16" cy="48.3" r="0.26" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+<circle cx="41.92" cy="48.06" r="0.26" fill="#FFE1EA" stroke="#AD1457" stroke-width="0.2"/>
+</g>
+<!-- portail -->
+<g>
+<ellipse cx="32" cy="49" rx="7" ry="4" fill="#FFD740" fill-opacity="0.1"/>
+<ellipse cx="32" cy="49" rx="5.72" ry="3.27" fill="#FFD740" fill-opacity="0.2"/>
+<ellipse cx="32" cy="49" rx="4.43" ry="2.53" fill="#FFD740" fill-opacity="0.3"/>
+<path d="M27.5 50.5 V44 A4.5 4.5 0 0 1 36.5 44 V50.5 Z" fill="#4A0A28"/>
+<path d="M28.3 50.5 V44.2 A3.7 3.7 0 0 1 35.7 44.2 V50.5 Z" fill="url(#citadelGate)"/>
+<path d="M28.4 50.5 V44.4 A3.6 3.6 0 0 1 31.6 40.6 V50.5 Z" fill="url(#citadelNacre)" stroke="#4A0A28" stroke-width="0.3"/>
+<path d="M29.2 49.8 V45.2 M30.4 49.8 V43.2" stroke="#7986CB" stroke-opacity="0.6" stroke-width="0.3"/>
+<circle cx="30.9" cy="46.8" r="0.35" fill="#FFD740"/>
+<path d="M27.6 44 L26.1 44 A5.9 5.9 0 0 1 26.87 41.09 L28.17 41.83 A4.4 4.4 0 0 0 27.6 44 Z" fill="#FCE4EC" stroke="#4A0A28" stroke-width="0.3" stroke-linejoin="round"/>
+<path d="M28.44 41.41 L27.23 40.53 A5.9 5.9 0 0 1 29.56 38.63 L30.18 40 A4.4 4.4 0 0 0 28.44 41.41 Z" fill="#F48FB1" stroke="#4A0A28" stroke-width="0.3" stroke-linejoin="round"/>
+<path d="M30.64 39.82 L30.18 38.39 A5.9 5.9 0 0 1 33.18 38.22 L32.88 39.69 A4.4 4.4 0 0 0 30.64 39.82 Z" fill="#FCE4EC" stroke="#4A0A28" stroke-width="0.3" stroke-linejoin="round"/>
+<path d="M33.36 39.82 L33.82 38.39 A5.9 5.9 0 0 1 36.35 40.02 L35.25 41.03 A4.4 4.4 0 0 0 33.36 39.82 Z" fill="#F48FB1" stroke="#4A0A28" stroke-width="0.3" stroke-linejoin="round"/>
+<path d="M35.56 41.41 L36.77 40.53 A5.9 5.9 0 0 1 37.86 43.33 L36.37 43.5 A4.4 4.4 0 0 0 35.56 41.41 Z" fill="#FCE4EC" stroke="#4A0A28" stroke-width="0.3" stroke-linejoin="round"/>
+<path d="M36.4 44 L37.9 44 A5.9 5.9 0 0 1 37.13 46.91 L35.83 46.17 A4.4 4.4 0 0 0 36.4 44 Z" fill="#F48FB1" stroke="#4A0A28" stroke-width="0.3" stroke-linejoin="round"/>
+<path d="M26.5 50.4 H37.5 L38.5 51.6 H25.5 Z" fill="#F48FB1" stroke="#4A0A28" stroke-width="0.35" stroke-linejoin="round"/>
+<path d="M27 50.7 H37" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="0.3"/>
+<ellipse cx="33.6" cy="39.8" rx="0.9" ry="0.9" fill="#B388FF" fill-opacity="0.08"/>
+<ellipse cx="33.6" cy="39.8" rx="0.74" ry="0.74" fill="#B388FF" fill-opacity="0.17"/>
+<ellipse cx="33.6" cy="39.8" rx="0.57" ry="0.57" fill="#B388FF" fill-opacity="0.25"/>
+<path d="M33.25 40.2 L33.4 39.4 L33.6 39.05 L33.83 39.45 L33.95 40.2 Z" fill="url(#citadelCrystal)" stroke="#4A148C" stroke-width="0.3" stroke-linejoin="round" transform="rotate(0 33.6 40.2)"/>
+<path d="M33.6 39.05 L33.53 40.1" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.25" transform="rotate(0 33.6 40.2)"/>
+<path d="M33.75 38.9 v0.8 M33.55 39.1 h0.8" stroke="#FFFFFF" stroke-width="0.3" stroke-linecap="round" transform="rotate(0 33.6 40.2)"/>
+</g>
+</svg>

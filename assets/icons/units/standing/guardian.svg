@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150"><defs><radialGradient id="gdHelm" cx="0.5" cy="0.5" r="0.6" fx="0.32" fy="0.28"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.3" stop-color="#CFD8DC"/><stop offset="0.7" stop-color="#78909C"/><stop offset="1" stop-color="#263238"/></radialGradient><linearGradient id="gdSteel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ECEFF1"/><stop offset="0.45" stop-color="#9EAFBA"/><stop offset="1" stop-color="#37474F"/></linearGradient><linearGradient id="gdSteelD" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#90A4AE"/><stop offset="1" stop-color="#263238"/></linearGradient><linearGradient id="gdShield" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5E7686"/><stop offset="0.5" stop-color="#2E3E4A"/><stop offset="1" stop-color="#121A20"/></linearGradient><linearGradient id="gdRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F5F8FA"/><stop offset="0.5" stop-color="#A7B6C2"/><stop offset="1" stop-color="#4A5A66"/></linearGradient><linearGradient id="gdGem" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E0FFFF"/><stop offset="0.4" stop-color="#40F0FF"/><stop offset="1" stop-color="#00838F"/></linearGradient><radialGradient id="gdGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#00E5FF" stop-opacity="0.55"/><stop offset="1" stop-color="#00E5FF" stop-opacity="0"/></radialGradient><linearGradient id="gdSlit" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E0FFFF"/><stop offset="0.5" stop-color="#00E5FF"/><stop offset="1" stop-color="#00ACC1"/></linearGradient><linearGradient id="gdMail" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#607D8B"/><stop offset="1" stop-color="#263238"/></linearGradient></defs>
+<!-- legs: greaves and sabatons -->
+<path d="M47 103 L58 103 L57.5 129 L47.5 129 Z" fill="url(#gdMail)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M62 103 L73 103 L72.5 129 L62.5 129 Z" fill="url(#gdMail)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M46.5 113 L58.5 113 L58 129 L47 129 Z" fill="url(#gdSteel)" stroke="#0A0E1A" stroke-width="1"/>
+<path d="M61.5 113 L73.5 113 L73 129 L62 129 Z" fill="url(#gdSteelD)" stroke="#0A0E1A" stroke-width="1"/>
+<ellipse cx="52.5" cy="113" rx="6.5" ry="4" fill="url(#gdSteel)" stroke="#0A0E1A" stroke-width="1"/>
+<ellipse cx="67.5" cy="113" rx="6.5" ry="4" fill="url(#gdSteelD)" stroke="#0A0E1A" stroke-width="1"/>
+<path d="M45 127 L59.5 127 L60 137 C60 140 58 141 55 141 L44 141 C41 141 40 138 42 135 Z" fill="url(#gdSteel)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M60.5 127 L75 127 L78 135 C80 138 79 141 76 141 L65 141 C62 141 60 140 60 137 Z" fill="url(#gdSteelD)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M45 133 H59 M61 133 H76" stroke="#263238" stroke-width=".8"/>
+<!-- torso: breastplate -->
+<path d="M38 80 C38 71 48 67 60 67 C72 67 82 71 82 80 L80 102 C80 107 71 110 60 110 C49 110 40 107 40 102 Z" fill="url(#gdSteel)" stroke="#0A0E1A" stroke-width="1.3" stroke-linejoin="round"/>
+<path d="M60 68 L60 109" stroke="#37474F" stroke-width="1.2"/><path d="M59 69 L59 108" stroke="#FFF" stroke-width=".6" stroke-opacity=".6"/>
+<path d="M66 68 C75 69 82 73 82 80 L80 102 C80 106 74 109 67 110 C72 98 72 82 66 68 Z" fill="#263238" opacity=".35"/>
+<path d="M44 91 C50 94 70 94 76 91 M43 97 C50 100 70 100 77 97" stroke="#37474F" stroke-width="1" fill="none"/>
+<path d="M44 92 C50 95 59 95.5 59 95.5" stroke="#FFF" stroke-width=".5" fill="none" opacity=".5"/>
+<rect x="40" y="101" width="40" height="6" rx="2" fill="#37474F" stroke="#0A0E1A" stroke-width=".9"/>
+<rect x="56" y="100.5" width="8" height="7" rx="1.2" fill="url(#gdRim)" stroke="#0A0E1A" stroke-width=".8"/>
+<g fill="#263238"><circle cx="45" cy="78" r="1"/><circle cx="75" cy="78" r="1"/><circle cx="47" cy="86" r="1"/><circle cx="73" cy="86" r="1"/></g>
+<!-- right arm -->
+<path d="M80 77 C87 81 90 92 89 102 L81.5 103 C82 94 80 86 75 81 Z" fill="url(#gdSteelD)" stroke="#0A0E1A" stroke-width="1.1"/>
+<circle cx="85.5" cy="105.5" r="5" fill="url(#gdSteelD)" stroke="#0A0E1A" stroke-width="1"/>
+<path d="M76 70 C83 69 90 73 91 80 C91 84 88 86 84 85 C82 80 79 77 74 76 Z" fill="url(#gdSteelD)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M78 72.5 C83 72.5 87 75 88.5 79" stroke="#CFD8DC" stroke-width=".7" fill="none" opacity=".7"/>
+<!-- helmet: rounded great helm with a glowing slit -->
+<ellipse cx="60" cy="68" rx="16" ry="4.6" fill="url(#gdSteelD)" stroke="#0A0E1A" stroke-width="1"/>
+<path d="M37 48 C37 31 47 22 60 22 C73 22 83 31 83 48 L82 60 C82 65 72 69 60 69 C48 69 38 65 38 60 Z" fill="url(#gdHelm)" stroke="#0A0E1A" stroke-width="1.3"/>
+<path d="M60 22.5 L60 68.5" stroke="#37474F" stroke-width="1.4"/><path d="M59 23 L59 68" stroke="#FFF" stroke-width=".7" opacity=".7"/>
+<path d="M42 30 C47 25 53 23 59 23" stroke="#FFF" stroke-width="1.8" fill="none" stroke-opacity=".85" stroke-linecap="round"/>
+<rect x="42" y="42" width="36" height="7" rx="2.5" fill="#0A1218" stroke="#0A0E1A" stroke-width="1"/>
+<rect x="44" y="43.8" width="32" height="3.4" rx="1.7" fill="url(#gdSlit)"/>
+<rect x="40" y="39" width="40" height="13" rx="5" fill="url(#gdGlow)" opacity=".7"/>
+<g fill="#37474F"><rect x="50" y="54" width="2" height="7" rx="1"/><rect x="55" y="55" width="2" height="7" rx="1"/><rect x="63" y="55" width="2" height="7" rx="1"/><rect x="68" y="54" width="2" height="7" rx="1"/></g>
+<g fill="#37474F"><circle cx="41" cy="38" r="1.1"/><circle cx="79" cy="38" r="1.1"/><circle cx="41" cy="57" r="1.1"/><circle cx="79" cy="57" r="1.1"/></g>
+<path d="M38 58 L38 47 C38 34 45 26 54 23.5" fill="none" stroke="#9FE8FF" stroke-width="1.2" stroke-opacity="0.55" stroke-linecap="round"/>
+<!-- tower shield in the left hand, in front -->
+<path d="M44 72 C40 72 36 71 30 69 C26 71 24 73 23 75 L23 108 C23 120 30 128 41 134 C52 128 58 120 58 108 L58 75 C57 73 55 71 52 69 C47 71 46 72 44 72 Z" fill="url(#gdRim)" stroke="#0A0E1A" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M41 76 C38 76 34 75 30.5 73.5 C28.5 74.5 27.5 76 27 77 L27 107 C27 117 32 124 41 129.5 C50 124 54 117 54 107 L54 77 C53.5 76 52.5 74.5 51 73.5 C47 75 44 76 41 76 Z" fill="url(#gdShield)" stroke="#0A0E1A" stroke-width=".9"/>
+<path d="M41 80 L41 126" stroke="#1A262E" stroke-width="1"/>
+<circle cx="41" cy="100" r="13" fill="url(#gdGlow)"/>
+<path d="M41 88 L49 100 L41 112 L33 100 Z" fill="url(#gdGem)" stroke="#0A0E1A" stroke-width="1"/>
+<path d="M41 88 L45 100 L41 112 M33 100 H49" stroke="#FFF" stroke-width=".6" opacity=".6" fill="none"/>
+<path d="M41 89.5 L35 100 L41 100 Z" fill="#FFF" opacity=".45"/>
+<g fill="#CFD8DC" stroke="#0A0E1A" stroke-width=".5"><circle cx="31" cy="80" r="1.4"/><circle cx="51" cy="80" r="1.4"/><circle cx="31" cy="112" r="1.4"/><circle cx="51" cy="112" r="1.4"/><circle cx="41" cy="125" r="1.4"/></g>
+<path d="M25 78 L25 107 C25 115 29 121 34 125" stroke="#FFF" stroke-width="1" fill="none" opacity=".6" stroke-linecap="round"/>
+<!-- left pauldron over the shield's top -->
+<path d="M44 70 C37 69 30 73 29 80 C29 84 32 86 36 85 C38 80 41 77 46 76 Z" fill="url(#gdSteel)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M42 72.5 C37 72.5 33 75 31.5 79" stroke="#FFF" stroke-width=".9" fill="none" opacity=".8"/>
+</svg>

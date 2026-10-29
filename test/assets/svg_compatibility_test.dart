@@ -14,24 +14,29 @@ const _forbidden = [
   '<text',
   '<style',
   '<use',
+  '<pattern',
   '<!DOCTYPE',
   '<metadata',
 ];
 
 /// Features allowed in some files only, by the prefix of their path under
 /// assets/icons. The guide's portrait keeps the clip of its medallion, and
-/// the floor tiles of the isometric map the clip of their diamond: they
-/// are rasterized once like every icon, then drawn as bitmaps.
+/// the floor tiles of the isometric map the clip of their diamond, the
+/// standing units their translucent shading and the clip of their hazard
+/// stripes: they are rasterized once like every icon, then drawn as bitmaps.
 const _allowed = {
   'guide/': ['<clipPath'],
   'terrain/plain_iso_': ['<clipPath'],
+  'units/standing/': [' opacity=', '<clipPath'],
 };
 
 /// The viewBox of the files whose frame is not the 64x64 square, by the
 /// prefix of their path under assets/icons: a floor tile of the isometric
-/// map is a diamond twice as wide as tall.
+/// map is a diamond twice as wide as tall, a standing unit a full-body
+/// figure taller than wide.
 const _viewBoxes = {
   'terrain/plain_iso_': '0 0 128 64',
+  'units/standing/': '0 0 120 150',
 };
 
 void main() {

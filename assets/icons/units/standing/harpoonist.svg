@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150"><defs><radialGradient id="hpBrass" cx="0.5" cy="0.5" r="0.6" fx="0.3" fy="0.28"><stop offset="0" stop-color="#FFF1B8"/><stop offset="0.25" stop-color="#FFCA28"/><stop offset="0.65" stop-color="#C98A12"/><stop offset="1" stop-color="#5A3300"/></radialGradient><linearGradient id="hpBrassL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE082"/><stop offset="0.5" stop-color="#C98A12"/><stop offset="1" stop-color="#5A3300"/></linearGradient><linearGradient id="hpSuit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A3D"/><stop offset="0.5" stop-color="#D9480F"/><stop offset="1" stop-color="#6B1F00"/></linearGradient><linearGradient id="hpSuitD" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B33A0A"/><stop offset="1" stop-color="#4A1500"/></linearGradient><linearGradient id="hpGlass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5C3A16"/><stop offset="0.5" stop-color="#2E1A08"/><stop offset="1" stop-color="#120902"/></linearGradient><linearGradient id="hpShaft" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A0703C"/><stop offset="0.5" stop-color="#6D4520"/><stop offset="1" stop-color="#3A2210"/></linearGradient><linearGradient id="hpSteel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5F8FA"/><stop offset="0.5" stop-color="#A7B6C2"/><stop offset="1" stop-color="#4A5A66"/></linearGradient><linearGradient id="hpHose" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#90A4AE"/><stop offset="1" stop-color="#37474F"/></linearGradient><linearGradient id="hpBoot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5D4037"/><stop offset="1" stop-color="#1E120C"/></linearGradient><radialGradient id="hpEye" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE0B2"/><stop offset="0.4" stop-color="#FF9800"/><stop offset="1" stop-color="#E65100" stop-opacity="0"/></radialGradient></defs>
+<!-- harpoon behind the right arm -->
+<path d="M89 14 L89 138" stroke="#0A0E1A" stroke-width="4.6" stroke-linecap="round"/>
+<path d="M89 16 L89 137" stroke="url(#hpShaft)" stroke-width="3" stroke-linecap="round"/>
+<path d="M89 4 L94 18 L91 17 L91 22 L87 22 L87 17 L84 18 Z" fill="url(#hpSteel)" stroke="#0A0E1A" stroke-width=".9" stroke-linejoin="round"/>
+<path d="M87 22 L82 27 L86 24 Z M91 22 L96 27 L92 24 Z" fill="url(#hpSteel)" stroke="#0A0E1A" stroke-width=".7"/>
+<path d="M88.4 6 L88.4 18" stroke="#FFF" stroke-width=".7" opacity=".8"/>
+<rect x="86.5" y="22" width="5" height="4" rx="1" fill="#C98A12" stroke="#0A0E1A" stroke-width=".6"/>
+<path d="M87 40 L91 43 M87 44 L91 47 M87 48 L91 51" stroke="#2A1608" stroke-width=".8"/>
+<!-- air hose from helmet to back tank -->
+<path d="M38 54 C26 60 26 80 36 90" stroke="#0A0E1A" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M38 54 C26 60 26 80 36 90" stroke="url(#hpHose)" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+<path d="M38 54 C26 60 26 80 36 90" stroke="#263238" stroke-width="4.2" fill="none" stroke-dasharray="1 2.2"/>
+<!-- legs and boots -->
+<path d="M47.5 104 L58 104 L57.5 129 L48 129 Z" fill="url(#hpSuit)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M62 104 L72.5 104 L72 129 L62.5 129 Z" fill="url(#hpSuitD)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M50 112 L56 112 M64 112 L70 112" stroke="#6B1F00" stroke-width="1"/>
+<path d="M45.5 127 L59 127 L60 137 C60 140 58 141 55 141 L45 141 C42 141 41 139 42 136 Z" fill="url(#hpBoot)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M61 127 L74.5 127 L78 136 C79 139 78 141 75 141 L65 141 C62 141 60 140 60 137 Z" fill="url(#hpBoot)" stroke="#0A0E1A" stroke-width="1.1"/>
+<rect x="44" y="134" width="16" height="3" rx="1" fill="url(#hpBrassL)" stroke="#0A0E1A" stroke-width=".6"/>
+<rect x="61" y="134" width="16" height="3" rx="1" fill="url(#hpBrassL)" stroke="#0A0E1A" stroke-width=".6"/>
+<!-- torso -->
+<path d="M39 80 C39 72 49 68 60 68 C71 68 81 72 81 80 L79 103 C79 108 70 110 60 110 C50 110 41 108 41 103 Z" fill="url(#hpSuit)" stroke="#0A0E1A" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M67 69 C75 70 81 74 81 80 L79 103 C79 107 74 109 68 110 C72 98 72 82 67 69 Z" fill="url(#hpSuitD)" opacity=".6"/>
+<path d="M47 70 C51 69 56 68 60 68 C64 68 69 69 73 70 L71 79 C67 81 63 82 60 82 C57 82 53 81 49 79 Z" fill="url(#hpBrassL)" stroke="#0A0E1A" stroke-width="1"/>
+<g fill="#5A3300"><circle cx="51" cy="74" r="1"/><circle cx="56" cy="76.5" r="1"/><circle cx="64" cy="76.5" r="1"/><circle cx="69" cy="74" r="1"/></g>
+<path d="M43 84 L76 100 L74 105 L41 89 Z" fill="#5D4037" stroke="#0A0E1A" stroke-width=".9"/>
+<g fill="#C98A12" stroke="#0A0E1A" stroke-width=".5"><rect x="49" y="88" width="3" height="6" rx=".8" transform="rotate(26 50 91)"/><rect x="56" y="91.5" width="3" height="6" rx=".8" transform="rotate(26 57 94)"/><rect x="63" y="95" width="3" height="6" rx=".8" transform="rotate(26 64 98)"/></g>
+<rect x="41" y="102" width="38" height="5" rx="2" fill="#3E2723" stroke="#0A0E1A" stroke-width=".9"/>
+<rect x="56" y="101" width="8" height="7" rx="1.2" fill="url(#hpBrassL)" stroke="#0A0E1A" stroke-width=".8"/>
+<path d="M40 101 L40 81 C40 75 46 71 53 69" fill="none" stroke="#FFD9A0" stroke-width="1.1" stroke-opacity="0.45" stroke-linecap="round"/>
+<!-- arms -->
+<path d="M40 77 C33 81 30 92 31 102 L38.5 103 C38 94 40 86 45 81 Z" fill="url(#hpSuit)" stroke="#0A0E1A" stroke-width="1.1"/>
+<path d="M80 77 C86 80 89 88 89 96 L82 99 C81 92 79 86 75 81 Z" fill="url(#hpSuitD)" stroke="#0A0E1A" stroke-width="1.1"/>
+<circle cx="34.5" cy="105" r="5" fill="#5D4037" stroke="#0A0E1A" stroke-width="1"/><path d="M31.5 103 C33 101 36 101 37.5 103" stroke="#A1887F" stroke-width=".8" fill="none"/>
+<rect x="83" y="92" width="11" height="10" rx="4" fill="#5D4037" stroke="#0A0E1A" stroke-width="1"/>
+<path d="M84 95 H93 M84 98 H93" stroke="#3E2723" stroke-width=".8"/>
+<ellipse cx="40.5" cy="77" rx="9" ry="6.5" fill="url(#hpBrassL)" stroke="#0A0E1A" stroke-width="1"/>
+<ellipse cx="79.5" cy="77" rx="9" ry="6.5" fill="url(#hpBrassL)" stroke="#0A0E1A" stroke-width="1" opacity=".9"/>
+<path d="M36 79 L40.5 82 L45 79 M36 82.5 L40.5 85.5 L45 82.5" stroke="#FFF59D" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<!-- brass helmet -->
+<ellipse cx="60" cy="68" rx="17" ry="5" fill="url(#hpBrassL)" stroke="#0A0E1A" stroke-width="1.1"/>
+<g fill="#5A3300"><circle cx="46" cy="68" r="1"/><circle cx="53" cy="70.5" r="1"/><circle cx="60" cy="71.5" r="1"/><circle cx="67" cy="70.5" r="1"/><circle cx="74" cy="68" r="1"/></g>
+<rect x="55" y="16" width="10" height="7" rx="2" fill="url(#hpBrassL)" stroke="#0A0E1A" stroke-width="1"/>
+<rect x="57" y="12" width="6" height="5" rx="1.5" fill="#C98A12" stroke="#0A0E1A" stroke-width=".9"/>
+<circle cx="60" cy="45" r="24" fill="url(#hpBrass)" stroke="#0A0E1A" stroke-width="1.3"/>
+<path d="M43 29 C48 24 54 22 61 22" stroke="#FFF8E1" stroke-width="1.8" fill="none" stroke-opacity=".8" stroke-linecap="round"/>
+<circle cx="60" cy="47" r="12.5" fill="#8C5A0A" stroke="#0A0E1A" stroke-width="1.2"/>
+<circle cx="60" cy="47" r="10" fill="url(#hpGlass)" stroke="#FFE082" stroke-width="1"/>
+<circle cx="55.5" cy="46" r="4.5" fill="url(#hpEye)"/><circle cx="64.5" cy="46" r="4.5" fill="url(#hpEye)"/>
+<circle cx="55.5" cy="46" r="1.6" fill="#FFF3E0"/><circle cx="64.5" cy="46" r="1.6" fill="#FFF3E0"/>
+<path d="M60 37 V57 M50 47 H70 M53 40 L67 54 M67 40 L53 54" stroke="#C98A12" stroke-width="1.3" opacity=".9"/>
+<path d="M60 37 V57 M50 47 H70" stroke="#5A3300" stroke-width="2.2" opacity=".5"/>
+<path d="M60 37 V57 M50 47 H70" stroke="#FFCA28" stroke-width="1.2"/>
+<path d="M53 40 C55 38 58 37 61 37" stroke="#FFF" stroke-width="1" fill="none" opacity=".55"/>
+<circle cx="40" cy="45" r="5" fill="#8C5A0A" stroke="#0A0E1A" stroke-width="1"/><circle cx="40" cy="45" r="3.4" fill="url(#hpGlass)"/><circle cx="39" cy="44" r="1" fill="#FFE0B2" opacity=".7"/>
+<circle cx="80" cy="45" r="5" fill="#8C5A0A" stroke="#0A0E1A" stroke-width="1"/><circle cx="80" cy="45" r="3.4" fill="url(#hpGlass)"/>
+<g fill="#5A3300"><circle cx="49" cy="32" r="1.1"/><circle cx="71" cy="32" r="1.1"/><circle cx="46" cy="58" r="1.1"/><circle cx="74" cy="58" r="1.1"/><circle cx="60" cy="61" r="1.1"/></g>
+<path d="M38 54 C35 40 41 28 51 24" fill="none" stroke="#FFE7B0" stroke-width="1.2" stroke-opacity="0.5" stroke-linecap="round"/>
+</svg>

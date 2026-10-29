@@ -50,7 +50,7 @@ class MapPainter extends CustomPainter {
       final image = sprites?.svg(visual.terrainSprite);
       image == null
           ? canvas.drawPath(MapProjection.diamondOf(cell), fallback)
-          : drawer.drawSprite(canvas, image, _tileOf(cell), terrain);
+          : drawer.drawSprite(canvas, image, tileOf(cell), terrain);
       if (visual.liesFlat) flat.add(i);
       if (visual.pending) {
         pending.addPath(MapProjection.diamondOf(cell, inset: 1), Offset.zero);
@@ -79,8 +79,9 @@ class MapPainter extends CustomPainter {
     );
   }
 
-  /// The box the tile of [cell] is drawn in: its tile box, a hair larger.
-  static Rect _tileOf((int, int) cell) => Rect.fromCenter(
+  /// The box the floor tile of [cell] is drawn in: its tile box, a hair
+  /// larger.
+  static Rect tileOf((int, int) cell) => Rect.fromCenter(
         center: MapProjection.centreOf(cell),
         width: MapProjection.tileWidth + 2 * tileBleed,
         height: MapProjection.tileHeight + tileBleed,

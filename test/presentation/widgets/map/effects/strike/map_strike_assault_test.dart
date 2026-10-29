@@ -7,8 +7,8 @@ import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/map/effects/map_effect.dart';
 import 'package:abyss/presentation/widgets/map/effects/strike/map_strike.dart';
-import 'package:abyss/presentation/widgets/map/effects/strike/strike_geometry.dart';
 import 'package:abyss/presentation/widgets/map/effects/strike/strike_round.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -81,9 +81,7 @@ void main() {
         target: (5, 5), sprite: _volcano, result: _onVolcano());
     final run =
         strike.stage(MapStage(originOf: (_) => (0, 5), sprites: sprites));
-    final area =
-        const StrikeGeometry(origin: (0, 5), target: (5, 5), span: 2)
-            .lairRect;
+    final area = MapProjection.standingOf((5, 5), span: 2);
     const cyan = ColorFilter.mode(AbyssColors.biolumCyan, BlendMode.srcIn);
     final over = <(Rect, ColorFilter?)>[];
     for (var ms = 0; ms <= run.duration.inMilliseconds; ms += 20) {

@@ -7,6 +7,7 @@ import 'package:abyss/presentation/screens/game/story/turn_story.dart';
 import 'package:abyss/presentation/screens/game/story/turn_story_snapshot.dart';
 import 'package:abyss/presentation/widgets/map/effects/story/map_fog_lift.dart';
 import 'package:abyss/presentation/widgets/map/effects/story/map_siege.dart';
+import 'package:abyss/presentation/widgets/map/map_scatter.dart';
 import 'package:abyss/presentation/widgets/map/effects/strike/strike_round.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -30,6 +31,11 @@ void main() {
     expect(chapter.level, 1);
     final lift = chapter.effect as MapFogLift;
     expect(lift.cells.keys.toSet(), {(8, 5), (9, 5), (9, 6)});
+    final map = game.levels[1]!;
+    for (final (x, y) in lift.cells.keys) {
+      expect(lift.cells[(x, y)], floorTileOf(map.cellAt(x, y).terrain, (x, y)),
+          reason: 'drawn as the still map draws it');
+    }
     expect(lift.scouts, {(8, 5)});
     expect(lift.focus, (8, 5));
   });

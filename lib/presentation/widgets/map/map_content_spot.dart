@@ -50,9 +50,13 @@ class MapContentSpot {
 
   /// The spot of [visual] at [index] on a map [columns] cells wide: on
   /// its cell, or on the block a wide content (the volcano) covers.
-  factory MapContentSpot.of(MapCellVisual visual, int index, int columns) {
-    final cell = (index % columns, index ~/ columns);
-    final span = visual.contentSpan;
+  factory MapContentSpot.of(MapCellVisual visual, int index, int columns) =>
+      MapContentSpot.at((index % columns, index ~/ columns),
+          span: visual.contentSpan, index: index);
+
+  /// The spot of a content standing on [cell], or on the [span] by [span]
+  /// block from it, kept as the [index]-th of a painter's spots.
+  factory MapContentSpot.at((int, int) cell, {int span = 1, int index = 0}) {
     final area = MapProjection.standingOf(cell, span: span);
     final floor = MapProjection.floorOf(cell, span: span);
     final glow = _onFloor(floor.center, floor.width * glowRatio);

@@ -7,6 +7,7 @@ import '../../../../extensions/unit_type_extensions.dart';
 import '../../../../theme/abyss_colors.dart';
 import '../../../../theme/abyss_motion.dart';
 import '../../map_content_drawer.dart';
+import '../../map_projection.dart';
 import '../../token/map_token_drawer.dart';
 import '../../token/map_token_trip.dart';
 import '../map_effect.dart';
@@ -18,8 +19,13 @@ import 'strike_timeline.dart';
 
 /// A [MapStrike] placed on a map: each round's hit flashes the target
 /// white, shakes the map and floats up what each side lost, over the
-/// target and over the army's token; a defeated monster shrinks and fades
-/// over the dimmed remains the still map shows, a taken place lights up.
+/// target and over the army's token; a defeated monster shrinks to its
+/// foot and fades over the dimmed remains the map shows, a taken place
+/// lights up.
+///
+/// The army's token swims on the flat map ([StrikeGeometry]) and stands
+/// upright where it projects; the target is drawn exactly where the
+/// standing layer draws it.
 class MapStrikeRun implements MapEffectRun {
   /// How long the lair flashes after a hit.
   static const flashLength = AbyssMotion.tap;
@@ -41,6 +47,13 @@ class MapStrikeRun implements MapEffectRun {
   final StrikeGeometry geometry;
   final StrikeTimeline timeline;
 
+  /// Where the target stands, as the standing layer draws it.
+  final Rect _body;
+
+  /// Where the army's losses float up from: the top of its token beside
+  /// the target.
+  final Offset _army;
+
   final _token = MapTokenDrawer();
   final _marks = StrikeMarks();
   final _lair = Paint()..filterQuality = FilterQuality.medium;
@@ -52,7 +65,9 @@ class MapStrikeRun implements MapEffectRun {
               ? Duration.zero
               : MapTokenTrip.durationOf(geometry.origin, geometry.approach),
           hits: strike.rounds.length,
-        );
+        ),
+        _body = MapProjection.standingOf(geometry.target, span: geometry.span),
+        _army = MapProjection.upright(geometry.tokenRect(swim: 1)).topCenter;
 
   @override
   Duration get duration => timeline.total;
@@ -66,21 +81,20 @@ class MapStrikeRun implements MapEffectRun {
   @override
   void paint(Canvas canvas, Duration elapsed) {
     _paintTarget(canvas, elapsed);
-    final token = geometry.tokenRect(
+    final token = MapProjection.upright(geometry.tokenRect(
       swim: timeline.swimAt(elapsed),
       reach: timeline.reachAt(elapsed),
       retreat: strike.victory ? 0 : timeline.outcomeAt(elapsed),
-    );
+    ));
     final opacity = 1 - AbyssMotion.exit.transform(timeline.vanishAt(elapsed));
     _token.draw(canvas, token, stage.image(strike.lead.iconPath),
         opacity: opacity);
     _marks.badge(canvas, token, strike.count, opacity);
-    final army = geometry.tokenRect(swim: 1).topCenter;
-    for (final (i, round) in strike.rounds.indexed) {
+    for (var i = 0; i < strike.rounds.length; i++) {
       if (!timeline.showsHit(i, elapsed)) continue;
       final progress = timeline.pace.fadeOf(i, elapsed)!;
-      _loss(canvas, geometry.lairRect.topCenter, round.dealt, progress);
-      _loss(canvas, army, round.taken, progress);
+      _loss(canvas, _body.topCenter, strike.rounds[i].dealt, progress);
+      _loss(canvas, _army, strike.rounds[i].taken, progress);
     }
   }
 
@@ -89,19 +103,19 @@ class MapStrikeRun implements MapEffectRun {
   }
 
   /// The target, flashing white as each hit lands. A beaten monster stays
-  /// alive over its dimmed remains until it shrinks and fades away; a
-  /// taken place stays as the map draws it and lights up in cyan.
+  /// alive over its dimmed remains until it shrinks to its foot and fades
+  /// away; a taken place stays as the map draws it and lights up in cyan.
   void _paintTarget(Canvas canvas, Duration elapsed) {
     final sprite = stage.image(strike.targetSprite);
     if (sprite == null) return;
-    var body = geometry.lairRect;
+    var body = _body;
     final outcome = strike.victory ? timeline.outcomeAt(elapsed) : 0.0;
     if (strike.victory && strike.fades) {
       final gone = AbyssMotion.exit.transform(outcome);
-      body = Rect.fromCenter(
-          center: body.center,
-          width: body.width * (1 - (1 - shrunk) * gone),
-          height: body.height * (1 - (1 - shrunk) * gone));
+      final scale = 1 - (1 - shrunk) * gone;
+      final width = body.width * scale, height = body.height * scale;
+      body = Rect.fromLTWH(body.center.dx - width / 2, body.bottom - height,
+          width, height);
       _lair.color = Color.fromRGBO(0, 0, 0, 1 - gone);
       _draw(canvas, sprite, body, _lair);
     }

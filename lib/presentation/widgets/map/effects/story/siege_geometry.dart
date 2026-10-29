@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import '../../../../theme/abyss_motion.dart';
-import '../../map_content_drawer.dart';
+import '../../map_cell_size.dart';
 import '../../token/map_token_trip.dart';
 
 /// Where the attackers of a place go: the place covers [span] cells
@@ -34,8 +34,10 @@ class SiegeGeometry {
   Offset get center => Offset(
       (place.$1 + span / 2) * cellSize, (place.$2 + span / 2) * cellSize);
 
-  /// Half the side of the place.
-  double get radius => span * cellSize / 2;
+  /// The radius of the circle through the corners of the place, which
+  /// the projection lays on the floor through the vertices of its
+  /// diamonds: rings drawn from it surround the content standing there.
+  double get radius => span * cellSize * math.sqrt1_2;
 
   /// Attacker [index] after [approach] of its way in (0 to 1), lunging
   /// [reach] of the way at the place, pushed back [pushed] of the way, or

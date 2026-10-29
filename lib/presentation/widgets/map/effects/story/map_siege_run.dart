@@ -4,11 +4,13 @@ import 'package:flutter/painting.dart';
 
 import '../../../../theme/abyss_colors.dart';
 import '../../../../theme/abyss_motion.dart';
+import '../../map_projection.dart';
 import '../../token/map_token_drawer.dart';
 import '../map_effect.dart';
 import '../map_jolt.dart';
 import '../strike/strike_marks.dart';
 import 'map_siege.dart';
+import 'siege_floor.dart';
 import 'siege_geometry.dart';
 import 'siege_timeline.dart';
 
@@ -18,6 +20,10 @@ import 'siege_timeline.dart';
 /// side lost floats up; then on a victory a cyan shield flashes as it
 /// pushes them back, on a defeat they break in as the place flashes red
 /// and the map shakes.
+///
+/// Everything is placed on the flat map ([SiegeGeometry]): the rings and
+/// flashes around the place lie on the floor through the projection, as
+/// ellipses; the attackers stand upright where they project.
 class MapSiegeRun implements MapEffectRun {
   /// How far the map shakes as the attackers break in, in logical pixels.
   static const shakeAmplitude = 4.0;
@@ -33,13 +39,24 @@ class MapSiegeRun implements MapEffectRun {
   final SiegeGeometry geometry;
   final SiegeTimeline timeline;
 
+  /// Where the place's losses float up from: the top of its sprite.
+  final Offset _place;
+
+  /// Where the attackers' losses float up from: the top of the first.
+  final Offset _attackers;
+
+  final SiegeFloor _floor;
   final _token = MapTokenDrawer();
   final _marks = StrikeMarks();
-  final _fill = Paint();
-  final _line = Paint()..style = PaintingStyle.stroke;
 
   MapSiegeRun(this.siege, {required this.stage, required this.geometry})
-      : timeline = SiegeTimeline(rounds: siege.rounds.length);
+      : timeline = SiegeTimeline(rounds: siege.rounds.length),
+        _floor = SiegeFloor(geometry),
+        _place = MapProjection.standingOf(geometry.place, span: geometry.span)
+            .topCenter,
+        _attackers = MapProjection.upright(
+                geometry.attackerRect(0, approach: 1))
+            .topCenter;
 
   @override
   Duration get duration => timeline.total;
@@ -65,21 +82,10 @@ class MapSiegeRun implements MapEffectRun {
 
   @override
   void paint(Canvas canvas, Duration elapsed) {
-    final center = geometry.center, radius = geometry.radius;
-    _ring(canvas, radius * 1.15, AbyssColors.error, timeline.alertAt(elapsed));
     final outcome = timeline.outcomeAt(elapsed);
-    final shield = shieldAt(elapsed);
-    if (shield > 0) {
-      final flash = siege.victory ? math.sin(math.pi * outcome) : 0.0;
-      _fill.color = AbyssColors.biolumCyan.withValues(alpha: 0.15 * shield);
-      canvas.drawCircle(center, radius * 1.1 * shield, _fill);
-      _ring(canvas, radius * 1.1 * shield, AbyssColors.biolumCyan,
-          math.min(1, shield * 0.8 + flash));
-    }
-    _flash(canvas, AbyssColors.daylight, 0.4 * _clashFlashAt(elapsed));
-    if (!siege.victory) {
-      _flash(canvas, AbyssColors.error, 0.5 * math.sin(math.pi * outcome));
-    }
+    _floor.begin(canvas);
+    _paintFloor(canvas, elapsed, outcome);
+    _floor.end(canvas);
     final opacity = 1 - AbyssMotion.exit.transform(outcome);
     final sprite = stage.image(siege.attackerSprite);
     for (var i = 0; i < SiegeGeometry.attackers; i++) {
@@ -88,23 +94,41 @@ class MapSiegeRun implements MapEffectRun {
           reach: timeline.clashes.reachAt(elapsed),
           pushed: siege.victory ? outcome : 0,
           breach: siege.victory ? 0 : outcome);
-      _token.draw(canvas, rect, sprite,
+      _token.draw(canvas, MapProjection.upright(rect), sprite,
           opacity: opacity, ring: siege.attackerRing);
     }
     _paintLosses(canvas, elapsed);
+  }
+
+  /// The alert, the shield and the flashes around the place, drawn on the
+  /// flat map for the projection to lay them on the floor.
+  void _paintFloor(Canvas canvas, Duration elapsed, double outcome) {
+    _floor.ring(canvas, 1.15, AbyssColors.error, timeline.alertAt(elapsed));
+    final shield = shieldAt(elapsed);
+    if (shield > 0) {
+      final flash = siege.victory ? math.sin(math.pi * outcome) : 0.0;
+      _floor
+        ..disc(canvas, 1.1 * shield, AbyssColors.biolumCyan, 0.15 * shield)
+        ..ring(canvas, 1.1 * shield, AbyssColors.biolumCyan,
+            math.min(1, shield * 0.8 + flash));
+    }
+    _floor.disc(
+        canvas, 1.1, AbyssColors.daylight, 0.4 * _clashFlashAt(elapsed));
+    if (!siege.victory) {
+      _floor.disc(canvas, 1.1, AbyssColors.error,
+          0.5 * math.sin(math.pi * outcome));
+    }
   }
 
   /// What each side lost in the round showing at [elapsed]: what the
   /// defenders dealt over the attackers, what they took over the place.
   void _paintLosses(Canvas canvas, Duration elapsed) {
     final clashes = timeline.clashes;
-    final attackers = geometry.attackerRect(0, approach: 1).topCenter;
-    final place = geometry.center - Offset(0, geometry.radius);
-    for (final (i, round) in siege.rounds.indexed) {
+    for (var i = 0; i < siege.rounds.length; i++) {
       if (!clashes.showsHit(i, elapsed)) continue;
       final progress = clashes.fadeOf(i, elapsed)!;
-      _loss(canvas, attackers, round.dealt, progress);
-      _loss(canvas, place, round.taken, progress);
+      _loss(canvas, _attackers, siege.rounds[i].dealt, progress);
+      _loss(canvas, _place, siege.rounds[i].taken, progress);
     }
   }
 
@@ -116,19 +140,5 @@ class MapSiegeRun implements MapEffectRun {
     final since = timeline.clashes.sinceLastHit(elapsed);
     if (since == null || since >= flashLength) return 0;
     return 1 - since.inMicroseconds / flashLength.inMicroseconds;
-  }
-
-  void _flash(Canvas canvas, Color color, double opacity) {
-    if (opacity <= 0) return;
-    _fill.color = color.withValues(alpha: opacity);
-    canvas.drawCircle(geometry.center, geometry.radius * 1.1, _fill);
-  }
-
-  void _ring(Canvas canvas, double radius, Color color, double opacity) {
-    if (opacity <= 0) return;
-    _line
-      ..color = color.withValues(alpha: opacity)
-      ..strokeWidth = 3;
-    canvas.drawCircle(geometry.center, radius, _line);
   }
 }

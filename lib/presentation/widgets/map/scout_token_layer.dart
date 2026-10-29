@@ -8,10 +8,11 @@ import '../common/svg_raster_cache.dart';
 import 'token/map_token_trip.dart';
 import 'token/map_tokens_painter.dart';
 
-/// The scouts sent to explore cells of a map, over it in map coordinates.
+/// The scouts sent to explore cells of a map, standing upright over it in
+/// projection coordinates.
 ///
 /// A scout sent while the layer is shown swims from [originOf] its target
-/// to that target, then waits in a corner of it; scouts already sent when
+/// to that target, then waits on its edge; scouts already sent when
 /// the layer appears wait there at once, as they do when the player asks
 /// for fewer animations. A scout whose target is no longer among
 /// [targets] (its exploration is over) leaves the layer at once: the

@@ -3,10 +3,12 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
+import '../map_projection.dart';
 import 'map_token_drawer.dart';
 import 'map_token_trip.dart';
 
-/// Draws round tokens over the map, each where its [MapTokenTrip] says.
+/// Draws round tokens over the map, each standing upright where its
+/// [MapTokenTrip] projects, in projection coordinates.
 ///
 /// Repaints only while a token swims: tokens at rest are painted once,
 /// then again only when the tokens or their [image] change. Never
@@ -32,8 +34,9 @@ class MapTokensPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (final trip in trips) {
-      _drawer.draw(canvas, trip.rect, image);
+    // Indexed loop: no iterator is made for a frame.
+    for (var i = 0; i < trips.length; i++) {
+      _drawer.draw(canvas, MapProjection.upright(trips[i].rect), image);
     }
   }
 

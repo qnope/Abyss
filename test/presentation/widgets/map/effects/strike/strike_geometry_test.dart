@@ -1,7 +1,6 @@
 import 'package:abyss/presentation/widgets/map/effects/strike/strike_geometry.dart';
 import 'package:abyss/presentation/widgets/map/map_content_drawer.dart';
 import 'package:abyss/presentation/widgets/map/token/map_token_trip.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Offset centerOf((int, int) cell) =>
@@ -57,14 +56,9 @@ void main() {
     });
   });
 
-  test('the lair is the content square in the middle of the target', () {
+  test('the lair is the flat cell of the target, aimed at its middle', () {
     const geometry = StrikeGeometry(origin: (0, 0), target: (2, 1));
-    expect(
-      geometry.lairRect,
-      Rect.fromCenter(
-          center: centerOf((2, 1)),
-          width: MapContentDrawer.contentSize,
-          height: MapContentDrawer.contentSize),
-    );
+    expect(geometry.lairRect, MapContentDrawer.cellRect(1 * 10 + 2, 10));
+    expect(geometry.lairRect.center, centerOf((2, 1)));
   });
 }

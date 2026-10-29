@@ -1,23 +1,31 @@
 import 'package:abyss/presentation/theme/abyss_motion.dart';
 import 'package:abyss/presentation/widgets/map/map_content_drawer.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/token/map_token_trip.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('a resting token sits in the bottom right corner of its cell', () {
+  test('a resting token sits on the middle of the right edge of its cell',
+      () {
     final rect = MapTokenTrip.restingRect((2, 1));
     final cell = MapContentDrawer.cellRect(1 * 10 + 2, 10);
     expect(rect.width, closeTo(cellSize * 0.45, 0.01));
-    expect(rect.height, rect.width);
-    expect(cell.contains(rect.topLeft), isTrue);
-    expect(rect.right, lessThanOrEqualTo(cell.right));
-    expect(rect.bottom, lessThanOrEqualTo(cell.bottom));
-    expect(rect.center.dx, greaterThan(cell.center.dx));
-    expect(rect.center.dy, greaterThan(cell.center.dy));
+    expect(rect.height, closeTo(rect.width, 1e-9));
+    expect((rect.center - cell.centerRight).distance, lessThan(1e-9));
   });
 
-  test('a token at rest stays in the corner of its target', () {
+  test('seen on screen, it waits on the front-right edge of the diamond, '
+      'leaving the foot of the content in sight', () {
+    final token = MapProjection.upright(MapTokenTrip.restingRect((2, 1)));
+    final tile = MapProjection.tileRectOf((2, 1));
+    final edge = (tile.centerRight + tile.bottomCenter) / 2;
+    expect((token.center - edge).distance, lessThan(1e-9));
+    final standing = MapProjection.standingOf((2, 1));
+    expect(token.left, greaterThan(standing.bottomCenter.dx));
+  });
+
+  test('a token at rest stays where it waits on its target', () {
     const trip = MapTokenTrip.atRest((4, 4));
     expect(trip.rect, MapTokenTrip.restingRect((4, 4)));
   });

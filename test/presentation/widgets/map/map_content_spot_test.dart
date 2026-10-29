@@ -56,4 +56,19 @@ void main() {
     expect(wide.ring.center, block);
     expect(wide.shadow.width, closeTo(2 * spot.shadow.width, 1e-9));
   });
+
+  test('placed on a cell, is the spot of the content standing there', () {
+    final at = MapContentSpot.at((3, 2), index: 7);
+    expect(at.index, 7);
+    for (final (a, b) in [
+      (at.area, spot.area),
+      (at.glow, spot.glow),
+      (at.shadow, spot.shadow),
+      (at.bounds, spot.bounds),
+    ]) {
+      expect(a, b);
+    }
+    expect(MapContentSpot.at((2, 1), span: 2).area,
+        MapProjection.standingOf((2, 1), span: 2));
+  });
 }

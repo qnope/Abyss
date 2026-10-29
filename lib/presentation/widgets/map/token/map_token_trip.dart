@@ -3,24 +3,23 @@ import 'dart:math' as math;
 import 'package:flutter/animation.dart';
 
 import '../../../theme/abyss_motion.dart';
-import '../map_content_drawer.dart';
+import '../map_cell_size.dart';
+import '../map_projection.dart';
 
-/// Where a round token stands on the map: swimming from one cell to
-/// another as its [progress] runs, or at rest in the corner of its
-/// [target] once arrived.
+/// Where a round token stands on the flat map: swimming from one cell to
+/// another as its [progress] runs, or at rest on the edge of its [target]
+/// once arrived. Drawn upright where it projects ([MapProjection.upright]).
 ///
 /// A token swims in the middle of the cells, a little larger, and shrinks
-/// into the bottom right corner of its target, leaving the cell's content
-/// in sight while it waits there.
+/// onto the right edge of its target, which the projection lays on the
+/// front-right edge of the diamond: the content standing there stays in
+/// sight while it waits.
 class MapTokenTrip {
   /// Side of a swimming token, as a share of a cell.
   static const swimScale = 0.6;
 
   /// Side of a token at rest, as a share of a cell.
   static const restScale = 0.45;
-
-  /// Gap between a token at rest and the edges of its cell.
-  static const restInset = 2.0;
 
   final (int, int) target;
   final (int, int)? origin;
@@ -53,12 +52,12 @@ class MapTokenTrip {
     return Rect.lerp(swimmingRect(origin), rest, t)!;
   }
 
-  /// A token at rest in the bottom right corner of [cell].
-  static Rect restingRect((int, int) cell) {
-    const side = cellSize * restScale;
-    final corner = _cell(cell).bottomRight - const Offset(restInset, restInset);
-    return Rect.fromPoints(corner - const Offset(side, side), corner);
-  }
+  /// A token at rest on the middle of the right edge of [cell].
+  static Rect restingRect((int, int) cell) => Rect.fromCenter(
+        center: _cell(cell).centerRight,
+        width: cellSize * restScale,
+        height: cellSize * restScale,
+      );
 
   /// A token swimming through the middle of [cell].
   static Rect swimmingRect((int, int) cell) => Rect.fromCenter(

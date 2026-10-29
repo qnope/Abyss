@@ -6,7 +6,7 @@ import 'map_effect.dart';
 import 'map_effect_painter.dart';
 import 'map_effects.dart';
 
-/// Plays the effects of [effects] over a map, in map coordinates.
+/// Plays the effects of [effects] over a map, in projection coordinates.
 ///
 /// One animation runs the effect playing; once it ends, the effect is
 /// over. When the player asks for fewer animations, every effect is over

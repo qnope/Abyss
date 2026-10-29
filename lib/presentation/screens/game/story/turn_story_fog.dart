@@ -2,8 +2,8 @@ import '../../../../domain/game/game.dart';
 import '../../../../domain/map/cell_content_type.dart';
 import '../../../../domain/map/map_cell.dart';
 import '../../../extensions/cell_content_type_extensions.dart';
-import '../../../extensions/terrain_type_extensions.dart';
 import '../../../widgets/map/effects/story/map_fog_lift.dart';
+import '../../../widgets/map/map_scatter.dart';
 import 'story_chapter.dart';
 import 'turn_story_snapshot.dart';
 
@@ -27,7 +27,8 @@ StoryChapter? fogLiftChapter(Game game, TurnStorySnapshot before) {
     level: level,
     effect: MapFogLift(
       cells: {
-        for (final (x, y) in seen) (x, y): map.cellAt(x, y).terrain.svgPath,
+        for (final (x, y) in seen)
+          (x, y): floorTileOf(map.cellAt(x, y).terrain, (x, y)),
       },
       scouts: scouts,
       beacons: {

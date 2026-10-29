@@ -45,6 +45,7 @@ const _frames = {
   'buildings/': SvgFrame.vignette,
   'buildings/standing/': SvgFrame.cutout,
   'units/': SvgFrame.medallion,
+  'units/standing/': SvgFrame.transparent,
   'tech/': SvgFrame.medallion,
   'resources/': SvgFrame.transparent,
   'map_content/': SvgFrame.transparent,

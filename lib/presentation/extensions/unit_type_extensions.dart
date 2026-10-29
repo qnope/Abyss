@@ -40,6 +40,17 @@ extension UnitTypeExtensions on UnitType {
     UnitType.saboteur => 'assets/icons/units/saboteur.svg',
   };
 
+  /// Full-body drawing of the unit standing, feet at the bottom of a
+  /// 120x150 canvas, for the isometric army.
+  String get standingPath => switch (this) {
+    UnitType.scout => 'assets/icons/units/standing/scout.svg',
+    UnitType.harpoonist => 'assets/icons/units/standing/harpoonist.svg',
+    UnitType.guardian => 'assets/icons/units/standing/guardian.svg',
+    UnitType.domeBreaker => 'assets/icons/units/standing/dome_breaker.svg',
+    UnitType.abyssAdmiral => 'assets/icons/units/standing/abyss_admiral.svg',
+    UnitType.saboteur => 'assets/icons/units/standing/saboteur.svg',
+  };
+
   String role(AppLocalizations l10n) => switch (this) {
     UnitType.scout => l10n.unitScoutRole,
     UnitType.harpoonist => l10n.unitHarpoonistRole,

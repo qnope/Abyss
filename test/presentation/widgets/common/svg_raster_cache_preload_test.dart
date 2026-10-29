@@ -1,3 +1,5 @@
+import 'package:abyss/domain/unit/unit_type.dart';
+import 'package:abyss/presentation/extensions/unit_type_extensions.dart';
 import 'package:abyss/presentation/widgets/common/svg_raster_cache.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,6 +18,16 @@ void main() {
         SvgRasterCache.preloads('assets/illustrations/menu/abyss_backdrop.svg'),
         isFalse,
       );
+    });
+
+    test('skips the standing units, taller than wide', () {
+      for (final type in UnitType.values) {
+        expect(
+          SvgRasterCache.preloads(type.standingPath),
+          isFalse,
+          reason: type.name,
+        );
+      }
     });
 
     test('skips assets that are not SVG', () {

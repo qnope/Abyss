@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'map_cell_at.dart';
@@ -58,6 +59,15 @@ abstract final class MapProjection {
       ..close();
   }
 
+  /// The transform laying the flat map onto the screen, as [toScreen]
+  /// does: a flat cell square becomes its diamond.
+  static final Float64List isometric = Float64List.fromList([
+    1, 0.5, 0, 0, //
+    -1, 0.5, 0, 0, //
+    0, 0, 1, 0, //
+    0, 0, 0, 1,
+  ]);
+
   /// The box bounding the diamond of [cell].
   static Rect tileRectOf((int, int) cell) {
     final (x, y) = cell;
@@ -68,6 +78,14 @@ abstract final class MapProjection {
       tileHeight,
     );
   }
+
+  /// The box bounding the diamonds of the [span] by [span] block from
+  /// [cell]: where a content lies on the floor.
+  static Rect floorOf((int, int) cell, {int span = 1}) => Rect.fromCenter(
+        center: centreOf(cell, span: span),
+        width: tileWidth * span,
+        height: tileHeight * span,
+      );
 
   /// The [flat] box stood up on screen: same size, centred on the
   /// projection of its centre.

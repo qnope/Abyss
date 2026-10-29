@@ -1,8 +1,7 @@
-import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
-import 'package:abyss/presentation/extensions/random_event_type_extensions.dart';
 import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
+import 'package:abyss/presentation/widgets/ambience/ambient_motion.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_content_drawer.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
@@ -15,7 +14,6 @@ import 'map_painter_probe.dart';
 void main() {
   final tiles = TerrainType.plain.tileSvgPaths;
   final String plain = tiles.first;
-  final String wreck = RandomEventType.wreck.illustration;
 
   /// Whether [dst] is the tile box of [cell], drawn a hair larger.
   bool floors(Rect dst, (int, int) cell) {
@@ -68,24 +66,37 @@ void main() {
     );
   });
 
-  testWidgets('a still content stands on its cell, over every floor tile', (
+  testWidgets('a hole lies flat on its diamond, over every floor tile', (
     tester,
   ) async {
-    final home = MapCellVisual(
-        terrainSprite: plain, contentSprite: wreck, revealed: true);
+    const faille = 'assets/icons/posts/faille_guarded.svg';
     final painter = await painterOf(tester, [
-      home,
       MapCellVisual(terrainSprite: plain, revealed: true),
+      MapCellVisual(
+        terrainSprite: plain,
+        contentSprite: faille,
+        glow: MapGlow.post,
+        revealed: true,
+        motion: AmbientMotion.pulse,
+      ),
     ]);
-    final standing = MapProjection.standingOf((0, 0));
+    final flat = MapContentDrawer.flatOf((1, 0));
+    final cell = MapContentDrawer.cellRect(1, 2);
+    expect((flat.center - cell.center).distance, lessThan(1e-9));
+    expect(flat.width, inInclusiveRange(cell.width, 1.25 * cell.width));
+    expect(flat.height, flat.width);
     expect(
       painter,
       paints
         ..drawImageRect()
         ..drawImageRect()
+        ..save()
+        ..transform(matrix4: MapProjection.isometric)
         ..drawImageRect(
-            destination: MapContentDrawer.bodyOf(home, standing)),
+            image: MapSprites.ready!.svg(faille), destination: flat)
+        ..restore(),
     );
+    // Two floor tiles and the hole: its glow pulses on the standing layer.
+    expect(painter, paintsExactlyCountTimes(#drawImageRect, 3));
   });
-
 }

@@ -5,7 +5,6 @@ import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/ambience/ambient_motion.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
-import 'package:abyss/presentation/widgets/map/map_content_drawer.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,33 +15,6 @@ void main() {
   final String plain = tiles.first;
   final String wreck = RandomEventType.wreck.illustration;
   final fog = AbyssColors.abyssBlack.withValues(alpha: 0.7);
-
-  testWidgets('a hidden wreck and its halo are drawn over the fog', (
-    tester,
-  ) async {
-    final beacon = MapCellVisual(
-      terrainSprite: plain,
-      contentSprite: wreck,
-      glow: MapGlow.wreck,
-      aboveFog: true,
-    );
-    final painter = await painterOf(tester, [
-      MapCellVisual(terrainSprite: plain),
-      beacon,
-    ]);
-    final standing = MapProjection.standingOf((1, 0));
-    expect(
-      painter,
-      paints
-        ..path(color: AbyssColors.biolumCyan)
-        ..path(color: fog)
-        ..drawImageRect(destination: standing)
-        ..drawImageRect(
-            destination: MapContentDrawer.bodyOf(beacon, standing)),
-    );
-    // Two terrains, the halo and the wreck: nothing drawn twice.
-    expect(painter, paintsExactlyCountTimes(#drawImageRect, 4));
-  });
 
   testWidgets('the fog covers the diamonds of hidden cells, softly', (
     tester,
@@ -91,27 +63,20 @@ void main() {
     );
   });
 
-  testWidgets('a revealed cell keeps its content under no fog', (
-    tester,
-  ) async {
+  testWidgets('standing contents, still or moving, are left to the '
+      'standing layer', (tester) async {
     final painter = await painterOf(tester, [
       MapCellVisual(terrainSprite: plain, contentSprite: wreck,
           revealed: true),
-      MapCellVisual(terrainSprite: plain, revealed: true),
-    ]);
-    expect(painter, paintsExactlyCountTimes(#drawImageRect, 3));
-  });
-
-  testWidgets('contents that move are left to the ambience layer', (
-    tester,
-  ) async {
-    final painter = await painterOf(tester, [
       MapCellVisual(terrainSprite: plain, contentSprite: wreck,
           revealed: true, motion: AmbientMotion.bob),
       MapCellVisual(terrainSprite: plain, contentSprite: wreck,
           glow: MapGlow.wreck, aboveFog: true, motion: AmbientMotion.sway),
+      MapCellVisual(terrainSprite: plain, revealed: true,
+          factionColor: AbyssColors.coralPink),
     ]);
-    // The two terrains only: no content, no halo.
-    expect(painter, paintsExactlyCountTimes(#drawImageRect, 2));
+    // The four terrains only: no content, no halo, no ring.
+    expect(painter, paintsExactlyCountTimes(#drawImageRect, 4));
+    expect(painter, paintsExactlyCountTimes(#drawOval, 0));
   });
 }

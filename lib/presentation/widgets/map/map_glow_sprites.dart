@@ -26,7 +26,7 @@ Future<ui.Image> rasterizeGlow(MapGlow glow, int size) {
 void _paintGlow(Canvas canvas, MapGlow glow) {
   const center = Offset(_referenceCell / 2, _referenceCell / 2);
   const radius = _coreDiameter / 2;
-  final color = _glowColor(glow);
+  final color = glowColorOf(glow);
   final shadow = Paint()
     ..color = color.withValues(alpha: 0.6)
     ..maskFilter = MaskFilter.blur(
@@ -37,7 +37,9 @@ void _paintGlow(Canvas canvas, MapGlow glow) {
   canvas.drawCircle(center, radius, Paint()..color = color.withValues(alpha: 0.3));
 }
 
-Color _glowColor(MapGlow glow) => switch (glow) {
+/// The colour of [glow]: gold for a wreck, cyan for a post, coral for
+/// the volcano.
+Color glowColorOf(MapGlow glow) => switch (glow) {
       MapGlow.wreck => AbyssColors.energyYellow,
       MapGlow.post => AbyssColors.biolumCyan,
       MapGlow.volcano => AbyssColors.coralPink,

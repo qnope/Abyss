@@ -4,21 +4,22 @@ import '../ambience/ambience_clock.dart';
 import '../guide/guide_cell_halo.dart';
 import 'effects/map_effects.dart';
 import 'effects/map_effects_layer.dart';
-import 'map_ambience_painter.dart';
 import 'map_cell_visual.dart';
 import 'map_painter.dart';
 import 'map_projection.dart';
 import 'map_sprites.dart';
+import 'map_standing_painter.dart';
 import 'scout_token_layer.dart';
 
-/// The stacked layers of a map: the still map, the moving contents above
-/// it, the scouts sent exploring, the [effects] played over the map
-/// (which may shake it all), then the guide's halo.
+/// The stacked layers of a map: the still floor, the contents standing
+/// on it (back to front, over the fog), the scouts sent exploring, the
+/// [effects] played over the map (which may shake it all), then the
+/// guide's halo.
 ///
 /// The map's box holds the projected map; the layers, shifted to the
 /// projection's origin, draw in projection coordinates. Each painted
 /// layer has its own repaint boundary, so the ambience [clock] and
-/// panning ([transform]) never repaint the still map.
+/// panning ([transform]) never repaint the still floor.
 class MapLayers extends StatelessWidget {
   final List<MapCellVisual> visuals;
   final int columns;
@@ -71,7 +72,7 @@ class MapLayers extends StatelessWidget {
       RepaintBoundary(
         child: CustomPaint(
           size: size,
-          painter: MapAmbiencePainter(
+          painter: MapStandingPainter(
             visuals: visuals,
             columns: columns,
             sprites: sprites,

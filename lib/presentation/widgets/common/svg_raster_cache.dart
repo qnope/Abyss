@@ -63,8 +63,12 @@ abstract final class SvgRasterCache {
   static const preloadWorkers = 3;
 
   /// Folders of SVGs that are not square icons: full-screen art is
-  /// rasterized at screen size by its own cache instead.
-  static const notPreloaded = ['assets/illustrations/menu/'];
+  /// rasterized at screen size by its own cache instead, and the standing
+  /// units, taller than wide, would be squashed into a square bitmap.
+  static const notPreloaded = [
+    'assets/illustrations/menu/',
+    'assets/icons/units/standing/',
+  ];
 
   /// Whether [preloadAll] rasterizes the asset at [path].
   static bool preloads(String path) =>

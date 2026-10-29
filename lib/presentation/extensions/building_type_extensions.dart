@@ -66,6 +66,10 @@ extension BuildingTypeInfo on BuildingType {
     BuildingType.pressureCapsule => 'assets/icons/buildings/pressure_capsule.svg',
     BuildingType.volcanicKernel => 'assets/icons/terrain/volcanic_kernel.svg',
   };
+
+  /// The illustration cut out of its card, standing on the base's ground.
+  String get standingPath =>
+      'assets/icons/buildings/standing/${iconPath.split('/').last}';
 }
 
 int _hqIncome(ResourceType type) =>

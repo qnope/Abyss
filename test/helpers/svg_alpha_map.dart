@@ -83,6 +83,15 @@ class SvgAlphaMap {
       ),
   ];
 
+  /// Share of the pixels drawn, even faintly.
+  double get coverage {
+    var drawn = 0;
+    for (var i = 0; i < svgPixels * svgPixels; i++) {
+      if (at(i % svgPixels, i ~/ svgPixels) > 0) drawn++;
+    }
+    return drawn / (svgPixels * svgPixels);
+  }
+
   /// Share of the transparent pixels on the ring one pixel inside the
   /// edges: a transparent icon leaves most of its border untouched.
   double get clearBorder {

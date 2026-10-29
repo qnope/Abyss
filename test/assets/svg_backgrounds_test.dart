@@ -32,11 +32,18 @@ enum SvgFrame {
   /// bottom, (32, 56): a decor drawn between the cells of the isometric
   /// map, its middle often empty.
   standing,
+
+  /// Building cut out of its vignette to stand on the base's ground:
+  /// transparent around it, nothing drawn outside the vignette it came
+  /// from, its middle not always filled (water shows between the legs of
+  /// the coral mine's derrick).
+  cutout,
 }
 
 /// Frame of each icon, by the prefix of its path under assets/icons.
 const _frames = {
   'buildings/': SvgFrame.vignette,
+  'buildings/standing/': SvgFrame.cutout,
   'units/': SvgFrame.medallion,
   'tech/': SvgFrame.medallion,
   'resources/': SvgFrame.transparent,
@@ -71,7 +78,9 @@ void main() {
       await tester.runAsync(() async {
         final image = await rasterizeSvg(file.readAsStringSync());
         final alpha = await SvgAlphaMap.of(image);
-        if (frame != SvgFrame.overlay && frame != SvgFrame.standing) {
+        if (frame != SvgFrame.overlay &&
+            frame != SvgFrame.standing &&
+            frame != SvgFrame.cutout) {
           expect(alpha.at(32, 32), greaterThan(0), reason: 'empty center');
         }
         switch (frame) {
@@ -94,15 +103,22 @@ void main() {
           case SvgFrame.diamond:
             expect(alpha.outside(inDiamond), 0, reason: 'drawn outside');
             expect(alpha.diamondTips, everyElement(255), reason: 'not full');
+          case SvgFrame.cutout:
+            expect(alpha.corners, everyElement(0), reason: 'corner drawn');
+            expect(alpha.clearBorder, greaterThan(0.5), reason: 'border');
+            expect(alpha.outside(inVignette), 0, reason: 'drawn outside');
+            expect(alpha.coverage, greaterThan(0.2), reason: 'too little');
         }
       });
     });
   }
 }
 
-/// The frame of the only prefix of [_frames] that [path] starts with.
+/// The frame of the longest prefix of [_frames] that [path] starts with:
+/// a folder nested in another one has its own frame.
 SvgFrame? _frameOf(String path) {
   final relative = path.replaceFirst('assets/icons/', '');
-  final prefix = _frames.keys.where(relative.startsWith).singleOrNull;
-  return _frames[prefix];
+  final prefixes = _frames.keys.where(relative.startsWith).toList()
+    ..sort((a, b) => b.length.compareTo(a.length));
+  return _frames[prefixes.firstOrNull];
 }

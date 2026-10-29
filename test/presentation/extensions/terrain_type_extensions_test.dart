@@ -17,6 +17,16 @@ void main() {
       expect(TerrainType.plain.svgPath, endsWith('.svg'));
     });
 
+    test('plain is laid with three diamond tiles of the sea floor', () {
+      final tiles = TerrainType.plain.tileSvgPaths;
+      expect(tiles, hasLength(3));
+      expect(tiles.toSet(), hasLength(3));
+      final path = RegExp(r'^assets/icons/terrain/plain_iso_\d\.svg$');
+      for (final tile in tiles) {
+        expect(tile, matches(path));
+      }
+    });
+
     test('plain is not opaque', () {
       expect(TerrainType.plain.isOpaque, false);
     });

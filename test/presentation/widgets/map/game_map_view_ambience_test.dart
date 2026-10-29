@@ -2,6 +2,7 @@ import 'package:abyss/domain/map/map_generator.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/map_ambience_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_snow_painter.dart';
 import 'package:abyss/presentation/widgets/map/scout_token_layer.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
+import 'map_view_geometry.dart';
 
 void main() {
   setUp(() => mockSvgAssets());
@@ -84,13 +86,8 @@ void main() {
     (int, int)? tapped;
     await pumpView(tester,
         onCellTap: (x, y) => tapped = (x, y), pendingTargets: {(10, 10)});
-    final viewer = find.byType(InteractiveViewer);
-    final matrix =
-        tester.widget<InteractiveViewer>(viewer).transformationController!.value;
-    final scale = matrix.getMaxScaleOnAxis();
-    final translation = Offset(matrix.storage[12], matrix.storage[13]);
-    const center = Offset(10.5 * cellSize, 10.5 * cellSize);
-    await tester.tapAt(tester.getTopLeft(viewer) + translation + center * scale);
+    await tester.tapAt(mapPointOnScreen(
+        tester, MapProjection.centreOf((10, 10)), rows: 20));
     expect(tapped, (10, 10));
   });
 

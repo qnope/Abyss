@@ -8,6 +8,7 @@ import 'package:abyss/presentation/widgets/ambience/creature_undulation.dart';
 import 'package:abyss/presentation/widgets/map/map_ambience_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_content_drawer.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,7 +18,7 @@ final _hard = MonsterDifficulty.hard.svgPath;
 void main() {
   const seconds = 1.3;
   MapCellVisual bobbing(String sprite) => MapCellVisual(
-        terrainSprite: TerrainType.plain.svgPath,
+        terrainSprite: TerrainType.plain.tileSvgPaths.first,
         contentSprite: sprite,
         revealed: true,
         motion: AmbientMotion.bob,
@@ -33,10 +34,10 @@ void main() {
       sprites: sprites,
       clock: ValueNotifier(seconds),
       transform: TransformationController(),
-      viewport: const Size(cellSize, cellSize),
+      viewport: MapProjection.sizeOf(1, 1),
       creatureSheetOf: (path) => sheets[path],
     );
-    return (canvas) => painter.paint(canvas, const Size(cellSize, cellSize));
+    return (canvas) => painter.paint(canvas, MapProjection.sizeOf(1, 1));
   }
 
   Future<CreatureSheet> sheetOf(WidgetTester tester) async {
@@ -51,7 +52,8 @@ void main() {
     final paint = await paintOf(tester, _hard, {_hard: sheet});
     final frame = sheet.undulation
         .frameAt(seconds, phase: AmbientMotion.phaseOf(0, 0));
-    const body = Rect.fromLTWH(10, 10, 28, 28);
+    final body = MapContentDrawer.bodyOf(
+        bobbing(_hard), MapProjection.standingOf((0, 0)));
     expect(
       paint,
       paints

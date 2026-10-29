@@ -7,15 +7,18 @@ import 'effects/map_effects_layer.dart';
 import 'map_ambience_painter.dart';
 import 'map_cell_visual.dart';
 import 'map_painter.dart';
+import 'map_projection.dart';
 import 'map_sprites.dart';
 import 'scout_token_layer.dart';
 
-/// The stacked layers of a map, in map coordinates: the still map, the
-/// moving contents above it, the scouts sent exploring, the [effects]
-/// played over the map (which may shake it all), then the guide's halo.
+/// The stacked layers of a map: the still map, the moving contents above
+/// it, the scouts sent exploring, the [effects] played over the map
+/// (which may shake it all), then the guide's halo.
 ///
-/// Each painted layer has its own repaint boundary, so the ambience
-/// [clock] and panning ([transform]) never repaint the still map.
+/// The map's box holds the projected map; the layers, shifted to the
+/// projection's origin, draw in projection coordinates. Each painted
+/// layer has its own repaint boundary, so the ambience [clock] and
+/// panning ([transform]) never repaint the still map.
 class MapLayers extends StatelessWidget {
   final List<MapCellVisual> visuals;
   final int columns;
@@ -55,9 +58,9 @@ class MapLayers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rows = columns == 0 ? 0 : visuals.length ~/ columns;
-    final size = Size(columns * cellSize, rows * cellSize);
+    final size = MapProjection.sizeOf(columns, rows);
     final effects = this.effects;
-    final layers = Stack(children: [
+    final stack = Stack(clipBehavior: Clip.none, children: [
       RepaintBoundary(
         child: CustomPaint(
           size: size,
@@ -90,8 +93,10 @@ class MapLayers extends StatelessWidget {
           originOf: scoutOriginOf,
           sprites: sprites,
         ),
-      GuideCellHalo(level: level, cellSize: cellSize),
+      GuideCellHalo(level: level, boxOf: MapProjection.tileRectOf),
     ]);
+    final layers = Transform.translate(
+        offset: MapProjection.originOf(rows), child: stack);
     if (effects == null) return layers;
     return ValueListenableBuilder<Offset>(
       valueListenable: effects.shake,

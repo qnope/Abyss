@@ -7,6 +7,7 @@ import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_visuals_builder.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -71,9 +72,10 @@ void main() {
       ],
       columns: 1,
     );
+    final centre = MapProjection.standingOf((0, 0)).center;
     expect(
-      (Canvas canvas) => painter.paint(canvas, const Size(cellSize, cellSize)),
-      paints..circle(color: colour),
+      (Canvas canvas) => painter.paint(canvas, MapProjection.sizeOf(1, 1)),
+      paints..circle(color: colour, x: centre.dx, y: centre.dy),
     );
   });
 

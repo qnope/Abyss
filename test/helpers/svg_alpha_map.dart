@@ -31,6 +31,11 @@ bool inVignette(double x, double y) {
   return sqrt(pow(x - cx, 2) + pow(y - cy, 2)) < 13.2;
 }
 
+/// Inside the diamond touching the middle of each edge, plus a pixel of
+/// antialiasing.
+bool inDiamond(double x, double y) =>
+    (x - 32).abs() + (y - 32).abs() < 32 + 1.5;
+
 /// Alpha channel of an icon rasterized by [rasterizeSvg].
 class SvgAlphaMap {
   final ByteData _bytes;
@@ -56,6 +61,9 @@ class SvgAlphaMap {
     }
     return drawn;
   }
+
+  /// A pixel near each tip of a diamond, inside it.
+  List<int> get diamondTips => [at(32, 3), at(60, 32), at(32, 60), at(3, 32)];
 
   /// The middle pixel of each edge, inside a vignette.
   List<int> get edgeMiddles => [at(32, 1), at(32, 62), at(1, 32), at(62, 32)];

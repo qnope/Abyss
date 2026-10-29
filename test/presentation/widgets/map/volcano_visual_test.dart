@@ -39,7 +39,7 @@ GameMap _map({String? collectedBy}) {
 void main() {
   group('MapCellVisual.from for the volcano', () {
     test('the anchor draws the volcano over a 2x2 span', () {
-      final v = MapCellVisual.from(_anchor(), isRevealed: true);
+      final v = MapCellVisual.from(_anchor(), at: (0, 0), isRevealed: true);
       expect(v.contentSprite, _kernelSvg);
       expect(v.contentSpan, 2);
     });
@@ -47,6 +47,7 @@ void main() {
     test('a captured volcano is never dimmed and wears its seal colour', () {
       final v = MapCellVisual.from(
         _anchor(collectedBy: 'me'),
+        at: (0, 0),
         isRevealed: true,
         sealColor: AbyssColors.biolumCyan,
       );
@@ -55,12 +56,12 @@ void main() {
     });
 
     test('a free volcano has no seal', () {
-      final v = MapCellVisual.from(_anchor(), isRevealed: true);
+      final v = MapCellVisual.from(_anchor(), at: (0, 0), isRevealed: true);
       expect(v.sealColor, isNull);
     });
 
     test('a part draws nothing of its own', () {
-      final v = MapCellVisual.from(_part(), isRevealed: true);
+      final v = MapCellVisual.from(_part(), at: (0, 0), isRevealed: true);
       expect(v.contentSprite, isNull);
       expect(v.glow, MapGlow.none);
       expect(v.contentSpan, 1);
@@ -69,6 +70,7 @@ void main() {
     test('other content keeps a 1x1 span and no seal', () {
       final v = MapCellVisual.from(
         MapCell(terrain: TerrainType.plain, content: CellContentType.ruins),
+        at: (0, 0),
         isRevealed: true,
       );
       expect(v.contentSpan, 1);

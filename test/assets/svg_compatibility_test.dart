@@ -19,10 +19,19 @@ const _forbidden = [
 ];
 
 /// Features allowed in some files only, by the prefix of their path under
-/// assets/icons. The guide's portrait keeps the clip of its medallion: it
-/// is rasterized once like every icon, then drawn as a bitmap.
+/// assets/icons. The guide's portrait keeps the clip of its medallion, and
+/// the floor tiles of the isometric map the clip of their diamond: they
+/// are rasterized once like every icon, then drawn as bitmaps.
 const _allowed = {
   'guide/': ['<clipPath'],
+  'terrain/plain_iso_': ['<clipPath'],
+};
+
+/// The viewBox of the files whose frame is not the 64x64 square, by the
+/// prefix of their path under assets/icons: a floor tile of the isometric
+/// map is a diamond twice as wide as tall.
+const _viewBoxes = {
+  'terrain/plain_iso_': '0 0 128 64',
 };
 
 void main() {
@@ -42,8 +51,9 @@ void main() {
     group(file.path, () {
       final content = file.readAsStringSync();
 
-      test('uses a 64x64 viewBox', () {
-        expect(content, contains('viewBox="0 0 64 64"'));
+      final viewBox = _viewBoxOf(file);
+      test('uses a $viewBox viewBox', () {
+        expect(content, contains('viewBox="$viewBox"'));
       });
 
       test('avoids layer-creating features', () {
@@ -62,6 +72,12 @@ void main() {
       });
     });
   }
+}
+
+String _viewBoxOf(File file) {
+  final relative = file.path.replaceFirst('assets/icons/', '');
+  final prefix = _viewBoxes.keys.where(relative.startsWith).singleOrNull;
+  return _viewBoxes[prefix] ?? '0 0 64 64';
 }
 
 bool _allows(File file, String token) {

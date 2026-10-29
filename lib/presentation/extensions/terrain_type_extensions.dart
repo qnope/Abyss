@@ -8,6 +8,14 @@ extension TerrainTypeExtensions on TerrainType {
 
   String get svgPath => 'assets/icons/terrain/plain.svg';
 
+  /// The diamond tiles of the sea floor laid on the isometric map, one
+  /// picked per cell so the floor never reads as a pattern.
+  List<String> get tileSvgPaths => const [
+        'assets/icons/terrain/plain_iso_1.svg',
+        'assets/icons/terrain/plain_iso_2.svg',
+        'assets/icons/terrain/plain_iso_3.svg',
+      ];
+
   Color get color => AbyssColors.plainBlue;
 
   bool get isOpaque => false;

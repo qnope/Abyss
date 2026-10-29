@@ -7,9 +7,9 @@ import '../../../domain/map/volcanic_kernel_placer.dart';
 import '../../extensions/cell_content_type_extensions.dart';
 import '../../extensions/monster_lair_extensions.dart';
 import '../../extensions/post_holder_extensions.dart';
-import '../../extensions/terrain_type_extensions.dart';
 import '../ambience/ambient_motion.dart';
 import 'map_cell_motion.dart';
+import 'map_scatter.dart';
 
 const playerBaseSvgPath = 'assets/icons/map_content/player_base.svg';
 const volcanoSealSvgPath = 'assets/icons/terrain/volcanic_kernel_seal.svg';
@@ -21,6 +21,7 @@ enum MapGlow { none, wreck, post, volcano }
 /// Everything needed to draw one map cell, decoupled from widgets so the
 /// whole map can be painted in a single pass.
 class MapCellVisual {
+  /// The floor tile of the cell.
   final String terrainSprite;
   final String? contentSprite;
   final MapGlow glow;
@@ -59,8 +60,10 @@ class MapCellVisual {
     this.motion = AmbientMotion.still,
   });
 
+  /// The visual of [cell], laid at [at] on the map.
   factory MapCellVisual.from(
     MapCell cell, {
+    required (int, int) at,
     required bool isRevealed,
     bool isBase = false,
     bool hasPendingExploration = false,
@@ -68,7 +71,7 @@ class MapCellVisual {
     Color? factionColor,
     Color? sealColor,
   }) {
-    final terrain = cell.terrain.svgPath;
+    final terrain = floorTileOf(cell.terrain, at);
     if (!isRevealed) {
       final beacon = _isBeacon(cell);
       return MapCellVisual(

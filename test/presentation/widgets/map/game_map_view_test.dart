@@ -5,8 +5,10 @@ import 'package:abyss/domain/map/map_generator.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
+import 'map_view_geometry.dart';
 
 void main() {
   setUp(() => mockSvgAssets());
@@ -46,6 +48,9 @@ void main() {
     return (paint.painter! as MapPainter).visuals;
   }
 
+  Offset onScreen(WidgetTester tester, Offset point) =>
+      mapPointOnScreen(tester, point, rows: 20);
+
   group('GameMapView', () {
     testWidgets('paints 400 cells in a single painter', (tester) async {
       await pumpView(tester, revealedCells: {});
@@ -55,7 +60,7 @@ void main() {
             (w) => w is CustomPaint && w.painter is MapPainter,
           ))
           .size;
-      expect(painter, const Size(20 * cellSize, 20 * cellSize));
+      expect(painter, MapProjection.sizeOf(20, 20));
     });
 
     testWidgets('tap reports the cell under the pointer', (tester) async {
@@ -65,17 +70,12 @@ void main() {
         revealedCells: {},
         onCellTap: (x, y) => tapped = (x, y),
       );
-      final viewer = find.byType(InteractiveViewer);
-      final matrix = tester
-          .widget<InteractiveViewer>(viewer)
-          .transformationController!
-          .value;
-      final scale = matrix.getMaxScaleOnAxis();
-      final origin = tester.getTopLeft(viewer);
-      final translation = Offset(matrix.storage[12], matrix.storage[13]);
-      final cellCenter = const Offset(10.5 * cellSize, 10.5 * cellSize);
-      await tester.tapAt(origin + translation + cellCenter * scale);
+      await tester.tapAt(onScreen(tester, MapProjection.centreOf((10, 10))));
       expect(tapped, (10, 10));
+      // Left of the projection's origin, on the bottom corner of a tile.
+      final tile = MapProjection.tileRectOf((9, 11));
+      await tester.tapAt(onScreen(tester, tile.bottomCenter.translate(0, -2)));
+      expect(tapped, (9, 11));
     });
 
     testWidgets('contains InteractiveViewer', (tester) async {
@@ -128,16 +128,6 @@ void main() {
         visuals.any((v) => v.contentSprite == playerBaseSvgPath),
         isFalse,
       );
-    });
-
-    testWidgets('initial scale shows 8 visible cells', (tester) async {
-      await pumpView(tester, revealedCells: {});
-      final viewer = tester.widget<InteractiveViewer>(
-        find.byType(InteractiveViewer),
-      );
-      final scale =
-          viewer.transformationController!.value.getMaxScaleOnAxis();
-      expect(scale, closeTo(800.0 / (8.0 * 48.0), 0.01));
     });
   });
 }

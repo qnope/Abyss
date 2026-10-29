@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import '../ambience/ambient_motion.dart';
 import '../ambience/sprite_motion.dart';
 import 'map_cell_visual.dart';
+import 'map_projection.dart';
 import 'map_sprites.dart';
 
 /// Side of a map cell, in logical pixels.
@@ -40,7 +41,7 @@ class MapContentDrawer {
 
   MapContentDrawer(this.sprites);
 
-  /// The cell at [index] of a map [columns] cells wide.
+  /// The flat cell at [index] of a map [columns] cells wide.
   static Rect cellRect(int index, int columns) => Rect.fromLTWH(
         (index % columns) * cellSize,
         (index ~/ columns) * cellSize,
@@ -48,17 +49,14 @@ class MapContentDrawer {
         cellSize,
       );
 
-  /// Where the content of [visual] at [index] lies: its cell, or the
-  /// several cells a wide content (the volcano) covers from there.
-  static Rect areaOf(MapCellVisual visual, int index, int columns) {
-    final cell = cellRect(index, columns);
-    if (visual.contentSpan == 1) return cell;
-    final side = cellSize * visual.contentSpan;
-    return Rect.fromLTWH(cell.left, cell.top, side, side);
-  }
+  /// Where the content of [visual] at [index] stands on screen: on its
+  /// cell, or on the block a wide content (the volcano) covers from there.
+  static Rect areaOf(MapCellVisual visual, int index, int columns) =>
+      MapProjection.standingOf((index % columns, index ~/ columns),
+          span: visual.contentSpan);
 
-  /// Where the sprite of [visual] lies in its [area]: centred in its
-  /// cell, or over the whole area of a wide content.
+  /// Where the sprite of [visual] lies in its [area]: inset from its
+  /// glow, or over the whole area of a wide content.
   static Rect bodyOf(MapCellVisual visual, Rect area) =>
       visual.contentSpan == 1 ? area.deflate(_contentInset) : area;
 
@@ -89,7 +87,7 @@ class MapContentDrawer {
     final ring = visual.factionColor;
     if (ring != null) {
       _ring.color = ring;
-      canvas.drawCircle(body.center, contentSize / 2 + 3, _ring);
+      canvas.drawCircle(body.center, body.shortestSide / 2 + 3, _ring);
     }
     final sprite = visual.contentSprite;
     if (sprite != null) {

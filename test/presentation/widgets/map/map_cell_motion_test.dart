@@ -27,7 +27,7 @@ void main() {
   AmbientMotion motionOf(CellContentType content,
           {bool revealed = true, bool isBase = false, String? collectedBy}) =>
       MapCellVisual.from(cellWith(content, collectedBy: collectedBy),
-              isRevealed: revealed, isBase: isBase)
+              at: (0, 0), isRevealed: revealed, isBase: isBase)
           .motion;
 
   group('MapCellVisual.motion', () {
@@ -39,7 +39,7 @@ void main() {
       expect(motionOf(CellContentType.empty, isBase: true),
           AmbientMotion.breathe);
       final faction = MapCellVisual.from(cellWith(CellContentType.empty),
-          isRevealed: true, factionColor: AbyssColors.coralPink);
+          at: (0, 0), isRevealed: true, factionColor: AbyssColors.coralPink);
       expect(faction.motion, AmbientMotion.breathe);
     });
 
@@ -49,7 +49,8 @@ void main() {
         CellContentType.passage,
         CellContentType.volcanicKernel,
       ]) {
-        final v = MapCellVisual.from(cellWith(content), isRevealed: true);
+        final v = MapCellVisual.from(cellWith(content),
+            at: (0, 0), isRevealed: true);
         expect(v.motion, AmbientMotion.pulse, reason: content.name);
         expect(v.glow, isNot(MapGlow.none), reason: content.name);
       }

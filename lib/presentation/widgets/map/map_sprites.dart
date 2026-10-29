@@ -48,7 +48,10 @@ class MapSprites {
   ui.Image? glow(MapGlow glow) => _glows[glow];
 
   static Set<String> get svgPaths => {
-        for (final terrain in TerrainType.values) terrain.svgPath,
+        for (final terrain in TerrainType.values) ...[
+          terrain.svgPath,
+          ...terrain.tileSvgPaths,
+        ],
         for (final content in CellContentType.values)
           if (content.svgPath != null) content.svgPath!,
         for (final difficulty in MonsterDifficulty.values) ...[

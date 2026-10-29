@@ -30,6 +30,7 @@ List<MapCellVisual> buildMapVisuals({
       for (var x = 0; x < gameMap.width; x++)
         MapCellVisual.from(
           gameMap.cellAt(x, y),
+          at: (x, y),
           isRevealed: revealed.contains(GridPosition(x: x, y: y)),
           isBase: x == baseX && y == baseY,
           hasPendingExploration: pendingTargets.contains((x, y)),

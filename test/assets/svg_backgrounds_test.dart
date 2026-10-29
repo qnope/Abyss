@@ -22,6 +22,11 @@ enum SvgFrame {
 
   /// Full tile: a terrain is itself a background.
   tile,
+
+  /// Full diamond touching the middle of each edge, nothing drawn outside
+  /// it: a floor tile of the isometric map, its viewBox twice as wide as
+  /// tall squeezed into the square.
+  diamond,
 }
 
 /// Frame of each icon, by the prefix of its path under assets/icons.
@@ -36,6 +41,7 @@ const _frames = {
   'guide/': SvgFrame.medallion,
   'factions/': SvgFrame.medallion,
   'terrain/plain.svg': SvgFrame.tile,
+  'terrain/plain_iso_': SvgFrame.diamond,
   'terrain/volcanic_kernel.svg': SvgFrame.transparent,
   'terrain/volcanic_kernel_seal.svg': SvgFrame.overlay,
 };
@@ -75,6 +81,9 @@ void main() {
             expect(alpha.disc, everyElement(255), reason: 'disc not full');
           case SvgFrame.tile:
             expect(alpha.corners, everyElement(255), reason: 'tile not full');
+          case SvgFrame.diamond:
+            expect(alpha.outside(inDiamond), 0, reason: 'drawn outside');
+            expect(alpha.diamondTips, everyElement(255), reason: 'not full');
         }
       });
     });

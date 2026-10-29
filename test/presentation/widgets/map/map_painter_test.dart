@@ -3,77 +3,89 @@ import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/presentation/extensions/random_event_type_extensions.dart';
 import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
-import 'package:abyss/presentation/widgets/ambience/ambient_motion.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
+import 'package:abyss/presentation/widgets/map/map_content_drawer.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-typedef PaintCallback = void Function(Canvas canvas);
+import 'map_painter_probe.dart';
 
 void main() {
-  final String plain = TerrainType.plain.svgPath;
+  final tiles = TerrainType.plain.tileSvgPaths;
+  final String plain = tiles.first;
   final String wreck = RandomEventType.wreck.illustration;
 
-  /// Paints the cells of [visuals], two per row, with the real sprites.
-  Future<PaintCallback> painterOf(
-    WidgetTester tester,
-    List<MapCellVisual> visuals,
-  ) async {
-    final sprites = await tester.runAsync(MapSprites.load);
-    final painter = MapPainter(visuals: visuals, columns: 2, sprites: sprites);
-    return (Canvas canvas) =>
-        painter.paint(canvas, const Size(2 * cellSize, cellSize));
+  /// Whether [dst] is the tile box of [cell], drawn a hair larger.
+  bool floors(Rect dst, (int, int) cell) {
+    final box = MapProjection.tileRectOf(cell);
+    return (dst.center - box.center).distance < 1e-9 &&
+        dst.width > box.width &&
+        dst.width < box.width + 4 &&
+        (dst.height / dst.width - 0.5).abs() < 0.01;
   }
 
-  testWidgets('a hidden wreck and its halo are drawn over the fog', (
+  testWidgets('each cell is floored with its own tile, a hair larger', (
     tester,
   ) async {
     final painter = await painterOf(tester, [
-      MapCellVisual(terrainSprite: plain),
-      MapCellVisual(
-        terrainSprite: plain,
-        contentSprite: wreck,
-        glow: MapGlow.wreck,
-        aboveFog: true,
-      ),
+      for (final tile in [...tiles, tiles.first])
+        MapCellVisual(terrainSprite: tile, revealed: true),
     ]);
-    const cell = Rect.fromLTWH(cellSize, 0, cellSize, cellSize);
-    final fog = AbyssColors.abyssBlack.withValues(alpha: 0.7);
+    final sprites = MapSprites.ready!;
+    PaintPatternPredicate tileOf(String tile, (int, int) cell) =>
+        (method, args) =>
+            method == #drawImageRect &&
+            args[0] == sprites.svg(tile) &&
+            floors(args[2] as Rect, cell);
     expect(
       painter,
       paints
-        ..path(color: AbyssColors.biolumCyan)
-        ..path(color: fog)
-        ..drawImageRect(destination: cell)
-        ..drawImageRect(destination: cell.deflate(10)),
+        ..something(tileOf(tiles[0], (0, 0)))
+        ..something(tileOf(tiles[1], (1, 0)))
+        ..something(tileOf(tiles[2], (0, 1)))
+        ..something(tileOf(tiles[0], (1, 1))),
     );
-    // Two terrains, the halo and the wreck: nothing drawn twice.
-    expect(painter, paintsExactlyCountTimes(#drawImageRect, 4));
+    // The dark around the diamonds is the viewport's, not a fill.
+    expect(painter, paintsExactlyCountTimes(#drawRect, 0));
   });
 
-  testWidgets('a revealed cell keeps its content under no fog', (
+  test('a floor not loaded yet is a plain diamond', () {
+    final painter = MapPainter(
+      visuals: [MapCellVisual(terrainSprite: plain, revealed: true)],
+      columns: 1,
+    );
+    final box = MapProjection.tileRectOf((0, 0));
+    expect(
+      (Canvas canvas) => painter.paint(canvas, MapProjection.sizeOf(1, 1)),
+      paints
+        ..path(
+          color: AbyssColors.plainBlue,
+          includes: [box.center],
+          excludes: [box.topLeft.translate(4, 4)],
+        ),
+    );
+  });
+
+  testWidgets('a still content stands on its cell, over every floor tile', (
     tester,
   ) async {
+    final home = MapCellVisual(
+        terrainSprite: plain, contentSprite: wreck, revealed: true);
     final painter = await painterOf(tester, [
-      MapCellVisual(terrainSprite: plain, contentSprite: wreck,
-          revealed: true),
+      home,
       MapCellVisual(terrainSprite: plain, revealed: true),
     ]);
-    expect(painter, paintsExactlyCountTimes(#drawImageRect, 3));
+    final standing = MapProjection.standingOf((0, 0));
+    expect(
+      painter,
+      paints
+        ..drawImageRect()
+        ..drawImageRect()
+        ..drawImageRect(
+            destination: MapContentDrawer.bodyOf(home, standing)),
+    );
   });
 
-  testWidgets('contents that move are left to the ambience layer', (
-    tester,
-  ) async {
-    final painter = await painterOf(tester, [
-      MapCellVisual(terrainSprite: plain, contentSprite: wreck,
-          revealed: true, motion: AmbientMotion.bob),
-      MapCellVisual(terrainSprite: plain, contentSprite: wreck,
-          glow: MapGlow.wreck, aboveFog: true, motion: AmbientMotion.sway),
-    ]);
-    // The two terrains only: no content, no halo.
-    expect(painter, paintsExactlyCountTimes(#drawImageRect, 2));
-  });
 }

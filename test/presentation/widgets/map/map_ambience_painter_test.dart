@@ -3,13 +3,14 @@ import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/widgets/ambience/ambient_motion.dart';
 import 'package:abyss/presentation/widgets/map/map_ambience_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
-import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import 'package:abyss/presentation/widgets/map/map_content_drawer.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final String plain = TerrainType.plain.svgPath;
+  final String plain = TerrainType.plain.tileSvgPaths.first;
 
   MapCellVisual cell(AmbientMotion motion, {MapGlow glow = MapGlow.none}) =>
       MapCellVisual(
@@ -33,7 +34,7 @@ void main() {
     MapSprites? sprites,
     ValueNotifier<double>? clock,
     TransformationController? transform,
-    Size viewport = const Size(4 * cellSize, cellSize),
+    Size? viewport,
   }) =>
       MapAmbiencePainter(
         visuals: visuals,
@@ -41,11 +42,15 @@ void main() {
         sprites: sprites,
         clock: clock ?? ValueNotifier(1.3),
         transform: transform ?? TransformationController(),
-        viewport: viewport,
+        viewport: viewport ?? MapProjection.sizeOf(4, 1),
       );
 
   void Function(Canvas) paintOf(MapAmbiencePainter painter) =>
-      (canvas) => painter.paint(canvas, const Size(4 * cellSize, cellSize));
+      (canvas) => painter.paint(canvas, MapProjection.sizeOf(4, 1));
+
+  /// Where the content of the cell at [x] stands in the map's box.
+  Rect boxOf(int x) =>
+      MapProjection.standingOf((x, 0)).shift(MapProjection.originOf(1));
 
   group('MapAmbiencePainter', () {
     testWidgets('draws every moving content in view, not the still ones', (
@@ -57,18 +62,33 @@ void main() {
       expect(paintOf(painter), paintsExactlyCountTimes(#drawImageRect, 4));
     });
 
+    testWidgets('draws each moving content standing on its cell', (
+      tester,
+    ) async {
+      final sprites = await tester.runAsync(MapSprites.load);
+      final standing = MapProjection.standingOf((0, 0));
+      expect(
+        paintOf(painterOf(row, sprites: sprites)),
+        paints
+          ..drawImageRect(
+              destination: MapContentDrawer.bodyOf(row.first, standing)),
+      );
+    });
+
     testWidgets('only draws the cells inside the viewport', (tester) async {
       final sprites = await tester.runAsync(MapSprites.load);
+      // The viewport ends before the second content of the row.
       final left = painterOf(row,
-          sprites: sprites, viewport: const Size(1.5 * cellSize, cellSize));
-      expect(paintOf(left), paintsExactlyCountTimes(#drawImageRect, 2));
+          sprites: sprites, viewport: Size(boxOf(1).left - 1, 400));
+      expect(paintOf(left), paintsExactlyCountTimes(#drawImageRect, 1));
+      // Panned past the third content, onto the pulsing last one.
       final panned = TransformationController(
-        Matrix4.translationValues(-3 * cellSize, 0, 0),
+        Matrix4.translationValues(-(boxOf(2).right + 1), 0, 0),
       );
       final right = painterOf(row,
           sprites: sprites,
           transform: panned,
-          viewport: const Size(cellSize, cellSize));
+          viewport: const Size(100, 400));
       expect(paintOf(right), paintsExactlyCountTimes(#drawImageRect, 2));
     });
 

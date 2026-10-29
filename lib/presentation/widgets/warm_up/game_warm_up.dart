@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_type.dart';
+import '../../../domain/map/terrain_type.dart';
 import '../../../domain/unit/unit_type.dart';
+import '../../extensions/terrain_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
 import '../building/building_card.dart';
 import '../common/raster_svg.dart';
 import '../common/svg_raster_cache.dart';
 import '../map/map_cell_visual.dart';
 import '../map/map_painter.dart';
+import '../map/map_projection.dart';
 import '../map/map_sprites.dart';
 import '../unit/unit_card.dart';
 import 'greyable_icon_paths.dart';
@@ -89,10 +92,11 @@ class _MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paths = MapSprites.svgPaths.toList();
+    final tiles = TerrainType.plain.tileSvgPaths;
     final visuals = [
-      for (final path in paths)
-        MapCellVisual(terrainSprite: paths.first, contentSprite: path,
-            revealed: true),
+      for (final (i, path) in paths.indexed)
+        MapCellVisual(terrainSprite: tiles[i % tiles.length],
+            contentSprite: path, revealed: true),
       for (final glow in MapGlow.values)
         MapCellVisual(terrainSprite: paths.last, glow: glow, dimmed: true,
             contentSprite: paths.first, revealed: true, pending: true),
@@ -102,12 +106,15 @@ class _MapPage extends StatelessWidget {
     ];
     const columns = 8;
     final rows = (visuals.length / columns).ceil();
-    return CustomPaint(
-      size: Size(columns * cellSize, rows * cellSize),
-      painter: MapPainter(
-        visuals: visuals,
-        columns: columns,
-        sprites: MapSprites.ready,
+    return Transform.translate(
+      offset: MapProjection.originOf(rows),
+      child: CustomPaint(
+        size: MapProjection.sizeOf(columns, rows),
+        painter: MapPainter(
+          visuals: visuals,
+          columns: columns,
+          sprites: MapSprites.ready,
+        ),
       ),
     );
   }

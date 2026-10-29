@@ -3,6 +3,7 @@ import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,8 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 const _kernelSvg = 'assets/icons/terrain/volcanic_kernel.svg';
 
 void main() {
-  final plain = TerrainType.plain.svgPath;
-  const whole = Rect.fromLTWH(0, 0, 2 * cellSize, 2 * cellSize);
+  final plain = TerrainType.plain.tileSvgPaths.first;
+  final whole = MapProjection.standingOf((0, 0), span: 2);
 
   Future<void Function(Canvas)> painterOf(
     WidgetTester tester,
@@ -33,10 +34,10 @@ void main() {
       columns: 2,
       sprites: sprites,
     );
-    return (canvas) => painter.paint(canvas, const Size(2 * cellSize, 2 * cellSize));
+    return (canvas) => painter.paint(canvas, MapProjection.sizeOf(2, 2));
   }
 
-  testWidgets('the volcano is drawn over the whole 2x2, after every terrain',
+  testWidgets('the volcano stands on its 2x2 block, after every terrain',
       (tester) async {
     final paint = await painterOf(tester, null);
     expect(

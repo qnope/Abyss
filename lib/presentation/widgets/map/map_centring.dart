@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import 'effects/map_effect.dart';
 import 'effects/map_effects.dart';
-import 'map_content_drawer.dart';
+import 'map_projection.dart';
 import 'map_viewport.dart';
 
 /// Moves a map through its [controller], keeping the cell that matters in
@@ -13,8 +13,8 @@ import 'map_viewport.dart';
 /// change: a story opening the map for its effect plays it at once, so
 /// the map is already on it when it first shows.
 mixin MapCentring<T extends StatefulWidget> on State<T> {
-  /// Cells seen across the screen when the map first shows.
-  static const homeVisibleCells = 8.0;
+  /// Tiles seen across the screen when the map first shows.
+  static const homeVisibleTiles = 4.5;
 
   MapEffect? _focused;
 
@@ -23,6 +23,9 @@ mixin MapCentring<T extends StatefulWidget> on State<T> {
 
   /// The cell shown first.
   (int, int) get home;
+
+  /// Rows of the map, which place its cells in the map's box.
+  int get rows;
 
   /// The effects played over the map, if any.
   MapEffects? get effects;
@@ -33,14 +36,15 @@ mixin MapCentring<T extends StatefulWidget> on State<T> {
     final screen = MediaQuery.sizeOf(context);
     if (controller.value.isIdentity()) {
       controller.value = MapViewport.centeredOn(screen, home,
-          visibleCells: homeVisibleCells);
+          rows: rows, visibleTiles: homeVisibleTiles);
     }
     final effect = effects?.current, focus = effect?.focus;
     if (focus == null || effect == _focused) return;
     _focused = effect;
     final scale = controller.value.getMaxScaleOnAxis();
     controller.value = MapViewport.centeredOn(screen, focus,
-        visibleCells: screen.width / (scale * cellSize));
+        rows: rows,
+        visibleTiles: screen.width / (scale * MapProjection.tileWidth));
   }
 
   @override

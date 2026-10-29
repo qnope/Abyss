@@ -3,7 +3,8 @@ import 'package:abyss/domain/objective/guide/guide_target.dart';
 import 'package:abyss/presentation/widgets/guide/guide_halo.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/level_selector.dart';
-import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import 'package:abyss/presentation/widgets/map/map_layers.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -29,18 +30,19 @@ void main() {
   );
 
   group('on the map', () {
-    testWidgets('the halo surrounds the cell of the target', (tester) async {
+    testWidgets('the halo surrounds the tile of the target', (tester) async {
       await tester.pumpWidget(map(faille));
       expect(activeHalos, findsOneWidget);
-      final Rect cell = tester.getRect(activeHalos);
-      final Rect grid = tester.getRect(
-        find.byWidgetPredicate(
-          (w) => w is CustomPaint && w.painter is MapPainter,
-        ),
-      );
-      expect(cell.width, closeTo(grid.width / harnessMapSize, 0.01));
-      expect(cell.left - grid.left, closeTo(2 * cell.width, 0.01));
-      expect(cell.top - grid.top, closeTo(3 * cell.height, 0.01));
+      final Rect halo = tester.getRect(activeHalos);
+      final Rect box = tester.getRect(find.byType(MapLayers));
+      final scale =
+          box.width / MapProjection.sizeOf(harnessMapSize, harnessMapSize).width;
+      final tile = MapProjection.tileRectOf((2, 3))
+          .shift(MapProjection.originOf(harnessMapSize));
+      expect(halo.left - box.left, closeTo(tile.left * scale, 0.01));
+      expect(halo.top - box.top, closeTo(tile.top * scale, 0.01));
+      expect(halo.width, closeTo(tile.width * scale, 0.01));
+      expect(halo.height, closeTo(tile.height * scale, 0.01));
     });
 
     testWidgets('nothing on another level, or without a cell', (tester) async {
@@ -50,7 +52,6 @@ void main() {
       expect(activeHalos, findsNothing);
       await tester.pumpWidget(map(null));
       expect(activeHalos, findsNothing);
-      expect(cellSize, greaterThan(0));
     });
   });
 

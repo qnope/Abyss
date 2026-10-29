@@ -1,10 +1,13 @@
 import 'package:abyss/domain/building/building_type.dart';
+import 'package:abyss/domain/map/terrain_type.dart';
+import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/building/building_card.dart';
 import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 import 'package:abyss/presentation/widgets/common/svg_raster_cache.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
 import 'package:abyss/presentation/widgets/unit/unit_card.dart';
 import 'package:abyss/presentation/widgets/warm_up/game_warm_up.dart';
@@ -89,6 +92,9 @@ void main() {
     expect(visuals.any((v) => !v.revealed), isTrue);
     expect(visuals.any((v) => v.aboveFog), isTrue);
     expect(visuals.any((v) => v.dimmed && v.pending), isTrue);
-    expect(paint.size.width, painter.columns * cellSize);
+    final rows = (visuals.length / painter.columns).ceil();
+    expect(paint.size, MapProjection.sizeOf(painter.columns, rows));
+    expect(visuals.map((v) => v.terrainSprite),
+        containsAll(TerrainType.plain.tileSvgPaths));
   });
 }

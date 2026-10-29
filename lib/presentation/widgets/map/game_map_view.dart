@@ -3,11 +3,10 @@ import '../../../domain/map/game_map.dart';
 import '../../../domain/map/grid_position.dart';
 import '../../../domain/map/post_holder.dart';
 import 'effects/map_effects.dart';
-import 'map_cell_at.dart';
 import 'map_cell_visual.dart';
 import 'map_centring.dart';
 import 'map_layers.dart';
-import 'map_painter.dart';
+import 'map_projection.dart';
 import 'map_sprites_loading.dart';
 import 'map_viewport.dart';
 import 'map_visuals_builder.dart';
@@ -60,11 +59,15 @@ class GameMapView extends StatefulWidget {
 
 class _GameMapViewState extends State<GameMapView>
     with MapCentring, MapSpritesLoading {
-  static const _maxVisibleCells = 1.0;
+  /// Tiles seen across the screen when zoomed in the most.
+  static const _maxVisibleTiles = 1.5;
 
   @override
   (int, int) get home => (widget.baseX ?? widget.gameMap.width ~/ 2,
       widget.baseY ?? widget.gameMap.height ~/ 2);
+
+  @override
+  int get rows => widget.gameMap.height;
 
   @override
   MapEffects? get effects => widget.effects;
@@ -87,8 +90,8 @@ class _GameMapViewState extends State<GameMapView>
     final screenWidth = MediaQuery.of(context).size.width;
     return MapViewport(
       controller: controller,
-      minScale: screenWidth / (map.width * cellSize),
-      maxScale: screenWidth / (_maxVisibleCells * cellSize),
+      minScale: screenWidth / MapProjection.sizeOf(map.width, rows).width,
+      maxScale: screenWidth / (_maxVisibleTiles * MapProjection.tileWidth),
       onTapUp: widget.onCellTap == null ? null : _handleTap,
       builder: (context, clock, viewport) => MapLayers(
         visuals: _visuals(),
@@ -125,8 +128,10 @@ class _GameMapViewState extends State<GameMapView>
   void _handleTap(TapUpDetails details) {
     final effects = widget.effects;
     if (effects != null && effects.isPlaying) return effects.skip();
-    final cell = mapCellAt(details.localPosition,
-        width: widget.gameMap.width, height: widget.gameMap.height);
+    final cell = MapProjection.cellAt(
+        details.localPosition - MapProjection.originOf(rows),
+        columns: widget.gameMap.width,
+        rows: rows);
     if (cell != null) widget.onCellTap!(cell.$1, cell.$2);
   }
 }

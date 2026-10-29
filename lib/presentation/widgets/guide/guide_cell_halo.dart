@@ -4,16 +4,18 @@ import 'guide_halo.dart';
 import 'guide_scope.dart';
 
 /// The guide's halo around its target cell, laid in the [Stack] of a map
-/// of [level] drawn with cells of [cellSize]. Shows nothing when the
-/// target has no cell on this level.
+/// of [level] over the box [boxOf] gives that cell. Shows nothing when
+/// the target has no cell on this level.
 class GuideCellHalo extends StatelessWidget {
   final int level;
-  final double cellSize;
+
+  /// The box of a cell in the stack, such as the box of its diamond.
+  final Rect Function((int, int) cell) boxOf;
 
   const GuideCellHalo({
     super.key,
     required this.level,
-    required this.cellSize,
+    required this.boxOf,
   });
 
   @override
@@ -23,11 +25,8 @@ class GuideCellHalo extends StatelessWidget {
     if (cell == null || target?.level != level) {
       return const Positioned(left: 0, top: 0, child: SizedBox.shrink());
     }
-    return Positioned(
-      left: cell.x * cellSize,
-      top: cell.y * cellSize,
-      width: cellSize,
-      height: cellSize,
+    return Positioned.fromRect(
+      rect: boxOf((cell.x, cell.y)),
       child: const IgnorePointer(
         child: GuideHalo(active: true, radius: 6, child: SizedBox.expand()),
       ),

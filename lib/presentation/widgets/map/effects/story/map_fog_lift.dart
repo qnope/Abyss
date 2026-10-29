@@ -4,14 +4,15 @@ import '../map_effect.dart';
 import 'fog_lift_run.dart';
 
 /// The fog lifting from the [cells] seen at the end of a turn, each with
-/// the sprite of its terrain, while the scouts waiting on [scouts], their
+/// its floor tile, while the scouts waiting on [scouts], their
 /// exploration over, fade away with it.
 ///
 /// The still map below already shows those cells seen: the lift covers
 /// them as the fog does, then fades. The [beacons], wrecks seen through
 /// the fog, stay drawn above it meanwhile.
 class MapFogLift extends MapEffect {
-  /// The cells seen, with the sprite of their terrain.
+  /// The cells seen, with their floor tile (as `floorTileOf` scatters
+  /// them).
   final Map<(int, int), String> cells;
 
   /// Cells where a scout waited for its exploration.

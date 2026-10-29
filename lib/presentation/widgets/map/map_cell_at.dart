@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'map_content_drawer.dart';
+import 'map_cell_size.dart';
 
 /// The cell under [point], in map coordinates, of a map [width] by
 /// [height] cells, or `null` outside the map.

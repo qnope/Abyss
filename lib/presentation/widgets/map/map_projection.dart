@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'map_cell_at.dart';
-import 'map_content_drawer.dart';
+import 'map_cell_size.dart';
 
 /// Projects the flat map (cells of [cellSize]) onto a 2:1 isometric
 /// screen and back: screen = (x − y, (x + y) / 2).

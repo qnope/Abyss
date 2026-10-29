@@ -5,8 +5,8 @@ import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/map/effects/map_effect.dart';
 import 'package:abyss/presentation/widgets/map/effects/strike/map_strike.dart';
-import 'package:abyss/presentation/widgets/map/effects/strike/strike_geometry.dart';
 import 'package:abyss/presentation/widgets/map/effects/strike/strike_round.dart';
+import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -59,8 +59,7 @@ void main() {
   });
 
   group('a place assaulted on the map', () {
-    final place =
-        const StrikeGeometry(origin: (0, 5), target: (5, 5)).lairRect;
+    final place = MapProjection.standingOf((5, 5));
     const cyan = ColorFilter.mode(AbyssColors.biolumCyan, BlendMode.srcIn);
 
     /// Every image the assault draws centred on the place, with its

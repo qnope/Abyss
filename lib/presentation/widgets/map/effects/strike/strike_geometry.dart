@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import '../../../../theme/abyss_motion.dart';
-import '../../map_content_drawer.dart';
+import '../../map_cell_size.dart';
 import '../../token/map_token_trip.dart';
 
-/// Where an army's token goes as it attacks what stands on [target] (the
-/// top left of a place [span] cells across), having set off from
-/// [origin]: it swims to the [approach] cell beside the place, lunges
-/// part of the way towards its middle, and may retreat a cell.
+/// Where an army's token goes on the flat map as it attacks what stands
+/// on [target] (the top left of a place [span] cells across), having set
+/// off from [origin]: it swims to the [approach] cell beside the place,
+/// lunges part of the way towards its middle, and may retreat a cell.
 class StrikeGeometry {
   /// Share of the way to the lair a lunge reaches.
   static const lungeReach = 0.45;
@@ -59,17 +59,10 @@ class StrikeGeometry {
     return swum.shift(shift);
   }
 
-  /// Where what is attacked is drawn: a lair's monster in the middle of
-  /// its cell, or a wide place over all its cells.
-  Rect get lairRect {
-    final corner = Offset(target.$1 * cellSize, target.$2 * cellSize);
-    if (span > 1) return corner & Size.square(span * cellSize);
-    return Rect.fromCenter(
-      center: corner + const Offset(cellSize / 2, cellSize / 2),
-      width: MapContentDrawer.contentSize,
-      height: MapContentDrawer.contentSize,
-    );
-  }
+  /// The cells what is attacked covers on the flat map: the token lunges
+  /// at their middle. The target itself is drawn where it stands.
+  Rect get lairRect => Offset(target.$1 * cellSize, target.$2 * cellSize) &
+      Size.square(span * cellSize);
 
   /// One cell's length from [from], back towards the origin, or straight
   /// away from the place when the token set off beside or within it.

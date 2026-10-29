@@ -33,7 +33,7 @@ abstract interface class MapEffectRun {
   /// How far the whole map is shaken [elapsed] into the effect.
   Offset shakeAt(Duration elapsed);
 
-  /// Paints the effect [elapsed] into it, in map coordinates.
+  /// Paints the effect [elapsed] into it, in projection coordinates.
   void paint(Canvas canvas, Duration elapsed);
 }
 
@@ -51,6 +51,11 @@ class MapStage {
   ui.Image? image(String path) =>
       sprites?.svg(path) ?? SvgRasterCache.peek(path);
 
-  /// The bitmap of [glow], or `null` while it loads.
-  ui.Image? glow(MapGlow glow) => sprites?.glow(glow);
+  /// The pool of light [glow] casts on the floor, or `null` while it
+  /// loads.
+  ui.Image? pool(MapGlow glow) => sprites?.pool(glow);
+
+  /// The contact shadow under a standing content, or `null` while it
+  /// loads.
+  ui.Image? get shadow => sprites?.shadow;
 }

@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 
 import '../ambience/ambient_motion.dart';
 import '../ambience/sprite_motion.dart';
+import 'map_cell_size.dart';
 import 'map_cell_visual.dart';
 import 'map_content_spot.dart';
 import 'map_flat_contents.dart';
@@ -11,8 +12,7 @@ import 'map_projection.dart';
 import 'map_floor_sprites.dart';
 import 'map_sprites.dart';
 
-/// Side of a map cell, in logical pixels.
-const cellSize = 48.0;
+export 'map_cell_size.dart';
 
 /// Draws the content of map cells: a hole lying flat on its diamond, or
 /// a content standing up over its glow, shadow and ring on the floor.
@@ -20,9 +20,6 @@ const cellSize = 48.0;
 /// Its paints are made once and reused for every cell it draws.
 class MapContentDrawer {
   final MapSprites? sprites;
-
-  /// Side of a content sprite on the flat map, as effects draw it.
-  static const contentSize = 28.0;
 
   /// How far a hole lying flat reaches past each side of its cell, as a
   /// share of the cell.
@@ -79,6 +76,11 @@ class MapContentDrawer {
     if (sprite != null) canvas.drawImageRect(sprite, spriteSrc, dst, paint);
   }
 
+  /// Draws [image], a floor sprite (a pool, a shadow), flattened in [dst].
+  void drawOnFloor(Canvas canvas, ui.Image? image, Rect dst, Paint paint) {
+    if (image != null) canvas.drawImageRect(image, _floorSrc, dst, paint);
+  }
+
   /// Draws what [visual] lays on the floor at [spot]: the pool of its
   /// glow (a pulsing one at the [pose]'s glow), the shadow of a standing
   /// content, then the ring of a faction's base.
@@ -92,10 +94,10 @@ class MapContentDrawer {
       final opacity =
           visual.motion == AmbientMotion.pulse ? pose.glow : 1.0;
       _glow.color = Color.fromRGBO(0, 0, 0, opacity);
-      _drawOnFloor(canvas, sprites?.pool(visual.glow), spot.glow, _glow);
+      drawOnFloor(canvas, sprites?.pool(visual.glow), spot.glow, _glow);
     }
     if (visual.standsUp) {
-      _drawOnFloor(canvas, sprites?.shadow, spot.shadow, _shadow);
+      drawOnFloor(canvas, sprites?.shadow, spot.shadow, _shadow);
     }
     final ring = visual.factionColor;
     if (ring != null) {
@@ -125,10 +127,6 @@ class MapContentDrawer {
       ..transform(MapProjection.isometric);
     drawSprite(canvas, sprite, flatOf(cell), visual.dimmed ? _dimmed : _image);
     canvas.restore();
-  }
-
-  void _drawOnFloor(Canvas canvas, ui.Image? image, Rect dst, Paint paint) {
-    if (image != null) canvas.drawImageRect(image, _floorSrc, dst, paint);
   }
 
   void _drawBody(Canvas canvas, MapCellVisual visual, Rect body) {

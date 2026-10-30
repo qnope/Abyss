@@ -7,12 +7,28 @@
 | Widget | Purpose |
 |--------|---------|
 | `BuildingCard` | Displays a building with level, status, and production info |
-| `BuildingListView` | Scrollable list of all buildings |
 | `BuildingDetailSheet` | Bottom sheet with stats and upgrade button; embeds `CoralCitadelInfoSection` when the building is the Coral Citadel |
 | `BuildingIcon` | SVG icon for a building type |
 | `UpgradeSection` | Cost breakdown and upgrade controls |
 | `CoralCitadelInfoSection` | Current DEF bonus, next-level bonus, and "dormant effect" notice rendered inside the Citadel detail sheet |
 | `BaseShieldBadge` | Synthetic "Bouclier de la base : +X%" badge reused by the army tab header and the HQ detail sheet; reads `CoralCitadelDefenseBonus` |
+
+## Base Widgets (`base/`)
+
+The Base tab: the eleven buildings standing on an isometric island, in
+the map's projection (`MapProjection`), floor, decor and slab.
+
+| Widget / class | Purpose |
+|--------|---------|
+| `BaseView` | The island fitted to the view; a tap opens the building's sheet (front-most wins) |
+| `BaseLayout` | Fixed slot of each building type on the 12 × 12 island, back-to-front draw order |
+| `BaseLayers` | Still island (`RasterPaint`, kept across tab switches), guide halo, living buildings, front rampart |
+| `BaseIslandPainter` | Trench, spire, slab, floor mesh, walkways, pads by level tier, back rampart, decor |
+| `BaseBuildingsLayer` | Standing sprites on the ambience clock: breathing, bubbles, pop on level up |
+| `BaseBadgesLayer` | Level hexagon, "À bâtir" / lock, upgradable chevron (`UpgradeReadiness`), degraded triangle |
+
+Performance: only the buildings repaint on the clock; everything still is
+one bitmap, rasterized in the background.
 
 ## Unit Widgets (`unit/`)
 

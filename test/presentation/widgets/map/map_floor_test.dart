@@ -50,7 +50,7 @@ void main() {
     expect(find.descendant(of: find.byType(MapFloor),
         matching: find.byType(RepaintBoundary, skipOffstage: false),
         skipOffstage: false),
-        findsNWidgets(3));
+        findsNWidgets(2));
   });
 
   testWidgets('stands the map on its slab, over the rest of the floor', (

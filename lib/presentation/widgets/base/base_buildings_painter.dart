@@ -9,6 +9,7 @@ import '../ambience/bubbles_painter.dart';
 import '../ambience/rise_glow_painter.dart';
 import '../map/map_content_drawer.dart';
 import 'base_building_pose.dart';
+import 'base_drawing.dart';
 import 'base_fit.dart';
 import 'base_layout.dart';
 import 'base_pad_geometry.dart';
@@ -104,7 +105,7 @@ class BaseBuildingsPainter extends CustomPainter {
       final foot = Rect.fromLTRB(box.left, box.top, box.right,
           box.top + BaseSlotProjection.footRatio * box.height);
       pose.paint(canvas, foot,
-          () => _drawer.drawSprite(canvas, sprites.standingOf(type), box, paint));
+          () => drawWholeImage(canvas, sprites.standingOf(type), box, paint));
       if (pose.glow > 0) _paintAt(canvas, box, _glow);
     }
     canvas.restore();

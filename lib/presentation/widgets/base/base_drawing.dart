@@ -46,6 +46,14 @@ void paintGlow(
   );
 }
 
+/// Draws the whole of [image], if any, scaled into [dst].
+void drawWholeImage(Canvas canvas, ui.Image? image, Rect dst, Paint paint) {
+  if (image == null) return;
+  final src = Rect.fromLTWH(
+      0, 0, image.width.toDouble(), image.height.toDouble());
+  canvas.drawImageRect(image, src, dst, paint);
+}
+
 /// A polygon through [points].
 Path polygonOf(List<Offset> points) => Path()..addPolygon(points, true);
 

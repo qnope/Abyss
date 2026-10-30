@@ -3088,6 +3088,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unitNoneAvailable => 'No units available.';
 
   @override
+  String armyLockPill(int level) {
+    return 'Barracks lv. $level';
+  }
+
+  @override
+  String armyUnitLocked(int level) {
+    return 'locked, Barracks level $level';
+  }
+
+  @override
+  String get armyUnitRecruitable => 'recruitable';
+
+  @override
   String get resourceProduction => 'Production';
 
   @override

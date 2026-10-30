@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
-import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
 import '../../../domain/game/game_upgrade_readiness.dart';
-import '../../widgets/army/army_view.dart';
 import '../../widgets/base/base_view.dart';
 import '../../widgets/map/effects/map_effects.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import 'game_screen_actions.dart';
+import 'game_screen_army_tab.dart';
 import 'game_screen_map_actions.dart';
 import 'game_screen_tech_actions.dart';
 
@@ -41,19 +40,12 @@ Widget buildGameTab(
       onChanged: onChanged,
       effects: effects,
     ),
-    2 => ArmyView(
-      buildings: human.buildings,
-      barracksLocked:
-          game.upgradeReadinessesOf(human)[BuildingType.barracks]?.isLocked ??
-          false,
-      onUnitTap:
-          (t) => showUnitDetailAction(
-            context,
-            game,
-            t,
-            onChanged,
-            level: currentLevel,
-          ),
+    2 => armyTab(
+      context,
+      game,
+      repository,
+      currentLevel: currentLevel,
+      onChanged: onChanged,
     ),
     3 => TechTreeView(
       techBranches: human.techBranches,

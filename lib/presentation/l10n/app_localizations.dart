@@ -4396,6 +4396,24 @@ abstract class AppLocalizations {
   /// **'Aucune unité disponible.'**
   String get unitNoneAvailable;
 
+  /// Pill of a squad the barracks is too low for, on the army's parade ground.
+  ///
+  /// In fr, this message translates to:
+  /// **'Caserne niv. {level}'**
+  String armyLockPill(int level);
+
+  /// Read by a screen reader after the name of a locked squad.
+  ///
+  /// In fr, this message translates to:
+  /// **'verrouillé, Caserne niveau {level}'**
+  String armyUnitLocked(int level);
+
+  /// Read by a screen reader after a squad that can recruit this turn.
+  ///
+  /// In fr, this message translates to:
+  /// **'recrutable'**
+  String get armyUnitRecruitable;
+
   /// No description provided for @resourceProduction.
   ///
   /// In fr, this message translates to:

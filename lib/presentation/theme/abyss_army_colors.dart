@@ -20,6 +20,24 @@ abstract final class AbyssArmyColors {
         UnitType.saboteur => AbyssColors.algaeGreen,
       };
 
+  /// The pennant of a squad's banner: its hue darkened towards the abyss.
+  static Color pennantOf(UnitType type) =>
+      Color.lerp(of(type), AbyssColors.abyssBlack, .55)!;
+
+  // The banner of a squad: the finial and the crossbar of its pole, the
+  // dark edge of its parts, its shadow on the deck, the sheen on its
+  // pennant, and how faint it stands while the unit is locked.
+  static const Color finial = AbyssColors.energyYellow;
+  static const Color crossbar = Color(0xFF8FA9C6);
+  static const Color bannerEdge = AbyssColors.abyssBlack;
+  static const Color bannerShadow = Color(0x9902060D);
+  static const Color pennantSheen = Color(0x0FFFFFFF);
+  static const double lockedBannerOpacity = .45;
+
+  /// Opacity of the ghost of a locked unit, over the alpha its filter
+  /// keeps (see AbyssIslandColors.ghost), as on the mockup.
+  static const double ghostOpacity = .7;
+
   // The crest: a trident in a ring painted on a deck in the middle.
   static const Color crestLight = AbyssColors.biolumCyan;
   static const Color crestSheen = Color(0xFFE0FFFF);

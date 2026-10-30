@@ -6,6 +6,7 @@ import '../../../domain/map/terrain_type.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/terrain_type_extensions.dart';
 import '../../theme/abyss_colors.dart';
+import '../army/army_sprites.dart';
 import '../building/building_card.dart';
 import '../common/raster_svg.dart';
 import '../common/svg_raster_cache.dart';
@@ -17,12 +18,14 @@ import '../map/map_standing_painter.dart';
 import '../unit/unit_card.dart';
 import 'greyable_icon_paths.dart';
 
-/// Rasterizes every icon and map sprite, plus the greyscale bitmap of
-/// every icon that can be greyed: meant to run once at startup.
+/// Rasterizes every icon and map sprite, the greyscale bitmap of every
+/// icon that can be greyed and the army's standing units: meant to run
+/// once at startup.
 Future<void> preloadGameArt() async {
   await SvgRasterCache.preloadAll();
   await SvgRasterCache.preloadGrey(greyableIconPaths());
   await MapSprites.load();
+  await ArmySprites.load();
 }
 
 /// Samples of what the game screens draw, for a [WarmUpLayer]: list

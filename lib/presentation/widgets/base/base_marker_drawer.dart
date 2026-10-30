@@ -10,12 +10,16 @@ import 'base_pad_tier.dart';
 
 /// Draws the [BaseBadge] floating over a building of the base, in
 /// projection units, as on the mockup: a glowing green chevron in a disc
-/// for a building to raise, an orange triangle for a degraded one.
+/// for a building to raise, an orange triangle for a degraded one, a
+/// green plus in the same disc for a squad of the army that can recruit.
 class BaseMarkerDrawer {
   static const _u = basePadUnit;
 
   /// Radius of the soft glow around a badge.
   static const glowRadius = 15 * _u;
+
+  /// Radius of the disc of a chevron or a plus.
+  static const discRadius = 8.5 * _u;
 
   const BaseMarkerDrawer();
 
@@ -23,17 +27,37 @@ class BaseMarkerDrawer {
   void draw(Canvas canvas, Offset at, BaseBadge badge) => switch (badge) {
         BaseBadge.upgrade => _upgrade(canvas, at),
         BaseBadge.warning => _warning(canvas, at),
+        BaseBadge.recruit => _recruit(canvas, at),
       };
 
   void _upgrade(Canvas canvas, Offset at) {
     const green = AbyssBaseBadgeTheme.upgrade;
-    _glow(canvas, at, green);
+    _greenDisc(canvas, at);
     canvas
-      ..drawCircle(at, 8.5 * _u, Paint()..color = AbyssBaseBadgeTheme.upgradeFill)
-      ..drawCircle(at, 8.5 * _u, _stroke(green, 1.6 * _u))
       ..drawPath(_chevron(at, 4, 2, -2.5), _stroke(green, 2.2 * _u))
       ..drawPath(_chevron(at, 3, 5, 2),
           _stroke(green.withValues(alpha: 0.5), 1.6 * _u));
+  }
+
+  void _recruit(Canvas canvas, Offset at) {
+    _greenDisc(canvas, at);
+    canvas.drawPath(
+        Path()
+          ..moveTo(at.dx, at.dy - 4 * _u)
+          ..lineTo(at.dx, at.dy + 4 * _u)
+          ..moveTo(at.dx - 4 * _u, at.dy)
+          ..lineTo(at.dx + 4 * _u, at.dy),
+        _stroke(AbyssBaseBadgeTheme.upgrade, 2.2 * _u));
+  }
+
+  /// The glowing green disc of a chevron or a plus.
+  void _greenDisc(Canvas canvas, Offset at) {
+    const green = AbyssBaseBadgeTheme.upgrade;
+    _glow(canvas, at, green);
+    canvas
+      ..drawCircle(
+          at, discRadius, Paint()..color = AbyssBaseBadgeTheme.upgradeFill)
+      ..drawCircle(at, discRadius, _stroke(green, 1.6 * _u));
   }
 
   void _warning(Canvas canvas, Offset at) {

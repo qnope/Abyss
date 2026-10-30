@@ -26,8 +26,6 @@ void main() {
         barracksLevel: level,
         barracksDegraded: degraded,
         unlocked: unlocked,
-        toBuild: 'À bâtir',
-        barracksName: 'Caserne',
         sprites: sprites,
       );
 
@@ -42,7 +40,7 @@ void main() {
     expect(island().shouldRepaint(island(unlocked: {...firstTwo})), isFalse);
   });
 
-  test('a barracks raised repaints the island, its plaque and pad', () {
+  test('a barracks raised repaints the island, its pad', () {
     expect(island(level: 2).shouldRepaint(island()), isTrue);
   });
 

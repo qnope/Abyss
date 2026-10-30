@@ -3122,6 +3122,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get unitNoneAvailable => 'Aucune unité disponible.';
 
   @override
+  String armyLockPill(int level) {
+    return 'Caserne niv. $level';
+  }
+
+  @override
+  String armyUnitLocked(int level) {
+    return 'verrouillé, Caserne niveau $level';
+  }
+
+  @override
+  String get armyUnitRecruitable => 'recrutable';
+
+  @override
   String get resourceProduction => 'Production';
 
   @override

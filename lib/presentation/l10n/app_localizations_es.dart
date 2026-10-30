@@ -3124,6 +3124,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unitNoneAvailable => 'No hay unidades disponibles.';
 
   @override
+  String armyLockPill(int level) {
+    return 'Barracones niv. $level';
+  }
+
+  @override
+  String armyUnitLocked(int level) {
+    return 'bloqueado, Barracones de nivel $level';
+  }
+
+  @override
+  String get armyUnitRecruitable => 'reclutable';
+
+  @override
   String get resourceProduction => 'Producción';
 
   @override

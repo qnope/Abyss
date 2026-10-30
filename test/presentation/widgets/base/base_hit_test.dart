@@ -1,6 +1,8 @@
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/presentation/widgets/base/base_hit.dart';
 import 'package:abyss/presentation/widgets/base/base_layout.dart';
+import 'package:abyss/presentation/widgets/base/base_pad_geometry.dart';
+import 'package:abyss/presentation/widgets/base/base_pad_tier.dart';
 import 'package:abyss/presentation/widgets/base/base_slot_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_standing_hit.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,6 +35,16 @@ void main() {
     expect(underSomeSprite(point), isFalse);
     expect(hq.footprintDiamond.contains(point), isTrue);
     expect(at(point), BuildingType.headquarters);
+  });
+
+  test('a building lifted by its pad is touched where it stands', () {
+    const panel = BuildingType.solarPanel;
+    final slot = layout.slotOf(panel);
+    final lifted = standingHitBox(slot.standingBoxOn(BasePadTier.litDeck));
+    final top = Offset(lifted.center.dx, lifted.top + 1);
+    expect(standingHitBox(slot.standingBox).contains(top), isFalse);
+    expect(baseBuildingAt(top, layout, tiers: {panel: BasePadTier.litDeck}),
+        panel);
   });
 
   test('empty ground picks nothing', () {

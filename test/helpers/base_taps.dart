@@ -1,7 +1,10 @@
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/presentation/widgets/base/base_fit.dart';
 import 'package:abyss/presentation/widgets/base/base_hit.dart';
+import 'package:abyss/presentation/widgets/base/base_pad_geometry.dart';
+import 'package:abyss/presentation/widgets/base/base_pad_tier.dart';
 import 'package:abyss/presentation/widgets/base/base_slot_projection.dart';
+import 'package:abyss/presentation/widgets/base/base_snapshot.dart';
 import 'package:abyss/presentation/widgets/base/base_view.dart';
 import 'package:abyss/presentation/widgets/map/map_standing_hit.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,10 +13,13 @@ import 'package:flutter_test/flutter_test.dart';
 /// on its sprite, or on its footprint where no sprite stands in front.
 Offset buildingSpot(WidgetTester tester, BuildingType type) {
   final view = tester.getRect(find.byType(BaseView));
-  final layout = tester.widget<BaseView>(find.byType(BaseView)).layout;
+  final base = tester.widget<BaseView>(find.byType(BaseView));
+  final layout = base.layout;
+  final tiers = BaseSnapshot.of(base.buildings).tiers;
   final fit = BaseFit.of(view.size, layout);
   final slot = layout.slotOf(type);
-  for (final box in [standingHitBox(slot.standingBox), slot.footprintBox]) {
+  final standing = slot.standingBoxOn(tiers[type] ?? BasePadTier.plot);
+  for (final box in [standingHitBox(standing), slot.footprintBox]) {
     final points = [
       for (var i = 1; i < 10; i++)
         for (var j = 1; j < 10; j++)
@@ -22,7 +28,7 @@ Offset buildingSpot(WidgetTester tester, BuildingType type) {
         .compareTo((b - box.center).distance));
     for (final point in points) {
       final onScreen = view.topLeft + fit.toView(point);
-      if (baseBuildingAt(point, layout) == type &&
+      if (baseBuildingAt(point, layout, tiers: tiers) == type &&
           view.deflate(1).contains(onScreen)) {
         return onScreen;
       }

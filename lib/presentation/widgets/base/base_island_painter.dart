@@ -2,30 +2,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../../domain/building/building_type.dart';
-import '../../../domain/map/terrain_type.dart';
 import '../../extensions/building_type_extensions.dart';
-import '../backdrop/trench/trench_backdrop.dart';
 import '../map/decor/map_decor_drawer.dart';
-import '../map/map_floor_tiles.dart';
-import '../map/map_scatter.dart';
 import '../map/map_sprites.dart';
-import '../map/slab/iso_slab_painter.dart';
 import 'base_cable.dart';
 import 'base_decor.dart';
 import 'base_fit.dart';
 import 'base_layout.dart';
 import 'base_pad_drawer.dart';
 import 'base_pad_tier.dart';
+import 'base_plateau.dart';
 import 'base_rampart.dart';
 import 'base_rampart_drawer.dart';
-import 'base_spire.dart';
 import 'base_walkway_drawer.dart';
 import 'base_walkways.dart';
 
-/// Paints the still island of the base over its whole view: the trench
-/// behind, the spire under the plateau and the Descent module's cable
-/// hanging along it, the slab, the plateau's floor in the map's diamond
-/// tiles (one mesh, see [MapFloorTiles]), the walkways from the headquarters to every building built,
+/// Paints the still island of the base over its whole view: the plateau
+/// (see [paintBasePlateau]: the trench behind, the spire under it with
+/// the Descent module's cable hanging along it, the slab, the floor),
+/// the walkways from the headquarters to every building built,
 /// the pad of every slot at its tier, the back edges of the [rampart]
 /// and the decor standing between the slots (see [baseDecorOf]).
 ///
@@ -65,17 +60,16 @@ class BaseIslandPainter extends CustomPainter {
     canvas
       ..save()
       ..clipRect(Offset.zero & size);
-    const TrenchWaterPainter().paint(canvas, size);
-    const TrenchRidgesPainter().paint(canvas, size);
-    fit.apply(canvas);
-    final below = fit.toProjection(Offset(0, size.height)).dy;
-    const depth = BaseFit.slabDepth;
-    final n = layout.size;
-    paintBaseSpire(canvas, n, depth, bottom: below);
-    BaseCable.of(layout, _built)?.paint(canvas, bottom: below);
-    IsoSlabPainter(columns: n, rows: n, depth: depth, salt: slabSalt)
-        .paint(canvas, size);
-    _paintFloor(canvas);
+    paintBasePlateau(
+      canvas,
+      size,
+      fit,
+      cells: layout.size,
+      slabSalt: slabSalt,
+      sprites: sprites,
+      onSpire: (bottom) =>
+          BaseCable.of(layout, _built)?.paint(canvas, bottom: bottom),
+    );
     final walkway = BaseWalkwayDrawer();
     for (final leg in baseWalkways(layout, _built)) {
       walkway.paint(canvas, leg);
@@ -101,17 +95,6 @@ class BaseIslandPainter extends CustomPainter {
       pad.paint(canvas, layout.slotOf(type), tier, type.color,
           seed: type.index);
     }
-  }
-
-  void _paintFloor(Canvas canvas) {
-    final floor = MapFloorTiles(sprites);
-    for (var y = 0; y < layout.size; y++) {
-      for (var x = 0; x < layout.size; x++) {
-        final cell = (x, y);
-        floor.add(canvas, cell, floorTileOf(TerrainType.plain, cell));
-      }
-    }
-    floor.flush(canvas);
   }
 
   @override

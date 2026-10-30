@@ -55,7 +55,7 @@ List<MapDecor> baseDecorOf(BaseLayout layout, {int salt = baseDecorSalt}) {
     for (final slot in layout.slots.values) slot.bounds.inflate(_footprintGap),
     for (final (from, to) in baseWalkways(layout, layout.slots.keys))
       Rect.fromPoints(from, to)
-          .inflate(BaseWalkwayDrawer.width / 2 + _walkwayGap),
+          .inflate(BaseWalkwayDrawer.standardWidth / 2 + _walkwayGap),
   ];
   final decor = scatterDecor(
     columns: n,

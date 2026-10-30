@@ -9,15 +9,19 @@ import 'base_slot_projection.dart';
 import 'base_walkways.dart';
 
 /// Draws the lit metal walkways of the base, in projection coordinates:
-/// a plank of [width] cells laid on the sand along each leg, its shadow
+/// a plank of [width] cells (the base's, or narrower for the alleys of
+/// the army's parade ground) laid on the sand along each leg, its shadow
 /// under it, slats across it every half cell, and a lamp on every other
 /// slat. Its paints are made once and reused for every leg.
 class BaseWalkwayDrawer {
-  /// Width of a walkway, in cells.
-  static const width = 0.42;
+  /// Width of a walkway of the base, in cells.
+  static const standardWidth = 0.42;
 
   /// Length of walkway between two slats, in cells.
   static const slatGap = 0.5;
+
+  /// Width of the walkways it draws, in cells.
+  final double width;
 
   final _shadow = Paint()
     ..color = AbyssIslandColors.walkShadow.withValues(alpha: .45);
@@ -28,6 +32,8 @@ class BaseWalkwayDrawer {
   final _slat = Paint()
     ..strokeWidth = .8 * baseMockPixel
     ..color = AbyssIslandColors.slat;
+
+  BaseWalkwayDrawer({this.width = standardWidth});
 
   /// Draws the walkway along [leg].
   void paint(Canvas canvas, BaseWalkway leg) {

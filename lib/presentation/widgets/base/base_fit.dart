@@ -5,10 +5,11 @@ import '../map/map_projection.dart';
 import 'base_layout.dart';
 import 'base_slot_projection.dart';
 
-/// How the projected base fits a view, with no pan nor zoom: every
+/// How a projected island fits a view, with no pan nor zoom: every
 /// footprint across its width (the plateau's corners may be cropped), the
 /// tallest building under the badges at the top and the slab above its
-/// bottom. A view = [origin] + projection point × [zoom].
+/// bottom. The base fits its layout ([BaseFit.of]); another island, the
+/// army's parade ground, the boxes it must show ([BaseFit.around]). A view = [origin] + projection point × [zoom].
 class BaseFit {
   /// Height kept at the top of the view for the badges.
   static const badgeSpace = 52.0;
@@ -33,19 +34,36 @@ class BaseFit {
   const BaseFit({required this.zoom, required this.origin});
 
   /// The fit of [layout] in a [view].
-  factory BaseFit.of(Size view, BaseLayout layout) {
-    final half = layout.size / 2;
+  factory BaseFit.of(Size view, BaseLayout layout) => BaseFit.around(
+        view,
+        size: layout.size.toDouble(),
+        across: [for (final slot in layout.slots.values) slot.footprintBox],
+        under: [for (final slot in layout.slots.values) slot.standingBox],
+      );
+
+  /// The fit in a [view] of a plateau of [size] cells, its centre in the
+  /// middle of the view's width: every box of [across] (in projection
+  /// coordinates) across the width, the whole plateau if none; every box
+  /// of [under] and the plateau's back corner under the badges, and the
+  /// slab above the view's bottom.
+  factory BaseFit.around(
+    Size view, {
+    required double size,
+    Iterable<Rect> across = const [],
+    Iterable<Rect> under = const [],
+  }) {
+    final half = size / 2;
     final centre = baseGroundToProjection(Offset(half, half));
     var reach = 0.0, top = 0.0;
-    for (final slot in layout.slots.values) {
-      final box = slot.footprintBox;
+    for (final box in across) {
       reach = max(reach, max(centre.dx - box.left, box.right - centre.dx));
-      top = min(top, slot.standingBox.top);
     }
-    final edge = layout.size.toDouble();
-    // An island with no slot (yet) fits its whole plateau.
-    if (reach == 0) reach = edge * MapProjection.tileWidth / 2;
-    final bottom = baseGroundToProjection(Offset(edge, edge)).dy + slabDepth;
+    for (final box in under) {
+      top = min(top, box.top);
+    }
+    // An island with nothing to show across fits its whole plateau.
+    if (reach == 0) reach = size * MapProjection.tileWidth / 2;
+    final bottom = baseGroundToProjection(Offset(size, size)).dy + slabDepth;
     final height = bottom - top;
     final room = view.height - badgeSpace;
     final zoom = max(minZoom, min(view.width / 2 / reach, room / height));

@@ -82,4 +82,35 @@ void main() {
     expect(left.dx, closeTo(0, 1e-9));
     expect(right.dx, closeTo(phone.width, 1e-9));
   });
+
+  group('a plateau fitted around boxes', () {
+    const w = MapProjection.tileWidth;
+    final boxes = [
+      const Rect.fromLTRB(-3 * w, w, -w, 2 * w),
+      const Rect.fromLTRB(w, w, 2 * w, 2 * w),
+    ];
+    final around = BaseFit.around(phone,
+        size: 9, across: boxes, under: [const Rect.fromLTRB(-w, -w, w, 0)]);
+
+    test('keeps the widest box at an edge of the view', () {
+      expect(around.toView(const Offset(-3 * w, 0)).dx, closeTo(0, 1e-9));
+      expect(around.toView(const Offset(2 * w, 0)).dx,
+          lessThanOrEqualTo(phone.width));
+    });
+
+    test('keeps the boxes under the badges', () {
+      expect(around.toView(const Offset(0, -w)).dy,
+          greaterThanOrEqualTo(BaseFit.badgeSpace - 1e-9));
+    });
+
+    test('is the fit of a layout given its slots', () {
+      expect(
+        BaseFit.around(phone,
+            size: 12,
+            across: [for (final s in layout.slots.values) s.footprintBox],
+            under: [for (final s in layout.slots.values) s.standingBox]),
+        fit,
+      );
+    });
+  });
 }

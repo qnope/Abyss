@@ -35,8 +35,10 @@ class ArmyView extends StatefulWidget {
   final void Function(Building barracks)? onBarracksTap;
 
   /// Units of each type standing on the ground: wherever they serve, or
-  /// at the place shown (see ArmyPlacesView).
+  /// at the [place] shown (see ArmyPlacesView), where recruits arrive on
+  /// the squads that grow.
   final Map<UnitType, int> counts;
+  final int? place;
 
   /// The types the player can recruit at least one of this turn.
   final Set<UnitType> recruitable;
@@ -54,6 +56,7 @@ class ArmyView extends StatefulWidget {
     required this.onUnitTap,
     this.onBarracksTap,
     this.counts = const {},
+    this.place,
     this.recruitable = const {},
     this.barracksLocked = false,
     this.bottomSpace = 0,
@@ -105,6 +108,7 @@ class _ArmyViewState extends State<ArmyView> {
                 roster: roster,
                 barracksDegraded: degraded,
                 barracksLocked: widget.barracksLocked,
+                place: widget.place,
                 base: _base,
                 army: _army,
               ),

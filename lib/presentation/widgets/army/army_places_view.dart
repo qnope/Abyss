@@ -71,6 +71,7 @@ class _ArmyPlacesViewState extends State<ArmyPlacesView> {
         ArmyView(
           buildings: widget.buildings,
           counts: places.countsAt(place),
+          place: place,
           recruitable: recruiting ? widget.recruitable : const {},
           barracksLocked: widget.barracksLocked,
           bottomSpace: split ? ArmyPlaceBar.room : 0,

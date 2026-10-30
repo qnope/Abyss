@@ -7,8 +7,9 @@ class BaseSlot {
   final double u;
   final double v;
 
-  /// The side of the square footprint, in cells.
-  final int footprint;
+  /// The side of the square footprint, in cells: whole for a building,
+  /// a part of a cell more for a drill pad of the army.
+  final double footprint;
 
   /// The size of the illustration relative to a plain building.
   final double scale;
@@ -24,8 +25,8 @@ class BaseSlot {
   Offset get centre => Offset(u, v);
 
   /// The footprint on the ground, in cells.
-  Rect get bounds => Rect.fromCenter(
-      center: centre, width: footprint.toDouble(), height: footprint.toDouble());
+  Rect get bounds =>
+      Rect.fromCenter(center: centre, width: footprint, height: footprint);
 
   /// Whether the ground [point] lies inside the footprint, its far edges
   /// excluded, so a point on an edge two slots share belongs to only one.

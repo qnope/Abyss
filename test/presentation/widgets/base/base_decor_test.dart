@@ -37,7 +37,7 @@ void main() {
       final ground = groundOf(item);
       for (final (from, to) in legs) {
         final band = Rect.fromPoints(from, to)
-            .inflate(BaseWalkwayDrawer.width / 2);
+            .inflate(BaseWalkwayDrawer.standardWidth / 2);
         expect(band.contains(ground), isFalse, reason: '$item on a walkway');
       }
     }

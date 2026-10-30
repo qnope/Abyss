@@ -29,4 +29,11 @@ void main() {
   test('the depth sorts a slot from the back to the front', () {
     expect(slot.depth, closeTo(6.4 + 6.4 + 1.5, 1e-9));
   });
+
+  test('a footprint may span part of a cell, as a drill pad does', () {
+    const pad = BaseSlot(u: 1.5, v: 4.5, footprint: 2.5, scale: 1);
+    expect(pad.bounds.width, 2.5);
+    expect(pad.contains(const Offset(.3, 4.5)), isTrue);
+    expect(pad.depth, closeTo(1.5 + 4.5 + 1.25, 1e-9));
+  });
 }

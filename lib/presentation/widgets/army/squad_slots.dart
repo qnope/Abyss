@@ -18,6 +18,14 @@ abstract final class SquadSlots {
   ];
 
   /// The slots of the first [count] figures, from the back to the front.
-  static List<Offset> backToFront(int count) =>
-      order.backToFront(arrival.take(count), ArmyLayout.depthOf);
+  static List<Offset> backToFront(int count) => [
+    for (final figure in figuresBackToFront(count)) arrival[figure],
+  ];
+
+  /// The first [count] figures, by their index in [arrival], from the
+  /// back to the front.
+  static List<int> figuresBackToFront(int count) => order.backToFront(
+    Iterable.generate(count.clamp(0, arrival.length)),
+    (figure) => ArmyLayout.depthOf(arrival[figure]),
+  );
 }

@@ -20,6 +20,10 @@ abstract final class AbyssMotion {
   /// A change worth a glance, such as a floating "+N".
   static const emphasis = Duration(milliseconds: 400);
 
+  /// A recruit falling onto its squad's drill pad, landing with a ring
+  /// while the squad's plaque pops and its gain floats up.
+  static const recruitArrival = Duration(milliseconds: 900);
+
   /// A "+N" or "−N" rising from a value that changed, then fading.
   static const deltaFloat = Duration(milliseconds: 1200);
 

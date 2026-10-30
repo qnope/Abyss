@@ -24,11 +24,24 @@ class DeltaFloat extends StatefulWidget {
     super.key,
     required this.value,
     required this.child,
-    this.style = const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+    this.style = defaultStyle,
     this.gainColor = AbyssColors.success,
     this.lossColor = AbyssColors.error,
-    this.rise = 22,
+    this.rise = defaultRise,
   });
+
+  /// The look of a float, unless told otherwise, and how far it rises.
+  static const defaultStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+  );
+  static const double defaultRise = 22;
+
+  /// Share of its rise a float has gone up at [t], from 0 to 1.
+  static double liftAt(double t) => AbyssMotion.enter.transform(t);
+
+  /// Opacity of a float at [t], from 0 to 1.
+  static double fadeAt(double t) => 1 - AbyssMotion.exit.transform(t);
 
   /// "+N" for a gain, "−N" (with a true minus sign) for a loss.
   static String label(int delta) =>
@@ -95,9 +108,9 @@ class _DeltaFloatState extends State<DeltaFloat>
   Widget _floating(BuildContext context, Widget? _) {
     final t = _float.value;
     final color = _delta >= 0 ? widget.gainColor : widget.lossColor;
-    final fade = 1 - AbyssMotion.exit.transform(t);
+    final fade = DeltaFloat.fadeAt(t);
     return Transform.translate(
-      offset: Offset(0, -widget.rise * AbyssMotion.enter.transform(t)),
+      offset: Offset(0, -widget.rise * DeltaFloat.liftAt(t)),
       child: Text(
         DeltaFloat.label(_delta),
         softWrap: false,

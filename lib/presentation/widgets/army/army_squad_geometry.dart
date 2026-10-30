@@ -43,12 +43,23 @@ abstract final class ArmySquadGeometry {
     int figures, {
     required bool locked,
   }) => [
-    for (final slot in SquadSlots.backToFront(figures))
-      _onPad(ArmyLayout.padCentre(type) + slot, locked),
+    for (final figure in SquadSlots.figuresBackToFront(figures))
+      feetAt(type, figure, locked: locked),
   ];
+
+  /// The feet of the figure on slot [figure] of the squad of [type].
+  static Offset feetAt(UnitType type, int figure, {required bool locked}) =>
+      _onPad(ArmyLayout.padCentre(type) + SquadSlots.arrival[figure], locked);
 
   /// The box of a figure standing on [feet].
   static Rect figureBox(Offset feet) => (feet - figureFeet) & figureSize;
+
+  /// The part of [figureBox] above its [feet], which a pose turns and
+  /// grows around: its bottom on the deck.
+  static Rect bodyBox(Offset feet) {
+    final box = figureBox(feet);
+    return Rect.fromLTRB(box.left, box.top, box.right, feet.dy);
+  }
 
   /// The contact shadow laid under a figure standing on [feet].
   static Rect shadowBox(Offset feet) => Rect.fromCenter(

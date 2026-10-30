@@ -6,6 +6,8 @@ import 'package:abyss/presentation/widgets/army/army_fit.dart';
 import 'package:abyss/presentation/widgets/army/army_roster.dart';
 import 'package:abyss/presentation/widgets/army/army_sprites.dart';
 import 'package:abyss/presentation/widgets/army/army_squads_painter.dart';
+import 'package:abyss/presentation/widgets/army/squad_arrival.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -110,6 +112,43 @@ void main() {
       ).shouldRepaint(before),
       isTrue,
     );
+  });
+
+  testWidgets('a recruit joining the ranks falls as one figure more, '
+      'then melts into them', (tester) async {
+    await load(tester);
+    const roster = ArmyRoster(barracksLevel: 1, counts: {UnitType.scout: 4});
+    ArmySquadsPainter at(double t) => ArmySquadsPainter(
+          fit: fit,
+          roster: roster,
+          sprites: sprites,
+          arrival: AlwaysStoppedAnimation(t),
+          arriving: const {
+            UnitType.scout: SquadArrival(figure: 2, stays: false, gained: 2),
+          },
+        );
+    final scout = sprites.standingOf(UnitType.scout)!;
+    expect(drawsOf(at(.2), scout), hasLength(3));
+    expect(drawsOf(at(1), scout), hasLength(2));
+  });
+
+  testWidgets('a recruit taking a new slot stands there once landed',
+      (tester) async {
+    await load(tester);
+    const roster = ArmyRoster(barracksLevel: 1, counts: {UnitType.scout: 8});
+    ArmySquadsPainter at(double t) => ArmySquadsPainter(
+          fit: fit,
+          roster: roster,
+          sprites: sprites,
+          arrival: AlwaysStoppedAnimation(t),
+          arriving: const {
+            UnitType.scout: SquadArrival(figure: 2, stays: true, gained: 5),
+          },
+        );
+    final scout = sprites.standingOf(UnitType.scout)!;
+    for (final t in [0.0, .2, .6, 1.0]) {
+      expect(drawsOf(at(t), scout), hasLength(3), reason: 'at $t');
+    }
   });
 
   testWidgets('takes no touch: the view picks the piece under a finger',

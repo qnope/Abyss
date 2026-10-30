@@ -49,6 +49,13 @@ class ArmyRoster {
   bool canRecruit(UnitType type) =>
       !isLocked(type) && recruitable.contains(type);
 
+  /// The same army but for [count] units of [type].
+  ArmyRoster withCount(UnitType type, int count) => ArmyRoster(
+    barracksLevel: barracksLevel,
+    counts: {...counts, type: count},
+    recruitable: recruitable,
+  );
+
   @override
   bool operator ==(Object other) =>
       other is ArmyRoster &&

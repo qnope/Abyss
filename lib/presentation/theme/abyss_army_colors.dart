@@ -38,6 +38,12 @@ abstract final class AbyssArmyColors {
   /// keeps (see AbyssIslandColors.ghost), as on the mockup.
   static const double ghostOpacity = .7;
 
+  // A recruit arriving: the glowing column it falls in, the bubbles
+  // rising through it, the ring it lands with.
+  static const Color recruitColumn = AbyssColors.biolumCyan;
+  static const Color recruitBubble = AbyssColors.abyssMist;
+  static const Color landingRing = AbyssColors.biolumCyanLight;
+
   // The crest: a trident in a ring painted on a deck in the middle.
   static const Color crestLight = AbyssColors.biolumCyan;
   static const Color crestSheen = Color(0xFFE0FFFF);

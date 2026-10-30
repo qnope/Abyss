@@ -17,11 +17,14 @@ class ArmyViewHarness {
   final tapped = <UnitType>[];
   final opened = <Building>[];
 
-  /// Shows the army of [counts] units, [recruitable] ones and a barracks
-  /// at [barracks], its figures loaded, pumped up to [phase].
+  /// Shows the army of [counts] units at [place], [recruitable] ones, a
+  /// barracks at [barracks] and a citadel at [citadel], its figures
+  /// loaded, pumped up to [phase].
   Future<void> show(
     WidgetTester tester, {
     int barracks = 3,
+    int citadel = 1,
+    int? place,
     Map<UnitType, int> counts = const {},
     Set<UnitType> recruitable = const {},
     EnginePhase phase = EnginePhase.sendSemanticsUpdate,
@@ -29,12 +32,13 @@ class ArmyViewHarness {
     await tester.runAsync(ArmySprites.load);
     nemo
       ..buildings[BuildingType.barracks]!.level = barracks
-      ..buildings[BuildingType.coralCitadel]!.level = 1;
+      ..buildings[BuildingType.coralCitadel]!.level = citadel;
     await tester.pumpWidget(
       guidedApp(
         ArmyView(
           buildings: nemo.buildings,
           counts: counts,
+          place: place,
           recruitable: recruitable,
           onUnitTap: tapped.add,
           onBarracksTap: opened.add,

@@ -21,8 +21,9 @@ class PaintedRaster {
   /// Longest side of a bitmap, in pixels: within any GPU's textures.
   static const maxSide = 4096;
 
-  /// Called once a bitmap rasterized in the background is kept.
-  final VoidCallback? onReady;
+  /// Called once a bitmap rasterized in the background is kept; given
+  /// to a new owner along with the raster (see KeptRasters).
+  VoidCallback? onReady;
 
   Object? _key;
   ui.Image? _image;

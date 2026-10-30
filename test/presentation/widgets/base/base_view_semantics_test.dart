@@ -5,6 +5,7 @@ import 'package:abyss/presentation/widgets/base/base_buildings_painter.dart';
 import 'package:abyss/presentation/widgets/base/base_island_painter.dart';
 import 'package:abyss/presentation/widgets/base/base_pad_tier.dart';
 import 'package:abyss/presentation/widgets/base/base_view.dart';
+import 'package:abyss/presentation/widgets/common/raster_paint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -59,7 +60,8 @@ void main() {
 
   testWidgets('the still island lays every pad at its tier', (tester) async {
     await show(tester);
-    final tiers = painterOf<BaseIslandPainter>(tester).tiers;
+    final island = tester.widget<RasterPaint>(find.byType(RasterPaint));
+    final tiers = (island.painter as BaseIslandPainter).tiers;
     expect(tiers[hq], BasePadTier.gravel);
     expect(tiers[farm], BasePadTier.gravel);
     expect(tiers[BuildingType.barracks], BasePadTier.plot);

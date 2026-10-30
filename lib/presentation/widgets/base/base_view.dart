@@ -17,7 +17,7 @@ import 'base_sprites.dart';
 
 /// The player's base seen as an island in the abyss, fitted to the view
 /// with no pan nor zoom: the still island with the pads, decor and back
-/// rampart (cached in its own layer), the guide's ring on the ground, the
+/// rampart (rasterized into a bitmap), the guide's ring on the ground, the
 /// eleven [buildings] standing on the pads, breathing, bubbling and
 /// popping as they rise, the degraded ones greyed and still, the front
 /// of the coral rampart, their marks (level,

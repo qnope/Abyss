@@ -4,12 +4,9 @@ import 'package:flutter/rendering.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/map/terrain_type.dart';
 import '../../extensions/building_type_extensions.dart';
-import '../../theme/abyss_colors.dart';
 import '../backdrop/trench/trench_backdrop.dart';
 import '../map/decor/map_decor_drawer.dart';
-import '../map/map_content_drawer.dart';
 import '../map/map_floor_tiles.dart';
-import '../map/map_projection.dart';
 import '../map/map_scatter.dart';
 import '../map/map_sprites.dart';
 import '../map/slab/iso_slab_painter.dart';
@@ -28,14 +25,14 @@ import 'base_walkways.dart';
 /// Paints the still island of the base over its whole view: the trench
 /// behind, the spire under the plateau and the Descent module's cable
 /// hanging along it, the slab, the plateau's floor in the map's diamond
-/// tiles, the walkways from the headquarters to every building built,
+/// tiles (one mesh, see [MapFloorTiles]), the walkways from the headquarters to every building built,
 /// the pad of every slot at its tier, the back edges of the [rampart]
 /// and the decor standing between the slots (see [baseDecorOf]).
 ///
-/// Nothing in it moves: within its repaint boundary, it is painted once
-/// and only repainted when a pad changes [tiers], the rampart grows, the
-/// [fit] or the [sprites] change; never when a building rises within its
-/// tier, nor as the base comes alive above it.
+/// Nothing in it moves: rasterized into a bitmap by the base's layers, it
+/// is painted once and only again when a pad changes [tiers], the
+/// rampart grows, the [fit] or the [sprites] change; never when a
+/// building rises within its tier, nor as the base comes alive above it.
 class BaseIslandPainter extends CustomPainter {
   /// The salt of the slab's rock, as on the mockup.
   static const slabSalt = 5;
@@ -87,8 +84,12 @@ class BaseIslandPainter extends CustomPainter {
     paintBaseRampart(canvas, rampart.back);
     final images = sprites;
     if (images != null) {
-      MapDecorDrawer(imageOf: images.svg, shadow: images.shadow)
-          .draw(canvas, baseDecorOf(layout));
+      MapDecorDrawer(
+        imageOf: images.svg,
+        shadow: images.shadow,
+        atlas: images.floor,
+        shadowSprite: MapSprites.shadowSprite,
+      ).draw(canvas, baseDecorOf(layout));
     }
     canvas.restore();
   }
@@ -103,18 +104,14 @@ class BaseIslandPainter extends CustomPainter {
   }
 
   void _paintFloor(Canvas canvas) {
-    final tile = Paint()..filterQuality = FilterQuality.medium;
-    final fallback = Paint()..color = AbyssColors.trench;
-    final drawer = MapContentDrawer(sprites);
+    final floor = MapFloorTiles(sprites);
     for (var y = 0; y < layout.size; y++) {
       for (var x = 0; x < layout.size; x++) {
         final cell = (x, y);
-        final image = sprites?.svg(floorTileOf(TerrainType.plain, cell));
-        image == null
-            ? canvas.drawPath(MapProjection.diamondOf(cell), fallback)
-            : drawer.drawSprite(canvas, image, MapFloorTiles.tileOf(cell), tile);
+        floor.add(canvas, cell, floorTileOf(TerrainType.plain, cell));
       }
     }
+    floor.flush(canvas);
   }
 
   @override

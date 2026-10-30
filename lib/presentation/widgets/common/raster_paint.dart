@@ -11,7 +11,9 @@ import 'painted_raster.dart';
 /// Rasterizes again only when the painter asks to repaint, or the box or
 /// [resolution] (pixels per logical pixel, the device's by default)
 /// changes; the bitmap lives as long as the widget's render object,
-/// drawn with [filterQuality]. Fills its box.
+/// drawn with [filterQuality]. Rasterizes in the background, never
+/// holding a frame: the painting is replayed live until the bitmap is
+/// ready. Fills its box.
 class RasterPaint extends LeafRenderObjectWidget {
   final CustomPainter painter;
   final int repeat;
@@ -50,7 +52,7 @@ class RenderRasterPaint extends RenderBox {
   CustomPainter _painter;
   int _repeat;
   double _resolution;
-  final _raster = PaintedRaster();
+  late final _raster = PaintedRaster(onReady: _ready);
 
   /// Counts the paintings asked, so that a new one rasterizes again.
   int _painting = 0;
@@ -88,6 +90,10 @@ class RenderRasterPaint extends RenderBox {
     if (value == _resolution) return;
     _resolution = value;
     markNeedsPaint();
+  }
+
+  void _ready() {
+    if (attached) markNeedsPaint();
   }
 
   @override

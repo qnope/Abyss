@@ -12,7 +12,9 @@ import 'slab/map_slab_layer.dart';
 /// boundary, sized to the map's box and drawn in projection coordinates.
 ///
 /// Keeps the bitmap of its fog from one build to the next, rasterized
-/// again only once other cells are hidden, and disposes it when it goes.
+/// again only once other cells are hidden, in the background (the fog
+/// drawn live meanwhile, never holding a frame), and disposes it when it
+/// goes.
 /// The slab the map stands on lies just above (see [MapSlabLayer]),
 /// following the map seen through [transform] in a [viewport].
 class MapFloor extends StatefulWidget {
@@ -42,11 +44,14 @@ class MapFloor extends StatefulWidget {
 }
 
 class _MapFloorState extends State<MapFloor> {
-  final _fog = PaintedRaster();
+  /// Counts the bitmaps of the fog made ready, to paint them.
+  final _fogReady = ValueNotifier(0);
+  late final _fog = PaintedRaster(onReady: () => _fogReady.value++);
 
   @override
   void dispose() {
     _fog.dispose();
+    _fogReady.dispose();
     super.dispose();
   }
 
@@ -67,6 +72,7 @@ class _MapFloorState extends State<MapFloor> {
             decorSalt: widget.level,
             fogRaster: _fog,
             slab: false,
+            repaint: _fogReady,
           ),
         ),
       ),

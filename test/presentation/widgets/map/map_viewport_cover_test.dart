@@ -5,11 +5,14 @@ import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_size.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/map_view_fit.dart';
+import 'package:abyss/presentation/widgets/map/map_viewport.dart';
 import 'package:abyss/presentation/widgets/map/viewport_cover.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/test_svg_helper.dart';
+import '../../../helpers/background_rasters.dart';
 
 void main() {
   // A diamond 200 wide and 100 tall, its top vertex at (100, 0).
@@ -87,20 +90,44 @@ void main() {
       await tester.pump();
       expect(trenchShows(tester), isTrue);
       final layers = find.byType(RasterPaint);
-      final bitmaps = [
-        for (final e in layers.evaluate())
-          (e.renderObject! as RenderRasterPaint).image,
-      ];
+      List<Object?> bitmapsOf() => [
+            for (final e in layers.evaluate())
+              (e.renderObject! as RenderRasterPaint).image,
+          ];
+      // Rasterized in the background, one after the other.
+      await settleRasters(tester, () => !bitmapsOf().contains(null));
+      final bitmaps = bitmapsOf();
       expect(bitmaps, everyElement(isNotNull));
       controller.value = home;
       await tester.pump();
       expect(trenchShows(tester), isFalse);
       controller.value = Matrix4.diagonal3Values(scale, scale, scale);
       await tester.pump();
-      expect([
-        for (final e in layers.evaluate())
-          (e.renderObject! as RenderRasterPaint).image,
-      ], bitmaps);
+      expect(bitmapsOf(), bitmaps);
+    });
+
+    testWidgets('the trench is painted only around what shows of it',
+        (tester) async {
+      final controller = await pumpView(tester);
+      final viewport = tester.getSize(find.byType(InteractiveViewer));
+      // Over the top vertex of the map: the abyss on both sides of it.
+      final top = MapProjection.originOf(20);
+      final scale = controller.value.getMaxScaleOnAxis();
+      controller.value = Matrix4.translationValues(
+          viewport.width / 2 - top.dx * scale, -top.dy * scale + 40, 0)
+        ..scaleByDouble(scale, scale, scale, 1);
+      await tester.pump();
+      expect(trenchShows(tester), isTrue);
+      final clip = tester.renderObject<RenderClipRect>(find.ancestor(
+          of: find.byType(TrenchBackdrop), matching: find.byType(ClipRect)));
+      final floor = [
+        for (final vertex in MapProjection.outlineOf(20, 20)) vertex + top,
+      ];
+      final area = uncoveredArea(floor, controller.value, viewport,
+          margin: MapViewport.coverMargin);
+      expect(clip.clipper!.getClip(viewport), area);
+      expect(area.top, 0);
+      expect(area.height, lessThan(viewport.height));
     });
   });
 }

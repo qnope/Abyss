@@ -8,6 +8,8 @@ import 'package:abyss/presentation/widgets/map/slab/map_slab_layer.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/background_rasters.dart';
+
 void main() {
   final tile = TerrainType.plain.tileSvgPaths.first;
   List<MapCellVisual> cells({int seen = 1, bool pending = false}) => [
@@ -30,6 +32,10 @@ void main() {
       .widget<CustomPaint>(find.byWidgetPredicate(
           (w) => w is CustomPaint && w.painter is MapPainter))
       .painter! as MapPainter;
+
+  /// Lets the fog's bitmap under way be rasterized, then painted.
+  Future<void> settle(WidgetTester tester) => settleRasters(
+      tester, () => painterOf(tester).fogRaster!.image != null);
 
   testWidgets('paints the still floor of the map in its own boundary', (
     tester,
@@ -61,9 +67,32 @@ void main() {
     expect(slab.viewport, viewport);
   });
 
+  testWidgets('never holds a frame for the bitmap of its fog: the fog is '
+      'drawn live until it is ready, then from it', (tester) async {
+    bool replay(Symbol method, List<dynamic> args) => method == #drawPicture;
+    final floor = find.byWidgetPredicate(
+        (w) => w is CustomPaint && w.painter is MapPainter);
+    await pump(tester, cells());
+    final raster = painterOf(tester).fogRaster!;
+    expect(raster.image, isNull);
+    expect(floor, paints..something(replay));
+    await settle(tester);
+    expect(raster.image, isNotNull);
+    expect(floor, paints..drawImageRect(image: raster.image));
+    expect(floor, isNot(paints..something(replay)));
+    // Other cells hidden: live again, the old bitmap gone at once.
+    final old = raster.image!;
+    await pump(tester, cells(seen: 2));
+    expect(old.debugDisposed, isTrue);
+    expect(floor, paints..something(replay));
+    await settle(tester);
+    expect(floor, paints..drawImageRect(image: raster.image));
+  });
+
   testWidgets('keeps the bitmap of its fog across rebuilds while the same '
       'cells are hidden', (tester) async {
     await pump(tester, cells());
+    await settle(tester);
     final raster = painterOf(tester).fogRaster!;
     final fog = raster.image!;
     await pump(tester, cells(pending: true));
@@ -71,6 +100,7 @@ void main() {
     expect(raster.image, same(fog));
     await pump(tester, cells(seen: 2));
     expect(fog.debugDisposed, isTrue);
+    await settle(tester);
     expect(raster.image, isNot(same(fog)));
   });
 
@@ -78,6 +108,7 @@ void main() {
     tester,
   ) async {
     await pump(tester, cells());
+    await settle(tester);
     final fog = painterOf(tester).fogRaster!.image!;
     await tester.pumpWidget(const SizedBox());
     expect(fog.debugDisposed, isTrue);

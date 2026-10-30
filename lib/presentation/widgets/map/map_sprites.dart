@@ -8,6 +8,7 @@ import '../../extensions/cell_content_type_extensions.dart';
 import '../../extensions/monster_family_extensions.dart';
 import '../../extensions/post_holder_extensions.dart';
 import '../../extensions/terrain_type_extensions.dart';
+import '../common/sprite_atlas.dart';
 import '../common/svg_raster_cache.dart';
 import 'decor/decor_kind.dart';
 import 'map_cell_visual.dart';
@@ -32,7 +33,16 @@ class MapSprites {
   /// The soft contact shadow laid under every standing content.
   final ui.Image shadow;
 
-  const MapSprites._(this._svgs, this._glows, this._pools, this.shadow);
+  /// What the still floor lays by the hundred, packed so that each kind
+  /// costs a single draw: the tiles of every terrain and the decor (by
+  /// their paths), and the [shadow] (as [shadowSprite]).
+  final SpriteAtlas<String> floor;
+
+  /// The key of the [shadow] in the [floor] atlas.
+  static const shadowSprite = 'shadow';
+
+  const MapSprites._(
+      this._svgs, this._glows, this._pools, this.shadow, this.floor);
 
   /// Loads the shared sprites, rasterizing them on first use only.
   static Future<MapSprites> load() {
@@ -84,11 +94,20 @@ class MapSprites {
       glows.map((g) => rasterizeGlow(g, spriteSize)),
     );
     final poolImages = await Future.wait(glows.map(rasterizePool));
+    final svgs = Map.fromIterables(paths, svgImages);
+    final shadow = await rasterizeShadow();
+    final floor = await SpriteAtlas.pack({
+      for (final terrain in TerrainType.values)
+        for (final tile in terrain.tileSvgPaths) tile: svgs[tile]!,
+      for (final decor in SeabedDecor.all) decor.svgPath: svgs[decor.svgPath]!,
+      shadowSprite: shadow,
+    });
     return MapSprites._(
-      Map.fromIterables(paths, svgImages),
+      svgs,
       Map.fromIterables(glows, glowImages),
       Map.fromIterables(glows, poolImages),
-      await rasterizeShadow(),
+      shadow,
+      floor,
     );
   }
 }

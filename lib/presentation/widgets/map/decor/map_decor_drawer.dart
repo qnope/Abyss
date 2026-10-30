@@ -2,6 +2,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/painting.dart';
 
+import '../../common/atlas_mesh.dart';
+import '../../common/sprite_atlas.dart';
 import 'map_decor.dart';
 
 /// Draws decor standing on the floor, each over a small soft contact
@@ -10,7 +12,9 @@ import 'map_decor.dart';
 /// front, as [scatterDecor] lists them).
 ///
 /// Knows nothing of the map: it takes the bitmap of each sprite from
-/// [imageOf] and the shadow's from [shadow], drawn whole into their boxes.
+/// [imageOf] and the shadow's from [shadow], drawn whole into their boxes;
+/// or, those packed in an [atlas] (the shadow as [shadowSprite]), every
+/// shadow in one mesh and every decor in another (see [AtlasMesh]).
 /// Its paints are made once and reused for every decor it draws.
 class MapDecorDrawer {
   /// Width of the shadow, as a share of the decor's box.
@@ -26,13 +30,31 @@ class MapDecorDrawer {
   /// The soft contact shadow, a disc drawn flattened on the floor.
   final ui.Image? shadow;
 
-  final _image = Paint()..filterQuality = FilterQuality.medium;
+  /// The sprites and the shadow packed, if any.
+  final SpriteAtlas<String>? atlas;
+
+  /// The key of the shadow in the [atlas].
+  final String? shadowSprite;
+
+  /// How the decor is sampled: smoothly, with mipmaps, by default.
+  final FilterQuality filterQuality;
+  final Paint _image;
   final _shadow = Paint()..filterQuality = FilterQuality.low;
 
-  MapDecorDrawer({required this.imageOf, this.shadow});
+  MapDecorDrawer({
+    required this.imageOf,
+    this.shadow,
+    this.atlas,
+    this.shadowSprite,
+    this.filterQuality = FilterQuality.medium,
+  }) : _image = Paint()..filterQuality = filterQuality;
 
   /// Draws [decor] on [canvas], in projection coordinates.
   void draw(Canvas canvas, Iterable<MapDecor> decor) {
+    final atlas = this.atlas, key = shadowSprite;
+    if (atlas != null && key != null && atlas.rectOf(key) != null) {
+      return _drawPacked(canvas, decor, AtlasMesh(atlas), key);
+    }
     final shadow = this.shadow;
     if (shadow != null) {
       for (final item in decor) {
@@ -43,6 +65,22 @@ class MapDecorDrawer {
       final image = imageOf(item.sprite);
       if (image != null) _drawWhole(canvas, image, item.box, _image);
     }
+  }
+
+  void _drawPacked(Canvas canvas, Iterable<MapDecor> decor,
+      AtlasMesh<String> mesh, String shadow) {
+    for (final item in decor) {
+      mesh.addRect(shadow, shadowOf(item));
+    }
+    mesh.flush(canvas, filterQuality: _shadow.filterQuality);
+    for (final item in decor) {
+      if (mesh.addRect(item.sprite, item.box)) continue;
+      // Not packed: drawn in turn.
+      mesh.flush(canvas, filterQuality: filterQuality);
+      final image = imageOf(item.sprite);
+      if (image != null) _drawWhole(canvas, image, item.box, _image);
+    }
+    mesh.flush(canvas, filterQuality: filterQuality);
   }
 
   /// The box of the shadow of [decor], flattened on the floor at its foot.

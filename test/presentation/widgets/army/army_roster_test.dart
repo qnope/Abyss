@@ -63,4 +63,20 @@ void main() {
       isNot(ArmyRoster(barracksLevel: 1, counts: {scout: 4})),
     );
   });
+
+  test('two equal rosters share their hash, whatever the order', () {
+    final one = ArmyRoster(
+      barracksLevel: 3,
+      counts: {scout: 3, guardian: 7},
+      recruitable: {scout, guardian},
+    );
+    final other = ArmyRoster(
+      barracksLevel: 3,
+      counts: {guardian: 7, scout: 3},
+      recruitable: {guardian, scout},
+    );
+    expect(other, one);
+    expect(other.hashCode, one.hashCode);
+    expect({one, other}, hasLength(1));
+  });
 }

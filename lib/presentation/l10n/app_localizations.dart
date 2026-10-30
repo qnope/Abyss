@@ -4414,6 +4414,12 @@ abstract class AppLocalizations {
   /// **'recrutable'**
   String get armyUnitRecruitable;
 
+  /// Segment of the bar at the bottom of the army's parade ground showing the units of every place together; each other segment names a level or the kernel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes'**
+  String get armyPlaceAll;
+
   /// No description provided for @resourceProduction.
   ///
   /// In fr, this message translates to:

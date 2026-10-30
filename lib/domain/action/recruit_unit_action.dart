@@ -11,6 +11,9 @@ import '../unit/unit_type.dart';
 import '../raid/noise_rules.dart';
 
 class RecruitUnitAction extends Action {
+  /// The level of the map where recruits arrive, at the base.
+  static const int arrivalLevel = 1;
+
   final UnitType unitType;
   final int quantity;
 
@@ -63,7 +66,7 @@ class RecruitUnitAction extends Action {
     for (final entry in costs.entries) {
       player.resources[entry.key]!.amount -= entry.value * quantity;
     }
-    player.unitsOnLevel(1)[unitType]!.count += quantity;
+    player.unitsOnLevel(arrivalLevel)[unitType]!.count += quantity;
     player.recruitedUnitTypes.add(unitType);
 
     return ActionResult.success();

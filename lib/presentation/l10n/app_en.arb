@@ -743,6 +743,7 @@
   "armyLockPill": "Barracks lv. {level}",
   "armyUnitLocked": "locked, Barracks level {level}",
   "armyUnitRecruitable": "recruitable",
+  "armyPlaceAll": "All",
   "resourceProduction": "Production",
   "resourceMainBuilding": "Main building",
   "turnTransition": "Turn {from} → Turn {to}",

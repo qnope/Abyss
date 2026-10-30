@@ -7,6 +7,7 @@ import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/game/player_defaults.dart';
 import 'package:abyss/domain/resource/resource.dart';
 import 'package:abyss/domain/resource/resource_type.dart';
+import 'package:abyss/domain/unit/unit.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
@@ -112,6 +113,26 @@ void main() {
       final army = tester.widget<ArmyView>(find.byType(ArmyView));
       expect(army.counts[UnitType.scout], 3);
       expect(army.recruitable, {UnitType.scout});
+    });
+
+    testWidgets('a squad\'s sheet counts the units of the place shown',
+        (tester) async {
+      final g = armyGame();
+      g.humanPlayer.unitsOnLevel(1)[UnitType.scout]!.count = 3;
+      g.humanPlayer.unitsPerLevel[2] = {
+        UnitType.scout: Unit(type: UnitType.scout, count: 5),
+      };
+      await goToArmyTab(tester, g);
+      await tapDrillPad(tester, UnitType.scout);
+      await tester.pumpAndSettle();
+      expect(find.text('En service : 8'), findsOneWidget);
+      await tester.tapAt(const Offset(400, 10));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Niv. 2'));
+      await tester.pumpAndSettle();
+      await tapDrillPad(tester, UnitType.scout);
+      await tester.pumpAndSettle();
+      expect(find.text('En service : 5'), findsOneWidget);
     });
   });
 }

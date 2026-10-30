@@ -5,6 +5,7 @@ import 'package:abyss/domain/unit/unit.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/domain/volcano/kernel_garrison.dart';
 import 'package:abyss/presentation/screens/game/game_screen_army_tab.dart';
+import 'package:abyss/presentation/widgets/army/army_places.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -61,7 +62,7 @@ void main() {
     });
   });
 
-  test('armyCountsOf counts every place, the kernel garrison included', () {
+  test('armyPlacesOf counts every place, the kernel garrison included', () {
     final player = Player(
       name: 'Nemo',
       unitsPerLevel: {
@@ -73,6 +74,13 @@ void main() {
         KernelGarrison.stockKey: {harpoonist: Unit(type: harpoonist, count: 5)},
       },
     );
-    expect(armyCountsOf(player), {scout: 14, harpoonist: 7});
+    expect(
+      armyPlacesOf(player),
+      const ArmyPlaces({
+        1: {scout: 10},
+        2: {scout: 4, harpoonist: 2},
+        KernelGarrison.stockKey: {harpoonist: 5},
+      }),
+    );
   });
 }

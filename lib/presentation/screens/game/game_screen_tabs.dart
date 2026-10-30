@@ -40,13 +40,7 @@ Widget buildGameTab(
       onChanged: onChanged,
       effects: effects,
     ),
-    2 => armyTab(
-      context,
-      game,
-      repository,
-      currentLevel: currentLevel,
-      onChanged: onChanged,
-    ),
+    2 => armyTab(context, game, repository, onChanged: onChanged),
     3 => TechTreeView(
       techBranches: human.techBranches,
       buildings: human.buildings,

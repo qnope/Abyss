@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../theme/abyss_colors.dart';
+import 'decor/map_decor_cells.dart';
+import 'decor/map_decor_drawer.dart';
 import 'map_cell_visual.dart';
 import 'map_content_drawer.dart';
 import 'map_flat_contents.dart';
@@ -12,12 +14,15 @@ export 'map_content_drawer.dart' show cellSize;
 
 /// Paints the still floor of the map in one pass, in projection
 /// coordinates: the diamond tile of every cell, the holes lying flat on
-/// them, then a single path for exploration markers and another for the
-/// fog.
+/// them, a single path for exploration markers, the decor standing
+/// among hidden cells, a single path for the fog, then the decor
+/// standing among seen cells, over the fog as the contents are.
 ///
-/// Whatever stands (still or moving, through the fog or not) and every
-/// glow, shadow and ring are left to the standing layer above, which
-/// draws them back to front: panning never repaints this map.
+/// Whatever else stands (still or moving, through the fog or not) and
+/// every glow, shadow and ring are left to the standing layer above,
+/// which draws them back to front: panning never repaints this map. The
+/// decor lies here, under every content, as none stands where a content
+/// could overlap it from behind (see [mapDecorOf]).
 class MapPainter extends CustomPainter {
   /// How far a floor tile is drawn past its box, so that neighbours
   /// overlap and no seam shows between them.
@@ -30,10 +35,15 @@ class MapPainter extends CustomPainter {
   final int columns;
   final MapSprites? sprites;
 
+  /// Scatters the decor standing between the cells (the map's level),
+  /// none when `null`.
+  final int? decorSalt;
+
   const MapPainter({
     required this.visuals,
     required this.columns,
     this.sprites,
+    this.decorSalt,
   });
 
   @override
@@ -70,6 +80,13 @@ class MapPainter extends CustomPainter {
         ..strokeWidth = 2
         ..color = AbyssColors.biolumCyan,
     );
+    final salt = decorSalt, images = sprites;
+    final decor = salt == null || images == null
+        ? const <MapDecor>[]
+        : mapDecorOf(visuals, columns, salt: salt);
+    final decorDrawer = MapDecorDrawer(
+        imageOf: (path) => images?.svg(path), shadow: images?.shadow);
+    decorDrawer.draw(canvas, decor.where((d) => d.hidden));
     canvas.drawPath(
       fog,
       Paint()
@@ -77,6 +94,7 @@ class MapPainter extends CustomPainter {
             .withValues(alpha: AbyssColors.fogOpacity)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, fogBlur),
     );
+    decorDrawer.draw(canvas, decor.where((d) => !d.hidden));
   }
 
   /// The box the floor tile of [cell] is drawn in: its tile box, a hair
@@ -91,5 +109,6 @@ class MapPainter extends CustomPainter {
   bool shouldRepaint(MapPainter oldDelegate) =>
       oldDelegate.sprites != sprites ||
       oldDelegate.columns != columns ||
+      oldDelegate.decorSalt != decorSalt ||
       !listEquals(oldDelegate.visuals, visuals);
 }

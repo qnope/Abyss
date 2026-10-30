@@ -94,7 +94,12 @@ class _MapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final paths = MapSprites.svgPaths.toList();
     final tiles = TerrainType.plain.tileSvgPaths;
+    const columns = 8;
     final visuals = [
+      // Bare rows, seen then hidden, for decor over and under the fog.
+      for (var i = 0; i < 6 * columns; i++)
+        MapCellVisual(terrainSprite: tiles[i % tiles.length],
+            revealed: i < 3 * columns),
       for (final (i, path) in paths.indexed)
         MapCellVisual(terrainSprite: tiles[i % tiles.length],
             contentSprite: path, revealed: true),
@@ -105,7 +110,6 @@ class _MapPage extends StatelessWidget {
       MapCellVisual(terrainSprite: paths.first, contentSprite: paths.last,
           glow: MapGlow.wreck, aboveFog: true),
     ];
-    const columns = 8;
     final rows = (visuals.length / columns).ceil();
     final size = MapProjection.sizeOf(columns, rows);
     return Transform.translate(
@@ -113,8 +117,8 @@ class _MapPage extends StatelessWidget {
       child: Stack(children: [
         CustomPaint(
           size: size,
-          painter: MapPainter(
-              visuals: visuals, columns: columns, sprites: MapSprites.ready),
+          painter: MapPainter(visuals: visuals, columns: columns,
+              sprites: MapSprites.ready, decorSalt: 1),
         ),
         CustomPaint(
           size: size,

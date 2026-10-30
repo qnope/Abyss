@@ -65,6 +65,12 @@ class SvgAlphaMap {
   /// A pixel near each tip of a diamond, inside it.
   List<int> get diamondTips => [at(32, 3), at(60, 32), at(32, 60), at(3, 32)];
 
+  /// The most opaque pixel around the foot (32, 56) of a standing decor:
+  /// a pixel row above it, a third of the width across.
+  int get foot => [
+    for (var x = 22; x <= 42; x++) at(x, 55),
+  ].reduce(max);
+
   /// The middle pixel of each edge, inside a vignette.
   List<int> get edgeMiddles => [at(32, 1), at(32, 62), at(1, 32), at(62, 32)];
 

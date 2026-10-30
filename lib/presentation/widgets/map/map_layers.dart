@@ -31,7 +31,8 @@ class MapLayers extends StatelessWidget {
   /// Size of the screen area the map is seen through.
   final Size viewport;
 
-  /// Level of the map, where the guide's halo may surround a cell.
+  /// Level of the map, where the guide's halo may surround a cell; it
+  /// also scatters the decor standing between the cells.
   final int level;
 
   /// Cells of the map the scouts were sent to, still to be explored.
@@ -88,7 +89,10 @@ class MapLayers extends StatelessWidget {
         child: CustomPaint(
           size: size,
           painter: MapPainter(
-              visuals: visuals, columns: columns, sprites: sprites),
+              visuals: visuals,
+              columns: columns,
+              sprites: sprites,
+              decorSalt: level),
         ),
       ),
       if (effects == null)

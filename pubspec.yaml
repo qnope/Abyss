@@ -43,6 +43,7 @@ flutter:
     - assets/icons/events/
     - assets/icons/guide/
     - assets/icons/factions/
+    - assets/icons/decor/
     - assets/illustrations/menu/
     - assets/illustrations/saves/
   fonts:

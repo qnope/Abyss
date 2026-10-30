@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="kelp" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#0F4A3A"/><stop offset="0.6" stop-color="#1F8A64"/><stop offset="1" stop-color="#69F0AE"/></linearGradient><linearGradient id="kelpDark" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#0A3328"/><stop offset="1" stop-color="#2BAF7F"/></linearGradient>
+</defs>
+<path d="M23.8 56 Q18.88 46.89 15.68 43.05 Q21.52 46.89 28.2 56 Z" fill="url(#kelp)"/><path d="M23.8 56 Q20.05 45.44 18.72 38.24 Q22.69 45.44 28.2 56 Z" fill="url(#kelpDark)"/><path d="M23.8 56 Q25.25 44.99 24.25 36.05 Q27.89 44.99 28.2 56 Z" fill="url(#kelp)"/><path d="M23.8 56 Q29.82 44.37 33.84 36.36 Q32.46 44.37 28.2 56 Z" fill="url(#kelpDark)"/><path d="M23.8 56 Q30.88 43.03 41.62 38.33 Q33.52 43.03 28.2 56 Z" fill="url(#kelp)"/><path d="M38.4 58 Q38.65 51.8 37.44 47.02 Q40.57 51.8 41.6 58 Z" fill="url(#kelpDark)"/><path d="M38.4 58 Q39.6 51.75 39.71 46.64 Q41.52 51.75 41.6 58 Z" fill="url(#kelpDark)"/><path d="M38.4 58 Q39.79 51.01 42.9 45.63 Q41.71 51.01 41.6 58 Z" fill="url(#kelpDark)"/>
+</svg>

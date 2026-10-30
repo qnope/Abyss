@@ -50,4 +50,22 @@ void main() {
     expect(effects.fade.cells, {(6, 12)});
     effects.finish();
   });
+
+  testWidgets('scatters the decor of the still map by its level', (
+    tester,
+  ) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: GameMapView(
+          gameMap: MapGenerator.generate(seed: 42).map,
+          revealedCells: const {},
+          humanPlayerId: 'human',
+          level: 2,
+        ),
+      ),
+    ));
+    final still = tester.widget<CustomPaint>(find.byWidgetPredicate(
+        (w) => w is CustomPaint && w.painter is MapPainter));
+    expect((still.painter! as MapPainter).decorSalt, 2);
+  });
 }

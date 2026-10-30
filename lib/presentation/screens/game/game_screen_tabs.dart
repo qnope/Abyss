@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
-import '../../widgets/building/building_list_view.dart';
+import '../../widgets/base/base_view.dart';
 import '../../widgets/map/effects/map_effects.dart';
 import '../../widgets/tech/tech_tree_view.dart';
 import '../../widgets/unit/army_list_view.dart';
@@ -29,9 +29,8 @@ Widget buildGameTab(
 }) {
   final human = game.humanPlayer;
   return switch (tab) {
-    0 => BuildingListView(
+    0 => BaseView(
       buildings: human.buildings,
-      resources: human.resources,
       worksite: human.worksite,
       onBuildingTap:
           (b) =>

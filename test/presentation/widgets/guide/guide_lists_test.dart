@@ -2,8 +2,8 @@ import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/objective/guide/guide_target.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
-import 'package:abyss/presentation/widgets/building/building_card.dart';
-import 'package:abyss/presentation/widgets/building/building_list_view.dart';
+import 'package:abyss/presentation/widgets/base/base_guide_halo.dart';
+import 'package:abyss/presentation/widgets/base/base_view.dart';
 import 'package:abyss/presentation/widgets/unit/army_list_view.dart';
 import 'package:abyss/presentation/widgets/unit/unit_card.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +21,8 @@ void main() {
   final player = Player(name: 'Nemo');
 
   Widget base(GuideTarget? target) => guidedApp(
-    BuildingListView(
+    BaseView(
       buildings: player.buildings,
-      resources: player.resources,
       worksite: player.worksite,
       onBuildingTap: (_) {},
     ),
@@ -40,15 +39,14 @@ void main() {
     target,
   );
 
-  Finder buildingCard(BuildingType type) => find.byWidgetPredicate(
-    (widget) => widget is BuildingCard && widget.building.type == type,
-  );
+  Finder buildingSlot(BuildingType type) =>
+      find.byKey(BaseGuideHalo.keyOf(type));
 
   Finder unitCard(UnitType type) => find.byWidgetPredicate(
     (widget) => widget is UnitCard && widget.unitType == type,
   );
 
-  testWidgets('the halo surrounds the card of the building to raise', (
+  testWidgets('the halo surrounds the slot of the building to raise', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -57,7 +55,7 @@ void main() {
     await tester.pump();
 
     expect(activeHalos, findsOneWidget);
-    expect(haloAround(buildingCard(BuildingType.algaeFarm)), findsOneWidget);
+    expect(haloAround(buildingSlot(BuildingType.algaeFarm)), findsOneWidget);
   });
 
   testWidgets('no halo on the base without a building to raise', (

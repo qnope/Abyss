@@ -13,6 +13,7 @@ import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/screens/game/victory_screen.dart';
 import 'package:abyss/presentation/screens/menu/main_menu_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import '../../../helpers/base_taps.dart';
 import '../../../helpers/fake_game_repository.dart';
 import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
@@ -60,7 +61,7 @@ void main() {
   Future<void> upgradeKernel(WidgetTester t, Game g) async {
     await t.pumpWidget(app(g));
     await t.pumpAndSettle();
-    await t.tap(find.text('Noyau Volcanique'));
+    await tapBuilding(t, BuildingType.volcanicKernel);
     await t.pumpAndSettle();
     await t.tap(find.text('Améliorer'));
     await t.pumpAndSettle();
@@ -74,7 +75,7 @@ void main() {
       game.humanPlayer.buildings[BuildingType.headquarters]!.level = 5;
       await t.pumpWidget(app(game));
       await t.pumpAndSettle();
-      await t.tap(find.text('Quartier Général'));
+      await tapBuilding(t, BuildingType.headquarters);
       await t.pumpAndSettle();
       await t.tap(find.text('Améliorer'));
       await t.pumpAndSettle();

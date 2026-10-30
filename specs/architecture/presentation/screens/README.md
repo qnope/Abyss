@@ -32,7 +32,7 @@
 
 | Index | Content | Widget |
 |-------|---------|--------|
-| 0 | Buildings | `BuildingListView` |
+| 0 | Base | `BaseView` (isometric island) |
 | 1 | Map | `GameMapView` (generated on first visit) |
 | 2 | Army | `ArmyListView` |
 | 3 | Tech | `TechTreeView` |

@@ -91,6 +91,7 @@ class ArmySquadsPainter extends CustomPainter {
         case SquadPiece():
           final coming = t < 1 ? arriving[type] : null;
           final falling = coming != null && SquadArrival.fallAt(t) > 0;
+          if (coming != null) arrivals.paintGround(canvas, type, coming, t);
           squads.paint(
             canvas,
             type,
@@ -102,7 +103,7 @@ class ArmySquadsPainter extends CustomPainter {
                     : (figure) => ArmySquadPose.soldier(type, figure, seconds),
             hidden: falling && coming.stays ? coming.figure : null,
           );
-          if (coming != null) arrivals.paint(canvas, type, coming, t);
+          if (coming != null) arrivals.paintRecruit(canvas, type, coming, t);
       }
     }
     canvas.restore();

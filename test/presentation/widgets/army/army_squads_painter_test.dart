@@ -151,6 +151,36 @@ void main() {
     }
   });
 
+  testWidgets('the landing ring lies on the deck, under the squad',
+      (tester) async {
+    await load(tester);
+    final squads = ArmySquadsPainter(
+      fit: fit,
+      roster: const ArmyRoster(barracksLevel: 1, counts: {UnitType.scout: 8}),
+      sprites: sprites,
+      arrival: const AlwaysStoppedAnimation(.6),
+      arriving: const {
+        UnitType.scout: SquadArrival(figure: 2, stays: true, gained: 5),
+      },
+    );
+    final scout = sprites.standingOf(UnitType.scout)!;
+    final calls = <String>[];
+    expect(
+      (Canvas canvas) => squads.paint(canvas, view),
+      paints..everything((method, arguments) {
+        if (method == #drawImageRect && arguments[0] == scout) {
+          calls.add('figure');
+        } else if (method == #drawOval &&
+            (arguments[1] as Paint).style == PaintingStyle.stroke) {
+          calls.add('ring');
+        }
+        return true;
+      }),
+    );
+    expect(calls.first, 'ring');
+    expect(calls.where((call) => call == 'figure'), hasLength(3));
+  });
+
   testWidgets('takes no touch: the view picks the piece under a finger',
       (tester) async {
     await load(tester);

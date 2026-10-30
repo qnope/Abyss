@@ -91,7 +91,7 @@ class _GameMapViewState extends State<GameMapView>
     final screenWidth = MediaQuery.of(context).size.width;
     return MapViewport(
       controller: controller,
-      minScale: screenWidth / MapProjection.sizeOf(map.width, rows).width,
+      content: MapProjection.sizeOf(map.width, rows),
       maxScale: screenWidth / (_maxVisibleTiles * MapProjection.tileWidth),
       onTapUp: widget.onCellTap == null ? null : _handleTap,
       builder: (context, clock, viewport) => MapLayers(

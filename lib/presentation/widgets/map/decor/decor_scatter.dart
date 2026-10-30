@@ -13,13 +13,13 @@ export 'map_decor.dart';
 
 /// Share of the cells that start a decor on their top corner or along
 /// one of their top edges; some are left out (on the map's border, too
-/// near another decor, in the way of a content), leaving about one decor
-/// for every three cells.
-const decorDensity = 0.45;
+/// near another decor, in the way of a content), leaving a little over
+/// one decor for every three cells.
+const decorDensity = 0.55;
 
 /// Smallest distance between the feet of two decor, as a share of a
 /// tile's width, so they never pile up.
-const decorGapRatio = 0.4;
+const decorGapRatio = 0.45;
 
 /// Asks something of the cell at ([x], [y]).
 typedef DecorCellTest = bool Function(int x, int y);

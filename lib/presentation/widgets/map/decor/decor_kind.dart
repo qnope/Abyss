@@ -18,22 +18,23 @@ class DecorKind {
 const _folder = 'assets/icons/decor';
 
 /// The decor of the seabed: algae and rocks often, corals and sponges
-/// now and then; algae small, corals tall.
+/// now and then; algae small, corals tall, about half a tile on average
+/// so they read among the contents.
 abstract final class SeabedDecor {
   static const rock =
-      DecorKind('$_folder/rock.svg', weight: 4, sizeRatio: 0.5);
+      DecorKind('$_folder/rock.svg', weight: 4, sizeRatio: 0.625);
   static const algae =
-      DecorKind('$_folder/algae.svg', weight: 5, sizeRatio: 0.4);
+      DecorKind('$_folder/algae.svg', weight: 5, sizeRatio: 0.5);
   static const coralPink =
-      DecorKind('$_folder/coral_pink.svg', weight: 1, sizeRatio: 0.55);
+      DecorKind('$_folder/coral_pink.svg', weight: 1, sizeRatio: 0.69);
   static const coralTeal =
-      DecorKind('$_folder/coral_teal.svg', weight: 1, sizeRatio: 0.55);
+      DecorKind('$_folder/coral_teal.svg', weight: 1, sizeRatio: 0.69);
   static const coralPurple =
-      DecorKind('$_folder/coral_purple.svg', weight: 1, sizeRatio: 0.55);
+      DecorKind('$_folder/coral_purple.svg', weight: 1, sizeRatio: 0.69);
   static const spongePurple =
-      DecorKind('$_folder/sponge_purple.svg', weight: 1, sizeRatio: 0.48);
+      DecorKind('$_folder/sponge_purple.svg', weight: 1, sizeRatio: 0.6);
   static const spongeOrange =
-      DecorKind('$_folder/sponge_orange.svg', weight: 1, sizeRatio: 0.48);
+      DecorKind('$_folder/sponge_orange.svg', weight: 1, sizeRatio: 0.6);
 
   /// Every kind, as [scatterDecor] draws them by default.
   static const all = [

@@ -4,12 +4,13 @@ import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/objective/guide/guide_target.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/widgets/ambience/ambience_clock_scope.dart';
+import 'package:abyss/presentation/widgets/base/base_badge_geometry.dart';
 import 'package:abyss/presentation/widgets/base/base_fit.dart';
 import 'package:abyss/presentation/widgets/base/base_guide_halo.dart';
 import 'package:abyss/presentation/widgets/base/base_layout.dart';
-import 'package:abyss/presentation/widgets/base/base_slot_projection.dart';
 import 'package:abyss/presentation/widgets/base/base_view.dart';
 import 'package:abyss/presentation/widgets/building/worksite_badge.dart';
+import 'package:abyss/presentation/widgets/guide/guide_halo.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/base_taps.dart';
@@ -80,7 +81,7 @@ void main() {
     expect(tapped, isEmpty);
   });
 
-  testWidgets('the guide surrounds the slot of the building to raise', (
+  testWidgets('the guide rings the slot of the building to raise', (
     tester,
   ) async {
     await show(tester,
@@ -90,9 +91,14 @@ void main() {
     expect(haloAround(slot), findsOneWidget);
     final view = tester.getRect(find.byType(BaseView));
     final fit = BaseFit.of(view.size, BaseLayout.island);
-    final foot = BaseLayout.island.slotOf(BuildingType.algaeFarm).foot;
-    expect(tester.getRect(slot).center,
-        offsetMoreOrLessEquals(view.topLeft + fit.toView(foot)));
+    final ring = BaseLayout.island.slotOf(BuildingType.algaeFarm).ringBox;
+    final rect = tester.getRect(slot);
+    expect(rect.topLeft,
+        offsetMoreOrLessEquals(view.topLeft + fit.toView(ring.topLeft)));
+    expect(rect.bottomRight,
+        offsetMoreOrLessEquals(view.topLeft + fit.toView(ring.bottomRight)));
+    final halo = tester.widget<GuideHalo>(haloAround(slot));
+    expect(halo.outline, BaseGuideHalo.diamondOf);
   });
 
   testWidgets('no halo on the base when the guide points elsewhere', (

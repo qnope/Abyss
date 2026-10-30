@@ -712,6 +712,8 @@
   "baseLevel": "Level {level}",
   "baseLevelShort": "Lv. {level}",
   "baseNotBuilt": "Not built",
+  "baseToBuild": "To build",
+  "baseUpgradable": "Upgradable",
   "baseMaxLevel": "Maximum level reached",
   "baseUpgradeLevels": "Level {from} → {to}",
   "baseWorksitesBusy": "Worksites busy this turn",

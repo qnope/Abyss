@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../data/game_repository.dart';
 import '../../../domain/building/building_type.dart';
 import '../../../domain/game/game.dart';
+import '../../../domain/game/game_upgrade_readiness.dart';
 import '../../widgets/base/base_view.dart';
 import '../../widgets/map/effects/map_effects.dart';
 import '../../widgets/tech/tech_tree_view.dart';
@@ -29,13 +30,7 @@ Widget buildGameTab(
 }) {
   final human = game.humanPlayer;
   return switch (tab) {
-    0 => BaseView(
-      buildings: human.buildings,
-      worksite: human.worksite,
-      onBuildingTap:
-          (b) =>
-              showBuildingDetailAction(context, game, repository, b, onChanged),
-    ),
+    0 => _baseTab(context, game, repository, onChanged),
     mapTab => buildMapTab(
       context,
       game,
@@ -70,4 +65,30 @@ Widget buildGameTab(
     ),
     _ => const SizedBox.shrink(),
   };
+}
+
+/// The base of the human player, a chevron over each building that can
+/// rise now and a lock on each plot a prerequisite holds back.
+Widget _baseTab(
+  BuildContext context,
+  Game game,
+  GameRepository repository,
+  VoidCallback onChanged,
+) {
+  final human = game.humanPlayer;
+  final readiness = game.upgradeReadinessesOf(human);
+  return BaseView(
+    buildings: human.buildings,
+    worksite: human.worksite,
+    upgradable: {
+      for (final MapEntry(:key, :value) in readiness.entries)
+        if (value.isReady) key,
+    },
+    locked: {
+      for (final MapEntry(:key, :value) in readiness.entries)
+        if (value.isLocked) key,
+    },
+    onBuildingTap:
+        (b) => showBuildingDetailAction(context, game, repository, b, onChanged),
+  );
 }

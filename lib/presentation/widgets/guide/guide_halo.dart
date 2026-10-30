@@ -18,6 +18,10 @@ class GuideHalo extends StatefulWidget {
   /// as the margin of a card.
   final EdgeInsets inset;
 
+  /// Outline traced in the box instead of [shape], such as the diamond
+  /// of a slot on the base.
+  final Path Function(Rect box)? outline;
+
   const GuideHalo({
     super.key,
     required this.active,
@@ -25,6 +29,7 @@ class GuideHalo extends StatefulWidget {
     this.shape = BoxShape.rectangle,
     this.radius = 12,
     this.inset = EdgeInsets.zero,
+    this.outline,
   });
 
   @override
@@ -93,6 +98,7 @@ class _GuideHaloState extends State<GuideHalo>
             shape: widget.shape,
             radius: widget.radius,
             inset: widget.inset,
+            outline: widget.outline,
             glow: glow,
           )
           : null;

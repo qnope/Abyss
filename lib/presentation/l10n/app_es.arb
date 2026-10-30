@@ -711,6 +711,8 @@
   "baseLevel": "Nivel {level}",
   "baseLevelShort": "Niv. {level}",
   "baseNotBuilt": "Sin construir",
+  "baseToBuild": "Por construir",
+  "baseUpgradable": "Mejorable",
   "baseMaxLevel": "Nivel máximo alcanzado",
   "baseUpgradeLevels": "Nivel {from} → {to}",
   "baseWorksitesBusy": "Obras ocupadas este turno",

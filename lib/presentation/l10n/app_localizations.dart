@@ -1381,7 +1381,7 @@ abstract class AppLocalizations {
   /// No description provided for @actionFailureAttackTooSoon.
   ///
   /// In fr, this message translates to:
-  /// **'La base a été attaquée trop récemment : les autres attendent'**
+  /// **'Vous avez attaqué cet adversaire trop récemment : attendez quelques tours'**
   String get actionFailureAttackTooSoon;
 
   /// No description provided for @actionFailureAlreadyAttackedThisTurn.
@@ -4227,6 +4227,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Non construit'**
   String get baseNotBuilt;
+
+  /// No description provided for @baseToBuild.
+  ///
+  /// In fr, this message translates to:
+  /// **'À bâtir'**
+  String get baseToBuild;
+
+  /// No description provided for @baseUpgradable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Améliorable'**
+  String get baseUpgradable;
 
   /// No description provided for @baseMaxLevel.
   ///

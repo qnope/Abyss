@@ -21,7 +21,10 @@ void main() {
   late List<Building> tapped;
 
   /// The base of a player whose farm (level 3) outgrew its QG (level 2).
-  Future<Player> show(WidgetTester tester) async {
+  Future<Player> show(
+    WidgetTester tester, {
+    Set<BuildingType> upgradable = const {},
+  }) async {
     tapped = [];
     final nemo =
         Player(name: 'Nemo')
@@ -33,6 +36,7 @@ void main() {
           buildings: nemo.buildings,
           worksite: nemo.worksite,
           onBuildingTap: tapped.add,
+          upgradable: upgradable,
         ),
         null,
       ),
@@ -73,6 +77,22 @@ void main() {
     expect(
       find.bySemanticsLabel(RegExp(r'^.+, (Niveau \d+|Non construit)')),
       findsNWidgets(BuildingType.values.length),
+    );
+    semantics.dispose();
+  });
+
+  testWidgets('a building that can rise now is said to be upgradable', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await show(tester, upgradable: {hq, farm});
+    expect(
+      find.bySemanticsLabel('Quartier Général, Niveau 2, Améliorable'),
+      findsOneWidget,
+    );
+    expect(
+      find.bySemanticsLabel("Ferme d'algues, Niveau 3, Dégradé"),
+      findsOneWidget,
     );
     semantics.dispose();
   });

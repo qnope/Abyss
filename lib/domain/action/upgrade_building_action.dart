@@ -5,6 +5,7 @@ import 'action_type.dart';
 import '../building/building_cost_calculator.dart';
 import '../building/building_type.dart';
 import '../game/game.dart';
+import '../game/game_upgrade_readiness.dart';
 import '../game/player.dart';
 import '../history/history_entry.dart';
 import '../raid/noise_rules.dart';
@@ -32,18 +33,9 @@ class UpgradeBuildingAction extends Action {
     if (building == null) {
       return ActionResult.failure(ActionFailure.buildingNotFound);
     }
-    final check = _calculator(player).checkUpgrade(
-      type: buildingType,
-      currentLevel: building.level,
-      resources: player.resources,
-      allBuildings: player.buildings,
-      capturedBaseTypes: game.capturedBaseTypesOf(player.id),
-      isVolcanicKernelCaptured:
-          game.isVolcanicKernelCapturedBy(player.id),
-    );
-    final int hqLevel =
-        player.buildings[BuildingType.headquarters]?.level ?? 0;
-    if (player.worksite.freeBuildSites(hqLevel) <= 0) {
+    final readiness = game.upgradeReadinessOf(player, buildingType);
+    final check = readiness.check;
+    if (!readiness.siteFree) {
       return ActionResult.failure(ActionFailure.worksitesBusy);
     }
     if (check.isMaxLevel) {

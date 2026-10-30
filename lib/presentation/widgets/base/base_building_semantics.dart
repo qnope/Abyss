@@ -12,8 +12,9 @@ import 'base_pad_tier.dart';
 import 'base_snapshot.dart';
 
 /// One node per building of the base for screen readers, over where it
-/// stands: named with its level (or still to build) and whether it is
-/// degraded, it opens the building through [onBuildingTap].
+/// stands: named with its level (or still to build), whether it is
+/// degraded and whether it can rise now, it opens the building through
+/// [onBuildingTap].
 ///
 /// The nodes take no touch: a finger goes through them to the base,
 /// which picks the building in front.
@@ -48,6 +49,7 @@ class BaseBuildingSemantics extends StatelessWidget {
                 label: building.baseLabel(
                   l10n,
                   degraded: snapshot.degraded.contains(type),
+                  upgradable: snapshot.upgradable.contains(type),
                 ),
                 onTap: () => onBuildingTap(building),
                 child: const SizedBox.expand(),

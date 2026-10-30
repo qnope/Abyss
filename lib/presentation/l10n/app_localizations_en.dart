@@ -2973,6 +2973,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get baseNotBuilt => 'Not built';
 
   @override
+  String get baseToBuild => 'To build';
+
+  @override
+  String get baseUpgradable => 'Upgradable';
+
+  @override
   String get baseMaxLevel => 'Maximum level reached';
 
   @override

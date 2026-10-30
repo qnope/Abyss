@@ -1,5 +1,6 @@
 import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/player.dart';
+import 'package:abyss/presentation/widgets/base/base_badge.dart';
 import 'package:abyss/presentation/widgets/base/base_pad_tier.dart';
 import 'package:abyss/presentation/widgets/base/base_snapshot.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,5 +32,37 @@ void main() {
   test('a building above what its headquarters allows is degraded', () {
     expect(BaseSnapshot.of(player(farmLevel: 3).buildings).degraded, {farm});
     expect(BaseSnapshot.of(player(farmLevel: 2).buildings).degraded, isEmpty);
+  });
+
+  group('the marks over the buildings', () {
+    const barracks = BuildingType.barracks, lab = BuildingType.laboratory;
+
+    test('only a built building that may rise shows a chevron', () {
+      final base = BaseSnapshot.of(
+        player().buildings,
+        upgradable: {hq, farm, barracks},
+      );
+      expect(base.upgradable, {hq, farm});
+      expect(base.badgeOf(hq), BaseBadge.upgrade);
+      expect(base.badgeOf(barracks), isNull);
+    });
+
+    test('a degraded building shows its triangle, never a chevron', () {
+      final base = BaseSnapshot.of(
+        player(farmLevel: 3).buildings,
+        upgradable: {farm},
+      );
+      expect(base.upgradable, isEmpty);
+      expect(base.badgeOf(farm), BaseBadge.warning);
+    });
+
+    test('a building with nothing to say shows no badge', () {
+      expect(BaseSnapshot.of(player().buildings).badgeOf(farm), isNull);
+    });
+
+    test('only a plot can be locked', () {
+      final base = BaseSnapshot.of(player().buildings, locked: {farm, lab});
+      expect(base.locked, {lab});
+    });
   });
 }

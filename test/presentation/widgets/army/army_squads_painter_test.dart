@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/theme/abyss_island_colors.dart';
+import 'package:abyss/presentation/widgets/army/army_banner_drawer.dart';
 import 'package:abyss/presentation/widgets/army/army_fit.dart';
 import 'package:abyss/presentation/widgets/army/army_roster.dart';
 import 'package:abyss/presentation/widgets/army/army_sprites.dart';
@@ -34,6 +35,23 @@ void main() {
       (Canvas canvas) => painter.paint(canvas, view),
       paints..everything((method, arguments) {
         if (method == #drawImageRect && arguments[0] == image) {
+          found.add(arguments[3] as Paint);
+        }
+        return true;
+      }),
+    );
+    return found;
+  }
+
+  /// The paints the banner of [type] draws its portrait with.
+  List<Paint> bannerDrawsOf(UnitType type, {required bool locked}) {
+    final portrait = sprites.portraitOf(type)!;
+    final found = <Paint>[];
+    expect(
+      (Canvas canvas) =>
+          ArmyBannerDrawer().paint(canvas, type, portrait, locked: locked),
+      paints..everything((method, arguments) {
+        if (method == #drawImageRect && arguments[0] == portrait) {
           found.add(arguments[3] as Paint);
         }
         return true;
@@ -76,9 +94,9 @@ void main() {
     expect(ghost, hasLength(1));
     expect(ghost.single.colorFilter, AbyssIslandColors.ghost);
     expect(ghost.single.color.a, lessThan(1));
-    final banner = drawsOf(squads, sprites.portraitOf(UnitType.saboteur)!);
+    final banner = bannerDrawsOf(UnitType.saboteur, locked: true);
     expect(banner.single.colorFilter, AbyssIslandColors.degraded);
-    final scout = drawsOf(squads, sprites.portraitOf(UnitType.scout)!);
+    final scout = bannerDrawsOf(UnitType.scout, locked: false);
     expect(scout.single.colorFilter, isNull);
   });
 

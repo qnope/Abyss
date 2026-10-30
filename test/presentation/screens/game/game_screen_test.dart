@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
 import 'package:abyss/domain/map/cell_content_type.dart';
@@ -14,7 +15,9 @@ import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/fight/army_selection_screen.dart';
 import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/widgets/base/base_view.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
+import '../../../helpers/base_taps.dart';
 import '../../../helpers/fake_game_repository.dart';
 import '../../../helpers/test_svg_helper.dart';
 import '../../../helpers/reduced_motion.dart';
@@ -107,14 +110,14 @@ void main() {
       expect(find.text('Bientôt disponible'), findsNothing);
     });
 
-    testWidgets('Base tab shows building list', (tester) async {
+    testWidgets('Base tab shows the base as an island', (tester) async {
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();
 
-      expect(find.text('Quartier Général'), findsOneWidget);
+      expect(find.byType(BaseView), findsOneWidget);
     });
 
-    testWidgets('tapping building card opens detail sheet', (tester) async {
+    testWidgets('tapping a building of the base opens its detail sheet', (tester) async {
       tester.view.physicalSize = const Size(800, 1200);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(() => tester.view.resetPhysicalSize());
@@ -123,7 +126,7 @@ void main() {
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Quartier Général'));
+      await tapBuilding(tester, BuildingType.headquarters);
       await tester.pumpAndSettle();
 
       expect(
@@ -199,13 +202,14 @@ void main() {
       await tester.pumpWidget(createApp());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Quartier Général'));
+      await tapBuilding(tester, BuildingType.headquarters);
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('Construire'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Niveau 1'), findsOneWidget);
+      final hq = game.humanPlayer.buildings[BuildingType.headquarters]!;
+      expect(hq.level, 1);
     });
   });
 }

@@ -4,7 +4,7 @@ import 'package:abyss/domain/objective/objective_id.dart';
 import 'package:abyss/presentation/extensions/guide_message_extensions.dart';
 import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
-import 'package:abyss/presentation/widgets/building/building_card.dart';
+import 'package:abyss/presentation/widgets/base/base_guide_halo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -29,20 +29,16 @@ void main() {
     await tester.pump();
   }
 
-  final hqCard = find.byWidgetPredicate(
-    (widget) =>
-        widget is BuildingCard &&
-        widget.building.type == BuildingType.headquarters,
-  );
+  final hqSlot = find.byKey(BaseGuideHalo.keyOf(BuildingType.headquarters));
 
-  testWidgets('the guide shows its lesson and points at the HQ card', (
+  testWidgets('the guide shows its lesson and points at the HQ slot', (
     tester,
   ) async {
     await pumpScreen(tester, guideGame(ObjectiveId.hqLevel1));
 
     expect(find.text(ObjectiveId.hqLevel1.lesson(fr)!), findsOneWidget);
     expect(activeHalos, findsOneWidget);
-    expect(haloAround(hqCard), findsOneWidget);
+    expect(haloAround(hqSlot), findsOneWidget);
   });
 
   testWidgets('« Compris » hides the bubble but keeps the halo', (
@@ -54,7 +50,7 @@ void main() {
     await tester.pump();
 
     expect(find.text('Compris'), findsNothing);
-    expect(haloAround(hqCard), findsOneWidget);
+    expect(haloAround(hqSlot), findsOneWidget);
   });
 
   testWidgets('the halo shows the tab to open, then leaves it once open', (

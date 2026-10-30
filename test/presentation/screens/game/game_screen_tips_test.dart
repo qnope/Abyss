@@ -1,4 +1,5 @@
 import 'package:abyss/domain/raid/noise_rules.dart';
+import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/event/random_event_type.dart';
 import 'package:abyss/domain/game/game.dart';
 import 'package:abyss/domain/game/player.dart';
@@ -14,6 +15,7 @@ import 'package:abyss/presentation/widgets/tip/tip_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/base_taps.dart';
 import '../../../helpers/fake_game_repository.dart';
 import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
@@ -43,7 +45,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Quartier Général'));
+    await tapBuilding(tester, BuildingType.headquarters);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Construire'));
     await tester.pumpAndSettle();

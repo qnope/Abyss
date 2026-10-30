@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../domain/building/building_type.dart';
+import '../common/raster_paint.dart';
 import '../map/map_sprites.dart';
 import 'base_buildings_layer.dart';
 import 'base_fit.dart';
@@ -14,12 +15,18 @@ import 'base_snapshot.dart';
 import 'base_sprites.dart';
 
 /// The base of [layout] seen through [fit], from the back to the front,
-/// each layer within its own repaint boundary: the still island (cached),
+/// each layer within its own repaint boundary: the still island,
+/// rasterized into a bitmap kept when the base is left ([RasterPaint]),
 /// the guide's ring on its ground, the buildings alive on the ambience
-/// [clock], then the front of the coral rampart once the citadel stands.
+/// [clock], then
+/// the front of the coral rampart once the citadel stands (a few plain
+/// shapes, cheap enough to stay a picture).
 ///
 /// Only the buildings repaint as the base lives.
 class BaseLayers extends StatelessWidget {
+  /// The name the island's bitmap is kept as when the base is left.
+  static const islandName = 'base island';
+
   final BaseLayout layout;
   final BaseFit fit;
   final BaseSnapshot snapshot;
@@ -41,7 +48,8 @@ class BaseLayers extends StatelessWidget {
         layout, snapshot.levels[BuildingType.coralCitadel] ?? 0);
     return Stack(fit: StackFit.expand, children: [
       RepaintBoundary(
-        child: CustomPaint(
+        child: RasterPaint(
+          keepAs: islandName,
           painter: BaseIslandPainter(
             layout: layout,
             tiers: snapshot.tiers,

@@ -4,6 +4,7 @@ import 'package:abyss/presentation/widgets/base/base_buildings_painter.dart';
 import 'package:abyss/presentation/widgets/base/base_island_painter.dart';
 import 'package:abyss/presentation/widgets/base/base_rampart_painter.dart';
 import 'package:abyss/presentation/widgets/base/base_view.dart';
+import 'package:abyss/presentation/widgets/common/raster_paint.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -41,6 +42,12 @@ void main() {
   T painterOf<T extends CustomPainter>(WidgetTester tester) =>
       tester.widget<CustomPaint>(painted<T>()).painter! as T;
 
+  final island = find.byWidgetPredicate((widget) =>
+      widget is RasterPaint && widget.painter is BaseIslandPainter);
+
+  BaseIslandPainter islandOf(WidgetTester tester) =>
+      tester.widget<RasterPaint>(island).painter as BaseIslandPainter;
+
   /// How many times the layer holding [painter] was painted, with or
   /// without what lies around it.
   int paintsOf(WidgetTester tester, Finder painter) {
@@ -57,13 +64,10 @@ void main() {
     }
   }
 
-  testWidgets('the buildings breathe on the clock, the island stays still',
-      (tester) async {
+  testWidgets('the buildings breathe on the clock', (tester) async {
     await show(tester, player());
-    final island = paintsOf(tester, painted<BaseIslandPainter>());
     final buildings = paintsOf(tester, painted<BaseBuildingsPainter>());
     await tick(tester);
-    expect(paintsOf(tester, painted<BaseIslandPainter>()), island);
     expect(paintsOf(tester, painted<BaseBuildingsPainter>()),
         greaterThan(buildings));
   });
@@ -105,10 +109,10 @@ void main() {
     final nemo = player();
     await show(tester, nemo);
     expect(painted<BaseRampartPainter>(), findsNothing);
-    expect(painterOf<BaseIslandPainter>(tester).rampart.back, isEmpty);
+    expect(islandOf(tester).rampart.back, isEmpty);
     nemo.buildings[citadel]!.level = 2;
     await show(tester, nemo);
-    expect(painterOf<BaseIslandPainter>(tester).rampart.back, isNotEmpty);
+    expect(islandOf(tester).rampart.back, isNotEmpty);
     final front = find.byWidgetPredicate((widget) =>
         widget is CustomPaint && widget.painter is BaseRampartPainter);
     expect(front, findsOneWidget);

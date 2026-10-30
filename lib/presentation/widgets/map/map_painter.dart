@@ -9,6 +9,7 @@ import 'map_content_drawer.dart';
 import 'map_flat_contents.dart';
 import 'map_projection.dart';
 import 'map_sprites.dart';
+import 'slab/iso_slab_painter.dart';
 
 export 'map_content_drawer.dart' show cellSize;
 
@@ -16,7 +17,9 @@ export 'map_content_drawer.dart' show cellSize;
 /// coordinates: the diamond tile of every cell, the holes lying flat on
 /// them, a single path for exploration markers, the decor standing
 /// among hidden cells, a single path for the fog, then the decor
-/// standing among seen cells, over the fog as the contents are.
+/// standing among seen cells, over the fog as the contents are, and
+/// last the rock slab the map stands on (see [IsoSlabPainter]), clear of
+/// the fog.
 ///
 /// Whatever else stands (still or moving, through the fog or not) and
 /// every glow, shadow and ring are left to the standing layer above,
@@ -95,6 +98,12 @@ class MapPainter extends CustomPainter {
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, fogBlur),
     );
     decorDrawer.draw(canvas, decor.where((d) => !d.hidden));
+    // Under the front edges, which nothing on the map reaches past.
+    IsoSlabPainter(
+      columns: columns,
+      rows: columns == 0 ? 0 : visuals.length ~/ columns,
+      salt: salt ?? 0,
+    ).paint(canvas, size);
   }
 
   /// The box the floor tile of [cell] is drawn in: its tile box, a hair

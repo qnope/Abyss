@@ -13,12 +13,12 @@ void main() {
     expect(scatter(), isNotEmpty);
   });
 
-  test('stands about one decor for every three cells', () {
+  test('stands a little over one decor for every three cells', () {
     for (final salt in [1, 2, 3]) {
-      expect(scatter(salt: salt).length, inInclusiveRange(110, 160),
+      expect(scatter(salt: salt).length, inInclusiveRange(135, 175),
           reason: 'salt $salt');
     }
-    expect(scatter(side: 32).length, inInclusiveRange(290, 400));
+    expect(scatter(side: 32).length, inInclusiveRange(360, 440));
   });
 
   test('scatters other decor for another salt', () {
@@ -65,11 +65,14 @@ void main() {
     }
   });
 
-  test('keeps decor small: algae smaller, corals taller', () {
-    for (final decor in scatter(side: 32)) {
-      expect(decor.size / MapProjection.tileWidth,
-          inInclusiveRange(0.3, 0.6), reason: '$decor');
+  test('keeps decor about half a tile: algae smaller, corals taller', () {
+    final decor = scatter(side: 32);
+    final ratios = [for (final d in decor) d.size / MapProjection.tileWidth];
+    for (final (i, ratio) in ratios.indexed) {
+      expect(ratio, inInclusiveRange(0.45, 0.75), reason: '${decor[i]}');
     }
+    final mean = ratios.reduce((a, b) => a + b) / ratios.length;
+    expect(mean, inInclusiveRange(0.55, 0.62));
     expect(SeabedDecor.algae.sizeRatio, lessThan(SeabedDecor.rock.sizeRatio));
     expect(SeabedDecor.coralPink.sizeRatio,
         greaterThan(SeabedDecor.rock.sizeRatio));

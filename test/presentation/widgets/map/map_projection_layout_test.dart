@@ -49,7 +49,8 @@ void main() {
     expect(right + origin.dx, size.width);
     final bottom = MapProjection.tileRectOf((columns - 1, rows - 1)).bottom;
     expect(bottom + origin.dy + MapProjection.slabDepth, size.height);
-    expect(MapProjection.slabDepth, closeTo(0.6 * MapProjection.tileHeight, 3));
+    // Thick enough to read as a slab once zoomed out on the whole map.
+    expect(MapProjection.slabDepth, 4 * MapProjection.tileHeight);
   });
 
   group('the cell at a projection point', () {

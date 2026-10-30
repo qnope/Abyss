@@ -29,8 +29,9 @@ abstract final class MapProjection {
   /// contents.
   static const headroom = tileWidth;
 
-  /// Space under the map reserved for its thickness.
-  static const slabDepth = 0.6 * tileHeight;
+  /// Space under the map reserved for its thickness: the rock slab it
+  /// stands on, deep enough to read once zoomed out on the whole map.
+  static const slabDepth = 4 * tileHeight;
 
   /// The screen point of the [flat] map point.
   static Offset toScreen(Offset flat) =>

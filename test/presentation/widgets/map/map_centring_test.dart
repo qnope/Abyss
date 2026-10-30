@@ -3,6 +3,7 @@ import 'package:abyss/presentation/widgets/map/effects/map_effect.dart';
 import 'package:abyss/presentation/widgets/map/effects/map_effects.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
+import 'package:abyss/presentation/widgets/map/map_view_fit.dart';
 import 'package:abyss/presentation/widgets/map/map_viewport.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -68,14 +69,15 @@ void main() {
     expect(mapTransformOf(tester).getMaxScaleOnAxis(), closeTo(homeScale, 1e-9));
   });
 
-  testWidgets('zooms from the whole map width to a tile and a half', (
+  testWidgets('zooms from the whole map in the abyss to a tile and a half', (
     tester,
   ) async {
     await pumpView(tester);
     final viewer =
         tester.widget<InteractiveViewer>(find.byType(InteractiveViewer));
-    expect(viewer.minScale,
-        closeTo(800.0 / MapProjection.sizeOf(20, 20).width, 1e-9));
+    expect(viewer.minScale, closeTo(MapViewFit.overviewScale(
+        tester.getSize(find.byType(InteractiveViewer)),
+        MapProjection.sizeOf(20, 20)), 1e-9));
     expect(viewer.maxScale,
         closeTo(800.0 / (1.5 * MapProjection.tileWidth), 1e-9));
   });

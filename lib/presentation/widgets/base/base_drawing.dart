@@ -48,3 +48,32 @@ void paintGlow(
 
 /// A polygon through [points].
 Path polygonOf(List<Offset> points) => Path()..addPolygon(points, true);
+
+/// The closed polygon through [points] cut in dashes [dash] long, [gap]
+/// apart, the pattern running on from one edge to the next.
+Path dashedPolygonOf(List<Offset> points, double dash, double gap) {
+  final path = Path();
+  var on = true, left = dash;
+  for (var k = 0; k < points.length; k++) {
+    final from = points[k], to = points[(k + 1) % points.length];
+    final length = (to - from).distance;
+    var done = 0.0;
+    while (done < length) {
+      final step = min(left, length - done);
+      final a = Offset.lerp(from, to, done / length)!;
+      final b = Offset.lerp(from, to, (done + step) / length)!;
+      if (on) {
+        path
+          ..moveTo(a.dx, a.dy)
+          ..lineTo(b.dx, b.dy);
+      }
+      done += step;
+      left -= step;
+      if (left <= 0) {
+        on = !on;
+        left = on ? dash : gap;
+      }
+    }
+  }
+  return path;
+}

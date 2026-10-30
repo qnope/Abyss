@@ -5,6 +5,7 @@ import 'package:abyss/presentation/widgets/base/base_buildings_painter.dart';
 import 'package:abyss/presentation/widgets/base/base_fit.dart';
 import 'package:abyss/presentation/widgets/base/base_island_painter.dart';
 import 'package:abyss/presentation/widgets/base/base_layout.dart';
+import 'package:abyss/presentation/widgets/base/base_pad_tier.dart';
 import 'package:abyss/presentation/widgets/base/base_sprites.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,11 +17,16 @@ void main() {
   final fit = BaseFit.of(view, layout);
   const hq = BuildingType.headquarters, farm = BuildingType.algaeFarm;
 
-  BaseIslandPainter island(Set<BuildingType> built, {BaseFit? at}) =>
-      BaseIslandPainter(layout: layout, built: built, fit: at ?? fit);
+  const gravel = BasePadTier.gravel;
 
-  BaseBuildingsPainter buildings(Map<BuildingType, int> levels) =>
-      BaseBuildingsPainter(layout: layout, levels: levels, fit: fit);
+  BaseIslandPainter island(Map<BuildingType, BasePadTier> tiers,
+          {BaseFit? at}) =>
+      BaseIslandPainter(layout: layout, tiers: tiers, fit: at ?? fit);
+
+  BaseBuildingsPainter buildings(Map<BuildingType, int> levels,
+          {Set<BuildingType> degraded = const {}}) =>
+      BaseBuildingsPainter(
+          layout: layout, levels: levels, degraded: degraded, fit: fit);
 
   /// Paints [painter] on a canvas of the [view], as a frame would.
   void paint(void Function(Canvas, Size) painter) {
@@ -30,29 +36,42 @@ void main() {
   }
 
   group('the still island', () {
-    test('a rebuilt base with the same buildings is not repainted', () {
-      expect(island({hq, farm}).shouldRepaint(island({farm, hq})), isFalse);
+    test('a rebuilt base with the same pads is not repainted', () {
+      expect(island({hq: gravel, farm: gravel})
+          .shouldRepaint(island({farm: gravel, hq: gravel})), isFalse);
     });
 
-    test('a new building lays a new walkway, so the island repaints', () {
-      expect(island({hq, farm}).shouldRepaint(island({hq})), isTrue);
+    test('a new building lays a pad and a walkway, so the island repaints',
+        () {
+      expect(island({hq: gravel, farm: gravel})
+          .shouldRepaint(island({hq: gravel, farm: BasePadTier.plot})),
+          isTrue);
+    });
+
+    test('a pad grown to its next tier repaints the island', () {
+      expect(island({hq: BasePadTier.deck}).shouldRepaint(island({hq: gravel})),
+          isTrue);
     });
 
     test('a new view size repaints the island', () {
       final other = BaseFit.of(const Size(400, 700), layout);
-      expect(island({hq}, at: other).shouldRepaint(island({hq})), isTrue);
+      expect(island({hq: gravel}, at: other).shouldRepaint(island({hq: gravel})),
+          isTrue);
     });
 
-    test('paints with or without its sprites', () {
-      paint(island({hq, farm}).paint);
-      paint(island(BuildingType.values.toSet()).paint);
+    test('paints every tier of pad, with or without its sprites', () {
+      paint(island({hq: gravel, farm: gravel}).paint);
+      for (final tier in BasePadTier.values) {
+        paint(island({for (final type in BuildingType.values) type: tier})
+            .paint);
+      }
     });
 
     test('paints an island of any size', () {
       const parade = BaseLayout(size: 9, slots: {});
       paint(BaseIslandPainter(
         layout: parade,
-        built: const {},
+        tiers: const {},
         fit: BaseFit.of(view, parade),
       ).paint);
     });
@@ -62,8 +81,8 @@ void main() {
       addTearDown(clearSvgMocks);
       final sprites = await tester.runAsync(BaseSprites.load);
       final loaded = BaseIslandPainter(
-          layout: layout, built: {hq}, fit: fit, sprites: sprites!.map);
-      expect(loaded.shouldRepaint(island({hq})), isTrue);
+          layout: layout, tiers: {hq: gravel}, fit: fit, sprites: sprites!.map);
+      expect(loaded.shouldRepaint(island({hq: gravel})), isTrue);
       paint(loaded.paint);
     });
   });
@@ -77,6 +96,13 @@ void main() {
       expect(buildings({hq: 2}).shouldRepaint(buildings({hq: 1})), isTrue);
     });
 
+    test('a building degraded repaints them, greyed', () {
+      expect(
+          buildings({farm: 3}, degraded: {farm})
+              .shouldRepaint(buildings({farm: 3})),
+          isTrue);
+    });
+
     testWidgets('paints every building, built or ghost', (tester) async {
       mockSvgAssets();
       addTearDown(clearSvgMocks);
@@ -85,7 +111,12 @@ void main() {
         expect(sprites!.standingOf(type), isNotNull, reason: '$type');
       }
       final painter = BaseBuildingsPainter(
-          layout: layout, levels: {hq: 1, farm: 0}, fit: fit, sprites: sprites);
+        layout: layout,
+        levels: {hq: 1, farm: 0, BuildingType.barracks: 5},
+        degraded: {BuildingType.barracks},
+        fit: fit,
+        sprites: sprites,
+      );
       paint(painter.paint);
       expect(painter.hitTest(Offset.zero), isFalse);
     });

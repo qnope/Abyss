@@ -1,8 +1,9 @@
 import 'package:flutter/painting.dart';
 
 /// Colours of the player's base drawn as an island in the abyss: the
-/// water behind it, the rock of its slab and spire, its walkways and the
-/// ghost of a building still to build. Taken from the approved mockup.
+/// water behind it, the rock of its slab and spire, its walkways, the
+/// pads under its buildings and the ghost of a building still to build.
+/// Taken from the approved mockup.
 abstract final class AbyssIslandColors {
   // The water behind the island, from the surface light to the dark.
   static const Color waterTop = Color(0xFF16314F);
@@ -53,11 +54,43 @@ abstract final class AbyssIslandColors {
   static const Color walkShadow = Color(0xFF03080F);
   static const Color lampCore = Color(0xFFE0FFFF);
 
+  // The pads the buildings stand on, from the plot to the lit deck.
+  static const Color plot = Color(0xFF00E5FF);
+  static const Color stake = Color(0xFF7B9CC0);
+  static const Color stakeShadow = Color(0xFF02060D);
+  static const Color gravelLight = Color(0xFF3D5677);
+  static const Color gravelDark = Color(0xFF22364F);
+  static const Color pebbleLight = Color(0xFF5E7DA3);
+  static const Color pebbleDark = Color(0xFF1A2B44);
+  static const Color gravelRim = Color(0xFF8FB0D8);
+  static const Color padLitTop = Color(0xFF2C4361);
+  static const Color padLitBottom = Color(0xFF13213A);
+  static const Color padShadedTop = Color(0xFF1A2B44);
+  static const Color padShadedBottom = Color(0xFF0A1424);
+  static const Color deckLight = Color(0xFF5A7699);
+  static const Color deckMid = Color(0xFF3A5374);
+  static const Color deckDark = Color(0xFF22374F);
+  static const Color seam = Color(0xFF16263D);
+  static const Color rivet = Color(0xFF9DB6D2);
+  static const Color deckRim = Color(0xFFC8DCF2);
+  static const Color beaconCore = Color(0xFFFFFFFF);
+
+  /// Share of a sprite's alpha its cyan [ghost] keeps.
+  static const double ghostAlpha = 0.42;
+
   /// Turns a building still to build into a translucent cyan ghost.
   static const ColorFilter ghost = ColorFilter.matrix([
     0, 0, 0, 0, 64, //
     0.2, 0.3, 0.3, 0, 191, //
     0.25, 0.3, 0.35, 0, 230, //
-    0, 0, 0, 0.23, 0,
+    0, 0, 0, ghostAlpha, 0,
+  ]);
+
+  /// Greys a degraded building: barely saturated, darkened, cold.
+  static const ColorFilter degraded = ColorFilter.matrix([
+    0.2053, 0.3768, 0.0379, 0, 0, //
+    0.1195, 0.5001, 0.0404, 0, 0, //
+    0.1340, 0.4497, 0.1563, 0, 0, //
+    0, 0, 0, 1, 0,
   ]);
 }

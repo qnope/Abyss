@@ -1,6 +1,7 @@
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:abyss/presentation/widgets/map/decor/decor_kind.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_sprites.dart';
 
@@ -9,6 +10,11 @@ void main() {
     for (final terrain in TerrainType.values) {
       expect(MapSprites.svgPaths, containsAll(terrain.tileSvgPaths));
     }
+  });
+
+  test('lists every decor standing between the cells', () {
+    expect(MapSprites.svgPaths,
+        containsAll(SeabedDecor.all.map((kind) => kind.svgPath)));
   });
 
   testWidgets('rasterizes every map sprite once', (tester) async {

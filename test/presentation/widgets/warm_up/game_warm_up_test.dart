@@ -5,6 +5,7 @@ import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/building/building_card.dart';
 import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 import 'package:abyss/presentation/widgets/common/svg_raster_cache.dart';
+import 'package:abyss/presentation/widgets/map/decor/map_decor_cells.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
@@ -100,6 +101,9 @@ void main() {
     final standing = tester.widget<CustomPaint>(find.byWidgetPredicate(
         (w) => w is CustomPaint && w.painter is MapStandingPainter));
     expect((standing.painter! as MapStandingPainter).visuals, same(visuals));
+    final decor =
+        mapDecorOf(visuals, painter.columns, salt: painter.decorSalt!);
+    expect(decor.map((d) => d.hidden).toSet(), {true, false});
     expect(standing.size, paint.size);
   });
 }

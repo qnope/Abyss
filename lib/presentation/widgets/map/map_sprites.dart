@@ -9,6 +9,7 @@ import '../../extensions/monster_family_extensions.dart';
 import '../../extensions/post_holder_extensions.dart';
 import '../../extensions/terrain_type_extensions.dart';
 import '../common/svg_raster_cache.dart';
+import 'decor/decor_kind.dart';
 import 'map_cell_visual.dart';
 import 'map_glow_sprites.dart';
 import 'map_floor_sprites.dart';
@@ -70,6 +71,7 @@ class MapSprites {
         ...postSvgPaths,
         playerBaseSvgPath,
         volcanoSealSvgPath,
+        for (final decor in SeabedDecor.all) decor.svgPath,
       };
 
   static Future<MapSprites> _rasterizeAll() async {

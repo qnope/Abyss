@@ -27,6 +27,11 @@ enum SvgFrame {
   /// it: a floor tile of the isometric map, its viewBox twice as wide as
   /// tall squeezed into the square.
   diamond,
+
+  /// Transparent all around, standing on its foot in the middle of the
+  /// bottom, (32, 56): a decor drawn between the cells of the isometric
+  /// map, its middle often empty.
+  standing,
 }
 
 /// Frame of each icon, by the prefix of its path under assets/icons.
@@ -40,6 +45,7 @@ const _frames = {
   'events/': SvgFrame.transparent,
   'guide/': SvgFrame.medallion,
   'factions/': SvgFrame.medallion,
+  'decor/': SvgFrame.standing,
   'terrain/plain.svg': SvgFrame.tile,
   'terrain/plain_iso_': SvgFrame.diamond,
   'terrain/volcanic_kernel.svg': SvgFrame.transparent,
@@ -65,7 +71,7 @@ void main() {
       await tester.runAsync(() async {
         final image = await rasterizeSvg(file.readAsStringSync());
         final alpha = await SvgAlphaMap.of(image);
-        if (frame != SvgFrame.overlay) {
+        if (frame != SvgFrame.overlay && frame != SvgFrame.standing) {
           expect(alpha.at(32, 32), greaterThan(0), reason: 'empty center');
         }
         switch (frame) {
@@ -79,6 +85,10 @@ void main() {
           case SvgFrame.medallion:
             expect(alpha.outside(inDisc), 0, reason: 'drawn outside');
             expect(alpha.disc, everyElement(255), reason: 'disc not full');
+          case SvgFrame.standing:
+            expect(alpha.corners, everyElement(0), reason: 'corner drawn');
+            expect(alpha.clearBorder, greaterThan(0.5), reason: 'border');
+            expect(alpha.foot, greaterThan(0), reason: 'not on its foot');
           case SvgFrame.tile:
             expect(alpha.corners, everyElement(255), reason: 'tile not full');
           case SvgFrame.diamond:

@@ -12,11 +12,22 @@ import 'run_concurrently.dart';
 /// Detailed SVGs hold hundreds of shapes: replaying them every frame is
 /// costly, especially on the web where pictures are not raster-cached.
 /// Drawing a shared bitmap instead costs a single image draw. Every SVG is
-/// rasterized at [pixels] and drawn downscaled with mipmaps, so any icon
-/// size reuses the same bitmap.
+/// rasterized at [pixels] ([largePixels] for [large] art) and drawn
+/// downscaled with mipmaps, so any icon size reuses the same bitmap.
 abstract final class SvgRasterCache {
-  /// Side of every bitmap: sharp for map sprites and the largest icons.
+  /// Side of a bitmap: sharp for map sprites and the largest icons.
   static const pixels = 256;
+
+  /// Side of the bitmaps of [large] art, drawn up to ~160 logical pixels
+  /// (the headquarters on the base): sharp on a 3× screen.
+  static const largePixels = 512;
+
+  /// Folders of SVGs drawn larger than icons, rasterized at [largePixels].
+  static const large = ['assets/icons/buildings/standing/'];
+
+  /// Side of the bitmap of the SVG at [path].
+  static int pixelsOf(String path) =>
+      large.any(path.startsWith) ? largePixels : pixels;
 
   static final _pending = <String, Future<ui.Image>>{};
   static final _ready = <String, ui.Image>{};
@@ -92,12 +103,13 @@ abstract final class SvgRasterCache {
 
   static Future<ui.Image> _rasterize(String path) async {
     final info = await vg.loadPicture(SvgAssetLoader(path), null);
+    final side = pixelsOf(path);
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
-    canvas.scale(pixels / info.size.width, pixels / info.size.height);
+    canvas.scale(side / info.size.width, side / info.size.height);
     canvas.drawPicture(info.picture);
     info.picture.dispose();
     final picture = recorder.endRecording();
-    return picture.toImage(pixels, pixels).whenComplete(picture.dispose);
+    return picture.toImage(side, side).whenComplete(picture.dispose);
   }
 }

@@ -23,12 +23,13 @@ import 'army_slots.dart';
 /// alleys between its blocks, the crest flat in the middle, the barracks'
 /// pad and the six drill pads (laid for the [unlocked] units, surveyed
 /// for the others), then, back to front, the decor, the barracks standing
-/// and the depot; last the barracks' plaque.
+/// and the depot. The squads and the plaques float above, apart (see
+/// ArmySquadsPainter and ArmyMarksPainter).
 ///
 /// Nothing in it moves: rasterized into a bitmap kept by the army's view,
 /// it is painted once and only again when the barracks changes (its
-/// level, degraded, its plot locked), a unit is unlocked, the [fit], the
-/// texts or the [sprites] change; never as the army grows.
+/// level, degraded), a unit is unlocked, the [fit] or the [sprites]
+/// change; never as the army grows.
 class ArmyIslandPainter extends CustomPainter {
   /// The salt of the slab's rock, as on the mockup.
   static const slabSalt = 6;
@@ -37,15 +38,8 @@ class ArmyIslandPainter extends CustomPainter {
   final int barracksLevel;
   final bool barracksDegraded;
 
-  /// Whether a missing prerequisite keeps the barracks from being built.
-  final bool barracksLocked;
-
   /// The units the barracks' level lets recruit.
   final Set<UnitType> unlocked;
-
-  /// The pill of the barracks' plot, « À bâtir », and its name.
-  final String toBuild;
-  final String barracksName;
 
   /// The floor tiles, decor and barracks, plain diamonds and none of the
   /// others while they load.
@@ -55,10 +49,7 @@ class ArmyIslandPainter extends CustomPainter {
     required this.fit,
     required this.barracksLevel,
     required this.unlocked,
-    required this.toBuild,
-    required this.barracksName,
     this.barracksDegraded = false,
-    this.barracksLocked = false,
     this.sprites,
   });
 
@@ -82,11 +73,6 @@ class ArmyIslandPainter extends CustomPainter {
       pads.paint(canvas, type, unlocked: unlocked.contains(type));
     }
     _paintStanding(canvas, barracks);
-    barracks.paintPlaque(canvas,
-        level: barracksLevel,
-        name: barracksName,
-        toBuild: toBuild,
-        locked: barracksLocked);
     canvas.restore();
   }
 
@@ -134,9 +120,6 @@ class ArmyIslandPainter extends CustomPainter {
       oldDelegate.fit != fit ||
       oldDelegate.barracksLevel != barracksLevel ||
       oldDelegate.barracksDegraded != barracksDegraded ||
-      oldDelegate.barracksLocked != barracksLocked ||
-      oldDelegate.toBuild != toBuild ||
-      oldDelegate.barracksName != barracksName ||
       oldDelegate.sprites != sprites ||
       !setEquals(oldDelegate.unlocked, unlocked);
 

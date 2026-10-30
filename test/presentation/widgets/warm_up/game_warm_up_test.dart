@@ -2,6 +2,7 @@ import 'package:abyss/domain/building/building_type.dart';
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
+import 'package:abyss/presentation/widgets/army/army_sprites.dart';
 import 'package:abyss/presentation/widgets/building/building_card.dart';
 import 'package:abyss/presentation/widgets/common/raster_svg.dart';
 import 'package:abyss/presentation/widgets/common/svg_raster_cache.dart';
@@ -50,6 +51,11 @@ void main() {
     for (final path in _greyed) {
       expect(SvgRasterCache.peekGrey(path), isNotNull, reason: path);
     }
+  });
+
+  testWidgets('preloads the standing units of the army', (tester) async {
+    await tester.runAsync(preloadGameArt);
+    expect(ArmySprites.ready, isNotNull);
   });
 
   testWidgets('icons page draws icons in colour and faded greyscale', (

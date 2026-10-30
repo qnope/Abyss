@@ -47,23 +47,6 @@ void main() {
       test('the crest is in the middle of the screen\'s width', () {
         expect(viewOf(fit, ArmyLayout.crest).dx, closeTo(phone.width / 2, 1e-9));
       });
-
-      test('touching the centre of a drill pad picks its unit', () {
-        for (final type in UnitType.values) {
-          final centre = viewOf(fit, ArmyLayout.padCentre(type));
-          expect(armyUnitAt(centre, fit), type);
-        }
-      });
-
-      test('touching the crest, the depot or the barracks picks no unit', () {
-        for (final cell in [
-          ArmyLayout.crest,
-          ArmyLayout.depot,
-          ArmyLayout.barracks,
-        ]) {
-          expect(armyUnitAt(viewOf(fit, cell), fit), isNull, reason: '$cell');
-        }
-      });
     });
   }
 

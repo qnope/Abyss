@@ -94,5 +94,24 @@ void main() {
       await tester.pumpAndSettle();
       expect(g.humanPlayer.unitsOnLevel(1)[UnitType.scout]!.count, greaterThan(0));
     });
+
+    testWidgets('tapping the barracks opens its building sheet',
+        (tester) async {
+      await goToArmyTab(tester, armyGame());
+      await tapBarracks(tester, 1);
+      await tester.pumpAndSettle();
+      expect(find.text('Améliorer'), findsOneWidget);
+    });
+
+    testWidgets('the army counts every place and marks what can be recruited',
+        (tester) async {
+      final g = armyGame();
+      g.humanPlayer.unitsOnLevel(1)[UnitType.scout]!.count = 3;
+      g.humanPlayer.recruitedUnitTypes.add(UnitType.harpoonist);
+      await goToArmyTab(tester, g);
+      final army = tester.widget<ArmyView>(find.byType(ArmyView));
+      expect(army.counts[UnitType.scout], 3);
+      expect(army.recruitable, {UnitType.scout});
+    });
   });
 }

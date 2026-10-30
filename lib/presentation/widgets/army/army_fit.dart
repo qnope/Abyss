@@ -24,8 +24,3 @@ abstract final class ArmyFit {
         under: [ArmySlots.barracks.standingBoxOn(BasePadTier.litDeck)],
       );
 }
-
-/// The unit whose drill pad lies under the [view] point of the parade
-/// ground seen through [fit], if any.
-UnitType? armyUnitAt(Offset view, BaseFit fit) =>
-    ArmyLayout.unitAt(baseProjectionToGround(fit.toProjection(view)));

@@ -7,10 +7,10 @@ import 'base_drawing.dart';
 import 'base_label_text.dart';
 import 'base_pad_tier.dart';
 
-/// Draws what lies at the foot of a building of the base, in projection
-/// units, as on the mockup: the hexagonal plaque of its level, the
-/// dashed « À bâtir » pill of a plot, with a lock while it cannot be
-/// built, and the name of the building the guide points at.
+/// Draws what lies at the foot of a building of the base (or a squad of
+/// the army), in projection units, as on the mockup: the hexagonal plaque
+/// of its level, the dashed « À bâtir » pill of a plot, locked while it
+/// cannot be built, and the name of the building the guide points at.
 class BasePlaqueDrawer {
   static const _u = basePadUnit;
 
@@ -47,9 +47,16 @@ class BasePlaqueDrawer {
   /// The pill saying [label] centred on [at], a lock before it while
   /// [locked].
   void toBuild(Canvas canvas, Offset at, String label,
+          {required bool locked}) =>
+      _dashedPill(canvas, at, _pillText(label.toUpperCase()), locked: locked);
+
+  /// The pill of a locked place saying [label] as is, centred on [at].
+  void lockedPill(Canvas canvas, Offset at, String label) =>
+      _dashedPill(canvas, at, _pillText(label), locked: true);
+
+  /// The dashed pill holding [text] centred on [at], [locked] or not.
+  void _dashedPill(Canvas canvas, Offset at, TextPainter text,
       {required bool locked}) {
-    final text = baseLabelOf(
-        label.toUpperCase(), AbyssBaseBadgeTheme.toBuild, 10 * _u);
     final lock = locked ? 9 * _u : 0.0;
     final content = lock + text.width;
     final pill = RRect.fromRectAndRadius(
@@ -69,9 +76,30 @@ class BasePlaqueDrawer {
     paintLabel(canvas, text, left: left + lock, middle: at.dy);
   }
 
-  /// The [name] of the building under its pill centred on [at].
-  void name(Canvas canvas, Offset at, String name) {
-    final text = baseLabelOf(name, AbyssBaseBadgeTheme.name, 10 * _u);
+  /// Width of the pill [lockedPill] draws saying [label].
+  double lockedPillWidth(String label) =>
+      max(pillMinWidth, _widthOf(_pillText(label)) + 25 * _u);
+
+  /// Width of the band [name] draws under a pill, saying [name].
+  double nameWidth(String name) =>
+      _widthOf(baseLabelOf(name, AbyssBaseBadgeTheme.name, 10 * _u)) + 12 * _u;
+
+  static TextPainter _pillText(String label) =>
+      baseLabelOf(label, AbyssBaseBadgeTheme.toBuild, 10 * _u);
+
+  /// The width of [text], disposed of.
+  static double _widthOf(TextPainter text) {
+    final width = text.width;
+    text.dispose();
+    return width;
+  }
+
+  /// The [name] of the building under its pill centred on [at], in
+  /// [colour].
+  void name(Canvas canvas, Offset at, String name,
+      {Color colour = AbyssBaseBadgeTheme.nameText}) {
+    final text = baseLabelOf(
+        name, AbyssBaseBadgeTheme.name.copyWith(color: colour), 10 * _u);
     final centre = at.translate(0, nameDrop);
     canvas.drawRRect(
       RRect.fromRectAndRadius(

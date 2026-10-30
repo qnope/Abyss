@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/services.dart';
@@ -12,8 +13,9 @@ import 'run_concurrently.dart';
 /// Detailed SVGs hold hundreds of shapes: replaying them every frame is
 /// costly, especially on the web where pictures are not raster-cached.
 /// Drawing a shared bitmap instead costs a single image draw. Every SVG is
-/// rasterized at [pixels] ([largePixels] for [large] art) and drawn
-/// downscaled with mipmaps, so any icon size reuses the same bitmap.
+/// rasterized at [pixels] ([largePixels] for [large] art; [keepAspect]
+/// art at its own aspect, see [pixelSizeOf]) and drawn downscaled with
+/// mipmaps, so any icon size reuses the same bitmap.
 abstract final class SvgRasterCache {
   /// Side of a bitmap: sharp for map sprites and the largest icons.
   static const pixels = 256;
@@ -28,6 +30,19 @@ abstract final class SvgRasterCache {
   /// Side of the bitmap of the SVG at [path].
   static int pixelsOf(String path) =>
       large.any(path.startsWith) ? largePixels : pixels;
+
+  /// Folders of SVGs taller than wide, rasterized at their own aspect.
+  static const keepAspect = ['assets/icons/units/standing/'];
+
+  /// Width and height of the bitmap of the SVG at [path] drawn [size]
+  /// large: a square of [pixelsOf]; for [keepAspect] art, its longest
+  /// side [pixelsOf] and the other in proportion.
+  static (int, int) pixelSizeOf(String path, Size size) {
+    final side = pixelsOf(path);
+    if (!keepAspect.any(path.startsWith)) return (side, side);
+    final scale = side / max(size.width, size.height);
+    return ((size.width * scale).round(), (size.height * scale).round());
+  }
 
   static final _pending = <String, Future<ui.Image>>{};
   static final _ready = <String, ui.Image>{};
@@ -107,13 +122,13 @@ abstract final class SvgRasterCache {
 
   static Future<ui.Image> _rasterize(String path) async {
     final info = await vg.loadPicture(SvgAssetLoader(path), null);
-    final side = pixelsOf(path);
+    final (width, height) = pixelSizeOf(path, info.size);
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
-    canvas.scale(side / info.size.width, side / info.size.height);
+    canvas.scale(width / info.size.width, height / info.size.height);
     canvas.drawPicture(info.picture);
     info.picture.dispose();
     final picture = recorder.endRecording();
-    return picture.toImage(side, side).whenComplete(picture.dispose);
+    return picture.toImage(width, height).whenComplete(picture.dispose);
   }
 }

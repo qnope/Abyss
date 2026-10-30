@@ -14,9 +14,10 @@ import 'squad_arrival.dart';
 const _u = basePadUnit;
 
 /// Draws, in projection coordinates, a recruit arriving on its squad's
-/// drill pad at a progress from 0 to 1 (see [SquadArrival]): a faint
-/// column of light full of rising bubbles over its slot, the recruit
-/// falling down it, then the ring it lands with spreading on the deck.
+/// drill pad at a progress from 0 to 1 (see [SquadArrival]): on the deck
+/// under the squad, a faint column of light full of rising bubbles over
+/// its slot, then the ring it lands with spreading; over the squad, the
+/// recruit falling down the column.
 /// The recruit that stays is the squad's own figure once landed (see
 /// ArmySquadsPainter); one that joins the ranks melts away.
 class ArmyArrivalDrawer {
@@ -40,24 +41,43 @@ class ArmyArrivalDrawer {
 
   ArmyArrivalDrawer(this.squads);
 
-  /// Draws the recruit of [arrival] on the pad of [type] at [t].
-  void paint(Canvas canvas, UnitType type, SquadArrival arrival, double t) {
-    final feet = ArmySquadGeometry.feetAt(type, arrival.figure, locked: false);
-    final fall = SquadArrival.fallAt(t), spread = SquadArrival.ringAt(t);
+  /// Draws, under the squad of [type], the column of light the recruit of
+  /// [arrival] falls in at [t] and the ring it lands with.
+  void paintGround(
+    Canvas canvas,
+    UnitType type,
+    SquadArrival arrival,
+    double t,
+  ) {
+    final feet = _feetOf(type, arrival);
+    final spread = SquadArrival.ringAt(t);
     _column(canvas, feet, t, 1 - spread);
-    final opacity = arrival.stays ? 1.0 : SquadArrival.fadeAt(t);
-    if (opacity > 0 && (fall > 0 || !arrival.stays)) {
-      squads.paintOne(
-        canvas,
-        type,
-        feet,
-        pose: SpriteMotion(dy: -drop * fall),
-        opacity: opacity * (1 - .5 * fall),
-        shadow: opacity > .5,
-      );
-    }
     if (spread > 0 && spread < 1) _landing(canvas, feet, spread);
   }
+
+  /// Draws, over the squad of [type], the recruit of [arrival] at [t]:
+  /// falling, or melting into the ranks once landed if it does not stay.
+  void paintRecruit(
+    Canvas canvas,
+    UnitType type,
+    SquadArrival arrival,
+    double t,
+  ) {
+    final fall = SquadArrival.fallAt(t);
+    final opacity = arrival.stays ? 1.0 : SquadArrival.fadeAt(t);
+    if (opacity <= 0 || (fall <= 0 && arrival.stays)) return;
+    squads.paintOne(
+      canvas,
+      type,
+      _feetOf(type, arrival),
+      pose: SpriteMotion(dy: -drop * fall),
+      opacity: opacity * (1 - .5 * fall),
+      shadow: opacity > .5,
+    );
+  }
+
+  static Offset _feetOf(UnitType type, SquadArrival arrival) =>
+      ArmySquadGeometry.feetAt(type, arrival.figure, locked: false);
 
   /// The column of light over [feet] and its bubbles at [t], at [glow].
   void _column(Canvas canvas, Offset feet, double t, double glow) {
@@ -99,7 +119,7 @@ class ArmyArrivalDrawer {
 
   /// The ring spreading from [feet], [spread] from 0 to 1.
   void _landing(Canvas canvas, Offset feet, double spread) {
-    final width = (16 + 30 * spread) * _u;
+    final width = (18 + 40 * spread) * _u;
     _ring.color = AbyssArmyColors.landingRing.withValues(alpha: 1 - spread);
     canvas.drawOval(
       Rect.fromCenter(center: feet, width: width, height: width / 2),

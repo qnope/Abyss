@@ -1,21 +1,26 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../domain/unit/unit_type.dart';
 import '../../l10n/l10n_extension.dart';
 import '../ambience/ambience_clock_scope.dart';
 import '../base/base_fit.dart';
 import '../base/base_sprites.dart';
 import '../common/raster_paint.dart';
 import 'army_arrivals.dart';
+import 'army_guide_halo.dart';
 import 'army_island_painter.dart';
 import 'army_marks_painter.dart';
 import 'army_roster.dart';
 import 'army_sprites.dart';
 import 'army_squads_painter.dart';
+import 'squad_arrival.dart';
 
 /// The parade ground of [roster] seen through [fit], from the back to
 /// the front, each layer within its own repaint boundary: the still
 /// island ([ArmyIslandPainter]), rasterized into a bitmap kept when the
-/// army is left ([RasterPaint]); the squads and their banners
+/// army is left ([RasterPaint]); the guide's ring on the drill pad of
+/// the unit it points at ([ArmyGuideHalo]); the squads and their banners
 /// ([ArmySquadsPainter]), once their figures are loaded; their plaques
 /// and the barracks' plaque ([ArmyMarksPainter]).
 ///
@@ -60,54 +65,63 @@ class ArmyLayers extends StatelessWidget {
     final reduced = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     return AmbienceClockScope(
       animate: !reduced,
-      builder:
-          (context, clock) => ArmyArrivals(
-            counts: roster.counts,
-            place: place,
-            builder:
-                (context, arrival, arriving) => Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    RepaintBoundary(
-                      child: RasterPaint(
-                        keepAs: islandName,
-                        painter: ArmyIslandPainter(
-                          fit: fit,
-                          barracksLevel: roster.barracksLevel,
-                          barracksDegraded: barracksDegraded,
-                          unlocked: roster.unlocked,
-                          sprites: base,
-                        ),
-                      ),
-                    ),
-                    if (army case final sprites?)
-                      RepaintBoundary(
-                        child: CustomPaint(
-                          painter: ArmySquadsPainter(
-                            fit: fit,
-                            roster: roster,
-                            sprites: sprites,
-                            clock: reduced ? null : clock,
-                            arrival: arrival,
-                            arriving: arriving,
-                          ),
-                        ),
-                      ),
-                    RepaintBoundary(
-                      child: CustomPaint(
-                        painter: ArmyMarksPainter(
-                          fit: fit,
-                          roster: roster,
-                          l10n: context.l10n,
-                          barracksLocked: barracksLocked,
-                          arrival: arrival,
-                          arriving: arriving,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+      builder: (context, clock) => ArmyArrivals(
+        counts: roster.counts,
+        place: place,
+        builder: (context, arrival, arriving) =>
+            _layers(context, reduced ? null : clock, arrival, arriving),
+      ),
+    );
+  }
+
+  Widget _layers(
+    BuildContext context,
+    ValueListenable<double>? clock,
+    Animation<double> arrival,
+    Map<UnitType, SquadArrival> arriving,
+  ) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        RepaintBoundary(
+          child: RasterPaint(
+            keepAs: islandName,
+            painter: ArmyIslandPainter(
+              fit: fit,
+              barracksLevel: roster.barracksLevel,
+              barracksDegraded: barracksDegraded,
+              unlocked: roster.unlocked,
+              sprites: base,
+            ),
           ),
+        ),
+        ArmyGuideHalo(fit: fit),
+        if (army case final sprites?)
+          RepaintBoundary(
+            child: CustomPaint(
+              painter: ArmySquadsPainter(
+                fit: fit,
+                roster: roster,
+                sprites: sprites,
+                clock: clock,
+                arrival: arrival,
+                arriving: arriving,
+              ),
+            ),
+          ),
+        RepaintBoundary(
+          child: CustomPaint(
+            painter: ArmyMarksPainter(
+              fit: fit,
+              roster: roster,
+              l10n: context.l10n,
+              barracksLocked: barracksLocked,
+              arrival: arrival,
+              arriving: arriving,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../ambience/sprite_motion.dart';
 import '../base/base_fit.dart';
+import '../common/recorded_pictures.dart';
 import 'army_arrival_drawer.dart';
 import 'army_banner_drawer.dart';
 import 'army_draw_order.dart';
@@ -31,8 +32,13 @@ import 'squad_arrival.dart';
 /// On the shared ambience [clock], the soldiers of the unlocked squads
 /// breathe and their banners sway (see [ArmySquadPose]): only this layer
 /// repaints as they live, never the island under it. Without a clock
-/// (fewer animations asked), they stand still.
+/// (fewer animations asked), they stand still. Each banner, still in
+/// itself, is recorded once and replayed as it sways ([banners]).
 class ArmySquadsPainter extends CustomPainter {
+  /// The banner of every unit, locked or not, recorded once for all the
+  /// painters and recorded again only for another portrait.
+  static final banners = RecordedPictures<(UnitType, bool)>();
+
   final BaseFit fit;
   final ArmyRoster roster;
   final ArmySprites sprites;
@@ -64,7 +70,7 @@ class ArmySquadsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final squads = ArmySquadDrawer(sprites);
-    final banners = ArmyBannerDrawer();
+    final banner = ArmyBannerDrawer();
     final arrivals = ArmyArrivalDrawer(squads);
     final seconds = clock?.value, t = arrival?.value ?? 1;
     canvas
@@ -80,12 +86,13 @@ class ArmySquadsPainter extends CustomPainter {
           final foot = ArmySquadGeometry.bannerFoot(type, locked: locked);
           final pose =
               still ? SpriteMotion.rest : ArmySquadPose.banner(type, seconds);
+          final portrait = sprites.portraitOf(type);
           pose.paint(canvas, ArmySquadGeometry.bannerBox(foot), () {
-            banners.paint(
+            banners.replay(
               canvas,
-              type,
-              sprites.portraitOf(type),
-              locked: locked,
+              (type, locked),
+              (canvas) => banner.paint(canvas, type, portrait, locked: locked),
+              source: portrait,
             );
           });
         case SquadPiece():

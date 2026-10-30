@@ -31,6 +31,16 @@ void main() {
     expect(find.ancestor(
         of: find.byType(ParallaxLayer).first,
         matching: find.byType(RepaintBoundary)), findsWidgets);
+    // The soft water's bitmap at half the device's pixels, the crisp
+    // ridges' at all of them.
+    expect(tester.view.devicePixelRatio, 3);
+    expect([for (final l in layers) l.resolution], [1.5, null]);
+  });
+
+  test('the water is never rasterized below a pixel per logical pixel', () {
+    expect(TrenchBackdrop.waterResolution(3), 1.5);
+    expect(TrenchBackdrop.waterResolution(2), 1);
+    expect(TrenchBackdrop.waterResolution(1), 1);
   });
 
   group('the depth haze', () {

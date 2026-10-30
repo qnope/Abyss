@@ -5,7 +5,7 @@ import '../guide/guide_cell_halo.dart';
 import 'effects/map_effects.dart';
 import 'effects/map_effects_layer.dart';
 import 'map_cell_visual.dart';
-import 'map_painter.dart';
+import 'map_floor.dart';
 import 'map_projection.dart';
 import 'map_sprites.dart';
 import 'map_standing_painter.dart';
@@ -85,15 +85,13 @@ class MapLayers extends StatelessWidget {
       ),
     ];
     final stack = Stack(clipBehavior: Clip.none, children: [
-      RepaintBoundary(
-        child: CustomPaint(
-          size: size,
-          painter: MapPainter(
-              visuals: visuals,
-              columns: columns,
-              sprites: sprites,
-              decorSalt: level),
-        ),
+      MapFloor(
+        visuals: visuals,
+        columns: columns,
+        sprites: sprites,
+        level: level,
+        transform: transform,
+        viewport: viewport,
       ),
       if (effects == null)
         ...standing

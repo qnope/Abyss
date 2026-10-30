@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
@@ -27,6 +28,25 @@ class IsoSlabPainter extends CustomPainter {
     this.depth = MapProjection.slabDepth,
     this.salt = 0,
   });
+
+  /// The box holding all a slab of a map [columns] by [rows] cells, of
+  /// [depth], draws: under its side vertices, around the bottom one, the
+  /// dark under its foot included.
+  static Rect boundsOf(
+    int columns,
+    int rows, {
+    double depth = MapProjection.slabDepth,
+  }) {
+    final [_, right, bottom, left] = MapProjection.outlineOf(columns, rows);
+    final half = 0.55 * (right.dx - left.dx);
+    // The lips' strokes and the algae reach a little past the vertices.
+    final margin = 0.1 * depth;
+    return Rect.fromLTRB(
+        math.min(left.dx - margin, bottom.dx - half),
+        math.min(left.dy, right.dy) - margin,
+        math.max(right.dx + margin, bottom.dx + half),
+        bottom.dy + 1.8 * depth);
+  }
 
   @override
   void paint(Canvas canvas, Size size) {

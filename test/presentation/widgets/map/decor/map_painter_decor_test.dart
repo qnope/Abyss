@@ -1,6 +1,9 @@
+import 'dart:ui' as ui;
+
 import 'package:abyss/domain/map/terrain_type.dart';
 import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
+import 'package:abyss/presentation/widgets/common/painted_raster.dart';
 import 'package:abyss/presentation/widgets/map/decor/map_decor_cells.dart';
 import 'package:abyss/presentation/widgets/map/decor/map_decor_drawer.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
@@ -52,6 +55,21 @@ void main() {
     final pattern = decorIn(tiles..path(), hidden)..path(color: fog);
     expect((Canvas canvas) => painter.paint(canvas, size),
         decorIn(pattern, seen));
+
+    // Its fog kept as a bitmap, the map lays it at the same place.
+    final raster = PaintedRaster();
+    addTearDown(raster.dispose);
+    final kept = MapPainter(visuals: visuals, columns: side,
+        sprites: sprites, decorSalt: 2, fogRaster: raster);
+    kept.paint(Canvas(ui.PictureRecorder()), size);
+    final again = paints;
+    for (var i = 0; i < visuals.length; i++) {
+      again.drawImageRect(image: sprites.svg(tile));
+    }
+    final bitmap =
+        decorIn(again..path(), hidden)..drawImageRect(image: raster.image);
+    expect((Canvas canvas) => kept.paint(canvas, size),
+        decorIn(bitmap, seen));
   });
 
   testWidgets('stands no decor without a salt, nor before the sprites load',

@@ -1,4 +1,5 @@
 import 'package:abyss/presentation/widgets/backdrop/trench/parallax_layer.dart';
+import 'package:abyss/presentation/widgets/common/raster_paint.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -39,7 +40,7 @@ void main() {
       ));
 
   Finder painted() => find.descendant(
-      of: find.byType(ParallaxLayer), matching: find.byType(CustomPaint));
+      of: find.byType(ParallaxLayer), matching: find.byType(RasterPaint));
 
   Offset shiftOf(WidgetTester tester) {
     final transform = tester
@@ -49,11 +50,14 @@ void main() {
     return Offset(transform.storage[12], transform.storage[13]);
   }
 
-  testWidgets('paints its tile once, side by side, at the viewport size', (
-    tester,
-  ) async {
+  testWidgets('paints its tile once at the viewport size, its bitmap drawn '
+      'side by side', (tester) async {
     await pumpLayer(tester);
-    expect(tile.sizes, [viewport, viewport]);
+    expect(tile.sizes, [viewport]);
+    final layer = tester.widget<RasterPaint>(painted());
+    expect(layer.repeat, 2);
+    expect(tester.getSize(painted()),
+        Size(2 * viewport.width, 1.4 * viewport.height));
     expect(find.ancestor(of: painted(), matching: find.byType(RepaintBoundary)),
         findsWidgets);
   });
@@ -70,7 +74,7 @@ void main() {
     expect(moved.dy, closeTo(0.35 * -20, 1e-9));
     transform.value = Matrix4.translationValues(-90, 30, 0);
     await tester.pump();
-    expect(tile.sizes, hasLength(2));
+    expect(tile.sizes, hasLength(1));
   });
 
   testWidgets('always covers the viewport, however far it pans', (

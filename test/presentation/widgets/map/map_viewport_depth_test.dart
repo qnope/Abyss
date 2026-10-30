@@ -2,6 +2,7 @@ import 'package:abyss/domain/map/map_generator.dart';
 import 'package:abyss/presentation/widgets/backdrop/trench/depth_haze.dart';
 import 'package:abyss/presentation/widgets/backdrop/trench/parallax_layer.dart';
 import 'package:abyss/presentation/widgets/backdrop/trench/trench_backdrop.dart';
+import 'package:abyss/presentation/widgets/common/raster_paint.dart';
 import 'package:abyss/presentation/widgets/map/game_map_view.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
@@ -44,19 +45,29 @@ void main() {
     expect(indexOf<TrenchBackdrop>(), lessThan(indexOf<InteractiveViewer>()));
     expect(indexOf<InteractiveViewer>(), lessThan(indexOf<DepthHaze>()));
     expect(indexOf<DepthHaze>(), lessThan(indexOf<MapSnowLayer>()));
-    final backdrop = tester.widget<TrenchBackdrop>(find.byType(TrenchBackdrop));
+    final backdrop = tester.widget<TrenchBackdrop>(
+        find.byType(TrenchBackdrop, skipOffstage: false));
     final snow = tester.widget<MapSnowLayer>(find.byType(MapSnowLayer));
     expect(backdrop.transform, same(controllerOf(tester)));
     expect(snow.transform, same(controllerOf(tester)));
     expect((backdrop.content, snow.content), (map, map));
     for (final layer in [TrenchBackdrop, DepthHaze, MapSnowLayer]) {
-      expect(tester.getRect(find.byType(layer)), tester.getRect(viewer()));
+      expect(tester.getRect(find.byType(layer, skipOffstage: false)),
+          tester.getRect(viewer()));
     }
   });
 
   testWidgets('panning slides the trench, never repainting it, the haze or '
       'the still map with its slab', (tester) async {
     await pumpView(tester);
+    // Zoomed out, the map in the middle, so that the abyss shows around.
+    final screen = tester.getSize(viewer());
+    final scale = MapViewFit.overviewScale(screen, map);
+    final corner = (screen - map * scale as Offset) / 2;
+    controllerOf(tester).value =
+        Matrix4.translationValues(corner.dx, corner.dy, 0)
+          ..scaleByDouble(scale, scale, scale, 1);
+    await tester.pump();
     RenderRepaintBoundary boundaryOver(Finder finder) => tester
         .renderObject<RenderRepaintBoundary>(find
             .ancestor(of: finder, matching: find.byType(RepaintBoundary))
@@ -65,7 +76,7 @@ void main() {
       for (final element in find
           .descendant(
               of: find.byType(ParallaxLayer),
-              matching: find.byType(CustomPaint))
+              matching: find.byType(RasterPaint))
           .evaluate())
         boundaryOver(find.byWidget(element.widget)),
       boundaryOver(find.descendant(

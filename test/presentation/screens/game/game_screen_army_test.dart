@@ -10,6 +10,8 @@ import 'package:abyss/domain/resource/resource_type.dart';
 import 'package:abyss/domain/unit/unit_type.dart';
 import 'package:abyss/presentation/screens/game/game_screen.dart';
 import 'package:abyss/presentation/theme/abyss_theme.dart';
+import 'package:abyss/presentation/widgets/army/army_view.dart';
+import '../../../helpers/army_taps.dart';
 import '../../../helpers/fake_game_repository.dart';
 import '../../../helpers/reduced_motion.dart';
 import '../../../helpers/test_svg_helper.dart';
@@ -59,27 +61,21 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('shows unit cards', (tester) async {
+    testWidgets('shows the army on its parade ground', (tester) async {
       await goToArmyTab(tester, armyGame());
-      expect(find.text('Éclaireur'), findsOneWidget);
-      expect(find.text('Harponneur'), findsOneWidget);
-    });
-
-    testWidgets('locked units shown', (tester) async {
-      await goToArmyTab(tester, armyGame());
-      expect(find.text('Verrouillé'), findsNWidgets(4));
+      expect(find.byType(ArmyView), findsOneWidget);
     });
 
     testWidgets('tapping unlocked unit shows stats', (tester) async {
       await goToArmyTab(tester, armyGame());
-      await tester.tap(find.text('Éclaireur'));
+      await tapDrillPad(tester, UnitType.scout);
       await tester.pumpAndSettle();
       expect(find.text('PV: 10'), findsOneWidget);
     });
 
     testWidgets('tapping locked unit shows unlock message', (tester) async {
       await goToArmyTab(tester, armyGame());
-      await tester.tap(find.text('Gardien'));
+      await tapDrillPad(tester, UnitType.guardian);
       await tester.pumpAndSettle();
       expect(
         find.text('Caserne niveau 3 requise pour débloquer'),
@@ -90,7 +86,7 @@ void main() {
     testWidgets('recruit units updates count', (tester) async {
       final g = armyGame();
       await goToArmyTab(tester, g);
-      await tester.tap(find.text('Éclaireur'));
+      await tapDrillPad(tester, UnitType.scout);
       await tester.pumpAndSettle();
       await tester.drag(find.byType(Slider), const Offset(200, 0));
       await tester.pumpAndSettle();

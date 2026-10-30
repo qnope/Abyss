@@ -53,18 +53,19 @@ void showBuildingDetailAction(
   );
 }
 
+/// Opens the sheet of [unitType], [count] of them serving where the
+/// player looks, to recruit more.
 void showUnitDetailAction(
   BuildContext context,
   Game game,
   UnitType unitType,
   VoidCallback onChanged, {
-  int level = 1,
+  required int count,
 }) {
   final human = game.humanPlayer;
   final calculator = UnitCostCalculator();
   final barracksLevel = human.buildings[BuildingType.barracks]!.level;
   final isUnlocked = calculator.isUnlocked(unitType, barracksLevel);
-  final count = human.unitsOnLevel(level)[unitType]?.count ?? 0;
   final hasRecruitedThisType = human.recruitedUnitTypes.contains(unitType);
   showUnitDetailSheet(
     context,

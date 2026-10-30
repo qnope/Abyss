@@ -742,6 +742,7 @@
   "armyLockPill": "Barracones niv. {level}",
   "armyUnitLocked": "bloqueado, Barracones de nivel {level}",
   "armyUnitRecruitable": "reclutable",
+  "armyPlaceAll": "Todas",
   "resourceProduction": "Producción",
   "resourceMainBuilding": "Edificio principal",
   "turnTransition": "Turno {from} → Turno {to}",

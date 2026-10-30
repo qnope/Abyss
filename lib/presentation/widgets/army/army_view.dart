@@ -34,7 +34,8 @@ class ArmyView extends StatefulWidget {
   final void Function(UnitType type) onUnitTap;
   final void Function(Building barracks)? onBarracksTap;
 
-  /// Units of each type, wherever they serve.
+  /// Units of each type standing on the ground: wherever they serve, or
+  /// at the place shown (see ArmyPlacesView).
   final Map<UnitType, int> counts;
 
   /// The types the player can recruit at least one of this turn.
@@ -42,6 +43,10 @@ class ArmyView extends StatefulWidget {
 
   /// Whether a missing prerequisite keeps the barracks from being built.
   final bool barracksLocked;
+
+  /// Height kept free at the bottom for what floats there, the parade
+  /// ground fitted above it (see [ArmyFit]).
+  final double bottomSpace;
 
   const ArmyView({
     super.key,
@@ -51,6 +56,7 @@ class ArmyView extends StatefulWidget {
     this.counts = const {},
     this.recruitable = const {},
     this.barracksLocked = false,
+    this.bottomSpace = 0,
   });
 
   @override
@@ -85,7 +91,8 @@ class _ArmyViewState extends State<ArmyView> {
     );
     return LayoutBuilder(
       builder: (context, constraints) {
-        final fit = ArmyFit.of(constraints.biggest);
+        final bottom = widget.bottomSpace;
+        final fit = ArmyFit.of(constraints.biggest, bottom: bottom);
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           excludeFromSemantics: true,

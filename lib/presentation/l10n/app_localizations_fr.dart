@@ -3135,6 +3135,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get armyUnitRecruitable => 'recrutable';
 
   @override
+  String get armyPlaceAll => 'Toutes';
+
+  @override
   String get resourceProduction => 'Production';
 
   @override

@@ -1030,6 +1030,8 @@
   "@armyUnitLocked": { "description": "Read by a screen reader after the name of a locked squad.", "placeholders": { "level": { "type": "int" } } },
   "armyUnitRecruitable": "recrutable",
   "@armyUnitRecruitable": { "description": "Read by a screen reader after a squad that can recruit this turn." },
+  "armyPlaceAll": "Toutes",
+  "@armyPlaceAll": { "description": "Segment of the bar at the bottom of the army's parade ground showing the units of every place together; each other segment names a level or the kernel." },
   "resourceProduction": "Production",
   "resourceMainBuilding": "Bâtiment principal",
   "turnTransition": "Tour {from} → Tour {to}",

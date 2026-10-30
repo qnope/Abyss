@@ -11,8 +11,10 @@ import 'package:flutter_test/flutter_test.dart';
 /// The point of the screen over the projection [point] of the shown
 /// parade ground.
 Offset armyPoint(WidgetTester tester, Offset point) {
-  final view = tester.getRect(find.byType(ArmyView));
-  return view.topLeft + ArmyFit.of(view.size).toView(point);
+  final army = find.byType(ArmyView);
+  final view = tester.getRect(army);
+  final bottom = tester.widget<ArmyView>(army).bottomSpace;
+  return view.topLeft + ArmyFit.of(view.size, bottom: bottom).toView(point);
 }
 
 /// The point of the screen over the ground [cell] of the shown parade

@@ -3101,6 +3101,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get armyUnitRecruitable => 'recruitable';
 
   @override
+  String get armyPlaceAll => 'All';
+
+  @override
   String get resourceProduction => 'Production';
 
   @override

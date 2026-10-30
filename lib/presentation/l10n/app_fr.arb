@@ -984,6 +984,8 @@
   "baseLevelShort": "Niv. {level}",
   "@baseLevelShort": { "placeholders": { "level": { "type": "int" } } },
   "baseNotBuilt": "Non construit",
+  "baseToBuild": "À bâtir",
+  "baseUpgradable": "Améliorable",
   "baseMaxLevel": "Niveau maximum atteint",
   "baseUpgradeLevels": "Niveau {from} → {to}",
   "@baseUpgradeLevels": { "placeholders": { "from": { "type": "int" }, "to": { "type": "int" } } },

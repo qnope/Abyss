@@ -3009,6 +3009,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get baseNotBuilt => 'Sin construir';
 
   @override
+  String get baseToBuild => 'Por construir';
+
+  @override
+  String get baseUpgradable => 'Mejorable';
+
+  @override
   String get baseMaxLevel => 'Nivel máximo alcanzado';
 
   @override

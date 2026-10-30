@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_cost_calculator.dart';
 import '../../../domain/building/building_type.dart';
+import '../../../domain/building/upgrade_readiness.dart';
 import '../../../domain/map/transition_base_type.dart';
 import '../../../domain/raid/noise_rules.dart';
 import '../../../domain/resource/resource.dart';
@@ -42,18 +43,18 @@ class UpgradeSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final calculator =
         BuildingCostCalculator(discountPercent: discountPercent);
-    final check = calculator.checkUpgrade(
-      type: building.type,
-      currentLevel: building.level,
+    final readiness = UpgradeReadiness.of(
+      building.type,
+      buildings: allBuildings,
       resources: resources,
-      allBuildings: allBuildings,
+      worksite: worksite,
       capturedBaseTypes: capturedBaseTypes,
       isVolcanicKernelCaptured: isVolcanicKernelCaptured,
+      discountPercent: discountPercent,
     );
+    final check = readiness.check;
     final textTheme = Theme.of(context).textTheme;
     final l10n = context.l10n;
-    final hqLevel = allBuildings[BuildingType.headquarters]?.level ?? 0;
-    final siteFree = worksite.freeBuildSites(hqLevel) > 0;
 
     if (check.isMaxLevel) {
       return Text(
@@ -84,10 +85,10 @@ class UpgradeSection extends StatelessWidget {
           _capturedBaseRow(check.missingCapturedBase!, l10n),
         if (check.missingCapturedKernel)
           _lockedRow(l10n.baseKernelRequired),
-        if (!siteFree) _lockedRow(l10n.baseWorksitesBusy),
+        if (!readiness.siteFree) _lockedRow(l10n.baseWorksitesBusy),
         const SizedBox(height: 12),
         ElevatedButton(
-          onPressed: check.canUpgrade && siteFree ? onUpgrade : null,
+          onPressed: readiness.isReady ? onUpgrade : null,
           child: Text(
             building.level == 0 ? l10n.baseBuild : l10n.baseUpgrade,
           ),

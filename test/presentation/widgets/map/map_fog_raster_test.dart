@@ -95,4 +95,43 @@ void main() {
             MapProjection.centreOf((1, 0))) / 2;
     expect(alphaAt(edge), inExclusiveRange(dark ~/ 4, 3 * dark ~/ 4));
   });
+
+  testWidgets('a quarter of a pixel per logical one, the bitmap looks as '
+      'the fog blurred live, however far the map zooms in', (tester) async {
+    expect(MapFog.resolution, 0.25);
+    paint(cells());
+    final area = MapFog.areaOf(fog);
+    Future<List<int>> pixels(double zoom, void Function(Canvas) draw) async {
+      final recorder = ui.PictureRecorder();
+      final canvas = Canvas(recorder)
+        ..drawColor(const Color(0xFF4A6A8C), BlendMode.src)
+        ..scale(zoom)
+        ..translate(-area.left, -area.top);
+      draw(canvas);
+      final image = recorder.endRecording().toImageSync(
+          (area.width * zoom).round(), (area.height * zoom).round());
+      addTearDown(image.dispose);
+      final bytes = (await tester.runAsync(image.toByteData))!;
+      return bytes.buffer.asUint8List();
+    }
+
+    for (final zoom in [1.0, 3.0, 8.0]) {
+      final live = await pixels(zoom, (canvas) => canvas.drawPath(
+          fog,
+          Paint()
+            ..color = AbyssColors.abyssBlack
+                .withValues(alpha: AbyssColors.fogOpacity)
+            ..maskFilter =
+                const MaskFilter.blur(BlurStyle.normal, MapFog.blur)));
+      final kept = await pixels(zoom, raster.drawOn);
+      var total = 0, worst = 0;
+      for (var i = 0; i < live.length; i++) {
+        final gap = (live[i] - kept[i]).abs();
+        total += gap;
+        if (gap > worst) worst = gap;
+      }
+      expect(total / live.length, lessThan(1), reason: 'at $zoom');
+      expect(worst, lessThan(16), reason: 'at $zoom');
+    }
+  });
 }

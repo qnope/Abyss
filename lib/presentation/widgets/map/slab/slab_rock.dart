@@ -83,9 +83,8 @@ abstract final class SlabRock {
     }
   }
 
-  /// Every speck of the slab in three batches: halos, glows, cores.
-  static void specks(Canvas canvas, IsoSlab slab, double unit) {
-    final specks = [for (final face in slab.faces) ...face.specks];
+  /// The [specks] of a slab in three batches: halos, glows, cores.
+  static void specks(Canvas canvas, List<Offset> specks, double unit) {
     final points = Float32List(2 * specks.length);
     for (final (i, p) in specks.indexed) {
       points[2 * i] = p.dx;

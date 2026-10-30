@@ -13,9 +13,10 @@ import 'slab_rock.dart';
 /// under it, both faces shaded from their lips down, their strata,
 /// stones and algae, the specks glowing in the rock, then the lit lips.
 ///
-/// Meant to be painted once into a still, cached layer: the game's map
-/// paints it in its still floor, a base can paint it on its own. A few
-/// batched draws per face, no oval nor rect.
+/// Meant to be painted once into a still, cached layer: a base can paint
+/// it on its own. A few batched draws per face, no oval nor rect. Its
+/// parts ([paintBody], [paintRock], [paintLips]) let the game's map draw
+/// the rock from bitmaps (see MapSlabLayer).
 class IsoSlabPainter extends CustomPainter {
   final int columns;
   final int rows;
@@ -53,7 +54,22 @@ class IsoSlabPainter extends CustomPainter {
     final slab =
         IsoSlab(columns: columns, rows: rows, depth: depth, salt: salt);
     if (slab.faces.isEmpty) return;
+    paintBody(canvas, slab);
     final unit = slab.faces.first.unit;
+    for (final face in slab.faces) {
+      SlabRock.strata(canvas, face, unit);
+      SlabRock.stones(canvas, face, unit);
+      SlabRock.strands(canvas, face);
+    }
+    SlabRock.specks(
+        canvas, [for (final face in slab.faces) ...face.specks], unit);
+    paintLips(canvas, slab);
+  }
+
+  /// The body of [slab]: the dark under its foot, its faces shaded from
+  /// their lips down.
+  static void paintBody(Canvas canvas, IsoSlab slab) {
+    if (slab.faces.isEmpty) return;
     _underShadow(canvas, slab);
     for (final face in slab.faces) {
       final (from, to) = face.shading;
@@ -65,21 +81,28 @@ class IsoSlabPainter extends CustomPainter {
               AbyssSlabTheme.faceStops),
       );
     }
-    for (final face in slab.faces) {
-      SlabRock.strata(canvas, face, unit);
-      SlabRock.stones(canvas, face, unit);
-      SlabRock.strands(canvas, face);
-    }
-    SlabRock.specks(canvas, slab, unit);
+  }
+
+  /// The rock of [face]: its strata, stones, algae and specks.
+  static void paintRock(Canvas canvas, SlabFace face) {
+    SlabRock.strata(canvas, face, face.unit);
+    SlabRock.stones(canvas, face, face.unit);
+    SlabRock.strands(canvas, face);
+    SlabRock.specks(canvas, face.specks, face.unit);
+  }
+
+  /// The lit lips of [slab], over its rock.
+  static void paintLips(Canvas canvas, IsoSlab slab) {
     for (final face in slab.faces) {
       canvas.drawLine(face.start, face.end, Paint()
         ..color = face.lit ? AbyssSlabTheme.litLip : AbyssSlabTheme.shadedLip
-        ..strokeWidth = 1.4 * unit);
+        ..strokeWidth = 1.4 * face.unit);
     }
   }
 
   /// The dark of the abyss under the foot of the slab, a flattened disc.
-  void _underShadow(Canvas canvas, IsoSlab slab) {
+  static void _underShadow(Canvas canvas, IsoSlab slab) {
+    final depth = slab.depth;
     final radius = 0.55 * (slab.right.dx - slab.left.dx);
     canvas
       ..save()

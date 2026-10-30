@@ -14,9 +14,11 @@ abstract final class MapFog {
   /// Blur of the fog's edge, in logical pixels.
   static const blur = 4.0;
 
-  /// Pixels per logical pixel of the fog's bitmap: two pixels of blur
-  /// still draw a smooth edge, however far the map zooms in.
-  static const resolution = 0.5;
+  /// Pixels per logical pixel of the fog's bitmap: a pixel of blur still
+  /// draws the same smooth edge, however far the map zooms in, and a
+  /// bitmap this small costs a short hitch when a turn hides other cells
+  /// on the web, where rasterizing holds the frame.
+  static const resolution = 0.25;
 
   /// The box the fog over [path] spreads into, its blurred edge included.
   static Rect areaOf(Path path) => path.getBounds().inflate(3 * blur);

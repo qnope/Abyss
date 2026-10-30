@@ -50,4 +50,15 @@ void main() {
       lessThan(slot.standingBoxOn(BasePadTier.gravel).bottom),
     );
   });
+
+  test('bubbles rise from the upper part of a building, right of its middle',
+      () {
+    for (final tier in BasePadTier.values) {
+      final sprite = slot.standingBoxOn(tier);
+      final bubbles = slot.bubblesBoxOn(tier);
+      expect(bubbles.center.dx, greaterThan(sprite.center.dx));
+      expect(bubbles.bottom, lessThan(sprite.center.dy));
+      expect(bubbles.top, lessThan(sprite.top));
+    }
+  });
 }

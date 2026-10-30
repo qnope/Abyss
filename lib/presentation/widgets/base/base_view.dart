@@ -5,23 +5,22 @@ import '../../../domain/building/building_type.dart';
 import '../../../domain/worksite/worksite.dart';
 import '../ambience/ambience_clock_scope.dart';
 import '../map/map_snow_layer.dart';
-import '../map/map_sprites.dart';
 import 'base_badges_layer.dart';
 import 'base_building_semantics.dart';
-import 'base_buildings_painter.dart';
 import 'base_fit.dart';
-import 'base_guide_halo.dart';
 import 'base_hit.dart';
 import 'base_hud.dart';
-import 'base_island_painter.dart';
+import 'base_layers.dart';
 import 'base_layout.dart';
 import 'base_snapshot.dart';
 import 'base_sprites.dart';
 
 /// The player's base seen as an island in the abyss, fitted to the view
-/// with no pan nor zoom: the still island with the pads (cached in its
-/// own layer), the guide's ring on the ground, the eleven [buildings]
-/// standing on the pads, the degraded ones greyed, their marks (level,
+/// with no pan nor zoom: the still island with the pads, decor and back
+/// rampart (cached in its own layer), the guide's ring on the ground, the
+/// eleven [buildings] standing on the pads, breathing, bubbling and
+/// popping as they rise, the degraded ones greyed and still, the front
+/// of the coral rampart, their marks (level,
 /// « À bâtir » with a lock on the [locked] plots, a chevron over the
 /// [upgradable] ones, a triangle over the degraded ones), a light marine
 /// snow and the worksite and rampart banners at the top.
@@ -83,7 +82,13 @@ class _BaseViewState extends State<BaseView> {
               excludeFromSemantics: true,
               onTapUp: (details) => _tap(details.localPosition, fit, base),
               child: Stack(fit: StackFit.expand, children: [
-                ..._layers(fit, base),
+                BaseLayers(
+                  layout: widget.layout,
+                  fit: fit,
+                  snapshot: base,
+                  sprites: _sprites,
+                  clock: clock,
+                ),
                 BaseBadgesLayer(
                     layout: widget.layout, fit: fit, snapshot: base),
                 MapSnowLayer(clock: clock),
@@ -107,33 +112,6 @@ class _BaseViewState extends State<BaseView> {
           },
         ),
       );
-
-  /// The still island, the guide's ring on its ground, then the
-  /// buildings, each within its own boundary.
-  List<Widget> _layers(BaseFit fit, BaseSnapshot base) => [
-      RepaintBoundary(
-        child: CustomPaint(
-          painter: BaseIslandPainter(
-            layout: widget.layout,
-            tiers: base.tiers,
-            fit: fit,
-            sprites: _sprites?.map ?? MapSprites.ready,
-          ),
-        ),
-      ),
-      BaseGuideHalo(layout: widget.layout, fit: fit),
-      RepaintBoundary(
-        child: CustomPaint(
-          painter: BaseBuildingsPainter(
-            layout: widget.layout,
-            levels: base.levels,
-            degraded: base.degraded,
-            fit: fit,
-            sprites: _sprites,
-          ),
-        ),
-      ),
-    ];
 
   void _tap(Offset position, BaseFit fit, BaseSnapshot base) {
     final type = baseBuildingAt(fit.toProjection(position), widget.layout,

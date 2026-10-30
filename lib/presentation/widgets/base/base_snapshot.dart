@@ -1,6 +1,7 @@
 import '../../../domain/building/building.dart';
 import '../../../domain/building/building_degradation.dart';
 import '../../../domain/building/building_type.dart';
+import '../building/lively_building_icon.dart';
 import 'base_badge.dart';
 import 'base_pad_tier.dart';
 
@@ -71,6 +72,19 @@ class BaseSnapshot {
   Set<BuildingType> get built => {
     for (final MapEntry(:key, :value) in tiers.entries)
       if (value != BasePadTier.plot) key,
+  };
+
+  /// The buildings that breathe: built and not degraded.
+  Set<BuildingType> get breathing => {
+    for (final type in built)
+      if (!degraded.contains(type)) type,
+  };
+
+  /// The breathing buildings that produce a resource: bubbles rise over
+  /// them, as over their icons in a list.
+  Set<BuildingType> get bubbling => {
+    for (final type in breathing)
+      if (LivelyBuildingIcon.bubblesOver(type)) type,
   };
 
   /// What floats over [type], if anything.

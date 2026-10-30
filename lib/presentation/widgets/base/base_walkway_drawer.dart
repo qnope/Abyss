@@ -24,7 +24,7 @@ class BaseWalkwayDrawer {
   final _rim = Paint()
     ..style = PaintingStyle.stroke
     ..strokeWidth = .8 * baseMockPixel
-    ..color = AbyssIslandColors.rayFade.withValues(alpha: .45);
+    ..color = AbyssIslandColors.walkRim.withValues(alpha: .45);
   final _slat = Paint()
     ..strokeWidth = .8 * baseMockPixel
     ..color = AbyssIslandColors.slat;

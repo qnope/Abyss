@@ -39,4 +39,14 @@ extension BasePadGeometry on BaseSlot {
 
   /// The box of the contact shadow, laid on the pad at [tier].
   Rect shadowBoxOn(BasePadTier tier) => shadowBox.translate(0, -tier.lift);
+
+  /// The box the bubbles rise through over a producer on its pad at
+  /// [tier]: from its upper part, a little right of its middle, as on the
+  /// mockup.
+  Rect bubblesBoxOn(BasePadTier tier) {
+    final box = standingBoxOn(tier);
+    final side = box.width;
+    return Rect.fromLTWH(box.center.dx - 0.12 * side, box.top - 0.35 * side,
+        0.6 * side, 0.6 * side);
+  }
 }

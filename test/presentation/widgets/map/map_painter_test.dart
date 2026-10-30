@@ -15,36 +15,17 @@ void main() {
   final tiles = TerrainType.plain.tileSvgPaths;
   final String plain = tiles.first;
 
-  /// Whether [dst] is the tile box of [cell], drawn a hair larger.
-  bool floors(Rect dst, (int, int) cell) {
-    final box = MapProjection.tileRectOf(cell);
-    return (dst.center - box.center).distance < 1e-9 &&
-        dst.width > box.width &&
-        dst.width < box.width + 4 &&
-        (dst.height / dst.width - 0.5).abs() < 0.01;
-  }
+  bool mesh(Symbol method, List<dynamic> args) => method == #drawVertices;
 
-  testWidgets('each cell is floored with its own tile, a hair larger', (
+  testWidgets('floors every cell in one draw, its tiles packed together', (
     tester,
   ) async {
     final painter = await painterOf(tester, [
       for (final tile in [...tiles, tiles.first])
         MapCellVisual(terrainSprite: tile, revealed: true),
     ]);
-    final sprites = MapSprites.ready!;
-    PaintPatternPredicate tileOf(String tile, (int, int) cell) =>
-        (method, args) =>
-            method == #drawImageRect &&
-            args[0] == sprites.svg(tile) &&
-            floors(args[2] as Rect, cell);
-    expect(
-      painter,
-      paints
-        ..something(tileOf(tiles[0], (0, 0)))
-        ..something(tileOf(tiles[1], (1, 0)))
-        ..something(tileOf(tiles[2], (0, 1)))
-        ..something(tileOf(tiles[0], (1, 1))),
-    );
+    expect(painter, paintsExactlyCountTimes(#drawVertices, 1));
+    expect(painter, paintsExactlyCountTimes(#drawImageRect, 0));
     // The dark around the diamonds is the viewport's, not a fill.
     expect(painter, paintsExactlyCountTimes(#drawRect, 0));
   });
@@ -88,15 +69,14 @@ void main() {
     expect(
       painter,
       paints
-        ..drawImageRect()
-        ..drawImageRect()
+        ..something(mesh)
         ..save()
         ..transform(matrix4: MapProjection.isometric)
         ..drawImageRect(
             image: MapSprites.ready!.svg(faille), destination: flat)
         ..restore(),
     );
-    // Two floor tiles and the hole: its glow pulses on the standing layer.
-    expect(painter, paintsExactlyCountTimes(#drawImageRect, 3));
+    // The hole alone: its glow pulses on the standing layer.
+    expect(painter, paintsExactlyCountTimes(#drawImageRect, 1));
   });
 }

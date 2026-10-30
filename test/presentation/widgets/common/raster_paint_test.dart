@@ -2,6 +2,8 @@ import 'package:abyss/presentation/widgets/common/raster_paint.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/background_rasters.dart';
+
 /// A tile counting the sizes it is painted at; repaints when its [shade]
 /// changes.
 class _Tile extends CustomPainter {
@@ -35,11 +37,24 @@ void main() {
   RenderRasterPaint render(WidgetTester tester) =>
       tester.renderObject(find.byType(RasterPaint));
 
+  /// Lets the bitmap under way be rasterized, then painted.
+  Future<void> settle(WidgetTester tester) =>
+      settleRasters(tester, () => render(tester).image != null);
+
+  bool replay(Symbol method, List<dynamic> args) => method == #drawPicture;
+
   testWidgets('paints its painter once, drawn side by side as one bitmap', (
     tester,
   ) async {
     await pump(tester);
     expect(sizes, [const Size(150, 200)]);
+    // Replayed live, side by side, until the bitmap is ready.
+    expect(render(tester).image, isNull);
+    expect(find.byType(RasterPaint), paints
+      ..translate(x: 0, y: 0)..something(replay)
+      ..translate(x: 150, y: 0)..something(replay));
+    await settle(tester);
+    expect(sizes, hasLength(1));
     final image = render(tester).image!;
     expect((image.width, image.height), (300, 400));
     expect(
@@ -56,6 +71,7 @@ void main() {
     tester,
   ) async {
     await pump(tester);
+    await settle(tester);
     final image = render(tester).image;
     render(tester).markNeedsPaint();
     await tester.pump();
@@ -67,10 +83,12 @@ void main() {
   testWidgets('rasterizes again for a new painting or size, disposing the '
       'old bitmap', (tester) async {
     await pump(tester);
+    await settle(tester);
     final first = render(tester).image!;
     await pump(tester, shade: 1);
-    final second = render(tester).image!;
     expect(first.debugDisposed, isTrue);
+    await settle(tester);
+    final second = render(tester).image!;
     await pump(tester, shade: 1, box: const Size(100, 100));
     expect(second.debugDisposed, isTrue);
     expect(sizes, [
@@ -79,6 +97,7 @@ void main() {
 
   testWidgets('disposes its bitmap when it goes away', (tester) async {
     await pump(tester);
+    await settle(tester);
     final image = render(tester).image!;
     await tester.pumpWidget(const SizedBox());
     expect(image.debugDisposed, isTrue);
@@ -92,6 +111,7 @@ void main() {
       child: SizedBox(width: 10, height: 20,
           child: RasterPaint(painter: _Tile(sizes))),
     ));
+    await settle(tester);
     final image = render(tester).image!;
     final ratio = tester.view.devicePixelRatio;
     expect((image.width, image.height), ((10 * ratio).round(),

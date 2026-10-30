@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:abyss/presentation/widgets/map/decor/decor_kind.dart';
@@ -14,9 +15,8 @@ void main() {
       foot: const Offset(60, 50),
       size: 50);
 
-  testWidgets('draws every shadow, then every decor, in order', (
-    tester,
-  ) async {
+  testWidgets('without an atlas, draws every shadow, then every decor, in '
+      'order', (tester) async {
     final sprites = (await tester.runAsync(MapSprites.load))!;
     final drawer =
         MapDecorDrawer(imageOf: sprites.svg, shadow: sprites.shadow);
@@ -31,6 +31,44 @@ void main() {
         ..drawImageRect(
             image: sprites.svg(coral.sprite), destination: coral.box),
     );
+  });
+
+  testWidgets('from an atlas, lays every shadow in one draw, then every '
+      'decor in another, looking the same', (tester) async {
+    final sprites = (await tester.runAsync(MapSprites.load))!;
+    final decor = [
+      for (var i = 0; i < 12; i++)
+        MapDecor(
+            sprite: SeabedDecor.all[i % SeabedDecor.all.length].svgPath,
+            foot: Offset(30.0 + 23 * (i % 4), 40.0 + 9 * i),
+            size: 30.0 + 3 * i),
+    ];
+    MapDecorDrawer drawer({required bool packed}) => MapDecorDrawer(
+        imageOf: sprites.svg,
+        shadow: sprites.shadow,
+        atlas: packed ? sprites.floor : null,
+        shadowSprite: MapSprites.shadowSprite,
+        filterQuality: FilterQuality.low);
+    expect((Canvas canvas) => drawer(packed: true).draw(canvas, decor),
+        paintsExactlyCountTimes(#drawVertices, 2));
+    expect((Canvas canvas) => drawer(packed: true).draw(canvas, decor),
+        paintsExactlyCountTimes(#drawImageRect, 0));
+    Future<Uint8List> pixels(MapDecorDrawer drawer) async {
+      final recorder = PictureRecorder();
+      drawer.draw(Canvas(recorder)..scale(2), decor);
+      final image = await recorder.endRecording().toImage(300, 340);
+      return (await image.toByteData())!.buffer.asUint8List();
+    }
+
+    final (expected, actual) = (await tester.runAsync(() async => (
+          await pixels(drawer(packed: false)),
+          await pixels(drawer(packed: true)),
+        )))!;
+    var off = 0;
+    for (var i = 0; i < expected.length; i++) {
+      if ((expected[i] - actual[i]).abs() > 2) off++;
+    }
+    expect(off / expected.length, lessThan(0.002));
   });
 
   testWidgets('lays a small shadow at the foot, falling away from the light',

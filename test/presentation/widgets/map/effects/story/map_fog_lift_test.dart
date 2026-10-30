@@ -4,7 +4,7 @@ import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/map/effects/map_effect.dart';
 import 'package:abyss/presentation/widgets/map/effects/story/fog_lift_run.dart';
 import 'package:abyss/presentation/widgets/map/effects/story/map_fog_lift.dart';
-import 'package:abyss/presentation/widgets/map/map_painter.dart';
+import 'package:abyss/presentation/widgets/map/map_floor_tiles.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
 import 'package:abyss/presentation/widgets/map/token/map_token_trip.dart';
 import 'package:flutter/painting.dart';
@@ -59,7 +59,7 @@ void main() {
     final fog =
         canvas.order.lastIndexOf(fogAt(Duration.zero).single.$1.getBounds());
     for (final cell in seen) {
-      final tile = canvas.order.indexOf(MapPainter.tileOf(cell));
+      final tile = canvas.order.indexOf(MapFloorTiles.tileOf(cell));
       expect(tile, inExclusiveRange(-1, fog));
     }
   });

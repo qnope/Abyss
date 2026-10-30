@@ -30,6 +30,15 @@ void main() {
       expect(sprites.pool(glow), isNotNull, reason: glow.name);
     }
     expect(sprites!.shadow.width, greaterThan(0));
+    // The floor's tiles, decor and shadow, in one bitmap.
+    final floor = sprites.floor;
+    for (final path in [
+      for (final terrain in TerrainType.values) ...terrain.tileSvgPaths,
+      for (final kind in SeabedDecor.all) kind.svgPath,
+    ]) {
+      expect(floor.rectOf(path)?.width, MapSprites.spriteSize, reason: path);
+    }
+    expect(floor.rectOf(MapSprites.shadowSprite)?.width, sprites.shadow.width);
     final again = await tester.runAsync(MapSprites.load);
     expect(identical(again, sprites), isTrue);
   });

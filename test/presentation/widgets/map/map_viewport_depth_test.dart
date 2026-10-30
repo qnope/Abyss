@@ -80,7 +80,7 @@ void main() {
           .evaluate())
         boundaryOver(find.byWidget(element.widget)),
       boundaryOver(find.descendant(
-          of: find.byType(DepthHaze), matching: find.byType(DecoratedBox))),
+          of: find.byType(DepthHaze), matching: find.byType(RasterPaint))),
       boundaryOver(find.byWidgetPredicate(
           (w) => w is CustomPaint && w.painter is MapPainter)),
     ];

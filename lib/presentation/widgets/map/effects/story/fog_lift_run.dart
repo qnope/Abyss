@@ -5,7 +5,7 @@ import '../../../../extensions/unit_type_extensions.dart';
 import '../../../../theme/abyss_colors.dart';
 import '../../../../theme/abyss_motion.dart';
 import '../../map_content_drawer.dart';
-import '../../map_painter.dart';
+import '../../map_floor_tiles.dart';
 import '../../map_projection.dart';
 import '../../token/map_token_drawer.dart';
 import '../../token/map_token_trip.dart';
@@ -57,7 +57,7 @@ class FogLiftRun extends MapEffectRun {
   FogLiftRun(this.fog, {required this.stage})
       : _tiles = [
           for (final MapEntry(key: cell, value: tile) in fog.cells.entries)
-            (tile, MapPainter.tileOf(cell)),
+            (tile, MapFloorTiles.tileOf(cell)),
         ],
         fadedCells = fog.cells.keys.toSet().difference(fog.beacons),
         _scouts = [

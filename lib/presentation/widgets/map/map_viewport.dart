@@ -5,6 +5,7 @@ import '../../theme/abyss_colors.dart';
 import '../ambience/ambience_clock_scope.dart';
 import '../backdrop/trench/depth_haze.dart';
 import '../backdrop/trench/trench_backdrop.dart';
+import '../common/fixed_rect_clipper.dart';
 import 'map_projection.dart';
 import 'map_snow_layer.dart';
 import 'map_view_fit.dart';
@@ -23,11 +24,12 @@ typedef MapLayersBuilder =
 /// (moved by [controller], tapped anywhere in their box through
 /// [onTapUp]) and the snow lying over the screen all share it. Zooms out
 /// until the whole map's box ([content]) shows in the middle of the
-/// abyss (see [MapViewFit]), and in up to [maxScale]. The trench is left
-/// unpainted while the map's [floor] fills the screen.
+/// abyss (see [MapViewFit]), and in up to [maxScale]. The trench is
+/// painted only within the box of what shows past the map's [floor]
+/// (see [uncoveredArea]), not at all while the floor fills the screen.
 class MapViewport extends StatelessWidget {
-  /// How far past the screen's edges the floor must reach to hide the
-  /// trench: more than a blow shakes the map.
+  /// How far past the screen the floor's edges must lie to hide the
+  /// trench behind them: more than a blow shakes the map.
   static const coverMargin = 8.0;
 
   final TransformationController controller;
@@ -36,7 +38,7 @@ class MapViewport extends StatelessWidget {
   final Size content;
 
   /// The convex part of the map's box its floor covers, if any (see
-  /// [coversViewport]).
+  /// [uncoveredArea]).
   final List<Offset>? floor;
   final double maxScale;
   final GestureTapUpCallback? onTapUp;
@@ -71,10 +73,11 @@ class MapViewport extends StatelessWidget {
       ..scaleByDouble(scale, scale, scale, 1);
   }
 
-  bool _covered(Matrix4 transform, Size viewport) {
+  Rect _uncovered(Matrix4 transform, Size viewport) {
     final floor = this.floor;
-    return floor != null &&
-        coversViewport(floor, transform, viewport, margin: coverMargin);
+    return floor == null
+        ? Offset.zero & viewport
+        : uncoveredArea(floor, transform, viewport, margin: coverMargin);
   }
 
   @override
@@ -95,10 +98,14 @@ class MapViewport extends StatelessWidget {
                   Positioned.fill(
                     child: ValueListenableBuilder<Matrix4>(
                       valueListenable: controller,
-                      builder: (context, transform, trench) => Offstage(
-                        offstage: _covered(transform, viewport),
-                        child: trench,
-                      ),
+                      builder: (context, transform, trench) {
+                        final area = _uncovered(transform, viewport);
+                        return Offstage(
+                          offstage: area.isEmpty,
+                          child: ClipRect(
+                              clipper: FixedRectClipper(area), child: trench),
+                        );
+                      },
                       child: TrenchBackdrop(
                           transform: controller, content: content),
                     ),

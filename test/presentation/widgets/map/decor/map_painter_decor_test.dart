@@ -5,7 +5,6 @@ import 'package:abyss/presentation/extensions/terrain_type_extensions.dart';
 import 'package:abyss/presentation/theme/abyss_colors.dart';
 import 'package:abyss/presentation/widgets/common/painted_raster.dart';
 import 'package:abyss/presentation/widgets/map/decor/map_decor_cells.dart';
-import 'package:abyss/presentation/widgets/map/decor/map_decor_drawer.dart';
 import 'package:abyss/presentation/widgets/map/map_cell_visual.dart';
 import 'package:abyss/presentation/widgets/map/map_painter.dart';
 import 'package:abyss/presentation/widgets/map/map_projection.dart';
@@ -35,26 +34,18 @@ void main() {
     final seen = decor.where((d) => !d.hidden).toList();
     expect(hidden, isNotEmpty);
     expect(seen, isNotEmpty);
-    PaintPattern decorIn(PaintPattern pattern, List<MapDecor> items) {
-      for (final item in items) {
-        pattern.drawImageRect(
-            image: sprites.shadow, destination: MapDecorDrawer.shadowOf(item));
-      }
-      for (final item in items) {
-        pattern.drawImageRect(
-            image: sprites.svg(item.sprite), destination: item.box);
-      }
-      return pattern;
-    }
+    // Their shadows in one mesh, then the decor in another (see
+    // MapDecorDrawer).
+    bool mesh(Symbol method, List<dynamic> args) => method == #drawVertices;
+    PaintPattern decorIn(PaintPattern pattern) =>
+        pattern..something(mesh)..something(mesh);
 
     // The tiles, the exploration markers, then the decor and the fog.
-    final tiles = paints;
-    for (var i = 0; i < visuals.length; i++) {
-      tiles.drawImageRect(image: sprites.svg(tile));
-    }
-    final pattern = decorIn(tiles..path(), hidden)..path(color: fog);
+    final tiles = paints..something(mesh);
+    final pattern = decorIn(tiles..path())..path(color: fog);
+    expect((Canvas canvas) => painter.paint(canvas, size), decorIn(pattern));
     expect((Canvas canvas) => painter.paint(canvas, size),
-        decorIn(pattern, seen));
+        paintsExactlyCountTimes(#drawVertices, 5));
 
     // Its fog kept as a bitmap, the map lays it at the same place.
     final raster = PaintedRaster();
@@ -62,14 +53,9 @@ void main() {
     final kept = MapPainter(visuals: visuals, columns: side,
         sprites: sprites, decorSalt: 2, fogRaster: raster);
     kept.paint(Canvas(ui.PictureRecorder()), size);
-    final again = paints;
-    for (var i = 0; i < visuals.length; i++) {
-      again.drawImageRect(image: sprites.svg(tile));
-    }
-    final bitmap =
-        decorIn(again..path(), hidden)..drawImageRect(image: raster.image);
-    expect((Canvas canvas) => kept.paint(canvas, size),
-        decorIn(bitmap, seen));
+    final again = paints..something(mesh);
+    final bitmap = decorIn(again..path())..drawImageRect(image: raster.image);
+    expect((Canvas canvas) => kept.paint(canvas, size), decorIn(bitmap));
   });
 
   testWidgets('stands no decor without a salt, nor before the sprites load',
@@ -77,7 +63,7 @@ void main() {
     final sprites = (await tester.runAsync(MapSprites.load))!;
     final bare = MapPainter(visuals: visuals, columns: side, sprites: sprites);
     expect((Canvas canvas) => bare.paint(canvas, size),
-        paintsExactlyCountTimes(#drawImageRect, visuals.length));
+        paintsExactlyCountTimes(#drawVertices, 1));
     final loading =
         MapPainter(visuals: visuals, columns: side, decorSalt: 2);
     expect((Canvas canvas) => loading.paint(canvas, size),

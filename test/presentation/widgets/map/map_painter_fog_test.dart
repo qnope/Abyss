@@ -75,8 +75,9 @@ void main() {
       MapCellVisual(terrainSprite: plain, revealed: true,
           factionColor: AbyssColors.coralPink),
     ]);
-    // The four terrains only: no content, no halo, no ring.
-    expect(painter, paintsExactlyCountTimes(#drawImageRect, 4));
+    // The four terrains only, in one mesh: no content, no halo, no ring.
+    expect(painter, paintsExactlyCountTimes(#drawVertices, 1));
+    expect(painter, paintsExactlyCountTimes(#drawImageRect, 0));
     expect(painter, paintsExactlyCountTimes(#drawOval, 0));
   });
 }

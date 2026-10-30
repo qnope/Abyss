@@ -65,4 +65,28 @@ void main() {
       expect(base.locked, {lab});
     });
   });
+
+  group('the life of the base', () {
+    const mine = BuildingType.coralMine, lab = BuildingType.laboratory;
+
+    test('the built buildings breathe, never a degraded one nor a plot', () {
+      final nemo = player(farmLevel: 3)..buildings[lab]!.level = 1;
+      final base = BaseSnapshot.of(nemo.buildings);
+      expect(base.breathing, {hq, lab});
+    });
+
+    test('bubbles rise over the breathing producers only', () {
+      final nemo = player()
+        ..buildings[lab]!.level = 1
+        ..buildings[mine]!.level = 2;
+      final base = BaseSnapshot.of(nemo.buildings);
+      expect(base.breathing, {hq, farm, lab, mine});
+      expect(base.bubbling, {farm, mine});
+    });
+
+    test('a degraded producer stands still, without bubbles', () {
+      final base = BaseSnapshot.of(player(farmLevel: 3).buildings);
+      expect(base.bubbling, isEmpty);
+    });
+  });
 }

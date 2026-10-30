@@ -54,7 +54,7 @@ void main() {
 
   testWidgets('the degraded buildings reach the painter', (tester) async {
     await show(tester);
-    expect(painterOf<BaseBuildingsPainter>(tester).degraded, {farm});
+    expect(painterOf<BaseBuildingsPainter>(tester).snapshot.degraded, {farm});
   });
 
   testWidgets('the still island lays every pad at its tier', (tester) async {

@@ -6,6 +6,8 @@ import 'package:abyss/presentation/widgets/base/base_fit.dart';
 import 'package:abyss/presentation/widgets/base/base_island_painter.dart';
 import 'package:abyss/presentation/widgets/base/base_layout.dart';
 import 'package:abyss/presentation/widgets/base/base_pad_tier.dart';
+import 'package:abyss/presentation/widgets/base/base_rampart.dart';
+import 'package:abyss/presentation/widgets/base/base_snapshot.dart';
 import 'package:abyss/presentation/widgets/base/base_sprites.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -23,10 +25,20 @@ void main() {
           {BaseFit? at}) =>
       BaseIslandPainter(layout: layout, tiers: tiers, fit: at ?? fit);
 
+  BaseSnapshot snapshot(Map<BuildingType, int> levels,
+          {Set<BuildingType> degraded = const {}}) =>
+      BaseSnapshot(
+        levels: levels,
+        tiers: levels.map((t, l) => MapEntry(t, BasePadTier.ofLevel(l))),
+        degraded: degraded,
+      );
+
   BaseBuildingsPainter buildings(Map<BuildingType, int> levels,
           {Set<BuildingType> degraded = const {}}) =>
       BaseBuildingsPainter(
-          layout: layout, levels: levels, degraded: degraded, fit: fit);
+          layout: layout,
+          snapshot: snapshot(levels, degraded: degraded),
+          fit: fit);
 
   /// Paints [painter] on a canvas of the [view], as a frame would.
   void paint(void Function(Canvas, Size) painter) {
@@ -67,12 +79,29 @@ void main() {
       }
     });
 
+    test('a rampart grown repaints the island, with its back edges', () {
+      final walled = BaseIslandPainter(layout: layout, tiers: {hq: gravel},
+          fit: fit, rampart: BaseRampart.of(layout, 2));
+      expect(walled.shouldRepaint(island({hq: gravel})), isTrue);
+      expect(
+          walled.shouldRepaint(BaseIslandPainter(layout: layout,
+              tiers: {hq: gravel}, fit: fit,
+              rampart: BaseRampart.of(layout, 2))),
+          isFalse);
+      paint(walled.paint);
+    });
+
+    test('paints the cable once the Descent module is built', () {
+      paint(island({hq: gravel, BuildingType.descentModule: gravel}).paint);
+    });
+
     test('paints an island of any size', () {
       const parade = BaseLayout(size: 9, slots: {});
       paint(BaseIslandPainter(
         layout: parade,
         tiers: const {},
         fit: BaseFit.of(view, parade),
+        rampart: BaseRampart.of(parade, 3),
       ).paint);
     });
 
@@ -112,8 +141,8 @@ void main() {
       }
       final painter = BaseBuildingsPainter(
         layout: layout,
-        levels: {hq: 1, farm: 0, BuildingType.barracks: 5},
-        degraded: {BuildingType.barracks},
+        snapshot: snapshot({hq: 1, farm: 0, BuildingType.barracks: 5},
+            degraded: {BuildingType.barracks}),
         fit: fit,
         sprites: sprites,
       );

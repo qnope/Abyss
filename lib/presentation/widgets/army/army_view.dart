@@ -19,8 +19,8 @@ import 'army_sprites.dart';
 /// base's fitted to the view with no pan nor zoom (see [ArmyLayers]): the
 /// still island kept as a bitmap, the squads of [counts] units standing
 /// on it with their banners, and their plaques, a green « + » on the
-/// [recruitable] ones; the rampart's badge at the top once the Coral
-/// Citadel stands.
+/// [recruitable] ones; the coral rampart around the island and its
+/// badge at the top once the Coral Citadel stands.
 ///
 /// Touching a squad (one of its figures, its banner or its pad; the one
 /// in front where two overlap) calls [onUnitTap] with its unit, locked or
@@ -108,6 +108,8 @@ class _ArmyViewState extends State<ArmyView> {
                 roster: roster,
                 barracksDegraded: degraded,
                 barracksLocked: widget.barracksLocked,
+                citadelLevel:
+                    widget.buildings[BuildingType.coralCitadel]?.level ?? 0,
                 place: widget.place,
                 base: _base,
                 army: _army,

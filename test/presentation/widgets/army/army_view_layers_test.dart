@@ -1,7 +1,10 @@
 import 'package:abyss/domain/unit/unit_type.dart';
+import 'package:abyss/presentation/widgets/army/army_island_painter.dart';
 import 'package:abyss/presentation/widgets/army/army_marks_painter.dart';
+import 'package:abyss/presentation/widgets/army/army_rampart.dart';
 import 'package:abyss/presentation/widgets/army/army_squads_painter.dart';
 import 'package:abyss/presentation/widgets/army/army_view.dart';
+import 'package:abyss/presentation/widgets/base/base_rampart_painter.dart';
 import 'package:abyss/presentation/widgets/common/raster_paint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -60,5 +63,25 @@ void main() {
     expect(tester.renderObject(painted<ArmyMarksPainter>()).debugNeedsPaint,
         isTrue);
     await tester.pump();
+  });
+
+  testWidgets('the rampart stands around the island iff the citadel does',
+      (tester) async {
+    ArmyIslandPainter still() =>
+        tester.widget<RasterPaint>(island).painter as ArmyIslandPainter;
+    await army.show(tester, citadel: 0, counts: {UnitType.scout: 4});
+    expect(still().rampart.back, isEmpty);
+    expect(painted<BaseRampartPainter>(), findsNothing);
+    await army.show(tester, citadel: 3, counts: {UnitType.scout: 4});
+    expect(still().rampart, armyRampartOf(3));
+    expect(still().rampart.back, isNotEmpty);
+    final front = painterOf<BaseRampartPainter>(tester);
+    expect(front.rampart, armyRampartOf(3));
+    final order = tester.allWidgets.whereType<CustomPaint>().toList();
+    int indexOf<T>() => order.indexWhere((paint) => paint.painter is T);
+    expect(indexOf<BaseRampartPainter>(),
+        greaterThan(indexOf<ArmySquadsPainter>()));
+    expect(indexOf<BaseRampartPainter>(),
+        lessThan(indexOf<ArmyMarksPainter>()));
   });
 }

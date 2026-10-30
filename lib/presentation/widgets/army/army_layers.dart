@@ -5,12 +5,14 @@ import '../../../domain/unit/unit_type.dart';
 import '../../l10n/l10n_extension.dart';
 import '../ambience/ambience_clock_scope.dart';
 import '../base/base_fit.dart';
+import '../base/base_rampart_painter.dart';
 import '../base/base_sprites.dart';
 import '../common/raster_paint.dart';
 import 'army_arrivals.dart';
 import 'army_guide_halo.dart';
 import 'army_island_painter.dart';
 import 'army_marks_painter.dart';
+import 'army_rampart.dart';
 import 'army_roster.dart';
 import 'army_sprites.dart';
 import 'army_squads_painter.dart';
@@ -21,8 +23,10 @@ import 'squad_arrival.dart';
 /// island ([ArmyIslandPainter]), rasterized into a bitmap kept when the
 /// army is left ([RasterPaint]); the guide's ring on the drill pad of
 /// the unit it points at ([ArmyGuideHalo]); the squads and their banners
-/// ([ArmySquadsPainter]), once their figures are loaded; their plaques
-/// and the barracks' plaque ([ArmyMarksPainter]).
+/// ([ArmySquadsPainter]), once their figures are loaded; the front of the
+/// coral rampart once the citadel stands at [citadelLevel] (its back lies
+/// in the island, see [armyRampartOf]); their plaques and the barracks'
+/// plaque ([ArmyMarksPainter]).
 ///
 /// The squads live on an ambience clock of their own, standing still when
 /// the platform reduces motion; recruits arrive on the squads growing at
@@ -41,6 +45,9 @@ class ArmyLayers extends StatelessWidget {
   /// Whether a missing prerequisite keeps the barracks from being built.
   final bool barracksLocked;
 
+  /// The level of the Coral Citadel, raising the rampart from 1.
+  final int citadelLevel;
+
   /// The place the [roster] counts the army at, whatever names it.
   final Object? place;
 
@@ -55,6 +62,7 @@ class ArmyLayers extends StatelessWidget {
     required this.roster,
     this.barracksDegraded = false,
     this.barracksLocked = false,
+    this.citadelLevel = 0,
     this.place,
     this.base,
     this.army,
@@ -80,6 +88,7 @@ class ArmyLayers extends StatelessWidget {
     Animation<double> arrival,
     Map<UnitType, SquadArrival> arriving,
   ) {
+    final rampart = armyRampartOf(citadelLevel);
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -91,6 +100,7 @@ class ArmyLayers extends StatelessWidget {
               barracksLevel: roster.barracksLevel,
               barracksDegraded: barracksDegraded,
               unlocked: roster.unlocked,
+              rampart: rampart,
               sprites: base,
             ),
           ),
@@ -107,6 +117,12 @@ class ArmyLayers extends StatelessWidget {
                 arrival: arrival,
                 arriving: arriving,
               ),
+            ),
+          ),
+        if (rampart.level > 0)
+          RepaintBoundary(
+            child: CustomPaint(
+              painter: BaseRampartPainter(rampart: rampart, fit: fit),
             ),
           ),
         RepaintBoundary(

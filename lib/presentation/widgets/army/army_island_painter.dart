@@ -4,6 +4,8 @@ import 'package:flutter/rendering.dart';
 import '../../../domain/unit/unit_type.dart';
 import '../base/base_fit.dart';
 import '../base/base_plateau.dart';
+import '../base/base_rampart.dart';
+import '../base/base_rampart_drawer.dart';
 import '../base/base_sprites.dart';
 import '../base/base_walkway_drawer.dart';
 import '../map/decor/map_decor_drawer.dart';
@@ -22,14 +24,14 @@ import 'army_slots.dart';
 /// island like the base's: the plateau (see [paintBasePlateau]), the four
 /// alleys between its blocks, the crest flat in the middle, the barracks'
 /// pad and the six drill pads (laid for the [unlocked] units, surveyed
-/// for the others), then, back to front, the decor, the barracks standing
-/// and the depot. The squads and the plaques float above, apart (see
+/// for the others), the back edges of the coral [rampart], then, back to
+/// front, the decor, the barracks standing and the depot. The squads and the plaques float above, apart (see
 /// ArmySquadsPainter and ArmyMarksPainter).
 ///
 /// Nothing in it moves: rasterized into a bitmap kept by the army's view,
 /// it is painted once and only again when the barracks changes (its
-/// level, degraded), a unit is unlocked, the [fit] or the [sprites]
-/// change; never as the army grows.
+/// level, degraded), a unit is unlocked, the rampart grows, the [fit] or
+/// the [sprites] change; never as the army grows.
 class ArmyIslandPainter extends CustomPainter {
   /// The salt of the slab's rock, as on the mockup.
   static const slabSalt = 6;
@@ -41,6 +43,10 @@ class ArmyIslandPainter extends CustomPainter {
   /// The units the barracks' level lets recruit.
   final Set<UnitType> unlocked;
 
+  /// The coral wall around the island, its front edges apart, over the
+  /// squads (see BaseRampartPainter).
+  final BaseRampart rampart;
+
   /// The floor tiles, decor and barracks, plain diamonds and none of the
   /// others while they load.
   final BaseSprites? sprites;
@@ -50,6 +56,7 @@ class ArmyIslandPainter extends CustomPainter {
     required this.barracksLevel,
     required this.unlocked,
     this.barracksDegraded = false,
+    this.rampart = const BaseRampart.none(),
     this.sprites,
   });
 
@@ -72,6 +79,7 @@ class ArmyIslandPainter extends CustomPainter {
     for (final type in UnitType.values) {
       pads.paint(canvas, type, unlocked: unlocked.contains(type));
     }
+    paintBaseRampart(canvas, rampart.back);
     _paintStanding(canvas, barracks);
     canvas.restore();
   }
@@ -121,6 +129,7 @@ class ArmyIslandPainter extends CustomPainter {
       oldDelegate.barracksLevel != barracksLevel ||
       oldDelegate.barracksDegraded != barracksDegraded ||
       oldDelegate.sprites != sprites ||
+      oldDelegate.rampart != rampart ||
       !setEquals(oldDelegate.unlocked, unlocked);
 
   @override

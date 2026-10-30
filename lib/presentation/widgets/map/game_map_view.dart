@@ -92,6 +92,10 @@ class _GameMapViewState extends State<GameMapView>
     return MapViewport(
       controller: controller,
       content: MapProjection.sizeOf(map.width, rows),
+      floor: [
+        for (final vertex in MapProjection.outlineOf(map.width, rows))
+          vertex + MapProjection.originOf(rows),
+      ],
       maxScale: screenWidth / (_maxVisibleTiles * MapProjection.tileWidth),
       onTapUp: widget.onCellTap == null ? null : _handleTap,
       builder: (context, clock, viewport) => MapLayers(

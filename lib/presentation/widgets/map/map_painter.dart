@@ -2,11 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../theme/abyss_colors.dart';
+import '../common/painted_raster.dart';
 import 'decor/map_decor_cells.dart';
 import 'decor/map_decor_drawer.dart';
 import 'map_cell_visual.dart';
 import 'map_content_drawer.dart';
 import 'map_flat_contents.dart';
+import 'map_fog.dart';
 import 'map_projection.dart';
 import 'map_sprites.dart';
 import 'slab/iso_slab_painter.dart';
@@ -16,8 +18,8 @@ export 'map_content_drawer.dart' show cellSize;
 /// Paints the still floor of the map in one pass, in projection
 /// coordinates: the diamond tile of every cell, the holes lying flat on
 /// them, a single path for exploration markers, the decor standing
-/// among hidden cells, a single path for the fog, then the decor
-/// standing among seen cells, over the fog as the contents are, and
+/// among hidden cells, the fog (one bitmap kept in [fogRaster], see
+/// [MapFog]), then the decor standing among seen cells, over the fog as the contents are, and
 /// last the rock slab the map stands on (see [IsoSlabPainter]), clear of
 /// the fog.
 ///
@@ -31,9 +33,6 @@ class MapPainter extends CustomPainter {
   /// overlap and no seam shows between them.
   static const tileBleed = 1.5;
 
-  /// Blur of the fog's edge, paid only when the map repaints.
-  static const fogBlur = 4.0;
-
   final List<MapCellVisual> visuals;
   final int columns;
   final MapSprites? sprites;
@@ -42,11 +41,21 @@ class MapPainter extends CustomPainter {
   /// none when `null`.
   final int? decorSalt;
 
+  /// Keeps the fog's bitmap from one painting to the next; the fog is
+  /// blurred live without it.
+  final PaintedRaster? fogRaster;
+
+  /// Whether the slab is painted here, last; else it is left to a layer
+  /// of its own just above.
+  final bool slab;
+
   const MapPainter({
     required this.visuals,
     required this.columns,
     this.sprites,
     this.decorSalt,
+    this.fogRaster,
+    this.slab = true,
   });
 
   @override
@@ -56,6 +65,7 @@ class MapPainter extends CustomPainter {
     final fallback = Paint()..color = AbyssColors.plainBlue;
     final pending = Path();
     final fog = Path();
+    final hidden = StringBuffer();
     final flat = <int>[];
     for (var i = 0; i < visuals.length; i++) {
       final visual = visuals[i];
@@ -68,6 +78,7 @@ class MapPainter extends CustomPainter {
       if (visual.pending) {
         pending.addPath(MapProjection.diamondOf(cell, inset: 1), Offset.zero);
       }
+      hidden.writeCharCode(visual.revealed ? 0x2E : 0x23);
       if (!visual.revealed) {
         fog.addPath(MapProjection.diamondOf(cell, inset: -0.5), Offset.zero);
       }
@@ -90,15 +101,10 @@ class MapPainter extends CustomPainter {
     final decorDrawer = MapDecorDrawer(
         imageOf: (path) => images?.svg(path), shadow: images?.shadow);
     decorDrawer.draw(canvas, decor.where((d) => d.hidden));
-    canvas.drawPath(
-      fog,
-      Paint()
-        ..color = AbyssColors.abyssBlack
-            .withValues(alpha: AbyssColors.fogOpacity)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, fogBlur),
-    );
+    MapFog.paint(canvas, fog, (columns, '$hidden'), raster: fogRaster);
     decorDrawer.draw(canvas, decor.where((d) => !d.hidden));
     // Under the front edges, which nothing on the map reaches past.
+    if (!slab) return;
     IsoSlabPainter(
       columns: columns,
       rows: columns == 0 ? 0 : visuals.length ~/ columns,
@@ -119,5 +125,7 @@ class MapPainter extends CustomPainter {
       oldDelegate.sprites != sprites ||
       oldDelegate.columns != columns ||
       oldDelegate.decorSalt != decorSalt ||
+      oldDelegate.fogRaster != fogRaster ||
+      oldDelegate.slab != slab ||
       !listEquals(oldDelegate.visuals, visuals);
 }

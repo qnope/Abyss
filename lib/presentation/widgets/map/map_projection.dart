@@ -109,6 +109,13 @@ abstract final class MapProjection {
     return Rect.fromLTWH(centre.dx - side / 2, bottom - side, side, side);
   }
 
+  /// The floor of a map of [columns] by [rows] cells, its top, right,
+  /// bottom and left vertices: what its tiles cover, without a gap.
+  static List<Offset> outlineOf(int columns, int rows) => [
+        for (final (x, y) in [(0, 0), (columns, 0), (columns, rows), (0, rows)])
+          toScreen(Offset(x * cellSize, y * cellSize)),
+      ];
+
   /// Where the projection's origin lands in the box of a map of [rows].
   static Offset originOf(int rows) => Offset(rows * cellSize, headroom);
 

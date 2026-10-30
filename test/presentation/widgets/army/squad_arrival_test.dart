@@ -40,6 +40,14 @@ void main() {
         {scout: const SquadArrival(figure: 2, stays: true, gained: 5)},
       );
     });
+
+    test('two arrivals alike are one, and read as such', () {
+      final arrival = SquadArrival.of(3, 8)!;
+      expect(arrival.hashCode, SquadArrival.of(4, 9)!.hashCode);
+      expect({arrival, SquadArrival.of(4, 9)}, hasLength(1));
+      expect(arrival, isNot(SquadArrival.of(3, 9)));
+      expect('$arrival', 'SquadArrival(2, stays: true, +5)');
+    });
   });
 
   group('SquadArrival timeline', () {

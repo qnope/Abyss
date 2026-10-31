@@ -24,7 +24,7 @@ void main() {
   late List<int> paintings;
 
   setUp(() => paintings = []);
-  tearDown(KeptRasters.clear);
+  tearDown(KeptRasters.debugReset);
 
   Future<void> pump(WidgetTester tester,
           {int shade = 0, Object? keepAs = 'tile'}) =>

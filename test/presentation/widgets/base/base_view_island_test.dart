@@ -18,7 +18,7 @@ import '../guide/guide_widget_helpers.dart';
 void main() {
   setUp(mockSvgAssets);
   tearDown(clearSvgMocks);
-  tearDown(KeptRasters.clear);
+  tearDown(KeptRasters.debugReset);
 
   const hq = BuildingType.headquarters, farm = BuildingType.algaeFarm;
   late Player nemo;

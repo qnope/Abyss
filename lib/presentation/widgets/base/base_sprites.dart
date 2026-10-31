@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
+
 import '../../../domain/building/building_type.dart';
 import '../../extensions/building_type_extensions.dart';
 import '../common/svg_raster_cache.dart';
@@ -24,6 +26,13 @@ class BaseSprites {
   /// The shared sprites if already loaded, so the base can paint them on
   /// its very first frame.
   static BaseSprites? get ready => _ready ??= _peek();
+
+  /// Forgets the shared sprites and their load under way, as at startup.
+  @visibleForTesting
+  static void debugReset() {
+    _shared = null;
+    _ready = null;
+  }
 
   /// Loads the shared sprites, rasterizing them on first use only.
   static Future<BaseSprites> load() {

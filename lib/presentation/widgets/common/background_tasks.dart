@@ -16,22 +16,36 @@ abstract final class BackgroundTasks {
 
   static final _queue = Queue<void Function()>();
 
+  /// Counts the resets, so a turn asked before one does nothing.
+  static int _generation = 0;
+
   /// Queues [task], run after those queued before it.
   static void run(void Function() task) {
     _queue.add(task);
     if (_queue.length == 1) _next();
   }
 
-  static void _next() => Zone.root.createTimer(spacing, () {
-        final task = _queue.first;
-        try {
-          task();
-        } catch (error, stack) {
-          FlutterError.reportError(
-              FlutterErrorDetails(exception: error, stack: stack));
-        } finally {
-          _queue.removeFirst();
-          if (_queue.isNotEmpty) _next();
-        }
-      });
+  /// Drops the tasks queued, as at startup.
+  @visibleForTesting
+  static void debugReset() {
+    _queue.clear();
+    _generation++;
+  }
+
+  static void _next() {
+    final generation = _generation;
+    Zone.root.createTimer(spacing, () {
+      if (generation != _generation) return;
+      final task = _queue.first;
+      try {
+        task();
+      } catch (error, stack) {
+        FlutterError.reportError(
+            FlutterErrorDetails(exception: error, stack: stack));
+      } finally {
+        _queue.removeFirst();
+        if (_queue.isNotEmpty) _next();
+      }
+    });
+  }
 }

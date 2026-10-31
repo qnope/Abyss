@@ -103,6 +103,15 @@ abstract final class SvgRasterCache {
   static Future<void> preloadGrey(Iterable<String> paths) =>
       runConcurrently(paths, preloadWorkers, loadGrey);
 
+  /// Forgets every bitmap and every load under way, as at startup.
+  @visibleForTesting
+  static void debugReset() {
+    _pending.clear();
+    _ready.clear();
+    _pendingGrey.clear();
+    _readyGrey.clear();
+  }
+
   /// Runs [compute] once per [path]; a failure is forgotten so the next
   /// call retries.
   static Future<ui.Image> _memoize(

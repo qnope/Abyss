@@ -52,4 +52,20 @@ void main() {
         () => Future<void>.delayed(const Duration(milliseconds: 50)));
     expect(ran, isTrue);
   });
+
+  test('drops the tasks queued once reset, then runs the new ones',
+      () async {
+    final ran = <String>[];
+    final done = Completer<void>();
+    BackgroundTasks.run(() => ran.add('stale'));
+    BackgroundTasks.run(() => ran.add('stale too'));
+
+    BackgroundTasks.debugReset();
+    BackgroundTasks.run(() => ran.add('fresh'));
+    BackgroundTasks.run(done.complete);
+
+    await done.future;
+    await Future<void>.delayed(const Duration(milliseconds: 20));
+    expect(ran, ['fresh']);
+  });
 }

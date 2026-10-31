@@ -43,6 +43,18 @@ abstract final class BackdropRasterCache {
     return pending.then((image) => image.clone());
   }
 
+  /// Disposes every bitmap and forgets every load under way, as at
+  /// startup.
+  @visibleForTesting
+  static void debugReset() {
+    for (final image in _ready.values) {
+      image.dispose();
+    }
+    _ready.clear();
+    _pending.clear();
+    _pictures.clear();
+  }
+
   static ui.Image _keep(_Key key, ui.Image image) {
     _ready[key] = image;
     while (_ready.length > maxEntries) {

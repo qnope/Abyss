@@ -30,9 +30,9 @@ abstract final class KeptRasters {
     _kept[name] = kept;
   }
 
-  /// Disposes every bitmap kept.
+  /// Disposes every bitmap kept, as at startup.
   @visibleForTesting
-  static void clear() {
+  static void debugReset() {
     for (final kept in _kept.values) {
       kept.raster.dispose();
     }

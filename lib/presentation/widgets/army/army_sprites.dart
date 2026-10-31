@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
+
 import '../../../domain/unit/unit_type.dart';
 import '../../extensions/unit_type_extensions.dart';
 import '../common/svg_raster_cache.dart';
@@ -31,6 +33,13 @@ class ArmySprites {
   /// The shared sprites if already loaded, so the army can paint them on
   /// its very first frame.
   static ArmySprites? get ready => _ready ??= _peek();
+
+  /// Forgets the shared sprites and their load under way, as at startup.
+  @visibleForTesting
+  static void debugReset() {
+    _shared = null;
+    _ready = null;
+  }
 
   /// Loads the shared sprites, rasterizing them on first use only.
   static Future<ArmySprites> load() {

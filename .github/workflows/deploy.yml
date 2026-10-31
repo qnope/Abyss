@@ -40,7 +40,7 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
-      - run: flutter test --coverage
+      - run: tool/test.sh --coverage
       - name: Coverage report
         run: |
           .github/scripts/coverage_summary.sh coverage/lcov.info coverage/badge.json >> "$GITHUB_STEP_SUMMARY"

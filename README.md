@@ -19,7 +19,7 @@ Two GitHub Actions workflows live in `.github/workflows/`.
 | Job | What it does |
 |---|---|
 | Analyze | `flutter analyze --fatal-infos` |
-| Test | `flutter test --coverage`, then reports the coverage |
+| Test | `tool/test.sh --coverage`, then reports the coverage |
 | Build Web | `flutter build web`, uploaded as the `web-build` artifact |
 | Build Android | `flutter build apk`, uploaded as the `android-apk` artifact |
 | Build iOS | `flutter build ios --no-codesign`, uploaded as the `ios-build` artifact |
@@ -52,7 +52,7 @@ the `app_localizations*.dart` files `flutter gen-l10n` writes from the ARB.
   https://qnope.github.io/Abyss/coverage/ and the badge above shows the total.
 - **On any CI run**: the same table is in the Test job's summary, and the
   `coverage` artifact holds `lcov.info` and the HTML report.
-- **Locally**: `flutter test --coverage`, then
+- **Locally**: `tool/test.sh --coverage`, then
   `.github/scripts/coverage_summary.sh coverage/lcov.info`.
 - **Minimum**: the Test job fails when the total drops below 97 %. Set
   `COVERAGE_MIN` to apply the same check locally.

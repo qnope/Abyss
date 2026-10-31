@@ -19,7 +19,8 @@ The full product vision and the incremental development stages are described in 
 ## Rules
 1. Always design component that are reusable
 2. Never have object with `initialize()` function. Object should be constructed or not.
-3. Always run `flutter analyze` and `flutter test` to be sure everything is fine.
+3. Always run `flutter analyze` and `tool/test.sh` to be sure everything is fine. `tool/test.sh` runs every test file in 4 bundled processes (minutes faster than plain `flutter test`, which still works for a single file: `flutter test test/some_test.dart`); it passes extra options to `flutter test`, as in `tool/test.sh --coverage`, and paths to restrict the files, as in `tool/test.sh test/domain`.
 4. Always target under 150 lines of code by file.
 5. Target architecture of 5 layers.
 6. Theme is in `lib/presentation/theme/`. Always use it when creating UI component.
+7. Test files share a process in the bundles, and `resetProcessState()` (`test/helpers/fresh_process.dart`) puts it back as at startup before each file. Any new process-wide state (a static cache, a static future, a registry) needs a `@visibleForTesting static void debugReset()` called from there, or a test may pass alone and fail in a bundle.

@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
+
 import '../ambience/creature_sheet.dart';
 import '../common/run_concurrently.dart';
 import '../common/svg_raster_cache.dart';
@@ -14,6 +16,13 @@ abstract final class MapCreatureSheets {
 
   /// The sheet of the creature drawn with [sprite], if already built.
   static CreatureSheet? peek(String sprite) => _ready[sprite];
+
+  /// Forgets every sheet and every build under way, as at startup.
+  @visibleForTesting
+  static void debugReset() {
+    _pending.clear();
+    _ready.clear();
+  }
 
   /// Builds the sheet of every living creature of [sprites] not built
   /// yet, a few at a time so the map shown meanwhile stays smooth.

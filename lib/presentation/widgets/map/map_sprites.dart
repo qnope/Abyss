@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
+
 import '../../../domain/map/cell_content_type.dart';
 import '../../../domain/map/monster_difficulty.dart';
 import '../../../domain/map/monster_family.dart';
@@ -58,6 +60,13 @@ class MapSprites {
   /// The shared sprites if already loaded (e.g. at startup), so a map can
   /// paint them on its very first frame.
   static MapSprites? get ready => _ready;
+
+  /// Forgets the shared sprites and their load under way, as at startup.
+  @visibleForTesting
+  static void debugReset() {
+    _shared = null;
+    _ready = null;
+  }
 
   ui.Image? svg(String path) => _svgs[path];
 

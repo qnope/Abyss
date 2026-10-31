@@ -56,6 +56,20 @@ void main() {
     expect(pictures.length, 1);
   });
 
+  test('forgets every picture and recording once reset', () {
+    final pictures = RecordedPictures<String>();
+    var draws = 0;
+    void counted(Canvas canvas) => draws++;
+    replayed(pictures, 'flag', counted);
+
+    pictures.debugReset();
+
+    expect(pictures.length, 0);
+    expect(pictures.recordings, 0);
+    replayed(pictures, 'flag', counted);
+    expect(draws, 2, reason: 'recorded anew');
+  });
+
   testWidgets('replays what the drawing draws', (tester) async {
     final pictures = RecordedPictures<String>();
     replayed(pictures, 'flag', square);

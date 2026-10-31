@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 
 /// Still drawings recorded once into pictures, then replayed: a drawing
@@ -19,6 +20,16 @@ class RecordedPictures<K> {
 
   /// How many pictures are held, one per key.
   int get length => _pictures.length;
+
+  /// Disposes every picture and forgets the recordings, as when new.
+  @visibleForTesting
+  void debugReset() {
+    for (final held in _pictures.values) {
+      held.picture.dispose();
+    }
+    _pictures.clear();
+    _recordings = 0;
+  }
 
   /// Draws on [canvas] the picture of [key]: what [draw] draws, recorded
   /// on first use and whenever [source] differs from the last one.

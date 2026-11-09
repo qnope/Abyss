@@ -5,7 +5,9 @@ extends SceneTree
 ##
 ## Paths are test files or folders, `res://` or relative to godot/; without
 ## any, every `*_test.gd` of the project runs. Prints a line per failed test
-## and a summary, and exits with 1 when a test failed, 0 otherwise.
+## and a summary, and exits with 1 when a test failed, 0 otherwise. With
+## `--coverage-out=<file>`, an instrumented copy of the project also writes
+## its hits there (see TestCoverageDump).
 
 
 func _init() -> void:
@@ -14,7 +16,14 @@ func _init() -> void:
 
 
 func _run() -> void:
-	var run := TestSuite.run(TestDiscovery.find(OS.get_cmdline_user_args()))
+	var options := TestRunOptions.new(OS.get_cmdline_user_args())
+	var run := TestSuite.run(TestDiscovery.find(options.paths))
 	for line: String in run.report_lines():
 		print(line)
-	quit(run.exit_code())
+	var code := run.exit_code()
+	if not options.coverage_out.is_empty():
+		var error := TestCoverageDump.write(options.coverage_out)
+		if not error.is_empty():
+			printerr(error)
+			code = 1
+	quit(code)

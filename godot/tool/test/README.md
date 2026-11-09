@@ -11,6 +11,11 @@ script also takes them relative to the repo root). Without any, every
 runner's own sample files. The command prints a line per failed test, then
 `N tests, F failed, in T ms`, and exits with 1 when a test failed.
 
+`--coverage-out=<file>` is for `tool/godot_coverage.py`, which runs the tests on
+an instrumented copy of the project (see `tool/gdscript_coverage/README.md`):
+the runner then calls the copy's `CoverageProbe.dump()`, and exits with 1 when
+it cannot, as on the project itself, which has no such class.
+
 ## Writing a test
 
 A test file `extends TestCase`; each `test_*` method is a test, run on a fresh

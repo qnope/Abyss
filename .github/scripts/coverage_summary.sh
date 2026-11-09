@@ -11,9 +11,11 @@ badge_file="${2:-}"
 
 # One "found hit file" line per source file, paths relative to lib/.
 # Generated files are left out: Hive adapters (*.g.dart) and the
-# translations flutter gen-l10n writes from the ARB files.
+# translations flutter gen-l10n writes from the ARB files. The Godot
+# project's paths (tool/godot_coverage.py) stay as they are: godot/...
 per_file=$(awk '
-  /^SF:/ { file = substr($0, 4); sub(/^.*\/lib\//, "lib/", file)
+  /^SF:/ { file = substr($0, 4)
+           if (file !~ /^godot\//) sub(/^.*\/lib\//, "lib/", file)
            skip = file ~ /\.g\.dart$/ ||
                   file ~ /\/l10n\/app_localizations[a-z_]*\.dart$/ }
   skip { next }

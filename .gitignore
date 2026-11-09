@@ -49,3 +49,12 @@ app.*.map.json
 
 # Test bundles, written by tool/test_bundles.dart on each tool/test.sh run
 /test/bundles/
+
+# Godot: the editor's cache and imported assets, rebuilt by --import, and the
+# export outputs. The .import and .uid sidecar files are committed.
+/godot/.godot/
+/godot/build/
+/godot/*.apk
+/godot/*.aab
+/godot/*.ipa
+/godot/*.pck

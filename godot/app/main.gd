@@ -1,15 +1,13 @@
 extends Control
-## The startup screen: the abyss background and the game's title.
-
-## AbyssColors.abyssBlack, the background of every Flutter screen.
-const BACKGROUND := Color("0a0e1a")
-## AbyssColors.biolumCyan, the colour of the title.
-const TITLE_COLOR := Color("00e5ff")
+## The startup screen: the game's title on the abyss background. Every
+## screen shows under it, so it gives its window the game's theme.
 
 @onready var _background: ColorRect = $Background
-@onready var _title: Label = $Title
+
+
+func _enter_tree() -> void:
+	get_window().theme = AbyssTheme.build()
 
 
 func _ready() -> void:
-	_background.color = BACKGROUND
-	_title.add_theme_color_override("font_color", TITLE_COLOR)
+	_background.color = AbyssColors.ABYSS_BLACK

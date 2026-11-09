@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" uid="uid://be8ym51o00tn3" path="res://app/main.gd" id="1_main"]
-[ext_resource type="FontFile" uid="uid://cj3klqe2vj0jr" path="res://assets/fonts/rajdhani/Rajdhani-Bold.ttf" id="2_bold"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -27,8 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_bold")
-theme_override_font_sizes/font_size = 56
+theme_type_variation = &"HeroTitle"
 text = "ABYSSES"
 horizontal_alignment = 1
 vertical_alignment = 1

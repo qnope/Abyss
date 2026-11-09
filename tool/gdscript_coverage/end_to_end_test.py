@@ -60,7 +60,8 @@ class EndToEndTest(unittest.TestCase):
         self.assertIn(CALC, [record + "end_of_record\n" for record in records])
         main = [r for r in records if r.startswith("SF:godot/app/main.gd\n")]
         self.assertEqual(len(main), 1)
-        self.assertRegex(main[0], r"DA:14,0\nDA:15,0\nLF:2\nLH:0\n$")
+        # No test of the fixture loads the main scene: its lines are all missed.
+        self.assertRegex(main[0], r"^SF:godot/app/main.gd\n(DA:\d+,0\n)+LF:\d+\nLH:0\n$")
         self.assertTrue(os.path.exists(os.path.join(self.root, "coverage", "summary.md")))
 
     def test_fails_when_a_test_fails(self):

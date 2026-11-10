@@ -41,3 +41,8 @@ case writes, with `VectorInputs` (`godot/tool/reference/README.md`).
 as `test/domain/raid/raid_test_helper.dart` does: a player holding 1000 of
 every resource with the units, the Citadel and the headquarters given
 (`raid_player`), and the units standing on its base (`units_on_base`).
+
+`RaidDigests` writes the short texts the digest tests compare with what a
+scratch Dart script printed on the games of `GameFactory`: a wave, a raid
+report, a raid state with the stocks and the units, and the army the
+players get first (`arm_for_raids`).

@@ -5,6 +5,7 @@ extends RefCounted
 ## A failed assertion is recorded and the test goes on.
 
 var _failures: PackedStringArray = PackedStringArray()
+var _expected_errors: PackedStringArray = PackedStringArray()
 
 
 ## Runs before each test, on the test's own instance.
@@ -24,6 +25,18 @@ func failures() -> PackedStringArray:
 
 func fail(message: String) -> void:
 	_failures.append(message)
+
+
+## Says that the code under test logs an error holding `part`. An error
+## fails the test that logs it; each call lets one such error pass, and
+## fails the test if none came.
+func expect_error(part: String) -> void:
+	_expected_errors.append(part)
+
+
+## The parts given to expect_error(), for the runner.
+func expected_errors() -> PackedStringArray:
+	return _expected_errors
 
 
 func assert_true(value: bool, message := "") -> void:

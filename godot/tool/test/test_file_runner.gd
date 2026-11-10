@@ -37,13 +37,15 @@ static func _run_test(script: GDScript, path: String, test_name: String) -> Test
 	var error_log := _listen()
 	var test: TestCase = script.new()
 	var failures := PackedStringArray()
+	var expected := PackedStringArray()
 	if test != null:
 		test.before_each()
 		test.call(test_name)
 		test.after_each()
 		failures = test.failures()
+		expected = test.expected_errors()
 	OS.remove_logger(error_log)
-	failures.append_array(error_log.errors())
+	failures.append_array(TestErrorLog.unexpected(error_log.errors(), expected))
 	if test == null and failures.is_empty():
 		failures.append("cannot create the test case")
 	return TestResult.new(path, test_name, failures)

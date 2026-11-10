@@ -21,9 +21,33 @@ func _log_error(
 	_mutex.unlock()
 
 
+## What fails a test once each part it expected has let one error holding it
+## pass: the other errors, then a line per expected error that never came.
+static func unexpected(
+	errors: PackedStringArray, expected: PackedStringArray
+) -> PackedStringArray:
+	var left := errors.duplicate()
+	var missing := PackedStringArray()
+	for part: String in expected:
+		var index := _index_holding(left, part)
+		if index < 0:
+			missing.append('expected an error holding "%s", none was logged' % part)
+		else:
+			left.remove_at(index)
+	left.append_array(missing)
+	return left
+
+
 ## The errors logged so far, in order.
 func errors() -> PackedStringArray:
 	_mutex.lock()
 	var copy := _errors.duplicate()
 	_mutex.unlock()
 	return copy
+
+
+static func _index_holding(errors: PackedStringArray, part: String) -> int:
+	for index: int in errors.size():
+		if errors[index].contains(part):
+			return index
+	return -1

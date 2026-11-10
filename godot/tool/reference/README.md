@@ -27,6 +27,12 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   value from its Dart name, the stocks, the buildings and the units of a
   player in the order of their enum; and writes an answer
   keyed by an enum under the Dart names a case holds.
+- `VectorRegistry` lists every section of every vector file under the test
+  that reads it, or under `pending: <module>` while the module of
+  `lib/domain` it belongs to is not ported. `vector_registry_test.gd` fails
+  on a section that is in neither state or in both, on a test that does not
+  read its section, and on a module that does not exist: porting a module
+  moves its sections from pending to its test.
 - `ReferenceFiles` finds the repository: the folder above `res://`, or the one
   `ABYSS_REPO_ROOT` names. `tool/godot_coverage.py` sets it, as it runs the
   tests on a copy of the project in a temporary folder.

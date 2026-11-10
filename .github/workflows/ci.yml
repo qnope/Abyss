@@ -139,6 +139,23 @@ jobs:
           path: build/ios/iphoneos/Runner.app
           retention-days: 7
 
+  # The 3D models' scripts (tool/models/), over Blender's Python module: each
+  # model builds, stays under its budget, gives the same geometry twice and
+  # matches the glb committed in godot/assets/models/.
+  models:
+    name: Models
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install bpy==5.2.3
+      - name: Test the model scripts
+        working-directory: tool/models
+        run: python -m unittest discover -s . -p '*_test.py'
+
   # The Godot project (godot/), built beside the Flutter app until the switch.
   # Every Godot job has a timeout, so a hung headless Godot cannot run for hours.
   godot-test:

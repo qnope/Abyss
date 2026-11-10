@@ -40,3 +40,4 @@ The game is being rewritten with Godot in `godot/`, for real 3D. Both versions c
 4. Test files share a process: a class with static state (a cache, a registry) exposes `static func debug_reset() -> void` and is listed in `godot/tool/test/process_resets.gd`.
 5. The UI uses the theme of `godot/presentation/ui/theme/` through `theme_type_variation` and the `AbyssColors`, `AbyssMotion`... constants: no hard-coded colour, font or style.
 6. Files under 150 lines, components reusable, objects complete once `_init` returns (no `initialize()`).
+7. 3D models: one Blender Python script each in `tool/models/catalog/`, with its budget (triangles, materials, texture size); `tool/models/build.py [names]` regenerates `godot/assets/models/*.glb`, never edited by hand, `tool/models/preview.sh <name>` renders it for review, and its tests run with Python 3.13 and `bpy==5.2.3` (`tool/models/README.md`).

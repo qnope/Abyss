@@ -56,6 +56,8 @@ a negative shift, `clamp` with bounds out of order) logs an error with
 - GDScript keeps one constant for `0.0` and `-0.0` in a function, the first
   it meets: a `-0.0` literal may be `0.0`.
 - `1 / 3` is 0: a Dart constant such as `1 / 3` is `1.0 / 3.0` here.
+- A literal below the smallest normal double (`5e-324`, `1e-320`) parses
+  as 0.
 - The smallest int divided by -1, with `/` or `%`, crashes the engine.
 - From 2^63 up, `int(x)` and `roundi(x)` depend on the processor, as does a
   shift of 64 or more.

@@ -73,7 +73,7 @@ const FILES: Dictionary[String, Dictionary] = {
 		PENDING + "fight": ["strength", "rehearsal", "planner", "assaultChance", "assaultRating"],
 	},
 	"map_rules": {
-		PENDING + "map": [
+		"res://domain/map/tests/map_rule_vectors_test.gd": [
 			"layout", "lairFamily", "lair", "startingBases", "reveal", "posts", "volcano",
 		],
 	},

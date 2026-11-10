@@ -140,5 +140,8 @@ parts as nodes the game can animate:
   riveted plates on a plinth, four airlocks, a railed gallery, a drum of cyan
   bridge windows under a glass cupola, a mast with an amber yard; nodes
   `Beacon` and `Dish`. Cyan crown, amber living quarters.
+- `solar_panel`: a heliostat. A low housing (gauges, capacitors, cables) and on
+  its turntable the node `Array`, two wings of glass cells tilted to the light,
+  algae hanging from them. Gold is its light.
 
 Each has its own 1024 px atlas painted from `textures/colony.py`.

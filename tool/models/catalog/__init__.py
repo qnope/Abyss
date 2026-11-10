@@ -8,7 +8,7 @@
     build(model)      fills the workshop's Model
 """
 
-from catalog import base_island, base_rampart, headquarters, material_swatches
+from catalog import base_island, base_rampart, headquarters, material_swatches, solar_panel
 
 MODELS = {script.NAME: script for script in (base_island, base_rampart, headquarters,
-                                             material_swatches)}
+                                             solar_panel, material_swatches)}

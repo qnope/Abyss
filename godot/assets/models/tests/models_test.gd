@@ -13,10 +13,11 @@ const ROOTS := {
 	"base_rampart": ["Tier1", "Tier2", "Tier3"],
 	"headquarters": ["Headquarters"],
 	"material_swatches": ["Swatches", "Unit"],
+	"solar_panel": ["SolarPanel"],
 }
 
 ## The models that paint an atlas (<model>_atlas.png beside the glb).
-const TEXTURED: Array[String] = ["headquarters"]
+const TEXTURED: Array[String] = ["headquarters", "solar_panel"]
 
 ## The island's pads, one per building, where the buildings stand.
 const PADS: Array[String] = [

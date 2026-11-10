@@ -41,14 +41,14 @@ func _init() -> void:
 	_body.visible = false
 	column.add_child(_body)
 	for setting in SWITCHES:
-		var button := _segment(SWITCHES[setting])
+		var button := _toggle(SWITCHES[setting])
 		button.button_pressed = true
 		button.toggled.connect(func(on: bool) -> void: changed.emit(setting, on))
 		_switches[setting] = button
 	_body.add_child(_tray([_switches[SHADOWS], _switches[GLOW], _switches[PARTICLES]]))
 	var group := ButtonGroup.new()
 	for scale in SCALES:
-		var button := _segment("×%s" % scale)
+		var button := _toggle("×%s" % scale)
 		button.button_group = group
 		button.toggled.connect(func(on: bool) -> void: if on: changed.emit(SCALE, scale))
 		_scales.append(button)
@@ -86,11 +86,11 @@ func button(setting: StringName, scale := 1.0) -> Button:
 	return _scales[SCALES.find(scale)] if setting == SCALE else _switches[setting]
 
 
-static func _segment(text: String) -> Button:
+static func _toggle(text: String) -> Button:
 	var button := Button.new()
 	button.text = text
 	button.toggle_mode = true
-	button.theme_type_variation = AbyssSegmentedTheme.SEGMENT
+	button.theme_type_variation = AbyssHudTheme.TOGGLE
 	button.custom_minimum_size = Vector2(AbyssHudTheme.TOUCH_SIZE, AbyssHudTheme.TOUCH_SIZE)
 	button.size_flags_horizontal = SIZE_EXPAND_FILL
 	button.focus_mode = FOCUS_NONE

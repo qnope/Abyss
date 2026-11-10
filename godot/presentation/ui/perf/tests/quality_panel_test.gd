@@ -57,8 +57,8 @@ func test_shows_the_starting_state_without_telling_it() -> void:
 	assert_eq(_changes.size(), 0)
 
 
-func test_its_buttons_are_segments_sized_for_a_finger() -> void:
+func test_its_buttons_are_light_toggles_sized_for_a_finger() -> void:
 	var button := _panel.button(QualityPanel.GLOW)
-	assert_eq(button.theme_type_variation, &"Segment")
+	assert_eq(button.theme_type_variation, &"HudToggle")
 	assert_true(button.custom_minimum_size.y >= AbyssHudTheme.TOUCH_SIZE)
 	assert_eq((button.get_parent().get_parent() as Control).theme_type_variation, &"SegmentedTray")

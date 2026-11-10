@@ -194,8 +194,8 @@ Files and tests of the modules above that wait for another module:
 | `fight/assault/assault_plan.dart`, `assault_plan_test.dart`, `assault_suggestion_test.dart`, `assault_test_helper.dart` | nothing now: `Player` and `FightMonsterHelpers` are ported |
 | `passage` of `fight/assault/assault_target.dart`, the second test of `assault_target_test.dart`; the `treasureLoot` vectors | `action` (`PostTakeover`, `TreasureLoot`) |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
-| `event/effects/survivors_effect.dart`, `survivors_effect_test.dart`; the `survivors` vectors | `volcano` (`KernelGarrison.stockAt`) |
-| `event/effects/predators_effect.dart`, `predators_effect_test.dart`, `predators_test_helper.dart` | `raid` (`RaidBattle`, `RaidReport`, `RaidWaveFactory`) |
-| `event/event_effects.dart`, `event_effects_test.dart`; the `excludedAt` checks of `caravan_effect_test.dart` and `wreck_effect_test.dart` | the predators and the survivors above: it builds the table of every effect |
+| two tests of `survivors_effect_test.dart` (welcoming the survivors, turning them away), two of `predators_effect_test.dart` (facing them, baiting them) | `action` (`ChooseEventAction`) |
+| the last test of `survivors_effect_test.dart` and of `predators_effect_test.dart` (left without a choice) | `event_resolver.dart`, below |
+| `event/event_effects.dart`, `event_effects_test.dart`; the `excludedAt` checks of `caravan_effect_test.dart` and `wreck_effect_test.dart` | nothing now: the predators and the survivors are ported |
 | `event/event_turn_outcome.dart`, `event/event_resolver.dart`, the five `event_resolver_*_test.dart` and `event_test_helper.dart`'s `producingPlayer` | `raid` (`RaidReport`, `PredatorsEffect.strike`), `event_effects.dart`; the wreck test also an action (`CollectTreasureAction`) |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

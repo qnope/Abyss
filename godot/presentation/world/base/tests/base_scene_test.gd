@@ -41,11 +41,26 @@ func test_is_lit_and_seen_from_the_game_view() -> void:
 	assert_eq(_base.camera.rig.yaw, OrbitRig.DEFAULT_YAW)
 
 
-func test_turns_its_shadows_on_and_off() -> void:
+func test_fills_the_water_with_light() -> void:
+	assert_true(_base.water.environment.fog_enabled)
+	assert_eq(_base.find_children("*", "LightShafts", false, false).size(), 1)
+
+
+func test_animates_the_buildings() -> void:
+	var dish := _base.buildings.building(&"Headquarters").get_node("Headquarters/Dish") as Node3D
+	_base.motion.advance(1.0)
+	assert_ne(dish.rotation.y, 0.0)
+
+
+func test_turns_its_costly_effects_on_and_off() -> void:
 	_base.set_shadows(false)
+	_base.set_glow(false)
 	assert_false(_base.key_light.shadow_enabled)
+	assert_false(_base.water.environment.glow_enabled)
 	_base.set_shadows(true)
+	_base.set_glow(true)
 	assert_true(_base.key_light.shadow_enabled)
+	assert_true(_base.water.environment.glow_enabled)
 
 
 func test_casts_the_shadows_worth_their_cost_only() -> void:

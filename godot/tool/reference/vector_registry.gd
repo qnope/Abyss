@@ -65,7 +65,11 @@ const FILES: Dictionary[String, Dictionary] = {
 		PENDING + "volcano": ["magmaRampart"],
 		PENDING + "leviathan": ["leviathan"],
 	},
-	"fight_engine": {PENDING + "fight": ["resolve", "critChance", "twoFights"]},
+	"fight_engine": {
+		"res://domain/fight/tests/fight_engine_vectors_test.gd": [
+			"resolve", "critChance", "twoFights",
+		],
+	},
 	"fight_aftermath": {
 		PENDING + "fight": ["woundedProbability", "casualties", "lairLoot"],
 		PENDING + "action": ["pctLost", "treasureLoot"],

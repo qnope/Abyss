@@ -10,7 +10,7 @@ extends TestCase
 ## each objective of an event ended (TemporaryObjectives.endedBy), each
 ## objective completed by ObjectiveResolver.resolve with what it credited,
 ## the current objective when it changes, the objectives of the events under
-## way (activeOf) and the tips ported newly applying; then the stocks. Last,
+## way (activeOf) and the tips newly applying; then the stocks. Last,
 ## the game's next nextInt(1000).
 
 const DIGESTS: Dictionary[String, Dictionary] = {

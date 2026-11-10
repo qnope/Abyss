@@ -57,10 +57,3 @@ func test_writes_completions_objectives_of_the_events_and_tips() -> void:
 	p.raid_state.noise = 100
 	assert_eq(ObjectiveDigests.fresh_tips(game, p, 2, seen), "2 !noiseGauge")
 	assert_eq(ObjectiveDigests.fresh_tips(game, p, 3, seen), "")
-	var ids: Array[int] = []
-	for tip: Tip in ObjectiveDigests.tips():
-		ids.append(tip.id)
-	var sorted := ids.duplicate()
-	sorted.sort()
-	assert_eq(ids, sorted)
-	assert_eq(ids.size(), TipId.Value.size() - 1)

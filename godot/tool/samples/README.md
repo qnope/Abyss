@@ -67,9 +67,8 @@ draw left, a school of predators fought and the state of the events;
 `test/helpers/objective_helpers.dart` and `map_tab_harness.dart`: the game
 of a new player on a plain 10x10 map (`objective_game`), a building set to
 a level, and the progress `expectProgress` compares, as
-`[current, target, done]`. `tip` and `applies` stand for
-`TipCatalog.byId(id)`, which waits for the tips of the posts: they read a
-tip from its list.
+`[current, target, done]`. `applies` is the `_applies` the Dart tests of
+the tips write, `TipCatalog.byId(id).appliesTo(game, game.humanPlayer)`.
 
 `ObjectiveDigests` serves the digest test of the objectives
 (`objective_resolver_digest_test.gd`): it develops each player of the
@@ -77,7 +76,7 @@ games of `GameFactory` between the turns as the scratch Dart script did
 (a building, units, research, cells revealed, raids, history entries, a
 lair, a Faille and a kernel taken), and writes an objective completed
 with what it credited, an objective of an event under way or ended, and
-the tips ported that newly apply, in the order of `TipId`.
+the tips that newly apply, in the order of `TipId`.
 
 `ActionSamples` builds what the tests of the actions write inline (`Player(id:
 'test', name: 'Test', resources: ..., buildings: ...)`, a player stocked with

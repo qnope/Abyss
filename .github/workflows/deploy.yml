@@ -54,10 +54,31 @@ jobs:
           name: coverage-html
           path: coverage/html
 
+  # The Godot web export, published under /Abyss/godot/ beside the Flutter
+  # game. Flutter's base href only rewrites its own index.html, and the
+  # flutter_service_worker.js of current Flutter (3.47) only unregisters
+  # itself, with no fetch handler, so nothing of Flutter's answers there.
+  godot-web:
+    name: Godot Web
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot
+        run: .github/scripts/install_godot.sh "$(cat godot/GODOT_VERSION)" web
+      - run: tool/godot_test.sh
+      - name: Export Web
+        run: .github/scripts/godot_export.sh Web build/web/index.html
+      - name: Upload web export
+        uses: actions/upload-artifact@v4
+        with:
+          name: godot-web
+          path: godot/build/web
+
   build:
     name: Build Web
     runs-on: ubuntu-latest
-    needs: test
+    needs: [test, godot-web]
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -75,6 +96,11 @@ jobs:
         with:
           name: coverage-html
           path: build/web/coverage
+      - name: Add the Godot demo to the site
+        uses: actions/download-artifact@v4
+        with:
+          name: godot-web
+          path: build/web/godot
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

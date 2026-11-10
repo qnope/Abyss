@@ -205,10 +205,10 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_solo_test.dart` | `script` |
 | `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
 | `fight/assault/assault_plan.dart`, `assault_plan_test.dart`, `assault_suggestion_test.dart`, `assault_test_helper.dart` | `passage` of `AssaultTarget` below: `AssaultPlan.of` reads it for its next step |
-| `passage` of `fight/assault/assault_target.dart`, the second test of `assault_target_test.dart`; the `treasureLoot` vectors | `action` (`PostTakeover`, `TreasureLoot`) |
+| `passage` of `fight/assault/assault_target.dart`, the second test of `assault_target_test.dart` | `action` (`PostTakeover`) |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
 | two tests of `survivors_effect_test.dart` (welcoming the survivors, turning them away), two of `predators_effect_test.dart` (facing them, baiting them) | `action` (`ChooseEventAction`) |
-| `event_resolver_predators_test.dart`, the last test of `event_resolver_wreck_test.dart` | `action` (`ChooseEventAction`, `CollectTreasureAction`) |
+| `event_resolver_predators_test.dart` | `action` (`ChooseEventAction`) |
 | `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `action`, `script` |
 | the last two tests of `objective/temporary/temporary_objectives_test.dart` (their twins choose through the effect) | `action` (`ChooseEventAction`) |
 | `postLost` of `objective/tip/post_tip_triggers.dart`, then `post_tips.dart` and `tip_catalog.dart`, which list it; `tip_catalog_test.dart`, `post_tips_test.dart`, the group "Archives" of `archive_tips_test.dart` (the tests of the other tips read each tip from its list) | `action` (`AttackHeldKernelAction.kernelCode`) |

@@ -1,8 +1,6 @@
 extends TestCase
 ## test/domain/event/event_resolver_wreck_test.dart: the wreck at the end
-## of a turn. 'a wreck searched during the turn is told at its end, once'
-## waits for the action module (CollectTreasureAction, ActionExecutor); the
-## `subtitle` of an entry, always null, is not ported.
+## of a turn. The `subtitle` of an entry, always null, is not ported.
 
 const WRECK := CellContentType.Value.WRECK
 
@@ -71,3 +69,20 @@ func test_the_end_of_turn_17_tells_the_sunk_wreck_and_its_last_turn() -> void:
 	var ending := EventResolver.resolve(game, player, 17).wreck
 	assert_false(ending.searched)
 	assert_eq(ending.until_turn, 17)
+
+
+func test_a_wreck_searched_during_the_turn_is_told_at_its_end_once() -> void:
+	var player := EventSamples.wreck_player()
+	var game := EventSamples.wreck_game(player, null, 14)
+	var at := _drawn(game, player)
+	player.add_revealed_cell(1, at)
+	var search := CollectTreasureAction.new(at.x, at.y)
+	assert_true(ActionExecutor.new().execute(search, game, player).is_success)
+	assert_null(player.event_state.wreck_position)
+
+	var ending := EventResolver.resolve(game, player, 14).wreck
+
+	assert_true(ending.searched)
+	assert_eq(ending.until_turn, 17)
+	assert_null(player.event_state.wreck_until_turn)
+	assert_null(EventResolver.resolve(game, player, 15).wreck)

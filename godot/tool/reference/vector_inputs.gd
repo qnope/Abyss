@@ -47,6 +47,15 @@ static func named(enumeration: Dictionary, map: Dictionary) -> Dictionary:
 	return written
 
 
+## The Dart name of a value of an enum, or null for the null of a rule that
+## answers a value or none.
+static func name_or_null(enumeration: Dictionary, value_or_null: Variant) -> Variant:
+	if value_or_null == null:
+		return null
+	var key: int = value_or_null
+	return DartEnum.name_of(enumeration, key)
+
+
 ## A list of values of an enum as the list of their Dart names.
 static func names(enumeration: Dictionary, values: Array) -> Array:
 	return values.map(func(key: int) -> String: return DartEnum.name_of(enumeration, key))

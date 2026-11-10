@@ -22,6 +22,8 @@ func test_reads_named_amounts_as_a_typed_map_in_the_order_of_the_enum() -> void:
 func test_writes_a_map_and_a_list_by_dart_names() -> void:
 	assert_eq(VectorInputs.named(ResourceType.Value, {ORE: 3, ALGAE: 1}), {"ore": 3, "algae": 1})
 	assert_eq(VectorInputs.names(ResourceType.Value, [ORE, ALGAE]), ["ore", "algae"])
+	assert_eq(VectorInputs.name_or_null(ResourceType.Value, ORE), "ore")
+	assert_null(VectorInputs.name_or_null(ResourceType.Value, null))
 
 
 func test_builds_the_stocks_of_a_new_player() -> void:

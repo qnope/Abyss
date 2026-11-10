@@ -23,3 +23,11 @@ func test_building_level_is_mutable() -> void:
 func test_building_accepts_custom_level() -> void:
 	var b := Building.new(HQ, 5)
 	assert_eq(b.level, 5)
+
+
+## Not in the Dart file: `buildings[type]?.level ?? 0`.
+func test_reads_the_level_of_a_building_in_a_map_0_when_it_is_missing() -> void:
+	var buildings := DomainSamples.buildings({HQ: 4})
+	assert_eq(Building.level_in(buildings, HQ), 4)
+	assert_eq(Building.level_in(buildings, BuildingType.Value.BARRACKS), 0)
+	assert_eq(Building.level_in({}, HQ), 0)

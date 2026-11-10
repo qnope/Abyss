@@ -193,6 +193,7 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
+| `script/action_spec.dart` (a typedef: an `ActionSpec` is a `Callable` taking a `DartRandom` and giving an `Action`) | `script/action_codec.dart`, its only reader |
 | `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
 | `held_attack_report/held_kernel_report_test.dart`, `held_post_report_test.dart`; `announce_attack/announced_attack_report_test.dart`, `announced_attack_resolve_test.dart` (they end the turn; `held_attack_reports_test.gd` and `announced_attack_resolver_test.gd` call the two steps meanwhile) | `turn` (`EndTurnAction`, `TurnResult.attacks`) |
 | `volcano/wave_held_back_turn_test.dart` | `turn` (`TurnResolver`) |

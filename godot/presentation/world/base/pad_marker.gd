@@ -9,7 +9,7 @@ extends RefCounted
 ## The slab's colour, times its painted vertex colours.
 const STONE_SHADE := Color(0.42, 0.47, 0.55)
 ## The rim's light, between its dimmest and brightest breath.
-const GLOW_ENERGY := 0.5
+const GLOW_ENERGY := 0.4
 const GLOW_SWING := 0.35
 ## The rim's colour, times its painted vertex colours: lit, it would outshine
 ## its glow.

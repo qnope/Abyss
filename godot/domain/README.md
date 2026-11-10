@@ -154,8 +154,7 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_solo_test.dart` | `script` |
 | `game/difficulty_test.dart`, `difficulty_faction_test.dart`, `difficulty_world_relief_test.dart`, `difficulty_faction_monsters_test.dart` (the tests on a wave, a turn or a new game) | `raid`, `volcano`, `turn`, `game` |
 | `map/cell_eligibility_checker.dart`, `captured_base_finder.dart`, `reinforcement_resolver.dart`, with `cell_eligibility_checker_test.dart` | `game` (`Game`, `Player`) |
-| `map/exploration_resolver.dart`, its four tests (`exploration_resolver_test.dart`, `_level_`, `_multi_`, `exploration_volcano_test.dart`) | `game`, `tech` (`TechEffects.revealSide`) |
+| `map/exploration_resolver.dart`, its four tests (`exploration_resolver_test.dart`, `_level_`, `_multi_`, `exploration_volcano_test.dart`) | `game` (`TechEffects.of`) |
 | `map/rival_taker.dart`, its test | `game`, `faction` |
 | `revealWhole` and `migrate` of `map/volcano_footprint.dart`, their three tests of `volcano_footprint_test.dart`; the last test of `reveal_area_calculator_base_test.dart` | `game` |
-| `map/reveal_area_calculator_side_test.dart`, which tests `TechEffects.revealSide` | `tech` |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

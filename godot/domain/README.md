@@ -197,7 +197,7 @@ Files and tests of the modules above that wait for another module:
 | `volcano/wave_held_back_turn_test.dart` | `turn`, `action` |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it | `action` (`Action`, `ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
-| `game_factory_factions_test.dart` (the human exploring) | `action` |
+| `game_factory_factions_test.dart` (the human exploring) | `turn` (`EndTurnAction`) |
 | `pearl_income_test.dart` (its two tests of the end of turn) | `turn` |
 | `resource/consumption_integration_test.dart` | `turn` |
 | `building_degradation_effects_test.dart` (`TurnProduction sees the degraded buildings`) | `turn` |

@@ -42,11 +42,9 @@ const FILES: Dictionary[String, Dictionary] = {
 	},
 	"resources": {
 		_RESOURCE + "resource_vectors_test.gd": [
-			"storage", "credit", "energyConsumption", "totalConsumption",
+			"storage", "credit", "energyConsumption", "totalConsumption", "production",
 		],
 		_RESOURCE + "production_formulas_test.gd": ["buildingProduction"],
-		# ProductionCalculator reads TechEffects; its `scaled` reads Difficulty.
-		PENDING + "tech": ["production"],
 		PENDING + "game": ["startingStocks"],
 	},
 	"units": {

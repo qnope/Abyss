@@ -13,9 +13,8 @@ extends RefCounted
 const WIN_LEVEL := 10
 
 
-## `random` null is Dart's own die for the fight. Dart adds a VolcanoEntry
-## (`_entryOf`) to the player's history once a wave is fought: that step
-## waits for the history module.
+## `random` null is Dart's own die for the fight. A wave fought goes to
+## the player's history.
 static func resolve(
 	player: Player,
 	ended_turn: int,
@@ -37,6 +36,7 @@ static func resolve(
 	if due:
 		report = VolcanoBattle.fight(player, state.incoming, ended_turn, random)
 		state.record_outcome(report.victory)
+		player.add_history_entry(_entry_of(report))
 		state.clear_incoming()
 	var level := KernelGarrison.kernel_level_of(player)
 	if state.is_incoming() or level < 1 or level >= WIN_LEVEL:
@@ -48,3 +48,10 @@ static func resolve(
 	)
 	state.announce(wave, ended_turn + 1)
 	return VolcanoTurnOutcome.new(report, wave)
+
+
+static func _entry_of(r: VolcanoReport) -> VolcanoEntry:
+	return VolcanoEntry.new(
+		r.turn, r.victory, r.wave, r.fight, r.kernel_level, r.defenders, r.survivors_intact,
+		r.wounded, r.dead,
+	)

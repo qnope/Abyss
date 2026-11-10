@@ -95,3 +95,21 @@ func test_unit_boost_of_reads_the_research_on_offence_and_on_the_base() -> void:
 		)
 	var plain := FightMonsterHelpers.unit_boost_of(GameSamples.player("q"))
 	assert_eq([plain.atk_percent, plain.def_percent, plain.hp_percent], [0, 0, 0])
+
+
+func test_build_combat_entry_carries_the_fight_or_none_without_one() -> void:
+	var fight := FightResult.new(CombatSide.Value.PLAYER, 3, [], [], [], 4, 0)
+	var lair := MonsterLair.new(MonsterDifficulty.Value.EASY, 4)
+	var loot: Dictionary[ResourceType.Value, int] = {ResourceType.Value.CORAL: 9}
+	var sent: Dictionary[UnitType.Value, int] = {SCOUT: 3, HARPOONIST: 2}
+	var intact: Dictionary[UnitType.Value, int] = {SCOUT: 3}
+	var wounded: Dictionary[UnitType.Value, int] = {HARPOONIST: 1}
+	var dead: Dictionary[UnitType.Value, int] = {HARPOONIST: 1}
+	var won := FightMonsterResult.success(true, fight, loot, sent, intact, wounded, dead)
+	var e := FightMonsterHelpers.build_combat_entry(7, 4, 5, lair, won)
+	assert_eq([e.turn, e.category, e.victory, e.target_x, e.target_y], [7, HistoryEntryCategory.Value.COMBAT, true, 4, 5])
+	assert_eq([e.lair, e.fight_result, e.loot, e.sent], [lair, fight, loot, sent])
+	assert_eq([e.survivors_intact, e.wounded, e.dead], [intact, wounded, dead])
+	assert_null(FightMonsterHelpers.build_combat_entry(7, 4, 5, null, won))
+	var failed := FightMonsterResult.new(false, null, {}, {}, {}, {}, {})
+	assert_null(FightMonsterHelpers.build_combat_entry(7, 4, 5, lair, failed))

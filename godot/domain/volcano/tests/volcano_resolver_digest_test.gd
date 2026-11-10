@@ -11,7 +11,8 @@ extends TestCase
 ## does. Per player: each wave as "turn V|L kernel-level krakens dead
 ## wounded fight-turns", each announce as "turn +krakens@arrival"; then the
 ## volcano state, the kernel, the garrison and the raids won and lost. Last,
-## the game's next nextInt(1000).
+## the game's next nextInt(1000). The history entries the players hold,
+## counted after each turn, are VolcanoHistories.VOLCANO.
 
 const DIGESTS: Dictionary[String, Dictionary] = {
 	"solo-5": {
@@ -49,19 +50,25 @@ func test_raids_and_kraken_waves_resolve_as_dart_resolves_them_on_new_games() ->
 		RaidDigests.arm_for_volcano(game)
 		var random := DartRandom.new(seed_)
 		var events := {}
+		var sizes := {}
 		for id: String in game.players:
 			events[id] = PackedStringArray()
+			sizes[id] = PackedStringArray()
 		for t: int in range(1, 13):
 			var index := 0
 			for player: Player in game.players.values():
 				var log_: PackedStringArray = events[player.id]
 				_end_turn(player, t, index, random, difficulty, game.factions().size(), log_)
 				index += 1
+			HistoryDigests.count_entries(game, sizes)
 		var expected: Dictionary = DIGESTS[name]
 		for player: Player in game.players.values():
 			var log_: PackedStringArray = events[player.id]
 			var got := [", ".join(log_), RaidDigests.volcano_state(player)]
 			assert_eq(got, expected[player.id], "%s %s" % [name, player.id])
+			var held: PackedStringArray = sizes[player.id]
+			var history: Array = VolcanoHistories.VOLCANO[name][player.id]
+			assert_eq(HistoryDigests.history(player, held), history, "%s %s" % [name, player.id])
 		assert_eq(game.players.size() + 1, expected.size(), name)
 		assert_eq(random.next_int(1000), expected["next"], name)
 

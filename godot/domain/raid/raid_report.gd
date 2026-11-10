@@ -4,8 +4,7 @@ extends RefCounted
 ## turn summary and the history.
 ##
 ## A `surprise` attack, the school of predators of a random event, is fought
-## like a raid but does not count as one. `toEntry`, the history entry that
-## replays the fight, waits for the history module (`RaidEntry`).
+## like a raid but does not count as one.
 
 var turn: int
 var victory: bool
@@ -47,3 +46,11 @@ func _init(
 	loot = loot_
 	pillaged = pillaged_
 	surprise = surprise_
+
+
+## The history entry that replays this fight.
+func to_entry() -> RaidEntry:
+	return RaidEntry.new(
+		turn, victory, wave, fight, loot, pillaged, defenders, survivors_intact, wounded, dead,
+		rampart_level, surprise,
+	)

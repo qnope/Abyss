@@ -1,8 +1,6 @@
 extends TestCase
 ## test/domain/raid/raid_resolver_test.dart: the end-of-turn step of the
-## raids. 'the raid is fought at the end of its arrival turn' without its
-## two checks of the RaidEntry the history gets, which wait for the history
-## module.
+## raids.
 
 const HARPOONIST := UnitType.Value.HARPOONIST
 
@@ -52,7 +50,10 @@ func test_the_raid_is_fought_at_the_end_of_its_arrival_turn() -> void:
 	assert_false(outcome.report.victory)
 	assert_false(player.raid_state.is_incoming())
 	assert_eq(player.raid_state.lost_in_a_row, 1)
+	var last: HistoryEntry = player.history_entries.back()
+	assert_true(last is RaidEntry)
 	assert_false(outcome.report.surprise)
+	assert_false((last as RaidEntry).surprise)
 
 
 func test_a_strong_base_draws_a_wave_sized_on_its_defenders() -> void:

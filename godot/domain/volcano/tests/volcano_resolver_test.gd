@@ -1,8 +1,6 @@
 extends TestCase
 ## test/domain/volcano/volcano_resolver_test.dart: the end-of-turn step of
-## the volcano. 'a wave beating an empty garrison takes a level off' without
-## its check of the VolcanoEntry the history gets, which waits for the
-## history module.
+## the volcano.
 
 const NORMAL := Difficulty.Value.NORMAL
 
@@ -42,6 +40,7 @@ func test_a_wave_beating_an_empty_garrison_takes_a_level_off() -> void:
 	assert_false(outcome.report.victory)
 	assert_eq(_kernel_level(player), 3)
 	assert_eq(player.volcano_state.levels_lost, 1)
+	assert_true(player.history_entries.back() is VolcanoEntry)
 	assert_eq(
 		outcome.announced.unit_count,
 		VolcanoWaveFactory.krakens_for(3, Difficulty.monster_percent(NORMAL)),

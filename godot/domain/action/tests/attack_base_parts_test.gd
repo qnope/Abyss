@@ -1,8 +1,8 @@
 extends TestCase
 ## Not in the Dart files: the parts of an attack on a base that
-## AttackBaseAction puts together, which waits for the objective module
-## (AttackBaseValidator): the defences, their settling, the result and the
-## two history entries.
+## AttackBaseAction puts together, and the attacks on a post and on a
+## kernel too: the defences, their settling, the result and the two history
+## entries.
 
 const GUARDIAN := UnitType.Value.GUARDIAN
 const HARPOONIST := UnitType.Value.HARPOONIST

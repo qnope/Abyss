@@ -64,3 +64,9 @@ static func assault_player(
 		units[type] = Unit.new(type, count)
 	var per_level: Dictionary[int, Dictionary] = {level: units}
 	return Player.new("Test", "p1", 0, 0, null, buildings, null, per_level)
+
+
+## `strike`: the human's attack on the rival's base with `army`, its dice
+## `SeededRandom(seed)`.
+static func strike(game: Game, army: Dictionary[UnitType.Value, int], seed_ := 1) -> AttackBaseAction:
+	return AttackBaseAction.new(rival_of(game).id, army, DartRandom.new(seed_))

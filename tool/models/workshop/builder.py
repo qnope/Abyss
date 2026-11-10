@@ -7,6 +7,13 @@ import bpy
 from workshop.materials import COLOR_ATTRIBUTE
 
 
+def painted(geometry, paint):
+    """The colour of each corner of each face of [geometry], by [paint], a
+    function of the corner's position and of its face's normal."""
+    return [[paint(geometry.verts[i], geometry.face_normal(index)) for i in face]
+            for index, face in enumerate(geometry.faces)]
+
+
 class MeshBuilder:
     """[blank] maps the faces added without a mapping into the atlas (its
     white tile); None for a model without atlas, whose mesh has no UV."""
@@ -22,10 +29,11 @@ class MeshBuilder:
 
     def add(self, geometry, material, paint, uv=None):
         """Adds [geometry] in [material], each corner coloured by [paint]: a
-        linear (r, g, b), or a function of the corner's position and of its
-        face's normal giving one. [uv] maps its faces into the atlas: one of
-        Atlas' mappings, or what one gave (a part maps itself before it is
-        turned into place); the white tile without it."""
+        linear (r, g, b), a function of the corner's position and of its
+        face's normal giving one, or what painted() gave (a part painted in
+        its own frame before it was turned). [uv] maps its faces into the
+        atlas: one of Atlas' mappings, or what one gave (a part maps itself
+        before it is turned into place); the white tile without it."""
         if uv is not None and self.blank is None:
             raise ValueError("a mapping into an atlas, but the model has none")
         if self.blank is not None:
@@ -39,12 +47,16 @@ class MeshBuilder:
         base = len(self.verts)
         self.sharp += [(a + base, b + base) for a, b in geometry.sharp_edges()]
         self.verts += geometry.verts
-        for index, face in enumerate(geometry.faces):
-            if callable(paint):
-                normal = geometry.face_normal(index)
-                self.colors += [paint(geometry.verts[i], normal) for i in face]
-            else:
-                self.colors += [paint] * len(face)
+        if isinstance(paint, list):
+            if len(paint) != len(geometry.faces):
+                raise ValueError("a painting of another geometry")
+            colours = paint
+        elif callable(paint):
+            colours = painted(geometry, paint)
+        else:
+            colours = [[paint] * len(face) for face in geometry.faces]
+        for face, corners in zip(geometry.faces, colours):
+            self.colors += corners
             self.faces.append(tuple(base + i for i in face))
         self.smooth += geometry.smooth
         self.face_materials += [slot] * len(geometry.faces)

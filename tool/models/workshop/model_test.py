@@ -7,8 +7,10 @@ import numpy
 
 from workshop import shapes
 from workshop.atlas import Atlas, Tile
+from workshop.builder import painted
 from workshop.materials import COLOR_ATTRIBUTE, Material
 from workshop.model import Model
+from workshop.occlusion import Occlusion
 from workshop.scene import fresh_scene
 
 ROCK, GLOW = Material("rock", 0.9), Material("glow", 0.4, emission="#00ffff")
@@ -87,6 +89,17 @@ class ModelTest(unittest.TestCase):
                          [tuple(round(c, 5) for c in uv) for face in mapped for uv in face])
         with self.assertRaises(ValueError):
             model.add("Island", shapes.octahedron(1), "rock", GREY, mapped)
+
+    def test_takes_the_colours_a_part_painted_before_it_was_turned(self):
+        fresh_scene()
+        model = Model("test", 3, [ROCK], Occlusion(strength={"rock": 0.0}))
+        cube = shapes.box((1, 1, 1))
+        colours = painted(cube, lambda p, normal: (p.z, 0.5, 0.25))
+        model.add("Island", cube.transform((0, 0, 5)), "rock", colours)
+        data = model.emit()[0].data.color_attributes[COLOR_ATTRIBUTE].data
+        self.assertEqual(sorted({round(d.color[0], 2) for d in data}), [0.0, 1.0])
+        with self.assertRaises(ValueError):
+            model.add("Island", shapes.octahedron(1), "rock", colours)
 
     def test_gives_no_uv_to_a_model_without_atlas(self):
         for obj in _model().emit():

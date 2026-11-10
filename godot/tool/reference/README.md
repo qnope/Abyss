@@ -27,6 +27,9 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   value from its Dart name, the stocks, the buildings, the units and the
   research of a player in the order of their enum; and writes an answer
   keyed by an enum under the Dart names a case holds.
+- `FightInputs` reads what a fight case writes: a combatant, the runs of a
+  side (and writes a side back as runs), an army as `[type, count]` pairs
+  in their order, a boost.
 - `MapWriter` writes a generated map as a case of `maps.json` does, as
   `tool/vectors/domain/map_writer.dart` on the Dart side: its size, its
   bases and each cell that holds anything, the lair or the post a cell

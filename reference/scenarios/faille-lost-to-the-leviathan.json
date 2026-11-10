@@ -1,0 +1,7 @@
+{
+  "name": "faille-lost",
+  "otherwise": "conquest",
+  "turns": {
+    "35": []
+  }
+}

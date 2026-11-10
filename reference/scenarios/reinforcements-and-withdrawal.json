@@ -1,0 +1,18 @@
+{
+  "name": "reinforcements",
+  "otherwise": "conquest",
+  "turns": {
+    "36": [
+      {"do": "reinforce", "x": 8, "y": 2, "units": {"harpoonist": 2}}
+    ],
+    "61": [
+      {"do": "reinforce", "x": 8, "y": 2, "units": {"harpoonist": 2, "scout": 1}}
+    ],
+    "63": [
+      {"do": "reinforce", "x": 10, "y": 0, "level": 2, "units": {"scout": 1, "harpoonist": 2}}
+    ],
+    "96": [
+      {"do": "withdraw", "units": {"harpoonist": 5, "domeBreaker": 2}}
+    ]
+  }
+}

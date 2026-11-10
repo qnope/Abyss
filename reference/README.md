@@ -291,10 +291,15 @@ ends in the very state of the game first played. A replay goes:
    one as its `player` (a faction id) or as the human when it has none,
    through `ActionExecutor`, with `SeededRandom(seed)` when it has a `seed`.
    After each successful action, `VictoryChecker.check` may end the game.
-3. Stop when the game is over or on `lastTurn`. Otherwise end the turn:
+3. Stop on `lastTurn`, or when the human won. When a faction won (the
+   status is `defeat`), the actions left in the turn are not played, and the
+   turn still ends when `endTurnSeeds` holds it: the faction tamed the
+   volcano while that turn ended, and the game resolved the rest of it
+   (`conquest-hard-3-factions`). Otherwise end the turn:
    `EndTurnAction(random: SeededRandom(endTurnSeeds[turn]), playFactions:
    false)`, the brains of the factions do not play, their moves are in the
-   journal. Compare with the entry of the next turn.
+   journal. Compare with the entry of the next turn, and stop if the game
+   is over.
 4. Compare with `final`.
 
 The state does not depend on the id of the human. A reference game is
@@ -307,6 +312,98 @@ A strategy rolls its dice as `SeededScript` says: one generator,
 the order asked, and to every end of turn; the map seed is the first draw
 of another `Random(seed)`. That is what the Godot strategies will have to
 do to play these games again by themselves, not only to replay them.
+
+## The games
+
+`reference/games/` holds the games below. The turn is the one the game
+stopped on: a game still `playing` reached its limit of turns, or the last
+turn of the replay it comes from.
+
+<!-- games:start -->
+| Game | Played by | Seed | Difficulty | Factions | Result |
+|---|---|---|---|---|---|
+| `balanced-normal-2-factions` | balanced | 24 | normal | 2 | defeat, turn 86 |
+| `balanced-normal` | balanced | 2 | normal | 0 | defeat, turn 84 |
+| `conquest-easy-1-faction` | conquest | 1 | easy | 1 | victory, turn 83 |
+| `conquest-hard-3-factions` | conquest | 39 | hard | 3 | defeat, turn 109 |
+| `conquest-hard` | conquest | 13 | hard | 0 | victory, turn 101 |
+| `conquest-normal-10-factions` | conquest | 29 | normal | 10 | playing, turn 101 |
+| `conquest-normal` | conquest | 3 | normal | 0 | victory, turn 90 |
+| `economy-hard` | economy | 11 | hard | 0 | defeat, turn 27 |
+| `every-research-option-b` | `reference/scenarios/every-research-option-b.json` | 8 | normal | 0 | playing, turn 111 |
+| `faille-lost-to-the-leviathan` | `reference/scenarios/faille-lost-to-the-leviathan.json` | 3 | normal | 0 | playing, turn 101 |
+| `idle-normal-10-factions` | idle | 28 | normal | 10 | defeat, turn 45 |
+| `idle-normal` | idle | 6 | normal | 0 | defeat, turn 48 |
+| `plan85-easy` | plan85 | 7 | easy | 0 | defeat, turn 108 |
+| `reinforcements-and-withdrawal` | `reference/scenarios/reinforcements-and-withdrawal.json` | 3 | normal | 0 | playing, turn 101 |
+| `replay-victoire-tour-84` | `scenarios/replays/victoire-tour-84.json` | 1 | easy | 0 | playing, turn 84 |
+| `replay-victoire-tour-85` | `scenarios/replays/victoire-tour-85.json` | 1 | normal | 0 | playing, turn 85 |
+| `rush-easy` | rush | 14 | easy | 0 | defeat, turn 29 |
+| `tutorial-easy-2-factions` | tutorial | 26 | easy | 2 | playing, turn 121 |
+| `tutorial-normal` | tutorial | 5 | normal | 0 | victory, turn 92 |
+<!-- games:end -->
+
+The strategies are those of `bin/simulate.dart` (`ScriptLibrary`). The games
+played by a file:
+
+- `scenarios/replays/victoire-tour-84.json` and `victoire-tour-85.json` are
+  two games a human won in the app, with their own map and dice (the seed of
+  the source plays no part). The rules changed since: from turn 25 or so
+  many of their actions are refused today, and neither is a victory any
+  more. They are kept for what a human plays and a strategy does not, and
+  their journal here holds the actions that still succeed.
+- `reference/scenarios/reinforcements-and-withdrawal.json` lets `conquest`
+  play, but sends reinforcements to a lower level three times (once from
+  level 2 to level 3) and calls a part of the garrison of the base back
+  (`withdraw`): no strategy does either.
+- `reference/scenarios/faille-lost-to-the-leviathan.json` lets `conquest`
+  play but leaves turn 35 empty, the turn the guardians strike back at the
+  Faille the player took: the Faille is lost, which no strategy game of the
+  set lets happen.
+- `reference/scenarios/every-research-option-b.json` lets `conquest` play
+  but researches the five levels of the three branches with option B at
+  every choice, where the strategies take A at most of them.
+
+`test/domain/reference/reference_set_test.dart` and
+`reference_scenarios_test.dart` read these files and check that, together,
+they execute every `ActionType`, draw every `RandomEventType`, end in every
+status a scripted game can end in, are played at every difficulty and
+against every faction, win and lose a raid, a kraken wave and the Faille,
+see a faction fall and a faction win. `reference_set_fresh_test.dart` plays
+the four shortest games again at every run of the tests; `--check` plays
+them all.
+
+Measured when the set was made, and not guarded by a test: the games also
+build every building, recruit every unit, write every class of history
+entry, accept, decline and let pass every event that asks a question, fight
+the four families of monsters of the lairs, in easy, medium and hard lairs,
+and win and lose base assaults on both sides.
+
+### What the set does not cover
+
+- **`GameStatus.freePlay`**: only the victory screen sets it, no rule does.
+- **The guide.** A scripted game is created with the tutorial and the tips
+  off, and the journal does not say otherwise: `tutorialEnabled` and
+  `tipsEnabled` stay false and `seenTips` empty. So the one rule that reads
+  the tutorial flag is never on: a base that cannot be attacked while its
+  player has not finished the installation objectives
+  (`AttackBaseValidator.isProtected`).
+- **Refused actions.** A journal holds the actions that succeeded. A replay
+  never asks a validator to refuse anything; only a strategy playing by
+  itself does.
+- **The brains and the strategies, by a replay.** In a replay the factions
+  do not think (`playFactions: false`): their moves are read from the
+  journal. A replay proves how actions and ends of turn resolve. To prove
+  the brains of the factions and the strategies, play the game again from
+  its `source` and compare the journal as well.
+- **Saves of older versions**: the fields a migration fills, the `null`
+  `saved...` fields, the texts of old history entries. Every game starts
+  from `GameFactory.newGame`.
+- **The cheat code** of the player named `qnope` (`CheatCodes`).
+- **Games longer than 121 turns.**
+- **Every roll of every die.** Nineteen games draw what they draw: a branch
+  taken once in a thousand rolls may be in none. A rule is pinned for good
+  by vectors of its own, not by these games.
 
 ## The tool
 

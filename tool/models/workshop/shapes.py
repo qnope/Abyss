@@ -10,27 +10,31 @@ from mathutils import Vector
 from workshop.geometry import Geometry
 
 
-def box(size, bevel=0.0, segments=1, smooth=False):
+def box(size, bevel=0.0, segments=1, smooth=False, bottom=True):
     """A box of [size] (x, y, z), its edges rounded by [bevel]."""
     x, y, _ = size
     outline = [(-x / 2, -y / 2), (x / 2, -y / 2), (x / 2, y / 2), (-x / 2, y / 2)]
-    return prism(outline, size[2], bevel, segments, smooth=smooth)
+    return prism(outline, size[2], bevel, segments, smooth=smooth, bottom=bottom)
 
 
-def prism(outline, height, bevel=0.0, segments=1, top=1.0, smooth=False):
+def prism(outline, height, bevel=0.0, segments=1, top=1.0, smooth=False, bottom=True):
     """The polygon [outline] (x, y points, counter-clockwise) raised to
-    [height], its top scaled by [top] around the axis, its edges bevelled."""
+    [height], its top scaled by [top] around the axis, its edges bevelled.
+    Without [bottom], it is open below, for what stands on something: no
+    face nor bevel is spent where nobody looks."""
     bm = bmesh.new()
-    bottom = [bm.verts.new((x, y, 0.0)) for x, y in outline]
+    low = [bm.verts.new((x, y, 0.0)) for x, y in outline]
     upper = [bm.verts.new((x * top, y * top, height)) for x, y in outline]
     n = len(outline)
-    bm.faces.new(list(reversed(bottom)))
+    if bottom:
+        bm.faces.new(list(reversed(low)))
     bm.faces.new(upper)
     for i in range(n):
         j = (i + 1) % n
-        bm.faces.new([bottom[i], bottom[j], upper[j], upper[i]])
+        bm.faces.new([low[i], low[j], upper[j], upper[i]])
     if bevel > 0:
-        bmesh.ops.bevel(bm, geom=list(bm.edges), offset=bevel, segments=segments,
+        edges = [e for e in bm.edges if bottom or not all(v.co.z == 0.0 for v in e.verts)]
+        bmesh.ops.bevel(bm, geom=edges, offset=bevel, segments=segments,
                         profile=0.5, affect="EDGES", clamp_overlap=True)
     return Geometry.from_bmesh(bm, smooth)
 
@@ -48,16 +52,19 @@ def chamfered_square(side, chamfer):
             (h - c, h), (-h + c, h), (-h, h - c), (-h, -h + c)]
 
 
-def cylinder(radius, height, sides=16, top_radius=None, bevel=0.0, segments=1, smooth=True):
+def cylinder(radius, height, sides=16, top_radius=None, bevel=0.0, segments=1, smooth=True,
+             bottom=True):
     top = 1.0 if top_radius is None else top_radius / radius
-    return prism(polygon(sides, radius), height, bevel, segments, top, smooth)
+    return prism(polygon(sides, radius), height, bevel, segments, top, smooth, bottom)
 
 
 def sphere(radius, subdivisions=2, smooth=True):
     """An icosphere: even triangles, good to deform into rocks and heads."""
     bm = bmesh.new()
     bmesh.ops.create_icosphere(bm, subdivisions=subdivisions, radius=radius)
-    return Geometry.from_bmesh(bm, smooth)
+    geometry = Geometry.from_bmesh(bm, smooth)
+    geometry.sharp_angle = math.radians(95)
+    return geometry
 
 
 def octahedron(radius):

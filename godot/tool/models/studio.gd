@@ -19,8 +19,8 @@ func _environment() -> WorldEnvironment:
 	environment.background_mode = Environment.BG_COLOR
 	environment.background_color = BACKGROUND
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color("5b7aa6")
-	environment.ambient_light_energy = 0.5
+	environment.ambient_light_color = Color("8fa8c8")
+	environment.ambient_light_energy = 1.0
 	environment.tonemap_mode = Environment.TONE_MAPPER_AGX
 	environment.glow_enabled = true
 	environment.glow_intensity = 0.5
@@ -35,20 +35,21 @@ func _environment() -> WorldEnvironment:
 func _key_light(bounds: AABB) -> DirectionalLight3D:
 	var light := DirectionalLight3D.new()
 	light.light_color = Color("fff1dc")
-	light.light_energy = 1.25
+	light.light_energy = 1.9
 	light.shadow_enabled = true
 	light.shadow_blur = 1.5
 	light.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
 	light.directional_shadow_max_distance = bounds.size.length() * 3.0
-	light.rotation_degrees = Vector3(-55.0, -30.0, 0.0)
+	# From the upper left of the game camera, which looks from +x +z.
+	light.rotation_degrees = Vector3(-48.0, 15.0, 0.0)
 	return light
 
 
 func _fill_light() -> DirectionalLight3D:
 	var light := DirectionalLight3D.new()
 	light.light_color = Color("7fb2ff")
-	light.light_energy = 0.35
-	light.rotation_degrees = Vector3(-20.0, 150.0, 0.0)
+	light.light_energy = 0.5
+	light.rotation_degrees = Vector3(-25.0, 200.0, 0.0)
 	return light
 
 

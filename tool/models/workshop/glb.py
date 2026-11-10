@@ -67,9 +67,15 @@ class GlbReport:
     @property
     def bounds(self):
         """The lowest and highest corner of every mesh's positions, in mesh space."""
+        return self._box(self._document.get("meshes", []))
+
+    def bounds_of(self, path):
+        """The lowest and highest corner of the mesh of the node at [path], in its space."""
+        return self._box([self._document["meshes"][self._nodes[self._paths[path]]["mesh"]]])
+
+    def _box(self, meshes):
         boxes = [self._document["accessors"][primitive["attributes"]["POSITION"]]
-                 for mesh in self._document.get("meshes", [])
-                 for primitive in mesh["primitives"]]
+                 for mesh in meshes for primitive in mesh["primitives"]]
         low = tuple(min(box["min"][axis] for box in boxes) for axis in range(3))
         high = tuple(max(box["max"][axis] for box in boxes) for axis in range(3))
         return low, high

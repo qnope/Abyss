@@ -8,6 +8,6 @@
     build(model)      fills the workshop's Model
 """
 
-from catalog import material_swatches
+from catalog import base_island, base_rampart, material_swatches
 
-MODELS = {script.NAME: script for script in (material_swatches,)}
+MODELS = {script.NAME: script for script in (base_island, base_rampart, material_swatches)}

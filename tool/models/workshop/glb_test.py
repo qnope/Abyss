@@ -82,6 +82,7 @@ class GlbTest(unittest.TestCase):
     def test_gives_the_bounds_of_the_positions(self):
         report = read_glb(self.write(_glb(DOCUMENT, b"1234")))
         self.assertEqual(report.bounds, ((-1, -2, -3), (1, 2, 3)))
+        self.assertEqual(report.bounds_of("Island/Copy"), ((-1, -2, -3), (1, 2, 3)))
 
     def test_hashes_the_geometry_only(self):
         one = read_glb(self.write(_glb(DOCUMENT, b"1234")))

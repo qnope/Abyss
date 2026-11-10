@@ -3,6 +3,8 @@ veins (tubes), leaves and strands (ribbons), vases and cups (lathes)."""
 
 import math
 
+ORGANIC = math.radians(95)
+
 import bpy  # noqa: F401, loads mathutils
 from mathutils import Vector
 
@@ -48,6 +50,7 @@ def tube(points, radii, sides=6, cap=True, smooth=True):
         geometry.verts.append(Vector(points[-1]) + frames(points)[-1][0] * radii[-1] * 0.6)
         geometry.faces += [(ring[-1] + k, ring[-1] + (k + 1) % sides, tip) for k in range(sides)]
     geometry.smooth = [smooth] * len(geometry.faces)
+    geometry.sharp_angle = ORGANIC
     return geometry
 
 
@@ -61,6 +64,7 @@ def ribbon(points, widths, sides=None):
         geometry.verts += [Vector(point) - side * width / 2, Vector(point) + side * width / 2]
     geometry.faces = [(2 * i, 2 * i + 1, 2 * i + 3, 2 * i + 2) for i in range(len(points) - 1)]
     geometry.smooth = [True] * len(geometry.faces)
+    geometry.sharp_angle = ORGANIC
     return geometry
 
 
@@ -88,4 +92,5 @@ def lathe(profile, sides=12, phase=0.0, smooth=True):
             else:
                 geometry.faces.append((low[k], low[j], high[j], high[k]))
     geometry.smooth = [smooth] * len(geometry.faces)
+    geometry.sharp_angle = ORGANIC
     return geometry

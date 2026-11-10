@@ -1,20 +1,16 @@
 """Gathers faces into one Blender object: their materials and the colour of
 each corner, which the vertex colour attribute carries to the glb."""
 
-import math
-
 import bpy
 
 from workshop.materials import COLOR_ATTRIBUTE
-
-# Faces shaded smooth still get a hard edge where they meet at more than this.
-SHARP_ANGLE = math.radians(42)
 
 
 class MeshBuilder:
     def __init__(self):
         self.verts, self.faces, self.smooth = [], [], []
         self.colors, self.face_materials, self.materials = [], [], []
+        self.sharp = []
 
     @property
     def triangles(self):
@@ -28,6 +24,7 @@ class MeshBuilder:
             self.materials.append(material)
         slot = self.materials.index(material)
         base = len(self.verts)
+        self.sharp += [(a + base, b + base) for a, b in geometry.sharp_edges()]
         self.verts += geometry.verts
         for index, face in enumerate(geometry.faces):
             if callable(paint):
@@ -51,6 +48,10 @@ class MeshBuilder:
         colors = mesh.color_attributes.new(COLOR_ATTRIBUTE, "BYTE_COLOR", "CORNER")
         colors.data.foreach_set("color", [c for color in self.colors for c in (*color, 1.0)])
         mesh.color_attributes.active_color = colors
-        mesh.set_sharp_from_angle(angle=SHARP_ANGLE)
         mesh.update()
+        index = {edge.key: edge.index for edge in mesh.edges}
+        flags = [False] * len(mesh.edges)
+        for edge in self.sharp:
+            flags[index[edge]] = True
+        mesh.attributes.new("sharp_edge", "BOOLEAN", "EDGE").data.foreach_set("value", flags)
         return bpy.data.objects.new(name, mesh)

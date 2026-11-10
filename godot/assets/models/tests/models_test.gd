@@ -7,8 +7,16 @@ const FOLDER := "res://assets/models/"
 
 ## The root nodes of each model, under the scene's own root.
 const ROOTS := {
+	"base_island": ["Island", "Pads"],
+	"base_rampart": ["Tier1", "Tier2", "Tier3"],
 	"material_swatches": ["Swatches", "Unit"],
 }
+
+## The island's pads, one per building, where the buildings stand.
+const PADS: Array[String] = [
+	"AlgaeFarm", "Barracks", "CoralCitadel", "CoralMine", "DescentModule", "Headquarters",
+	"Laboratory", "OreExtractor", "PressureCapsule", "SolarPanel", "VolcanicKernel",
+]
 
 
 func test_every_model_has_its_root_nodes() -> void:
@@ -22,6 +30,21 @@ func test_every_model_has_its_root_nodes() -> void:
 			names.append(String(child.name))
 		assert_eq(names, ROOTS[model], model)
 		scene.free()
+
+
+func test_the_island_has_a_pad_per_building_on_the_deck() -> void:
+	var island := _instantiate("base_island")
+	var names: Array[String] = []
+	for pad in island.get_node("Pads").get_children():
+		names.append(String(pad.name))
+		var top := (pad as Node3D).position
+		assert_almost_eq(top.y, 0.12, 0.001, String(pad.name))
+		assert_true(maxf(absf(top.x), absf(top.z)) < 6.0, String(pad.name))
+	names.sort()
+	assert_eq(names, PADS)
+	var headquarters := island.get_node("Pads/Headquarters") as Node3D
+	assert_true(headquarters.position.is_equal_approx(Vector3(0.4, 0.12, 0.4)))
+	island.free()
 
 
 func test_every_committed_model_is_expected() -> void:

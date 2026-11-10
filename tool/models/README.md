@@ -6,6 +6,7 @@ is never edited by hand: change its script and build it again.
 
     tool/models/build.py [name ...]           # all models without a name
     tool/models/preview.sh <name> [prefix]    # renders to /tmp/models_preview/
+    tool/models/preview.sh base_island+base_rampart   # several models together
     cd tool/models && python -m unittest discover -s . -p '*_test.py'
 
 Both Python commands need Python 3.13 with `pip install bpy==5.2.3` (the CI job
@@ -33,6 +34,11 @@ missing from the wheel: harmless, neither is used.
   `<Group>`, so a group costs one draw call per material.
 - `model.piece(path, location)` is a node of its own (a pad the game shows,
   hides or tints), its origin at `location`, all its materials in one mesh.
+- Hard or soft edges: a geometry's `sharp_angle` is the angle between two
+  smooth faces past which their edge is drawn hard: low for machined plates,
+  higher for rocks, 95 degrees for living things (tubes, ribbons, spheres).
+- Open bottoms: `prism`, `box` and `cylinder` take `bottom=False` for what
+  stands on something, so no face is spent where nobody looks.
 - Deterministic: everything random comes from `model.rng`, seeded by the
   script's `SEED`, or from `noise` with a fixed seed. The tests build each model
   twice and compare the geometry, and compare it with the committed glb.
@@ -43,7 +49,8 @@ Mobile and WebGL 2 first, so no texture and no Blender procedural texture: a
 material is glTF factors only (roughness, metallic, emission), and the albedo is
 in the **vertex colours**, painted per corner by the script (`paint`) and then
 multiplied by an **ambient occlusion baked per corner** (`Occlusion`: rays cast
-against the whole model, favouring the sky). One material therefore serves
+against the whole model, favouring the sky; its `strength` per material keeps
+coral and algae bright and leaves the glowing materials untouched). One material therefore serves
 every rock or every coral, whatever its colour, which keeps the draw calls few.
 The palette's materials are in `catalog/palette.py`.
 
@@ -67,6 +74,23 @@ over it, and so do the tests.
 it in a neutral studio (a key light with shadows, a cool fill, a dark blue
 background, a ground disc): `<prefix>_game.png` from the game's default 3/4
 camera at the phone's portrait size, and `_front`, `_right`, `_back`, `_left`
-from the four sides, all at 2x. It runs Godot's Compatibility renderer (the
+from the four sides, all at 2x, and `_close`, the game's view zoomed on the
+front quarter, to judge the detail. It runs Godot's Compatibility renderer (the
 web's) under `xvfb-run`. The renders go to `/tmp/models_preview/` by default:
 never into the repo.
+
+## The base
+
+- `base_island`: the plateau of the base, 12 x 12 cells, its deck's top at the
+  origin. Its plan (`catalog/base_island/layout.py`) copies the slots of
+  `lib/presentation/widgets/base/base_layout.dart`, which its test checks: each
+  slot is an empty pad, the node `Pads/<Building>` (`Pads/CoralMine`), its
+  origin where the building stands, at (u - 6, 0.12, v - 6) in Godot.
+- `base_rampart`: the coral wall around the deck, in the band the island keeps
+  flat and free of decor for it, open where the walkways leave. It grows with
+  the coral citadel as **3 tiers that add up**, the nodes `Tier1` (the low
+  wall), `Tier2` (a second course, coral in the crenels, lit gate posts) and
+  `Tier3` (merlons, crowned bastions, lanterns): the game shows the tiers up to
+  the citadel's level. Pieces that stack rather than one wall scaled, so that
+  stones, towers and coral keep their size at every level, and each tier stays
+  joined per material.

@@ -83,7 +83,7 @@ const FILES: Dictionary[String, Dictionary] = {
 	"raids": {
 		PENDING + "raid": ["wave", "everyWave", "defenceStrength", "loot", "pillage", "upgradeNoise"],
 		PENDING + "volcano": ["krakens"],
-		PENDING + "game": ["monsterPercent"],
+		"res://domain/game/tests/difficulty_test.gd": ["monsterPercent"],
 	},
 	"factions": {
 		PENDING + "faction": [

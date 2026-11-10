@@ -35,6 +35,13 @@ func _init(seed_value: int) -> void:
 		_state = _MULTIPLIER * (_state & _MASK32) + ((_state >> 32) & _MASK32)
 
 
+## Dart's `Random()`, seeded by nothing the game knows: here by Godot's own
+## generator, the one place of the rules that may call it. It draws as any
+## other from the seed it remembers; no replay may count on that seed.
+static func unseeded() -> DartRandom:
+	return DartRandom.new(randi() << 32 | randi())
+
+
 ## A whole number from 0 to bound - 1, for a bound from 1 to 2^32. Dart
 ## throws for any other bound; GDScript has no exceptions, so this logs an
 ## error, draws nothing and returns REFUSED.

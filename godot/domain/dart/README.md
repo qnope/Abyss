@@ -5,13 +5,15 @@ generator, its sort, part of its arithmetic, the names of its enum values. The r
 ported to give **the same game**, to the last die; wherever one of them
 draws, shuffles, sorts with a comparator, divides or rounds, the port goes
 through here. Each class is held against `reference/vectors/dart_*.json`
-(`reference/vectors/README.md` has the algorithms).
+(`reference/vectors/README.md` has the algorithms). `DartInt` has no vector
+yet: its test lists what the Dart VM answered.
 
 ## What a ported rule writes
 
 | Dart | GDScript | Never |
 | --- | --- | --- |
 | `Random(seed)`, `SeededRandom(seed)`, `.seed` | `DartRandom.new(seed)`, `.initial_seed` (`seed` is a function of Godot) | `randi`, `randf`, `RandomNumberGenerator`, `pick_random` |
+| `Random()` | `DartRandom.unseeded()`, seeded by Godot's generator | |
 | `random.nextInt(n)`, `nextDouble()`, `nextBool()` | `random.next_int(n)`, `next_double()`, `next_bool()` | |
 | `list.shuffle(random)` | `DartRandom.shuffle(list, random)` | `Array.shuffle` |
 | `list.sort(compare)` | `DartSort.sort(list, compare)`, `compare` returning an int | `sort_custom` |
@@ -25,6 +27,7 @@ through here. Each class is held against `reference/vectors/dart_*.json`
 | `min`, `max`, `clamp` between ints | `mini`, `maxi`, `clampi` | |
 | `min`, `max`, `clamp` with a float | `DartNum.min`, `max`, `clamp` if a zero's sign or a NaN matters, else `minf`, `maxf`, `clampf` | |
 | `value.name`, `Enum.values.asNameMap()[name]` | `DartEnum.name_of(Enum.Value, value)`, `DartEnum.by_name(Enum.Value, name)` (null when none) | `Enum.Value.keys()`, `find_key`: GDScript's constants, not Dart's names |
+| `int.tryParse(text)` | `DartInt.try_parse(text)` (null when none) | `to_int`, `is_valid_int`: they read other texts |
 | `value.index`, `Enum.values[i]` | the value itself, `i as Enum.Value`: the port declares the values in the Dart order | |
 
 `godot/domain/native_calls_test.gd` fails on the calls of the last column

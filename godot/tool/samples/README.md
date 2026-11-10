@@ -56,3 +56,8 @@ hold, for the same comparison: the number of entries after each turn, then
 each entry, its maps as `name:count` in their order. `RaidHistories` and
 `VolcanoHistories` hold what the Dart script printed for the raid and the
 volcano digests, too long to sit in their test files.
+
+`EventDigests` does the same for the digest test of the random events: it
+makes the players' choices as `ChooseEventAction` does, and writes what a
+draw left, a school of predators fought and the state of the events;
+`EventHistories` holds the history entries the Dart script printed.

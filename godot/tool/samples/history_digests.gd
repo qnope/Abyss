@@ -24,7 +24,8 @@ static func history(player: Player, sizes: PackedStringArray) -> Array:
 ## loot | pillaged | defenders | intact | wounded | dead` or `volcano turn
 ## V|L wave fight kN | defenders | intact | wounded | dead`, the wave as
 ## RaidDigests.wave, the fight as `winner turns monsters>left`, each map as
-## `name:count` in its order; another entry as `category turn`.
+## `name:count` in its order; `event turn type accepted defaulted`;
+## another entry as `category turn`.
 static func entry(e: HistoryEntry) -> String:
 	var units := UnitType.Value
 	if e is RaidEntry:
@@ -42,6 +43,10 @@ static func entry(e: HistoryEntry) -> String:
 			v.kernel_level, counts(v.defenders, units), counts(v.survivors_intact, units),
 			counts(v.wounded, units), counts(v.dead, units),
 		]
+	if e is EventEntry:
+		var ev := e as EventEntry
+		var type := DartEnum.name_of(RandomEventType.Value, ev.type)
+		return "event %d %s %s %s" % [ev.turn, type, ev.accepted, ev.defaulted]
 	return "%s %d" % [DartEnum.name_of(HistoryEntryCategory.Value, e.category), e.turn]
 
 

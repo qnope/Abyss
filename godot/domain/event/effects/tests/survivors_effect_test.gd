@@ -2,8 +2,7 @@ extends VectorTestCase
 ## test/domain/event/effects/survivors_effect_test.dart: survivors who may
 ## join the base as free harpoonists. 'welcoming them adds free harpoonists
 ## on level 1, silently' and 'turning them away adds nobody' wait for the
-## action module (ChooseEventAction, ActionExecutor); 'left without a
-## choice, nobody joins' for the event resolver, ported next.
+## action module (ChooseEventAction, ActionExecutor).
 
 var _survivors := SurvivorsEffect.new()
 
@@ -32,6 +31,13 @@ func test_the_draw_remembers_how_many_survivors_are_met() -> void:
 	var player := EventSamples.event_player()
 	_survivors.on_draw(EventSamples.event_game(player, 20), player, 20, DartRandom.new(1))
 	assert_eq(player.event_state.survivors, 4)
+
+
+func test_left_without_a_choice_nobody_joins() -> void:
+	var player := _met(4)
+	EventResolver.resolve(EventSamples.event_game(player, 12), player, 12, DartRandom.new(1))
+	assert_eq(_harpoonists(player), 0)
+	assert_null(player.event_state.survivors)
 
 
 ## Not in the Dart file: the section survivors of

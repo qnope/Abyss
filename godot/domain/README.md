@@ -195,6 +195,6 @@ Files and tests of the modules above that wait for another module:
 | `passage` of `fight/assault/assault_target.dart`, the second test of `assault_target_test.dart`; the `treasureLoot` vectors | `action` (`PostTakeover`, `TreasureLoot`) |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
 | two tests of `survivors_effect_test.dart` (welcoming the survivors, turning them away), two of `predators_effect_test.dart` (facing them, baiting them) | `action` (`ChooseEventAction`) |
-| the last test of `survivors_effect_test.dart` and of `predators_effect_test.dart` (left without a choice) | `event_resolver.dart`, below |
-| `event/event_turn_outcome.dart`, `event/event_resolver.dart`, the five `event_resolver_*_test.dart` and `event_test_helper.dart`'s `producingPlayer` | nothing now but the tests of an action (`ChooseEventAction`, `CollectTreasureAction`) |
+| `event_resolver_predators_test.dart`, the last test of `event_resolver_wreck_test.dart` | `action` (`ChooseEventAction`, `CollectTreasureAction`) |
+| `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `action`, `script` |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

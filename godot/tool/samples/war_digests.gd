@@ -11,6 +11,26 @@ static func counts(map: Dictionary) -> String:
 	return SiegeDigests.counts(map)
 
 
+## The first cell of `map`, row by row, where `ok(x, y)`.
+static func first(map: GameMap, ok: Callable) -> GridPosition:
+	for y: int in map.height:
+		for x: int in map.width:
+			if ok.call(x, y):
+				return GridPosition.new(x, y)
+	return GridPosition.new(-1, -1)
+
+
+## Puts exactly `units` on the stock of `level` of `p`.
+static func put(p: Player, level: int, units: Dictionary[UnitType.Value, int]) -> void:
+	for unit: Unit in KernelGarrison.stock_at(p, level).values():
+		unit.count = units.get(unit.type, 0)
+
+
+## A value as Dart prints it: "null" for null.
+static func text(value: Variant) -> String:
+	return "null" if value == null else str(value)
+
+
 ## The turns a map keyed by player ids holds, as `id:turn`.
 static func turns(map: Dictionary) -> String:
 	var parts := PackedStringArray()
@@ -27,7 +47,7 @@ static func entry(p: Player) -> String:
 	var last: BaseAssaultEntry = p.history_entries[-1]
 	return "%d %s %s %s %s %s %s %s %d>%d" % [
 		last.turn, last.defending, last.victory, last.opponent_name,
-		"null" if last.post_name == null else str(last.post_name), counts(last.units),
+		text(last.post_name), counts(last.units),
 		counts(last.lost_with_post), last.passage_destroyed, last.rampart_before, last.rampart_after,
 	]
 

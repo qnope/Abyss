@@ -61,6 +61,10 @@ a negative shift, `clamp` with bounds out of order) logs an error with
 - `1 / 3` is 0: a Dart constant such as `1 / 3` is `1.0 / 3.0` here.
 - A literal below the smallest normal double (`5e-324`, `1e-320`) parses
   as 0.
+- A 17-digit literal may parse one bit away from Dart's:
+  `0.39285714285714285`, which Dart prints for `110 / 280`, reads as the
+  next double up. A test writes a double Dart printed by its bits
+  (`VectorValues.float_of`).
 - The smallest int divided by -1, with `/` or `%`, crashes the engine.
 - From 2^63 up, `int(x)` and `roundi(x)` depend on the processor, as does a
   shift of 64 or more.

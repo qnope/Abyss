@@ -46,6 +46,17 @@ func test_builds_the_buildings_and_the_units_of_a_player() -> void:
 	assert_eq(army[UnitType.Value.SCOUT].count, 0)
 
 
+func test_builds_the_research_of_a_player() -> void:
+	var research := VectorInputs.tech({"resources": [4, [0, 1]]})
+	assert_eq(research.keys(), TechBranch.Value.values())
+	var resources := research[TechBranch.Value.RESOURCES]
+	assert_eq([resources.branch, resources.unlocked], [TechBranch.Value.RESOURCES, true])
+	assert_eq([resources.research_level, resources.choices], [4, [0, 1]])
+	var military := research[TechBranch.Value.MILITARY]
+	assert_eq([military.branch, military.unlocked], [TechBranch.Value.MILITARY, false])
+	assert_eq([military.research_level, military.choices], [0, []])
+
+
 func test_reads_a_list_of_names_as_a_set() -> void:
 	var excluded: Dictionary[BuildingType.Value, bool] = VectorInputs.values_set(
 		BuildingType.Value, ["laboratory", "barracks"]

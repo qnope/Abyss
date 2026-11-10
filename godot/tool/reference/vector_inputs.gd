@@ -94,6 +94,23 @@ static func units(named_counts: Variant) -> Dictionary[UnitType.Value, Unit]:
 	return army
 
 
+## The three branches in the order of TechBranch. A branch the case names is
+## unlocked, at the level and with the choices (option indices) of its
+## `[level, choices]`; the others are locked.
+static func tech(named_research: Variant) -> Dictionary[TechBranch.Value, TechBranchState]:
+	var given: Dictionary = named_research
+	var branches: Dictionary[TechBranch.Value, TechBranchState] = {}
+	for branch: TechBranch.Value in TechBranch.Value.values():
+		var name := DartEnum.name_of(TechBranch.Value, branch)
+		var research: Array = given.get(name, [0, []])
+		var level: int = research[0]
+		var taken: Array = research[1]
+		var choices: Array[int] = []
+		choices.assign(taken)
+		branches[branch] = TechBranchState.new(branch, given.has(name), level, choices)
+	return branches
+
+
 ## A set of values of an enum (`Dictionary[Enum.Value, bool]`) from the list
 ## of names a case writes, empty when the case writes null.
 static func values_set(enumeration: Dictionary, names_or_null: Variant) -> Dictionary:

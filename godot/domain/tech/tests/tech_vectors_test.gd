@@ -1,6 +1,11 @@
 extends VectorTestCase
-## reference/vectors/tech.json: what the research costs and the state of a
-## branch, as the Dart rules answer.
+## reference/vectors/tech.json: what the research costs, the state of a
+## branch and what the research changes in the rules, as Dart answers.
+
+const NOISES: Array[int] = [0, 1, 3, 7]
+const LOOT: Dictionary[ResourceType.Value, int] = {
+	ResourceType.Value.ALGAE: 333, ResourceType.Value.CORAL: 1, ResourceType.Value.PEARL: 3,
+}
 
 var _vectors := VectorFile.new("tech")
 
@@ -48,3 +53,34 @@ func test_branch_state() -> void:
 			"tiers": state.tiers(),
 		}
 		assert_same(out, case["out"], str(case))
+
+
+## The keys of `out` are the getters reference/vectors/README.md lists.
+func test_effects() -> void:
+	var cases := _vectors.cases("effects")
+	assert_eq(cases.size(), 92)
+	for case: Dictionary in cases:
+		var halved: bool = case["halved"]
+		var effects := TechEffects.new(VectorInputs.tech(case["tech"]), halved)
+		var production: Dictionary[ResourceType.Value, int] = {}
+		for type: ResourceType.Value in ResourceType.Value.values():
+			production[type] = effects.production_percent(type)
+		var out := {
+			"atk": effects.atk_percent(),
+			"atkAttacking": effects.atk_percent(true),
+			"boostLoot": VectorInputs.named(ResourceType.Value, effects.boost_loot(LOOT)),
+			"def": effects.def_percent(),
+			"defBase": effects.def_percent(true),
+			"hp": effects.hp_percent(),
+			"lootPercent": effects.loot_percent(),
+			"muffle": NOISES.map(effects.muffle),
+			"pillageRate": effects.pillage_rate(),
+			"production": VectorInputs.named(ResourceType.Value, production),
+			"raidWarningTurns": effects.raid_warning_turns(),
+			"revealSide": effects.reveal_side(),
+			"upgradeDiscount": effects.upgrade_discount_percent(),
+		}
+		assert_same(out, case["out"], str(case))
+		var boost := effects.unit_boost(true, true)
+		var percents := [boost.atk_percent, boost.def_percent, boost.hp_percent]
+		assert_eq(percents, [out["atkAttacking"], out["defBase"], out["hp"]], str(case))

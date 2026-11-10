@@ -24,8 +24,8 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   a NaN, 0.0 is not -0.0, 1 is not 1.0.
 - `VectorInputs` builds what the rules take from what a case writes, as
   `tool/vectors/domain/vector_inputs.dart` does on the Dart side: an enum
-  value from its Dart name, the stocks, the buildings and the units of a
-  player in the order of their enum; and writes an answer
+  value from its Dart name, the stocks, the buildings, the units and the
+  research of a player in the order of their enum; and writes an answer
   keyed by an enum under the Dart names a case holds.
 - `VectorRegistry` lists every section of every vector file under the test
   that reads it, or under `pending: <module>` while the module of

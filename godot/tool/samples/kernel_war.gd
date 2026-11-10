@@ -72,6 +72,12 @@ func garrison(units: Dictionary[UnitType.Value, int]) -> void:
 	put(owner(), KernelGarrison.STOCK_KEY, units)
 
 
+## `strike`: the attack on the kernel with `army`, its dice
+## `SeededRandom(seed)`.
+func strike(army: Dictionary[UnitType.Value, int], seed_ := 1) -> AttackHeldKernelAction:
+	return AttackHeldKernelAction.new(at.x, at.y, army, DartRandom.new(seed_))
+
+
 func _map() -> GameMap:
 	return game.levels[KernelGarrison.VOLCANO_LEVEL]
 

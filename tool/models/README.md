@@ -46,7 +46,8 @@ missing from the wheel: harmless, neither is used.
   stands on something, so no face is spent where nobody looks.
 - Deterministic: everything random comes from `model.rng`, seeded by the
   script's `SEED`, or from `noise` with a fixed seed. The tests build each model
-  twice and compare the geometry, and compare it with the committed glb.
+  twice and compare the geometry, and compare it with the committed glb within
+  a float tolerance: another machine computes the last bits of a float otherwise.
 
 ## Materials
 

@@ -41,6 +41,11 @@ class GlbReport:
         return list(self._paths)
 
     @property
+    def document(self):
+        """The glb's JSON chunk."""
+        return self._document
+
+    @property
     def materials(self):
         return [material.get("name", "") for material in self._document.get("materials", [])]
 

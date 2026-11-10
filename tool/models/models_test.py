@@ -1,6 +1,7 @@
 """Builds every model of the catalog in a temporary folder and checks the glb:
 valid, with the nodes the game relies on, under its budget, the same from one
-build to the next, and the same as the one committed in the game."""
+build to the next, and the same as the one committed in the game (within a
+float tolerance, as another machine computes the last bits differently)."""
 
 import glob
 import os
@@ -10,6 +11,7 @@ from build import atlas_name
 from catalog import MODELS
 from model_builds import built, committed, rebuilt
 from workshop.glb import read_glb
+from workshop.glb_compare import geometry_differences
 
 
 class ModelsTest(unittest.TestCase):
@@ -41,8 +43,8 @@ class ModelsTest(unittest.TestCase):
         for name in MODELS:
             with self.subTest(name):
                 self.assertTrue(os.path.exists(committed(name)), f"run tool/models/build.py {name}")
-                self.assertEqual(read_glb(committed(name)).geometry_hash,
-                                 built(name)[1].geometry_hash,
+                differences = geometry_differences(read_glb(committed(name)), built(name)[1])
+                self.assertEqual(differences, [],
                                  f"godot/assets/models/{name}.glb is stale: rebuild it")
 
     def test_every_committed_atlas_is_what_its_script_paints(self):

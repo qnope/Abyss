@@ -41,3 +41,12 @@ func test_reads_a_unit_from_its_dart_name_only() -> void:
 		DartEnum.names(CombatRole.Value),
 		PackedStringArray(["none", "taunt", "bossBreaker", "armourPiercer", "evasive"])
 	)
+
+
+## Not in the Dart file: the table of the units holds each by its Dart name.
+func test_reads_every_unit_by_its_dart_name() -> void:
+	for type: UnitType.Value in UnitType.Value.values():
+		var key := DartEnum.name_of(UnitType.Value, type)
+		assert_eq(CombatRole._UNIT_TYPES[key], type)
+		assert_eq(CombatRole.of(_c(key, PLAYER)), CombatRole.for_unit(type), key)
+	assert_eq(CombatRole._UNIT_TYPES.size(), UnitType.Value.size())

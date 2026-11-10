@@ -23,6 +23,9 @@ func test_has_the_values_of_dart_in_its_order() -> void:
 		DartEnum.names(MonsterFamily.Value),
 		PackedStringArray(["swarm", "armoured", "hunter", "colossus", "kraken"])
 	)
+	for family: MonsterFamily.Value in MonsterFamily.Value.values():
+		assert_eq(MonsterFamily._BY_NAME[DartEnum.name_of(MonsterFamily.Value, family)], family)
+	assert_eq(MonsterFamily._BY_NAME.size(), MonsterFamily.Value.size())
 
 
 func test_writes_the_key_of_a_monster_from_its_family_and_its_level() -> void:

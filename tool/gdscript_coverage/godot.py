@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 RUNNER = "res://tool/test/run_tests.gd"
 TIMEOUT = "GODOT_TEST_TIMEOUT"
+REPO_ROOT = "ABYSS_REPO_ROOT"
 SCRIPT_ERROR = re.compile(r"SCRIPT ERROR: (.+)\n\s+at: .*\(res://(.+?):(\d+)\)")
 
 
@@ -43,11 +44,14 @@ def check_scripts(copy, scripts, prefix):
             raise CoverageError(_describe(copy, script.path, output, prefix))
 
 
-def run_tests(copy, paths, dump):
-    """Runs the tests on the copy, which dumps its hits; the exit code."""
+def run_tests(copy, paths, dump, repo):
+    """Runs the tests on the copy, which dumps its hits; the exit code.
+    The tests read reference/ from the repo, which is not above the copy:
+    ABYSS_REPO_ROOT names it (godot/tool/reference/reference_files.gd)."""
     command = godot("--path", copy, "--script", RUNNER, "--",
                     "--coverage-out=" + dump, "--timeout=%d" % timeout(), *paths)
-    return _run(command, "The test run").returncode
+    env = {**os.environ, REPO_ROOT: repo}
+    return _run(command, "The test run", env=env).returncode
 
 
 def _run(command, step, **options):

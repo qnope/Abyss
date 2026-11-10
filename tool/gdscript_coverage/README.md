@@ -29,6 +29,8 @@ tool; the test run also passes it to the runner as `--timeout`.
    first that breaks, naming its file, line and the instrumented text.
 5. Runs the tests with `--coverage-out=<file>`: the runner then calls
    `CoverageProbe.dump()`, a class it looks up by name, since only the copy has it.
+   `ABYSS_REPO_ROOT` names the repo to the tests, which read `reference/` from
+   it: the copy has no repo above it (`godot/tool/reference/reference_files.gd`).
 6. Writes the lcov file and its summary.
 
 ## What counts as an executable line

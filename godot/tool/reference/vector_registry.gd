@@ -53,7 +53,7 @@ const FILES: Dictionary[String, Dictionary] = {
 		"res://domain/unit/tests/unit_vectors_test.gd": [
 			"units", "maxRecruitable", "hungerLosses", "hungerLossesAllLevels",
 		],
-		PENDING + "fight": ["boost"],
+		"res://domain/fight/tests/unit_boost_test.gd": ["boost"],
 	},
 	"tech": {
 		"res://domain/tech/tests/tech_vectors_test.gd": [

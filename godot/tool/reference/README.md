@@ -22,6 +22,10 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   bits, `"i:9223372036854775807"` an `int` no float holds. `encode()` writes
   the floats back as `d:` texts, and `assert_same` compares those: a NaN equals
   a NaN, 0.0 is not -0.0, 1 is not 1.0.
+- `VectorInputs` builds what the rules take from what a case writes, as
+  `tool/vectors/domain/vector_inputs.dart` does on the Dart side: an enum
+  value from its Dart name, the stocks of a player; and writes an answer
+  keyed by an enum under the Dart names a case holds.
 - `ReferenceFiles` finds the repository: the folder above `res://`, or the one
   `ABYSS_REPO_ROOT` names. `tool/godot_coverage.py` sets it, as it runs the
   tests on a copy of the project in a temporary folder.

@@ -172,6 +172,8 @@ either, and not in the same way.
 | `script/variant/plan_script.dart` | turns of a plan | turn numbers | none: map keys |
 | `script/variant/plan_script.dart` | steps due | rank | none: unique ranks |
 | `script/faction_tally.dart` | `factionIds` | ids | none: map keys |
+| `reference/canonical_writer.dart` | keys of a map | UTF-16 code units | none: map keys; not a rule, the snapshot's format |
+| `reference/snapshot_sections.dart` | section names | names | none: distinct; not a rule |
 
 No sort of the rules can tie beyond 33 elements today; the two that tie
 rely on the insertion sort being stable.

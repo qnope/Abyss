@@ -56,11 +56,11 @@ func test_a_pending_section_waits_for_a_module_of_lib_domain() -> void:
 
 func test_tells_a_section_listed_twice_or_nowhere() -> void:
 	assert_eq(
-		VectorRegistry.states_of("units", "boost"),
+		VectorRegistry.states_of("fight_engine", "resolve"),
 		PackedStringArray([VectorRegistry.PENDING + "fight"])
 	)
-	assert_eq(VectorRegistry.states_of("units", "morale"), PackedStringArray())
-	assert_eq(VectorRegistry.states_of("songs", "boost"), PackedStringArray())
+	assert_eq(VectorRegistry.states_of("fight_engine", "morale"), PackedStringArray())
+	assert_eq(VectorRegistry.states_of("songs", "resolve"), PackedStringArray())
 	assert_eq(VectorRegistry.pending_module("pending: fight"), "fight")
 	assert_eq(VectorRegistry.pending_module("res://domain/x_test.gd"), "")
 

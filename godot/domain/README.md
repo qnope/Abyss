@@ -139,5 +139,4 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_test.dart` (the tests on a `Player`), `building_type_test.dart` (`PlayerDefaults`), the `startingStocks` vectors | `game` |
 | `building_degradation_usage_test.dart` (actions, victory), `building_cost_discount_test.dart` (its last test) | `action`, `game` |
 | `building_degradation_solo_test.dart` | `script` |
-| `fight/unit_boost.dart`, the `boost` vectors of `units.json` | `fight` |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

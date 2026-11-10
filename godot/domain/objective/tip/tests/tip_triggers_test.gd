@@ -1,8 +1,7 @@
 extends TestCase
 ## test/domain/objective/tip/tip_triggers_test.dart: the situations of the
-## tips of the base, the threats and the events. Dart reads each tip through
-## TipCatalog.byId, which waits for the tips of the posts (`action`):
-## ObjectiveSamples.applies reads it from its list.
+## tips of the base, the threats and the events, each tip read through
+## TipCatalog.by_id (ObjectiveSamples.applies).
 
 const Id := TipId.Value
 

@@ -1,12 +1,34 @@
 extends TestCase
 ## test/domain/objective/tip/archive_tips_test.dart: the Archives of the
-## Trench, each card read from its list (ObjectiveSamples.applies). Left
-## out: the group "Archives", which reads TipCatalog, and the first two tests
-## of "ancients", whose PostWar takes a post through AttackPostAction: both
-## wait for `action`.
+## Trench, each card read through TipCatalog (ObjectiveSamples.applies).
+## The group "ancients" is in archive_tips_ancients_test.gd.
 
 const Id := TipId.Value
 const SCOUT := UnitType.Value.SCOUT
+const ARCHIVES: Array = [Id.ABYSS_LISTENS, Id.RIVAL_COLONIES, Id.ANCIENTS, Id.FORGE_TOWERS, Id.AWAKENING]
+
+
+func test_archives_the_last_section_of_the_guide_holds_the_five_archive_tips() -> void:
+	assert_eq(TipCategory.Value.values()[-1], TipCategory.Value.ARCHIVES)
+	var ids: Array = []
+	for tip: Tip in TipCatalog.all():
+		if tip.category == TipCategory.Value.ARCHIVES:
+			ids.append(tip.id)
+	assert_eq(ids, ARCHIVES)
+
+
+func test_archives_open_after_the_gameplay_tips_of_the_same_turn() -> void:
+	var game := ObjectiveSamples.objective_game()
+	game.human_player().saved_objective_state = ObjectiveState.new([], false, true)
+	game.human_player().raid_state.record_outcome(false)
+	var pending: Array = []
+	for tip: Tip in TipCatalog.pending_for(game, game.human_player()):
+		pending.append(tip.id)
+	assert_eq(pending, [Id.RAID_REPORT, Id.ABYSS_LISTENS])
+	var last: Array = []
+	for tip: Tip in TipCatalog.all().slice(-5):
+		last.append(tip.id)
+	assert_eq(last, ARCHIVES)
 
 
 func test_abyss_listens_once_a_first_raid_was_fought_won_or_lost() -> void:
@@ -24,14 +46,6 @@ func test_rival_colonies_once_the_base_of_a_faction_is_revealed() -> void:
 	var rival := game.players[game.factions()[-1].id()]
 	game.human_player().add_revealed_cell(1, GridPosition.new(rival.base_x, rival.base_y))
 	assert_true(ObjectiveSamples.applies(game, Id.RIVAL_COLONIES))
-
-
-func test_ancients_also_for_a_faille_captured_once_then_lost() -> void:
-	var game := ObjectiveSamples.objective_game()
-	game.human_player().add_history_entry(HistorySamples.capture_entry("cheminee:0"))
-	assert_false(ObjectiveSamples.applies(game, Id.ANCIENTS))
-	game.human_player().add_history_entry(HistorySamples.capture_entry("faille:1"))
-	assert_true(ObjectiveSamples.applies(game, Id.ANCIENTS))
 
 
 func test_forge_towers_once_units_stand_below_the_reef() -> void:
@@ -66,33 +80,3 @@ func test_awakening_not_before() -> void:
 func test_awakening_also_once_taken_then_lost_its_fires_already_lit() -> void:
 	var game := RaidSamples.kernel_garrison_game(false)
 	assert_true(ObjectiveSamples.applies(game, Id.AWAKENING))
-
-
-## Not in the Dart file, for the tests left: the archives in their order,
-## filed last in the Guide; a Faille held, not one held by another, nor a
-## Cheminée; other entries of the history and a capture lost are no Faille.
-func test_the_archives_in_their_order_and_a_faille_held() -> void:
-	var ids: Array = []
-	for tip: Tip in ArchiveTips.archive_tips():
-		assert_eq(tip.category, TipCategory.Value.ARCHIVES)
-		ids.append(tip.id)
-	assert_eq(ids, [Id.ABYSS_LISTENS, Id.RIVAL_COLONIES, Id.ANCIENTS, Id.FORGE_TOWERS, Id.AWAKENING])
-	assert_eq(TipCategory.Value.values()[-1], TipCategory.Value.ARCHIVES)
-	var game := ObjectiveSamples.objective_game()
-	game.human_player().add_history_entry(HistorySamples.raid_entry(true))
-	var lost := HistorySamples.capture_entry("faille:0")
-	lost.captured = false
-	game.human_player().add_history_entry(lost)
-	_hold(game, TransitionBaseType.Value.FAILLE, "rival")
-	assert_false(ObjectiveSamples.applies(game, Id.ANCIENTS))
-	_hold(game, TransitionBaseType.Value.CHEMINEE, game.human_player_id)
-	assert_false(ObjectiveSamples.applies(game, Id.ANCIENTS))
-	_hold(game, TransitionBaseType.Value.FAILLE, game.human_player_id)
-	assert_true(ObjectiveSamples.applies(game, Id.ANCIENTS))
-
-
-## A post of `type` at (7, 7) of level 1, held by `by`.
-func _hold(game: Game, type: TransitionBaseType.Value, by: String) -> void:
-	var base := TransitionBase.new(type, "X", by)
-	var cell := MapCell.new(TerrainType.Value.PLAIN, CellContentType.Value.TRANSITION_BASE, null, null, base)
-	game.levels[1].set_cell(7, 7, cell)

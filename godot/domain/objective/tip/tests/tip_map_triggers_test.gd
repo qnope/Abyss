@@ -1,7 +1,7 @@
 extends TestCase
 ## test/domain/objective/tip/tip_map_triggers_test.dart: the situations of
-## the tips of the map, monster families included. Each tip is read from its
-## list (ObjectiveSamples.applies), TipCatalog waiting for `action`.
+## the tips of the map, monster families included, each tip read through
+## TipCatalog.by_id (ObjectiveSamples.applies).
 
 const Id := TipId.Value
 const Content := CellContentType.Value

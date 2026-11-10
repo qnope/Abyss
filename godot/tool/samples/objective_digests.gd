@@ -68,30 +68,15 @@ static func temporary(t: int, objective: TemporaryObjective, outcome: Variant = 
 	return "%d -%s/%d %s" % [t, kind, objective.last_turn, DartEnum.name_of(TemporaryObjectiveOutcome.Value, ended)]
 
 
-## `turn !ids` for the tips ported that apply to `p` and are not in `seen`,
+## `turn !ids` for the tips that apply to `p` and are not in `seen`,
 ## in the order of TipId, added to `seen`; "" for none.
 static func fresh_tips(game: Game, p: Player, t: int, seen: Dictionary[TipId.Value, bool]) -> String:
 	var fresh := PackedStringArray()
-	for tip: Tip in tips():
+	for tip: Tip in TipCatalog.all():
 		if not seen.has(tip.id) and tip.applies_to(game, p):
 			seen[tip.id] = true
 			fresh.append(DartEnum.name_of(TipId.Value, tip.id))
 	return "" if fresh.is_empty() else "%d !%s" % [t, " ".join(fresh)]
-
-
-## Every tip ported, those of the posts by their triggers but `postLost`,
-## in the order of TipId, as TipCatalog.all.
-static func tips() -> Array[Tip]:
-	var all := BaseTips.base_tips()
-	all.append_array(ThreatTips.threat_tips())
-	all.append_array(MapTips.map_tips())
-	all.append(Tip.new(TipId.Value.ADMIRAL, TipCategory.Value.MAP, PostTipTriggers.admiral))
-	all.append(Tip.new(TipId.Value.POST_DEFENCE, TipCategory.Value.THREATS, PostTipTriggers.post_held))
-	all.append(Tip.new(TipId.Value.KERNEL_GARRISON, TipCategory.Value.THREATS, PostTipTriggers.kernel_garrison))
-	all.append_array(EventTips.all())
-	all.append_array(ArchiveTips.archive_tips())
-	DartSort.sort(all, func(a: Tip, b: Tip) -> int: return DartSort.compare_ints(a.id, b.id))
-	return all
 
 
 static func _add_units(p: Player, level: int, type: UnitType.Value, count: int) -> void:

@@ -208,8 +208,6 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_solo_test.dart` | `script` |
 | `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
-| `postLost` of `objective/tip/post_tip_triggers.dart`, then `post_tips.dart` and `tip_catalog.dart`, which list it; `tip_catalog_test.dart`, `post_tips_test.dart`, the group "Archives" of `archive_tips_test.dart` (the tests of the other tips read each tip from its list) | `action` (`AttackHeldKernelAction.kernelCode`) |
-| `faction_attack_tip_test.dart`, the first two tests of "ancients" in `archive_tips_test.dart` (their twins read the triggers) | `action` (`AnnounceAttackAction`, `AttackPostAction` of `PostWar`), and `TipCatalog` above |
 | `objective/guide/guide_leviathan.dart`, `guide_leviathan_test.dart` | `leviathan` (`LeviathanResolver`, `LeviathanDefenceAdvisor`) |
 | `objective/guide/guide_alerts.dart` | `faction` (`UndefendedPosts`, which reads `action`'s `PostTakeover`) |
 | `objective/guide/guide_assault.dart` | `action`: `AssaultPlan` is ported, left for the next part of the lot |

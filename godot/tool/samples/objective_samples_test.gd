@@ -18,10 +18,7 @@ func test_set_building_and_progress_read_the_human() -> void:
 	assert_eq(ObjectiveSamples.expected(5, 5), [5, 5, true])
 
 
-func test_a_tip_is_read_from_its_list_none_for_the_tips_of_the_posts() -> void:
-	assert_eq(ObjectiveSamples.tip(TipId.Value.STORM).category, TipCategory.Value.EVENTS)
-	assert_eq(ObjectiveSamples.tip(TipId.Value.AWAKENING).id, TipId.Value.AWAKENING)
-	assert_null(ObjectiveSamples.tip(TipId.Value.POST_LOST))
+func test_a_tip_applies_as_the_catalog_says() -> void:
 	var game := ObjectiveSamples.objective_game()
 	assert_false(ObjectiveSamples.applies(game, TipId.Value.RAID_REPORT))
 	game.human_player().raid_state.record_outcome(true)

@@ -135,3 +135,7 @@ the digest test of the Leviathan (`leviathan_digest_test.gd`) compares, an
 assault of the human on a post nobody holds, an announcement, a report of
 the guardians' attack, the state of their return and one end of turn; `LeviathanHistories` holds what the scratch Dart
 script printed.
+
+`ScriptSamples` builds what the tests of the scripts write inline: a turn
+of a game for a player, its dice the plain `Random(1)` of the Dart tests
+(`DartRandom.new(1, false)`, no `SeededRandom`), its log the list given.

@@ -24,12 +24,20 @@ var initial_seed: int:
 	get:
 		return _seed
 
+## Whether it stands for a `SeededRandom`, which a rule may ask (`random is
+## SeededRandom`, as AnnounceAttackAction does): false for a plain
+## `Random(seed)` built with `seeded` false, and for `unseeded()`.
+var is_seeded: bool
+
 var _seed: int
 var _state: int
 
 
-func _init(seed_value: int) -> void:
+## `seeded` false is a plain `Random(seed)` that a rule may tell from a
+## `SeededRandom`: it draws the same, only `is_seeded` differs.
+func _init(seed_value: int, seeded := true) -> void:
 	_seed = seed_value
+	is_seeded = seeded
 	_state = _mixed(seed_value)
 	for _round: int in 4:
 		_state = _MULTIPLIER * (_state & _MASK32) + ((_state >> 32) & _MASK32)
@@ -37,9 +45,10 @@ func _init(seed_value: int) -> void:
 
 ## Dart's `Random()`, seeded by nothing the game knows: here by Godot's own
 ## generator, the one place of the rules that may call it. It draws as any
-## other from the seed it remembers; no replay may count on that seed.
+## other from the seed it remembers; no replay may count on that seed, and
+## it is no `SeededRandom`.
 static func unseeded() -> DartRandom:
-	return DartRandom.new(randi() << 32 | randi())
+	return DartRandom.new(randi() << 32 | randi(), false)
 
 
 ## A whole number from 0 to bound - 1, for a bound from 1 to 2^32. Dart

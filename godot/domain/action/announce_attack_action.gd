@@ -40,14 +40,15 @@ func validate(game: Game, player: Player) -> ActionResult:
 	return ActionResult.failure(reason)
 
 
-## Every DartRandom remembers its seed, as a `SeededRandom` does: the
-## fight takes the seed of `random`, and draws one when there is none
-## (`Random()` in Dart, which is no `SeededRandom`).
+## The fight takes the seed of a `SeededRandom` (`is_seeded`), and draws
+## one from any other generator: a plain `Random(seed)`, the one a script
+## run hands its turns, or `Random()` when there is none.
 func execute(game: Game, player: Player) -> ActionResult:
 	var validation := validate(game, player)
 	if not validation.is_success:
 		return validation
-	var fight_seed := random.initial_seed if random != null else DartRandom.unseeded().next_int(0x7FFFFFFF)
+	var dice := random if random != null else DartRandom.unseeded()
+	var fight_seed := dice.initial_seed if dice.is_seeded else dice.next_int(0x7FFFFFFF)
 	var units: Dictionary[UnitType.Value, int] = {}
 	for type_: UnitType.Value in selected_units:
 		if selected_units[type_] > 0:

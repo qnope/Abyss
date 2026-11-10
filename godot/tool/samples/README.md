@@ -14,5 +14,10 @@ only them, in the order given.
 `TechHelpers` is `test/helpers/tech_helpers.dart`, a file of helpers the Dart
 tests already share: a researched branch, the three branches of a player.
 
+`MapSamples` builds bare cells and maps, and reads a map as the Dart tests
+do through `test/helpers/`: the cells that hold a content, the posts as the
+passages of the level below, the distance between two cells and the
+fingerprint that pins a generated map (`mapFingerprint`).
+
 The tests driven by `reference/vectors/` build theirs from the Dart names a
 case writes, with `VectorInputs` (`godot/tool/reference/README.md`).

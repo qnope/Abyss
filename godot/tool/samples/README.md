@@ -83,3 +83,9 @@ the tips ported that newly apply, in the order of `TipId`.
 'test', name: 'Test', resources: ..., buildings: ...)`, a player stocked with
 the amounts and buildings given and its game) and, as the actions come, what
 the helpers of `test/domain/action/` build.
+
+`MoveSamples` builds the games of the actions that move units from one level
+to another: the descent of `descend_action_helper.dart` (`descend_game`), the
+reinforcements of `send_reinforcements_helper.dart` (`reinforcement_map`,
+`reinforcement_game`) and the volcano of `volcano_test_helper.dart`
+(`volcano_game`), whose player `RaidSamples.volcano_player` builds.

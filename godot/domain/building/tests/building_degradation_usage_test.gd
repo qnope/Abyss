@@ -1,7 +1,7 @@
 extends TestCase
 ## test/domain/building/building_degradation_usage_test.dart: what a
-## degraded building costs its base. The tests that descend or garrison
-## the kernel go with DescendValidator and GarrisonKernelAction.
+## degraded building costs its base. The two tests of the kernel's
+## garrison go with GarrisonKernelAction.
 
 const CITADEL := BuildingType.Value.CORAL_CITADEL
 const SCOUT := UnitType.Value.SCOUT
@@ -56,6 +56,17 @@ func test_degraded_citadel_halves_the_rampart_of_the_buildings_of_a_base() -> vo
 	assert_eq(CoralCitadelRampart.combatant_of(ok).max_hp, 120)
 	assert_eq(CoralCitadelRampart.combatant_of(low).max_hp, 60)
 	assert_null(CoralCitadelRampart.combatant_of(DomainSamples.base(7)))
+
+
+func test_module_capsule_and_noyau_are_unusable_when_degraded_descent_refused_with_a_module_the_qg_no_longer_supports() -> void:
+	var game := MoveSamples.descend_game()
+	var player := game.human_player()
+	var selected: Dictionary[UnitType.Value, int] = {SCOUT: 1}
+	player.buildings[BuildingType.Value.HEADQUARTERS] = Building.new(BuildingType.Value.HEADQUARTERS, 4)
+	var result := DescendValidator.validate(game, player, 5, 5, 1, selected)
+	assert_eq(result.reason, ActionFailure.Value.REQUIRED_BUILDING_DEGRADED)
+	player.buildings[BuildingType.Value.HEADQUARTERS].level = 5
+	assert_true(DescendValidator.validate(game, player, 5, 5, 1, selected).is_success)
 
 
 func test_victory_needs_an_undegraded_noyau_10_refused_when_the_qg_fell_below_10() -> void:

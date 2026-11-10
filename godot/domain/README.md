@@ -194,8 +194,8 @@ Files and tests of the modules above that wait for another module:
 | Dart | Waits for |
 | --- | --- |
 | `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
-| `action/attack_base_validator.dart`, `attack_base_action.dart`, `attack_post_validator.dart`, `attack_post_action.dart`, `attack_held_kernel_validator.dart`, `attack_held_kernel_action.dart`, `announce_attack_validator.dart`, `announce_attack_action.dart`, the tests of `attack_base/`, `attack_post/`, `attack_held_kernel/`, `announce_attack/` | `objective` (`AttackBaseValidator` reads `installation_objectives.dart` and `objective_migration.dart`) |
-| `action/announced_attack_resolver.dart`, `held_attack_reports.dart`, the tests of `held_attack_report/` | `objective` (as above), `faction` (`faction_attack_report.dart`, which reads `AttackHeldKernelAction` and `PostTakeover`) |
+| `action/attack_base_validator.dart`, `attack_base_action.dart`, `attack_post_validator.dart`, `attack_post_action.dart`, `attack_held_kernel_validator.dart`, `attack_held_kernel_action.dart`, `announce_attack_validator.dart`, `announce_attack_action.dart`, the tests of `attack_base/`, `attack_post/`, `attack_held_kernel/`, `announce_attack/` | `action`: `objective`, which `AttackBaseValidator` reads, is ported; left for the next part of the lot |
+| `action/announced_attack_resolver.dart`, `held_attack_reports.dart`, the tests of `held_attack_report/` | `faction` (`faction_attack_report.dart`, which reads `AttackHeldKernelAction` and `PostTakeover`) |
 | `action/post_takeover.dart`, `post_loss.dart`, `post_assault_settlement.dart`, `kernel_takeover.dart`, `kernel_assault_settlement.dart`, `attack_volcanic_kernel_action.dart`, `_helpers.dart`, `_result.dart` and their tests, `attack_transition_base_helpers.dart`, `_result.dart`, `_validator.dart` | `action`: nothing else is missing, left for want of time in the lot that ported the rest |
 | `action/attack_transition_base_action.dart` and its tests | `leviathan` (`LeviathanResolver`), and the row above |
 | `action_identity_test.dart` | the actions of the three rows above |
@@ -212,10 +212,6 @@ Files and tests of the modules above that wait for another module:
 | `fight/assault/assault_plan.dart`, `assault_plan_test.dart`, `assault_suggestion_test.dart`, `assault_test_helper.dart` | `passage` of `AssaultTarget` below: `AssaultPlan.of` reads it for its next step |
 | `passage` of `fight/assault/assault_target.dart`, the second test of `assault_target_test.dart` | `action` (`PostTakeover`) |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
-| two tests of `survivors_effect_test.dart` (welcoming the survivors, turning them away), two of `predators_effect_test.dart` (facing them, baiting them) | `action` (`ChooseEventAction`) |
-| `event_resolver_predators_test.dart` | `action` (`ChooseEventAction`) |
-| `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `action`, `script` |
-| the last two tests of `objective/temporary/temporary_objectives_test.dart` (their twins choose through the effect) | `action` (`ChooseEventAction`) |
 | `postLost` of `objective/tip/post_tip_triggers.dart`, then `post_tips.dart` and `tip_catalog.dart`, which list it; `tip_catalog_test.dart`, `post_tips_test.dart`, the group "Archives" of `archive_tips_test.dart` (the tests of the other tips read each tip from its list) | `action` (`AttackHeldKernelAction.kernelCode`) |
 | `faction_attack_tip_test.dart`, the first two tests of "ancients" in `archive_tips_test.dart` (their twins read the triggers) | `action` (`AnnounceAttackAction`, `AttackPostAction` of `PostWar`), and `TipCatalog` above |
 | `objective/guide/guide_leviathan.dart`, `guide_leviathan_test.dart` | `leviathan` (`LeviathanResolver`, `LeviathanDefenceAdvisor`) |
@@ -223,6 +219,5 @@ Files and tests of the modules above that wait for another module:
 | `objective/guide/guide_assault.dart` | `AssaultPlan` above |
 | `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` and `GuideAssault` above |
 | `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own) | `GuideCampaign` and `GuideLeviathan` above |
-
 | `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `script` |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

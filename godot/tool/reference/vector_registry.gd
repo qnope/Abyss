@@ -85,9 +85,8 @@ const FILES: Dictionary[String, Dictionary] = {
 		"res://domain/game/tests/difficulty_test.gd": ["monsterPercent"],
 	},
 	"factions": {
-		PENDING + "faction": [
-			"draw", "traits", "slots", "siege", "siegesPerTurn", "explorationBias",
-		],
+		"res://domain/faction/tests/faction_catalogue_test.gd": ["draw"],
+		PENDING + "faction": ["traits", "slots", "siege", "siegesPerTurn", "explorationBias"],
 	},
 }
 

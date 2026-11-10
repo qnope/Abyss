@@ -132,11 +132,10 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
-| `resource/production_calculator.dart`, its test, the `production` vectors | `tech` (`TechEffects`); `scaled` reads `Difficulty` of `game` |
 | `resource/pearl_income.dart`, its test | `game` (`Game`), `map` |
 | `resource/consumption_integration_test.dart` | `game`, `turn` |
 | `TechEffects.of` (the effects of a `Player`); `tech_energy_reachable_test.dart` reads the storage of a new `Player` from `VectorInputs.STORAGE` until then | `game` |
-| `building_degradation_effects_test.dart` (all but one test) | `tech`, `game`, `turn` |
+| `building_degradation_effects_test.dart` (`TurnProduction`, `TechEffects.of`) | `turn`, `game` |
 | `building_degradation_test.dart` (the tests on a `Player`), `building_type_test.dart` (`PlayerDefaults`), the `startingStocks` vectors | `game` |
 | `building_degradation_usage_test.dart` (actions, victory), `building_cost_discount_test.dart` (its last test) | `action`, `game` |
 | `building_degradation_solo_test.dart` | `script` |

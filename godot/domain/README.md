@@ -178,9 +178,13 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
+| `action/fight_monster_result.dart`: its base class `ActionResult`, its `failure` constructor, two tests of `fight_monster_result_test.dart`; `buildCombatEntry` of `fight_monster_helpers.dart` | `action` (`ActionResult`, `ActionFailure`), `history` (`CombatEntry`) |
+| `RaidReport.toEntry`, the history entry `RaidResolver` and `VolcanoResolver` add once a wave is fought, the checks of it in `raid_resolver_test.dart` and `volcano_resolver_test.dart` | `history` (`RaidEntry`, `VolcanoEntry`) |
+| three tests of `action_noise_test.dart`, `silent_swim_noise_test.dart`, `garrison_kernel_action_test.dart` | `action` |
+| `volcano/wave_held_back_turn_test.dart` | `turn`, `action` |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes) | `action` (`Action`, `ActionEncoder`) |
 | `game/game_statistics.dart`, `game_statistics_calculator.dart`, their two tests | `fight` (the `FightResult` of a `CombatEntry`), `action` (the entries) |
-| `game/defeat_analysis.dart`, its test | `raid` (`RaidEntry`, `RaidDefenceAdvisor`) |
+| `game/defeat_analysis.dart`, its test | `history` (`RaidEntry`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
 | `game_factory_factions_test.dart` (the human exploring) | `action` |
 | `pearl_income_test.dart` (its two tests of the end of turn) | `turn` |
@@ -188,9 +192,9 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_effects_test.dart` (`TurnProduction sees the degraded buildings`) | `turn` |
 | `building_degradation_usage_test.dart` (the tests of an action), `building_cost_discount_test.dart` (its last test) | `action` |
 | `building_degradation_solo_test.dart` | `script` |
-| `game/difficulty_test.dart`, `difficulty_faction_test.dart`, `difficulty_world_relief_test.dart`, `difficulty_faction_monsters_test.dart` (the tests on a wave or a turn) | `raid`, `volcano`, `turn` |
-| `fight/assault/assault_plan.dart`, `assault_plan_test.dart`, `assault_suggestion_test.dart`, `assault_test_helper.dart` | `game` (`Player`), `action` (`FightMonsterHelpers`) |
-| `passage` of `fight/assault/assault_target.dart`, the second test of `assault_target_test.dart`; the `pctLost` and `treasureLoot` vectors | `action` (`PostTakeover`, `FightMonsterHelpers`, `TreasureLoot`) |
+| `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
+| `fight/assault/assault_plan.dart`, `assault_plan_test.dart`, `assault_suggestion_test.dart`, `assault_test_helper.dart` | nothing now: `Player` and `FightMonsterHelpers` are ported |
+| `passage` of `fight/assault/assault_target.dart`, the second test of `assault_target_test.dart`; the `treasureLoot` vectors | `action` (`PostTakeover`, `TreasureLoot`) |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
 | `event/effects/survivors_effect.dart`, `survivors_effect_test.dart`; the `survivors` vectors | `volcano` (`KernelGarrison.stockAt`) |
 | `event/effects/predators_effect.dart`, `predators_effect_test.dart`, `predators_test_helper.dart` | `raid` (`RaidBattle`, `RaidReport`, `RaidWaveFactory`) |

@@ -28,5 +28,23 @@ func test_its_figures_are_compact_and_its_headline_cyan() -> void:
 	assert_eq(_theme.get_color("font_color", "HudCaption"), AbyssColors.ON_SURFACE_DIM)
 
 
+func test_a_toggle_on_is_tinted_and_rimmed_not_filled() -> void:
+	assert_eq(_theme.get_type_variation_base("HudToggle"), &"Button")
+	for state: String in ["pressed", "hover_pressed"]:
+		var on := _theme.get_stylebox(state, "HudToggle") as StyleBoxFlat
+		assert_eq(on.bg_color, Color(AbyssColors.BIOLUM_CYAN, 0.14), state)
+		assert_true(on.bg_color.a < 0.25, "a tint, not a fill")
+		assert_eq(on.border_color, AbyssHudTheme.TOGGLE_EDGE, state)
+		assert_eq(on.border_width_top, 1, state)
+	for state: String in ["normal", "hover", "disabled"]:
+		var off := _theme.get_stylebox(state, "HudToggle") as StyleBoxFlat
+		assert_false(off.draw_center, state)
+		assert_eq(off.border_color, AbyssHudTheme.TOGGLE_IDLE_EDGE, state)
+	assert_true(_theme.get_stylebox("focus", "HudToggle") is StyleBoxEmpty)
+	assert_eq(_theme.get_color("font_pressed_color", "HudToggle"), AbyssColors.BIOLUM_CYAN)
+	assert_eq(_theme.get_color("font_color", "HudToggle"), AbyssColors.ON_SURFACE_DIM)
+	assert_eq(_theme.get_font("font", "HudToggle"), AbyssFonts.BOLD)
+
+
 func test_a_finger_gets_room() -> void:
 	assert_true(AbyssHudTheme.TOUCH_SIZE >= 44.0)

@@ -2,7 +2,9 @@ class_name AbyssHudTheme
 ## The panels laid over the 3D world, such as the frame counter, which the
 ## Flutter game had no need of: a translucent abyss panel faintly rimmed in
 ## cyan, so that the world shows through, and the compact text styles of
-## the figures it shows. Its buttons are the Segment ones.
+## the figures it shows, and HudToggle, a button that is on or off, its
+## "on" tinted and rimmed in cyan rather than filled, so that a panel of
+## switches stays light over the world.
 
 ## The panel, and its content's gap from its sides (x) and its top (y).
 const PANEL_FILL := Color(AbyssColors.ABYSS_BLACK, 0.72)
@@ -15,6 +17,13 @@ const TOUCH_SIZE := 44.0
 const GAP := 6
 
 const PANEL := &"HudPanel"
+const TOGGLE := &"HudToggle"
+## A toggle on: a tint and a rim of cyan, its name in cyan; off: only a
+## faint rim, its name dim.
+const TOGGLE_TINT := Color(AbyssColors.BIOLUM_CYAN, 0.14)
+const TOGGLE_EDGE := Color(AbyssColors.BIOLUM_CYAN, 0.7)
+const TOGGLE_IDLE_EDGE := Color(AbyssColors.BIOLUM_CYAN, 0.12)
+const TOGGLE_RADIUS := 9
 
 
 ## Adds the panel and its text styles to [param theme].
@@ -33,3 +42,21 @@ static func apply(theme: Theme) -> void:
 	}
 	for name in styles:
 		AbyssTextTheme.add_label(theme, name, styles[name])
+	_toggle(theme)
+
+
+static func _toggle(theme: Theme) -> void:
+	theme.set_type_variation(TOGGLE, &"Button")
+	var padding := Vector2i(8, 0)
+	var off := AbyssBox.rimmed(AbyssBox.flat(Color.TRANSPARENT, TOGGLE_RADIUS, padding),
+		TOGGLE_IDLE_EDGE)
+	var on := AbyssBox.rimmed(AbyssBox.flat(TOGGLE_TINT, TOGGLE_RADIUS, padding), TOGGLE_EDGE)
+	for state: StringName in [&"normal", &"hover", &"disabled"]:
+		theme.set_stylebox(state, TOGGLE, off)
+	for state: StringName in [&"pressed", &"hover_pressed"]:
+		theme.set_stylebox(state, TOGGLE, on)
+	theme.set_stylebox(&"focus", TOGGLE, StyleBoxEmpty.new())
+	AbyssTextStyle.new(13, AbyssFonts.Weight.BOLD, AbyssColors.ON_SURFACE_DIM).apply_to(theme, TOGGLE)
+	theme.set_color(&"font_hover_color", TOGGLE, AbyssColors.ON_SURFACE_DIM)
+	for state: StringName in [&"font_pressed_color", &"font_hover_pressed_color"]:
+		theme.set_color(state, TOGGLE, AbyssColors.BIOLUM_CYAN)

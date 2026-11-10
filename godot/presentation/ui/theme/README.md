@@ -17,7 +17,8 @@ role or widget:
   `BadgeLabel`, `SegmentDetail`. A plain `Label` reads as `BodyMedium`.
 - `Button`: plain is the filled `ElevatedButton`; `OutlinedButton`,
   `TextButton`, `OverMapButton`, `MenuPrimaryButton`, `MenuOutlinedButton`,
-  `Segment` (a toggle button in a `ButtonGroup`, inside a `SegmentedTray`).
+  `Segment` (a toggle button in a `ButtonGroup`, inside a `SegmentedTray`),
+  `HudToggle` (a switch over the 3D world, tinted and rimmed when on).
 - `PanelContainer`: plain is the card; `DialogPanel`, `BottomSheetPanel`,
   `AppBarPanel`, `SavePanel`, `SavePanelHighlighted`, `SavePanelFaded`,
   `SegmentedTray`, and `HudPanel`, translucent over the 3D world, with its

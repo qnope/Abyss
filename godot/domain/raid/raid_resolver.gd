@@ -5,9 +5,8 @@ extends RefCounted
 ## next raid once the gauge is full.
 
 
-## `random` null is Dart's own die for the fight and the families. Dart adds
-## `report.toEntry()` to the player's history once a raid is fought: that
-## step waits for the history module (RaidEntry).
+## `random` null is Dart's own die for the fight and the families. A raid
+## fought goes to the player's history.
 static func resolve(
 	player: Player,
 	ended_turn: int,
@@ -21,6 +20,7 @@ static func resolve(
 	if state.is_incoming() and state.arrival_turn <= ended_turn:
 		report = RaidBattle.fight(player, state.incoming, ended_turn, random)
 		state.record_outcome(report.victory)
+		player.add_history_entry(report.to_entry())
 		state.clear_incoming()
 	state.add_noise(NoiseRules.PER_TURN)
 	if state.is_incoming() or state.noise < NoiseRules.THRESHOLD:

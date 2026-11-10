@@ -2,7 +2,7 @@ class_name FightMonsterHelpers
 extends RefCounted
 ## lib/domain/action/fight_monster_helpers.dart: what every fight shares
 ## once fought, ported ahead of the action module for the raids and the
-## volcano. `buildCombatEntry` waits for the history module (`CombatEntry`).
+## volcano.
 
 
 ## Stat boosts the player's research grants its units, when they attack or
@@ -84,4 +84,17 @@ static func resolve_casualties(
 	restore_to_stock(player, split.wounded, level)
 	return FightCasualtyBreakdown.new(
 		combatants_by_type(alive), combatants_by_type(split.wounded), combatants_by_type(split.dead)
+	)
+
+
+## Builds a CombatEntry for the history log from the captured lair and the
+## successful FightMonsterResult. Returns null if either is missing.
+static func build_combat_entry(
+	turn: int, target_x: int, target_y: int, lair: MonsterLair, result: FightMonsterResult
+) -> CombatEntry:
+	if lair == null or result.fight == null:
+		return null
+	return CombatEntry.new(
+		turn, result.victory, target_x, target_y, lair, result.fight, result.loot, result.sent,
+		result.survivors_intact, result.wounded, result.dead,
 	)

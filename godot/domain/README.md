@@ -178,8 +178,7 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
-| `action/fight_monster_result.dart`: its base class `ActionResult`, its `failure` constructor, two tests of `fight_monster_result_test.dart`; `buildCombatEntry` of `fight_monster_helpers.dart` | `action` (`ActionResult`, `ActionFailure`), `history` (`CombatEntry`) |
-| `RaidReport.toEntry`, the history entry `RaidResolver` and `VolcanoResolver` add once a wave is fought, the checks of it in `raid_resolver_test.dart` and `volcano_resolver_test.dart` | `history` (`RaidEntry`, `VolcanoEntry`) |
+| `action/fight_monster_result.dart`: its base class `ActionResult`, its `failure` constructor, two tests of `fight_monster_result_test.dart` | `action` (`ActionResult`) |
 | three tests of `action_noise_test.dart`, `silent_swim_noise_test.dart`, `garrison_kernel_action_test.dart` | `action` |
 | `volcano/wave_held_back_turn_test.dart` | `turn`, `action` |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes) | `action` (`Action`, `ActionEncoder`) |

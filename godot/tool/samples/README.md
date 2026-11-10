@@ -49,3 +49,9 @@ player whose kernel holds a garrison (`volcano_player`, as
 scratch Dart script printed on the games of `GameFactory`: a wave, a raid
 report, a raid state with the stocks and the units, and the army the
 players get first (`arm_for_raids`).
+
+`HistoryDigests` writes the history entries the players of those games
+hold, for the same comparison: the number of entries after each turn, then
+each entry, its maps as `name:count` in their order. `RaidHistories` and
+`VolcanoHistories` hold what the Dart script printed for the raid and the
+volcano digests, too long to sit in their test files.

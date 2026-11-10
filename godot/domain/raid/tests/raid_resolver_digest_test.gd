@@ -10,7 +10,8 @@ extends TestCase
 ## game. Per player: each raid as "turn V|L dead wounded loot pillaged
 ## fight-turns" (sums), each announce as "turn wave@arrival"; then the raid
 ## state, the stocks and the units on the base. Last, the game's next
-## nextInt(1000).
+## nextInt(1000). The history entries the players hold, counted after each
+## turn, are RaidHistories.RAIDS.
 
 const DIGESTS: Dictionary[String, Dictionary] = {
 	"solo-3": {
@@ -54,8 +55,10 @@ func test_raids_resolve_as_dart_resolves_them_on_new_games() -> void:
 		RaidDigests.arm_for_raids(game)
 		var random := DartRandom.new(seed_)
 		var events := {}
+		var sizes := {}
 		for id: String in game.players:
 			events[id] = PackedStringArray()
+			sizes[id] = PackedStringArray()
 		for t: int in range(1, 25):
 			var index := 0
 			for player: Player in game.players.values():
@@ -69,10 +72,14 @@ func test_raids_resolve_as_dart_resolves_them_on_new_games() -> void:
 				if o.announced != null:
 					log_.append("%d %s@%d" % [t, RaidDigests.wave(o.announced), o.announced_turn])
 				index += 1
+			HistoryDigests.count_entries(game, sizes)
 		var expected: Dictionary = DIGESTS[name]
 		for player: Player in game.players.values():
 			var log_: PackedStringArray = events[player.id]
 			var got := [", ".join(log_), RaidDigests.raid_state(player)]
 			assert_eq(got, expected[player.id], "%s %s" % [name, player.id])
+			var held: PackedStringArray = sizes[player.id]
+			var history: Array = RaidHistories.RAIDS[name][player.id]
+			assert_eq(HistoryDigests.history(player, held), history, "%s %s" % [name, player.id])
 		assert_eq(game.players.size() + 1, expected.size(), name)
 		assert_eq(random.next_int(1000), expected["next"], name)

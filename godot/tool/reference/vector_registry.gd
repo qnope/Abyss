@@ -77,7 +77,7 @@ const FILES: Dictionary[String, Dictionary] = {
 			"layout", "lairFamily", "lair", "startingBases", "reveal", "posts", "volcano",
 		],
 	},
-	"maps": {PENDING + "map": ["world", "level"]},
+	"maps": {"res://domain/map/tests/map_vectors_test.gd": ["world", "level"]},
 	"events": {PENDING + "event": ["drawTurns", "pick", "survivors", "production"]},
 	"raids": {
 		PENDING + "raid": ["wave", "everyWave", "defenceStrength", "loot", "pillage", "upgradeNoise"],

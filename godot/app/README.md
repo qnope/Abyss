@@ -4,3 +4,10 @@ Startup and navigation: the main scene, building the domain's state, choosing
 which screen or world scene shows, and wiring the layers together.
 
 The outermost layer: it may depend on every other one, and none depends on it.
+
+For the 3D prototype, `main.tscn` opens on the base (`presentation/world/`)
+with the frame counter and the quality panel over it (`presentation/ui/perf/`):
+`QualitySettings` applies the panel's choices, `IdleFrameCap` caps the frame
+rate at 30 while the view stands still, and `bench/` runs a fixed orbit when
+the launch asks for one: `?bench=1` (`?bench=40` for 40 s) in the web page's
+address, `-- --bench[=seconds]` on the command line.

@@ -36,3 +36,8 @@ of the wreck with the player who explored its centre.
 
 The tests driven by `reference/vectors/` build theirs from the Dart names a
 case writes, with `VectorInputs` (`godot/tool/reference/README.md`).
+
+`RaidSamples` builds the bases and kernels the raids and the krakens strike,
+as `test/domain/raid/raid_test_helper.dart` does: a player holding 1000 of
+every resource with the units, the Citadel and the headquarters given
+(`raid_player`), and the units standing on its base (`units_on_base`).

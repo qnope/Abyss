@@ -2,7 +2,8 @@ extends TestCase
 ## test/domain/game/difficulty_faction_test.dart: the production of a
 ## faction moves against the human one. 'the production of a faction moves
 ## against the human one' and 'the human production keeps its own levers'
-## resolve the turn of a Player and go with the game and turn modules.
+## resolve the turn of a Player (PlayerTurnResolver) and go with the turn
+## module.
 
 const CORAL := ResourceType.Value.CORAL
 const ENERGY := ResourceType.Value.ENERGY

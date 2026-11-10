@@ -1,7 +1,8 @@
 extends VectorTestCase
 ## reference/vectors/fight_aftermath.json: the wounded, the dead and the loot
-## a fight leaves, as the Dart rules answer. pctLost and treasureLoot wait
-## for the action module (FightMonsterHelpers, TreasureLoot).
+## a fight leaves, as the Dart rules answer. pctLost is held by
+## action/tests/fight_monster_helpers_vectors_test.gd; treasureLoot waits
+## for the action module (TreasureLoot).
 
 var _vectors := VectorFile.new("fight_aftermath")
 

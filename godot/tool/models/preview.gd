@@ -5,10 +5,12 @@ extends SceneTree
 ##   godot --path godot --script res://tool/models/preview.gd -- <name> <out prefix>
 ## writes <out prefix>_game.png, _close.png (the front quarter, zoomed in),
 ## _front.png, _right.png, _back.png, _left.png. Names joined by "+"
-## (base_island+base_rampart) render those models together.
+## (base_island+base_rampart) render those models together, each building on
+## the island's pad named after it.
 
 const Studio := preload("res://tool/models/studio.gd")
 const ModelBounds := preload("res://tool/models/model_bounds.gd")
+const ModelPads := preload("res://tool/models/model_pads.gd")
 
 ## The phone's viewport (project.godot), rendered at 2x.
 const SCALE := 2
@@ -50,6 +52,7 @@ func _load(names: String) -> Node3D:
 			group.free()
 			return null
 		group.add_child(scene.instantiate())
+	ModelPads.seat(group)
 	return group
 
 

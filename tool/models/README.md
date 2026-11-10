@@ -110,7 +110,8 @@ background, a ground disc): `<prefix>_game.png` from the game's default 3/4
 camera at the phone's portrait size, and `_front`, `_right`, `_back`, `_left`
 from the four sides, all at 2x, and `_close`, the game's view zoomed on the
 front quarter, to judge the detail. It runs Godot's Compatibility renderer (the
-web's) under `xvfb-run`. The renders go to `/tmp/models_preview/` by default:
+web's) under `xvfb-run`. Models shown together with `base_island` stand on
+its pad of the same name (`model_pads.gd`), as in the game. The renders go to `/tmp/models_preview/` by default:
 never into the repo.
 
 ## The base

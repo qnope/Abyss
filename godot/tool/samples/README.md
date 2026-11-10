@@ -70,3 +70,11 @@ a level, and the progress `expectProgress` compares, as
 `[current, target, done]`. `tip` and `applies` stand for
 `TipCatalog.byId(id)`, which waits for the tips of the posts: they read a
 tip from its list.
+
+`ObjectiveDigests` serves the digest test of the objectives
+(`objective_resolver_digest_test.gd`): it develops each player of the
+games of `GameFactory` between the turns as the scratch Dart script did
+(a building, units, research, cells revealed, raids, history entries, a
+lair, a Faille and a kernel taken), and writes an objective completed
+with what it credited, an objective of an event under way or ended, and
+the tips ported that newly apply, in the order of `TipId`.

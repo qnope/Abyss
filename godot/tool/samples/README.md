@@ -40,7 +40,10 @@ case writes, with `VectorInputs` (`godot/tool/reference/README.md`).
 `RaidSamples` builds the bases and kernels the raids and the krakens strike,
 as `test/domain/raid/raid_test_helper.dart` does: a player holding 1000 of
 every resource with the units, the Citadel and the headquarters given
-(`raid_player`), and the units standing on its base (`units_on_base`).
+(`raid_player`), and the units standing on its base (`units_on_base`); a
+player whose kernel holds a garrison (`volcano_player`, as
+`volcano_test_helper.dart`), the game of `kernel_garrison_helpers.dart`
+(`kernel_garrison_game`), and `set_units` of `objective_helpers.dart`.
 
 `RaidDigests` writes the short texts the digest tests compare with what a
 scratch Dart script printed on the games of `GameFactory`: a wave, a raid

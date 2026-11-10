@@ -7,8 +7,8 @@ extends Camera3D
 ## A tap on this point of the screen, in the viewport's coordinates.
 signal tapped(position: Vector2)
 
-## The horizontal field of view, which frames the plateau on a phone held
-## upright (keep_aspect = KEEP_WIDTH).
+## The field of view across the screen's narrow side: its width on a phone
+## held upright, its height on a tablet or a desktop.
 const FOV := 38.0
 
 ## The view, which a bench or a cutscene may also drive.
@@ -32,6 +32,19 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	rig.step(delta)
+	transform = rig.transform()
+
+
+## Fits the default view to the screen (OrbitFrame): [param outline], the
+## points around the target that must show, as wide as the screen's narrow
+## side allows, centred under the top [param hud] share of the screen.
+func fit(outline: PackedVector3Array, hud: float) -> void:
+	var size := get_viewport().get_visible_rect().size
+	var aspect := size.x / size.y
+	keep_aspect = KEEP_WIDTH if aspect < 1.0 else KEEP_HEIGHT
+	var fitted := OrbitFrame.fit(outline, OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH,
+		aspect, FOV, hud)
+	rig.frame(fitted.x, fitted.y)
 	transform = rig.transform()
 
 

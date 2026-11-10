@@ -24,7 +24,7 @@ func test_is_a_hud_panel_that_lets_touches_through() -> void:
 
 func test_rewrites_its_lines_a_few_times_a_second() -> void:
 	_counter._process(0.1)
-	assert_eq(_counter.line(0).text, "", "not yet")
+	assert_eq(_counter.line(0).text, "– FPS", "not yet, but as tall as it will be")
 	_counter._process(0.2)
 	assert_eq(_counter.line(0).text, "7 FPS")
 	assert_has(_counter.line(1).text, "ms avg")

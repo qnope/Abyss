@@ -26,6 +26,9 @@ func _ready() -> void:
 	settings = QualitySettings.new(base, get_viewport(), idle)
 	quality.changed.connect(settings.apply)
 	_fit_safe_area()
+	get_viewport().size_changed.connect(_frame)
+	counter.resized.connect(_frame)
+	_frame()
 	start_bench(BenchOptions.from_launch())
 
 
@@ -36,6 +39,12 @@ func start_bench(options: BenchOptions) -> void:
 	idle.enabled = false
 	quality.show_value(QualityPanel.IDLE_CAP, false)
 	add_child(BenchRun.new(base.camera, counter, options.seconds))
+
+
+## Fits the base's default view to the screen, under the frame counter.
+func _frame() -> void:
+	var under := counter.get_global_rect().end.y / get_viewport_rect().size.y
+	base.frame(clampf(under, 0.0, 0.5))
 
 
 ## Keeps the panels off the notch: the safe area's top, in points.

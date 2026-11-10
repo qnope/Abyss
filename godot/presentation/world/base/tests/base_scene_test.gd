@@ -82,6 +82,15 @@ func test_casts_the_shadows_worth_their_cost_only() -> void:
 	assert_eq(wall.cast_shadow, GeometryInstance3D.SHADOW_CASTING_SETTING_ON)
 
 
+func test_fits_the_island_to_the_screen() -> void:
+	_base.frame(0.12)
+	var size := _base.get_viewport().get_visible_rect().size
+	var fitted := OrbitFrame.fit(BaseScene.OUTLINE, OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH,
+		size.x / size.y, OrbitCamera.FOV, 0.12)
+	assert_almost_eq(_base.camera.rig.default_distance, fitted.x, 1e-4)
+	assert_almost_eq(_base.camera.rig.lift, fitted.y, 1e-4)
+
+
 func test_tells_the_pad_under_a_tap() -> void:
 	var headquarters := _base.pads.origin_of(&"Headquarters") + Vector3.UP
 	_base.camera.tapped.emit(_base.camera.unproject_position(headquarters))

@@ -33,6 +33,17 @@ func test_opens_on_the_base_seen_from_the_game_view() -> void:
 	assert_eq(_main.mouse_filter, Control.MOUSE_FILTER_IGNORE, "the touches reach the camera")
 
 
+func test_fits_the_base_under_the_counter() -> void:
+	var base := _main.get_node("Base") as BaseScene
+	var counter := _main.get_node("Hud/Top/FrameCounter") as FrameCounter
+	counter.size.y += 10.0
+	var size := _main.get_viewport_rect().size
+	var fitted := OrbitFrame.fit(BaseScene.OUTLINE, OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH,
+		size.x / size.y, OrbitCamera.FOV, counter.get_global_rect().end.y / size.y)
+	assert_almost_eq(base.camera.rig.default_distance, fitted.x, 1e-4)
+	assert_almost_eq(base.camera.rig.lift, fitted.y, 1e-4)
+
+
 func test_shows_the_counter_in_the_theme() -> void:
 	var counter := _main.get_node("Hud/Top/FrameCounter") as FrameCounter
 	var headline := counter.line(0)

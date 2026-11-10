@@ -46,8 +46,8 @@ def merlons(model, group, tops, rng, height, depth, keep):
             continue
         size = (length * rng.uniform(0.55, 0.7), depth, height * rng.uniform(0.9, 1.1))
         block = masonry.stone(size, rng.randrange(1000), batter=0.18, rough=0.022)
-        model.add(group, block.transform((x, y, z - 0.02), (0, 0, turn)), "coral",
-                  masonry.coral_stone(rng, rng.randrange(1000)))
+        model.add(group, block.transform((x, y, z - 0.02), (0, 0, turn)), "reef",
+                  masonry.coral_stone(rng, rng.randrange(1000)), masonry.STONE)
     return crenels
 
 
@@ -66,7 +66,7 @@ def encrust(model, group, tops, rng, depth, chance=0.4):
         lump.transform(scale=(size * 1.3, size, size * 0.7))
         lump.transform(_turned(local, turn) + Vector((x, y, z)), (0, 0, turn))
         base = vary(rng.choice(LIFE), rng, 0.1)
-        model.add(group, lump, "coral", paints.organic(scale(base, 0.7), base, seed,
+        model.add(group, lump, "reef", paints.organic(scale(base, 0.7), base, seed,
                                                        frequency=9.0, variation=0.3, height=0.2))
 
 
@@ -86,7 +86,7 @@ def sprig(rng, size, base=None):
     tips.transform(scale=size)
     paint = paints.organic(scale(base, 0.75), scale(vary(base, rng, 0.1), 1.6),
                            rng.randrange(99), height=size)
-    return [(branches, "coral", paint), (tips, "glow_pink", colors.GLOW_PINK)]
+    return [(branches, "reef", paint), (tips, "glow_pink", colors.GLOW_PINK)]
 
 
 def _turned(local, turn):

@@ -8,10 +8,17 @@ from mathutils import Vector
 
 from catalog import colors
 from catalog.base_rampart import ring
+from catalog.textures import lights, living
 from workshop import noise, shapes
+from workshop.atlas import Atlas, Tile
 from workshop.colors import mix, scale, vary
 
 JOINT = 0.05
+# The rampart's atlas: the grain of its reef stone, which the vertex colours
+# cannot hold on blocks this coarse. 512 px: one seamless tile, and white.
+ATLAS = Atlas(512, 8, {"stone": Tile((0, 0, 6, 6), living.reef_stone, seamless=True),
+                       "plain": Tile((6, 0, 1, 1), lights.solid((1.0, 1.0, 1.0)))})
+STONE = ATLAS.tiled("stone", 0.7)
 
 
 def course(model, group, bottom, height, depth, rng, shortest=0.42, longest=0.78):
@@ -25,7 +32,7 @@ def course(model, group, bottom, height, depth, rng, shortest=0.42, longest=0.78
             block = stone(size, rng.randrange(1000))
             lean = (rng.uniform(-0.04, 0.04), rng.uniform(-0.03, 0.03), turn + rng.uniform(-0.03, 0.03))
             block.transform((x, y, bottom), lean)
-            model.add(group, block, "coral", coral_stone(rng, rng.randrange(1000)))
+            model.add(group, block, "reef", coral_stone(rng, rng.randrange(1000)), STONE)
             tops.append(((x, y, bottom + size[2]), length, turn))
     return tops
 

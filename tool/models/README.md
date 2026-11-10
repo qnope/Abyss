@@ -147,4 +147,5 @@ parts as nodes the game can animate:
   with thorns, four cupped towers, a keep crowned by a polyp calyx holding the
   node `Heart`, a pink crystal. Pink is its light.
 
-Each has its own 1024 px atlas painted from `textures/colony.py`.
+Each has its own 1024 px atlas painted from `textures/colony.py`; the rampart
+has a 512 px one, its seamless reef stone.

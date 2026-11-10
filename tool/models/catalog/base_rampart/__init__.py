@@ -11,6 +11,7 @@ joined per material, so no tier is ever scaled or rebuilt."""
 
 from catalog import palette
 from catalog.base_rampart import crest, ring
+from catalog.base_rampart import masonry
 from catalog.base_rampart.masonry import course
 from catalog.base_rampart.towers import towers
 from workshop.budget import Budget
@@ -18,10 +19,11 @@ from workshop.occlusion import Occlusion
 
 NAME = "base_rampart"
 SEED = 1408
-MATERIALS = [palette.CORAL, palette.GLOW, palette.GLOW_PINK]
-BUDGET = Budget(triangles=20_000, materials=4)
+MATERIALS = [palette.REEF, palette.GLOW, palette.GLOW_PINK]
+ATLAS = masonry.ATLAS  # the grain of the reef stone, 512 px
+BUDGET = Budget(triangles=20_000, materials=4, texture_px=512)
 OCCLUSION = Occlusion(rays=20, distance=0.6, floor=0.35,
-                      strength={"coral": 0.6, "glow": 0.0, "glow_pink": 0.0})
+                      strength={"reef": 0.6, "glow": 0.0, "glow_pink": 0.0})
 TIERS = ["Tier1", "Tier2", "Tier3"]
 NODES = TIERS
 

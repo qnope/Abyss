@@ -40,8 +40,8 @@ def _drum(model, group, at, radius, bottom, height, sides, rng):
                            bevel=0.04, bottom=False)
     drum.sharp_angle = math.radians(50)
     drum.displace(lambda p: noise.vector(p * 3.0, seed) * Vector((0.03, 0.03, 0.012)))
-    model.add(group, drum.transform((at[0], at[1], bottom)), "coral",
-              masonry.coral_stone(rng, seed))
+    model.add(group, drum.transform((at[0], at[1], bottom)), "reef",
+              masonry.coral_stone(rng, seed), masonry.STONE)
 
 
 def _crown(model, group, at, rng):
@@ -52,8 +52,8 @@ def _crown(model, group, at, rng):
         a = 2 * math.pi * (k + 0.5) / 6
         block = masonry.stone((0.24, 0.16, 0.19), rng.randrange(1000), batter=0.15, rough=0.02)
         place = (at[0] + math.cos(a) * radius * 0.78, at[1] + math.sin(a) * radius * 0.78, top)
-        model.add(group, block.transform(place, (0, 0, a + math.pi / 2)), "coral",
-                  masonry.coral_stone(rng, rng.randrange(1000)))
+        model.add(group, block.transform(place, (0, 0, a + math.pi / 2)), "reef",
+                  masonry.coral_stone(rng, rng.randrange(1000)), masonry.STONE)
     for geometry, material, paint in crest.sprig(rng, 0.42):
         geometry.transform((at[0], at[1], top))
         model.add(group, geometry, material, paint)
@@ -67,7 +67,8 @@ def _capital(model, group, at, rng):
                (radius * 1.4, top + 0.17), (radius * 1.1, top + 0.19), (0.0, top + 0.2)]
     capital = sweep.lathe(profile, sides=10)
     seed = rng.randrange(1000)
-    model.add(group, capital.transform((at[0], at[1], 0)), "coral", masonry.coral_stone(rng, seed))
+    model.add(group, capital.transform((at[0], at[1], 0)), "reef", masonry.coral_stone(rng, seed),
+              masonry.STONE)
     horns = Geometry()
     for k in range(3):
         a = 2 * math.pi * k / 3 + 0.5
@@ -75,7 +76,7 @@ def _capital(model, group, at, rng):
         points = [rim * 0.27 + Vector((0, 0, top + 0.15)), rim * 0.24 + Vector((0, 0, top + 0.32)),
                   rim * 0.09 + Vector((0, 0, LANTERN + 0.02))]
         horns.extend(sweep.tube(points, [0.06, 0.045, 0.025], sides=5))
-    model.add(group, horns.transform((at[0], at[1], 0)), "coral",
+    model.add(group, horns.transform((at[0], at[1], 0)), "reef",
               masonry.coral_stone(rng, seed + 1))
     lantern = shapes.sphere(0.11, subdivisions=1).transform((at[0], at[1], LANTERN))
     model.add(group, lantern, "glow", colors.GLOW_CYAN)

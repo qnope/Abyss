@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" uid="uid://be8ym51o00tn3" path="res://app/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://b3cpjnvhw40an" path="res://presentation/world/base/base_scene.gd" id="2_base"]
+[ext_resource type="Script" uid="uid://kwcnv46hy1u4" path="res://presentation/ui/perf/frame_counter.gd" id="3_counter"]
+[ext_resource type="Script" uid="uid://b6nx5bibyt70n" path="res://presentation/ui/perf/quality_panel.gd" id="4_quality"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -9,24 +12,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_main")
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Base" type="Node3D" parent="."]
+script = ExtResource("2_base")
 
-[node name="Title" type="Label" parent="."]
+[node name="Hud" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"HeroTitle"
-text = "ABYSSES"
-horizontal_alignment = 1
-vertical_alignment = 1
+mouse_filter = 2
+
+[node name="Top" type="HBoxContainer" parent="Hud"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="FrameCounter" type="PanelContainer" parent="Hud/Top"]
+layout_mode = 2
+size_flags_vertical = 0
+script = ExtResource("3_counter")
+
+[node name="Gap" type="Control" parent="Hud/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="QualityPanel" type="PanelContainer" parent="Hud/Top"]
+layout_mode = 2
+size_flags_vertical = 0
+script = ExtResource("4_quality")

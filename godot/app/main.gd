@@ -1,8 +1,19 @@
 extends Control
-## The startup screen: the game's title on the abyss background. Every
-## screen shows under it, so it gives its window the game's theme.
+## The startup screen of the 3D prototype: the player's base, the frame
+## counter and the quality panel over it, and a bench when the launch asks
+## for one (BenchOptions). Every screen shows under it, so it gives its
+## window the game's theme.
 
-@onready var _background: ColorRect = $Background
+## The gap between the screen's safe edges and the panels, in points.
+const MARGIN := 10
+
+var idle: IdleFrameCap
+var settings: QualitySettings
+
+@onready var base: BaseScene = $Base
+@onready var counter: FrameCounter = $Hud/Top/FrameCounter
+@onready var quality: QualityPanel = $Hud/Top/QualityPanel
+@onready var _hud: MarginContainer = $Hud
 
 
 func _enter_tree() -> void:
@@ -10,4 +21,28 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	_background.color = AbyssColors.ABYSS_BLACK
+	idle = IdleFrameCap.new(base.camera)
+	add_child(idle)
+	settings = QualitySettings.new(base, get_viewport(), idle)
+	quality.changed.connect(settings.apply)
+	_fit_safe_area()
+	start_bench(BenchOptions.from_launch())
+
+
+## Runs the bench [param options] ask for, if any, the frame rate uncapped.
+func start_bench(options: BenchOptions) -> void:
+	if options.seconds <= 0.0:
+		return
+	idle.enabled = false
+	quality.show_value(QualityPanel.IDLE_CAP, false)
+	add_child(BenchRun.new(base.camera, counter, options.seconds))
+
+
+## Keeps the panels off the notch: the safe area's top, in points.
+func _fit_safe_area() -> void:
+	var safe := DisplayServer.get_display_safe_area()
+	var points := get_viewport_rect().size.y / maxf(get_window().size.y, 1.0)
+	var notch := roundi(safe.position.y * points) if safe.has_area() else 0
+	for side: StringName in [&"margin_left", &"margin_right", &"margin_bottom"]:
+		_hud.add_theme_constant_override(side, MARGIN)
+	_hud.add_theme_constant_override(&"margin_top", MARGIN + notch)

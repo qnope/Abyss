@@ -1,6 +1,7 @@
 extends TestCase
-## The main scene gives the window the game's theme and shows the title
-## on the abyss background.
+## The startup screen: the game's theme on the window, the base in 3D, the
+## frame counter and the quality panel over it, its choices applied, and a
+## bench when the launch asks for one.
 
 const MainScene := preload("res://app/main.tscn")
 
@@ -15,26 +16,51 @@ func before_each() -> void:
 func after_each() -> void:
 	_main.free()
 	_window().theme = null
+	_window().use_hdr_2d = false
+	_window().scaling_3d_scale = 1.0
 
 
 func test_gives_the_window_the_abyss_theme() -> void:
 	var theme := _window().theme
 	assert_not_null(theme)
-	assert_eq(theme.get_type_variation_base("HeroTitle"), &"Label")
+	assert_eq(theme.get_type_variation_base("HudPanel"), &"PanelContainer")
 
 
-func test_shows_the_title_in_the_hero_style() -> void:
-	var title := _main.get_node("Title") as Label
-	assert_eq(title.text, "ABYSSES")
-	assert_eq(title.theme_type_variation, &"HeroTitle")
-	assert_eq((title.get_theme_font("font") as FontVariation).base_font, AbyssFonts.BOLD)
-	assert_eq(title.get_theme_font_size("font_size"), 60)
-	assert_eq(title.get_theme_color("font_color"), AbyssColors.BIOLUM_CYAN)
+func test_opens_on_the_base_seen_from_the_game_view() -> void:
+	var base := _main.get_node("Base") as BaseScene
+	assert_true(base.camera.current)
+	assert_eq(base.buildings.names(), BaseScene.BUILT)
+	assert_eq(_main.mouse_filter, Control.MOUSE_FILTER_IGNORE, "the touches reach the camera")
 
 
-func test_paints_the_abyss_background() -> void:
-	var background := _main.get_node("Background") as ColorRect
-	assert_eq(background.color, AbyssColors.ABYSS_BLACK)
+func test_shows_the_counter_in_the_theme() -> void:
+	var counter := _main.get_node("Hud/Top/FrameCounter") as FrameCounter
+	var headline := counter.line(0)
+	assert_eq(headline.get_theme_color("font_color"), AbyssColors.BIOLUM_CYAN)
+	assert_eq(headline.get_theme_font_size("font_size"), 20)
+
+
+func test_applies_the_quality_chosen() -> void:
+	var quality := _main.get_node("Hud/Top/QualityPanel") as QualityPanel
+	quality.button(QualityPanel.SHADOWS).button_pressed = false
+	quality.button(QualityPanel.SCALE, 0.75).button_pressed = true
+	assert_false((_main.get_node("Base") as BaseScene).key_light.shadow_enabled)
+	assert_eq(_window().scaling_3d_scale, 0.75)
+
+
+func test_keeps_the_panels_off_the_screen_s_edges() -> void:
+	var hud := _main.get_node("Hud") as MarginContainer
+	assert_true(hud.get_theme_constant("margin_top") >= 10)
+	assert_eq(hud.get_theme_constant("margin_left"), 10)
+
+
+func test_runs_a_bench_uncapped_when_asked() -> void:
+	_main.call(&"start_bench", BenchOptions.new(0.0))
+	assert_eq(_main.find_children("*", "BenchRun", false, false).size(), 0)
+	_main.call(&"start_bench", BenchOptions.new(10.0))
+	assert_eq(_main.find_children("*", "BenchRun", false, false).size(), 1)
+	var idle := _main.find_children("*", "IdleFrameCap", false, false)[0] as IdleFrameCap
+	assert_false(idle.enabled)
 
 
 func _window() -> Window:

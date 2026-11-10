@@ -93,7 +93,8 @@ reinforcements of `send_reinforcements_helper.dart` (`reinforcement_map`,
 `AssaultSamples` is the twin of `test/helpers/base_attack_helper.dart`: the
 two-player game at turn 12 where the human has seen the rival's base
 (`assault_game`, `rival_of` for `two.rival`), `set_level`, `station` and
-`standing`, and the armies `HORDE` and `WALL`; and the player of
+`standing`, `strike` (the human's attack on the rival's base), and the
+armies `HORDE` and `WALL`; and the player of
 `test/domain/fight/assault/assault_test_helper.dart` (`assault_player`).
 
 `PostWar` and `KernelWar` are the twins of the classes of
@@ -106,8 +107,9 @@ to strike, with the armies of those files as constants.
 as `attack_transition_base_helper.dart` (`attack_game`) and
 `attack_volcanic_kernel_helper.dart` (`kernel_game`) do: a 5x5 map with
 the post or the kernel on (1, 1), the player `test-uuid` and its stock.
-`SiegeHistories` holds what the scratch Dart script of the digest test of
-the sieges (`siege_digest_test.gd`) printed.
+`SiegeDigests` writes what the digest test of the sieges
+(`siege_digest_test.gd`) compares, an assault on the kernel or an attack on
+a base, and `SiegeHistories` holds what the scratch Dart script printed.
 
 `ActionDigests` writes the digest of an action that the digest test of the
 actions compares with what a scratch Dart script printed on the games of

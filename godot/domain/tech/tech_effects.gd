@@ -1,8 +1,7 @@
 class_name TechEffects
 extends RefCounted
 ## lib/domain/tech/tech_effects.dart: everything a player's research changes
-## in the rules, read from the tiers and options of the three branches. Its
-## factory `of`, which reads a Player, comes with the game module.
+## in the rules, read from the tiers and options of the three branches.
 
 ## Bonus of each shared tier of a branch, in percent.
 const TIER_PERCENT := 20
@@ -22,6 +21,12 @@ func _init(
 	for branch: TechBranch.Value in tech_branches:
 		_tiers[branch] = tech_branches[branch].tiers()
 		perks.merge(tech_branches[branch].perks())
+
+
+## `TechEffects.of`: the effects of `player`'s research, halved when the
+## laboratory is degraded.
+static func of(player: Player) -> TechEffects:
+	return TechEffects.new(player.tech_branches, player.is_degraded(BuildingType.Value.LABORATORY))
 
 
 func tiers_of(branch: TechBranch.Value) -> int:

@@ -107,6 +107,14 @@ constant: a static function builds it at each call
 (`ProductionFormulas.production_formulas()`). A real cache is a `static var`
 with `debug_reset()`, listed in `tool/test/process_resets.gd`.
 
+**Functions and second types** (first met in `fight`). A field or a
+parameter of a function type (`List<Combatant> Function()`) is a
+`Callable`, a nullable one an invalid `Callable()` for null; a tear-off
+such as `target.guardians` is a static function bound to its value
+(`AssaultTarget.guardians_of`). A second top-level type of a Dart file
+takes a file of its own, named after it, whose first comment names the
+Dart file (`fight/assault/assault_rating.gd`).
+
 **`switch` on an enum.** GDScript checks no exhaustiveness, and a `return`
 no value reaches would never be covered. Constant cases are a `const` table
 keyed by the enum (`ConsumptionCalculator`); otherwise a `match` whose last
@@ -174,4 +182,7 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_usage_test.dart` (the tests of an action), `building_cost_discount_test.dart` (its last test) | `action` |
 | `building_degradation_solo_test.dart` | `script` |
 | `game/difficulty_test.dart`, `difficulty_faction_test.dart`, `difficulty_world_relief_test.dart`, `difficulty_faction_monsters_test.dart` (the tests on a wave or a turn) | `raid`, `volcano`, `turn` |
+| `fight/assault/assault_plan.dart`, `assault_plan_test.dart`, `assault_suggestion_test.dart`, `assault_test_helper.dart` | `game` (`Player`), `action` (`FightMonsterHelpers`) |
+| `passage` of `fight/assault/assault_target.dart`, the second test of `assault_target_test.dart`; the `pctLost` and `treasureLoot` vectors | `action` (`PostTakeover`, `FightMonsterHelpers`, `TreasureLoot`) |
+| `AssaultTarget.at`, the last three tests of `assault_target_test.dart` | `game` (`Game`) |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

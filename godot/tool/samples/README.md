@@ -102,6 +102,13 @@ against two factions at turn 12 where one faction (or the human) holds a
 post with its passage, or the volcanic kernel, and the other stands ready
 to strike, with the armies of those files as constants.
 
+`SiegeSamples` builds the games of the assaults on what nobody holds yet,
+as `attack_transition_base_helper.dart` (`attack_game`) and
+`attack_volcanic_kernel_helper.dart` (`kernel_game`) do: a 5x5 map with
+the post or the kernel on (1, 1), the player `test-uuid` and its stock.
+`SiegeHistories` holds what the scratch Dart script of the digest test of
+the sieges (`siege_digest_test.gd`) printed.
+
 `ActionDigests` writes the digest of an action that the digest test of the
 actions compares with what a scratch Dart script printed on the games of
 `GameFactory`: its outcome, the stocks, the units, the buildings, the cells

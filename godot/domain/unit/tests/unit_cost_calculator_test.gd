@@ -103,14 +103,3 @@ func test_max_recruitable_count_scout_with_5_algae_5_coral_returns_0() -> void:
 
 func test_max_recruitable_count_capped_by_barracks_level() -> void:
 	assert_eq(_calculator.max_recruitable_count(SCOUT, 1, _resources(5000, 5000)), 100)
-
-
-## test/domain/building/building_degradation_usage_test.dart, 'degraded
-## barracks doubles the unit cost', its test 'cost x2'.
-func test_degraded_barracks_doubles_the_unit_cost_cost_x2() -> void:
-	for type: UnitType.Value in UnitType.Value.values():
-		var normal := _calculator.recruitment_cost(type)
-		var doubled := _calculator.recruitment_cost(type, true)
-		assert_eq(doubled.keys(), normal.keys())
-		for resource: ResourceType.Value in normal:
-			assert_eq(doubled[resource], normal[resource] * 2)

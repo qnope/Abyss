@@ -1,8 +1,28 @@
 extends VectorTestCase
-## reference/vectors/units.json: how many units a stock pays for and those
-## lost when the algae run short, as the Dart rules answer.
+## reference/vectors/units.json: what a unit is, how many a stock pays for
+## and those lost when the algae run short, as the Dart rules answer.
 
 var _vectors := VectorFile.new("units")
+
+
+func test_units() -> void:
+	var cases := _vectors.cases("units")
+	assert_eq(cases.size(), 6)
+	var calculator := UnitCostCalculator.new()
+	for case: Dictionary in cases:
+		var type := VectorInputs.value(UnitType.Value, case["type"]) as UnitType.Value
+		var stats := UnitStats.for_type(type)
+		var out := {
+			"algae": ConsumptionCalculator.unit_algae_consumption(type),
+			"cost": VectorInputs.named(ResourceType.Value, calculator.recruitment_cost(type)),
+			"costDegraded": VectorInputs.named(
+				ResourceType.Value, calculator.recruitment_cost(type, true)
+			),
+			"role": DartEnum.name_of(CombatRole.Value, CombatRole.for_unit(type)),
+			"stats": [stats.hp, stats.atk, stats.def],
+			"unlockLevel": calculator.unlock_level(type),
+		}
+		assert_same(out, case["out"], str(case))
 
 
 func test_max_recruitable() -> void:

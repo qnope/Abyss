@@ -1,8 +1,8 @@
 extends TestCase
 ## test/domain/map/volcano_footprint_test.dart: the 2x2 volcano read from
-## any of its cells. Left out, with the two functions they test: the group
-## 'revealWhole' (a `Player`) and 'migrate completes the volcano on every
-## level of a game' (a `Game`), which wait for `game`.
+## any of its cells. 'migrate completes the volcano on every level of a
+## game' never comes, nor `migrate`: it runs complete_legacy() on the levels
+## of a Hive save being loaded, and the Godot saves are not those.
 
 const Content := CellContentType.Value
 const PARTS: Array[Vector2i] = [Vector2i(11, 10), Vector2i(10, 11), Vector2i(11, 11)]
@@ -98,6 +98,26 @@ func test_a_kernel_on_the_edge_of_a_map_is_completed_within_the_map() -> void:
 	assert_eq(MapSamples.indices_of(map.cells, Content.VOLCANIC_KERNEL_PART), [])
 	_put(map, 0, 0, Content.VOLCANIC_KERNEL_PART)
 	assert_null(VolcanoFootprint.anchor_of(map, 0, 0))
+
+
+func test_reveal_whole_seeing_one_part_reveals_the_anchor_and_the_other_parts() -> void:
+	var player := Player.new("p")
+	player.add_revealed_cell(3, GridPosition.new(11, 11))
+	VolcanoFootprint.reveal_whole(_map(), player, 3)
+	var whole: Dictionary[Vector2i, bool] = {
+		Vector2i(10, 10): true, Vector2i(11, 10): true, Vector2i(10, 11): true, Vector2i(11, 11): true,
+	}
+	assert_eq(player.revealed_cells_set_on_level(3), whole)
+
+
+func test_reveal_whole_a_volcano_out_of_sight_stays_hidden() -> void:
+	var player := Player.new("p")
+	player.add_revealed_cell(3, GridPosition.new(1, 1))
+	VolcanoFootprint.reveal_whole(_map(), player, 3)
+	assert_eq(player.revealed_cells_on_level(3).size(), 1)
+	# Not in the Dart file: nothing seen on the level, nothing revealed.
+	VolcanoFootprint.reveal_whole(_map(), player, 2)
+	assert_eq(player.revealed_cells_on_level(2).size(), 0)
 
 
 func _map(with_parts := true) -> GameMap:

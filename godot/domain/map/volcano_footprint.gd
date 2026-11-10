@@ -4,7 +4,8 @@ extends RefCounted
 ## The anchor (top-left, the `VOLCANIC_KERNEL`) carries the state, the other
 ## cells are parts.
 ##
-## `revealWhole` (a `Player`) and `migrate` (a `Game`) wait for `game`.
+## `migrate`, which runs complete_legacy() on every level of a Hive save
+## being loaded, is not ported: the Godot saves are not those.
 
 const _KERNEL := CellContentType.Value.VOLCANIC_KERNEL
 const _PART := CellContentType.Value.VOLCANIC_KERNEL_PART
@@ -56,6 +57,23 @@ static func tap_target(
 	for cell: Vector2i in VolcanicKernelPlacer.footprint(anchor.x, anchor.y):
 		seen = seen or revealed.has(cell)
 	return TapTarget.new(anchor, seen)
+
+
+## Reveals the whole volcano to `player` on `level` once one of its cells
+## is seen, as the map shows it.
+static func reveal_whole(map: GameMap, player: Player, level: int) -> void:
+	var seen := player.revealed_cells_set_on_level(level)
+	if seen.is_empty():
+		return
+	for y: int in map.height:
+		for x: int in map.width:
+			if map.cell_at(x, y).content != _KERNEL:
+				continue
+			var cells := VolcanicKernelPlacer.footprint(x, y)
+			if not cells.any(func(cell: Vector2i) -> bool: return seen.has(cell)):
+				continue
+			for cell: Vector2i in cells:
+				player.add_revealed_cell(level, GridPosition.of_key(cell))
 
 
 ## Gives a volcano saved as a single cell its three parts.

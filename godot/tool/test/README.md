@@ -35,6 +35,10 @@ logged while a test runs and fails the test with them. The engine still prints
 them. What it cannot catch: an endless loop hangs the run, and a crash of the
 engine itself ends it.
 
+A test of code that must log an error (a rule refusing an argument with
+`push_error`) says so first with `expect_error("part of the message")`: each
+call lets one error holding that text pass, and fails the test if none came.
+
 ## Timeouts
 
 A script error in the runner's own code would stop it before its `quit()`

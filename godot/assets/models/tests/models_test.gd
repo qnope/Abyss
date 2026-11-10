@@ -1,7 +1,9 @@
 extends TestCase
 ## Each glb of assets/models/, built by tool/models/build.py, imports and
 ## instantiates with the nodes the game relies on, its vertex colours used
-## as albedo (tool/models/model_import.gd).
+## as albedo (tool/models/model_import.gd), and its atlas, if it has one,
+## compressed for the GPU, with mipmaps, sampled anisotropically, and the
+## light of its glowing surfaces.
 
 const FOLDER := "res://assets/models/"
 
@@ -9,8 +11,12 @@ const FOLDER := "res://assets/models/"
 const ROOTS := {
 	"base_island": ["Island", "Pads"],
 	"base_rampart": ["Tier1", "Tier2", "Tier3"],
+	"headquarters": ["Headquarters"],
 	"material_swatches": ["Swatches", "Unit"],
 }
+
+## The models that paint an atlas (<model>_atlas.png beside the glb).
+const TEXTURED: Array[String] = ["headquarters"]
 
 ## The island's pads, one per building, where the buildings stand.
 const PADS: Array[String] = [
@@ -63,6 +69,29 @@ func test_every_surface_takes_its_albedo_from_the_vertex_colours() -> void:
 			for surface in mesh.get_surface_count():
 				var material := mesh.surface_get_material(surface) as BaseMaterial3D
 				assert_true(material.vertex_color_use_as_albedo, "%s/%s" % [model, node.name])
+		scene.free()
+
+
+func test_every_atlas_is_compressed_with_mipmaps_and_sampled_anisotropically() -> void:
+	for model in TEXTURED:
+		var scene := _instantiate(model)
+		var textured := 0
+		for node in scene.find_children("*", "MeshInstance3D", true, false):
+			var mesh := (node as MeshInstance3D).mesh
+			for surface in mesh.get_surface_count():
+				var material := mesh.surface_get_material(surface) as BaseMaterial3D
+				if material.albedo_texture == null:
+					continue
+				textured += 1
+				assert_eq(material.albedo_texture.resource_path, FOLDER + model + "_atlas.png", model)
+				var image := material.albedo_texture.get_image()
+				assert_true(image.has_mipmaps(), "%s: its atlas has no mipmaps" % model)
+				assert_true(image.is_compressed(), "%s: its atlas is not VRAM-compressed" % model)
+				assert_eq(material.texture_filter,
+					BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC, model)
+				if material.emission_enabled:
+					assert_eq(material.emission_texture, material.albedo_texture, model)
+		assert_true(textured > 0, "%s has no textured surface" % model)
 		scene.free()
 
 

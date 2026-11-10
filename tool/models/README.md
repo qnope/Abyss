@@ -22,8 +22,11 @@ missing from the wheel: harmless, neither is used.
   faces into it; `export` writes the glb, `glb_atlas` links its atlas; `glb`
   and `budget` read and check it with the stdlib only, `png` writes and reads
   the atlas.
-- `catalog/`: one script per model, listed in `catalog/__init__.py`, and
-  `palette.py`, the materials they share. A script declares its `NAME`, `SEED`,
+- `catalog/`: one script (or package) per model, listed in
+  `catalog/__init__.py`, and what they share: `palette.py` (materials),
+  `colors.py`, `paints.py`, `textures/` (the tiles the atlases are painted
+  from, `textures/colony.py` the buildings' atlas) and `parts/` (hatches,
+  pipes, rails, fittings, props and reef clusters, mapped into an atlas). A script declares its `NAME`, `SEED`,
   `MATERIALS`, `BUDGET`, `OCCLUSION`, the `NODES` the game relies on, and
   `build(model)`; a textured one also its `ATLAS`.
 
@@ -129,3 +132,13 @@ never into the repo.
   the citadel's level. Pieces that stack rather than one wall scaled, so that
   stones, towers and coral keep their size at every level, and each tier stays
   joined per material.
+
+The buildings stand at the origin of their pad, 1 unit a cell, their moving
+parts as nodes the game can animate:
+
+- `headquarters`: the command keep, the tallest piece. An octagonal hull of
+  riveted plates on a plinth, four airlocks, a railed gallery, a drum of cyan
+  bridge windows under a glass cupola, a mast with an amber yard; nodes
+  `Beacon` and `Dish`. Cyan crown, amber living quarters.
+
+Each has its own 1024 px atlas painted from `textures/colony.py`.

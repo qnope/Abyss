@@ -13,3 +13,12 @@ GLOW = Material("glow", roughness=0.4, emission="#2fd8f0", strength=1.8)
 GLOW_PINK = Material("glow_pink", roughness=0.4, emission="#ff5c9e", strength=1.8)
 
 ALL = [ROCK, STONE, METAL, CORAL, ALGAE, GLOW, GLOW_PINK]
+
+# The colony's buildings: their colours times the building's atlas (catalog/
+# textures), one lamp for every light, whose colour is the atlas tile it maps.
+HULL = Material("hull", roughness=0.5, metallic=0.2, textured=True)
+REEF = Material("reef", roughness=0.62, textured=True)
+LAMP = Material("lamp", roughness=0.35, emission="#ffffff", strength=1.3, textured=True)
+GLASS = Material("glass", roughness=0.08, metallic=0.2, textured=True)
+
+BUILDING = [HULL, REEF, LAMP, GLASS, ALGAE]

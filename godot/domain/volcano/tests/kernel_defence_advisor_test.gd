@@ -64,3 +64,10 @@ func test_forgets_its_answers_on_a_reset() -> void:
 	var needed: Variant = KernelDefenceAdvisor.units_for(player, _wave)
 	KernelDefenceAdvisor.debug_reset()
 	assert_eq(KernelDefenceAdvisor.units_for(player, _wave), needed)
+
+
+## Not in the Dart file: a kernel at level 0 fights with no magma rampart;
+## the Dart rules answer 26 (`volcanoPlayer(kernelLevel: 0)`).
+func test_a_kernel_at_level_0_fights_without_a_rampart() -> void:
+	var player := RaidSamples.volcano_player(0)
+	assert_eq(KernelDefenceAdvisor.units_for(player, VolcanoWaveFactory.from_kernel_level(1)), 26)

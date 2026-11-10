@@ -143,5 +143,8 @@ parts as nodes the game can animate:
 - `solar_panel`: a heliostat. A low housing (gauges, capacitors, cables) and on
   its turntable the node `Array`, two wings of glass cells tilted to the light,
   algae hanging from them. Gold is its light.
+- `coral_citadel`: a fortress grown rather than built: walls of living stone
+  with thorns, four cupped towers, a keep crowned by a polyp calyx holding the
+  node `Heart`, a pink crystal. Pink is its light.
 
 Each has its own 1024 px atlas painted from `textures/colony.py`.

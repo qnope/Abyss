@@ -200,4 +200,6 @@ Files and tests of the modules above that wait for another module:
 | `event_resolver_predators_test.dart`, the last test of `event_resolver_wreck_test.dart` | `action` (`ChooseEventAction`, `CollectTreasureAction`) |
 | `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `action`, `script` |
 | the last two tests of `objective/temporary/temporary_objectives_test.dart` (their twins choose through the effect) | `action` (`ChooseEventAction`) |
+| `postLost` of `objective/tip/post_tip_triggers.dart`, then `post_tips.dart` and `tip_catalog.dart`, which list it; `tip_catalog_test.dart`, `post_tips_test.dart`, the group "Archives" of `archive_tips_test.dart` (the tests of the other tips read each tip from its list) | `action` (`AttackHeldKernelAction.kernelCode`) |
+| `faction_attack_tip_test.dart`, the first two tests of "ancients" in `archive_tips_test.dart` (their twins read the triggers) | `action` (`AnnounceAttackAction`, `AttackPostAction` of `PostWar`), and `TipCatalog` above |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

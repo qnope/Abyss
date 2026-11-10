@@ -67,4 +67,6 @@ draw left, a school of predators fought and the state of the events;
 `test/helpers/objective_helpers.dart` and `map_tab_harness.dart`: the game
 of a new player on a plain 10x10 map (`objective_game`), a building set to
 a level, and the progress `expectProgress` compares, as
-`[current, target, done]`.
+`[current, target, done]`. `tip` and `applies` stand for
+`TipCatalog.byId(id)`, which waits for the tips of the posts: they read a
+tip from its list.

@@ -19,5 +19,11 @@ do through `test/helpers/`: the cells that hold a content, the posts as the
 passages of the level below, the distance between two cells and the
 fingerprint that pins a generated map (`mapFingerprint`).
 
+`GameSamples` builds the players and games the Dart tests write inline: a
+player named after its id (`player`), one holding only the buildings given
+(`player_with`), a game whose human is the first player given (`game`), and
+`two_players`, the twin of `test/helpers/two_player_game.dart`. A game from a
+seed comes from `GameFactory` itself.
+
 The tests driven by `reference/vectors/` build theirs from the Dart names a
 case writes, with `VectorInputs` (`godot/tool/reference/README.md`).

@@ -24,6 +24,20 @@ func test_damage() -> void:
 		assert_same(out, case["out"], "atk %d" % atk)
 
 
+func test_guardians() -> void:
+	var cases := _vectors.cases("guardians")
+	assert_eq(cases.size(), 3)
+	var guardians: Dictionary[String, Callable] = {
+		"faille": GuardianFactory.for_faille,
+		"cheminee": GuardianFactory.for_cheminee,
+		"kernel": GuardianFactory.for_volcanic_kernel,
+	}
+	for case: Dictionary in cases:
+		var of: String = case["of"]
+		var side: Array[Combatant] = guardians[of].call()
+		assert_same(FightInputs.runs_of(side), case["out"], of)
+
+
 func test_attack_damage() -> void:
 	var cases := _vectors.cases("attackDamage")
 	assert_eq(cases.size(), 208)

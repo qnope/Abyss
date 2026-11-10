@@ -31,3 +31,11 @@ func test_resource_amount_is_mutable() -> void:
 	var r := GameResource.new(ResourceType.Value.ORE, 10)
 	r.amount = 20
 	assert_eq(r.amount, 20)
+
+
+## Not in the Dart file: `resources[type]?.amount ?? 0`.
+func test_reads_the_amount_of_a_resource_in_a_map_0_when_it_is_missing() -> void:
+	var resources := DomainSamples.resources({ALGAE: 7})
+	assert_eq(GameResource.amount_in(resources, ALGAE), 7)
+	assert_eq(GameResource.amount_in(resources, ResourceType.Value.ORE), 0)
+	assert_eq(GameResource.amount_in({}, ALGAE), 0)

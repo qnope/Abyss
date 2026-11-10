@@ -23,7 +23,17 @@ def _report(positions, indices=(0, 1, 2), count=None):
     return GlbReport(document, floats + shorts, ".")
 
 
+def _colours(values):
+    """A glb report of vertex colours: normalised ushorts, four per corner."""
+    data = struct.pack(f"<{len(values)}H", *values)
+    document = {"bufferViews": [{"buffer": 0, "byteLength": len(data)}],
+                "accessors": [{"bufferView": 0, "count": len(values) // 4, "type": "VEC4",
+                               "componentType": 5123, "normalized": True}]}
+    return GlbReport(document, data, ".")
+
+
 TRIANGLE = (0, 0, 0, 1, 0, 0, 0, 1, 0)
+GREY = [30000] * 4000
 
 
 class GlbCompareTest(unittest.TestCase):
@@ -46,6 +56,23 @@ class GlbCompareTest(unittest.TestCase):
         differences = geometry_differences(_report(TRIANGLE), flipped)
         self.assertEqual(len(differences), 1)
         self.assertIn("accessor 1", differences[0])
+
+    def test_a_rare_flipped_occlusion_ray_in_the_colours_is_the_same(self):
+        flipped = list(GREY)
+        flipped[7] += 417
+        flipped[900] -= 153
+        self.assertEqual(geometry_differences(_colours(GREY), _colours(flipped)), [])
+
+    def test_a_colour_further_than_one_occlusion_ray_is_named(self):
+        repainted = list(GREY)
+        repainted[7] += 6000
+        differences = geometry_differences(_colours(GREY), _colours(repainted))
+        self.assertIn("1 of 4000 values differ", differences[0])
+
+    def test_many_slightly_different_colours_are_named(self):
+        shifted = [value + 300 for value in GREY]
+        differences = geometry_differences(_colours(GREY), _colours(shifted))
+        self.assertIn("4000 of 4000 values differ", differences[0])
 
     def test_a_different_layout_is_named(self):
         shorter = _report(TRIANGLE[:6], indices=(0, 1, 0))

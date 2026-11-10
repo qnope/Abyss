@@ -151,6 +151,5 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_usage_test.dart` (actions, victory), `building_cost_discount_test.dart` (its last test) | `action`, `game` |
 | `building_degradation_solo_test.dart` | `script` |
 | `game/difficulty_test.dart`, `difficulty_faction_test.dart`, `difficulty_world_relief_test.dart`, `difficulty_faction_monsters_test.dart` (the tests on a wave, a turn or a new game) | `raid`, `volcano`, `turn`, `game` |
-| `map/exploration_resolver.dart`, its four tests (`exploration_resolver_test.dart`, `_level_`, `_multi_`, `exploration_volcano_test.dart`) | `game` (`TechEffects.of`) |
 | `map/rival_taker.dart`, its test | `game`, `faction` |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

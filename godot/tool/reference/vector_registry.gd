@@ -76,7 +76,10 @@ const FILES: Dictionary[String, Dictionary] = {
 		PENDING + "action": ["pctLost", "treasureLoot"],
 	},
 	"fight_planning": {
-		PENDING + "fight": ["strength", "rehearsal", "planner", "assaultChance", "assaultRating"],
+		"res://domain/fight/tests/fight_planning_vectors_test.gd": [
+			"strength", "rehearsal", "planner",
+		],
+		PENDING + "fight": ["assaultChance", "assaultRating"],
 	},
 	"map_rules": {
 		"res://domain/map/tests/map_rule_vectors_test.gd": [

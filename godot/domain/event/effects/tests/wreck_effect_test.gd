@@ -1,9 +1,6 @@
 extends TestCase
 ## test/domain/event/effects/wreck_effect_test.dart: where a wreck sinks and
-## when it may be drawn. The check of 'no wreck is drawn when no hidden
-## empty cell borders the area' on EventEffects.excludedAt waits for
-## event_effects.dart, which waits for the predators (raid) and the
-## survivors (volcano).
+## when it may be drawn.
 
 const WRECK := CellContentType.Value.WRECK
 
@@ -77,6 +74,8 @@ func test_no_wreck_is_drawn_when_no_hidden_empty_cell_borders_the_area() -> void
 	var player := EventSamples.wreck_player()
 	var full := EventSamples.wreck_map(9, _contents(EventSamples.wreck_ring(), CellContentType.Value.MONSTER_LAIR))
 	assert_false(_wreck.allowed_at(EventSamples.wreck_game(player, full), player, 12))
+	var excluded := EventEffects.excluded_at(EventSamples.wreck_game(player, full), player, 12)
+	assert_has(excluded, RandomEventType.Value.WRECK)
 	assert_true(_wreck.allowed_at(EventSamples.wreck_game(player), player, 12))
 
 

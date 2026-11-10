@@ -1,7 +1,6 @@
 extends TestCase
 ## test/domain/building/building_degradation_usage_test.dart: what a
-## degraded building costs its base. The two tests of the kernel's
-## garrison go with GarrisonKernelAction.
+## degraded building costs its base.
 
 const CITADEL := BuildingType.Value.CORAL_CITADEL
 const SCOUT := UnitType.Value.SCOUT
@@ -67,6 +66,26 @@ func test_module_capsule_and_noyau_are_unusable_when_degraded_descent_refused_wi
 	assert_eq(result.reason, ActionFailure.Value.REQUIRED_BUILDING_DEGRADED)
 	player.buildings[BuildingType.Value.HEADQUARTERS].level = 5
 	assert_true(DescendValidator.validate(game, player, 5, 5, 1, selected).is_success)
+
+
+func test_module_capsule_and_noyau_are_unusable_when_degraded_garrison_refused_with_a_degraded_noyau_allowed_otherwise() -> void:
+	var p := RaidSamples.volcano_player(3, {}, {SCOUT: 2})
+	p.buildings[BuildingType.Value.HEADQUARTERS].level = 9
+	var game := MoveSamples.volcano_game(p)
+	var selected: Dictionary[UnitType.Value, int] = {SCOUT: 1}
+	var action := GarrisonKernelAction.new(selected)
+	assert_eq(action.validate(game, p).reason, ActionFailure.Value.KERNEL_DEGRADED)
+	assert_false(action.execute(game, p).is_success)
+	p.buildings[BuildingType.Value.HEADQUARTERS].level = 10
+	assert_true(action.execute(game, p).is_success)
+
+
+func test_module_capsule_and_noyau_are_unusable_when_degraded_units_can_still_leave_a_degraded_garrison() -> void:
+	var p := RaidSamples.volcano_player(3, {SCOUT: 2})
+	p.buildings[BuildingType.Value.HEADQUARTERS].level = 9
+	var selected: Dictionary[UnitType.Value, int] = {SCOUT: 1}
+	var out := GarrisonKernelAction.new(selected, true)
+	assert_true(out.validate(MoveSamples.volcano_game(p), p).is_success)
 
 
 func test_victory_needs_an_undegraded_noyau_10_refused_when_the_qg_fell_below_10() -> void:

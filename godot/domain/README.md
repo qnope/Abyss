@@ -193,7 +193,7 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
-| three tests of `action_noise_test.dart`, `silent_swim_noise_test.dart`, `garrison_kernel_action_test.dart` | `action` |
+| `silent_swim_noise_test.dart` | `action` (`AttackTransitionBaseAction`, `AttackVolcanicKernelAction`) |
 | `volcano/wave_held_back_turn_test.dart` | `turn`, `action` |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it; the last test of `choose_event_action_test.dart` (the choice is written in the replay journal) | `action` (`ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
@@ -201,7 +201,6 @@ Files and tests of the modules above that wait for another module:
 | `pearl_income_test.dart` (its two tests of the end of turn) | `turn` |
 | `resource/consumption_integration_test.dart` | `turn` |
 | `building_degradation_effects_test.dart` (`TurnProduction sees the degraded buildings`) | `turn` |
-| `building_degradation_usage_test.dart` (the two tests of the kernel's garrison) | `action` (`GarrisonKernelAction`) |
 | `building_degradation_solo_test.dart` | `script` |
 | `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
 | `fight/assault/assault_plan.dart`, `assault_plan_test.dart`, `assault_suggestion_test.dart`, `assault_test_helper.dart` | `passage` of `AssaultTarget` below: `AssaultPlan.of` reads it for its next step |

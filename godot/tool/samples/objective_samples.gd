@@ -38,3 +38,22 @@ static func progress(game: Game, id: ObjectiveId.Value) -> Array:
 ## The `[current, target, done]` `expectProgress` expects.
 static func expected(current: int, target: int) -> Array:
 	return [current, target, current >= target]
+
+
+## `TipCatalog.byId(id)` over the tips ported: the catalog waits for the
+## tips of the posts, whose `postLost` waits for `action`. Null for those.
+static func tip(id: TipId.Value) -> Tip:
+	var tips := BaseTips.base_tips()
+	tips.append_array(ThreatTips.threat_tips())
+	tips.append_array(MapTips.map_tips())
+	tips.append_array(EventTips.all())
+	tips.append_array(ArchiveTips.archive_tips())
+	for each: Tip in tips:
+		if each.id == id:
+			return each
+	return null
+
+
+## `TipCatalog.byId(id).appliesTo(game, game.humanPlayer)` of the Dart tests.
+static func applies(game: Game, id: TipId.Value) -> bool:
+	return tip(id).applies_to(game, game.human_player())

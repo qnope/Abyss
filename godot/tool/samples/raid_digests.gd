@@ -22,6 +22,20 @@ static func arm_for_raids(game: Game) -> void:
 		player.buildings[headquarters] = Building.new(headquarters, 3)
 
 
+## arm_for_raids, then the kernel of the human at level 3 guarded by 12
+## guardians and 20 dome breakers, those of the factions at level 2 by 4
+## guardians.
+static func arm_for_volcano(game: Game) -> void:
+	arm_for_raids(game)
+	for player: Player in game.players.values():
+		var human := player.id == "human"
+		player.buildings[BuildingType.Value.VOLCANIC_KERNEL].level = 3 if human else 2
+		var stock := KernelGarrison.stock_of(player)
+		stock[UnitType.Value.GUARDIAN].count = 12 if human else 4
+		if human:
+			stock[UnitType.Value.DOME_BREAKER].count = 20
+
+
 ## `difficulty/family/unitCount/secondFamily/secondCount`, a missing family
 ## as "null".
 static func wave(lair: MonsterLair) -> String:
@@ -50,6 +64,28 @@ static func raid_state(player: Player) -> String:
 	return "%d %d %d %d %d %s | %s | %s" % [
 		s.noise, s.total_noise, s.lost_in_a_row, s.raids_repelled, s.raids_lost,
 		s.is_incoming(), " ".join(stocks), " ".join(units),
+	]
+
+
+## `turn V|L kernel-level krakens dead wounded fight-turns`, the maps summed.
+static func volcano_report(r: VolcanoReport) -> String:
+	return "%d %s %d %d %d %d %d" % [
+		r.turn, "V" if r.victory else "L", r.kernel_level, r.wave.unit_count, sum(r.dead),
+		sum(r.wounded), r.fight.turn_count,
+	]
+
+
+## `repelled lost incoming arrival kernel-level | garrison stock | raids
+## repelled lost`, the stock in its order.
+static func volcano_state(player: Player) -> String:
+	var v := player.volcano_state
+	var stock := PackedStringArray()
+	for unit: Unit in KernelGarrison.stock_of(player).values():
+		stock.append(str(unit.count))
+	return "%d %d %s %s %d | %s | %d %d" % [
+		v.waves_repelled, v.levels_lost, v.is_incoming(), _null_text(str(v.arrival_turn)),
+		KernelGarrison.kernel_level_of(player), " ".join(stock),
+		player.raid_state.raids_repelled, player.raid_state.raids_lost,
 	]
 
 

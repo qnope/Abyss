@@ -45,5 +45,6 @@ scene={
 renderer/rendering_method="mobile"
 renderer/rendering_method.mobile="mobile"
 renderer/rendering_method.web="gl_compatibility"
+lights_and_shadows/directional_shadow/size=2048
 environment/defaults/default_clear_color=Color(0.039215688, 0.05490196, 0.101960786, 1)
 textures/vram_compression/import_etc2_astc=true

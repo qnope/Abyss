@@ -23,3 +23,8 @@ func test_turns_its_shadows_on_and_off() -> void:
 	light.set_shadows(true)
 	assert_true(light.shadow_enabled)
 	light.free()
+
+
+func test_its_shadows_fit_a_phone_s_memory() -> void:
+	var atlas: int = ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/size")
+	assert_eq(atlas, 2048, "a 4096 atlas would cost 64 MB on the web of an iPhone")

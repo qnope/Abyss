@@ -25,3 +25,13 @@ func test_the_entries_of_the_fights() -> void:
 	var assault := HistorySamples.base_assault_entry(true, false)
 	assert_eq([assault.turn, assault.opponent_name, assault.defending], [14, "Nacre", false])
 	assert_eq([assault.rampart_before, assault.rampart_after, assault.headquarters_after], [2, 0, 5])
+
+
+func test_the_fights_and_the_game_of_the_statistics() -> void:
+	var fight := HistorySamples.statistics_fight(CombatSide.Value.MONSTER, 4)
+	assert_eq([fight.winner, fight.turn_count, fight.initial_monster_count, fight.final_monster_count], [CombatSide.Value.MONSTER, 1, 4, 0])
+	var lost := HistorySamples.statistics_combat(false, 2)
+	assert_eq([lost.victory, lost.fight_result.winner, lost.lair.unit_count], [false, CombatSide.Value.MONSTER, 3])
+	var game := HistorySamples.statistics_game(9, [lost])
+	var player := game.human_player()
+	assert_eq([game.turn, player.id, player.name, player.history_entries.size()], [9, "p1", "Test", 1])

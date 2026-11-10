@@ -48,3 +48,25 @@ static func base_assault_entry(victory: bool, defending: bool) -> BaseAssaultEnt
 ## The lair of level 2 of the Dart helper.
 static func _lair() -> MonsterLair:
 	return MonsterLair.new(MonsterDifficulty.Value.MEDIUM, 3)
+
+
+## `fightOf` of test/domain/game/game_statistics_helper.dart: a fight of one
+## turn won by `winner` against `monsters` monsters.
+static func statistics_fight(winner: CombatSide.Value, monsters: int) -> FightResult:
+	return FightResult.new(winner, 1, [], [], [], monsters, 0)
+
+
+## `combatOf`: a combat against an easy lair of 3, won or lost.
+static func statistics_combat(victory: bool, monsters: int) -> CombatEntry:
+	var winner := CombatSide.Value.PLAYER if victory else CombatSide.Value.MONSTER
+	return CombatEntry.new(
+		1, victory, 0, 0, MonsterLair.new(MonsterDifficulty.Value.EASY, 3),
+		statistics_fight(winner, monsters), {}, {}, {}, {}, {},
+	)
+
+
+## `gameWith`: the game during `turn` of player "p1" named "Test", based at
+## (0, 0), holding `history`.
+static func statistics_game(turn := 1, history: Array[HistoryEntry] = []) -> Game:
+	var player := Player.new("Test", "p1", 0, 0, null, null, null, null, [], [], {}, history)
+	return Game.new(player.id, {player.id: player}, turn)

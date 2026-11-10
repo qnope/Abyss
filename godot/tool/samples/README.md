@@ -27,7 +27,8 @@ seed comes from `GameFactory` itself.
 
 `HistorySamples` builds the entries of the fights of
 `test/helpers/history_entry_samples.dart` and the fight of two turns they
-hold (`buildTestFight`, its `fight` here).
+hold (`buildTestFight`, its `fight` here), and the fights, combats and
+game of `test/domain/game/game_statistics_helper.dart` (`statistics_*`).
 
 `EventSamples` builds what the tests of the random events take from
 `test/domain/event/event_test_helper.dart`,

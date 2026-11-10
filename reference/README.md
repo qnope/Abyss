@@ -9,6 +9,11 @@ port replays the journal and must find the same digests.
 This file specifies the format, so that GDScript writes the very same bytes.
 The Dart side lives in `lib/domain/reference/`.
 
+Beside the games, `reference/vectors/` holds inputs and outputs of single
+pieces of the rules (Dart's random generator, sort and arithmetic, costs,
+fights, maps...), for the modules ported before a whole game can be replayed:
+see `reference/vectors/README.md`. CI's `Reference` job checks both.
+
 ## Canonical text
 
 A value of the state is written as a strict subset of JSON

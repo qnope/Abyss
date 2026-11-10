@@ -3,7 +3,7 @@ by how much of its sky the model hides, which gives the contact shading a
 mobile renderer cannot afford at run time."""
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import bpy  # noqa: F401, loads mathutils
 import numpy
@@ -17,12 +17,14 @@ from workshop.materials import COLOR_ATTRIBUTE
 class Occlusion:
     """[rays] per corner, cast up to [distance]; a corner fully hidden keeps
     [floor] of its colour. [sky] > 0 favours the rays going up, as the light
-    falls from the surface."""
+    falls from the surface. [strength] softens it per material name (1 by
+    default): thin living things lit through would go black otherwise."""
 
     rays: int = 24
     distance: float = 1.2
     floor: float = 0.25
     sky: float = 0.35
+    strength: dict = field(default_factory=dict)
 
     def bake(self, objects):
         """Darkens the colours of [objects] by what all of them hide."""
@@ -44,6 +46,7 @@ class Occlusion:
         colors = numpy.zeros(corners * 4, dtype=numpy.float32)
         attribute = mesh.color_attributes[COLOR_ATTRIBUTE]
         attribute.data.foreach_get("color", colors)
+        strength = self._strengths(mesh)
         cache = {}
         for corner in range(corners):
             n = normals[corner * 3:corner * 3 + 3]
@@ -53,8 +56,17 @@ class Occlusion:
                 position = matrix @ mesh.vertices[key[0]].co
                 normal = (turn @ Vector(n)).normalized()
                 cache[key] = self._light(tree, position, normal, directions, key[0])
-            colors[corner * 4:corner * 4 + 3] *= cache[key]
+            colors[corner * 4:corner * 4 + 3] *= 1 - strength[corner] * (1 - cache[key])
         attribute.data.foreach_set("color", colors)
+
+    def _strengths(self, mesh):
+        """The occlusion's strength at each corner, from its face's material."""
+        per_slot = [self.strength.get(m.name, 1.0) if m else 1.0 for m in mesh.materials] or [1.0]
+        result = numpy.ones(len(mesh.loops), dtype=numpy.float32)
+        for polygon in mesh.polygons:
+            start = polygon.loop_start
+            result[start:start + polygon.loop_total] = per_slot[polygon.material_index]
+        return result
 
     def _light(self, tree, position, normal, directions, salt):
         side = normal.orthogonal().normalized()

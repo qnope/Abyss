@@ -3,7 +3,9 @@ extends SceneTree
 ## studio: from the game's 3/4 camera and from four sides, at twice the
 ## phone's scale. tool/models/preview.sh runs it:
 ##   godot --path godot --script res://tool/models/preview.gd -- <name> <out prefix>
-## writes <out prefix>_game.png, _front.png, _right.png, _back.png, _left.png.
+## writes <out prefix>_game.png, _close.png (the front quarter, zoomed in),
+## _front.png, _right.png, _back.png, _left.png. Names joined by "+"
+## (base_island+base_rampart) render those models together.
 
 const Studio := preload("res://tool/models/studio.gd")
 const ModelBounds := preload("res://tool/models/model_bounds.gd")
@@ -38,13 +40,17 @@ func _initialize() -> void:
 	_render(model, args[1])
 
 
-func _load(name: String) -> Node3D:
-	var path := "res://assets/models/%s.glb" % name
-	var scene := load(path) as PackedScene
-	if scene == null:
-		printerr("cannot load %s" % path)
-		return null
-	return scene.instantiate() as Node3D
+func _load(names: String) -> Node3D:
+	var group := Node3D.new()
+	for name in names.split("+"):
+		var path := "res://assets/models/%s.glb" % name
+		var scene := load(path) as PackedScene
+		if scene == null:
+			printerr("cannot load %s" % path)
+			group.free()
+			return null
+		group.add_child(scene.instantiate())
+	return group
 
 
 func _render(model: Node3D, prefix: String) -> void:
@@ -63,6 +69,7 @@ func _render(model: Node3D, prefix: String) -> void:
 	_viewport.add_child(_camera)
 	var shots: Array[Shot] = [
 		Shot.new("game", PHONE, GAME_YAW, GAME_PITCH, GAME_FOV, true),
+		Shot.new("close", SIDE, GAME_YAW, GAME_PITCH, GAME_FOV / 2.5, true),
 		Shot.new("front", SIDE, 0.0, SIDE_PITCH, SIDE_FOV, false),
 		Shot.new("right", SIDE, 90.0, SIDE_PITCH, SIDE_FOV, false),
 		Shot.new("back", SIDE, 180.0, SIDE_PITCH, SIDE_FOV, false),
@@ -78,6 +85,10 @@ func _shoot(bounds: AABB, shot: Shot, path: String) -> void:
 	_camera.fov = shot.fov
 	var target := Vector3.ZERO if shot.game else bounds.get_center()
 	var radius := ModelBounds.top_radius(bounds) if shot.game else bounds.size.length() * 0.5
+	if shot.fov < GAME_FOV and shot.game:
+		# A close-up of the front quarter, as the player zooms in.
+		target = Vector3(1.0, 0.0, 1.0) * radius * 0.35
+		radius /= 2.5
 	var direction := Basis.from_euler(Vector3(deg_to_rad(shot.pitch), deg_to_rad(shot.yaw), 0.0)) \
 		* Vector3.BACK
 	var distance := radius / sin(deg_to_rad(shot.fov) * 0.5) * (1.08 if shot.game else 1.0)

@@ -2,16 +2,22 @@
 gather: positions, faces as tuples of vertex indices, and per face whether
 it is shaded smooth."""
 
+import math
+
 import bpy  # noqa: F401, loads bmesh and mathutils
 import bmesh
 from mathutils import Euler, Matrix, Vector
 
 
 class Geometry:
-    def __init__(self, verts=(), faces=(), smooth=False):
+    """[sharp_angle], in radians, is the angle between two smooth faces past
+    which their edge is drawn hard: low for machined parts, high for rocks."""
+
+    def __init__(self, verts=(), faces=(), smooth=False, sharp_angle=math.radians(42)):
         self.verts = [Vector(v) for v in verts]
         self.faces = [tuple(f) for f in faces]
         self.smooth = [smooth] * len(self.faces)
+        self.sharp_angle = sharp_angle
 
     @classmethod
     def from_bmesh(cls, bm, smooth=False):
@@ -57,6 +63,7 @@ class Geometry:
         self.verts += [v.copy() for v in other.verts]
         self.faces += [tuple(i + base for i in face) for face in other.faces]
         self.smooth += other.smooth
+        self.sharp_angle = min(self.sharp_angle, other.sharp_angle)
         return self
 
     def face_normal(self, index):
@@ -65,6 +72,22 @@ class Geometry:
         for a, b in zip(points, points[1:] + points[:1]):
             normal += a.cross(b)
         return normal.normalized() if normal.length > 1e-12 else Vector((0, 0, 1))
+
+    def sharp_edges(self):
+        """The edges (vertex index pairs) where two smooth faces meet at more
+        than [sharp_angle]; a flat face is hard all round anyway."""
+        faces_of = {}
+        for index, face in enumerate(self.faces):
+            for a, b in zip(face, face[1:] + face[:1]):
+                faces_of.setdefault((min(a, b), max(a, b)), []).append(index)
+        limit = math.cos(self.sharp_angle)
+        sharp = []
+        for edge, faces in faces_of.items():
+            if len(faces) != 2 or not (self.smooth[faces[0]] and self.smooth[faces[1]]):
+                continue
+            if self.face_normal(faces[0]).dot(self.face_normal(faces[1])) < limit:
+                sharp.append(edge)
+        return sharp
 
     def bounds(self):
         low = Vector([min(v[a] for v in self.verts) for a in range(3)])

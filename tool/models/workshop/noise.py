@@ -13,8 +13,12 @@ def _offset(seed):
 
 
 def value(point, seed=0, frequency=1.0):
-    """Smooth noise in about [-1, 1] at [point], a different field per [seed]."""
-    return noise.noise(Vector(point) * frequency + _offset(seed), noise_basis="PERLIN_NEW") * 1.6
+    """Smooth noise in about [-1, 1] at [point] (2D or 3D), a different field
+    per [seed]."""
+    point = Vector(point)
+    if len(point) == 2:
+        point = point.to_3d()
+    return noise.noise(point * frequency + _offset(seed), noise_basis="PERLIN_NEW") * 1.6
 
 
 def fbm(point, seed=0, frequency=1.0, octaves=3, gain=0.5):
@@ -32,3 +36,18 @@ def vector(point, seed=0, frequency=1.0):
     """A smooth random offset in about [-1, 1] on each axis."""
     return Vector((value(point, seed, frequency), value(point, seed + 7, frequency),
                    value(point, seed + 13, frequency)))
+
+
+def cracks(point, seed=0, frequency=1.0, width=0.12):
+    """1 on the borders between Voronoi cells, falling to 0 at [width]
+    inside them: fractures in rock."""
+    p = Vector(point).to_3d() if len(point) == 2 else Vector(point)
+    f2f1 = noise.noise(p * frequency + _offset(seed), noise_basis="VORONOI_F2F1")
+    return max(0.0, 1.0 - (f2f1 + 1.0) / width)
+
+
+def cells(point, seed=0, frequency=1.0):
+    """A random value in about [-1, 1], the same over each Voronoi cell:
+    stones of a wall, columns of basalt."""
+    p = Vector(point).to_3d() if len(point) == 2 else Vector(point)
+    return noise.noise(p * frequency + _offset(seed), noise_basis="CELLNOISE")

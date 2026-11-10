@@ -43,8 +43,9 @@ keeps the Dart name. Of the 427 names of `lib/domain`, one collides:
 
 A member or a parameter named as a global function of Godot is renamed
 too, a parameter with the `_` of those that fill a field: the `seed` of
-`GameMap` is `map_seed`, as the `seed` of a `Random` is `initial_seed`, and
-`generate(seed: 3)` is `generate(seed_)`.
+`GameMap` is `map_seed`, as the `seed` of a `Random` is `initial_seed` and
+the `seed` of an `AnnouncedAttack` its `fight_seed`, and `generate(seed: 3)`
+is `generate(seed_)`.
 
 **Enums.** `class_name BuildingType` holding `enum Value { HEADQUARTERS,
 ALGAE_FARM, ... }`, the values **in the Dart order** so that a value is its
@@ -118,7 +119,23 @@ a value Dart never returned (`dart/README.md`).
 **No Hive.** No annotation, no adapter, `RefCounted` instead of
 `HiveObject`: saves come later, in `data/`. Every field of the state stays;
 the fields that only keep the layout of old saves (`reference/README.md`,
-"Fields left out") are dropped, and no rule may change for it.
+"Fields left out") are dropped, and no rule may change for it. What only
+reads an old Hive save is not ported (`VolcanoFootprint.migrate`).
+
+**State** (first met in `Game`, `Player` and what they hold). The rules
+change these objects in place: each field is a plain `var`, a map or a
+list is the very one the rules fill. A constructor parameter Dart makes
+nullable to fall back on a default takes `null` when its default holds
+something (`Player.new(name)` builds the stocks of `PlayerDefaults`, a new
+object each time), else a typed empty default, which GDScript builds anew at
+each call. A field `null` only in an old save (`savedFallen`, `savedIntel`,
+`savedDifficulty`, `savedFactions`) keeps its Dart name and holds the value
+Dart reads for that null (`false`, empty, `NORMAL`): no Godot save is an
+old one; its getter stays a method (`has_fallen()`, `intel()`,
+`difficulty()`). A pure helper that would take a class over 150 lines goes
+to a class marked "Not in the Dart class" (`PlayerHoldings`). An extension
+of a class is a class of static functions taking the extended object first
+(`GameUpgradeReadiness.upgrade_readiness_of(game, player, type)`).
 
 ### Tests
 
@@ -145,8 +162,14 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
+| `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes) | `action` (`Action`, `ActionEncoder`) |
+| `history/entries/` but `building_entry.dart`, their tests | `action`, `fight` (`FightResult`), `turn` (`TurnResourceChange`): each entry with what builds it |
+| `game/game_statistics.dart`, `game_statistics_calculator.dart`, their two tests | `fight` (the `FightResult` of a `CombatEntry`), `action` (the entries) |
+| `game/defeat_analysis.dart`, its test | `raid` (`RaidEntry`, `RaidDefenceAdvisor`) |
+| `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
+| `game_factory_factions_test.dart` (the human exploring) | `action` |
 | `pearl_income_test.dart` (its two tests of the end of turn) | `turn` |
-| `resource/consumption_integration_test.dart` | `game`, `turn` |
+| `resource/consumption_integration_test.dart` | `turn` |
 | `building_degradation_effects_test.dart` (`TurnProduction sees the degraded buildings`) | `turn` |
 | `building_degradation_usage_test.dart` (the tests of an action), `building_cost_discount_test.dart` (its last test) | `action` |
 | `building_degradation_solo_test.dart` | `script` |

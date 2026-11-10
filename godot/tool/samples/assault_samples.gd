@@ -70,3 +70,23 @@ static func assault_player(
 ## `SeededRandom(seed)`.
 static func strike(game: Game, army: Dictionary[UnitType.Value, int], seed_ := 1) -> AttackBaseAction:
 	return AttackBaseAction.new(rival_of(game).id, army, DartRandom.new(seed_))
+
+
+## `raiders` of test/helpers/announce_attack_helper.dart: the rival's army,
+## strong enough to beat a bare base.
+const RAIDERS: Dictionary[UnitType.Value, int] = {UnitType.Value.HARPOONIST: 40}
+
+
+## `announceGame`: `assault_game` with the tutorial of the human over, the
+## rival holding RAIDERS on its base.
+static func announce_game(turn := 12, rival_id := "rival-1") -> Game:
+	var game := assault_game(turn, true, rival_id)
+	ObjectiveMigration.state_of(game, game.human_player()).tutorial_enabled = false
+	station(rival_of(game), RAIDERS)
+	return game
+
+
+## `announce`: the rival's attack on the human with `army`, its dice
+## `SeededRandom(seed)`.
+static func announce(army: Dictionary[UnitType.Value, int] = RAIDERS, seed_ := 3) -> AnnounceAttackAction:
+	return AnnounceAttackAction.new(army, DartRandom.new(seed_))

@@ -94,7 +94,9 @@ reinforcements of `send_reinforcements_helper.dart` (`reinforcement_map`,
 two-player game at turn 12 where the human has seen the rival's base
 (`assault_game`, `rival_of` for `two.rival`), `set_level`, `station` and
 `standing`, `strike` (the human's attack on the rival's base), and the
-armies `HORDE` and `WALL`; and the player of
+armies `HORDE` and `WALL`; the game of `announce_attack_helper.dart`
+(`announce_game`, its army `RAIDERS`, and `announce`, the rival's attack
+on the human); and the player of
 `test/domain/fight/assault/assault_test_helper.dart` (`assault_player`).
 
 `PostWar` and `KernelWar` are the twins of the classes of
@@ -105,9 +107,10 @@ to strike, with the armies of those files as constants; `strike` is the
 attack on the post, or on the kernel, with its dice `SeededRandom(seed)`.
 
 `WarDigests` writes what the digest test of the wars between players
-(`war_digest_test.gd`) compares, an attack on a post or on a held kernel
-and the last assault entry of a player, and `WarHistories` holds what the scratch Dart script
-printed.
+(`war_digest_test.gd`) compares, an attack on a post or on a held kernel,
+the last assault entry of a player and the attacks pending on the human
+base, and plays the attacks the factions decide (`announces`);
+`WarHistories` holds what the scratch Dart script printed.
 
 `SiegeSamples` builds the games of the assaults on what nobody holds yet,
 as `attack_transition_base_helper.dart` (`attack_game`) and

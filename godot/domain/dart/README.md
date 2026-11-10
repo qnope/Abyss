@@ -14,6 +14,7 @@ yet: its test lists what the Dart VM answered.
 | --- | --- | --- |
 | `Random(seed)`, `SeededRandom(seed)`, `.seed` | `DartRandom.new(seed)`, `.initial_seed` (`seed` is a function of Godot) | `randi`, `randf`, `RandomNumberGenerator`, `pick_random` |
 | `Random()` | `DartRandom.unseeded()`, seeded by Godot's generator | |
+| `random is SeededRandom ? random.seed : ...` | `random.initial_seed`: every `DartRandom` remembers its seed (`AnnounceAttackAction`) | |
 | `random.nextInt(n)`, `nextDouble()`, `nextBool()` | `random.next_int(n)`, `next_double()`, `next_bool()` | |
 | `list.shuffle(random)` | `DartRandom.shuffle(list, random)` | `Array.shuffle` |
 | `list.sort(compare)` | `DartSort.sort(list, compare)`, `compare` returning an int | `sort_custom` |

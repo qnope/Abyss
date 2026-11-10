@@ -1,8 +1,8 @@
 class_name EventSamples
 extends RefCounted
 ## The players, games and maps the Dart tests of the random events build
-## with test/domain/event/event_test_helper.dart and
-## effects/wreck_test_helper.dart.
+## with test/domain/event/event_test_helper.dart,
+## effects/wreck_test_helper.dart and effects/predators_test_helper.dart.
 
 
 ## `eventPlayer`: a player with no event scheduled, pending or active yet.
@@ -74,3 +74,23 @@ static func wreck_game(player: Player, map: GameMap = null, turn := 12) -> Game:
 	game.levels = {1: map if map != null else wreck_map()}
 	game.turn = turn
 	return game
+
+
+## `predatorTestWave`: the wave of the predators waiting in the tests.
+static func predator_test_wave() -> MonsterLair:
+	return MonsterLair.new(
+		MonsterDifficulty.Value.EASY, 3, MonsterFamily.Value.SWARM, MonsterFamily.Value.HUNTER, 2
+	)
+
+
+## `threatenedPlayer`: RaidSamples.raid_player whose predators, drawn at the
+## end of turn 11 with `wave` (predator_test_wave() when null), wait for a
+## choice during turn 12.
+static func threatened_player(
+	units: Dictionary[UnitType.Value, int] = {}, citadel_level := 0, wave: MonsterLair = null
+) -> Player:
+	var player := RaidSamples.raid_player(units, citadel_level)
+	player.event_state.schedule(100)
+	player.event_state.set_pending(RandomEventType.Value.PREDATORS, 12)
+	player.event_state.predator_wave = wave if wave != null else predator_test_wave()
+	return player

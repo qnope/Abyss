@@ -30,9 +30,10 @@ seed comes from `GameFactory` itself.
 hold (`buildTestFight`, its `fight` here).
 
 `EventSamples` builds what the tests of the random events take from
-`test/domain/event/event_test_helper.dart` and
-`effects/wreck_test_helper.dart`: a player and its game, and the 9x9 map
-of the wreck with the player who explored its centre.
+`test/domain/event/event_test_helper.dart`,
+`effects/wreck_test_helper.dart` and `effects/predators_test_helper.dart`:
+a player and its game, the 9x9 map of the wreck with the player who
+explored its centre, and the player whose predators wait for a choice.
 
 The tests driven by `reference/vectors/` build theirs from the Dart names a
 case writes, with `VectorInputs` (`godot/tool/reference/README.md`).

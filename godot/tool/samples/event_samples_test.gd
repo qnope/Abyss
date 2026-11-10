@@ -44,3 +44,13 @@ func test_a_wreck_player_and_its_game() -> void:
 	assert_eq([game.turn, game.levels[1].width], [12, 9])
 	var map := EventSamples.wreck_map(4)
 	assert_true(EventSamples.wreck_game(player, map, 3).levels[1] == map)
+
+
+func test_a_player_whose_predators_wait_for_a_choice() -> void:
+	var player := EventSamples.threatened_player({UnitType.Value.HARPOONIST: 10}, 2)
+	var state := player.event_state
+	assert_eq([state.pending, state.pending_turn, state.next_draw_turn], [RandomEventType.Value.PREDATORS, 12, 100])
+	assert_eq(RaidSamples.wave_fields(state.predator_wave), RaidSamples.wave_fields(EventSamples.predator_test_wave()))
+	assert_eq([RaidSamples.units_on_base(player), CoralCitadelRampart.level_of(player.buildings)], [10, 2])
+	var wave := MonsterLair.new(MonsterDifficulty.Value.HARD, 4)
+	assert_true(EventSamples.threatened_player({}, 0, wave).event_state.predator_wave == wave)

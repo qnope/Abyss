@@ -13,4 +13,6 @@ extends RefCounted
 
 ## The resets TestReset.reset_all() runs before each test file.
 static func all() -> Array[Callable]:
-	return []
+	return [
+		AssaultRehearsals.debug_reset,
+	]

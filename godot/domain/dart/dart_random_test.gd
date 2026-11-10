@@ -105,6 +105,20 @@ func test_two_generators_of_one_seed_draw_the_same() -> void:
 		assert_eq(first.next_int(1000), second.next_int(1000))
 
 
+## Dart's `Random()`: no vector can hold what it draws, only that it draws
+## as any other generator does, from the seed it tells.
+func test_a_generator_without_a_seed_draws_from_one_it_remembers() -> void:
+	var seeds: Dictionary[int, bool] = {}
+	for _game: int in 20:
+		var random := DartRandom.unseeded()
+		seeds[random.initial_seed] = true
+		var again := DartRandom.new(random.initial_seed)
+		var drawn := random.next_int(0x7FFFFFFF)
+		assert_true(drawn >= 0 and drawn < 0x7FFFFFFF, str(drawn))
+		assert_eq(drawn, again.next_int(0x7FFFFFFF))
+	assert_true(seeds.size() > 1, "twenty generators of one seed")
+
+
 func _seeded(case: Dictionary) -> DartRandom:
 	var seed_of_case: int = case["seed"]
 	return DartRandom.new(seed_of_case)

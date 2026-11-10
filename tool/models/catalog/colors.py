@@ -25,8 +25,16 @@ METAL = linear("#7f90a8")
 METAL_DARK = linear("#4d5c72")
 PAD = linear("#6f8098")
 PAD_BASE = linear("#3a4658")
+PIPE = linear("#b07a3a")
+HULL = linear("#93a3b8")
+HULL_DARK = linear("#5a6a82")
+TRIM = linear("#b9c2cc")
+GLASS = linear("#3f86a8")
 GLOW_CYAN = linear("#5ee9ff")
 GLOW_PINK = linear("#ff8cc0")
+WHITE = (1.0, 1.0, 1.0)
+# A lamp's own colour, dim: its light comes from the atlas, unbleached.
+LAMP = (0.3, 0.3, 0.3)
 
 # Life
 BRAIN_TAN = linear("#c9a26a")

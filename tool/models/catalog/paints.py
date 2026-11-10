@@ -35,3 +35,17 @@ def organic(base, tip, seed, frequency=4.0, variation=0.18, height=0.6):
 
 def flat(color):
     return color
+
+
+def machined(base, seed, soot=0.4, height=0.5):
+    """A machined hull: broad mottled patches, lit on top, shadowed under
+    its overhangs, darkened toward its foot (z = 0) by silt within [height]."""
+    def paint(p, normal):
+        color = scale(base, 1 + 0.12 * noise.fbm(p * 1.4, seed, octaves=2))
+        if normal.z > 0.6:
+            color = scale(color, 1.12)
+        elif normal.z < -0.4:
+            color = scale(color, 0.72)
+        foot = max(0.0, 1 - max(p.z, 0.0) / height)
+        return mix(color, scale(color, 0.45), soot * foot * foot)
+    return paint

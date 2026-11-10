@@ -199,4 +199,5 @@ Files and tests of the modules above that wait for another module:
 | two tests of `survivors_effect_test.dart` (welcoming the survivors, turning them away), two of `predators_effect_test.dart` (facing them, baiting them) | `action` (`ChooseEventAction`) |
 | `event_resolver_predators_test.dart`, the last test of `event_resolver_wreck_test.dart` | `action` (`ChooseEventAction`, `CollectTreasureAction`) |
 | `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `action`, `script` |
+| the last two tests of `objective/temporary/temporary_objectives_test.dart` (their twins choose through the effect) | `action` (`ChooseEventAction`) |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

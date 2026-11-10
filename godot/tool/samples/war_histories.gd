@@ -1,0 +1,32 @@
+class_name WarHistories
+extends RefCounted
+## What the scratch Dart script of the digest test of the wars between
+## players printed (war_digest_test.gd), on each game: four attacks on the posts of a faction and one refused, then a
+## faction taking the human's Faille.
+
+const DIGESTS: Dictionary[String, Array] = {
+	"3": [
+		"V 6 | harpoonist:10 | harpoonist:5 | harpoonist:1 | harpoonist:4 | harpoonist:5,guardian:3 |  | harpoonist:1,guardian:1 | harpoonist:4,guardian:2 | 0>0 0>0 | harpoonist:6 |  | n3 h1 h1 | 12 false true La Guilde des Siphonophores faille:0 harpoonist:10  true 0>0 | 12 true true Nemo faille:0 harpoonist:5,guardian:3 harpoonist:1,guardian:1 true 0>0 | human 0 faction-siphonophoreGuild:12",
+		"V 7 | harpoonist:14,guardian:1 | harpoonist:9 | harpoonist:3 | harpoonist:2,guardian:1 | harpoonist:7,guardian:6 |  | harpoonist:1 | harpoonist:6,guardian:6 | 0>0 0>0 | harpoonist:12 |  | n6 h2 h2 | 16 false true La Guilde des Siphonophores cheminee:2 harpoonist:14,guardian:1  true 0>0 | 16 true true Nemo cheminee:2 harpoonist:7,guardian:6 harpoonist:1 true 0>0 | human 0 faction-siphonophoreGuild:16",
+		"V 7 | harpoonist:18,guardian:2 | harpoonist:10 | harpoonist:3 | harpoonist:5,guardian:2 | harpoonist:9,guardian:9 |  | harpoonist:1 | harpoonist:8,guardian:9 | 0>0 0>0 | harpoonist:13 |  | n9 h3 h3 | 20 false true La Guilde des Siphonophores faille:0 harpoonist:18,guardian:2  true 0>0 | 20 true true Nemo faille:0 harpoonist:9,guardian:9 harpoonist:1 true 0>0 | human 0 faction-siphonophoreGuild:20",
+		"L 6 | harpoonist:22,guardian:3 |  | harpoonist:4,guardian:1 | harpoonist:18,guardian:2 | harpoonist:11,guardian:32 | harpoonist:11,guardian:32 |  |  | 0>0 0>0 | harpoonist:4,guardian:1 | harpoonist:11,guardian:32 | n12 h4 h4 | 24 false false La Guilde des Siphonophores cheminee:2 harpoonist:22,guardian:3  true 0>0 | 24 true false Nemo cheminee:2 harpoonist:11,guardian:32  false 0>0 | faction-siphonophoreGuild 2 faction-siphonophoreGuild:24",
+		"attackTooSoon",
+		"V 3 | harpoonist:30,guardian:5 | harpoonist:30,guardian:5 |  |  | scout:2,harpoonist:4,guardian:6 |  | scout:2,harpoonist:1,guardian:1 | harpoonist:3,guardian:5 | 0>0 0>0 | harpoonist:30,guardian:5 |  | n3 h1 h5 | 29 false true Nemo faille:0 harpoonist:30,guardian:5  true 0>0 | 29 true true L'Ordre de Nacre faille:0 scout:2,harpoonist:4,guardian:6 scout:2,harpoonist:1,guardian:1 true 0>0 | faction-pearlOrder 0",
+	],
+	"11": [
+		"V 5 | harpoonist:10 | harpoonist:7 | harpoonist:2 | harpoonist:1 | harpoonist:5,guardian:3 |  | guardian:1 | harpoonist:5,guardian:2 | 0>0 0>0 | harpoonist:9 |  | n3 h1 h1 | 12 false true Les Nomades du Courant faille:4 harpoonist:10  true 0>0 | 12 true true Nemo faille:4 harpoonist:5,guardian:3 guardian:1 true 0>0 | human 0 faction-currentNomads:12",
+		"V 6 | harpoonist:14,guardian:1 | harpoonist:11 | harpoonist:2 | harpoonist:1,guardian:1 | harpoonist:7,guardian:6 |  | guardian:1 | harpoonist:7,guardian:5 | 0>0 0>0 | harpoonist:13 |  | n6 h2 h2 | 16 false true Les Nomades du Courant cheminee:3 harpoonist:14,guardian:1  true 0>0 | 16 true true Nemo cheminee:3 harpoonist:7,guardian:6 guardian:1 true 0>0 | human 0 faction-currentNomads:16",
+		"V 7 | harpoonist:18,guardian:2 | harpoonist:13 | harpoonist:1 | harpoonist:4,guardian:2 | harpoonist:9,guardian:9 |  | harpoonist:2 | harpoonist:7,guardian:9 | 0>0 0>0 | harpoonist:14 |  | n9 h3 h3 | 20 false true Les Nomades du Courant faille:4 harpoonist:18,guardian:2  true 0>0 | 20 true true Nemo faille:4 harpoonist:9,guardian:9 harpoonist:2 true 0>0 | human 0 faction-currentNomads:20",
+		"L 6 | harpoonist:22,guardian:3 |  | harpoonist:6,guardian:1 | harpoonist:16,guardian:2 | harpoonist:11,guardian:32 | harpoonist:11,guardian:32 |  |  | 0>0 0>0 | harpoonist:6,guardian:1 | harpoonist:11,guardian:32 | n12 h4 h4 | 24 false false Les Nomades du Courant cheminee:3 harpoonist:22,guardian:3  true 0>0 | 24 true false Nemo cheminee:3 harpoonist:11,guardian:32  false 0>0 | faction-currentNomads 2 faction-currentNomads:24",
+		"attackTooSoon",
+		"V 3 | harpoonist:30,guardian:5 | harpoonist:30,guardian:5 |  |  | scout:2,harpoonist:4,guardian:6 |  | scout:2,harpoonist:2,guardian:2 | harpoonist:2,guardian:4 | 0>0 0>0 | harpoonist:30,guardian:5 |  | n3 h1 h5 | 29 false true Nemo faille:4 harpoonist:30,guardian:5  true 0>0 | 29 true true La Horde des Murènes faille:4 scout:2,harpoonist:4,guardian:6 scout:2,harpoonist:2,guardian:2 true 0>0 | faction-murenaHorde 0",
+	],
+	"24": [
+		"V 7 | harpoonist:10 | harpoonist:5 | harpoonist:1 | harpoonist:4 | harpoonist:5,guardian:3 |  | harpoonist:1 | harpoonist:4,guardian:3 | 0>0 0>0 | harpoonist:6 |  | n3 h1 h1 | 12 false true Les Fidèles du Kraken faille:0 harpoonist:10  true 0>0 | 12 true true Nemo faille:0 harpoonist:5,guardian:3 harpoonist:1 true 0>0 | human 0 faction-krakenFaithful:12",
+		"V 6 | harpoonist:14,guardian:1 | harpoonist:11 | harpoonist:1 | harpoonist:2,guardian:1 | harpoonist:7,guardian:6 |  | harpoonist:1,guardian:1 | harpoonist:6,guardian:5 | 0>0 0>0 | harpoonist:12 |  | n6 h2 h2 | 16 false true Les Fidèles du Kraken cheminee:2 harpoonist:14,guardian:1  true 0>0 | 16 true true Nemo cheminee:2 harpoonist:7,guardian:6 harpoonist:1,guardian:1 true 0>0 | human 0 faction-krakenFaithful:16",
+		"V 8 | harpoonist:18,guardian:2 | harpoonist:9 | harpoonist:5 | harpoonist:4,guardian:2 | harpoonist:9,guardian:9 |  | harpoonist:1 | harpoonist:8,guardian:9 | 0>0 0>0 | harpoonist:14 |  | n9 h3 h3 | 20 false true Les Fidèles du Kraken faille:0 harpoonist:18,guardian:2  true 0>0 | 20 true true Nemo faille:0 harpoonist:9,guardian:9 harpoonist:1 true 0>0 | human 0 faction-krakenFaithful:20",
+		"L 6 | harpoonist:22,guardian:3 |  | harpoonist:5,guardian:1 | harpoonist:17,guardian:2 | harpoonist:11,guardian:32 | harpoonist:11,guardian:29 | guardian:3 |  | 0>0 0>0 | harpoonist:5,guardian:1 | harpoonist:11,guardian:32 | n12 h4 h4 | 24 false false Les Fidèles du Kraken cheminee:2 harpoonist:22,guardian:3  true 0>0 | 24 true false Nemo cheminee:2 harpoonist:11,guardian:32  false 0>0 | faction-krakenFaithful 2 faction-krakenFaithful:24",
+		"attackTooSoon",
+		"V 3 | harpoonist:30,guardian:5 | harpoonist:30,guardian:5 |  |  | scout:2,harpoonist:4,guardian:6 |  | scout:2,harpoonist:1,guardian:1 | harpoonist:3,guardian:5 | 0>0 0>0 | harpoonist:30,guardian:5 |  | n3 h1 h5 | 29 false true Nemo faille:0 harpoonist:30,guardian:5  true 0>0 | 29 true true La Horde des Murènes faille:0 scout:2,harpoonist:4,guardian:6 scout:2,harpoonist:1,guardian:1 true 0>0 | faction-murenaHorde 0",
+	],
+}

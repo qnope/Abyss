@@ -72,6 +72,11 @@ func count(player: Player, on_level: int, type: UnitType.Value) -> int:
 	return KernelGarrison.stock_at(player, on_level)[type].count
 
 
+## `strike`: the attack on the post with `army`, its dice `SeededRandom(seed)`.
+func strike(army: Dictionary[UnitType.Value, int], seed_ := 1) -> AttackPostAction:
+	return AttackPostAction.new(at.x, at.y, level, army, DartRandom.new(seed_))
+
+
 ## The attacker's army: an overwhelming force on the attack level.
 func arm(player: Player, army: Dictionary[UnitType.Value, int] = HORDE) -> void:
 	put(player, level, army)

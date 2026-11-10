@@ -101,7 +101,13 @@ armies `HORDE` and `WALL`; and the player of
 `test/helpers/post_attack_helper.dart` and `kernel_war_helper.dart`: a game
 against two factions at turn 12 where one faction (or the human) holds a
 post with its passage, or the volcanic kernel, and the other stands ready
-to strike, with the armies of those files as constants.
+to strike, with the armies of those files as constants; `strike` is the
+attack on the post with its dice `SeededRandom(seed)`.
+
+`WarDigests` writes what the digest test of the wars between players
+(`war_digest_test.gd`) compares, an attack on a post and the last assault
+entry of a player, and `WarHistories` holds what the scratch Dart script
+printed.
 
 `SiegeSamples` builds the games of the assaults on what nobody holds yet,
 as `attack_transition_base_helper.dart` (`attack_game`) and

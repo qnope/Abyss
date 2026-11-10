@@ -2,7 +2,8 @@ class_name AssaultSamples
 extends RefCounted
 ## The GDScript twin of test/helpers/base_attack_helper.dart: a two-player
 ## game where the human may strike or spy on the rival's base, and the
-## helpers that set what stands on a base.
+## helpers that set what stands on a base; and the player of
+## test/domain/fight/assault/assault_test_helper.dart.
 
 ## `horde`: an army that beats a bare base.
 const HORDE: Dictionary[UnitType.Value, int] = {UnitType.Value.HARPOONIST: 40}
@@ -46,3 +47,20 @@ static func station(player: Player, units: Dictionary[UnitType.Value, int]) -> v
 ## `standing`: the units of `type` on the base level of `player`.
 static func standing(player: Player, type: UnitType.Value) -> int:
 	return player.units_on_level(1)[type].count
+
+
+## `assaultPlayer` of test/domain/fight/assault/assault_test_helper.dart:
+## the player "p1" with `stock` on `level`, every building at 0 but its
+## headquarters at `hq`.
+static func assault_player(
+	stock: Dictionary[UnitType.Value, int] = {}, level := 1, hq := 1
+) -> Player:
+	var buildings: Dictionary[BuildingType.Value, Building] = {}
+	for type: BuildingType.Value in BuildingType.Value.values():
+		buildings[type] = Building.new(type, hq if type == BuildingType.Value.HEADQUARTERS else 0)
+	var units: Dictionary[UnitType.Value, Unit] = {}
+	for type: UnitType.Value in UnitType.Value.values():
+		var count: int = stock.get(type, 0)
+		units[type] = Unit.new(type, count)
+	var per_level: Dictionary[int, Dictionary] = {level: units}
+	return Player.new("Test", "p1", 0, 0, null, buildings, null, per_level)

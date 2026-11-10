@@ -1,10 +1,8 @@
 extends TestCase
 ## test/domain/fight/assault/assault_target_test.dart: what an assault led by
-## an Abyss Admiral can capture. Its second test (the passage, from
-## PostTakeover) waits for the action module; the last three (AssaultTarget
-## .at, on a Game) are in assault_target_at_test.gd. assault_next_step.dart has no
-## Dart test: the plan's tests hold it, and wait for the game; the last test
-## here holds it in the meantime.
+## an Abyss Admiral can capture. The last three (AssaultTarget.at, on a
+## Game) are in assault_target_at_test.gd. assault_next_step.dart has no Dart
+## test: the plan's tests hold it; the last test here holds it too.
 
 
 func test_each_target_fights_its_own_guardians() -> void:
@@ -14,6 +12,12 @@ func test_each_target_fights_its_own_guardians() -> void:
 		GuardianFactory.for_cheminee()[0].type_key)
 	assert_eq(AssaultTarget.guardians(AssaultTarget.Value.KERNEL).size(),
 		GuardianFactory.for_volcanic_kernel().size())
+
+
+func test_the_passage_to_build_after_the_capture_none_for_the_kernel() -> void:
+	assert_eq(AssaultTarget.passage(AssaultTarget.Value.FAILLE), BuildingType.Value.DESCENT_MODULE)
+	assert_eq(AssaultTarget.passage(AssaultTarget.Value.CHEMINEE), BuildingType.Value.PRESSURE_CAPSULE)
+	assert_null(AssaultTarget.passage(AssaultTarget.Value.KERNEL))
 
 
 ## Not in the Dart file: the targets in the Dart order, and their guardians

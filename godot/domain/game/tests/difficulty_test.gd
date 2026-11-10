@@ -2,8 +2,7 @@ extends VectorTestCase
 ## test/domain/game/difficulty_test.dart: the levers of a difficulty. Its
 ## tests of the raid and kraken waves ('a scaled kraken wave keeps at least
 ## one kraken', 'raid waves grow...', 'kraken waves grow...') go with the
-## raid and volcano modules, 'a new game starts in the difficulty picked'
-## with the game module. Then the monsterPercent section of raids.json.
+## raid and volcano modules. Then the monsterPercent section of raids.json.
 
 const EASY := Difficulty.Value.EASY
 const NORMAL := Difficulty.Value.NORMAL
@@ -73,3 +72,9 @@ func test_monster_percent_vectors() -> void:
 			"resourcePercent": Difficulty.resource_percent(difficulty),
 		}
 		assert_same(out, case["out"], str(case))
+
+
+func test_a_new_game_starts_in_the_difficulty_picked() -> void:
+	var game := GameFactory.new_single_player("Nemo", 1, HARD)
+	assert_eq(game.difficulty(), HARD)
+	assert_eq(GameFactory.new_single_player("Nemo", 1).difficulty(), NORMAL)

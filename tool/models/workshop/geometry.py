@@ -66,6 +66,22 @@ class Geometry:
         self.sharp_angle = min(self.sharp_angle, other.sharp_angle)
         return self
 
+    def subdivide(self, longest):
+        """Halves every edge longer than [longest] until none is, in place:
+        a big flat face gets the corners its paint and occlusion need."""
+        bm = self.to_bmesh()
+        for _ in range(5):
+            edges = [e for e in bm.edges if e.calc_length() > longest]
+            if not edges:
+                break
+            bmesh.ops.subdivide_edges(bm, edges=edges, cuts=1, use_grid_fill=True)
+        bm.verts.index_update()
+        self.verts = [v.co.copy() for v in bm.verts]
+        self.faces = [tuple(v.index for v in f.verts) for f in bm.faces]
+        self.smooth = [f.smooth for f in bm.faces]
+        bm.free()
+        return self
+
     def face_normal(self, index):
         points = [self.verts[i] for i in self.faces[index]]
         normal = Vector((0, 0, 0))

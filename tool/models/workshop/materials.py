@@ -1,6 +1,7 @@
 """Materials that survive the glTF export: factors only, no Blender texture
 node. The albedo comes from the vertex colour attribute COL, which the
-build multiplies by the baked ambient occlusion."""
+build multiplies by the baked ambient occlusion, and, for a textured
+material, by the model's atlas, which the build links in the glb."""
 
 from dataclasses import dataclass
 
@@ -15,7 +16,9 @@ COLOR_ATTRIBUTE = "Col"
 class Material:
     """A material by its glTF factors. [emission] is an sRGB '#rrggbb' or
     None, [strength] its multiplier (exported as KHR_materials_emissive_strength
-    above 1). A [double_sided] one is drawn from behind too: thin leaves."""
+    above 1). A [double_sided] one is drawn from behind too: thin leaves.
+    A [textured] one multiplies its colours by the model's atlas, and takes
+    its emission from it when it glows: one lamp material, many lights."""
 
     name: str
     roughness: float
@@ -23,6 +26,7 @@ class Material:
     emission: str | None = None
     strength: float = 1.0
     double_sided: bool = False
+    textured: bool = False
 
     def create(self):
         material = bpy.data.materials.new(self.name)

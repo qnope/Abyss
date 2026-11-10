@@ -3,13 +3,18 @@ shades them. Needs bpy."""
 
 import unittest
 
+import numpy
+
 from workshop import shapes
+from workshop.atlas import Atlas, Tile
 from workshop.materials import COLOR_ATTRIBUTE, Material
 from workshop.model import Model
 from workshop.scene import fresh_scene
 
 ROCK, GLOW = Material("rock", 0.9), Material("glow", 0.4, emission="#00ffff")
 GREY = (0.5, 0.5, 0.5)
+ATLAS = Atlas(64, 2, {"plain": Tile((0, 0, 1, 1), lambda c: numpy.ones((c.height, c.width, 1))),
+                      "plate": Tile((1, 0, 1, 1), lambda c: c.noise(2)[..., None])})
 
 
 def _model():
@@ -55,6 +60,41 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(len(open_corner), 1)
         self.assertGreater(open_corner[0], 0.2)
         self.assertLess(hidden_corner[0], open_corner[0] * 0.8)
+
+    def test_maps_its_faces_into_its_atlas_and_the_rest_on_white(self):
+        fresh_scene()
+        model = Model("test", 3, [ROCK], atlas=ATLAS)
+        model.add("Island", shapes.box((1, 1, 1)), "rock", GREY, ATLAS.fit("plate"))
+        model.piece("Pads/One").add(shapes.octahedron(0.1), "rock", GREY)
+        objects = {obj.name: obj.data for obj in model.emit()}
+        u0, v0, u1, v1 = ATLAS.rect("plate")
+        box = [tuple(d.uv) for d in objects["Island_rock"].uv_layers.active.data]
+        self.assertEqual(len(box), 24)
+        self.assertAlmostEqual(min(u for u, _ in box), u0, places=5)
+        self.assertAlmostEqual(max(v for _, v in box), v1, places=5)
+        white = ATLAS.blank(shapes.octahedron(0.1))[0][0]
+        for data in objects["One"].uv_layers.active.data:
+            self.assertAlmostEqual(data.uv[0], white[0], places=5)
+
+    def test_takes_the_uv_a_part_mapped_before_it_was_turned(self):
+        fresh_scene()
+        model = Model("test", 3, [ROCK], atlas=ATLAS)
+        cube = shapes.box((1, 1, 1))
+        mapped = ATLAS.fit("plate")(cube)
+        model.add("Island", cube.transform(rotation=(0.5, 0, 0)), "rock", GREY, mapped)
+        uvs = [tuple(d.uv) for d in model.emit()[0].data.uv_layers.active.data]
+        self.assertEqual([tuple(round(c, 5) for c in uv) for uv in uvs],
+                         [tuple(round(c, 5) for c in uv) for face in mapped for uv in face])
+        with self.assertRaises(ValueError):
+            model.add("Island", shapes.octahedron(1), "rock", GREY, mapped)
+
+    def test_gives_no_uv_to_a_model_without_atlas(self):
+        for obj in _model().emit():
+            self.assertEqual(len(obj.data.uv_layers), 0)
+
+    def test_refuses_a_mapping_without_atlas(self):
+        with self.assertRaises(ValueError):
+            _model().add("Island", shapes.octahedron(1), "rock", GREY, ATLAS.fit("plate"))
 
     def test_refuses_a_material_it_does_not_have(self):
         with self.assertRaises(KeyError):

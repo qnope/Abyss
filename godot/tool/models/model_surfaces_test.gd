@@ -1,6 +1,7 @@
 extends TestCase
 ## The import of a model turns the vertex colours of a surface into its
-## albedo, and leaves a surface without any as it is.
+## albedo, and leaves a surface without any as it is; it samples a model's
+## atlas anisotropically, and leaves a surface without texture as it is.
 
 const ModelSurfaces := preload("res://tool/models/model_surfaces.gd")
 
@@ -23,6 +24,25 @@ func test_skips_a_surface_without_material() -> void:
 	_scene = _scene_with([true])
 	((_scene.get_child(0) as MeshInstance3D).mesh as ArrayMesh).surface_set_material(0, null)
 	ModelSurfaces.use_vertex_colours(_scene)
+	assert_null((_scene.get_child(0) as MeshInstance3D).mesh.surface_get_material(0))
+
+
+func test_samples_the_atlas_of_a_surface_anisotropically() -> void:
+	_scene = _scene_with([true, true])
+	var mesh := (_scene.get_child(0) as MeshInstance3D).mesh
+	var textured := mesh.surface_get_material(0) as BaseMaterial3D
+	textured.albedo_texture = PlaceholderTexture2D.new()
+	textured.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	ModelSurfaces.sample_atlas(_scene)
+	assert_eq(textured.texture_filter, BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC)
+	var plain := mesh.surface_get_material(1) as BaseMaterial3D
+	assert_eq(plain.texture_filter, BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS)
+
+
+func test_samples_no_atlas_on_a_surface_without_material() -> void:
+	_scene = _scene_with([true])
+	((_scene.get_child(0) as MeshInstance3D).mesh as ArrayMesh).surface_set_material(0, null)
+	ModelSurfaces.sample_atlas(_scene)
 	assert_null((_scene.get_child(0) as MeshInstance3D).mesh.surface_get_material(0))
 
 

@@ -185,23 +185,46 @@ Checked against Godot 4.7.2 on x86-64 where it says "GDScript".
 - **`%`**: Dart's is never negative (`-7 % 3 == 2`, `-7 % -3 == 2`).
   GDScript's `%` gives -1, and `posmod(-7, -3)` gives -1 too: only
   `posmod` with a positive divisor matches. `~/` truncates in both.
+- **The smallest int by -1**: `MIN ~/ -1` is MIN and `MIN % -1` is 0 in
+  Dart. GDScript's `/` and `%` crash the engine there (on x86-64 the
+  processor traps): `DartMath.trunc_div` and `modulo` answer before
+  dividing.
 - **`/`**: `int / int` is a double in Dart (`7 / 2 == 3.5`) and a whole
   division in GDScript. The rules count on it: `(count * k / 20).ceil()`,
   `(stat * (100 + percent) / 100).round()`.
 - **`round()`** rounds a half away from zero in both (`roundi`). `floor`,
-  `ceil`, `toInt` of a NaN or an infinity throw in Dart.
+  `ceil`, `toInt` of a NaN or an infinity throw in Dart. From 2^63 up
+  Dart stops at the largest int (and at the smallest below -2^63), where
+  GDScript's `roundi`, `floori`, `ceili` and `int()` give what the
+  processor gives, not the same on x86 and ARM: `DartMath.round`,
+  `floor`, `ceil` and `to_int` stop as Dart does.
 - **`pow(1.6, step)`** goes through the C library, whose last bit
   changes from one machine to another: the vectors hold no such bit
   (`pow` keeps to results a double holds exactly), only the costs, which
   no last bit can change. A port can do without `pow`: `exponentialCost`
   equals `(2 * base * 8^step + 5^step) ~/ (2 * 5^step)` on every case
-  (tested), 1.6 being 8/5 and a half never being reached. `pow` is the
-  only such function of `lib/domain`: no `exp`, `log`, `sin`, `sqrt`.
+  (tested), 1.6 being 8/5 and a half never being reached. That whole
+  number is the exact rounding; Dart's floats give it only while they are
+  precise enough to stay on the right side of the nearest half, which is
+  proved while `base * 8^step * (step + 2)` is below 2^52 (a cost of 3
+  million at step 9) and not beyond: `DartMath.round_times_power` logs
+  an error there. `pow` is the only such function of `lib/domain`: no
+  `exp`, `log`, `sin`, `sqrt`.
 - **Double literals** must parse to the same bits (`literals`): 0.85, 1.6,
   0.225, `1 / 3` did. `+`, `-`, `*`, `/` are exact IEEE operations on
-  both sides.
+  both sides. Three traps of GDScript's literals: `1 / 3` is the whole
+  number 0 (write `1.0 / 3.0`); `-0.0` may be `0.0`, a function keeping
+  one constant for both zeros, the first it meets; and a literal below
+  the smallest normal double (`5e-324`, `1e-320`) parses as 0.
 - **`min`/`max`/`clamp`** return one of their operands: `max(1, 1.0)` is
-  the int 1 in both, and stays an int in what follows.
+  the int 1 in both, and stays an int in what follows. Dart tells the
+  zeros apart (`min(0.0, -0.0)` is -0.0, `max` is 0.0, whatever the
+  order) and answers NaN as soon as an operand is one. Godot's `min`,
+  `max` and `clamp`, and `minf`, `maxf` and `clampf`, ignore the sign of
+  a zero and let a NaN through from one side only: `min(1.0, NAN)` is
+  1.0 when the NaN comes second, `minf(NAN, 1.0)` is 1.0 when it comes
+  first. Between ints `mini`, `maxi` and `clampi` are Dart's; `DartNum`
+  has the others.
 - **Shifts**: `1 << 64` is 0 in Dart, 1 in GDScript on x86.
 - **JSON**: Godot reads every number as a float; a whole number is exact
   up to 2^53 only, hence `i:`.
@@ -231,6 +254,12 @@ Checked against Godot 4.7.2 on x86-64 where it says "GDScript".
   count only tells whether `k` is reached (`winsNeeding`).
 - **`double.compareTo`** (strengths) puts -0.0 before 0.0 and NaN last,
   and a side with nothing to hit has an infinite strength.
+- **`String.compareTo`** compares UTF-16 code units (the player ids of
+  `faction_base_targets.dart`, the keys of the canonical text). A Godot
+  `String` holds code points and compares them, which orders a character
+  beyond U+FFFF (two units from 0xD800 in UTF-16) after U+E000 to U+FFFF
+  where Dart puts it before. **No vector holds this yet**: the ids and
+  the keys compared today are ASCII, where both agree.
 - **Memo caches**: `AssaultRehearsals` remembers its answers in static
   caches; they hold pure results, but a port that adds one must reset it
   between test files (`process_resets.gd`).

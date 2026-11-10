@@ -56,8 +56,8 @@ func test_a_pending_section_waits_for_a_module_of_lib_domain() -> void:
 
 func test_tells_a_section_listed_twice_or_nowhere() -> void:
 	assert_eq(
-		VectorRegistry.states_of("events", "pick"),
-		PackedStringArray([VectorRegistry.PENDING + "event"])
+		VectorRegistry.states_of("factions", "traits"),
+		PackedStringArray([VectorRegistry.PENDING + "faction"])
 	)
 	assert_eq(VectorRegistry.states_of("fight_engine", "morale"), PackedStringArray())
 	assert_eq(VectorRegistry.states_of("songs", "resolve"), PackedStringArray())

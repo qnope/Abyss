@@ -89,7 +89,10 @@ const FILES: Dictionary[String, Dictionary] = {
 		],
 	},
 	"maps": {"res://domain/map/tests/map_vectors_test.gd": ["world", "level"]},
-	"events": {PENDING + "event": ["drawTurns", "pick", "survivors", "production"]},
+	"events": {
+		"res://domain/event/tests/event_drawer_vectors_test.gd": ["drawTurns", "pick"],
+		PENDING + "event": ["survivors", "production"],
+	},
 	"raids": {
 		PENDING + "raid": ["wave", "everyWave", "defenceStrength", "loot", "pillage", "upgradeNoise"],
 		PENDING + "volcano": ["krakens"],

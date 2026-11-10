@@ -1,8 +1,6 @@
 extends TestCase
 ## test/domain/event/effects/predators_effect_test.dart: the shoal of
-## predators. 'facing them marks the fight for the end of the turn' and
-## 'baiting them gives up 30 % of the algae, without a fight' wait for the
-## action module (ChooseEventAction).
+## predators.
 
 const ALGAE := ResourceType.Value.ALGAE
 const HARPOONIST := UnitType.Value.HARPOONIST
@@ -51,6 +49,25 @@ func test_half_the_power_of_a_raid_at_the_same_noise() -> void:
 		150, DartRandom.new(1), Difficulty.monster_percent(Difficulty.Value.NORMAL)
 	)
 	assert_true(player.event_state.predator_wave.level() < raid.level())
+
+
+func test_facing_them_marks_the_fight_for_the_end_of_the_turn() -> void:
+	var player := EventSamples.threatened_player({HARPOONIST: 10})
+	ChooseEventAction.new(true).execute(EventSamples.event_game(player, 12), player)
+	assert_eq(player.event_state.predators_turn, 12)
+	assert_not_null(player.event_state.predator_wave)
+	assert_false(player.event_state.has_pending())
+	assert_eq([_algae(player), RaidSamples.units_on_base(player)], [1000, 10])
+
+
+func test_baiting_them_gives_up_30_percent_of_the_algae_without_a_fight() -> void:
+	var player := EventSamples.threatened_player({HARPOONIST: 10})
+	player.resources[ALGAE].amount = 333
+	ChooseEventAction.new(false).execute(EventSamples.event_game(player, 12), player)
+	_expect_baited(player, 333)
+	var outcome := EventResolver.resolve(EventSamples.event_game(player, 12), player, 12, DartRandom.new(1))
+	assert_null(outcome.predators)
+	_expect_baited(player, 333)
 
 
 func test_left_without_a_choice_they_are_baited_at_the_end_of_the_turn() -> void:

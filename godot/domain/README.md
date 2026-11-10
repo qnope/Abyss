@@ -145,7 +145,7 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
-| `resource/pearl_income.dart`, its test | `game` (`Game`), `map` |
+| `pearl_income_test.dart` (its two tests of the end of turn) | `turn` |
 | `resource/consumption_integration_test.dart` | `game`, `turn` |
 | `building_degradation_effects_test.dart` (`TurnProduction sees the degraded buildings`) | `turn` |
 | `building_degradation_usage_test.dart` (actions, victory), `building_cost_discount_test.dart` (its last test) | `action`, `game` |

@@ -30,7 +30,8 @@ a constant `MIN_ENERGY_STORAGE`, a private `_name`. A Dart file of top-level
 functions or constants is a class named after the file:
 `exponentialCost(base, step)` is `ExponentialCost.exponential_cost(base,
 step)`. A type a module needs from one not ported yet is ported alone, in
-its future folder (`map/transition_base_type.gd`), never the whole module.
+its future folder (`fight/monster_unit_stats.gd`, which sizes the lairs of
+`map`), never the whole module.
 
 **Names Godot owns.** A Dart class named as an engine class, a built-in
 type, a singleton or a class of `godot/` takes the prefix `Game`; its file
@@ -39,6 +40,11 @@ keeps the Dart name. Of the 427 names of `lib/domain`, one collides:
 | Dart | GDScript | File |
 | --- | --- | --- |
 | `Resource` | `GameResource` | `resource/resource.gd` |
+
+A member or a parameter named as a global function of Godot is renamed
+too, a parameter with the `_` of those that fill a field: the `seed` of
+`GameMap` is `map_seed`, as the `seed` of a `Random` is `initial_seed`, and
+`generate(seed: 3)` is `generate(seed_)`.
 
 **Enums.** `class_name BuildingType` holding `enum Value { HEADQUARTERS,
 ALGAE_FARM, ... }`, the values **in the Dart order** so that a value is its
@@ -77,13 +83,20 @@ fields is a field set at the end of `_init` (`Combatant.role`).
 **`copyWith`** (first met in `MapCell`): `copy_with(changes: Dictionary)`,
 the fields to change by their GDScript name. A key that is there replaces
 the field, even by null, which is what Dart's sentinel tells apart; an
-unknown key logs an error.
+unknown key logs an error. A field Dart copies with `field ?? this.field`
+(the terrain and the content of a cell) keeps its value when given null.
 
 **Equality.** GDScript compares objects by identity and cannot change it. A
 class with `operator ==` gets `equals(other) -> bool`. Where the rules use
 such objects as keys of a map or members of a set (`GridPosition`), the key
-is a value Godot compares by content: a `Vector2i` for a position, else the
-text or number the Dart `hashCode` is made of.
+is a value Godot compares by content: a `Vector2i` for a position
+(`GridPosition.key()`, `of_key`, `keys`), else the text or number the Dart
+`hashCode` is made of (the code of a `TransitionBaseName`).
+
+**Records.** A record of two whole numbers is a `Vector2i`, the first in
+`x` (`MapLayout.lair_range_for`, the cells of `VolcanicKernelPlacer
+.footprint`). A record with named fields is an inner class of the class
+that returns it (`VolcanoFootprint.TapTarget`).
 
 **Constants and tables.** A `static const` is a typed `const`. A const map
 or list is a typed `const`, read-only as in Dart. A const map of maps is a
@@ -140,4 +153,9 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_usage_test.dart` (actions, victory), `building_cost_discount_test.dart` (its last test) | `action`, `game` |
 | `building_degradation_solo_test.dart` | `script` |
 | `game/difficulty_test.dart`, `difficulty_faction_test.dart`, `difficulty_world_relief_test.dart`, `difficulty_faction_monsters_test.dart` (the tests on a wave, a turn or a new game) | `raid`, `volcano`, `turn`, `game` |
+| `map/cell_eligibility_checker.dart`, `captured_base_finder.dart`, `reinforcement_resolver.dart`, with `cell_eligibility_checker_test.dart` | `game` (`Game`, `Player`) |
+| `map/exploration_resolver.dart`, its four tests (`exploration_resolver_test.dart`, `_level_`, `_multi_`, `exploration_volcano_test.dart`) | `game`, `tech` (`TechEffects.revealSide`) |
+| `map/rival_taker.dart`, its test | `game`, `faction` |
+| `revealWhole` and `migrate` of `map/volcano_footprint.dart`, their three tests of `volcano_footprint_test.dart`; the last test of `reveal_area_calculator_base_test.dart` | `game` |
+| `map/reveal_area_calculator_side_test.dart`, which tests `TechEffects.revealSide` | `tech` |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

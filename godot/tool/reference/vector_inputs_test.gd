@@ -31,3 +31,22 @@ func test_builds_the_stocks_of_a_new_player() -> void:
 	assert_eq(stocks[ALGAE].amount, 0)
 	assert_eq(stocks[ResourceType.Value.ENERGY].max_storage, 2000)
 	assert_eq(stocks[ResourceType.Value.PEARL].max_storage, 100)
+
+
+func test_builds_the_buildings_and_the_units_of_a_player() -> void:
+	var built := VectorInputs.buildings({"laboratory": 3})
+	assert_eq(built.keys(), BuildingType.Value.values())
+	assert_eq(built[BuildingType.Value.LABORATORY].level, 3)
+	assert_eq(built[BuildingType.Value.HEADQUARTERS].level, 0)
+	var army := VectorInputs.units({"guardian": 4})
+	assert_eq(army.keys(), UnitType.Value.values())
+	assert_eq(army[UnitType.Value.GUARDIAN].count, 4)
+	assert_eq(army[UnitType.Value.SCOUT].count, 0)
+
+
+func test_reads_a_list_of_names_as_a_set() -> void:
+	var excluded: Dictionary[BuildingType.Value, bool] = VectorInputs.values_set(
+		BuildingType.Value, ["laboratory", "barracks"]
+	)
+	assert_eq(excluded, {BuildingType.Value.LABORATORY: true, BuildingType.Value.BARRACKS: true})
+	assert_eq(VectorInputs.values_set(BuildingType.Value, null), {})

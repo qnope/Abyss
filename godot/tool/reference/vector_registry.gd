@@ -45,7 +45,7 @@ const FILES: Dictionary[String, Dictionary] = {
 			"storage", "credit", "energyConsumption", "totalConsumption", "production",
 		],
 		_RESOURCE + "production_formulas_test.gd": ["buildingProduction"],
-		PENDING + "game": ["startingStocks"],
+		"res://domain/game/tests/player_defaults_vectors_test.gd": ["startingStocks"],
 	},
 	"units": {
 		"res://domain/unit/tests/unit_vectors_test.gd": [

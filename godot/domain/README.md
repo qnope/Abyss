@@ -183,7 +183,6 @@ Files and tests of the modules above that wait for another module:
 | `volcano/wave_held_back_turn_test.dart` | `turn`, `action` |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes) | `action` (`Action`, `ActionEncoder`) |
 | `game/game_statistics.dart`, `game_statistics_calculator.dart`, their two tests | `fight` (the `FightResult` of a `CombatEntry`), `action` (the entries) |
-| `game/defeat_analysis.dart`, its test | `history` (`RaidEntry`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
 | `game_factory_factions_test.dart` (the human exploring) | `action` |
 | `pearl_income_test.dart` (its two tests of the end of turn) | `turn` |

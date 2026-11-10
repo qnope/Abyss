@@ -15,4 +15,5 @@ extends RefCounted
 static func all() -> Array[Callable]:
 	return [
 		AssaultRehearsals.debug_reset,
+		RaidDefenceAdvisor.debug_reset,
 	]

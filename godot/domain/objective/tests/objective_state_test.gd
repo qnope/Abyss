@@ -1,7 +1,6 @@
 extends TestCase
 ## test/domain/objective/objective_state_test.dart: the objectives a player
-## completed and the tips they saw. 'a new player carries an empty state'
-## waits for the game module (a Player).
+## completed and the tips they saw.
 
 const Id := ObjectiveId.Value
 
@@ -33,6 +32,13 @@ func test_objective_state_keeps_the_completions_in_their_order_each_once() -> vo
 	assert_eq(state.completed, [Id.MINES, Id.HQ_LEVEL_1] as Array[Id])
 	assert_true(state.is_completed(Id.HQ_LEVEL_1))
 	assert_true(state.tutorial_enabled)
+
+
+func test_objective_state_a_new_player_carries_an_empty_state() -> void:
+	var state := Player.new("Nemo").saved_objective_state
+	assert_not_null(state)
+	assert_eq(state.completed, [] as Array[Id])
+	assert_false(state.tutorial_enabled)
 
 
 ## Not in the Dart file: two states never share the lists of their defaults.

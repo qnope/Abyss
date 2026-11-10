@@ -148,7 +148,6 @@ Files and tests of the modules above that wait for another module:
 | `resource/pearl_income.dart`, its test | `game` (`Game`), `map` |
 | `resource/consumption_integration_test.dart` | `game`, `turn` |
 | `building_degradation_effects_test.dart` (`TurnProduction sees the degraded buildings`) | `turn` |
-| `building_degradation_test.dart` (the tests on a `Player`), `building_type_test.dart` (`PlayerDefaults`) | `game` |
 | `building_degradation_usage_test.dart` (actions, victory), `building_cost_discount_test.dart` (its last test) | `action`, `game` |
 | `building_degradation_solo_test.dart` | `script` |
 | `game/difficulty_test.dart`, `difficulty_faction_test.dart`, `difficulty_world_relief_test.dart`, `difficulty_faction_monsters_test.dart` (the tests on a wave, a turn or a new game) | `raid`, `volcano`, `turn`, `game` |

@@ -1,8 +1,7 @@
 extends VectorTestCase
 ## test/domain/building/building_degradation_test.dart: a building works
-## badly while the headquarters is below the level it asked for. The tests
-## on a Player ('the same rule on a player', Player.lowerHeadquarters) go
-## with the game module. Then the degradation section of buildings.json.
+## badly while the headquarters is below the level it asked for. Then the
+## degradation section of buildings.json.
 
 const HQ := BuildingType.Value.HEADQUARTERS
 const BARRACKS := BuildingType.Value.BARRACKS
@@ -93,3 +92,27 @@ func test_degradation_vectors() -> void:
 			"required": required,
 		}
 		assert_same(out, case["out"], str(case))
+
+
+func test_is_degraded_the_same_rule_on_a_player() -> void:
+	var player := Player.new("P", null, 0, 0, null, DomainSamples.base(4, {BARRACKS: 2}))
+	assert_false(player.is_degraded(BARRACKS))
+	player.lower_headquarters(1)
+	assert_true(player.is_degraded(BARRACKS))
+
+
+func test_player_lower_headquarters_lowers_the_qg_by_the_given_levels() -> void:
+	var p := _player(6)
+	assert_eq(p.lower_headquarters(2), 4)
+	assert_eq(p.buildings[HQ].level, 4)
+
+
+func test_player_lower_headquarters_never_goes_below_level_1() -> void:
+	var p := _player(2)
+	assert_eq(p.lower_headquarters(5), 1)
+	assert_eq(p.buildings[HQ].level, 1)
+	assert_eq(p.lower_headquarters(1), 1)
+
+
+func _player(hq: int) -> Player:
+	return Player.new("P", null, 0, 0, null, DomainSamples.base(hq))

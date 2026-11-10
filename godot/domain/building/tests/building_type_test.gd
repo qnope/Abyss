@@ -1,7 +1,6 @@
 extends TestCase
 ## test/domain/building/building_type_test.dart: the buildings of a base.
-## Its Hive round-trip is not ported (saves come later, in data/), nor its
-## PlayerDefaults.buildings() test, which goes with the game module.
+## Its Hive round-trip is not ported (saves come later, in data/).
 
 const NAMES: Array[String] = [
 	"headquarters", "algaeFarm", "coralMine", "oreExtractor", "solarPanel", "laboratory",
@@ -36,3 +35,9 @@ func test_building_type_coral_citadel_exists() -> void:
 ## Not in the Dart file: the names and the order the snapshots write.
 func test_has_the_values_of_dart_in_its_order() -> void:
 	assert_eq(DartEnum.names(BuildingType.Value), PackedStringArray(NAMES))
+
+
+func test_player_defaults_buildings_contains_volcanic_kernel_at_level_0() -> void:
+	var buildings := PlayerDefaults.buildings()
+	assert_true(buildings.has(BuildingType.Value.VOLCANIC_KERNEL))
+	assert_eq(buildings[BuildingType.Value.VOLCANIC_KERNEL].level, 0)

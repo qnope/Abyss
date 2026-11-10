@@ -1,11 +1,9 @@
 extends TestCase
 ## test/domain/building/building_degradation_effects_test.dart: what a
 ## degraded building still does. 'TurnProduction sees the degraded
-## buildings' goes with the turn module; 'TechEffects.of halves the
-## percentages' and 'raising the QG restores it' read TechEffects.of, which
-## comes with the game module. 'the production bonus of the research is
-## halved too' takes the buildings and the research of a Player: the same
-## maps are built here.
+## buildings' goes with the turn module. 'the production bonus of the
+## research is halved too' takes the buildings and the research of a
+## Player: the same maps are built here.
 
 const HQ := BuildingType.Value.HEADQUARTERS
 const FARM := BuildingType.Value.ALGAE_FARM
@@ -70,3 +68,32 @@ func test_degraded_laboratory_halves_the_research_effects_the_production_bonus_o
 	# Not in the Dart file: the 15 of the headquarters at +75 % (two tiers and
 	# Culture intensive, the option of an old save), then at +37 %.
 	assert_eq([full, half], [26, 20])
+
+
+func test_degraded_laboratory_halves_the_research_effects_tech_effects_of_halves_the_percentages() -> void:
+	var full := TechEffects.of(_researcher(5))
+	var half := TechEffects.of(_researcher(4))
+	assert_true(full.atk_percent() > 0)
+	assert_eq(half.atk_percent(), DartMath.trunc_div(full.atk_percent(), 2))
+	assert_eq(half.def_percent(), DartMath.trunc_div(full.def_percent(), 2))
+	assert_eq(
+		half.production_percent(ResourceType.Value.ORE),
+		DartMath.trunc_div(full.production_percent(ResourceType.Value.ORE), 2),
+	)
+
+
+func test_degraded_laboratory_halves_the_research_effects_raising_the_qg_restores_it() -> void:
+	var p := _researcher(4)
+	p.buildings[HQ].level = 5
+	assert_eq(TechEffects.of(p).atk_percent(), TechEffects.of(_researcher(5)).atk_percent())
+
+
+## `player(hq)` of the Dart group: military and resources researched to 3,
+## the laboratory at 3 under the headquarters at `hq`.
+func _researcher(hq: int) -> Player:
+	var branches := TechHelpers.tech_branches_with([
+		TechHelpers.researched_branch(TechBranch.Value.MILITARY, 3),
+		TechHelpers.researched_branch(TechBranch.Value.RESOURCES, 3),
+	])
+	var lab: Dictionary[BuildingType.Value, int] = {BuildingType.Value.LABORATORY: 3}
+	return Player.new("P", null, 0, 0, null, DomainSamples.base(hq, lab), branches)

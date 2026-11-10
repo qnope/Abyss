@@ -14,3 +14,13 @@ func test_loot_is_capped_at_two_turns_of_production_pearls_aside() -> void:
 	)
 	assert_eq(capped, {ALGAE: 100, CORAL: 40, ORE: 0, PEARL: 2})
 	assert_eq(capped.keys(), [ALGAE, CORAL, ORE, PEARL])
+
+
+func test_a_repelled_raid_brings_no_more_than_two_turns_of_production() -> void:
+	var player := RaidSamples.raid_player({UnitType.Value.HARPOONIST: 30}, 0, 1)
+	var wave := MonsterLair.new(MonsterDifficulty.Value.EASY, 5)
+	var report := RaidBattle.fight(player, wave, 10, DartRandom.new(1))
+	var produced := ProductionCalculator.from_buildings(player.buildings)
+	assert_true(report.victory)
+	assert_eq(report.loot[CORAL], 2 * produced[CORAL])
+	assert_eq(report.loot[ORE], 2 * produced[ORE])

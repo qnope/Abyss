@@ -49,7 +49,10 @@ so an implementation may keep the text of an object that no longer changes
 
 The digest of a section is the **SHA-256** of the UTF-8 bytes of its
 canonical text, in lowercase hexadecimal (64 characters). The domain only
-produces the texts: `GameSnapshot.digests` is given the digest function.
+produces the texts: `GameSnapshot.digests` is given the digest function. The
+SHA-256 comes from the `crypto` package, a development dependency used by the
+export tool and the tests (`tool/reference/sha256_hex.dart`), so the app does
+not depend on it.
 
 ## From the model to values
 
@@ -212,3 +215,130 @@ model, or a new persisted class, fails that test until the snapshot writes it
 (or says why not). The same test checks that every field of `Game` and of
 `Player` is in exactly one section, and that the lists of this file are the
 ones of the code.
+
+## A reference game
+
+A file of `reference/games/` is one game (`ReferenceGame`), in JSON, one line
+per turn so that a change of the rules shows as the turns it changes:
+
+```
+{
+"format":1,
+"source":{"strategy":"conquest","seed":3,"difficulty":"normal","factions":[],"turns":100},
+"result":{"status":"victory","turn":90},
+"coverage":{"actions":{"upgradeBuilding":57,...},"events":{"storm":3,...},"milestones":{...}},
+"sections":["buildings","events","fog","game",...],
+"turns":[
+{"turn":1,"digests":["ad9a23a5...","83799caf...",...]},
+{"turn":2,"digests":["=","=","c1f0...",...]},
+...
+],
+"final":["4be1...",...],
+"journal":{
+"name":"replay-conquest-tour-90",
+"player":"conquest",
+"mapSeed":1366551624,
+"difficulty":"normal",
+"lastTurn":90,
+"exact":true,
+"status":"victory",
+"turns":{
+"1":[{"do":"upgrade","building":"headquarters"}],
+...},
+"endTurnSeeds":{"1":1575319661,...}
+}
+}
+```
+
+- `source` is what produced the game, and all it takes to produce it again:
+  a `strategy` of the simulator or a `scenario` file (a path from the root of
+  the repository), the `seed`, the `difficulty`, the `factions` (personalities
+  in playing order) and the limit of `turns`. A scenario that pins its own
+  difficulty, factions or last turn (an exported replay) keeps them.
+- `journal` is the game in the format the app exports and
+  `bin/simulate.dart --scenario` replays (`ReplayExport`): every successful
+  action of every player, turn by turn, in the order played, with the `seed`
+  of its dice when it rolls some, and the seed of every end of turn. It also
+  holds the map seed, the difficulty, the name of the player and the factions.
+  `exact` is always true: the export fails otherwise.
+- `sections` names the sections, in the order of every list of digests.
+- `turns` holds the digests of the state **at the start of turn 1, then after
+  each end of turn**: the entry of turn *n* is the state as turn *n* starts.
+  A digest equal to the one of the same section in the entry before is
+  written `"="`.
+- `final` holds the digests when the game stopped, always in full. They are
+  those of the last entry of `turns` unless actions were played in the last
+  turn: a game won by an action stops there, without ending its turn, and so
+  does a replay on its `lastTurn`.
+- `result` is the status (`playing` when the game reached the turn limit) and
+  the turn it stopped on.
+- `coverage` tells what the game went through, for the test of the set:
+  the successful actions by `ActionType` (ends of turn included, those of
+  the factions too), the random events drawn by type (for any player), and
+  `milestones`: the turn the human took a Faille, a Cheminée and the kernel,
+  the turn the guardians struck back and whether the Faille held, the raids
+  and kraken waves won and lost, the factions fallen, and the winner.
+
+### Replaying it
+
+The digests are those of a **replay of the journal**, the way
+`ScriptRunner` plays a `TimelineScript`; the export checks that this replay
+ends in the very state of the game first played. A replay goes:
+
+1. Create the game from the journal: `player`, `mapSeed`, `difficulty`,
+   `factions` (`GameFactory.newGame`). Compare with the entry of turn 1.
+2. For each turn, play the actions of `journal.turns[turn]` in order, each
+   one as its `player` (a faction id) or as the human when it has none,
+   through `ActionExecutor`, with `SeededRandom(seed)` when it has a `seed`.
+   After each successful action, `VictoryChecker.check` may end the game.
+3. Stop when the game is over or on `lastTurn`. Otherwise end the turn:
+   `EndTurnAction(random: SeededRandom(endTurnSeeds[turn]), playFactions:
+   false)`, the brains of the factions do not play, their moves are in the
+   journal. Compare with the entry of the next turn.
+4. Compare with `final`.
+
+The state does not depend on the id of the human. A reference game is
+*played* with the human id `00000000-0000-4000-8000-000000000000`
+(`ReferenceExporter.humanId`), because a faction breaks a tie between two
+bases by comparing ids, and a strategy game must be the same every time.
+
+A strategy rolls its dice as `SeededScript` says: one generator,
+`Random(seed)`, gives a fresh seed to every action that asks for dice, in
+the order asked, and to every end of turn; the map seed is the first draw
+of another `Random(seed)`. That is what the Godot strategies will have to
+do to play these games again by themselves, not only to replay them.
+
+## The tool
+
+```
+# One game
+dart run bin/export_reference.dart --strategy conquest --seed 3 \
+    --difficulty hard --factions 3 --turns 120 --out reference/games/x.json
+dart run bin/export_reference.dart --scenario reference/scenarios/y.json \
+    --seed 3 --turns 100 --out reference/games/y.json
+
+# The committed set: played again, compared byte for byte
+dart run bin/export_reference.dart --check     # fails naming what differs
+dart run bin/export_reference.dart --update    # after a meant change of rules
+
+# Where does a replay go wrong?
+dart run bin/export_reference.dart --reference reference/games/x.json \
+    --dump-turn 37 --trace-turn 36
+```
+
+`--factions` takes a number (drawn from the catalogue with the seed, as a new
+game does) or names separated by commas.
+
+`--dump-turn N` writes `<game>.turn-N.dump.json`: the canonical text of every
+section at the start of turn N (`final` for the last state), one section per
+line, `"name":` then the text whose SHA-256 is the digest. Dump the same turn
+on the other side and compare the two files (`jq .` makes them readable).
+
+`--trace-turn N` writes `<game>.turn-N.trace.json`: the digests at the start
+of turn N, after **each action** of the turn (those of the factions
+included, as the journal lists them), and after its end (`null` when the
+game stopped in that turn).
+
+`--check` plays every game of `reference/games/` again from its `source`
+and compares the file byte for byte; when some differ it names them, writes
+what they are today in a temporary folder, and exits with 1.

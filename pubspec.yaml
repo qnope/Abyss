@@ -26,6 +26,9 @@ dev_dependencies:
   hive_ce_generator: ^1.11.2
   build_runner: ^2.4.13
   flutter_launcher_icons: ^0.14.4
+  # SHA-256 of the reference games (bin/export_reference.dart and tests);
+  # not a dependency of the app.
+  crypto: ^3.0.7
   # analyzer 14.5 removed an API build_runner 2.16.1 still uses.
   analyzer: ">=12.1.0 <14.5.0"
 

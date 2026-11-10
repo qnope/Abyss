@@ -58,3 +58,8 @@ app.*.map.json
 /godot/*.aab
 /godot/*.ipa
 /godot/*.pck
+
+# The dump and the trace of a turn of a reference game, written beside it
+# by bin/export_reference.dart to find where a replay goes wrong
+/reference/games/*.dump.json
+/reference/games/*.trace.json

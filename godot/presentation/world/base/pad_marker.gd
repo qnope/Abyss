@@ -9,11 +9,11 @@ extends RefCounted
 ## The slab's colour, times its painted vertex colours.
 const STONE_SHADE := Color(0.42, 0.47, 0.55)
 ## The rim's light, between its dimmest and brightest breath.
-const GLOW_ENERGY := 0.4
-const GLOW_SWING := 0.35
+const GLOW_ENERGY := 0.22
+const GLOW_SWING := 0.2
 ## The rim's colour, times its painted vertex colours: lit, it would outshine
 ## its glow.
-const GLOW_SHADE := Color(0.3, 0.3, 0.3)
+const GLOW_SHADE := Color(0.16, 0.18, 0.2)
 ## A breath, in seconds: the pulse of a glow in the Flutter game.
 const PULSE_CYCLE := 3.0
 

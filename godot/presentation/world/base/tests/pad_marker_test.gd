@@ -36,3 +36,11 @@ func _mesh() -> Mesh:
 	var mesh := (island.get_node("Pads/Barracks") as MeshInstance3D).mesh
 	island.free()
 	return mesh
+
+
+func test_stays_a_hint_beside_the_buildings_lights() -> void:
+	var marker := PadMarker.new(_mesh())
+	for seconds: float in [0.0, PadMarker.PULSE_CYCLE / 4.0, PadMarker.PULSE_CYCLE / 2.0]:
+		marker.breathe(seconds)
+		assert_true(marker.glow.emission_energy_multiplier <= 0.3, "dimmer than any lamp")
+	assert_true(marker.glow.albedo_color.get_luminance() < 0.2, "its paint barely lit")

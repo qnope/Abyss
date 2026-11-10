@@ -25,6 +25,13 @@ func test_the_entries_of_the_fights() -> void:
 	var assault := HistorySamples.base_assault_entry(true, false)
 	assert_eq([assault.turn, assault.opponent_name, assault.defending], [14, "Nacre", false])
 	assert_eq([assault.rampart_before, assault.rampart_after, assault.headquarters_after], [2, 0, 5])
+	assert_eq([assault.post_name, assault.passage_destroyed, assault.dead], [null, true, {}])
+	var kernel := HistorySamples.base_assault_entry(
+		true, true, "volcanicKernel", Vector2i(1, 0), {UnitType.Value.SCOUT: 2}, {UnitType.Value.GUARDIAN: 1}, false
+	)
+	assert_eq([kernel.post_name, kernel.rampart_before, kernel.rampart_after], ["volcanicKernel", 1, 0])
+	assert_eq([kernel.lost_with_post, kernel.dead, kernel.passage_destroyed],
+		[{UnitType.Value.SCOUT: 2}, {UnitType.Value.GUARDIAN: 1}, false])
 
 
 func test_the_fights_and_the_game_of_the_statistics() -> void:

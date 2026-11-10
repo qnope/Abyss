@@ -29,5 +29,10 @@ seed comes from `GameFactory` itself.
 `test/helpers/history_entry_samples.dart` and the fight of two turns they
 hold (`buildTestFight`, its `fight` here).
 
+`EventSamples` builds what the tests of the random events take from
+`test/domain/event/event_test_helper.dart` and
+`effects/wreck_test_helper.dart`: a player and its game, and the 9x9 map
+of the wreck with the player who explored its centre.
+
 The tests driven by `reference/vectors/` build theirs from the Dart names a
 case writes, with `VectorInputs` (`godot/tool/reference/README.md`).

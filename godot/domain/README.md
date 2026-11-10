@@ -196,8 +196,7 @@ Files and tests of the modules above that wait for another module:
 | `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
 | `action/announced_attack_resolver.dart`, `held_attack_reports.dart`, the tests of `held_attack_report/` but `takeover_losses_test.dart`; `announce_attack/announced_attack_report_test.dart`, `announced_attack_resolve_test.dart` (they end the turn: `turn` too) | `faction` (`faction_attack_report.dart`, which reads `AttackHeldKernelAction` and `PostTakeover`) |
 | `action/attack_transition_base_action.dart`, `attack_transition_base_execute_test.dart`, `attack_transition_base_history_test.dart` (the tests of its `validate` call `AttackTransitionBaseValidator.check`, which it is) | `leviathan` (`LeviathanResolver`) |
-| `action_identity_test.dart` | `AttackPostAction` (the row of `attack_post_validator.dart`), `AttackTransitionBaseAction` above |
-| `silent_swim_noise_test.dart` | `AttackTransitionBaseAction` above |
+| The row of `AttackTransitionBaseAction` in `action_identity_test.dart`, and in the fights of `silent_swim_noise_test.dart` | `AttackTransitionBaseAction` above |
 | `volcano/wave_held_back_turn_test.dart` | `turn` (`TurnResolver`) |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it; the last test of `choose_event_action_test.dart` (the choice is written in the replay journal) | `action` (`ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
@@ -210,8 +209,7 @@ Files and tests of the modules above that wait for another module:
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
 | `objective/guide/guide_leviathan.dart`, `guide_leviathan_test.dart` | `leviathan` (`LeviathanResolver`, `LeviathanDefenceAdvisor`) |
 | `objective/guide/guide_alerts.dart` | `faction` (`UndefendedPosts`, which reads `action`'s `PostTakeover`) |
-| `objective/guide/guide_assault.dart` | `action`: `AssaultPlan` is ported, left for the next part of the lot |
-| `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` and `GuideAssault` above |
+| `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` above |
 | `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own) | `GuideCampaign` and `GuideLeviathan` above |
 | `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `script` |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

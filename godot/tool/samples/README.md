@@ -93,7 +93,14 @@ reinforcements of `send_reinforcements_helper.dart` (`reinforcement_map`,
 `AssaultSamples` is the twin of `test/helpers/base_attack_helper.dart`: the
 two-player game at turn 12 where the human has seen the rival's base
 (`assault_game`, `rival_of` for `two.rival`), `set_level`, `station` and
-`standing`, and the armies `HORDE` and `WALL`.
+`standing`, and the armies `HORDE` and `WALL`; and the player of
+`test/domain/fight/assault/assault_test_helper.dart` (`assault_player`).
+
+`PostWar` and `KernelWar` are the twins of the classes of
+`test/helpers/post_attack_helper.dart` and `kernel_war_helper.dart`: a game
+against two factions at turn 12 where one faction (or the human) holds a
+post with its passage, or the volcanic kernel, and the other stands ready
+to strike, with the armies of those files as constants.
 
 `ActionDigests` writes the digest of an action that the digest test of the
 actions compares with what a scratch Dart script printed on the games of

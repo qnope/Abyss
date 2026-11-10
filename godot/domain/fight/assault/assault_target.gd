@@ -1,8 +1,7 @@
 class_name AssaultTarget
 extends RefCounted
 ## lib/domain/fight/assault/assault_target.dart: what an assault led by an
-## Abyss Admiral can capture. Its `passage` waits for the action module
-## (PostTakeover).
+## Abyss Admiral can capture.
 
 enum Value { FAILLE, CHEMINEE, KERNEL }
 
@@ -21,6 +20,16 @@ static func guardians(target: Value) -> Array[Combatant]:
 ## fresh guardians at each call, as a planner takes its enemy.
 static func guardians_of(target: Value) -> Callable:
 	return guardians.bind(target)
+
+
+## `target.passage`: the building that opens the way down once captured
+## (a BuildingType.Value); null for the kernel, which opens nothing.
+static func passage(target: Value) -> Variant:
+	match target:
+		Value.FAILLE: return PostTakeover.passage_of(TransitionBaseType.Value.FAILLE)
+		Value.CHEMINEE: return PostTakeover.passage_of(TransitionBaseType.Value.CHEMINEE)
+	# kernel, the last target.
+	return null
 
 
 ## The target still to capture at (`x`, `y`) on `level` of `game`, any cell

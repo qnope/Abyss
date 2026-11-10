@@ -61,3 +61,36 @@ static func resources(named_amounts: Variant) -> Dictionary[ResourceType.Value, 
 		var amount: int = given.get(DartEnum.name_of(ResourceType.Value, type), 0)
 		stocks[type] = GameResource.new(type, amount, STORAGE[type])
 	return stocks
+
+
+## Every building in the order of BuildingType, at the level the case names,
+## 0 otherwise: the buildings of a player.
+static func buildings(named_levels: Variant) -> Dictionary[BuildingType.Value, Building]:
+	var given: Dictionary = named_levels
+	var built: Dictionary[BuildingType.Value, Building] = {}
+	for type: BuildingType.Value in BuildingType.Value.values():
+		var level: int = given.get(DartEnum.name_of(BuildingType.Value, type), 0)
+		built[type] = Building.new(type, level)
+	return built
+
+
+## The six units in the order of UnitType, as many of each as the case
+## names, 0 otherwise.
+static func units(named_counts: Variant) -> Dictionary[UnitType.Value, Unit]:
+	var given: Dictionary = named_counts
+	var army: Dictionary[UnitType.Value, Unit] = {}
+	for type: UnitType.Value in UnitType.Value.values():
+		var count: int = given.get(DartEnum.name_of(UnitType.Value, type), 0)
+		army[type] = Unit.new(type, count)
+	return army
+
+
+## A set of values of an enum (`Dictionary[Enum.Value, bool]`) from the list
+## of names a case writes, empty when the case writes null.
+static func values_set(enumeration: Dictionary, names_or_null: Variant) -> Dictionary:
+	var typed := Dictionary({}, TYPE_INT, &"", null, TYPE_BOOL, &"", null)
+	if names_or_null != null:
+		var given: Array = names_or_null
+		for name: String in given:
+			typed[value(enumeration, name)] = true
+	return typed

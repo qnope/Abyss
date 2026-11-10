@@ -11,5 +11,8 @@ only them, in the order given.
 
     var buildings := DomainSamples.buildings({BuildingType.Value.HEADQUARTERS: 2})
 
+`TechHelpers` is `test/helpers/tech_helpers.dart`, a file of helpers the Dart
+tests already share: a researched branch, the three branches of a player.
+
 The tests driven by `reference/vectors/` build theirs from the Dart names a
 case writes, with `VectorInputs` (`godot/tool/reference/README.md`).

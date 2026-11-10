@@ -18,7 +18,7 @@ const ROOTS := {
 }
 
 ## The models that paint an atlas (<model>_atlas.png beside the glb).
-const TEXTURED: Array[String] = ["coral_citadel", "headquarters", "solar_panel"]
+const TEXTURED: Array[String] = ["base_rampart", "coral_citadel", "headquarters", "solar_panel"]
 
 ## The island's pads, one per building, where the buildings stand.
 const PADS: Array[String] = [

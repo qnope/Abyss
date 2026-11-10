@@ -41,6 +41,9 @@ def decor(model):
                       allowed=lambda p: _on_rim(p) and _room(*p) > 0.35, tries=4000)
     for x, y in centres:
         taken += _cluster(model, rng, x, y)
+    for x, y in scatter(rng, _rim_sample, count=4, spacing=1.0, taken=centres, tries=4000,
+                        allowed=lambda p: _on_rim(p) and _front_flank(*p) and _room(*p) > 0.3):
+        taken += _cluster(model, rng, x, y)
     rocks_spots = scatter(rng, _rim_sample, count=80, spacing=0.3, allowed=_on_rim,
                           taken=taken, tries=4000)
     for x, y in rocks_spots:
@@ -111,6 +114,12 @@ def _choose(rng, kinds, front):
 def _front(x, y):
     """1 at the deck's corner nearest the game camera (u = v = 12), -1 at the far one."""
     return (x - y) / (2 * HALF)
+
+
+def _front_flank(x, y):
+    """On a front edge's rim, between its gate and its corners: the stretch
+    the game's camera sees best, which the first scatter leaves bare."""
+    return (x > HALF and 1.0 < abs(y) < 3.8) or (y < -HALF and 1.0 < abs(x) < 3.8)
 
 
 def _rim_sample(rng):

@@ -1,0 +1,40 @@
+"""Materials that survive the glTF export: factors only, no Blender texture
+node. The albedo comes from the vertex colour attribute COL, which the
+build multiplies by the baked ambient occlusion."""
+
+from dataclasses import dataclass
+
+import bpy
+
+from workshop.colors import linear
+
+COLOR_ATTRIBUTE = "Col"
+
+
+@dataclass(frozen=True)
+class Material:
+    """A material by its glTF factors. [emission] is an sRGB '#rrggbb' or
+    None, [strength] its multiplier (exported as KHR_materials_emissive_strength
+    above 1). A [double_sided] one is drawn from behind too: thin leaves."""
+
+    name: str
+    roughness: float
+    metallic: float = 0.0
+    emission: str | None = None
+    strength: float = 1.0
+    double_sided: bool = False
+
+    def create(self):
+        material = bpy.data.materials.new(self.name)
+        material.use_backface_culling = not self.double_sided
+        nodes = material.node_tree.nodes
+        shader = nodes["Principled BSDF"]
+        colors = nodes.new("ShaderNodeVertexColor")
+        colors.layer_name = COLOR_ATTRIBUTE
+        material.node_tree.links.new(colors.outputs["Color"], shader.inputs["Base Color"])
+        shader.inputs["Roughness"].default_value = self.roughness
+        shader.inputs["Metallic"].default_value = self.metallic
+        if self.emission:
+            shader.inputs["Emission Color"].default_value = (*linear(self.emission), 1)
+            shader.inputs["Emission Strength"].default_value = self.strength
+        return material

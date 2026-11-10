@@ -33,6 +33,13 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1
 
+[importer_defaults]
+
+scene={
+"import_script/path": "res://tool/models/model_import.gd",
+"meshes/ensure_tangents": false
+}
+
 [rendering]
 
 renderer/rendering_method="mobile"

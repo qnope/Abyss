@@ -121,7 +121,10 @@ itself, set by the `super(...)` of each subclass (`HistoryEntry`). An
 abstract class whose hooks do nothing until overridden is a plain base
 class with those empty hooks, their unused parameters prefixed `_`, and
 each subclass overrides the ones it needs (`EventEffect`); a `const`
-instance of a subclass is a `new` one.
+instance of a subclass is a `new` one. An abstract member without a body
+is an `@abstract func` of an `@abstract` class (`ObjectiveGoal`), which
+leaves no line for the coverage to miss. Another operator than `==` is a
+method named after it: `a + b` is `a.plus(b)` (`ObjectiveProgress`).
 
 **`switch` on an enum.** GDScript checks no exhaustiveness, and a `return`
 no value reaches would never be covered. Constant cases are a `const` table

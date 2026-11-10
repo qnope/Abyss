@@ -62,3 +62,9 @@ volcano digests, too long to sit in their test files.
 makes the players' choices as `ChooseEventAction` does, and writes what a
 draw left, a school of predators fought and the state of the events;
 `EventHistories` holds the history entries the Dart script printed.
+
+`ObjectiveSamples` builds what the tests of the objectives take from
+`test/helpers/objective_helpers.dart` and `map_tab_harness.dart`: the game
+of a new player on a plain 10x10 map (`objective_game`), a building set to
+a level, and the progress `expectProgress` compares, as
+`[current, target, done]`.

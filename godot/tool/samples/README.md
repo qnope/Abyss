@@ -78,3 +78,8 @@ games of `GameFactory` between the turns as the scratch Dart script did
 lair, a Faille and a kernel taken), and writes an objective completed
 with what it credited, an objective of an event under way or ended, and
 the tips ported that newly apply, in the order of `TipId`.
+
+`ActionSamples` builds what the tests of the actions write inline (`Player(id:
+'test', name: 'Test', resources: ..., buildings: ...)`, a player stocked with
+the amounts and buildings given and its game) and, as the actions come, what
+the helpers of `test/domain/action/` build.

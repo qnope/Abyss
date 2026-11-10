@@ -1,7 +1,6 @@
 extends TestCase
 ## test/domain/building/building_cost_discount_test.dart: the discount of
-## Chantiers économes on every upgrade. Its last test, an upgrade by a
-## player with the option, goes with the action module.
+## Chantiers économes on every upgrade.
 
 const CORAL := ResourceType.Value.CORAL
 const ORE := ResourceType.Value.ORE
@@ -31,3 +30,15 @@ func test_chantiers_economes_discount_a_maxed_building_stays_without_cost() -> v
 func test_chantiers_economes_discount_the_check_accepts_the_discounted_price() -> void:
 	assert_true(_check(_thrifty).can_upgrade)
 	assert_eq(_check(BuildingCostCalculator.new()).missing_resources, {CORAL: 9, ORE: 6})
+
+
+func test_chantiers_economes_discount_an_upgrade_by_a_player_with_the_option_pays_less() -> void:
+	var options: Array[TechOption.Value] = [TechOption.Value.A, TechOption.Value.B]
+	var player := Player.new(
+		"Test", "p", 0, 0, DomainSamples.resources({CORAL: 100, ORE: 100}), DomainSamples.buildings({HQ: 0}),
+		TechHelpers.tech_branches_with([TechHelpers.researched_branch(TechBranch.Value.RESOURCES, 4, options)]),
+	)
+	var result := UpgradeBuildingAction.new(HQ).execute(GameSamples.game([player]), player)
+	assert_true(result.is_success)
+	assert_eq(player.resources[CORAL].amount, 49)
+	assert_eq(player.resources[ORE].amount, 66)

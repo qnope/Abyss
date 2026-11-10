@@ -1,9 +1,18 @@
 extends TestCase
 ## test/domain/building/building_degradation_usage_test.dart: what a
-## degraded building costs its base. The tests that recruit, descend or
-## garrison the kernel go with the action module.
+## degraded building costs its base. The tests that descend or garrison
+## the kernel go with DescendValidator and GarrisonKernelAction.
 
 const CITADEL := BuildingType.Value.CORAL_CITADEL
+const SCOUT := UnitType.Value.SCOUT
+const ALGAE := ResourceType.Value.ALGAE
+
+
+func _barracks_player(hq: int, algae: int) -> Player:
+	var p := Player.new("P", "p", 0, 0, null, DomainSamples.base(hq, {BuildingType.Value.BARRACKS: 1}))
+	p.resources[ALGAE].amount = algae
+	p.resources[ResourceType.Value.CORAL].amount = 100
+	return p
 
 
 func test_degraded_barracks_doubles_the_unit_cost_cost_x2() -> void:
@@ -14,6 +23,23 @@ func test_degraded_barracks_doubles_the_unit_cost_cost_x2() -> void:
 		assert_eq(doubled.keys(), normal.keys())
 		for resource: ResourceType.Value in normal:
 			assert_eq(doubled[resource], normal[resource] * 2)
+
+
+func test_degraded_barracks_doubles_the_unit_cost_recruiting_charges_twice_and_refuses_without_the_funds() -> void:
+	var p := _barracks_player(1, 25)
+	var game := GameSamples.game([p])
+	var action := RecruitUnitAction.new(SCOUT, 2)
+	# 2 scouts = 40 algae when doubled.
+	assert_eq(action.validate(game, p).reason, ActionFailure.Value.NOT_ENOUGH_RESOURCES)
+	p.resources[ALGAE].amount = 40
+	assert_true(action.execute(game, p).is_success)
+	assert_eq(p.resources[ALGAE].amount, 0)
+
+
+func test_degraded_barracks_doubles_the_unit_cost_with_the_qg_at_2_the_cost_is_normal() -> void:
+	var p := _barracks_player(2, 20)
+	assert_true(RecruitUnitAction.new(SCOUT, 2).execute(GameSamples.game([p]), p).is_success)
+	assert_eq(p.resources[ALGAE].amount, 0)
 
 
 func test_degraded_citadel_halves_the_rampart_combatant() -> void:

@@ -22,3 +22,22 @@ func test_a_bare_raid_player_has_no_unit_and_buildings_at_level_0() -> void:
 	var player := RaidSamples.raid_player()
 	assert_eq(RaidSamples.units_on_base(player), 0)
 	assert_eq(Building.level_in(player.buildings, BuildingType.Value.CORAL_CITADEL), 0)
+
+
+func test_a_wave_reads_as_its_five_fields() -> void:
+	var wave := MonsterLair.new(
+		MonsterDifficulty.Value.HARD, 4, MonsterFamily.Value.COLOSSUS, MonsterFamily.Value.SWARM, 30
+	)
+	assert_eq(
+		RaidSamples.wave_fields(wave),
+		[MonsterDifficulty.Value.HARD, MonsterFamily.Value.COLOSSUS, 4, MonsterFamily.Value.SWARM, 30],
+	)
+
+
+func test_a_wave_shares_its_generic_monsters_the_first_family_taking_more() -> void:
+	var wave := MonsterLair.new(
+		MonsterDifficulty.Value.HARD, 0, MonsterFamily.Value.COLOSSUS, MonsterFamily.Value.SWARM, 0
+	)
+	# 7 generic: 4 for the colossi (one for six, at least one), 3 for the
+	# swarm (three for one).
+	assert_eq(RaidSamples.shared_counts(wave, 7), [1, 9])

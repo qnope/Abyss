@@ -73,7 +73,8 @@ const FILES: Dictionary[String, Dictionary] = {
 		"res://domain/fight/tests/fight_aftermath_vectors_test.gd": [
 			"woundedProbability", "casualties", "lairLoot",
 		],
-		PENDING + "action": ["pctLost", "treasureLoot"],
+		"res://domain/action/tests/fight_monster_helpers_vectors_test.gd": ["pctLost"],
+		PENDING + "action": ["treasureLoot"],
 	},
 	"fight_planning": {
 		"res://domain/fight/tests/fight_planning_vectors_test.gd": [

@@ -20,6 +20,10 @@ const BUILT: Array[StringName] = [&"Headquarters", &"SolarPanel", &"CoralCitadel
 const NO_SHADOW: Array[String] = [
 	"*_glow", "*_glow_pink", "*_algae", "Island_stone", "Island_rock", "Island_coral",
 ]
+## The way the rays of light fall: nearly straight down, steeper than the
+## key light, so that they cross every view of the orbit instead of
+## running along it.
+const RAYS := Vector3(-0.12, -1.0, -0.22)
 
 ## How far the rampart has grown with the coral citadel, from 1 to 3.
 @export_range(1, 3) var rampart_tier := 1:
@@ -27,8 +31,10 @@ const NO_SHADOW: Array[String] = [
 
 var camera := OrbitCamera.new()
 var key_light := KeyLight.new()
+var water := UnderwaterEnvironment.new()
 var buildings := BaseBuildings.new()
 var pads: BasePads
+var motion: BaseMotion
 var _rampart := RAMPART.instantiate() as Node3D
 
 
@@ -41,6 +47,10 @@ func _init() -> void:
 	add_child(_rampart)
 	add_child(buildings)
 	add_child(key_light)
+	add_child(water)
+	add_child(LightShafts.new(RAYS))
+	motion = BaseMotion.new(buildings, pads.marker)
+	add_child(motion)
 	add_child(camera)
 	build(BUILT)
 	set_rampart_tier(rampart_tier)
@@ -53,6 +63,7 @@ func _init() -> void:
 func build(names: Array[StringName]) -> void:
 	buildings.build(names, pads)
 	pads.mark(names)
+	motion.track()
 	for name in names:
 		_quiet_shadows(buildings.building(name))
 
@@ -60,6 +71,11 @@ func build(names: Array[StringName]) -> void:
 ## Turns the key light's shadows on or off.
 func set_shadows(enabled: bool) -> void:
 	key_light.set_shadows(enabled)
+
+
+## Turns the glow of the lights on or off.
+func set_glow(enabled: bool) -> void:
+	water.set_glow(enabled)
 
 
 func set_rampart_tier(tier: int) -> void:

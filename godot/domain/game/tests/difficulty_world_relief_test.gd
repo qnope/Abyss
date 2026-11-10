@@ -1,8 +1,6 @@
 extends TestCase
 ## test/domain/game/difficulty_world_relief_test.dart: the monsters ease on
-## the human as the world grows with the factions. 'a raid on the human is
-## smaller in a world of ten factions' and 'a kraken wave on the human
-## kernel is lighter too' go with the raid and volcano modules.
+## the human as the world grows with the factions.
 
 const NORMAL := Difficulty.Value.NORMAL
 
@@ -25,3 +23,25 @@ func test_the_relief_eases_the_human_only_never_a_faction() -> void:
 		Difficulty.monster_percent_for(NORMAL, true, 3),
 		Difficulty.monster_percent_for(NORMAL, true)
 	)
+
+
+func test_a_raid_on_the_human_is_smaller_in_a_world_of_ten_factions() -> void:
+	assert_true(_raid_size(10) < _raid_size(0))
+
+
+func test_a_kraken_wave_on_the_human_kernel_is_lighter_too() -> void:
+	assert_true(_krakens(10) < _krakens(0))
+
+
+func _raid_size(factions: int) -> int:
+	var player := RaidSamples.raid_player()
+	player.raid_state.add_noise(NoiseRules.THRESHOLD)
+	player.raid_state.total_noise = 4000
+	var outcome := RaidResolver.resolve(player, 12, DartRandom.new(1), NORMAL, false, factions)
+	return outcome.announced.unit_count
+
+
+func _krakens(factions: int) -> int:
+	var player := RaidSamples.raid_player()
+	player.buildings[BuildingType.Value.VOLCANIC_KERNEL].level = 9
+	return VolcanoResolver.resolve(player, 12, null, NORMAL, false, factions).announced.unit_count

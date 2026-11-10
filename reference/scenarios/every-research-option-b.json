@@ -1,0 +1,467 @@
+{
+  "name": "option-b",
+  "otherwise": "conquest",
+  "turns": {
+    "23": [
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 6,
+        "seed": 1862568257
+      },
+      {
+        "do": "collect",
+        "x": 8,
+        "y": 6,
+        "seed": 470943231
+      },
+      {
+        "do": "collect",
+        "x": 7,
+        "y": 8,
+        "seed": 1693780527
+      },
+      {
+        "do": "collect",
+        "x": 8,
+        "y": 12,
+        "seed": 2103965309
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 22
+      },
+      {
+        "do": "unlock",
+        "branch": "resources"
+      },
+      {
+        "do": "research",
+        "branch": "resources",
+        "option": "b"
+      },
+      {
+        "do": "unlock",
+        "branch": "military"
+      },
+      {
+        "do": "upgrade",
+        "building": "laboratory"
+      },
+      {
+        "do": "upgrade",
+        "building": "laboratory"
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 2
+      },
+      {
+        "do": "explore",
+        "x": 5,
+        "y": 5
+      },
+      {
+        "do": "explore",
+        "x": 5,
+        "y": 13
+      }
+    ],
+    "24": [
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 6,
+        "seed": 1105845580
+      },
+      {
+        "do": "research",
+        "branch": "military",
+        "option": "b"
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 2
+      },
+      {
+        "do": "explore",
+        "x": 3,
+        "y": 3
+      },
+      {
+        "do": "explore",
+        "x": 7,
+        "y": 3
+      }
+    ],
+    "25": [
+      {
+        "do": "collect",
+        "x": 3,
+        "y": 4,
+        "seed": 87342853
+      },
+      {
+        "do": "collect",
+        "x": 8,
+        "y": 2,
+        "seed": 44610162
+      },
+      {
+        "do": "collect",
+        "x": 6,
+        "y": 3,
+        "seed": 2091095314
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 46
+      },
+      {
+        "do": "research",
+        "branch": "resources",
+        "option": "b"
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 2
+      },
+      {
+        "do": "explore",
+        "x": 1,
+        "y": 1
+      },
+      {
+        "do": "explore",
+        "x": 1,
+        "y": 5
+      }
+    ],
+    "28": [
+      {
+        "do": "research",
+        "branch": "military",
+        "option": "b"
+      },
+      {
+        "do": "upgrade",
+        "building": "algaeFarm"
+      },
+      {
+        "do": "upgrade",
+        "building": "coralMine"
+      }
+    ],
+    "29": [
+      {
+        "do": "research",
+        "branch": "resources",
+        "option": "b"
+      },
+      {
+        "do": "recruit",
+        "unit": "abyssAdmiral",
+        "count": 1
+      },
+      {
+        "do": "upgrade",
+        "building": "oreExtractor"
+      },
+      {
+        "do": "upgrade",
+        "building": "barracks"
+      },
+      {
+        "do": "explore",
+        "x": 1,
+        "y": 9
+      },
+      {
+        "do": "explore",
+        "x": 15,
+        "y": 15
+      }
+    ],
+    "33": [
+      {
+        "do": "collect",
+        "x": 11,
+        "y": 17,
+        "seed": 1441386677
+      },
+      {
+        "do": "collect",
+        "x": 11,
+        "y": 18,
+        "seed": 2014273252
+      },
+      {
+        "do": "collect",
+        "x": 16,
+        "y": 18,
+        "seed": 195485818
+      },
+      {
+        "do": "research",
+        "branch": "military",
+        "option": "b"
+      },
+      {
+        "do": "descend",
+        "x": 18,
+        "y": 11,
+        "units": {
+          "harpoonist": 22,
+          "guardian": 2,
+          "abyssAdmiral": 1,
+          "scout": 4
+        },
+        "seed": 486040857
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 6
+      },
+      {
+        "do": "explore",
+        "x": 4,
+        "y": 1
+      },
+      {
+        "do": "explore",
+        "x": 8,
+        "y": 1
+      },
+      {
+        "do": "explore",
+        "x": 15,
+        "y": 8,
+        "level": 2
+      },
+      {
+        "do": "explore",
+        "x": 15,
+        "y": 14,
+        "level": 2
+      }
+    ],
+    "34": [
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 0,
+        "seed": 1362651289
+      },
+      {
+        "do": "collect",
+        "x": 4,
+        "y": 1,
+        "seed": 5839543
+      },
+      {
+        "do": "collect",
+        "x": 19,
+        "y": 10,
+        "level": 2,
+        "seed": 956584449
+      },
+      {
+        "do": "collect",
+        "x": 14,
+        "y": 7,
+        "level": 2,
+        "seed": 1993344780
+      },
+      {
+        "do": "collect",
+        "x": 15,
+        "y": 7,
+        "level": 2,
+        "seed": 1556828875
+      },
+      {
+        "do": "collect",
+        "x": 16,
+        "y": 15,
+        "level": 2,
+        "seed": 1905280335
+      },
+      {
+        "do": "recruit",
+        "unit": "guardian",
+        "count": 4
+      },
+      {
+        "do": "recruit",
+        "unit": "harpoonist",
+        "count": 8
+      },
+      {
+        "do": "research",
+        "branch": "resources",
+        "option": "b"
+      },
+      {
+        "do": "upgrade",
+        "building": "headquarters"
+      },
+      {
+        "do": "upgrade",
+        "building": "barracks"
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 2
+      },
+      {
+        "do": "explore",
+        "x": 14,
+        "y": 1
+      },
+      {
+        "do": "explore",
+        "x": 18,
+        "y": 1
+      },
+      {
+        "do": "explore",
+        "x": 17,
+        "y": 6,
+        "level": 2
+      },
+      {
+        "do": "explore",
+        "x": 17,
+        "y": 16,
+        "level": 2
+      }
+    ],
+    "49": [
+      {
+        "do": "collect",
+        "x": 1,
+        "y": 3,
+        "seed": 1039129910
+      },
+      {
+        "do": "research",
+        "branch": "military",
+        "option": "b"
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 2
+      },
+      {
+        "do": "explore",
+        "x": 14,
+        "y": 7
+      },
+      {
+        "do": "explore",
+        "x": 0,
+        "y": 19
+      }
+    ],
+    "50": [
+      {
+        "do": "research",
+        "branch": "resources",
+        "option": "b"
+      },
+      {
+        "do": "descend",
+        "x": 18,
+        "y": 11,
+        "units": {
+          "scout": 4
+        },
+        "seed": 935106355
+      },
+      {
+        "do": "fight",
+        "x": 14,
+        "y": 19,
+        "units": {
+          "harpoonist": 37,
+          "guardian": 7
+        },
+        "seed": 1037910029
+      },
+      {
+        "do": "recruit",
+        "unit": "scout",
+        "count": 6
+      },
+      {
+        "do": "explore",
+        "x": 5,
+        "y": 3
+      },
+      {
+        "do": "explore",
+        "x": 11,
+        "y": 3
+      },
+      {
+        "do": "explore",
+        "x": 7,
+        "y": 3,
+        "level": 2
+      },
+      {
+        "do": "explore",
+        "x": 13,
+        "y": 17,
+        "level": 2
+      }
+    ],
+    "52": [
+      {
+        "do": "unlock",
+        "branch": "explorer"
+      },
+      {
+        "do": "research",
+        "branch": "explorer",
+        "option": "b"
+      }
+    ],
+    "54": [
+      {
+        "do": "research",
+        "branch": "explorer",
+        "option": "b"
+      }
+    ],
+    "56": [
+      {
+        "do": "research",
+        "branch": "explorer",
+        "option": "b"
+      }
+    ],
+    "58": [
+      {
+        "do": "research",
+        "branch": "explorer",
+        "option": "b"
+      }
+    ],
+    "60": [
+      {
+        "do": "research",
+        "branch": "explorer",
+        "option": "b"
+      }
+    ]
+  }
+}

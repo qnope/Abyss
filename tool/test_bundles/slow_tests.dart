@@ -22,6 +22,7 @@ const Map<String, double> slowTestSeconds = {
   'presentation/screens/menu/new_game_opening_test.dart': 3.5,
   'presentation/screens/game/game_screen_fight_flow_test.dart': 3.5,
   'domain/reference/reference_trace_test.dart': 3.5,
+  'domain/reference/reference_set_fresh_test.dart': 3.5,
   'presentation/widgets/common/raster_svg_test.dart': 3.0,
   'presentation/screens/game/game_screen_transition_actions_test.dart': 3.0,
   'presentation/widgets/backdrop/backdrop_image_test.dart': 3.0,

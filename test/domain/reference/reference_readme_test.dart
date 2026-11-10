@@ -5,6 +5,8 @@ import 'package:abyss/domain/reference/snapshot_catalog.dart';
 import 'package:abyss/domain/reference/snapshot_sections.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'committed_games.dart';
+
 void main() {
   group('reference/README.md', () {
     final String readme = File('reference/README.md').readAsStringSync();
@@ -35,6 +37,24 @@ void main() {
           );
         }
       }
+    });
+
+    test('lists every reference game: who plays it, and how it ends', () {
+      final String listed =
+          readme
+              .split('<!-- games:start -->')[1]
+              .split('<!-- games:end -->')[0]
+              .trim();
+
+      expect(listed.split('\n').skip(2), [
+        for (final CommittedGame g in committedGames())
+          '| `${g.name}` '
+              '| ${g.source.strategy ?? '`${g.source.scenario}`'} '
+              '| ${g.source.seed} '
+              '| ${g.journal['difficulty']} '
+              '| ${(g.journal['factions'] as List<Object?>? ?? []).length} '
+              '| ${g.status}, turn ${g.turn} |',
+      ]);
     });
 
     test('names every section', () {

@@ -33,6 +33,8 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
 - `EventInputs` reads what an event case writes: an event or none, a set
   of events as the list of their names, the lasting effect of an
   `EventState`.
+- `RaidInputs` writes what a case of `raids.json` holds: a wave as
+  `[difficulty, family, unitCount, secondFamily, secondCount]`.
 - `MapWriter` writes a generated map as a case of `maps.json` does, as
   `tool/vectors/domain/map_writer.dart` on the Dart side: its size, its
   bases and each cell that holds anything, the lair or the post a cell

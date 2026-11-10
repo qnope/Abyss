@@ -31,3 +31,19 @@ static func units_on_base(player: Player) -> int:
 	for unit: Unit in player.units_on_level(1).values():
 		total += unit.count
 	return total
+
+
+## The five fields of `wave`, as `expectSameWave` of
+## raid_wave_factory_test.dart compares them.
+static func wave_fields(wave: MonsterLair) -> Array:
+	return [wave.difficulty, wave.family, wave.unit_count, wave.second_family, wave.second_count]
+
+
+## The two counts `expectShared` expects of `wave` holding `generic` generic
+## monsters, the first family taking the larger half.
+static func shared_counts(wave: MonsterLair, generic: int) -> Array[int]:
+	var first := DartMath.trunc_div(generic + 1, 2)
+	return [
+		MonsterUnitStats.count_for(wave.family, first),
+		MonsterUnitStats.count_for(wave.second_family, generic - first),
+	]

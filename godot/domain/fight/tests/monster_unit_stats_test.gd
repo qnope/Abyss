@@ -53,7 +53,9 @@ func test_monsters() -> void:
 		var family: Variant = null
 		var boss := false
 		if case["family"] != null:
-			var known := VectorInputs.value(MonsterFamily.Value, case["family"]) as MonsterFamily.Value
+			var known := (
+				VectorInputs.value(MonsterFamily.Value, case["family"]) as MonsterFamily.Value
+			)
 			family = known
 			boss = MonsterFamily.is_boss(known)
 		var stats := []

@@ -1,8 +1,6 @@
 extends VectorTestCase
-## test/domain/game/difficulty_test.dart: the levers of a difficulty. Its
-## tests of the raid and kraken waves ('a scaled kraken wave keeps at least
-## one kraken', 'raid waves grow...', 'kraken waves grow...') go with the
-## raid and volcano modules. Then the monsterPercent section of raids.json.
+## test/domain/game/difficulty_test.dart: the levers of a difficulty. Then
+## the monsterPercent section of raids.json.
 
 const EASY := Difficulty.Value.EASY
 const NORMAL := Difficulty.Value.NORMAL
@@ -33,6 +31,29 @@ func test_only_algae_coral_and_ore_are_scaled() -> void:
 	)
 	var scaled := Difficulty.resource_percent(EASY)
 	assert_eq(production, {ALGAE: scaled, CORAL: scaled, ORE: scaled, ENERGY: 100, PEARL: 5})
+
+
+func test_a_scaled_kraken_wave_keeps_at_least_one_kraken() -> void:
+	assert_eq(VolcanoWaveFactory.krakens_for(0, 1), 1)
+
+
+func test_raid_waves_grow_with_the_difficulty() -> void:
+	assert_true(_raid_monsters(EASY) < _raid_monsters(NORMAL))
+	assert_true(_raid_monsters(HARD) > _raid_monsters(NORMAL))
+
+
+func test_kraken_waves_grow_with_the_difficulty() -> void:
+	assert_true(_krakens(EASY) < _krakens(NORMAL))
+	assert_true(_krakens(HARD) > _krakens(NORMAL))
+
+
+func _raid_monsters(d: Difficulty.Value) -> int:
+	var wave := RaidWaveFactory.from_total_noise(200, DartRandom.new(3), Difficulty.monster_percent(d))
+	return wave.unit_count + wave.second_count
+
+
+func _krakens(d: Difficulty.Value) -> int:
+	return VolcanoWaveFactory.from_kernel_level(9, Difficulty.monster_percent(d)).unit_count
 
 
 ## Not in the Dart file: the names and the order the snapshots write.

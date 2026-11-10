@@ -94,3 +94,10 @@ reinforcements of `send_reinforcements_helper.dart` (`reinforcement_map`,
 two-player game at turn 12 where the human has seen the rival's base
 (`assault_game`, `rival_of` for `two.rival`), `set_level`, `station` and
 `standing`, and the armies `HORDE` and `WALL`.
+
+`ActionDigests` writes the digest of an action that the digest test of the
+actions compares with what a scratch Dart script printed on the games of
+`GameFactory`: its outcome, the stocks, the units, the buildings, the cells
+revealed and collected, the noise, the pending orders and the last history
+entry; it also picks the first target an action may take, row by row.
+`ActionHistories` holds what the Dart script printed.

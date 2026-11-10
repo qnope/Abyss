@@ -1,8 +1,6 @@
 extends TestCase
 ## test/domain/objective/temporary/temporary_objectives_test.dart: the
-## objectives the events of a player set. Its last two tests choose through
-## ChooseEventAction and wait for `action`; their twins below choose through
-## the effect, as that action does.
+## objectives the events of a player set.
 
 const WRECK := TemporaryObjectiveKind.Value.WRECK
 const PREDATORS := TemporaryObjectiveKind.Value.PREDATORS
@@ -42,9 +40,7 @@ func test_a_wreck_is_to_search_through_its_last_turn() -> void:
 	assert_eq(TemporaryObjectives.active_of(game, player).size(), 0)
 
 
-## Not in the Dart file: "predators faced are to repel by the end of the
-## turn", chosen as ChooseEventAction does.
-func test_predators_faced_are_to_repel_by_the_end_of_the_turn() -> void:
+func test_temporary_objectives_active_of_predators_faced_are_to_repel_by_the_end_of_the_turn() -> void:
 	var game := _predators_game(true)
 	var active := TemporaryObjectives.active_of(game, game.human_player())
 	assert_eq(active.size(), 1)
@@ -53,9 +49,7 @@ func test_predators_faced_are_to_repel_by_the_end_of_the_turn() -> void:
 	assert_eq(TemporaryObjectives.active_of(game, game.human_player()).size(), 0)
 
 
-## Not in the Dart file: "predators baited or not chosen yet bring no
-## objective", chosen as ChooseEventAction does.
-func test_predators_baited_or_not_chosen_yet_bring_no_objective() -> void:
+func test_temporary_objectives_active_of_predators_baited_or_not_chosen_yet_bring_no_objective() -> void:
 	for accept: Variant in [false, null]:
 		var game := _predators_game(accept)
 		assert_eq(TemporaryObjectives.active_of(game, game.human_player()).size(), 0, str(accept))
@@ -79,8 +73,7 @@ func _predators_game(accept: Variant) -> Game:
 	game.turn = 12
 	if accept != null:
 		var faced: bool = accept
-		EventEffects.apply(game, player, RandomEventType.Value.PREDATORS, faced, game.turn)
-		player.event_state.clear_pending()
+		ChooseEventAction.new(faced).execute(game, player)
 	return game
 
 

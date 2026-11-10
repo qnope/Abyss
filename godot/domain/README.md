@@ -194,8 +194,7 @@ Files and tests of the modules above that wait for another module:
 | Dart | Waits for |
 | --- | --- |
 | `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
-| `action/announce_attack_validator.dart`, `announce_attack_action.dart`, the tests of `announce_attack/` | `action`: left for the next part of the lot |
-| `action/announced_attack_resolver.dart`, `held_attack_reports.dart`, the tests of `held_attack_report/` but `takeover_losses_test.dart` | `faction` (`faction_attack_report.dart`, which reads `AttackHeldKernelAction` and `PostTakeover`) |
+| `action/announced_attack_resolver.dart`, `held_attack_reports.dart`, the tests of `held_attack_report/` but `takeover_losses_test.dart`; `announce_attack/announced_attack_report_test.dart`, `announced_attack_resolve_test.dart` (they end the turn: `turn` too) | `faction` (`faction_attack_report.dart`, which reads `AttackHeldKernelAction` and `PostTakeover`) |
 | `action/attack_transition_base_action.dart`, `attack_transition_base_execute_test.dart`, `attack_transition_base_history_test.dart` (the tests of its `validate` call `AttackTransitionBaseValidator.check`, which it is) | `leviathan` (`LeviathanResolver`) |
 | `action_identity_test.dart` | `AttackPostAction` (the row of `attack_post_validator.dart`), `AttackTransitionBaseAction` above |
 | `silent_swim_noise_test.dart` | `AttackTransitionBaseAction` above |

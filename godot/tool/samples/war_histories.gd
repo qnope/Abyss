@@ -4,7 +4,8 @@ extends RefCounted
 ## players printed (war_digest_test.gd), on each game: four attacks on the posts
 ## of a faction and one refused, then a faction taking the human's Faille;
 ## four sieges of the kernel of a faction, then a faction taking the
-## human's kernel, and its siege again, refused.
+## human's kernel, and its siege again, refused; six attacks the factions
+## decide on the human base, four of them refused.
 
 const DIGESTS: Dictionary[String, Array] = {
 	"3": [
@@ -20,6 +21,12 @@ const DIGESTS: Dictionary[String, Array] = {
 		"V 3 | harpoonist:44,guardian:6 | harpoonist:44,guardian:4 | guardian:2 |  | harpoonist:10,guardian:11 |  | guardian:3 | harpoonist:10,guardian:8 | 0>0 0>0 | harpoonist:44,guardian:6 |  | n24 h9 h8 | 42 false true La Guilde des Siphonophores volcanicKernel harpoonist:44,guardian:6  true 0>0 | 42 true true Nemo volcanicKernel harpoonist:10,guardian:11 guardian:3 true 0>0 | human 0 42 faction-siphonophoreGuild:42",
 		"V 2 | harpoonist:40 | harpoonist:40 |  |  | scout:1,guardian:3 |  | scout:1 | guardian:3 | 1>0 0>0 | harpoonist:40 |  | n6 h2 h10 | 47 false true Nemo volcanicKernel harpoonist:40  true 1>0 | 47 true true L'Ordre de Nacre volcanicKernel scout:1,guardian:3 scout:1 true 1>0 | faction-pearlOrder 0 47 human:47",
 		"attackTooSoon",
+		"ok | faction-siphonophoreGuild harpoonist:12 60 603 | harpoonist:30,guardian:4 n0 h8",
+		"attackAlreadyAnnounced | faction-siphonophoreGuild harpoonist:12 60 603 | harpoonist:30,guardian:4 n0 h8",
+		"attackTooSoon | faction-siphonophoreGuild harpoonist:12 60 603 | scout:2,harpoonist:20 n6 h2",
+		"raidSameTurn |  | scout:2,harpoonist:20 n6 h2",
+		"ok | faction-pearlOrder harpoonist:20,scout:2 71 607 | scout:2,harpoonist:20 n6 h2",
+		"notEnoughUnits | faction-pearlOrder harpoonist:20,scout:2 71 607 | harpoonist:30,guardian:4 n0 h8",
 	],
 	"11": [
 		"V 5 | harpoonist:10 | harpoonist:7 | harpoonist:2 | harpoonist:1 | harpoonist:5,guardian:3 |  | guardian:1 | harpoonist:5,guardian:2 | 0>0 0>0 | harpoonist:9 |  | n3 h1 h1 | 12 false true Les Nomades du Courant faille:4 harpoonist:10  true 0>0 | 12 true true Nemo faille:4 harpoonist:5,guardian:3 guardian:1 true 0>0 | human 0 faction-currentNomads:12",
@@ -34,6 +41,12 @@ const DIGESTS: Dictionary[String, Array] = {
 		"V 3 | harpoonist:44,guardian:6 | harpoonist:44,guardian:5 |  | guardian:1 | harpoonist:10,guardian:11 |  | harpoonist:2,guardian:2 | harpoonist:8,guardian:9 | 0>0 0>0 | harpoonist:44,guardian:5 |  | n24 h9 h8 | 42 false true Les Nomades du Courant volcanicKernel harpoonist:44,guardian:6  true 0>0 | 42 true true Nemo volcanicKernel harpoonist:10,guardian:11 harpoonist:2,guardian:2 true 0>0 | human 0 42 faction-currentNomads:42",
 		"V 1 | harpoonist:40 | harpoonist:40 |  |  | scout:1,guardian:3 |  | scout:1 | guardian:3 | 1>0 0>0 | harpoonist:40 |  | n6 h2 h10 | 47 false true Nemo volcanicKernel harpoonist:40  true 1>0 | 47 true true La Horde des Murènes volcanicKernel scout:1,guardian:3 scout:1 true 1>0 | faction-murenaHorde 0 47 human:47",
 		"attackTooSoon",
+		"ok | faction-currentNomads harpoonist:12 60 611 | harpoonist:30,guardian:4 n0 h8",
+		"attackAlreadyAnnounced | faction-currentNomads harpoonist:12 60 611 | harpoonist:30,guardian:4 n0 h8",
+		"attackTooSoon | faction-currentNomads harpoonist:12 60 611 | scout:2,harpoonist:20 n6 h2",
+		"raidSameTurn |  | scout:2,harpoonist:20 n6 h2",
+		"ok | faction-murenaHorde harpoonist:20,scout:2 71 615 | scout:2,harpoonist:20 n6 h2",
+		"notEnoughUnits | faction-murenaHorde harpoonist:20,scout:2 71 615 | harpoonist:30,guardian:4 n0 h8",
 	],
 	"24": [
 		"V 7 | harpoonist:10 | harpoonist:5 | harpoonist:1 | harpoonist:4 | harpoonist:5,guardian:3 |  | harpoonist:1 | harpoonist:4,guardian:3 | 0>0 0>0 | harpoonist:6 |  | n3 h1 h1 | 12 false true Les Fidèles du Kraken faille:0 harpoonist:10  true 0>0 | 12 true true Nemo faille:0 harpoonist:5,guardian:3 harpoonist:1 true 0>0 | human 0 faction-krakenFaithful:12",
@@ -48,5 +61,11 @@ const DIGESTS: Dictionary[String, Array] = {
 		"V 3 | harpoonist:44,guardian:6 | harpoonist:44,guardian:5 | guardian:1 |  | harpoonist:10,guardian:11 |  | harpoonist:1,guardian:2 | harpoonist:9,guardian:9 | 0>0 0>0 | harpoonist:44,guardian:6 |  | n24 h9 h8 | 42 false true Les Fidèles du Kraken volcanicKernel harpoonist:44,guardian:6  true 0>0 | 42 true true Nemo volcanicKernel harpoonist:10,guardian:11 harpoonist:1,guardian:2 true 0>0 | human 0 42 faction-krakenFaithful:42",
 		"V 1 | harpoonist:40 | harpoonist:40 |  |  | scout:1,guardian:3 |  | scout:1,guardian:1 | guardian:2 | 1>0 0>0 | harpoonist:40 |  | n6 h2 h10 | 47 false true Nemo volcanicKernel harpoonist:40  true 1>0 | 47 true true La Horde des Murènes volcanicKernel scout:1,guardian:3 scout:1,guardian:1 true 1>0 | faction-murenaHorde 0 47 human:47",
 		"attackTooSoon",
+		"ok | faction-krakenFaithful harpoonist:12 60 624 | harpoonist:30,guardian:4 n0 h8",
+		"attackAlreadyAnnounced | faction-krakenFaithful harpoonist:12 60 624 | harpoonist:30,guardian:4 n0 h8",
+		"attackTooSoon | faction-krakenFaithful harpoonist:12 60 624 | scout:2,harpoonist:20 n6 h2",
+		"raidSameTurn |  | scout:2,harpoonist:20 n6 h2",
+		"ok | faction-murenaHorde harpoonist:20,scout:2 71 628 | scout:2,harpoonist:20 n6 h2",
+		"notEnoughUnits | faction-murenaHorde harpoonist:20,scout:2 71 628 | harpoonist:30,guardian:4 n0 h8",
 	],
 }

@@ -57,8 +57,7 @@ static func entry(p: Player) -> String:
 ## `below` | nN hN hN | entry | their entry`, or the failure's name.
 static func assault(r: ActionResult, p: Player, owner: Player, level: int, below: int) -> String:
 	if not r.is_success:
-		var reason: int = r.reason
-		return DartEnum.name_of(ActionFailure.Value, reason)
+		return outcome(r)
 	var b: AttackBaseResult = r
 	var d := b.damage
 	return "%s %d | %s | %s | %s | %s | %s | %s | %s | %s | %d>%d %d>%d | %s | %s | n%d h%d h%d | %s | %s" % [
@@ -69,3 +68,51 @@ static func assault(r: ActionResult, p: Player, owner: Player, level: int, below
 		counts(owner.unit_counts_on_level(below)), p.raid_state.noise, p.history_entries.size(),
 		owner.history_entries.size(), entry(p), entry(owner),
 	]
+
+
+## "ok", or the name of the failure of `r`.
+static func outcome(r: ActionResult) -> String:
+	if r.is_success:
+		return "ok"
+	var reason: int = r.reason
+	return DartEnum.name_of(ActionFailure.Value, reason)
+
+
+## The attacks pending on the base of `human`, as `attacker units turn
+## seed`, joined by `; `.
+static func pending(human: Player) -> String:
+	var parts := PackedStringArray()
+	for a: AnnouncedAttack in human.raid_state.attacks:
+		parts.append("%s %s %d %d" % [a.attacker_id, counts(a.units), a.arrival_turn, a.fight_seed])
+	return "; ".join(parts)
+
+
+## The attacks the factions decide on the base of the human `p` from turn
+## 60, as the digest test reads them: each outcome, the attacks pending and
+## the units, noise and history of the faction.
+static func announces(game: Game, p: Player, rival: Player, other: Player, seed_: int) -> Array[String]:
+	var lines: Array[String] = []
+	var gap := Difficulty.attack_gap(game.difficulty())
+	var announce := func(by: Player, army: Dictionary[UnitType.Value, int], dice: int) -> String:
+		var r := ActionExecutor.new().execute(AnnounceAttackAction.new(army, DartRandom.new(dice)), game, by)
+		return "%s | %s | %s n%d h%d" % [
+			outcome(r), pending(p), counts(by.unit_counts_on_level(1)), by.raid_state.noise, by.history_entries.size(),
+		]
+	game.turn = 60
+	put(rival, 1, {UnitType.Value.HARPOONIST: 30, UnitType.Value.GUARDIAN: 4})
+	var others: Dictionary[UnitType.Value, int] = {UnitType.Value.HARPOONIST: 20, UnitType.Value.SCOUT: 2}
+	put(other, 1, others)
+	var first_army: Dictionary[UnitType.Value, int] = {UnitType.Value.HARPOONIST: 12, UnitType.Value.GUARDIAN: 0}
+	var five: Dictionary[UnitType.Value, int] = {UnitType.Value.HARPOONIST: 5}
+	lines.append(announce.call(rival, first_army, seed_ + 600))
+	lines.append(announce.call(rival, five, seed_ + 601))
+	lines.append(announce.call(other, five, seed_ + 602))
+	game.turn = 60 + gap
+	p.raid_state.attacks.clear()
+	p.raid_state.announce(MonsterLair.new(MonsterDifficulty.Value.EASY, 3), game.turn)
+	lines.append(announce.call(other, others, seed_ + 603))
+	game.turn = 61 + gap
+	lines.append(announce.call(other, others, seed_ + 604))
+	var too_many: Dictionary[UnitType.Value, int] = {UnitType.Value.HARPOONIST: 31}
+	lines.append(announce.call(rival, too_many, seed_ + 605))
+	return lines

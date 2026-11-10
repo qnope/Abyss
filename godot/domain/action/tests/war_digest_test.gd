@@ -15,7 +15,9 @@ extends TestCase
 ## k = 2) and 4 + 2k harpoonists, with 20 + 8k harpoonists and 2k
 ## guardians, Random(seed + 400 + k); then on turn 47 the second faction
 ## besieges the human's kernel at 1 with 40 harpoonists, Random(seed +
-## 500), and again, refused. Compared with WarHistories.
+## 500), and again, refused. Announces: from turn 60 the factions decide
+## attacks on the human base (WarDigests.announces). Compared with
+## WarHistories.
 
 const GUARDIAN := UnitType.Value.GUARDIAN
 const HARPOONIST := UnitType.Value.HARPOONIST
@@ -139,6 +141,7 @@ func test_the_wars_play_as_dart_plays_them_on_new_games() -> void:
 		var other: Player = game.players[game.factions()[1].id()]
 		var lines := _posts(game, p, rival, other, seed_)
 		lines.append_array(_kernels(game, p, rival, other, seed_))
+		lines.append_array(WarDigests.announces(game, p, rival, other, seed_))
 		var expected: Array = WarHistories.DIGESTS[str(seed_)]
 		assert_eq(lines.size(), expected.size(), str(seed_))
 		for i: int in mini(lines.size(), expected.size()):

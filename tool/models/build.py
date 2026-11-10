@@ -4,7 +4,8 @@
     tool/models/build.py [name ...] [--out folder]
 
 Without a name, every model of the catalog. Writes <folder>/<name>.glb, in
-godot/assets/models/ by default. Needs Python 3.13 with Blender's module
+godot/assets/models/ by default, and <name>_atlas.png beside it for a model
+with an atlas. Needs Python 3.13 with Blender's module
 (pip install bpy==5.2.3). A model over its budget or missing one of its nodes
 fails the command, and its glb is not written. See README.md."""
 
@@ -27,6 +28,7 @@ except ImportError:
 from catalog import MODELS  # noqa: E402
 from workshop.export import export_glb  # noqa: E402
 from workshop.glb import read_glb  # noqa: E402
+from workshop.glb_atlas import link_atlas  # noqa: E402
 from workshop.model import Model  # noqa: E402
 from workshop.scene import fresh_scene  # noqa: E402
 
@@ -38,22 +40,35 @@ class BuildError(Exception):
 def build_model(name, folder=ASSETS):
     """Builds the model [name] into [folder]; gives its path and its report."""
     script = MODELS[name]
+    atlas = getattr(script, "ATLAS", None)
     fresh_scene()
-    model = Model(name, script.SEED, script.MATERIALS, script.OCCLUSION)
+    model = Model(name, script.SEED, script.MATERIALS, script.OCCLUSION, atlas)
     script.build(model)
     model.emit()
     with tempfile.TemporaryDirectory() as scratch:
         path = os.path.join(scratch, f"{name}.glb")
         export_glb(path)
+        files = [path]
+        if atlas:
+            files.append(os.path.join(scratch, atlas_name(name)))
+            atlas.write(files[-1])
+            textured = [m.name for m in script.MATERIALS if m.textured]
+            link_atlas(path, atlas_name(name), textured,
+                       [m.name for m in script.MATERIALS if m.textured and m.emission])
         report = read_glb(path)
         problems = script.BUDGET.overruns(report) + [
             f"no node {node}" for node in script.NODES if node not in report.paths]
         if problems:
             raise BuildError(f"{name}: " + "; ".join(problems))
         os.makedirs(folder, exist_ok=True)
-        target = os.path.join(folder, f"{name}.glb")
-        shutil.move(path, target)
-    return target, report
+        for file in files:
+            shutil.move(file, os.path.join(folder, os.path.basename(file)))
+    return os.path.join(folder, f"{name}.glb"), report
+
+
+def atlas_name(name):
+    """The file of the atlas of the model [name], beside its glb."""
+    return f"{name}_atlas.png"
 
 
 def main(argv=None):

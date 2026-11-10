@@ -13,30 +13,35 @@ from workshop.scene import empty, link
 
 class Model:
     """A model under construction. [rng] is seeded by [seed]: drawing from it
-    in the same order gives the same model."""
+    in the same order gives the same model. With an [atlas], its faces may
+    be mapped into it (add's uv), and the others take its white tile."""
 
-    def __init__(self, name, seed, materials, occlusion=Occlusion()):
-        self.name, self.seed = name, seed
+    def __init__(self, name, seed, materials, occlusion=Occlusion(), atlas=None):
+        self.name, self.seed, self.atlas = name, seed, atlas
         self.rng = random.Random(seed)
         self.materials = {material.name: material for material in materials}
         self.occlusion = occlusion
         self._groups = {}
         self._pieces = {}
 
-    def add(self, group, geometry, material, paint):
+    def add(self, group, geometry, material, paint, uv=None):
         """Static [geometry] of the node [group] ('Island', 'Tier1'), joined
-        with the rest of its [material] there: one draw call per material."""
+        with the rest of its [material] there: one draw call per material.
+        [uv] maps it into the atlas (Atlas.fit, tiled, solid...)."""
         if material not in self.materials:
             raise KeyError(f"{self.name} has no material {material}")
         builders = self._groups.setdefault(group, {})
-        builders.setdefault(material, MeshBuilder()).add(geometry, material, paint)
+        builders.setdefault(material, self._builder()).add(geometry, material, paint, uv)
 
     def piece(self, path, location=(0, 0, 0)):
         """The builder of the node at [path] ('Pads/Headquarters'), its origin
         at [location]: geometry added to it is in its own space."""
         if path not in self._pieces:
-            self._pieces[path] = (MeshBuilder(), tuple(location))
+            self._pieces[path] = (self._builder(), tuple(location))
         return self._pieces[path][0]
+
+    def _builder(self):
+        return MeshBuilder(self.atlas.blank if self.atlas else None)
 
     @property
     def triangles(self):

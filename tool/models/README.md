@@ -18,12 +18,14 @@ missing from the wheel: harmless, neither is used.
 - `workshop/`: the library. `Model` gathers the geometry; `shapes` and `sweep`
   make it (bevelled boxes and prisms, cylinders, spheres, tubes, ribbons,
   lathes); `noise` and `scatter` vary it from a seed; `occlusion` bakes the
-  ambient occlusion; `export` writes the glb; `glb` and `budget` read and check
-  it with the stdlib only.
+  ambient occlusion; `atlas`, `canvas` and `uv` paint a texture atlas and map
+  faces into it; `export` writes the glb, `glb_atlas` links its atlas; `glb`
+  and `budget` read and check it with the stdlib only, `png` writes and reads
+  the atlas.
 - `catalog/`: one script per model, listed in `catalog/__init__.py`, and
   `palette.py`, the materials they share. A script declares its `NAME`, `SEED`,
   `MATERIALS`, `BUDGET`, `OCCLUSION`, the `NODES` the game relies on, and
-  `build(model)`.
+  `build(model)`; a textured one also its `ATLAS`.
 
 ## Conventions
 
@@ -45,9 +47,9 @@ missing from the wheel: harmless, neither is used.
 
 ## Materials
 
-Mobile and WebGL 2 first, so no texture and no Blender procedural texture: a
-material is glTF factors only (roughness, metallic, emission), and the albedo is
-in the **vertex colours**, painted per corner by the script (`paint`) and then
+Mobile and WebGL 2 first, so no Blender procedural texture and at most one
+small texture a model (its atlas, below): a material is glTF factors
+(roughness, metallic, emission), and the albedo is in the **vertex colours**, painted per corner by the script (`paint`) and then
 multiplied by an **ambient occlusion baked per corner** (`Occlusion`: rays cast
 against the whole model, favouring the sky; its `strength` per material keeps
 coral and algae bright and leaves the glowing materials untouched). One material therefore serves
@@ -58,15 +60,47 @@ Godot's glTF importer ignores vertex colours (`COLOR_0`) for the albedo, so
 `godot/project.godot` gives every scene the import script
 `godot/tool/models/model_import.gd`, which turns them on.
 
-A model whose detail cannot live in vertex colours may bake a small atlas PNG
-(512 or 1024 px) next to its glb; its budget then declares the texture size.
-None does yet: the budgets say `texture_px=0`.
+## Atlas
+
+Vertex colours cannot carry fine detail on a low-poly face: panel lines,
+rivets, grime, pores, lit panes. A model whose detail needs it declares an
+`ATLAS` (`workshop/atlas.py`): a square PNG of 512 or 1024 px cut into a grid,
+each `Tile` painted by a script with numpy on a `Canvas` (seeded noise that
+can wrap around the tile, soft boxes and discs), with a gutter of repeated
+edge pixels so that the mipmaps do not bleed. The build writes it as
+`<name>_atlas.png` beside the glb, byte for byte the same from one build to
+the next, and its budget declares its size (`texture_px`).
+
+A tile is mostly near white: the glTF multiplies it by the vertex colours, so
+it adds detail to a face and keeps its colour (a lit pane or a solar cell
+carries its own). Faces are mapped into it by `model.add(..., uv=...)`:
+
+- `atlas.fit(tile)`: each flat side stretched over the tile, upright (a plate,
+  a door); the faces of one plane, as a side cut in a grid, share it.
+- `atlas.tiled(tile, period)`: a seamless tile repeated every `period` units
+  in world space, projected on the plane a face faces most: grime, pores.
+- `atlas.planar(tile, right, up)`: the whole geometry seen along a plane (a
+  porthole's pane, a badge).
+- `atlas.solid(tile)`: one colour of the atlas; a face added without a
+  mapping takes the white tile `plain`.
+
+A part may map itself before it is turned into place, and pass the UVs it got.
+Only the materials marked `textured` (`palette.py`) take the atlas; a glowing
+one takes it as its emission too, so one lamp material gives every light of a
+model its colour, from the tile it maps. Blender exports the UVs and no image:
+`glb_atlas` then names the PNG in the glb (an image by `uri`, sampled with
+mipmaps and clamped), so the game imports it as a texture of its own,
+compressed for the GPU: its `.png.import` (committed) asks for `VRAM
+Compressed` with mipmaps, and the import script samples it anisotropically.
+A model with an atlas and a big flat side cuts it in a grid
+(`geometry.subdivide`), so that its baked occlusion has corners to darken.
 
 ## Budgets
 
 Each script's `BUDGET` caps its triangles (every mesh counted once per node
 that draws it), materials and texture size. `build.py` refuses to write a model
-over it, and so do the tests.
+over it, and so do the tests. A textured model costs one texture of its own:
+1024 px in VRAM-compressed form is about 1.3 MB with its mipmaps.
 
 ## Preview
 

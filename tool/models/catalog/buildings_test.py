@@ -9,7 +9,8 @@ from catalog.base_island import layout
 from model_builds import built
 
 # Each building: its slot on the island, and its nodes the game moves.
-BUILDINGS = {"headquarters": ("Headquarters", ["Beacon", "Dish"])}
+BUILDINGS = {"headquarters": ("Headquarters", ["Beacon", "Dish"]),
+             "solar_panel": ("SolarPanel", ["Array"])}
 SPILL = 0.3  # how far the reef at a building's foot may reach past its pad
 
 

@@ -55,7 +55,10 @@ const FILES: Dictionary[String, Dictionary] = {
 		],
 		PENDING + "fight": ["boost"],
 	},
-	"tech": {PENDING + "tech": ["unlockCost", "researchCost", "branchState", "effects"]},
+	"tech": {
+		"res://domain/tech/tests/tech_vectors_test.gd": ["branchState"],
+		PENDING + "tech": ["unlockCost", "researchCost", "effects"],
+	},
 	"fight_rules": {
 		PENDING + "fight": ["damage", "attackDamage", "monsters", "monsterLevels", "guardians"],
 		PENDING + "volcano": ["magmaRampart"],

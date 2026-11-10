@@ -184,5 +184,4 @@ Files and tests of the modules above that wait for another module:
 | `game/difficulty_test.dart`, `difficulty_faction_test.dart`, `difficulty_world_relief_test.dart`, `difficulty_faction_monsters_test.dart` (the tests on a wave or a turn) | `raid`, `volcano`, `turn` |
 | `fight/assault/assault_plan.dart`, `assault_plan_test.dart`, `assault_suggestion_test.dart`, `assault_test_helper.dart` | `game` (`Player`), `action` (`FightMonsterHelpers`) |
 | `passage` of `fight/assault/assault_target.dart`, the second test of `assault_target_test.dart`; the `pctLost` and `treasureLoot` vectors | `action` (`PostTakeover`, `FightMonsterHelpers`, `TreasureLoot`) |
-| `AssaultTarget.at`, the last three tests of `assault_target_test.dart` | `game` (`Game`) |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

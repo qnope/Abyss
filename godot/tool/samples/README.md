@@ -89,3 +89,8 @@ to another: the descent of `descend_action_helper.dart` (`descend_game`), the
 reinforcements of `send_reinforcements_helper.dart` (`reinforcement_map`,
 `reinforcement_game`) and the volcano of `volcano_test_helper.dart`
 (`volcano_game`), whose player `RaidSamples.volcano_player` builds.
+
+`AssaultSamples` is the twin of `test/helpers/base_attack_helper.dart`: the
+two-player game at turn 12 where the human has seen the rival's base
+(`assault_game`, `rival_of` for `two.rival`), `set_level`, `station` and
+`standing`, and the armies `HORDE` and `WALL`.

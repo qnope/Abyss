@@ -41,9 +41,12 @@ func test_is_lit_and_seen_from_the_game_view() -> void:
 	assert_eq(_base.camera.rig.yaw, OrbitRig.DEFAULT_YAW)
 
 
-func test_fills_the_water_with_light() -> void:
+func test_fills_the_water_with_light_and_specks() -> void:
 	assert_true(_base.water.environment.fog_enabled)
 	assert_eq(_base.find_children("*", "LightShafts", false, false).size(), 1)
+	assert_true(_base.snow.emitting)
+	assert_true(_base.bubbles.emitting)
+	assert_eq(_base.bubbles.emission_points.size(), BaseScene.BUILT.size() * 6)
 
 
 func test_animates_the_buildings() -> void:
@@ -55,12 +58,16 @@ func test_animates_the_buildings() -> void:
 func test_turns_its_costly_effects_on_and_off() -> void:
 	_base.set_shadows(false)
 	_base.set_glow(false)
+	_base.set_particles(false)
 	assert_false(_base.key_light.shadow_enabled)
 	assert_false(_base.water.environment.glow_enabled)
+	assert_false(_base.snow.emitting or _base.bubbles.emitting)
 	_base.set_shadows(true)
 	_base.set_glow(true)
+	_base.set_particles(true)
 	assert_true(_base.key_light.shadow_enabled)
 	assert_true(_base.water.environment.glow_enabled)
+	assert_true(_base.snow.emitting and _base.bubbles.emitting)
 
 
 func test_casts_the_shadows_worth_their_cost_only() -> void:

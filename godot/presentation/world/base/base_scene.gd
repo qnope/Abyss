@@ -35,6 +35,8 @@ var water := UnderwaterEnvironment.new()
 var buildings := BaseBuildings.new()
 var pads: BasePads
 var motion: BaseMotion
+var snow := MarineSnow.new()
+var bubbles := RisingBubbles.new()
 var _rampart := RAMPART.instantiate() as Node3D
 
 
@@ -51,6 +53,8 @@ func _init() -> void:
 	add_child(LightShafts.new(RAYS))
 	motion = BaseMotion.new(buildings, pads.marker)
 	add_child(motion)
+	add_child(snow)
+	add_child(bubbles)
 	add_child(camera)
 	build(BUILT)
 	set_rampart_tier(rampart_tier)
@@ -64,6 +68,10 @@ func build(names: Array[StringName]) -> void:
 	buildings.build(names, pads)
 	pads.mark(names)
 	motion.track()
+	var sources := PackedVector3Array()
+	for name in names:
+		sources.append(pads.origin_of(name))
+	bubbles.rise_from(sources)
 	for name in names:
 		_quiet_shadows(buildings.building(name))
 
@@ -76,6 +84,12 @@ func set_shadows(enabled: bool) -> void:
 ## Turns the glow of the lights on or off.
 func set_glow(enabled: bool) -> void:
 	water.set_glow(enabled)
+
+
+## Runs the marine snow and the bubbles, or stops and hides them.
+func set_particles(enabled: bool) -> void:
+	snow.set_running(enabled)
+	bubbles.set_running(enabled)
 
 
 func set_rampart_tier(tier: int) -> void:

@@ -11,13 +11,14 @@ const FOLDER := "res://assets/models/"
 const ROOTS := {
 	"base_island": ["Island", "Pads"],
 	"base_rampart": ["Tier1", "Tier2", "Tier3"],
+	"coral_citadel": ["CoralCitadel"],
 	"headquarters": ["Headquarters"],
 	"material_swatches": ["Swatches", "Unit"],
 	"solar_panel": ["SolarPanel"],
 }
 
 ## The models that paint an atlas (<model>_atlas.png beside the glb).
-const TEXTURED: Array[String] = ["headquarters", "solar_panel"]
+const TEXTURED: Array[String] = ["coral_citadel", "headquarters", "solar_panel"]
 
 ## The island's pads, one per building, where the buildings stand.
 const PADS: Array[String] = [

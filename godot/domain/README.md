@@ -16,3 +16,128 @@ can be negative, `/` between two whole numbers, `pow` nor `**`: it goes
 through `DartRandom`, `DartSort`, `DartMath`, `DartBits` and `DartNum` of
 [`dart/`](dart/README.md), which says what to write for each Dart
 expression and what GDScript already does as Dart.
+
+## Porting conventions
+
+Set by the first modules ported (`resource`, `building`, `worksite`, `unit`);
+every later module follows them, so that a Dart file and its port read side
+by side.
+
+**Files and names.** One Dart file, one GDScript file of the same name in
+the same module folder, its `class_name` the Dart class, its first comment
+the Dart path. Members take GDScript's case: `maxStorage` is `max_storage`,
+a constant `MIN_ENERGY_STORAGE`, a private `_name`. A Dart file of top-level
+functions or constants is a class named after the file:
+`exponentialCost(base, step)` is `ExponentialCost.exponential_cost(base,
+step)`. A type a module needs from one not ported yet is ported alone, in
+its future folder (`map/transition_base_type.gd`), never the whole module.
+
+**Names Godot owns.** A Dart class named as an engine class, a built-in
+type, a singleton or a class of `godot/` takes the prefix `Game`; its file
+keeps the Dart name. Of the 427 names of `lib/domain`, one collides:
+
+| Dart | GDScript | File |
+| --- | --- | --- |
+| `Resource` | `GameResource` | `resource/resource.gd` |
+
+**Enums.** `class_name BuildingType` holding `enum Value { HEADQUARTERS,
+ALGAE_FARM, ... }`, the values **in the Dart order** so that a value is its
+Dart `index`. The type is `BuildingType.Value`, in signatures and as a
+dictionary key. The snapshots, journals and vectors write Dart names:
+`DartEnum.name_of(BuildingType.Value, type)` gives `"algaeFarm"`,
+`DartEnum.by_name(BuildingType.Value, "algaeFarm")` the value or null
+(`dart/README.md`). The fields, getters and methods of a Dart enum are static
+functions taking the value: `side.opponent` is `CombatSide.opponent(side)`.
+The test of each enum lists its Dart names in order.
+
+**Maps, lists, sets.** A `Map<K, V>` is a `Dictionary[K, V]` filled in the
+order the Dart code fills it: that order is state. A `List<T>` is an
+`Array[T]`, a `Set<T>` a `Dictionary[T, bool]` whose keys are the members.
+GDScript types no collection inside another: `Map<int, Map<UnitType, Unit>>`
+is `Dictionary[int, Dictionary]`, each inner map built typed and read back
+into a typed variable (an untyped one is refused at run time). `map[key]`
+that may be missing is `map.get(key)`; `map[key]?.level ?? 0`, which has no
+GDScript spelling, is a static helper of the value's class marked "Not in
+the Dart class" (`Building.level_in(buildings, type)`).
+
+**Null.** An object may be null as in Dart. An `int?`, `bool?`, `String?` or
+enum is a `Variant` holding the value or null, its type said in the comment
+(`WorksiteRules.next_site_at_hq`). A nullable collection whose null means
+"none" takes an empty default (`excluded` of `ConsumptionCalculator`).
+
+**Constructors.** `_init` takes the Dart parameters by position, in the
+order of the declaration, the optional ones last with their Dart defaults; a
+parameter that fills a field is `name_`. `Resource(type: t, amount: 5)` is
+`GameResource.new(t, 5)`. A named constructor or a factory is a static
+function of the same name (`UpgradeReadiness.of(...)`). A `final` field is a
+plain `var` nothing reassigns. A getter that computes is a method without
+argument (`worksite.can_research()`); a `late final` computed from final
+fields is a field set at the end of `_init` (`Combatant.role`).
+
+**`copyWith`** (first met in `MapCell`): `copy_with(changes: Dictionary)`,
+the fields to change by their GDScript name. A key that is there replaces
+the field, even by null, which is what Dart's sentinel tells apart; an
+unknown key logs an error.
+
+**Equality.** GDScript compares objects by identity and cannot change it. A
+class with `operator ==` gets `equals(other) -> bool`. Where the rules use
+such objects as keys of a map or members of a set (`GridPosition`), the key
+is a value Godot compares by content: a `Vector2i` for a position, else the
+text or number the Dart `hashCode` is made of.
+
+**Constants and tables.** A `static const` is a typed `const`. A const map
+or list is a typed `const`, read-only as in Dart. A const map of maps is a
+`Dictionary[K, Dictionary]` with a function giving one inner map typed
+(`BuildingBaseCosts.of`). A table of objects or functions cannot be a
+constant: a static function builds it at each call
+(`ProductionFormulas.production_formulas()`). A real cache is a `static var`
+with `debug_reset()`, listed in `tool/test/process_resets.gd`.
+
+**`switch` on an enum.** GDScript checks no exhaustiveness, and a `return`
+no value reaches would never be covered. Constant cases are a `const` table
+keyed by the enum (`ConsumptionCalculator`); otherwise a `match` whose last
+Dart case is the `return` after it, named in a comment
+(`UnitStats.for_type`).
+
+**Where Dart throws**, the port logs an error with `push_error` and returns
+a value Dart never returned (`dart/README.md`).
+
+**No Hive.** No annotation, no adapter, `RefCounted` instead of
+`HiveObject`: saves come later, in `data/`. Every field of the state stays;
+the fields that only keep the layout of old saves (`reference/README.md`,
+"Fields left out") are dropped, and no rule may change for it.
+
+### Tests
+
+Each Dart test file of `test/domain/<module>/` is ported to
+`<module>/tests/<same name>_test.gd`, test for test: `group('upgradeCost')`,
+`test('HQ at max level 10: empty')` is
+`test_upgrade_cost_hq_at_max_level_10_empty`. The first comment names the
+Dart file and the tests left out, with the module each waits for (a
+`Player`, an action) or why it never comes (a Hive round-trip, a widget). A
+file too long for 150 lines is split by group, `<name>_<group>_test.gd`.
+Tests Dart generates in a loop are one test that loops. A test the Dart file
+does not have says "Not in the Dart file". `DomainSamples`
+(`tool/samples/`) builds the sample bases, armies and stocks.
+
+A rule that has vectors reads **every case** of its sections in a test that
+`extends VectorTestCase`, through the GDScript twin of the call the section's
+`api` names; `VectorInputs` reads what a case writes. `VectorRegistry`
+(`tool/reference/`) lists each section under that test, or under
+`pending: <module>`: move the sections of a module when porting it.
+
+### Left for a later lot
+
+Files and tests of the modules above that wait for another module:
+
+| Dart | Waits for |
+| --- | --- |
+| `resource/production_calculator.dart`, its test, the `production` vectors | `tech` (`TechEffects`); `scaled` reads `Difficulty` of `game` |
+| `resource/pearl_income.dart`, its test | `game` (`Game`), `map` |
+| `resource/consumption_integration_test.dart` | `game`, `turn` |
+| `building_degradation_effects_test.dart` (all but one test) | `tech`, `game`, `turn` |
+| `building_degradation_test.dart` (the tests on a `Player`), `building_type_test.dart` (`PlayerDefaults`), the `startingStocks` vectors | `game` |
+| `building_degradation_usage_test.dart` (actions, victory), `building_cost_discount_test.dart` (its last test) | `action`, `game` |
+| `building_degradation_solo_test.dart` | `script` |
+| `fight/unit_boost.dart`, the `boost` vectors of `units.json` | `fight` |
+| `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

@@ -115,6 +115,14 @@ such as `target.guardians` is a static function bound to its value
 takes a file of its own, named after it, whose first comment names the
 Dart file (`fight/assault/assault_rating.gd`).
 
+**Class hierarchies** (first met in `history` and `event`). A sealed
+base whose subclasses back its getters with fields holds those fields
+itself, set by the `super(...)` of each subclass (`HistoryEntry`). An
+abstract class whose hooks do nothing until overridden is a plain base
+class with those empty hooks, their unused parameters prefixed `_`, and
+each subclass overrides the ones it needs (`EventEffect`); a `const`
+instance of a subclass is a `new` one.
+
 **`switch` on an enum.** GDScript checks no exhaustiveness, and a `return`
 no value reaches would never be covered. Constant cases are a `const` table
 keyed by the enum (`ConsumptionCalculator`); otherwise a `match` whose last

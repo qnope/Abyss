@@ -35,3 +35,21 @@ func test_writes_a_report_and_a_raid_state() -> void:
 		RaidDigests.raid_state(player),
 		"7 7 0 0 0 false | 1000 1000 1000 1000 1000 | 0 2 0 0 0 0",
 	)
+
+
+func test_arms_the_kernels_and_writes_a_wave_on_one_and_its_state() -> void:
+	var game := GameSamples.game([GameSamples.player("human"), GameSamples.player("f")])
+	RaidDigests.arm_for_volcano(game)
+	var human := game.players["human"]
+	var faction := game.players["f"]
+	assert_eq([KernelGarrison.kernel_level_of(human), KernelGarrison.kernel_level_of(faction)], [3, 2])
+	assert_eq(KernelGarrison.of(human), {UnitType.Value.GUARDIAN: 12, UnitType.Value.DOME_BREAKER: 20})
+	assert_eq(KernelGarrison.of(faction), {UnitType.Value.GUARDIAN: 4})
+	var fight := FightResult.new(CombatSide.Value.PLAYER, 3, [], [], [], 5, 0)
+	var report := VolcanoReport.new(
+		7, true, VolcanoWaveFactory.from_kernel_level(3), fight, 3, {}, {}, {HARPOONIST: 2}, {HARPOONIST: 1}
+	)
+	assert_eq(RaidDigests.volcano_report(report), "7 V 3 6 1 2 3")
+	assert_eq(RaidDigests.volcano_state(faction), "0 0 false null 2 | 0 0 4 0 0 0 | 0 0")
+	faction.volcano_state.announce(report.wave, 8)
+	assert_eq(RaidDigests.volcano_state(faction), "0 0 true 8 2 | 0 0 4 0 0 0 | 0 0")

@@ -97,6 +97,8 @@ static func second_target(
 static func second_target_in(
 	attacker: Combatant, target: Combatant, pool: AliveIndex, random: DartRandom
 ) -> Combatant:
+	if attacker.family != _KRAKEN and attacker.type_key != HARPOONIST_KEY:
+		return null  # Neither rule applies: the fight's most common blow, answered at once.
 	var swept := sweep_target_in(attacker, target, pool, random)
 	if swept != null:
 		return swept

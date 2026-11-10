@@ -193,8 +193,14 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
+| `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
+| `action/attack_base_validator.dart`, `attack_base_action.dart`, `attack_post_validator.dart`, `attack_post_action.dart`, `attack_held_kernel_validator.dart`, `attack_held_kernel_action.dart`, `announce_attack_validator.dart`, `announce_attack_action.dart`, the tests of `attack_base/`, `attack_post/`, `attack_held_kernel/`, `announce_attack/` | `objective` (`AttackBaseValidator` reads `installation_objectives.dart` and `objective_migration.dart`) |
+| `action/announced_attack_resolver.dart`, `held_attack_reports.dart`, the tests of `held_attack_report/` | `objective` (as above), `faction` (`faction_attack_report.dart`, which reads `AttackHeldKernelAction` and `PostTakeover`) |
+| `action/post_takeover.dart`, `post_loss.dart`, `post_assault_settlement.dart`, `kernel_takeover.dart`, `kernel_assault_settlement.dart`, `attack_volcanic_kernel_action.dart`, `_helpers.dart`, `_result.dart` and their tests, `attack_transition_base_helpers.dart`, `_result.dart`, `_validator.dart` | `action`: nothing else is missing, left for want of time in the lot that ported the rest |
+| `action/attack_transition_base_action.dart` and its tests | `leviathan` (`LeviathanResolver`), and the row above |
+| `action_identity_test.dart` | the actions of the three rows above |
 | `silent_swim_noise_test.dart` | `action` (`AttackTransitionBaseAction`, `AttackVolcanicKernelAction`) |
-| `volcano/wave_held_back_turn_test.dart` | `turn`, `action` |
+| `volcano/wave_held_back_turn_test.dart` | `turn` (`TurnResolver`) |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it; the last test of `choose_event_action_test.dart` (the choice is written in the replay journal) | `action` (`ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
 | `game_factory_factions_test.dart` (the human exploring) | `turn` (`EndTurnAction`) |

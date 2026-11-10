@@ -28,6 +28,14 @@ func test_picking_a_family_does_not_consume_the_map_dice() -> void:
 	assert_eq(a.next_int(1000), b.next_int(1000))
 
 
+func test_every_lair_of_a_new_map_has_a_family() -> void:
+	var cells := MapGenerator.generate(11).map.cells
+	var lairs := MapSamples.indices_of(cells, CellContentType.Value.MONSTER_LAIR)
+	assert_false(lairs.is_empty())
+	for index: int in lairs:
+		assert_not_null(cells[index].lair.family)
+
+
 ## Not in the Dart file: the size of a lair of each difficulty, between the
 ## counts its family gives for the fewest and the most generic monsters.
 func test_a_lair_is_sized_by_its_difficulty_and_its_family() -> void:

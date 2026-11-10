@@ -25,6 +25,8 @@ The full product vision and the incremental development stages are described in 
 6. Theme is in `lib/presentation/theme/`. Always use it when creating UI component.
 7. Test files share a process in the bundles, and `resetProcessState()` (`test/helpers/fresh_process.dart`) puts it back as at startup before each file. Any new process-wide state (a static cache, a static future, a registry) needs a `@visibleForTesting static void debugReset()` called from there, or a test may pass alone and fail in a bundle.
 
+8. The Godot port is checked against `reference/`: games replayed turn by turn (`reference/README.md`) and vectors per module (`reference/vectors/README.md`). After a change of rules in `lib/domain`, run `dart run bin/export_reference.dart --update` and `dart run bin/export_vectors.dart`, commit what changed, and port the change to `godot/domain` if that module is already there. CI's `Reference` job runs both with `--check`.
+
 ## Godot
 The game is being rewritten with Godot in `godot/`, for real 3D. Both versions coexist until the switch: the Flutter rules above still apply to `lib/` and `test/`, these to `godot/`.
 

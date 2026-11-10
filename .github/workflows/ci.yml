@@ -73,6 +73,24 @@ jobs:
       - name: Enforce coverage minimum
         run: COVERAGE_MIN=97 .github/scripts/coverage_summary.sh coverage/lcov.info > /dev/null
 
+  reference:
+    name: Reference
+    # What the Godot port is checked against (reference/README.md): the
+    # committed games and vectors must be what the Dart rules give today.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - name: The reference games replay to the same states
+        run: dart run bin/export_reference.dart --check
+      - name: The vectors are what the rules compute
+        run: dart run bin/export_vectors.dart --check
+
   build-web:
     name: Build Web
     runs-on: ubuntu-latest

@@ -2,7 +2,7 @@ extends TestCase
 ## test/domain/fight/assault/assault_target_test.dart: what an assault led by
 ## an Abyss Admiral can capture. Its second test (the passage, from
 ## PostTakeover) waits for the action module; the last three (AssaultTarget
-## .at, on a Game) wait for the game module. assault_next_step.dart has no
+## .at, on a Game) are in assault_target_at_test.gd. assault_next_step.dart has no
 ## Dart test: the plan's tests hold it, and wait for the game; the last test
 ## here holds it in the meantime.
 

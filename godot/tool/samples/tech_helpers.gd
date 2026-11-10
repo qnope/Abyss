@@ -24,3 +24,8 @@ static func tech_branches_with(
 	for state: TechBranchState in states:
 		branches[state.branch] = state
 	return branches
+
+
+## Effects of `states` (other branches locked).
+static func effects_of(states: Array[TechBranchState]) -> TechEffects:
+	return TechEffects.new(tech_branches_with(states))

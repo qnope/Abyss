@@ -103,3 +103,10 @@ static func values_set(enumeration: Dictionary, names_or_null: Variant) -> Dicti
 		for name: String in given:
 			typed[value(enumeration, name)] = true
 	return typed
+
+
+## A combatant as a case writes it: type key, side, max HP, ATK, DEF,
+## current HP, boss.
+static func combatant(c: Combatant) -> Array:
+	var side := DartEnum.name_of(CombatSide.Value, c.side)
+	return [c.type_key, side, c.max_hp, c.atk, c.def, c.current_hp, c.is_boss]

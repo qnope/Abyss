@@ -52,3 +52,8 @@ func test_reads_a_list_of_names_as_a_set() -> void:
 	)
 	assert_eq(excluded, {BuildingType.Value.LABORATORY: true, BuildingType.Value.BARRACKS: true})
 	assert_eq(VectorInputs.values_set(BuildingType.Value, null), {})
+
+
+func test_writes_a_combatant_as_a_case_does() -> void:
+	var wounded := Combatant.new(CombatSide.Value.MONSTER, "hunterL2", 9, 4, 2, 5, true)
+	assert_eq(VectorInputs.combatant(wounded), ["hunterL2", "monster", 9, 4, 2, 5, true])

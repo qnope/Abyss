@@ -76,7 +76,10 @@ enum is a `Variant` holding the value or null, its type said in the comment
 order of the declaration, the optional ones last with their Dart defaults; a
 parameter that fills a field is `name_`. `Resource(type: t, amount: 5)` is
 `GameResource.new(t, 5)`. A named constructor or a factory is a static
-function of the same name (`UpgradeReadiness.of(...)`). A `final` field is a
+function of the same name (`UpgradeReadiness.of(...)`); where named
+constructors share their names with fields, which GDScript cannot, they
+all take the prefix `for_` (`GuideTarget.for_building(type)`,
+`for_end_turn()`). A `final` field is a
 plain `var` nothing reassigns. A getter that computes is a method without
 argument (`worksite.can_research()`); a `late final` computed from final
 fields is a field set at the end of `_init` (`Combatant.role`).
@@ -202,4 +205,9 @@ Files and tests of the modules above that wait for another module:
 | the last two tests of `objective/temporary/temporary_objectives_test.dart` (their twins choose through the effect) | `action` (`ChooseEventAction`) |
 | `postLost` of `objective/tip/post_tip_triggers.dart`, then `post_tips.dart` and `tip_catalog.dart`, which list it; `tip_catalog_test.dart`, `post_tips_test.dart`, the group "Archives" of `archive_tips_test.dart` (the tests of the other tips read each tip from its list) | `action` (`AttackHeldKernelAction.kernelCode`) |
 | `faction_attack_tip_test.dart`, the first two tests of "ancients" in `archive_tips_test.dart` (their twins read the triggers) | `action` (`AnnounceAttackAction`, `AttackPostAction` of `PostWar`), and `TipCatalog` above |
+| `objective/guide/guide_leviathan.dart`, `guide_leviathan_test.dart` | `leviathan` (`LeviathanResolver`, `LeviathanDefenceAdvisor`) |
+| `objective/guide/guide_alerts.dart` | `faction` (`UndefendedPosts`, which reads `action`'s `PostTakeover`) |
+| `objective/guide/guide_assault.dart` | `AssaultPlan` above |
+| `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` and `GuideAssault` above |
+| `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own) | `GuideCampaign` and `GuideLeviathan` above |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

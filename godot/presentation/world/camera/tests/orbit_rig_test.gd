@@ -111,3 +111,30 @@ func test_keeps_its_angles_small_after_many_turns() -> void:
 	_rig.step(1.0 / 60.0)
 	assert_almost_eq(_rig.yaw, 45.0, 1e-6)
 	assert_almost_eq(_rig.goal_yaw, 45.0, 1e-6)
+
+
+func test_fits_its_default_view_keeping_the_zoom() -> void:
+	_rig.zoom(0.5)
+	_rig.step(10.0)
+	_rig.frame(OrbitRig.DEFAULT_DISTANCE * 0.8, 0.1)
+	assert_almost_eq(_rig.default_distance, OrbitRig.DEFAULT_DISTANCE * 0.8, 1e-4)
+	assert_almost_eq(_rig.distance, OrbitRig.DEFAULT_DISTANCE * 0.4, 1e-4)
+	assert_almost_eq(_rig.goal_distance, OrbitRig.DEFAULT_DISTANCE * 0.4, 1e-4)
+	assert_almost_eq(_rig.max_distance, OrbitRig.DEFAULT_DISTANCE * 0.8 * OrbitRig.ZOOM_OUT, 1e-4)
+	_rig.zoom(100.0)
+	assert_eq(_rig.goal_distance, _rig.max_distance, "zooms out only a little past the fit")
+
+
+func test_never_zooms_out_past_its_farthest() -> void:
+	_rig.frame(40.0, 0.0)
+	assert_eq(_rig.max_distance, OrbitRig.MAX_DISTANCE)
+	_rig.frame(60.0, 0.0)
+	assert_eq(_rig.max_distance, 60.0, "but always as far as the fitted view")
+
+
+func test_rises_along_its_up_to_show_the_target_lower() -> void:
+	_rig.frame(OrbitRig.DEFAULT_DISTANCE, 0.2)
+	var transform := _rig.transform()
+	var target_in_view := transform.affine_inverse() * Vector3.ZERO
+	assert_almost_eq(target_in_view.y, -0.2 * OrbitRig.DEFAULT_DISTANCE, 1e-4)
+	assert_almost_eq(target_in_view.z, -OrbitRig.DEFAULT_DISTANCE, 1e-4)

@@ -45,6 +45,26 @@ func test_tells_a_tap() -> void:
 	assert_eq(_taps.size(), 1, "in the viewport's coordinates, past the window's stretch")
 
 
+func test_fits_its_default_view_to_an_upright_phone_and_to_a_desktop() -> void:
+	var screen := SubViewport.new()
+	_root().add_child(screen)
+	var camera := OrbitCamera.new()
+	screen.add_child(camera)
+	var outline := PackedVector3Array([Vector3(8, 0, 8), Vector3(-8, 0, -8), Vector3(8, 0, -8),
+		Vector3(-8, 0, 8)])
+	screen.size = Vector2i(390, 844)
+	camera.fit(outline, 0.1)
+	assert_eq(camera.keep_aspect, Camera3D.KEEP_WIDTH)
+	var upright := OrbitFrame.fit(outline, 45.0, -50.0, 390.0 / 844.0, OrbitCamera.FOV, 0.1)
+	assert_almost_eq(camera.rig.default_distance, upright.x, 1e-4)
+	assert_almost_eq(camera.rig.lift, upright.y, 1e-4)
+	assert_true(camera.transform.is_equal_approx(camera.rig.transform()))
+	screen.size = Vector2i(1600, 900)
+	camera.fit(outline, 0.1)
+	assert_eq(camera.keep_aspect, Camera3D.KEEP_HEIGHT)
+	screen.free()
+
+
 func _touch(position: Vector2, pressed: bool) -> InputEventScreenTouch:
 	var event := InputEventScreenTouch.new()
 	event.position = position

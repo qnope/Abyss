@@ -25,6 +25,17 @@ const NO_SHADOW: Array[String] = [
 ## running along it.
 const RAYS := Vector3(-0.12, -1.0, -0.22)
 
+## The island's outline the default view fits to the screen: its rims along
+## the axes and the diagonals, from the coral on its top to the strata under
+## its deck, and the headquarters' beacon.
+const OUTLINE: PackedVector3Array = [
+	Vector3(8.1, 1.0, 0.0), Vector3(-8.1, 1.0, 0.0), Vector3(0.0, 1.0, 8.1), Vector3(0.0, 1.0, -8.1),
+	Vector3(7.4, 1.0, 7.4), Vector3(-7.4, 1.0, 7.4), Vector3(7.4, 1.0, -7.4), Vector3(-7.4, 1.0, -7.4),
+	Vector3(8.1, -1.5, 0.0), Vector3(-8.1, -1.5, 0.0), Vector3(0.0, -1.5, 8.1), Vector3(0.0, -1.5, -8.1),
+	Vector3(7.4, -1.5, 7.4), Vector3(-7.4, -1.5, 7.4), Vector3(7.4, -1.5, -7.4),
+	Vector3(-7.4, -1.5, -7.4), Vector3(0.4, 3.2, 0.4),
+]
+
 ## How far the rampart has grown with the coral citadel, from 1 to 3.
 @export_range(1, 3) var rampart_tier := 1:
 	set = set_rampart_tier
@@ -74,6 +85,12 @@ func build(names: Array[StringName]) -> void:
 	bubbles.rise_from(sources)
 	for name in names:
 		_quiet_shadows(buildings.building(name))
+
+
+## Fits the default view to the screen, the island centred under the top
+## [param hud] share of it.
+func frame(hud: float) -> void:
+	camera.fit(OUTLINE, hud)
 
 
 ## Turns the key light's shadows on or off.

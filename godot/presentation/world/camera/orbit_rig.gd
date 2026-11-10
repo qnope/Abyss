@@ -14,9 +14,12 @@ const DEFAULT_DISTANCE := 29.0
 ## From nearly overhead to a low view along the deck, in degrees.
 const MIN_PITCH := -82.0
 const MAX_PITCH := -16.0
-## From a building filling the screen to the whole island and its spike.
+## From a building filling the screen to the whole island and its spike:
+## the farthest is the fitted view's distance times ZOOM_OUT, never past
+## MAX_DISTANCE.
 const MIN_DISTANCE := 9.0
 const MAX_DISTANCE := 44.0
+const ZOOM_OUT := 1.4
 ## Degrees turned by a drag of one point.
 const DEGREES_PER_POINT := 0.3
 ## How fast the view catches its goal: a share of 1 - exp(-SMOOTHING * t).
@@ -38,6 +41,12 @@ var distance := DEFAULT_DISTANCE
 var goal_yaw := DEFAULT_YAW
 var goal_pitch := DEFAULT_PITCH
 var goal_distance := DEFAULT_DISTANCE
+## The distance of the default view, fitted to the screen, and the farthest.
+var default_distance := DEFAULT_DISTANCE
+var max_distance := MAX_DISTANCE
+## How high the camera rises along its own up, as a share of its distance:
+## the target then shows below the screen's centre, under the HUD.
+var lift := 0.0
 
 ## The yaw's speed of a fling, in degrees per second.
 var _fling := 0.0
@@ -63,18 +72,29 @@ func release() -> void:
 
 ## Moves the goal [param factor] times as far: under 1 zooms in.
 func zoom(factor: float) -> void:
-	goal_distance = clampf(goal_distance * factor, MIN_DISTANCE, MAX_DISTANCE)
+	goal_distance = clampf(goal_distance * factor, MIN_DISTANCE, max_distance)
 
 
 ## Puts the view at once on these angles (degrees) and [param distance_].
 func look(yaw_: float, pitch_: float, distance_: float) -> void:
 	goal_yaw = yaw_
 	goal_pitch = clampf(pitch_, MIN_PITCH, MAX_PITCH)
-	goal_distance = clampf(distance_, MIN_DISTANCE, MAX_DISTANCE)
+	goal_distance = clampf(distance_, MIN_DISTANCE, max_distance)
 	yaw = goal_yaw
 	pitch = goal_pitch
 	distance = goal_distance
 	_fling = 0.0
+
+
+## Fits the default view to the screen (OrbitFrame): its [param distance_]
+## and its [param lift_]. The view keeps its zoom relative to the default.
+func frame(distance_: float, lift_: float) -> void:
+	var ratio := distance_ / default_distance
+	default_distance = distance_
+	max_distance = maxf(distance_, minf(distance_ * ZOOM_OUT, MAX_DISTANCE))
+	lift = lift_
+	goal_distance = clampf(goal_distance * ratio, MIN_DISTANCE, max_distance)
+	distance = clampf(distance * ratio, MIN_DISTANCE, max_distance)
 
 
 ## Moves the view [param seconds] on: the fling, then the ease to the goal.
@@ -100,7 +120,7 @@ func is_settled() -> bool:
 ## The camera's place, looking at the target.
 func transform() -> Transform3D:
 	var basis := Basis.from_euler(Vector3(deg_to_rad(pitch), deg_to_rad(yaw), 0.0))
-	return Transform3D(basis, target + basis * Vector3.BACK * distance)
+	return Transform3D(basis, target + basis * Vector3(0.0, lift, 1.0) * distance)
 
 
 static func _ease(value: float, goal: float, share: float) -> float:

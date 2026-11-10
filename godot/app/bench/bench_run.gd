@@ -40,7 +40,7 @@ func _process(delta: float) -> void:
 	var share := t / _seconds
 	var zoom := 1.0 - (1.0 - ZOOM) * sin(PI * share)
 	_camera.rig.look(OrbitRig.DEFAULT_YAW + 360.0 * share, OrbitRig.DEFAULT_PITCH,
-		OrbitRig.DEFAULT_DISTANCE * zoom)
+		_camera.rig.default_distance * zoom)
 
 
 func _finish() -> void:
@@ -49,5 +49,5 @@ func _finish() -> void:
 	var summary := FrameReport.bench(stats, _seconds)
 	print(summary)
 	_counter.show_bench(summary)
-	_camera.rig.look(OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH, OrbitRig.DEFAULT_DISTANCE)
+	_camera.rig.look(OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH, _camera.rig.default_distance)
 	finished.emit(summary)

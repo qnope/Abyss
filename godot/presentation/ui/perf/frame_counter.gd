@@ -27,6 +27,12 @@ func _init() -> void:
 		lines.add_child(label)
 	_bench.visible = false
 	add_child(lines)
+	# Its height is that of its figures from the start: the view fits under it.
+	_headline.text = "– FPS"
+	_timing.text = "– ms avg · – ms worst"
+	_load.text = "– draw calls · – primitives"
+	_renderer.text = "–"
+
 
 
 func _process(delta: float) -> void:

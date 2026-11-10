@@ -31,11 +31,11 @@ func _capture(folder: String) -> void:
 	var camera := _scene.find_children("*", "OrbitCamera", true, false)[0] as OrbitCamera
 	await _frames(WARM_UP)
 	var shots: Array[Shot] = [
-		Shot.new("default", OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH, OrbitRig.DEFAULT_DISTANCE),
+		Shot.new("default", OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH, camera.rig.default_distance),
 		Shot.new("rotated", OrbitRig.DEFAULT_YAW + 110.0, -38.0, 26.0),
 		Shot.new("close", OrbitRig.DEFAULT_YAW + 20.0, -30.0, OrbitRig.MIN_DISTANCE,
 			Vector3(0.4, 1.2, 0.4)),
-		Shot.new("top", OrbitRig.DEFAULT_YAW, OrbitRig.MIN_PITCH, 34.0),
+		Shot.new("top", OrbitRig.DEFAULT_YAW, OrbitRig.MIN_PITCH, camera.rig.default_distance),
 	]
 	for shot in shots:
 		camera.rig.target = shot.target

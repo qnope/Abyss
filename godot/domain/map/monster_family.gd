@@ -21,6 +21,15 @@ enum Value {
 
 const _BEFORE_LEVEL_2: Array[Value] = [Value.SWARM, Value.ARMOURED, Value.HUNTER]
 const _FROM_LEVEL_2: Array[Value] = [Value.SWARM, Value.ARMOURED, Value.HUNTER, Value.COLOSSUS]
+## `_byName`, the families by their Dart name, a table since `of_type_key`
+## runs for every combatant built; its test holds it to DartEnum.names.
+const _BY_NAME: Dictionary[String, Value] = {
+	"swarm": Value.SWARM,
+	"armoured": Value.ARMOURED,
+	"hunter": Value.HUNTER,
+	"colossus": Value.COLOSSUS,
+	"kraken": Value.KRAKEN,
+}
 
 
 ## Families that can make up a lair or a raid of `level` monsters: colossi
@@ -52,4 +61,4 @@ static func of_type_key(type_key: String) -> Variant:
 	var cut := type_key.rfind("L")
 	if cut <= 0:
 		return null
-	return DartEnum.by_name(Value, type_key.substr(0, cut))
+	return _BY_NAME.get(type_key.substr(0, cut))

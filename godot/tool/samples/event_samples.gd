@@ -76,6 +76,16 @@ static func wreck_game(player: Player, map: GameMap = null, turn := 12) -> Game:
 	return game
 
 
+## `eventEntriesOf`: the event entries of `player`'s history, oldest
+## first.
+static func event_entries_of(player: Player) -> Array[EventEntry]:
+	var entries: Array[EventEntry] = []
+	for e: HistoryEntry in player.history_entries:
+		if e is EventEntry:
+			entries.append(e as EventEntry)
+	return entries
+
+
 ## `predatorTestWave`: the wave of the predators waiting in the tests.
 static func predator_test_wave() -> MonsterLair:
 	return MonsterLair.new(

@@ -2,8 +2,7 @@ extends TestCase
 ## test/domain/event/effects/predators_effect_test.dart: the shoal of
 ## predators. 'facing them marks the fight for the end of the turn' and
 ## 'baiting them gives up 30 % of the algae, without a fight' wait for the
-## action module (ChooseEventAction); 'left without a choice, they are
-## baited at the end of the turn' for the event resolver, ported next.
+## action module (ChooseEventAction).
 
 const ALGAE := ResourceType.Value.ALGAE
 const HARPOONIST := UnitType.Value.HARPOONIST
@@ -52,6 +51,15 @@ func test_half_the_power_of_a_raid_at_the_same_noise() -> void:
 		150, DartRandom.new(1), Difficulty.monster_percent(Difficulty.Value.NORMAL)
 	)
 	assert_true(player.event_state.predator_wave.level() < raid.level())
+
+
+func test_left_without_a_choice_they_are_baited_at_the_end_of_the_turn() -> void:
+	var player := EventSamples.threatened_player({HARPOONIST: 10})
+	var game := EventSamples.event_game(player, 12)
+	var outcome := EventResolver.resolve(game, player, 12, DartRandom.new(1))
+	assert_null(outcome.predators)
+	assert_not_null(outcome.defaulted)
+	_expect_baited(player, 1000)
 
 
 ## Not in the Dart file: the choices through the effect itself, as

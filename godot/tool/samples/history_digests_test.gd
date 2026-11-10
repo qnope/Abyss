@@ -17,6 +17,8 @@ func test_writes_a_raid_a_volcano_and_another_entry() -> void:
 	assert_eq(
 		HistoryDigests.entry(volcano), "volcano 20 V medium/null/3/null/0 player 2 4>0 k2 | guardian:4 |  |  | "
 	)
+	var event := EventEntry.new(9, RandomEventType.Value.COLD_CURRENT, false, true)
+	assert_eq(HistoryDigests.entry(event), "event 9 coldCurrent false true")
 	assert_eq(HistoryDigests.entry(HistorySamples.capture_entry("Nacre")), "capture 6")
 
 

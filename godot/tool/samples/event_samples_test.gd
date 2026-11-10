@@ -54,3 +54,12 @@ func test_a_player_whose_predators_wait_for_a_choice() -> void:
 	assert_eq([RaidSamples.units_on_base(player), CoralCitadelRampart.level_of(player.buildings)], [10, 2])
 	var wave := MonsterLair.new(MonsterDifficulty.Value.HARD, 4)
 	assert_true(EventSamples.threatened_player({}, 0, wave).event_state.predator_wave == wave)
+
+
+func test_the_event_entries_of_a_history_oldest_first() -> void:
+	var player := EventSamples.event_player()
+	player.add_history_entry(EventEntry.new(3, RandomEventType.Value.STORM, true, false))
+	player.add_history_entry(HistorySamples.capture_entry("Nacre"))
+	player.add_history_entry(EventEntry.new(9, RandomEventType.Value.CARAVAN, false, true))
+	var turns := EventSamples.event_entries_of(player).map(func(e: EventEntry) -> int: return e.turn)
+	assert_eq(turns, [3, 9])

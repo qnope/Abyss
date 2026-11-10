@@ -42,3 +42,14 @@ func test_a_kernel_that_only_loses_a_level_keeps_its_garrison() -> void:
 	assert_eq(_take(war, 2), {} as Dictionary[UnitType.Value, int])
 	assert_eq(war.kernel_of(war.owner()), 2)
 	assert_eq(war.holder(), war.owner().id)
+
+
+## Not in the Dart file: a kernel taken down to level 1 is still held, with
+## its garrison, by its owner.
+func test_a_kernel_left_at_level_1_keeps_its_owner_and_garrison() -> void:
+	var war := KernelWar.new(2)
+	war.garrison(KernelWar.SMALL_GARRISON)
+
+	assert_eq(_take(war, 1), {} as Dictionary[UnitType.Value, int])
+	assert_eq(war.kernel_of(war.owner()), 1)
+	assert_eq(war.holder(), war.owner().id)

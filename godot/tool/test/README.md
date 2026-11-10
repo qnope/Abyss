@@ -9,7 +9,8 @@ Paths are test files or folders, `res://` or relative to `godot/` (the shell
 script also takes them relative to the repo root). Without any, every
 `*_test.gd` of the project runs, skipping hidden folders and `fixtures/`, the
 runner's own sample files. The command prints a line per failed test, then
-`N tests, F failed, in T ms`, and exits with 1 when a test failed.
+`N tests, F failed, in T ms`, and exits with 1 when a test failed or the run
+timed out (see Timeouts).
 
 `--coverage-out=<file>` is for `tool/godot_coverage.py`, which runs the tests on
 an instrumented copy of the project (see `tool/gdscript_coverage/README.md`):
@@ -33,3 +34,12 @@ stops the run on one: `TestErrorLog`, an engine `Logger`, records the errors
 logged while a test runs and fails the test with them. The engine still prints
 them. What it cannot catch: an endless loop hangs the run, and a crash of the
 engine itself ends it.
+
+## Timeouts
+
+A script error in the runner's own code would stop it before its `quit()`
+and leave the process idling. `TestWatchdog` quits with 1 once the run has
+gone on for `--timeout=<seconds>` (600 by default) without finishing. An
+endless loop never gives it the hand, so `tool/godot_test.sh` and
+`tool/godot_coverage.py` also kill a run after `GODOT_TEST_TIMEOUT` seconds
+(600 by default), which they pass to the runner as its `--timeout`.

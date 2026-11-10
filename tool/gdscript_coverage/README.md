@@ -12,7 +12,9 @@ paths from the repo root; a script no test loads has all its lines at 0) and
 `coverage/godot/summary.md` through `.github/scripts/coverage_summary.sh`, which
 also fails below `COVERAGE_MIN`. Nothing else in the repo is written. It exits
 with 1 when a test fails, when the minimum is not reached, or when a step fails.
-`GODOT` names the engine binary, `godot` by default.
+`GODOT` names the engine binary, `godot` by default. Each Godot step that
+outlasts `GODOT_TEST_TIMEOUT` seconds (600 by default) is killed and fails the
+tool; the test run also passes it to the runner as `--timeout`.
 
 ## How
 
@@ -21,7 +23,8 @@ with 1 when a test fails, when the minimum is not reached, or when a step fails.
    folders. Each executable line gets a probe before its statement, on the same
    line, so every line keeps its number: `\tCoverageProbe.hit(3, 17); var x := f()`.
 3. Adds `res://tool/coverage_probe.gd`, the `CoverageProbe` class that counts the
-   hits, and imports the copy.
+   hits, and imports the copy, as a step of its own; a failed import is tried
+   once more, as Godot once crashed importing a font there.
 4. Parses each instrumented script with `godot --check-only`, and stops at the
    first that breaks, naming its file, line and the instrumented text.
 5. Runs the tests with `--coverage-out=<file>`: the runner then calls

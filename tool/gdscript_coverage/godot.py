@@ -6,6 +6,7 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor
 
 RUNNER = "res://tool/test/run_tests.gd"
+TIMEOUT = "GODOT_TEST_TIMEOUT"
 SCRIPT_ERROR = re.compile(r"SCRIPT ERROR: (.+)\n\s+at: .*\(res://(.+?):(\d+)\)")
 
 
@@ -17,11 +18,20 @@ def godot(*arguments):
     return [os.environ.get("GODOT", "godot"), "--headless", *arguments]
 
 
+def timeout():
+    """The seconds a Godot step may take, GODOT_TEST_TIMEOUT or 600."""
+    return int(os.environ.get(TIMEOUT) or 600)
+
+
 def import_project(copy):
-    """Imports the copy, which writes the class cache that finds CoverageProbe."""
-    result = subprocess.run(godot("--path", copy, "--import"), capture_output=True, text=True)
-    if result.returncode != 0:
-        raise CoverageError("The instrumented copy does not import:\n" + result.stdout + result.stderr)
+    """Imports the copy, which writes the class cache that finds CoverageProbe.
+    A failed import is tried once more: Godot once crashed while importing a
+    font ("caller thread can't call propagate_notification() on /root")."""
+    for _ in range(2):
+        result = _run(godot("--path", copy, "--import"), "The import", capture_output=True, text=True)
+        if result.returncode == 0:
+            return
+    raise CoverageError("The instrumented copy does not import:\n" + result.stdout + result.stderr)
 
 
 def check_scripts(copy, scripts, prefix):
@@ -35,14 +45,23 @@ def check_scripts(copy, scripts, prefix):
 
 def run_tests(copy, paths, dump):
     """Runs the tests on the copy, which dumps its hits; the exit code."""
-    command = godot("--path", copy, "--script", RUNNER, "--", "--coverage-out=" + dump, *paths)
-    return subprocess.run(command).returncode
+    command = godot("--path", copy, "--script", RUNNER, "--",
+                    "--coverage-out=" + dump, "--timeout=%d" % timeout(), *paths)
+    return _run(command, "The test run").returncode
+
+
+def _run(command, step, **options):
+    """Runs a Godot step; raises when it outlasts timeout(), killing it."""
+    try:
+        return subprocess.run(command, timeout=timeout(), **options)
+    except subprocess.TimeoutExpired:
+        raise CoverageError("%s did not finish within %d s (%s)." % (step, timeout(), TIMEOUT))
 
 
 def _check(copy, path):
-    result = subprocess.run(
-        godot("--path", copy, "--check-only", "--script", "res://" + path),
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    result = _run(godot("--path", copy, "--check-only", "--script", "res://" + path),
+                  "The parse check of " + path, stdout=subprocess.PIPE,
+                  stderr=subprocess.STDOUT, text=True)
     return None if result.returncode == 0 else result.stdout
 
 

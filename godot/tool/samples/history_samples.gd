@@ -37,11 +37,23 @@ static func volcano_entry(victory: bool) -> VolcanoEntry:
 	return VolcanoEntry.new(20, victory, _lair(), fight(victory), 2, {}, {}, {}, {})
 
 
-## An assault on the base of "Nacre", seen from either side; without the
-## post, the kernel and the losses the Dart helper may also take.
-static func base_assault_entry(victory: bool, defending: bool) -> BaseAssaultEntry:
+## An assault of "Nacre", seen from either side: on the base, or on the
+## post of code `post` (a String); `kernel`, the record `(before, after)` of
+## the Dart helper, is a Vector2i of the levels of the rampart, or null for
+## 2 then 0.
+static func base_assault_entry(
+	victory: bool,
+	defending: bool,
+	post: Variant = null,
+	kernel: Variant = null,
+	lost_with_post: Dictionary[UnitType.Value, int] = {},
+	dead: Dictionary[UnitType.Value, int] = {},
+	passage_destroyed := true,
+) -> BaseAssaultEntry:
+	var rampart: Vector2i = Vector2i(2, 0) if kernel == null else kernel
 	return BaseAssaultEntry.new(
-		14, victory, defending, "Nacre", fight(victory), {}, {}, {}, {}, 2, 0, 5, 5, {}, {}
+		14, victory, defending, "Nacre", fight(victory), {}, {}, {}, dead, rampart.x, rampart.y,
+		5, 5, {}, {}, post, lost_with_post, passage_destroyed,
 	)
 
 

@@ -25,5 +25,9 @@ player named after its id (`player`), one holding only the buildings given
 `two_players`, the twin of `test/helpers/two_player_game.dart`. A game from a
 seed comes from `GameFactory` itself.
 
+`HistorySamples` builds the entries of the fights of
+`test/helpers/history_entry_samples.dart` and the fight of two turns they
+hold (`buildTestFight`, its `fight` here).
+
 The tests driven by `reference/vectors/` build theirs from the Dart names a
 case writes, with `VectorInputs` (`godot/tool/reference/README.md`).

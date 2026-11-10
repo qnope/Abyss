@@ -80,10 +80,16 @@ class ScriptRunner {
       );
       script.playTurn(turn);
       milestones.observe(game, game.turn, playerId: player.id);
-      if (turn.isOver || game.turn == script.lastTurn) break;
+      if (game.turn == script.lastTurn) break;
+      if (turn.isOver && game.status != GameStatus.defeat) break;
+      // A faction tames the volcano while the turn ends, and the turn
+      // ends all the same. A replay plays that move before ending the
+      // turn: it ends the turn too when the journal holds its seed.
+      final Random? recorded = script.endTurnRandom(game.turn);
+      if (turn.isOver && recorded == null) break;
       final ActionResult end = _executor.execute(
           EndTurnAction(
-            random: script.endTurnRandom(game.turn) ?? random,
+            random: recorded ?? random,
             playFactions: script.factionsPlay,
           ),
           game,

@@ -111,5 +111,5 @@ func test_build_combat_entry_carries_the_fight_or_none_without_one() -> void:
 	assert_eq([e.lair, e.fight_result, e.loot, e.sent], [lair, fight, loot, sent])
 	assert_eq([e.survivors_intact, e.wounded, e.dead], [intact, wounded, dead])
 	assert_null(FightMonsterHelpers.build_combat_entry(7, 4, 5, null, won))
-	var failed := FightMonsterResult.new(false, null, {}, {}, {}, {}, {})
+	var failed := FightMonsterResult.failure(ActionFailure.Value.LAIR_EMPTY)
 	assert_null(FightMonsterHelpers.build_combat_entry(7, 4, 5, lair, failed))

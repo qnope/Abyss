@@ -129,6 +129,15 @@ is an `@abstract func` of an `@abstract` class (`ObjectiveGoal`), which
 leaves no line for the coverage to miss. Another operator than `==` is a
 method named after it: `a + b` is `a.plus(b)` (`ObjectiveProgress`).
 
+**Abstract classes** (first met in `action`). An abstract Dart class
+whose members have no body is an `@abstract` class, those members `@abstract
+func`s, an abstract getter one without argument (`Action.type()`); a test
+extends it with an inner class. A result of a subclass passes its reason
+up, `ActionResult.new(reason)`, null a success. GDScript holds a static
+function to the signature of the one of the base it hides: the `success`
+of a subclass takes a default for every parameter, as
+`ActionResult.success()` takes none (`FightMonsterResult.success`).
+
 **`switch` on an enum.** GDScript checks no exhaustiveness, and a `return`
 no value reaches would never be covered. Constant cases are a `const` table
 keyed by the enum (`ConsumptionCalculator`); otherwise a `match` whose last
@@ -184,10 +193,9 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
-| `action/fight_monster_result.dart`: its base class `ActionResult`, its `failure` constructor, two tests of `fight_monster_result_test.dart` | `action` (`ActionResult`) |
 | three tests of `action_noise_test.dart`, `silent_swim_noise_test.dart`, `garrison_kernel_action_test.dart` | `action` |
 | `volcano/wave_held_back_turn_test.dart` | `turn`, `action` |
-| `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes) | `action` (`Action`, `ActionEncoder`) |
+| `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it | `action` (`Action`, `ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
 | `game_factory_factions_test.dart` (the human exploring) | `action` |
 | `pearl_income_test.dart` (its two tests of the end of turn) | `turn` |

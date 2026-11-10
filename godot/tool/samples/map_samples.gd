@@ -63,7 +63,7 @@ static func fingerprint(map: GameMap) -> int:
 			DartEnum.name_of(CellContentType.Value, cell.content),
 			"null" if lair == null else DartEnum.name_of(MonsterDifficulty.Value, lair.difficulty),
 			"null" if lair == null else str(lair.unit_count),
-			_text(null if lair == null else VectorInputs.name_or_null(MonsterFamily.Value, lair.family)),
+			_family(lair),
 			"null" if base == null else DartEnum.name_of(TransitionBaseType.Value, base.type),
 			"null" if base == null else base.name,
 			_text(null if base == null else base.captured_by),
@@ -76,6 +76,13 @@ static func fingerprint(map: GameMap) -> int:
 	for index: int in text.length():
 		fnv = ((fnv ^ text.unicode_at(index)) * 0x01000193) & 0xFFFFFFFF
 	return fnv
+
+
+## `lair?.family?.name` as Dart's string interpolation writes it.
+static func _family(lair: MonsterLair) -> String:
+	if lair == null:
+		return "null"
+	return _text(VectorInputs.name_or_null(MonsterFamily.Value, lair.family))
 
 
 ## A value as Dart's string interpolation writes it.

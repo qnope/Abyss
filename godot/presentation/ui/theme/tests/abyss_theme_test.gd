@@ -12,7 +12,7 @@ func test_gathers_every_family() -> void:
 	assert_eq(_theme.default_font_size, 14)
 	for variation: String in [
 		"TitleLarge", "OutlinedButton", "DialogPanel", "ErrorLineEdit",
-		"SegmentedTray", "Segment", "HeroTitle", "MenuPrimaryButton",
+		"SegmentedTray", "Segment", "HeroTitle", "MenuPrimaryButton", "HudPanel",
 	]:
 		assert_ne(_theme.get_type_variation_base(variation), &"", variation)
 	assert_true(_theme.has_stylebox("panel", "PopupMenu"))

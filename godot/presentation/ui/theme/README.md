@@ -20,7 +20,9 @@ role or widget:
   `Segment` (a toggle button in a `ButtonGroup`, inside a `SegmentedTray`).
 - `PanelContainer`: plain is the card; `DialogPanel`, `BottomSheetPanel`,
   `AppBarPanel`, `SavePanel`, `SavePanelHighlighted`, `SavePanelFaded`,
-  `SegmentedTray`.
+  `SegmentedTray`, and `HudPanel`, translucent over the 3D world, with its
+  labels `HudHeadline`, `HudFigure` and `HudCaption` (`AbyssHudTheme`, which
+  has no Flutter original).
 - `LineEdit`: plain, or `ErrorLineEdit` for a field in error. `TextEdit`,
   `ProgressBar`, `HSlider`, `PopupMenu` and tooltips are styled as they are.
 

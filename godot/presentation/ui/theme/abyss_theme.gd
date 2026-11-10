@@ -15,4 +15,5 @@ static func build() -> Theme:
 	AbyssInputTheme.apply(theme)
 	AbyssSegmentedTheme.apply(theme)
 	AbyssMenuTheme.apply(theme)
+	AbyssHudTheme.apply(theme)
 	return theme

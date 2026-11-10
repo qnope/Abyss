@@ -17,16 +17,18 @@ import 'player.dart';
 abstract final class GameFactory {
   /// [mapSeed] makes the first level reproducible; `null` draws one.
   /// [tutorial] has the guide lead the player through the first chapter,
-  /// with the tip cards.
+  /// with the tip cards. [humanId] names the player; `null` draws an id.
   static Game newSinglePlayer({
     required String playerName,
     int? mapSeed,
     Difficulty difficulty = Difficulty.normal,
     bool tutorial = false,
+    String? humanId,
   }) {
     final int seed = mapSeed ?? Random().nextInt(0x7FFFFFFF);
     final generation = MapGenerator.generate(seed: seed);
     final player = Player.withBase(
+      id: humanId,
       name: playerName,
       baseX: generation.baseX,
       baseY: generation.baseY,
@@ -46,6 +48,10 @@ abstract final class GameFactory {
   /// faction is a player on a base of its own, with a fog of its own, and
   /// the three levels are generated at once so that everybody descends in
   /// the same world. Without faction it is [newSinglePlayer].
+  ///
+  /// [humanId] names the human player; `null` draws an id. A faction
+  /// breaks a tie between two bases by their ids, so only a given id
+  /// makes a game against factions the same every time it is played.
   static Game newGame({
     required String playerName,
     int? mapSeed,
@@ -53,6 +59,7 @@ abstract final class GameFactory {
     bool tutorial = false,
     int factionCount = 0,
     List<FactionPersonality>? personalities,
+    String? humanId,
   }) {
     final int seed = mapSeed ?? Random().nextInt(0x7FFFFFFF);
     final List<FactionPersonality> drawn =
@@ -66,6 +73,7 @@ abstract final class GameFactory {
         mapSeed: seed,
         difficulty: difficulty,
         tutorial: tutorial,
+        humanId: humanId,
       );
     }
     final world = WorldGenerator.generate(
@@ -74,7 +82,7 @@ abstract final class GameFactory {
     );
     final MapGenerationResult first = world[1]!;
     final Game game = Game.singlePlayer(
-      _playerOn(first, 0, name: playerName)
+      _playerOn(first, 0, name: playerName, id: humanId)
         ..savedObjectiveState = ObjectiveState(
           tutorialEnabled: tutorial,
           tipsEnabled: tutorial,

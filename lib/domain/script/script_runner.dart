@@ -28,11 +28,17 @@ class ScriptRunner {
   /// Difficulty of the games, unless the script pins its own.
   final Difficulty difficulty;
 
+  /// Id of the human player of the games; `null` draws one per game, as
+  /// the game screen does. A faction breaks a tie between two bases by
+  /// their ids: a reference game pins this one to play the same again.
+  final String? humanId;
+
   final ActionExecutor _executor;
 
   ScriptRunner({
     this.maxTurns = 60,
     this.difficulty = Difficulty.normal,
+    this.humanId,
     ActionExecutor? executor,
   })
       : _executor = executor ?? ActionExecutor();
@@ -45,6 +51,7 @@ class ScriptRunner {
       mapSeed: script.mapSeed ?? drawnSeed,
       difficulty: script.difficulty ?? difficulty,
       personalities: script.factions,
+      humanId: humanId,
     );
     CheatCodes.apply(game.humanPlayer);
     return runOn(game, script, random: random, seed: seed);

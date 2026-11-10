@@ -195,7 +195,7 @@ Files and tests of the modules above that wait for another module:
 | --- | --- |
 | three tests of `action_noise_test.dart`, `silent_swim_noise_test.dart`, `garrison_kernel_action_test.dart` | `action` |
 | `volcano/wave_held_back_turn_test.dart` | `turn`, `action` |
-| `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it | `action` (`Action`, `ActionEncoder`) |
+| `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it; the last test of `choose_event_action_test.dart` (the choice is written in the replay journal) | `action` (`ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
 | `game_factory_factions_test.dart` (the human exploring) | `turn` (`EndTurnAction`) |
 | `pearl_income_test.dart` (its two tests of the end of turn) | `turn` |
@@ -218,4 +218,6 @@ Files and tests of the modules above that wait for another module:
 | `objective/guide/guide_assault.dart` | `AssaultPlan` above |
 | `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` and `GuideAssault` above |
 | `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own) | `GuideCampaign` and `GuideLeviathan` above |
+
+| `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `script` |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

@@ -1,14 +1,19 @@
 extends VectorTestCase
 ## test/domain/event/effects/survivors_effect_test.dart: survivors who may
-## join the base as free harpoonists. 'welcoming them adds free harpoonists
-## on level 1, silently' and 'turning them away adds nobody' wait for the
-## action module (ChooseEventAction, ActionExecutor).
+## join the base as free harpoonists.
 
 var _survivors := SurvivorsEffect.new()
 
 
 func _harpoonists(player: Player) -> int:
 	return player.units_on_level(1)[UnitType.Value.HARPOONIST].count
+
+
+func _stocks(player: Player) -> Dictionary[ResourceType.Value, int]:
+	var stocks: Dictionary[ResourceType.Value, int] = {}
+	for type: ResourceType.Value in player.resources:
+		stocks[type] = player.resources[type].amount
+	return stocks
 
 
 ## Player whose survivors, drawn at the end of turn 11, wait on turn 12.
@@ -31,6 +36,25 @@ func test_the_draw_remembers_how_many_survivors_are_met() -> void:
 	var player := EventSamples.event_player()
 	_survivors.on_draw(EventSamples.event_game(player, 20), player, 20, DartRandom.new(1))
 	assert_eq(player.event_state.survivors, 4)
+
+
+func test_welcoming_them_adds_free_harpoonists_on_level_1_silently() -> void:
+	var player := _met(4)
+	var before := _stocks(player)
+	var result := ActionExecutor.new().execute(ChooseEventAction.new(true), EventSamples.event_game(player, 12), player)
+	assert_true(result.is_success)
+	assert_eq(_harpoonists(player), 4)
+	assert_eq(_stocks(player), before)
+	assert_eq(player.raid_state.total_noise, 0)
+	assert_true(player.recruited_unit_types.is_empty())
+	assert_null(player.event_state.survivors)
+
+
+func test_turning_them_away_adds_nobody() -> void:
+	var player := _met(4)
+	ActionExecutor.new().execute(ChooseEventAction.new(false), EventSamples.event_game(player, 12), player)
+	assert_eq(_harpoonists(player), 0)
+	assert_null(player.event_state.survivors)
 
 
 func test_left_without_a_choice_nobody_joins() -> void:

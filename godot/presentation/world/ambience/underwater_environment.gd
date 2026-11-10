@@ -22,7 +22,7 @@ const CONTRAST := 1.06
 const FOG_COLOUR := Color("082a3c")
 const FOG_DENSITY := 0.006
 const FOG_FLOOR := -3.0
-const FOG_DEPTH_DENSITY := 0.07
+const FOG_DEPTH_DENSITY := 0.05
 ## The glow's spread: its weight at each blur level, the finest first.
 const GLOW_LEVELS: Array[float] = [0.0, 1.0, 0.8, 0.5, 0.2, 0.0, 0.0]
 

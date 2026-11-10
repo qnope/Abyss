@@ -1,8 +1,5 @@
 extends TestCase
 ## test/domain/event/effects/caravan_effect_test.dart: the turtle caravan.
-## The check of 'never drawn when the most abundant stock is under 100' on
-## EventEffects.excludedAt waits for event_effects.dart, which waits for the
-## predators (raid) and the survivors (volcano).
 
 const ALGAE := ResourceType.Value.ALGAE
 const CORAL := ResourceType.Value.CORAL
@@ -50,6 +47,7 @@ func test_ties_go_to_the_first_resource_in_the_usual_order() -> void:
 func test_never_drawn_when_the_most_abundant_stock_is_under_100() -> void:
 	var poor := _stocked(99, 50, 20)
 	assert_false(_caravan.allowed_at(EventSamples.event_game(poor), poor, 11))
+	assert_has(EventEffects.excluded_at(EventSamples.event_game(poor), poor, 11), RandomEventType.Value.CARAVAN)
 	var enough := _stocked(100, 50, 20)
 	assert_true(_caravan.allowed_at(EventSamples.event_game(enough), enough, 11))
 

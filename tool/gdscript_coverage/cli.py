@@ -33,7 +33,7 @@ def main(argv=None):
         import_project(copy)
         check_scripts(copy, scripts, prefix)
         dump = os.path.join(temp, "hits.txt")
-        code = run_tests(copy, [_in_project(path, prefix) for path in args.paths], dump)
+        code = run_tests(copy, [_in_project(path, prefix) for path in args.paths], dump, REPO)
         if not os.path.exists(dump):
             raise CoverageError("The test run ended before writing its hits.")
         with open(dump) as file:

@@ -36,14 +36,22 @@ class GodotTest(unittest.TestCase):
         with self.fake_godot("exec sleep 30"):
             start = time.monotonic()
             with self.assertRaises(CoverageError) as raised:
-                run_tests(self.root, [], os.path.join(self.root, "hits.txt"))
+                run_tests(self.root, [], os.path.join(self.root, "hits.txt"), self.root)
         self.assertLess(time.monotonic() - start, 10)
         self.assertIn("did not finish within 1 s (GODOT_TEST_TIMEOUT)", str(raised.exception))
 
     def test_gives_the_runner_the_same_timeout(self):
         with self.fake_godot("exit 3"):
-            self.assertEqual(run_tests(self.root, ["app"], "/tmp/hits.txt"), 3)
+            self.assertEqual(run_tests(self.root, ["app"], "/tmp/hits.txt", self.root), 3)
         self.assertIn("-- --coverage-out=/tmp/hits.txt --timeout=1 app", self.call_lines()[0])
+
+    def test_tells_the_tests_where_the_repository_is(self):
+        # The copy lies in a temporary folder: reference/ is not above it.
+        seen = os.path.join(self.root, "seen")
+        with self.fake_godot('echo "$ABYSS_REPO_ROOT" > "%s"' % seen):
+            run_tests(self.root, [], "/tmp/hits.txt", "/work/Abyss")
+        with open(seen) as file:
+            self.assertEqual(file.read(), "/work/Abyss\n")
 
     def test_imports_again_after_a_crash(self):
         with self.fake_godot('[ "$calls" -gt 1 ] || kill -ABRT $$'):

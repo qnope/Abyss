@@ -5,7 +5,7 @@ extends RefCounted
 ## then game_screen_turn_flow.dart), a chain of signals with no await:
 ##
 ##     request() -> TurnConfirmation -> confirmed -> GameActions.end_turn()
-##       -> turn_ended -> TurnOutcome (the summary, then the pages to come)
+##       -> turn_ended -> TurnOutcome (the summary, the reports, the tips)
 ##       -> finished, or defeated when the turn lost the game
 ##
 ## Cancelling, or dismissing the question, leaves the turn where it is.

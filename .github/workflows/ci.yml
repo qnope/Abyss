@@ -182,7 +182,9 @@ jobs:
   godot-test:
     name: Godot Test
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The suite, the Python tools and the coverage run (the suite again,
+    # instrumented) took 20 minutes at 4100 tests and the suite keeps growing.
+    timeout-minutes: 45
     permissions:
       contents: read
       pull-requests: write

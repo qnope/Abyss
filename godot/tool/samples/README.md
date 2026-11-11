@@ -210,3 +210,11 @@ what the scratch Dart script printed through `GameSnapshot`.
 die a fresh `SeededRandom` (`play_live_game`), the human and a rival playing
 turn about (`play_two`, its rival `RIVAL_ID`), and the snapshot a replay
 must reproduce of a player (`snapshot_of`, `both`).
+
+`JournalReplay` replays the journal of a game of `reference/games/` as
+Dart's `ReferenceExporter` does (`reference/README.md`, "Replaying it"):
+the steps of `ScriptRunner.run` and `TimelineScript`, which are not ported,
+on a game of `GameFactory` with the human id of the reference games, every
+action decoded by `ActionCodec` and played as its player. It keeps the
+actions refused and those left unplayed once the game was over;
+`reference_games` and `read_game` list and read the files.

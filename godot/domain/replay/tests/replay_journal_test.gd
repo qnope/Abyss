@@ -102,7 +102,7 @@ func test_a_whole_number_decodes_as_an_int_at_any_depth() -> void:
 	assert_eq(move["at"], [2, 3])
 	assert_eq(move["seed"], 2147483646)
 	assert_eq(move["go"], true)
-	assert_eq(ReplayJournal._whole_numbers(2.5), 2.5)
+	assert_eq(ReplayJournal.whole_numbers(2.5), 2.5)
 
 
 ## The snapshots write a move as the pairs of its keys in the order the

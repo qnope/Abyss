@@ -49,6 +49,19 @@ func test_ends_with_the_result_of_the_action_pressed() -> void:
 	assert_true(dialog.is_closed())
 
 
+func test_a_button_is_an_action_that_does_not_end_the_dialog() -> void:
+	var dialog := mount(AbyssDialog.new()) as AbyssDialog
+	dialog.closed.connect(func(result: Variant) -> void: _results.append(result))
+	var copy := dialog.add_button("Copy")
+	var close := dialog.add_action("Close")
+	assert_eq(dialog.actions(), [copy, close] as Array[Button])
+	assert_eq(copy.theme_type_variation, &"TextButton")
+	assert_eq(dialog.add_button("Share", &"").theme_type_variation, &"")
+	press(copy)
+	assert_eq(_results, [] as Array)
+	assert_false(dialog.is_closed())
+
+
 func test_a_cancel_action_ends_with_null() -> void:
 	var dialog := mount(AbyssDialog.new()) as AbyssDialog
 	dialog.closed.connect(func(result: Variant) -> void: _results.append(result))

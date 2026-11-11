@@ -112,6 +112,11 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   (the strip of the game screen that reopens the pending card), the warning of
   the question, the lines of the summary and `EventStep`, the page of the turn's
   queue.
+- `history/`: the log of the player (`history/README.md`): `HistorySheet` (a
+  bottom sheet filtered by category), its chips, its cards and the
+  `HistoryReports` hook that reopens a report.
+- `export/`: the replay of a game (`export/README.md`): `ReplayExportDialog`
+  and the `ReplaySharing` seam (clipboard, download).
 - `threat/`: the parts of the raid gauge (`NoiseCostRow`).
 - `resource/`: the resource bar (`ResourceBar`, a `ResourceBarItem` per
   resource with its amount, rate and shortage state, `AnimatedAmount` flashing

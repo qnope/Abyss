@@ -70,22 +70,24 @@ func actions_of(turn: int) -> Array[Dictionary]:
 	var decoded: Array[Dictionary] = []
 	var texts: Array = actions.get(turn, [])
 	for text: String in texts:
-		var move: Dictionary = _whole_numbers(JSON.parse_string(text))
+		var move: Dictionary = whole_numbers(JSON.parse_string(text))
 		decoded.append(move)
 	return decoded
 
 
-static func _whole_numbers(value: Variant) -> Variant:
+## Not in the Dart class: a JSON value with every whole float turned into
+## the int Dart's `jsonDecode` gives, for whatever reads a journal back.
+static func whole_numbers(value: Variant) -> Variant:
 	if value is float:
 		var number: float = value
 		return int(number) if number == floorf(number) else number
 	if value is Array:
 		var items: Array = value
-		return items.map(_whole_numbers)
+		return items.map(whole_numbers)
 	if value is Dictionary:
 		var entries: Dictionary = value
 		var converted := {}
 		for key: Variant in entries:
-			converted[key] = _whole_numbers(entries[key])
+			converted[key] = whole_numbers(entries[key])
 		return converted
 	return value

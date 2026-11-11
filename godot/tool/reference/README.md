@@ -58,6 +58,13 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   fields in Dart names (`max_storage` is `maxStorage`, the `map_seed` of a
   `GameMap` is `seed`). A class whose subclasses are reached is written as
   them (`HistoryEntry`).
+- `CommittedGame` reads a game of `reference/games/` (`committed_games.dart`):
+  its result, its sections, the digests of each turn with the `=` written
+  out (`DigestRows.expand`), its final digests and its journal, and builds
+  the game its replay starts from (`starting_game`, step 1 of "Replaying it"
+  in `reference/README.md`). `reference_games_test.gd` checks every section
+  of that game against the first digests of each file; the turns after it
+  wait for the codec of the actions, which decodes the journal.
 - `ReferenceFiles` finds the repository: the folder above `res://`, or the one
   `ABYSS_REPO_ROOT` names. `tool/godot_coverage.py` sets it, as it runs the
   tests on a copy of the project in a temporary folder.

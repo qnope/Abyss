@@ -4,9 +4,6 @@ extends RefCounted
 ## conquest, assaulting transition bases and the volcanic kernel, and taking
 ## the army down through captured bases. The Dart extension on ScriptTurn:
 ## each function takes the turn first.
-##
-## `assault` waits for AttackTransitionBaseAction (domain/README.md, "Left
-## for a later lot").
 
 
 ## Boost of the army when it attacks.
@@ -58,6 +55,30 @@ static func fighters_on(turn: ScriptTurn, level: int) -> Dictionary[UnitType.Val
 		if type != UnitType.Value.SCOUT and units[type].count > 0:
 			fighters[type] = units[type].count
 	return fighters
+
+
+## Assaults the guardians at `p` with the smallest share of the fighters of
+## `level` that `planner` judges a win, the admiral leading; returns whether
+## the assault was made.
+static func assault(turn: ScriptTurn, level: int, p: GridPosition, planner: ArmyPlanner) -> bool:
+	var cell: MapCell = turn.game.levels[level].cell_at(p.x, p.y)
+	var kernel := cell.content == CellContentType.Value.VOLCANIC_KERNEL
+	var enemy := guardians_of(null if kernel else cell.transition_base.type)
+	var all := fighters_on(turn, level)
+	if all.get(UnitType.Value.ABYSS_ADMIRAL, 0) <= 0:
+		return false
+	var share := func(k: int) -> Dictionary[UnitType.Value, int]:
+		var army: Dictionary[UnitType.Value, int] = {}
+		for t: UnitType.Value in all:
+			army[t] = 1 if t == UnitType.Value.ABYSS_ADMIRAL else ceili(DartMath.quotient(all[t] * k, 20))
+		return army
+	var k: Variant = planner.smallest_winning(20, share, enemy, attack_boost(turn), Callable(), true)
+	if k == null:
+		return false
+	var army: Dictionary[UnitType.Value, int] = share.call(k)
+	if kernel:
+		return turn.try_perform(AttackVolcanicKernelAction.new(p.x, p.y, level, army, turn.random()))
+	return turn.try_perform(AttackTransitionBaseAction.new(p.x, p.y, level, army, turn.random()))
 
 
 ## Whether the fighters of `level` would beat the guardians of `type` (a

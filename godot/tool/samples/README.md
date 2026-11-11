@@ -113,6 +113,16 @@ player. `KernelDescent` is the twin of `kernel_descent_helper.dart`: a
 `KernelWar` whose attacker holds the Faille and the Cheminée with their
 passages.
 
+`FactionDigests` plays what the digest test of the factions
+(`faction_digest_test.gd`) compares: turn after turn on a game of
+`GameFactory`, every player developed as `ScriptDigests` does, the
+factions shown the bases and armed (`arm`), each standing faction's brain
+with the dice `Random(seed * 100 + turn * 10 + index)`, then one turn of
+`FactionTurns`; `Spy` writes down every action as a `ScriptLogEntry` would
+and `war` the posts, the kernel, the intel and the assaults of a player.
+`FactionHistoriesFive7`, `FactionHistoriesFive11` and
+`FactionHistoriesEasy24` hold what the scratch Dart script printed.
+
 `WarDigests` writes what the digest test of the wars between players
 (`war_digest_test.gd`) compares, an attack on a post or on a held kernel,
 the last assault entry of a player and the attacks pending on the human

@@ -1,7 +1,6 @@
 extends TestCase
 ## test/domain/script/strategies/attack_defence_test.dart: a player recruits
-## against the attacks it is warned of. 'the careful strategy holds the
-## attacks it is warned of' waits for ConquestStrategy.
+## against the attacks it is warned of.
 
 const HARPOONIST := UnitType.Value.HARPOONIST
 
@@ -48,3 +47,11 @@ func test_a_player_with_nothing_to_spend_does_what_it_can() -> void:
 
 	assert_false(BattleMoves.defend_attacks(_turn(game), _planner))
 	assert_eq(AssaultSamples.standing(game.human_player(), HARPOONIST), 2)
+
+
+func test_the_careful_strategy_holds_the_attacks_it_is_warned_of() -> void:
+	var game := _attacked(true)
+
+	ConquestStrategy.new().play_turn(_turn(game))
+
+	assert_true(AssaultSamples.standing(game.human_player(), HARPOONIST) > 2)

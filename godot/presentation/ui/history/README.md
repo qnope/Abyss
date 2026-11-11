@@ -23,11 +23,13 @@ high, listing what the player did, newest first, filtered by category.
 - `HistoryReports`: the report page of an entry, rebuilt from what it stored:
   a combat reopens its `FightSummaryPage` (`ui/fight/`), a raid or a school of
   predators its `RaidReportPage` and a kraken wave its `VolcanoReportPage`
-  (`ui/threat/`).
+  (`ui/threat/`); a base assault its `BaseAssaultSummaryPage`
+  (`ui/assault/`), read from the side of the player whose history it is: the
+  attacker's own fight, or the defender's, whose victory is the repelled
+  attack.
 
-## Deferred
+## Not reopened
 
-The assault summary comes with the rival factions (lot 13): until then
-`HistoryReports.page_for` gives null for a base assault, as for a capture, and
-a touch on such a card does nothing. Flutter opens the history from the settings dialog; here it is the
-same link (`ui/settings/`).
+A capture (`CaptureEntry`) is tappable but has no report behind it, in Flutter
+too: `HistoryReports.page_for` gives null and a touch does nothing. The history
+opens from the settings dialog (`ui/settings/`).

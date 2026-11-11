@@ -46,6 +46,11 @@ func test_the_kill_count_calls_them_guardians_of_a_guarded_place() -> void:
 	assert_eq(count.label.text, "Gardiens éliminés : 5/5")
 
 
+func test_the_kill_count_can_say_it_in_other_words() -> void:
+	var count := mount(FightKillCount.new(HistorySamples.fight(true, 5, 1), false, &"assaultDefendersDown")) as FightKillCount
+	assert_eq(count.label.text, "Défenseurs mis hors de combat : 4/5")
+
+
 func test_the_loot_lists_each_resource_won_and_skips_the_zeros() -> void:
 	var loot: Dictionary[ResourceType.Value, int] = {Kind.CORAL: 40, Kind.ORE: 0}
 	var card := mount(FightLootCard.new(loot)) as FightLootCard

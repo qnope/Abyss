@@ -6,12 +6,19 @@ extends FightReportCard
 
 var fight: FightResult
 var guardians: bool
+## The ARB key of the text, which takes the figures "killed" and "total".
+var key: StringName
 var label := text_label()
 
 
-func _init(fight_: FightResult, guardians_ := false) -> void:
+## The count of [param fight_]; [param key_] says it in other words (the
+## defenders of a base put out of action) than the enemies' or the guardians'.
+func _init(fight_: FightResult, guardians_ := false, key_: StringName = &"") -> void:
 	fight = fight_
 	guardians = guardians_
+	key = key_
+	if key.is_empty():
+		key = &"fightGuardiansKilled" if guardians else &"fightEnemiesKilled"
 	super()
 	column.add_child(label)
 	refresh()
@@ -19,7 +26,7 @@ func _init(fight_: FightResult, guardians_ := false) -> void:
 
 func refresh() -> void:
 	var total := fight.initial_monster_count
-	label.text = Texts.t(&"fightGuardiansKilled" if guardians else &"fightEnemiesKilled", {
+	label.text = Texts.t(key, {
 		"killed": total - fight.final_monster_count,
 		"total": total,
 	})

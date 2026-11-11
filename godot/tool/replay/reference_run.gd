@@ -28,7 +28,7 @@ func _init(name: String) -> void:
 
 
 ## The reference games, the biggest file (the longest game) first, and the
-## long cases (up to 95 s) right after it.
+## long cases (up to 160 s) right after it.
 static func every_name() -> PackedStringArray:
 	var games := CommittedGame.all()
 	games.sort_custom(func(a: CommittedGame, b: CommittedGame) -> bool:

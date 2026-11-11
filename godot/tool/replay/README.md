@@ -34,8 +34,9 @@ first):
     godot --headless --path godot --script res://tool/replay/run_references.gd -- [game ...]
 
 Beside the games, it plays the **long cases** of `LongCases`: Dart tests of
-whole games too long for the unit tests, each a function giving what it
-found wrong (`CaseChecks`, an `expect` per line):
+whole games too long for the unit tests, and the saves of the reference
+games, each a function giving what it found wrong (`CaseChecks`, an
+`expect` per line):
 
 | Case | Dart |
 | --- | --- |
@@ -55,9 +56,11 @@ To find what went wrong, dump the turn on the Dart side
 (`ReferenceRecorder` takes `dump_turn` and `trace_turn` too).
 
 The digests take most of the time of the games: the history of a game
-against ten factions writes megabytes at every turn. The 19 games and 17
-cases take about 18 min of processor, 4 min 30 s on 4 cores, the longest
-(`faction-race-currentNomads`, `conquest-normal-10-factions`) some 90 s. The unit tests keep the fast checks:
+against ten factions writes megabytes at every turn. The 19 games and 36
+cases take about 30 min of processor, 7 to 8 min on 4 cores, the longest
+`saves-conquest-normal-10-factions` (160 s), then
+`saves-tutorial-easy-2-factions` (115 s) and `faction-race-currentNomads`
+and `conquest-normal-10-factions` (some 90 s); the saves take 12 min of it. The unit tests keep the fast checks:
 the start of every game (`domain/reference/tests/reference_games_test.gd`),
 `idle-normal` and `economy-hard` in full (`tool/reference/
 reference_replay_test.gd`), and every move of every journal through the

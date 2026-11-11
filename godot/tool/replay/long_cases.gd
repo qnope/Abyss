@@ -10,12 +10,13 @@ const _NAMES: Array[String] = [
 ]
 
 
-## Every case, those of `faction_race_test.dart` (FactionRaceCases), then
-## the saves of the reference games (SaveCases) last.
+## Every case: the saves of the reference games (SaveCases) first, the
+## longest of all, then those of `faction_race_test.dart`
+## (FactionRaceCases) last.
 static func names() -> Array[String]:
-	var all := _NAMES.duplicate()
+	var all := SaveCases.names()
+	all.append_array(_NAMES)
 	all.append_array(FactionRaceCases.names())
-	all.append_array(SaveCases.names())
 	return all
 
 

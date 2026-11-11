@@ -7,7 +7,10 @@ extends RefCounted
 ##   the other tabs cover it with their page until their views are built, and
 ##   the world is hidden and paused behind them.
 ## - A change of the game, once saved by the session, redraws the HUD and the
-##   buildings standing on the base.
+##   base: its buildings and the signs over its pads.
+## - A tap on a pad of the base, built or not, opens the sheet of its
+##   building; the sheet's upgrade goes through the session's actions, which
+##   save and redraw.
 ## - The island is framed in the area the HUD leaves clear between its bars.
 ## - The ways out of the screen are told on: [signal quit_requested] and
 ##   [signal language_chosen].
@@ -33,6 +36,7 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost) -> void:
 	hud.quit_requested.connect(quit_requested.emit)
 	hud.language_chosen.connect(language_chosen.emit)
 	hud.content.item_rect_changed.connect(_frame)
+	world.base.building_tapped.connect(hud.open_building)
 	session.changed.connect(_on_changed)
 	_show_base()
 	_frame()
@@ -41,6 +45,7 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost) -> void:
 ## The screen is gone: the world goes back to the menus' ambience.
 func close() -> void:
 	session.changed.disconnect(_on_changed)
+	world.base.building_tapped.disconnect(hud.open_building)
 	world.show_ambience()
 
 
@@ -54,7 +59,8 @@ func _on_tab_changed(tab: GameTab.Value) -> void:
 
 
 func _show_base() -> void:
-	world.show_game(session.game.human_player().buildings)
+	var game := session.game
+	world.show_game(game.human_player().buildings, BaseReadiness.upgradable(game), BaseReadiness.locked(game))
 
 
 ## Frames the island between the bars: the share of the screen above the

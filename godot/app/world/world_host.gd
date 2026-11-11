@@ -41,10 +41,16 @@ func set_drifting(enabled: bool) -> void:
 	set_process(enabled)
 
 
-## Shows the base of a game, the buildings [param held] has built, in the
-## player's hands.
-func show_game(held: Dictionary[BuildingType.Value, Building]) -> void:
-	base.show_base(held)
+## Shows the base of a game in the player's hands: the buildings
+## [param held], with the signs of those that can rise now
+## ([param upgradable]) and of the plots a prerequisite holds back
+## ([param locked]).
+func show_game(
+	held: Dictionary[BuildingType.Value, Building],
+	upgradable: Dictionary[BuildingType.Value, bool] = {},
+	locked: Dictionary[BuildingType.Value, bool] = {},
+) -> void:
+	base.show_base(held, upgradable, locked)
 
 
 ## Shows the ambience of the menus again: the prototype's buildings, the

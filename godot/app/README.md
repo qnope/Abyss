@@ -33,7 +33,13 @@ the `GameActions`, and saves the game each time an action succeeds (`acted`)
 before telling `changed`; `GameController` joins the `GameHud` and the
 `WorldHost`: the tab on show decides whether the world shows (the base) or
 rests, `changed` redraws both, the island is framed between the bars, and
-`quit_requested` and `language_chosen` go on to the flow. `AppFlow.play` builds
+`quit_requested` and `language_chosen` go on to the flow. A tap on a pad of
+the base (`BaseScene.building_tapped`) opens the sheet of its building
+(`GameHud.open_building`); its upgrade goes through the actions, which save
+(`acted`) and redraw (`changed`): the HUD, the pads' levels and signs
+(`BaseReadiness`: what can rise, what a prerequisite holds back) and the
+rampart's tier. Flow: pad tapped -> sheet -> `GameActions.execute` -> `acted`
+-> save -> `changed` -> HUD and base redrawn. `AppFlow.play` builds
 the three and `_leave_game` gives the world back to the menus.
 
 A save that cannot be read is skipped and named in a warning (and in

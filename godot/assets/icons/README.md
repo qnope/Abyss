@@ -6,8 +6,9 @@ technologies), `events/` (7), `factions/` (10), `guide/` (the tutorial's
 guide). The owner validated that interface icons keep their SVG; the world's
 buildings, units, monsters, terrain and decor are never copied here, they
 come from the 3D models (`presentation/ui/common/portrait.gd` stands in for
-them until step 7). `ui/` holds the four glyphs the components need
-(`chevron_right`, `warning`, `info`, `arrow_back`), drawn for the game as
+them until step 7). `ui/` holds the glyphs the components need
+(`chevron_right`, `warning`, `info`, `arrow_back`, `add`, `remove`, `check`,
+`person`, `settings`, `more_vert`, `delete_outline`), drawn for the game as
 white strokes on 24 x 24 and tinted by the node that shows them: Flutter's
 Material icons have no equivalent in Godot, and a screen that needs another
 glyph adds its SVG here.

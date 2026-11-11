@@ -168,3 +168,20 @@ lines), `threat_summary_announced.png` (a raid and a wave announced),
 lost, top and foot), `threat_predators_report.png` (the school of predators), `threat_raid_report_won.png` (a raid won behind a rampart),
 `threat_wave_report.png` and `threat_wave_report_en.png` (the kernel taken a
 level), each with its draw calls and primitives. Never commit the renders.
+
+## The posts and the Volcanic Kernel
+
+`post_capture.gd` (`tool/scene_capture.sh [out dir] post`, or after the events' views
+when no scene is given) plays a game against three factions where the Faille of the
+surface and the volcano are seen, with an army and its Abyss Admiral on each level, a
+Descent Module and a kernel at level 3, through the real screens, and renders:
+`post_sheet_guarded.png` (the Faille nobody holds: picture, difficulty, income, guardians,
+"Assault"), `post_selection.png` (the army page: the Admiral picked, the totals),
+`post_report.png` and `post_report_end.png` (the report of the capture: its top and
+foot), `post_sheet_held.png` and `post_sheet_held_en.png` (the Faille taken: income, the
+defenders of the level below, what is lost if it falls, the descent), `post_descent.png`
+and `post_descent_done.png` (the units sent down, the level reached), `post_rival.png`
+(a post a faction holds), `post_kernel_guarded.png`, `post_kernel_report.png` (the kernel
+captured), `post_kernel_held.png` (its garrison panel), `post_garrison_picker.png` and
+`post_kernel_garrisoned.png` (the garrison filled, a wave announced), each with its draw
+calls and primitives. Never commit the renders.

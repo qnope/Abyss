@@ -92,3 +92,16 @@ func test_a_lair_too_strong_or_an_army_of_admirals_alone_clears_nothing() -> voi
 		var at: GridPosition = w["at"]
 		BattleMoves.hunt_lairs(ScriptSamples.turn(game), _planner)
 		assert_false(game.levels[1].cell_at(at.x, at.y).is_collected())
+
+
+## Not in the Dart file: a lair already cleared is left alone.
+func test_a_lair_already_cleared_is_not_fought_again() -> void:
+	var w := _hunt(200)
+	var game: Game = w["game"]
+	var at: GridPosition = w["at"]
+	var map := game.levels[1]
+	map.set_cell(at.x, at.y, map.cell_at(at.x, at.y).copy_with({"collected_by": "someone"}))
+	var log_: Array[ScriptLogEntry] = []
+	BattleMoves.hunt_lairs(ScriptSamples.turn(game, null, 1, log_), _planner)
+	assert_true(log_.is_empty())
+	assert_eq(game.human_player().units_on_level(1)[HARPOONIST].count, 200)

@@ -13,7 +13,8 @@ role or widget:
 
 - `Label`: `DisplayLarge` … `LabelSmall` (Flutter's `TextTheme` roles),
   `SectionLabel`, `PillLabel`, `DialogTitle`, `AppBarTitle`, `HeroTitle`,
-  `HeroSubtitle`, `MenuButtonSubtitle`, `MenuPrimarySubtitle`, `Footnote`,
+  `HeroSubtitle`, `MenuButtonLabel` and `MenuPrimaryLabel` (the label of a menu
+  button drawn over it), `MenuButtonSubtitle`, `MenuPrimarySubtitle`, `Footnote`,
   `BadgeLabel`, `SegmentName`, `SegmentDetail`, and `Lore`, `LoreLarge`,
   `LoreSmall` (the Body roles dimmed and leaned: `AbyssTextStyle.slant`, since
   no font of the game has an italic face). A plain `Label` reads as

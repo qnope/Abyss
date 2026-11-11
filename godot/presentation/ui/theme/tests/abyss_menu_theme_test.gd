@@ -47,6 +47,17 @@ func test_an_outlined_menu_button_is_dark_glass_rimmed_with_cyan() -> void:
 	assert_eq(_theme.get_color("font_color", "MenuOutlinedButton"), CYAN)
 
 
+func test_the_label_drawn_over_a_menu_button_is_written_as_the_button_s() -> void:
+	for pair: Array in [["MenuButtonLabel", CYAN], ["MenuPrimaryLabel", AbyssColors.DEEP_NAVY]]:
+		var type: String = pair[0]
+		assert_eq(_theme.get_type_variation_base(type), &"Label", type)
+		var font := _theme.get_font("font", type) as FontVariation
+		assert_eq(font.base_font, AbyssFonts.BOLD, type)
+		assert_eq(font.spacing_glyph, 3, type)
+		assert_eq(_theme.get_font_size("font_size", type), 20, type)
+		assert_eq(_theme.get_color("font_color", type), pair[1], type)
+
+
 func test_a_menu_button_label_is_large_spaced_capitals() -> void:
 	for type: String in ["MenuPrimaryButton", "MenuOutlinedButton"]:
 		assert_eq(_theme.get_type_variation_base(type), &"Button", type)

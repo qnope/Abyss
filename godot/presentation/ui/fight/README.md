@@ -42,6 +42,8 @@ The pages and the sheet of a fight against a lair of the map
 | `SelectionSummaryCard(boost)` | the attack and defence of the units picked (`show_totals`) and the military bonus |
 | `ArmySelectionSummary` | the totals, with the `UnitBoost` the fight uses (`TechEffects.unit_boost(attacking)`) |
 | `ArmySelectionActions(launch_key)` | launch (off until `set_ready(true)`), cancel, and the warning of a missing admiral (`set_admiral_missing`, for the assaults) |
+| `AssaultSummaryPage(title, captured_key, victory, captured, fight, sent, intact, wounded, dead)` | the report of an assault on a place the guardians hold: banner (a capture in its own words), units, guardians killed, turns; no monsters, no loot, and without a fight only the result and the units. `TransitionFightSummaryPage` (`../post/`) and `KernelFightSummaryPage` (`../kernel/`) derive from it |
+| `AssaultSelections.transition(...)`, `.kernel(...)` | the `ArmySelection` of an assault: "Assault: <place>", the units of the level, `needs_admiral` (the page warns until an Admiral is picked and launches only with one), and a `plan` (lot 13) shown before the rows; `picks_changed(chosen)` lets it follow the picks |
 | `FightSummaryPage(result, lair, x, y)` | the report: banner, monsters, units, kills, loot of a victory, turns, "back to the map". `HistoryReports.fight_summary(combat_entry)` (`ui/history/`) rebuilds it from the history's `CombatEntry` |
 
 Not one to one: the Flutter selection screen pops with the result even when

@@ -2,7 +2,7 @@ class_name AbyssTheme
 ## The game's theme, the single source of the interface's styling: every
 ## family of styles ported from lib/presentation/theme/, gathered into one
 ## Theme built in code, so that its values have one source and the tests
-## can read them. app/main.gd gives it to the window at startup.
+## can read them. app/app.gd gives it to the window at startup.
 
 
 ## A new Theme holding every style of the game.

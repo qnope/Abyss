@@ -19,6 +19,13 @@ func test_shows_its_subtitle_under_the_label() -> void:
 	assert_true(entry.custom_minimum_size.y > AbyssMenuTheme.BUTTON_MIN_HEIGHT)
 
 
+func test_the_label_keeps_the_width_of_its_text() -> void:
+	# A label that may be trimmed has no minimum width, and the row centring
+	# it then gives it none: the first line would not show.
+	var entry := _entry("JOUER")
+	assert_true(entry.label.get_combined_minimum_size().x > 1.0)
+
+
 func test_a_button_without_subtitle_stays_low_and_shows_one_line() -> void:
 	var entry := _entry("JOUER")
 	assert_eq(entry.custom_minimum_size.y, AbyssMenuTheme.BUTTON_MIN_HEIGHT)

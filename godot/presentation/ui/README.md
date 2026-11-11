@@ -24,3 +24,13 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   `LanguageChoiceTexts`, `ActionFailureTexts`), each tested for a key in all
   three languages. A key is built from the enum value's Dart name
   (`TextKeys`).
+- `menu/`, `new_game/`, `save/`, `opening/`, `settings/`, `game/`: the screens of
+  the app shell and their parts, each a `ScreenPage` or a `RefreshingPanel`
+  that shows what it is given and tells what the player wants with signals:
+  the main menu (`MainMenuScreen`: title, entries, beta notice, settings
+  gear), the new game form with its pickers, the saved games (cards, list,
+  empty state, confirmed deletion), the opening story and the language
+  dialog, and `GamePlaceholderScreen`, what stands for the game until the base,
+  the map and the army are built. They save and navigate nothing: `app/` does
+  (`app/navigation/app_flow.gd`).
+- `resource/`: the strip of resource amounts (`ResourceAmountStrip`).

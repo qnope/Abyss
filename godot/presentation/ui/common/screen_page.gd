@@ -24,7 +24,7 @@ func _init(title_key: StringName, dimmed := true) -> void:
 	super()
 	if dimmed:
 		var veil := Panel.new()
-		veil.theme_type_variation = AbyssSurfaceTheme.SCRIM
+		veil.theme_type_variation = AbyssSurfaceTheme.VEIL
 		veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(veil)
 	var column := VBoxContainer.new()

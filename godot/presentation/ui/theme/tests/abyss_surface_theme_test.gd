@@ -20,6 +20,13 @@ func test_the_scrim_dims_what_a_modal_covers() -> void:
 	assert_eq(scrim.corner_radius_top_left, 0)
 
 
+func test_the_veil_of_a_screen_dims_the_world_more_than_a_scrim() -> void:
+	assert_eq(_theme.get_type_variation_base("PageVeil"), &"Panel")
+	var veil := _theme.get_stylebox("panel", "PageVeil") as StyleBoxFlat
+	assert_eq(veil.bg_color, Color(0, 0, 0, 0.8))
+	assert_true(veil.bg_color.a > AbyssSurfaceTheme.SCRIM_COLOR.a)
+
+
 func test_a_bare_panel_only_lays_out_its_content() -> void:
 	assert_eq(_theme.get_type_variation_base("BarePanel"), &"PanelContainer")
 	assert_true(_theme.get_stylebox("panel", "BarePanel") is StyleBoxEmpty)

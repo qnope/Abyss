@@ -18,6 +18,8 @@ its style box with `AbyssBox` from it. Depends on `domain/` and `../theme`,
 | `AbyssDialog` | title, `body` that scrolls past 90 % of the screen, `add_action(text, result, variation)` ending it with the result |
 | `BottomSheet` | `SheetDragHandle` (a pull of 64 px dismisses it) over a scrolling `body`, the full width |
 | `FullPage` | app bar (back button, centred title) over a padded scrolling `body`; back ends it with null |
+| `PageBar` | the app bar of both pages: a back button and a centred title (`back_pressed`, `set_title`) |
+| `ScreenPage` | a screen that is a page, not stacked on the modals: a `PageBar` over a `body`, on the `PageVeil` that dims the world; `back_pressed` from the arrow or Escape. The title is an ARB key, so that it follows the language |
 | `ScrollBody` | the column inside them: as tall as its content up to `max_height` |
 | `IllustratedCard` / `IllustratedCardBody` | the dialog of a card with a picture, a title, lines and stacked actions; the body alone for a card with a frame of its own |
 

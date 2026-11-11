@@ -10,7 +10,8 @@ extends RefreshingPanel
 ## It tells what the player wants with signals and changes the game only
 ## through the [GameActions]. The tab on show is its own state; it is not
 ## saved. [method refresh] redraws it from the game: the owner calls it after
-## each change.
+## each change. [method open_building] opens the sheet of a building of the
+## base; the banners of the worksites and the rampart float over its corner.
 
 ## The tab on show changed: the world shows the view of [param tab].
 signal tab_changed(tab: GameTab.Value)
@@ -21,6 +22,9 @@ signal quit_requested
 ## The player picked [param choice] in the settings.
 signal language_chosen(choice: LanguageChoice.Value)
 
+## How far the banners sit from the corner of the base.
+const BANNER_MARGIN := 8
+
 var actions: GameActions
 var game: Game
 var tab := GameTab.Value.BASE
@@ -28,6 +32,8 @@ var tab := GameTab.Value.BASE
 var language: LanguageChoice.Value
 var resource_bar: ResourceBar
 var status_bars := GameStatusBars.new()
+## The worksites free this turn and the rampart, over the base's corner.
+var banners: BaseBanners
 ## The area between the bars, where the world shows through.
 var content := Control.new()
 var turn_bar: TurnBar
@@ -50,11 +56,14 @@ func _init(actions_: GameActions, language_: LanguageChoice.Value, modals: Modal
 	resource_bar = ResourceBar.new(human.resources, TurnFigures.production(game, human),
 		TurnFigures.consumption(game, human), _modals)
 	turn_bar = TurnBar.new(game.turn)
+	banners = BaseBanners.new(human)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override(&"separation", 0)
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(banners)
+	banners.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE, BANNER_MARGIN)
 	_fill_page()
 	content.add_child(page)
 	for part: Control in [resource_bar, status_bars, content, turn_bar, tab_bar]:
@@ -90,8 +99,14 @@ func refresh() -> void:
 		TurnFigures.consumption(game, human))
 	turn_bar.set_turn(game.turn)
 	status_bars.refresh()
+	banners.refresh()
 	for each: GameTab.Value in pages:
 		pages[each].name_label.text = GameTab.label(each)
+
+
+## Opens the sheet of the building [param type] on the modals.
+func open_building(type: BuildingType.Value) -> void:
+	_modals.open(BuildingSheet.new(actions, type))
 
 
 ## Opens the settings of the game on the modals.

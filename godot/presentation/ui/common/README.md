@@ -35,7 +35,8 @@ its style box with `AbyssBox` from it. Depends on `domain/` and `../theme`,
 
 ## Small components
 
-`StatusPill`, `CountBadge`, `NoticeBanner`, `ThreatBanner` (a `tapped` signal
+`InfoBadge` (a line of text and an icon in a box rimmed with a colour, the
+base's banners), `StatusPill`, `CountBadge`, `NoticeBanner`, `ThreatBanner` (a `tapped` signal
 when tappable), `SegmentedBar` of `SegmentItem`s (a `chosen` signal),
 `LabeledSwitch` (a `toggled` signal), `LoreText` (dimmed italics, the Body
 font leaned), `GuideHalo` (a pulsing cyan halo around any control while

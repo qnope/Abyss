@@ -21,8 +21,9 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
 - `texts/`: one static class per Dart "name" extension (`BuildingTexts`,
   `UnitTexts`, `ResourceTexts`, `TechBranchTexts`, `TechNodeTexts`,
   `TerrainTexts`, `MonsterFamilyTexts`, `DifficultyTexts`,
-  `LanguageChoiceTexts`, `ActionFailureTexts`), each tested for a key in all
-  three languages. A key is built from the enum value's Dart name
+  `LanguageChoiceTexts`, `ActionFailureTexts`, `RampartTexts`,
+  `BuildingDegradationTexts`, `TransitionBaseTexts`), each tested for a key in
+  all three languages. A key is built from the enum value's Dart name
   (`TextKeys`).
 - `menu/`, `new_game/`, `save/`, `opening/`, `settings/`, `game/`: the screens of
   the app shell and their parts, each a `ScreenPage` or a `RefreshingPanel`
@@ -38,6 +39,15 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   success with `acted`; `TurnFigures` the production and consumption of a
   turn). They save and navigate nothing: `app/` does (`app/navigation/app_flow.gd`,
   `app/game/`).
+- `building/`: a building of the base (`BuildingSheet`, the bottom sheet a tap on
+  a pad opens: `BuildingHeader`, the `UpgradeSection` with its `RequirementRow`s
+  and `NoiseCostRow`, the `CitadelSection`, the `DegradedBadge`; `BuildingCard`
+  for a list; `BaseBanners` over the base: `WorksiteBadge`, `ShieldBadge`).
+  A sheet reads the game through a `BuildingView` taken at one moment and
+  redraws on `refresh()`; it changes the game only through `GameActions`, closes
+  with the result when the upgrade succeeds and tells a refusal in itself.
+  The colour of each building is `theme/BuildingColors`.
+- `threat/`: the parts of the raid gauge (`NoiseCostRow`).
 - `resource/`: the resource bar (`ResourceBar`, a `ResourceBarItem` per
   resource with its amount, rate and shortage state, `AnimatedAmount` flashing
   and popping when an amount changes), the detail sheet a touch opens and the

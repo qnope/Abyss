@@ -10,9 +10,9 @@
 # godot/tool/scene/kit_capture.gd, and prints each view's draw calls and
 # primitives. With a scene (res://...tscn) only the first, on that scene; with
 # `app` only the second; with `kit` only the third. The out dir defaults to
-# /tmp/scene_capture: never write the renders in the repo. Godot draws with its Compatibility renderer
-# (the web's) in a virtual X display (xvfb-run), in software: its frame rate
-# means nothing. GODOT names the engine binary.
+# /tmp/scene_capture: never write the renders in the repo. Godot draws with
+# its Compatibility renderer (the web's) in a virtual X display (xvfb-run), in
+# software: its frame rate means nothing. GODOT names the engine binary.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 out="${1:-/tmp/scene_capture}"

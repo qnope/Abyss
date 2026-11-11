@@ -53,6 +53,11 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   redraws on `refresh()`; it changes the game only through `GameActions`, closes
   with the result when the upgrade succeeds and tells a refusal in itself.
   The colour of each building is `theme/BuildingColors`.
+- `tech/`: the research (`tech/README.md`): the tree of the Tech tab (`TechTab`,
+  `TechTreeView`: the laboratory, three columns of medallion and nodes in four
+  states) and the sheet a touch opens (`TechTargetSheet`: effect, cost or
+  blocker, the two options of a choice). Built from a `TechView` of the game;
+  unlocking and researching go through `GameActions`.
 - `threat/`: the parts of the raid gauge (`NoiseCostRow`).
 - `resource/`: the resource bar (`ResourceBar`, a `ResourceBarItem` per
   resource with its amount, rate and shortage state, `AnimatedAmount` flashing

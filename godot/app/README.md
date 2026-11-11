@@ -46,6 +46,13 @@ rampart's tier. Flow: pad tapped -> sheet -> `GameActions.execute` -> `acted`
 -> save -> `changed` -> HUD and base redrawn. `AppFlow.play` builds
 the three and `_leave_game` gives the world back to the menus.
 
+The Tech tab is the research tree (`presentation/ui/tech/`), UI only: the tab
+bar hides the world behind it like any tab but the base, a touch on a node opens
+its sheet, and unlocking or researching goes through the same actions: node
+touched -> sheet -> `GameActions.execute` -> `acted` -> save -> `changed` ->
+`GameHud.refresh()` redraws the tree. `GameController` has nothing of its own to
+do for it.
+
 The end of a turn is `EndTurnFlow` (`presentation/ui/turn/`), made by the
 `GameController`: the HUD's `end_turn_requested` asks, the confirmed turn goes
 through `GameActions.end_turn()` (so it is saved by `acted` and redrawn before

@@ -41,7 +41,8 @@ when tappable), `SegmentedBar` of `SegmentItem`s (a `chosen` signal),
 `LabeledSwitch` (a `toggled` signal), `LoreText` (dimmed italics, the Body
 font leaned), `GuideHalo` (a pulsing cyan halo around any control while
 `active`; a rounded rectangle or circle, not Flutter's traced paths) and
-`TabPlaceholder` ("coming soon" follows the language).
+`TabPlaceholder` ("coming soon" follows the language). `Greyscale` turns any
+icon grey with a shader (a locked or given-up technology).
 
 ## Not one to one
 

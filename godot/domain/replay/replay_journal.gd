@@ -8,7 +8,7 @@ extends RefCounted
 ## of a player other than the human carries a `player` key. Unlike the
 ## history shown to the player, the journal is never trimmed.
 ## `ActionExecutor` fills it as actions succeed; `ReplayExport` turns it into
-## a scenario. Its Hive adapter (`replay_journal.g.dart`) never comes.
+## a scenario. A save keeps it as Hive does (`JournalCodec` of data/).
 
 var map_seed: int
 var player_name: String

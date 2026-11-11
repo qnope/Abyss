@@ -58,7 +58,8 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   fields in Dart names (`max_storage` is `maxStorage`, the `map_seed` of a
   `GameMap` is `seed`). A class whose subclasses are reached is written as
   them (`HistoryEntry`).
-- `CommittedGame` reads a game of `reference/games/` (`committed_games.dart`):
+- `CommittedGame` reads a game of `reference/games/` (`committed_games.dart`;
+  `names()` lists them without reading them):
   its source, result and coverage, its sections, the digests of each turn
   with the `=` written out (`DigestRows.expand`), its final digests and its
   journal, and builds the game its replay starts from (`starting_game`, step
@@ -74,6 +75,9 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   the result, the journal and the coverage. The unit tests replay the short
   games (`reference_replay_test.gd`); `tool/godot_reference.sh` replays all
   19 (`tool/replay/README.md`).
+- `CodecTestCase` is the base of the tests of the codecs of `data/save/`: an
+  object written, turned into the text of a save, parsed and read back must be
+  the object written, as the snapshot of its class sees it.
 - `ReferenceFiles` finds the repository: the folder above `res://`, or the one
   `ABYSS_REPO_ROOT` names. `tool/godot_coverage.py` sets it, as it runs the
   tests on a copy of the project in a temporary folder.

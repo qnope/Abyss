@@ -186,6 +186,9 @@ what the Dart script printed.
 against the factions where the human plays the balanced strategy, its dice
 drawn by a `LiveTurn` as the game screen journals them, and each turn ended
 by `EndTurnAction`; `growth_of` sums the levels and the units of a player.
+`FactionRace` is the twin of `test/helpers/faction_race.dart`: an idle human
+against one faction left alone to run for the volcano
+(`play_lone_faction`), for the long cases of `tool/replay/`.
 
 `TurnDigests` plays what the digest test of the whole games
 (`turn_digest_test.gd`) compares: a game of `GameFactory` whose human

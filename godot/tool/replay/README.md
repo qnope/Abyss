@@ -3,7 +3,7 @@
 The full replay of the reference games, outside the unit tests: test
 infrastructure, not game code, left out of exports and of the coverage.
 
-    tool/godot_reference.sh                          # the 19 games
+    tool/godot_reference.sh                          # the 19 games and the long cases
     tool/godot_reference.sh conquest-normal rush-easy
 
 Each game of `reference/games/` (`reference/README.md`) is replayed as Dart's
@@ -44,6 +44,7 @@ found wrong (`CaseChecks`, an `expect` per line):
 | `faction-attack-play` | `faction_attack_play_test.dart`, its four tests of `playIdleFactionGame(3, 100)` on one game |
 | `calibration` | the three games of `calibration_test.dart`: the plan `plan85` wins or falls by seed and difficulty (`ScriptCases`) |
 | `careful-script` | 'the careful script loses most games' of `strategies_test.dart` |
+| `faction-race-<personality>`, one per personality (`faction-race-magmaSmiths`...) | `faction_race_test.dart`: the six games of 200 turns where a lone faction tames the volcano (`FactionRaceCases`), 35 to 95 s each |
 | `script-performance` | `script_runner_performance_test.dart`: a conquest of 100 turns within 120 s, ten times what Godot takes (Dart's budget is 8 s, ten times its own) |
 
 To find what went wrong, dump the turn on the Dart side
@@ -52,10 +53,10 @@ To find what went wrong, dump the turn on the Dart side
 `GameSnapshot.texts` of the Godot replay at that turn
 (`ReferenceRecorder` takes `dump_turn` and `trace_turn` too).
 
-The digests take most of the time: the history of a game against ten
-factions writes megabytes at every turn. The 19 games and 4 cases take
-about 6.5 min of processor, 1 min 45 s on 4 cores, the longest
-(`conquest-normal-10-factions`) 88 s. The unit tests keep the fast checks:
+The digests take most of the time of the games: the history of a game
+against ten factions writes megabytes at every turn. The 19 games and 17
+cases take about 18 min of processor, 4 min 30 s on 4 cores, the longest
+(`faction-race-currentNomads`, `conquest-normal-10-factions`) some 90 s. The unit tests keep the fast checks:
 the start of every game (`domain/reference/tests/reference_games_test.gd`),
 `idle-normal` and `economy-hard` in full (`tool/reference/
 reference_replay_test.gd`), and every move of every journal through the

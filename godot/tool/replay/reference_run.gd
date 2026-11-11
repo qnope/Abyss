@@ -11,7 +11,7 @@ func _init(name: String) -> void:
 	var start := Time.get_ticks_msec()
 	var found := PackedStringArray()
 	var turns := ""
-	if name in LongCases.NAMES:
+	if name in LongCases.names():
 		found = LongCases.run(name)
 	else:
 		var committed := CommittedGame.named(name)
@@ -28,7 +28,7 @@ func _init(name: String) -> void:
 
 
 ## The reference games, the biggest file (the longest game) first, and the
-## long cases (up to 50 s) right after it.
+## long cases (up to 95 s) right after it.
 static func every_name() -> PackedStringArray:
 	var games := CommittedGame.all()
 	games.sort_custom(func(a: CommittedGame, b: CommittedGame) -> bool:
@@ -36,6 +36,7 @@ static func every_name() -> PackedStringArray:
 	var names := PackedStringArray()
 	for game: CommittedGame in games:
 		names.append(game.name)
-	for i: int in LongCases.NAMES.size():
-		names.insert(1 + i, LongCases.NAMES[i])
+	var cases := LongCases.names()
+	for i: int in cases.size():
+		names.insert(1 + i, cases[i])
 	return names

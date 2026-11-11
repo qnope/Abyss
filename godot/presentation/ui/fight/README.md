@@ -2,8 +2,8 @@
 
 The cards of a fight report, ported from `lib/presentation/widgets/fight/`:
 the parts every report is made of. The raid and the kraken wave reports
-(`../threat/`) are the first to use them; the lot of the monsters' fights and
-the history's report launchers use them next. Each card is a `FightReportCard`
+(`../threat/`) and the monsters' fights (below) use them; the history's report
+launchers use them next. Each card is a `FightReportCard`
 (a `RefreshingPanel` in the theme's card, a `column` to fill in `_init` and
 `refresh()` that rewrites its texts) and is complete once built.
 
@@ -27,3 +27,24 @@ the history's report launchers use them next. Each card is a `FightReportCard`
   card holds a `column` and `text_label()` makes the labels of its lines.
 - The tests are in `tests/`, on `UiTestCase`, from the fights of
   `HistorySamples` and the real ones of `ThreatSamples`.
+
+## The fights against the lairs
+
+The pages and the sheet of a fight against a lair of the map
+(`lib/presentation/widgets/map/monster_lair_sheet.dart`, `widgets/fight/` and
+`screens/game/fight/`). None of them changes the game: they pick and ask, and
+`app/game/FightController` runs the action and opens what follows.
+
+| Component | Does |
+| --- | --- |
+| `MonsterLairSheet(lair, x, y)` | a `MapSheet`: the family's initials, "Family (x, y)", difficulty, level, count and stats in rows, the rule and weakness (`MonsterFamilyTraits`), "cancel" and "prepare the fight" (`prepare_requested`, told once the sheet closed) |
+| `ArmySelection(title, available, boost, launch_key, confirm, header)` | a `FullPage`, generic: a header, a `UnitQuantityRow` per type in stock, the `SelectionSummaryCard` and the `ArmySelectionActions`. Launching calls `confirm(picks)`, which returns an `ActionResult`: a success ends the page with it, a refusal is told in the page (`ActionFailureTexts`) until the next pick. Cancelling or the back arrow ends it with null. The transition, kernel and base selections of lots 12 and 13 reuse it with their own title, stock, header and `confirm` |
+| `SelectionSummaryCard(boost)` | the attack and defence of the units picked (`show_totals`) and the military bonus |
+| `ArmySelectionSummary` | the totals, with the `UnitBoost` the fight uses (`TechEffects.unit_boost(attacking)`) |
+| `ArmySelectionActions(launch_key)` | launch (off until `set_ready(true)`), cancel, and the warning of a missing admiral (`set_admiral_missing`, for the assaults) |
+| `FightSummaryPage(result, lair, x, y)` | the report: banner, monsters, units, kills, loot of a victory, turns, "back to the map". `FightSummaryPage.of_entry(combat_entry)` rebuilds it from the history's `CombatEntry` |
+
+Not one to one: the Flutter selection screen pops with the result even when
+the action failed (and its summary then reads a fight that is not there); here
+a refusal stays in the page. The strike played on the map before the report is
+step 7.

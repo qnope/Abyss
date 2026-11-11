@@ -3,12 +3,22 @@ extends HistorySheetCase
 ## the handle pulls down.
 
 
-func test_a_touch_on_a_card_without_a_report_does_nothing() -> void:
-	var sheet := _sheet()
+func test_a_touch_on_a_combat_reopens_its_fight_summary() -> void:
+	var sheet := _sheet([], HistoryReports.new(), true)
 	press(sheet.cards[0].tap_button)
-	assert_null(current_modal(), "no report page exists yet")
+	var page := current_modal() as FightSummaryPage
+	assert_not_null(page)
+	assert_true(page.result.victory)
+	assert_no_raw_keys()
+	page.close()
 	press("Construction")
 	assert_null(sheet.cards[0].tap_button, "a building has nothing to reopen")
+
+
+func test_a_touch_on_a_capture_opens_nothing() -> void:
+	var sheet := _sheet([HistorySamples.capture_entry("Abysse")], HistoryReports.new(), true)
+	press(sheet.cards[0].tap_button)
+	assert_eq(current_modal(), sheet, "no report behind a capture")
 
 
 func test_a_touch_on_a_card_opens_the_report_the_hook_gives() -> void:

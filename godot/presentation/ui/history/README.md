@@ -20,13 +20,14 @@ high, listing what the player did, newest first, filtered by category.
   carries the turn in its subtitle.
 - `HistorySheet`: the sheet; reopening it starts again on "all". Pulling the
   handle down closes it.
-- `HistoryReports`: the hook that gives the report page of an entry.
+- `HistoryReports`: the report page of an entry, rebuilt from what it stored:
+  a combat reopens its `FightSummaryPage` (`ui/fight/`), a raid or a school of
+  predators its `RaidReportPage` and a kraken wave its `VolcanoReportPage`
+  (`ui/threat/`).
 
 ## Deferred
 
-`HistoryReports.page_for` returns null for every entry: the pages it must open
-belong to other lots. The branch of each is listed in the class: the fight
-summary (the combat entries), the raid and kraken reports (the threats), the
-assault summary (the base assaults). A touch on a card without a page does
-nothing. Flutter opens the history from the settings dialog; here it is the
+The assault summary comes with the rival factions (lot 13): until then
+`HistoryReports.page_for` gives null for a base assault, as for a capture, and
+a touch on such a card does nothing. Flutter opens the history from the settings dialog; here it is the
 same link (`ui/settings/`).

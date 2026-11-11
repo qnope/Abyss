@@ -31,8 +31,8 @@ role or widget:
   labels `HudHeadline`, `HudFigure` and `HudCaption` (`AbyssHudTheme`, which
   has no Flutter original).
 - `LineEdit`: plain, or `ErrorLineEdit` for a field in error. `TextEdit`,
-  `ProgressBar` (and `NoiseGauge`, its warning-coloured variation, the raid's
-  gauge), `HSlider`, `PopupMenu` and tooltips are styled as they are.
+  `ProgressBar` (`NoiseGauge`, its warning-coloured variation, the raid's
+  gauge, and `ChanceHigh`, `ChanceRisky`, `ChanceLow`, the assault's), `HSlider`, `PopupMenu` and tooltips are styled as they are.
 - Surfaces (`AbyssSurfaceTheme`): `Panel` `ModalScrim` (behind a modal),
   `Panel` `PageVeil` (darker, under a screen's forms and lists),
   `PanelContainer` `BarePanel` (draws nothing, only lays out), `Button`

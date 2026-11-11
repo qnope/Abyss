@@ -17,6 +17,11 @@ const TRACK_HALF_HEIGHT := 2
 const THUMB := 20
 ## The progress bar of the raid's noise gauge: warning on the trench.
 const NOISE_GAUGE := &"NoiseGauge"
+## The progress bar of the chance of an assault, filled by its rating: success,
+## warning or error on the bright track of any progress bar.
+const CHANCE_HIGH := &"ChanceHigh"
+const CHANCE_RISKY := &"ChanceRisky"
+const CHANCE_LOW := &"ChanceLow"
 
 
 ## Adds the inputs to [param theme].
@@ -34,6 +39,12 @@ static func apply(theme: Theme) -> void:
 	theme.set_type_variation(NOISE_GAUGE, &"ProgressBar")
 	theme.set_stylebox(&"background", NOISE_GAUGE, track(AbyssColors.TRENCH))
 	theme.set_stylebox(&"fill", NOISE_GAUGE, track(AbyssColors.WARNING))
+	var chances: Dictionary[StringName, Color] = {
+		CHANCE_HIGH: AbyssColors.SUCCESS, CHANCE_RISKY: AbyssColors.WARNING, CHANCE_LOW: AbyssColors.ERROR,
+	}
+	for chance: StringName in chances:
+		theme.set_type_variation(chance, &"ProgressBar")
+		theme.set_stylebox(&"fill", chance, track(chances[chance]))
 	theme.set_stylebox(&"slider", &"HSlider", track(AbyssColors.SURFACE_BRIGHT))
 	theme.set_stylebox(&"grabber_area", &"HSlider", track(CYAN))
 	theme.set_stylebox(&"grabber_area_highlight", &"HSlider", track(CYAN))

@@ -12,16 +12,26 @@ const MODELS: Dictionary[StringName, PackedScene] = {
 
 
 ## Stands the buildings [param names] on their [param pads], in place of
-## the ones standing before.
+## the ones standing before. A building with no model yet stands nowhere:
+## its pad shows alone.
 func build(names: Array[StringName], pads: BasePads) -> void:
 	for child: Node in get_children():
 		remove_child(child)
 		child.free()
 	for name in names:
+		if not MODELS.has(name):
+			continue
 		var model := MODELS[name].instantiate() as Node3D
 		model.name = name
 		model.position = pads.origin_of(name)
 		add_child(model)
+
+
+## The pad of the building [param type]: its Dart name, capitalised
+## (`solarPanel` stands on `SolarPanel`).
+static func pad_of(type: BuildingType.Value) -> StringName:
+	var named := DartEnum.name_of(BuildingType.Value, type)
+	return StringName(named.substr(0, 1).to_upper() + named.substr(1))
 
 
 ## The names of the buildings standing, in the order they were built.

@@ -12,6 +12,8 @@ const DRIFT := 4.0
 const HUD := 0.0
 
 var base := BaseScene.new()
+var _top := HUD
+var _bottom := 0.0
 ## Whether the camera turns by itself, deaf to the touches.
 var drifting := true:
 	set = set_drifting
@@ -39,5 +41,33 @@ func set_drifting(enabled: bool) -> void:
 	set_process(enabled)
 
 
+## Shows the base of a game, the buildings [param held] has built, in the
+## player's hands.
+func show_game(held: Dictionary[BuildingType.Value, Building]) -> void:
+	base.show_base(held)
+
+
+## Shows the ambience of the menus again: the prototype's buildings, the
+## island framed under the title.
+func show_ambience() -> void:
+	base.build(BaseScene.BUILT)
+	frame_between(HUD, 0.0)
+	set_shown(true)
+
+
+## Frames the island between the bars of the game screen: the top
+## [param top] share of the screen and its bottom [param bottom] share.
+func frame_between(top: float, bottom: float) -> void:
+	_top = top
+	_bottom = bottom
+	_frame()
+
+
+## Shows the world, or hides it and pauses it behind a page that covers it.
+func set_shown(shown: bool) -> void:
+	visible = shown
+	process_mode = Node.PROCESS_MODE_INHERIT if shown else Node.PROCESS_MODE_DISABLED
+
+
 func _frame() -> void:
-	base.frame(HUD)
+	base.frame(_top, _bottom)

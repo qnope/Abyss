@@ -51,8 +51,15 @@ func test_backs_off_as_far_as_the_screen_needs() -> void:
 	assert_true(phone.y > 0.0, "the camera rises to lower the base under the HUD")
 
 
-func _fitted(aspect: float, hud: float) -> Rect2:
+func test_fits_the_base_between_a_bar_at_the_top_and_one_at_the_foot() -> void:
+	var bounds := _fitted(390.0 / 844.0, 0.12, 0.1)
+	assert_true(bounds.position.y >= -1.0 + 2.0 * 0.1 + OrbitFrame.MARGIN - 1e-3, "above the foot")
+	assert_true(bounds.end.y <= 1.0 - 2.0 * 0.12 - OrbitFrame.MARGIN + 1e-3, "under the top")
+	assert_almost_eq(bounds.get_center().y, 0.1 - 0.12, 1e-3, "centred in the band left")
+
+
+func _fitted(aspect: float, hud: float, foot := 0.0) -> Rect2:
 	var points := PackedVector3Array(OUTLINE)
-	var fit := OrbitFrame.fit(points, YAW, PITCH, aspect, FOV, hud)
+	var fit := OrbitFrame.fit(points, YAW, PITCH, aspect, FOV, hud, foot)
 	return OrbitFrame.project(points, YAW, PITCH, fit.x, fit.y * fit.x,
 		OrbitFrame.tangents(aspect, FOV))

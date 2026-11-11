@@ -114,3 +114,17 @@ func test_a_level_0_is_written_nowhere() -> void:
 	var before := GameSnapshot.texts(game)
 	game.levels[0] = GameMap.new(0, 0, [], 0)
 	assert_eq(GameSnapshot.texts(game), before)
+
+
+## Not in the Dart file: a journal that holds moves and seeds, each move the
+## pairs of its JSON in their order, as Dart's GameSnapshot wrote it.
+func test_a_journal_reads_as_dart_writes_it() -> void:
+	var game := _new_game()
+	game.replay.actions[2] = [
+		'{"do":"fight","units":{"scout":1,"guardian":2},"player":"faction-pearlOrder"}',
+	] as Array[String]
+	game.replay.end_turn_seeds[1] = 5
+	game.replay.end_turn_seeds[2] = 8
+	assert_eq(GameSnapshot.texts(game)["journal"], '{"replay":{"actions":[[2,[[["do","fight"],["units",'
+		+ '[["scout",1],["guardian",2]]],["player","faction-pearlOrder"]]]]],"endTurnSeeds":[[1,5],[2,8]],'
+		+ '"exact":true,"mapSeed":7,"playerName":"Nemo"}}')

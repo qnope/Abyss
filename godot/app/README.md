@@ -13,8 +13,8 @@ window the game's theme, opens the saves (`GameRepository`) and the settings
 
 - `World` (`world/WorldHost`): the base in 3D (`presentation/world/`), drifting
   slowly around while a menu shows, the player's camera once a game is played;
-  and the army's parade ground, one `WorldHost.View` at a time (base, parade or
-  none, each with its own camera; the water and the sky are the base's);
+  and the army's parade ground and the map, one `WorldHost.View` at a time (base,
+  parade, map or none, each with its own camera; the water and the sky are the base's);
 - `Screens`: one screen at a time, kept off the notch (`SafeArea`);
 - `Modals`: the `ModalLayer` dialogs and sheets open on.
 
@@ -65,6 +65,21 @@ of one the barracks is too low for). Flow: squad tapped
 (`ParadeScene.squad_tapped`) -> `UnitSheet` -> recruit ->
 `GameActions.execute` -> `acted` -> save -> `changed` -> `ArmyTab.refresh` ->
 `changed` -> parade redrawn; the barracks tapped opens its `BuildingSheet`.
+
+The map tab is the `MapController`, made by the `GameController`: it puts the
+`MapTab` (`presentation/ui/map/`) over the world on the Map tab only, and draws
+the level the tab shows as the `MapScene` of the world (`MapStates`: the cells
+seen, the base, the scouts on their way with the cell each left, the colours of
+the rival bases and of whoever can hold the volcano, who holds the post above each
+passage) while the tab is on show, again on each change of the game. Flow: cell
+tapped (`MapScene.cell_tapped(level, x, y)`) -> `CellRouter.route` -> sheet ->
+`GameActions.execute` -> `acted` -> save -> `changed` -> `MapTab.refresh` and the
+map redrawn; a search then tells what it found. A level chosen on the selector
+(`MapTab.level_changed`) is drawn at once. For the other lots:
+`map.router.register(CellRoute.Kind.LAIR | POST | KERNEL | FACTION_BASE, handler)` opens
+their sheet (the handler takes the `CellRoute` and opens its own modals), and
+`map.show_level(level)` (after `hud.show_tab(GameTab.Value.MAP)`) shows a level
+from a status bar or the guide.
 
 The end of a turn is `EndTurnFlow` (`presentation/ui/turn/`), made by the
 `GameController`: the HUD's `end_turn_requested` asks, the confirmed turn goes

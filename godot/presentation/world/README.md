@@ -59,6 +59,57 @@ ambience: the water and the sky are the base's, which `WorldHost` leaves on.
 - `frame(hud, foot)` fits the deck between the bars of the game screen, leaving
   `PLACE_BAR_ROOM` more at the bottom for the bar of the places.
 
+## map/
+
+The map of a level in 3D (`MapScene`), shown on the map tab as the base is on the
+base tab, one level at a time: `show_level(state)` draws what `app/` reads from the
+game (`MapLevelState`, built by `MapStates`), and `cell_tapped(level, x, y)` tells
+a tap. The 2D painters, the projection, the slabs and the viewport of Flutter's
+`GameMapView` are not ported: a 3D scene replaces them.
+
+- `MapTiles` is one `MultiMesh` of a box per cell, coloured by `TerrainLook`
+  (`WorldModels.terrain(terrain, revealed)`: the terrain's colour, a faint
+  checker so the cells are told apart, and, for a cell not seen, the fog: dark
+  and `FOG_DROP` lower). `MapLooks` is the port of Flutter's visuals builder:
+  it reads the level once into a `MapLook` per cell (the whole volcano is seen as
+  soon as one of its cells is, the wreck of the event is seen through the fog,
+  a post is tinted by who holds it, a cell emptied is dimmed).
+- `MapContents` stands what lies on the cells seen, one scene per content from
+  `WorldModels.map_content(kind, tint, dimmed)` (the volcano, which covers 2x2
+  cells, centred on them). `MapScouts` shows a `ScoutToken` for each scout on
+  its way, sliding from the cell it left (`ScoutOrigin`) to its target, and
+  swimming or hovering as Flutter's token does.
+- `MapCamera` (a `MapRig`) looks down at a steep angle that never changes; a
+  drag pans over the map (clamped to it), a pinch or the wheel zooms, and
+  `fit_map` frames the whole level between the bars of the game screen (and
+  `LEVEL_BAR_ROOM` more at the top for the level selector). A level not on show
+  before is framed anew; the same level again keeps the view where the player left it.
+- `MapPick` casts the tap's ray on the plane of the cells to the cell it
+  falls in (`MapGrid.cell_at`). `MapPalette` holds every colour of the stand-ins.
+
+`WorldModels.map_content(kind, tint, dimmed)` is the seam for what stands on a
+cell, as `building` and `unit` are: the `.glb` of `MAP_MODELS` (empty today: step 7
+adds them there), a `MapStandIn` when it has none. The twelve kinds are told apart
+by their solid and colour; a dimmed one (a cell already emptied) is the degraded grey:
+
+| Content | Solid | Colour |
+| --- | --- | --- |
+| Treasure | small box | gold |
+| Ruins | tapering drum | sand |
+| Wreck | low prism | orange |
+| Lair, easy | low prism (0.6 high) | light red |
+| Lair, medium | prism (0.95 high) | red |
+| Lair, hard | tall prism (1.3 high) | dark red |
+| Faille (a post) | ring (a torus) | by holder: grey guardians, green the player, pink a rival |
+| Cheminée (a post) | tapering drum | by holder |
+| Passage | flat disc | by holder |
+| Volcano | sphere over 2x2 cells, with a seal ring in the colour of whoever holds it | orange |
+| Player's base | tapering drum | cyan |
+| A rival's base | capsule | the faction's colour |
+
+Terrain has one kind today (the plain): a blue-grey tile, the fog a darker one.
+The wreck's glow and the terrain's variety are left to step 7.
+
 ## models/: the seam of step 7
 
 `WorldModels.building(type, level, degraded)` is the one place that says what

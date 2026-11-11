@@ -87,6 +87,22 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   `FightUnitAccounting`, `FightKillCount`, `FightLootCard`, `FightTurnList`),
   used by the reports of `threat/` and, next, by the monsters' fights
   (`fight/README.md`).
+
+- `map/`: the 2D part of the map tab over the map in 3D (`world/map/`):
+  `MapTab` (the `LevelSelector`, small chips for the three depths, a locked one
+  disabled with a padlock) and, for a touch on a cell, `CellRoute` (the port of
+  Flutter's `_showCellAction`: the kind of the cell and the cell to act on, the
+  volcano on its anchor) and `CellRouter`, which opens the sheet of the kind on
+  the modals: `ExplorationSheet` (cost, scouts, area, noise, why it cannot be
+  sent), `TreasureSheet` (what it holds, the wreck's countdown, the search, then
+  `ResourceGainDialog` with `CollectMessages`), and a `CellInfoSheet` for a cell
+  visited, taken by a rival, the player's base, a passage or nothing. The sheets
+  are `MapSheet`s (a picture, a title, rows of `SheetInfoRow`, a `SheetNotice`,
+  a button and the line that says why an action was refused). A kind whose sheet
+  another lot builds (`LAIR`, `POST`, `KERNEL`, `FACTION_BASE`) is handed to the
+  handler registered with `CellRouter.register(kind, handler)`; until then it opens
+  a "coming soon" sheet.
+- `threat/`: the parts of the raid gauge (`NoiseCostRow`).
 - `resource/`: the resource bar (`ResourceBar`, a `ResourceBarItem` per
   resource with its amount, rate and shortage state, `AnimatedAmount` flashing
   and popping when an amount changes), the detail sheet a touch opens and the

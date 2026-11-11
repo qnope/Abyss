@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Abysses"
 config/description="A turn-based strategy game in the deep sea."
+config/version="0.1.0"
 run/main_scene="res://app/main.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://assets/icon/app_icon.png"

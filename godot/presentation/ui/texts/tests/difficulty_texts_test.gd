@@ -16,3 +16,9 @@ func test_every_difficulty_has_a_name_and_a_description_in_every_language() -> v
 	for suffix: String in ["Name", "Description"]:
 		assert_every_value_translated(Level, func(level: int) -> String:
 			return TextKeys.of("difficulty", Level, level, suffix))
+
+
+func test_colours_the_easy_game_green_the_normal_one_cyan_and_the_hard_one_red() -> void:
+	assert_eq(DifficultyTexts.color(Level.EASY), AbyssColors.SUCCESS)
+	assert_eq(DifficultyTexts.color(Level.NORMAL), AbyssColors.BIOLUM_CYAN)
+	assert_eq(DifficultyTexts.color(Level.HARD), AbyssColors.ERROR)

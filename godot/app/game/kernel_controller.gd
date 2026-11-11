@@ -14,9 +14,12 @@ extends RefCounted
 ## [MessageDialog] tells. The victory a kernel raised to the last level brings
 ## is the session's: [signal GameActions.victory_reached].
 ##
+## The sheet and the selection of a volcano still guarded show the plan of the
+## assault ([AssaultPlans]); the selection's follows the units picked.
+##
 ## It registers itself for the volcano on the router it is given. A volcano
-## another player holds opens a [RivalPostSheet] and its attack is the rival
-## assault of lot 13: [signal rival_attack_requested] tells it.
+## another player holds opens a [RivalPostSheet] and its attack is
+## [FactionController]'s: [signal rival_attack_requested] tells it.
 
 ## The player wants to attack the volcano [param owner] holds at ([param x],
 ## [param y]) of [param level].
@@ -43,7 +46,8 @@ func open_kernel(route: CellRoute) -> void:
 			rival_attack_requested.emit(owner, route.level, route.x, route.y))
 		modals.open(rival)
 		return
-	var sheet := VolcanicKernelSheet.new(actions.game, owner == human)
+	var plan := AssaultPlans.sheet_panel(actions.game, route.level, route.x, route.y)
+	var sheet := VolcanicKernelSheet.new(actions.game, owner == human, plan)
 	sheet.attack_requested.connect(_select_assault.bind(route))
 	sheet.garrison_requested.connect(_pick_garrison.bind(false))
 	sheet.withdraw_requested.connect(_pick_garrison.bind(true))
@@ -51,7 +55,9 @@ func open_kernel(route: CellRoute) -> void:
 
 
 func _select_assault(route: CellRoute) -> void:
-	var page := AssaultSelections.kernel(actions.game.human_player(), route.level, _assault.bind(route))
+	var plan := AssaultPlans.selection_panel(actions.game, route.level, route.x, route.y)
+	var page := AssaultSelections.kernel(actions.game.human_player(), route.level, _assault.bind(route), plan)
+	AssaultPlans.track(page, plan, actions.game, route.level, route.x, route.y)
 	page.closed.connect(_on_assaulted.bind(route))
 	modals.open(page)
 

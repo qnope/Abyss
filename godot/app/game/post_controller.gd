@@ -15,9 +15,12 @@ extends RefCounted
 ## [MessageDialog] tells it (or why it was refused). The volcano is
 ## [KernelController]'s.
 ##
+## The sheet and the selection of a post still guarded show the plan of the
+## assault ([AssaultPlans]); the selection's follows the units picked.
+##
 ## It registers itself for the posts on the router it is given. A post another
-## player holds opens a [RivalPostSheet] and its attack is the rival assault of
-## lot 13: [signal rival_attack_requested] tells it.
+## player holds opens a [RivalPostSheet] and its attack is [FactionController]'s:
+## [signal rival_attack_requested] tells it.
 
 ## The player wants to attack the post [param owner] holds at ([param x],
 ## [param y]) of [param level].
@@ -48,15 +51,18 @@ func open_post(route: CellRoute) -> void:
 			rival_attack_requested.emit(owner, route.level, route.x, route.y))
 		modals.open(rival)
 		return
-	var sheet := TransitionBaseSheet.new(actions.game, base)
+	var plan := AssaultPlans.sheet_panel(actions.game, route.level, route.x, route.y)
+	var sheet := TransitionBaseSheet.new(actions.game, base, plan)
 	sheet.assault_requested.connect(_select_assault.bind(route))
 	sheet.descend_requested.connect(_select_descent.bind(route))
 	modals.open(sheet)
 
 
 func _select_assault(route: CellRoute) -> void:
+	var plan := AssaultPlans.selection_panel(actions.game, route.level, route.x, route.y)
 	var page := AssaultSelections.transition(actions.game.human_player(), route.level, route.cell.transition_base,
-		_assault.bind(route))
+		_assault.bind(route), plan)
+	AssaultPlans.track(page, plan, actions.game, route.level, route.x, route.y)
 	page.closed.connect(_on_assaulted.bind(route))
 	modals.open(page)
 

@@ -38,6 +38,20 @@ func test_the_kernel_page_picks_among_the_units_of_the_volcano_level() -> void:
 	assert_eq(page.rows.keys(), [UnitType.Value.HARPOONIST, Admiral])
 
 
+func test_the_rival_page_needs_no_admiral_and_has_no_plan() -> void:
+	var page := AssaultSelections.rival(_player(), 1, "Nacre", _confirm)
+	modals().open(page)
+	assert_eq(page.title(), "Assaut : Nacre")
+	assert_eq(page.rows.keys(), [Scout, Admiral])
+	assert_false(page.needs_admiral)
+	assert_false(page.actions_bar.admiral_label.visible)
+	assert_eq(find_type("AssaultPlanPanel", page).size(), 0)
+	page.rows[Scout].set_value(2)
+	press("Lancer l'assaut")
+	assert_eq(_asked, [{Scout: 2}] as Array[Dictionary])
+	assert_true(page.is_closed())
+
+
 func test_launching_needs_the_admiral_and_asks_with_the_picks() -> void:
 	var page := AssaultSelections.kernel(_player(), 3, _confirm)
 	modals().open(page)

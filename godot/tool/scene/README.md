@@ -26,8 +26,8 @@ meets: `app_menu_empty.png` (the menu with no save: two entries), `app_menu.png`
 card of the opening story) `app_game.png` (the game screen: the resource bar with
 the energy shortage in red, the island with the buildings built, the turn bar
 and the tabs), `app_game_settings.png` (the settings dialog over it),
-`app_game_resource.png` (the energy detail sheet) and `app_game_tech.png` (a
-tab not built yet, the world hidden), each with its draw calls and primitives. Never commit the renders.
+`app_game_resource.png` (the energy detail sheet) and `app_game_tech.png` (the
+research tab of that game, the world hidden), each with its draw calls and primitives. Never commit the renders.
 
 ## The base and its buildings
 
@@ -53,6 +53,21 @@ that will starve), `turn_summary.png` (what the turn did), `turn_summary_en.png`
 (the same after the language changed), `turn_victory.png` and `turn_defeat.png`
 (the two screens of a game's end), each with its draw calls and primitives.
 Never commit the renders.
+
+## The research
+
+`tech_capture.gd` (`tool/scene_capture.sh [out dir] tech`, or after the end of a
+turn's views when no scene is given) plays a new game and then a game in the
+middle of its research (a laboratory 3, the military branch to its second level
+with the second option taken, the resources branch to its third, the explorer one
+just opened) and renders: `tech_new.png` (no laboratory: the notice, every node
+locked), `tech_tree.png` and `tech_tree_en.png` (the tree in French and in
+English: researched, accessible, locked and discarded nodes, the threads lit as
+far as the research went), and the sheets of a touch: `tech_node.png` (a node to
+research, its effect and cost), `tech_choice.png` (a choice, two options face to
+face), `tech_done.png` (a choice already made), `tech_blocked.png` (a choice held
+back by the laboratory) and `tech_branch.png` (a branch to unlock, with the
+surcharge), each with its draw calls and primitives. Never commit the renders.
 
 ## The UI kit
 

@@ -66,3 +66,13 @@ func test_assert_has() -> void:
 func test_fail_records_its_message() -> void:
 	_probe.fail("broken")
 	assert_eq(_probe.failures(), PackedStringArray(["broken"]))
+
+
+func test_runs_the_cleanups_last_registered_first() -> void:
+	var order := []
+	_probe.add_cleanup(func() -> void: order.append(1))
+	_probe.add_cleanup(func() -> void: order.append(2))
+	_probe.run_cleanups()
+	assert_eq(order, [2, 1])
+	_probe.run_cleanups()
+	assert_eq(order, [2, 1], "each runs once")

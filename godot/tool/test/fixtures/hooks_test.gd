@@ -10,6 +10,8 @@ var _hooked: int = 0
 func before_each() -> void:
 	events.append("before")
 	_hooked += 1
+	add_cleanup(func() -> void: events.append("cleanup first"))
+	add_cleanup(func() -> void: events.append("cleanup last"))
 
 
 func after_each() -> void:

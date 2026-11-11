@@ -46,9 +46,23 @@ func add_action(button: Button) -> void:
 	_actions.add_child(button)
 
 
+## Adds [param text] in [param color] under the actions added so far, centred
+## and as wide as the card: the reason an action is closed, or why it failed.
+func add_note(text: String, color: Color) -> Label:
+	var note := Label.new()
+	note.text = text
+	note.theme_type_variation = &"BodySmall"
+	note.add_theme_color_override(&"font_color", color)
+	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_actions.add_child(note)
+	return note
+
+
 ## The actions, top to bottom.
 func actions() -> Array[Button]:
 	var found: Array[Button] = []
 	for child in _actions.get_children():
-		found.append(child as Button)
+		if child is Button:
+			found.append(child as Button)
 	return found

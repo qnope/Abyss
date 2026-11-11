@@ -71,6 +71,7 @@ func _init(actions_: GameActions, language_: LanguageChoice.Value, modals: Modal
 	for part: Control in [resource_bar, status_bars, content, turn_bar, tab_bar]:
 		column.add_child(part)
 	add_child(column)
+	status_bars.add_bar(EventStatusBar.new(actions, _modals))
 	tab_bar.tab_chosen.connect(show_tab)
 	turn_bar.end_turn_requested.connect(end_turn_requested.emit)
 	turn_bar.settings_requested.connect(open_settings)

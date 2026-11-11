@@ -25,13 +25,13 @@ func _flow() -> EndTurnFlow:
 
 
 func _run(result: TurnResult) -> void:
-	_outcome = TurnOutcome.new(_game, result, modals(), TurnOutcome.default_steps())
+	_outcome = TurnOutcome.new(_game, result, modals(), TurnOutcome.default_steps(GameActions.new(_game)))
 	_outcome.finished.connect(_told.append.bind("finished"))
 	_outcome.run()
 
 
 func test_the_default_queue_follows_the_summary_with_the_reports_of_the_threats() -> void:
-	var steps := TurnOutcome.default_steps()
+	var steps := TurnOutcome.default_steps(GameActions.new(_game))
 	assert_eq(steps, [TurnOutcome.summary_page, ThreatPages.raid, ThreatPages.predators, ThreatPages.volcano] as Array[Callable])
 
 

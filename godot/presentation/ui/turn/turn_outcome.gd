@@ -13,9 +13,10 @@ extends RefCounted
 ## order Flutter shows them:
 ##
 ## - after the summary, the reports of the raid, of the predators and of a
-##   kraken wave lost ([ThreatPages]);
-## - to come: the card of the event drawn (lot 14), then the next tip
-##   (lot 15). The turn's story told on the map is step 7's.
+##   kraken wave lost ([ThreatPages]), then the card of the event drawn
+##   ([EventStep]);
+## - to come: the next tip (lot 15). The turn's story told on the map is
+##   step 7's.
 
 ## The turn lost the game: the defeat screen is next.
 signal defeated
@@ -36,9 +37,11 @@ func _init(game_: Game, result_: TurnResult, modals: ModalLayer, steps_: Array[C
 	steps = steps_
 
 
-## The steps of a turn, in order.
-static func default_steps() -> Array[Callable]:
-	return [summary_page, ThreatPages.raid, ThreatPages.predators, ThreatPages.volcano]
+## The steps of a turn for the game of [param actions], in order: the pages
+## that change the game (the choice of an event) go through them.
+static func default_steps(actions: GameActions) -> Array[Callable]:
+	return [summary_page, ThreatPages.raid, ThreatPages.predators, ThreatPages.volcano,
+		EventStep.of(actions)]
 
 
 ## The summary of the turn: always shown.

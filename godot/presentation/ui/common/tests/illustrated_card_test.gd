@@ -60,6 +60,19 @@ func test_scrolls_when_taller_than_the_screen() -> void:
 	assert_true(card.get_combined_minimum_size().y <= 800.0 * AbyssDialog.MAX_HEIGHT_SHARE + 1.0)
 
 
+func test_a_note_goes_among_the_actions_without_being_one() -> void:
+	var card := _card()
+	var first := card.add_action("Un")
+	var note := card.card_body.add_note("Fermé", AbyssColors.WARNING)
+	var second := card.add_action("Deux")
+	assert_eq(card.card_body.actions(), [first, second] as Array[Button])
+	assert_eq(note.get_index(), first.get_index() + 1)
+	assert_eq(note.text, "Fermé")
+	assert_eq(note.theme_type_variation, &"BodySmall")
+	assert_eq(note.get_theme_color(&"font_color"), AbyssColors.WARNING)
+	assert_eq(note.horizontal_alignment, HORIZONTAL_ALIGNMENT_CENTER)
+
+
 func _card() -> IllustratedCard:
 	var picture := UiIcon.new(UiIcon.path_of(&"events", &"storm"), IllustratedCard.ILLUSTRATION_SIZE)
 	var card := IllustratedCard.new(picture, "Tempête",

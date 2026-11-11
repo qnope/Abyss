@@ -59,3 +59,17 @@ func test_a_journal_saved_before_players_existed_still_exports() -> void:
 	var journal := ReplayJournal.new(3, "Nemo", actions)
 
 	assert_eq(journal.actions_of(1), [{"do": "upgrade", "building": "algaeFarm"}] as Array[Dictionary])
+
+
+## Not in the Dart file: the executor hands the journal the id of the human,
+## so a rival spying on the human base names it `human`.
+func test_a_rival_spying_on_the_human_names_its_target_human() -> void:
+	var game := GameSamples.two_players(3, RIVAL_ID)
+	var rival: Player = game.players[RIVAL_ID]
+	var human := game.human_player()
+	rival.add_revealed_cell(RaidBattle.BASE_LEVEL, GridPosition.new(human.base_x, human.base_y))
+	rival.units_on_level(RaidBattle.BASE_LEVEL)[UnitType.Value.SCOUT].count = 1
+
+	assert_true(ActionExecutor.new().execute(SpyBaseAction.new(human.id), game, rival).is_success)
+	assert_eq(game.replay.actions_of(1), [{"do": "spy", "target": "human", "player": RIVAL_ID}] as Array[Dictionary])
+

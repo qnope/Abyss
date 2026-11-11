@@ -38,6 +38,15 @@ func test_names_the_file_after_the_player_and_the_turn() -> void:
 	assert_eq(ReplayExport.file_name(game), "replay-Le_Nautile-tour-1.json")
 
 
+## Not in the Dart file: the last turn is the game's, whatever ends the
+## journal holds.
+func test_the_last_turn_is_the_turn_of_the_game() -> void:
+	var game := GameFactory.new_single_player("Nemo", 42)
+	game.turn = 7
+
+	assert_eq(ReplayExport.to_json(game)["lastTurn"], 7)
+
+
 ## Not in the Dart file: a game without journal is named after "partie",
 ## and every character but letters, digits, `_` and `-` becomes `_`.
 func test_names_a_file_without_journal_after_partie() -> void:

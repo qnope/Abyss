@@ -143,4 +143,8 @@ of a game for a player, its dice the plain `Random(1)` of the Dart tests
 against six factions whose first one scouts, the posts it holds, its
 scouts by level and the targets of its explorations; its `turn` gives each
 action a fresh `SeededRandom` drawn from `Random(3)`, as a `FactionTurn`
-does (`FactionDice`, until `faction` ports it).
+does (`FactionDice`, until `faction` ports it). `EventMoveSamples` is
+the twin of `strategies/event_moves_test_helper.dart`: the turn of a
+player waiting for a choice on an event and the choice it made; the
+producing base of `event_test_helper.dart` is
+`EventSamples.producing_player`.

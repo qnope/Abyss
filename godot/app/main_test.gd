@@ -18,12 +18,22 @@ func after_each() -> void:
 	_window().theme = null
 	_window().use_hdr_2d = false
 	_window().scaling_3d_scale = 1.0
+	AppLocale.debug_reset()
 
 
 func test_gives_the_window_the_abyss_theme() -> void:
 	var theme := _window().theme
 	assert_not_null(theme)
 	assert_eq(theme.get_type_variation_base("HudPanel"), &"PanelContainer")
+
+
+func test_speaks_the_language_of_the_player_or_the_device() -> void:
+	var main := _main as Object
+	var language: LanguageSettings = main.get("language")
+	var locale: AppLocale = main.get("locale")
+	assert_eq(language.path, LanguageSettings.PATH)
+	assert_eq(locale.locale(), AppLocale.resolve(language.choice(), OS.get_locale_language()))
+	assert_eq(TranslationServer.get_locale(), locale.locale())
 
 
 func test_opens_on_the_base_seen_from_the_game_view() -> void:

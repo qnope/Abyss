@@ -9,6 +9,10 @@ const MARGIN := 10
 
 var idle: IdleFrameCap
 var settings: QualitySettings
+## The player's language, kept in user://settings.json, and the locale it
+## sets on the TranslationServer (now and when the player picks another).
+var language: LanguageSettings
+var locale: AppLocale
 
 @onready var base: BaseScene = $Base
 @onready var counter: FrameCounter = $Hud/Top/FrameCounter
@@ -21,6 +25,8 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	language = LanguageSettings.new()
+	locale = AppLocale.new(language)
 	idle = IdleFrameCap.new(base.camera)
 	add_child(idle)
 	settings = QualitySettings.new(base, get_viewport(), idle)

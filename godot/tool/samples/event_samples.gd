@@ -104,3 +104,18 @@ static func threatened_player(
 	player.event_state.set_pending(RandomEventType.Value.PREDATORS, 12)
 	player.event_state.predator_wave = wave if wave != null else predator_test_wave()
 	return player
+
+
+## `producingPlayer`: a player "p1" whose farm, mine and extractor stand at
+## 3, its Solar Panels at 6 and its headquarters at 10, high enough that
+## none of them is degraded.
+static func producing_player(id := "p1") -> Player:
+	var buildings := PlayerDefaults.buildings()
+	for type: BuildingType.Value in [
+		BuildingType.Value.HEADQUARTERS, BuildingType.Value.ALGAE_FARM,
+		BuildingType.Value.CORAL_MINE, BuildingType.Value.ORE_EXTRACTOR,
+	]:
+		buildings[type] = Building.new(type, 3)
+	buildings[BuildingType.Value.HEADQUARTERS].level = 10
+	buildings[BuildingType.Value.SOLAR_PANEL] = Building.new(BuildingType.Value.SOLAR_PANEL, 6)
+	return Player.new("Test", id, 0, 0, null, buildings)

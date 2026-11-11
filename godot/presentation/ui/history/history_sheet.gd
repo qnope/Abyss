@@ -7,7 +7,7 @@ extends ModalPanel
 ## and its filter starts at "all": closing and reopening it starts over.
 ##
 ## A touch on a tappable card opens the report of that entry on the modals
-## through [HistoryReports] (none exists yet). Dragging the handle down far
+## through [HistoryReports]. Dragging the handle down far
 ## enough closes it, like a touch outside.
 
 const HEIGHT_SHARE := 0.8

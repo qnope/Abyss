@@ -3,8 +3,11 @@ extends SceneTree
 ## upright shows them, on saves of its own. tool/scene_capture.sh runs it:
 ##   godot --path godot --resolution 780x1688 --script res://tool/scene/app_capture.gd -- <out dir>
 ## writes <out dir>/app_menu.png, app_menu_empty.png (no save yet),
-## app_new_game.png, app_saves.png, app_story.png and app_game.png, each with
-## its draw calls and primitives. The saves are written under user:// and
+## app_new_game.png, app_saves.png, app_story.png and the game's screens:
+## app_game.png (the base built up, the resource bar, the tabs),
+## app_game_settings.png (the settings dialog), app_game_resource.png (the
+## detail of a resource) and app_game_tech.png (a tab's page), each with its
+## draw calls and primitives. The saves are written under user:// and
 ## removed at the end; the player's own are never read.
 
 const MainScene := preload("res://app/main.tscn")
@@ -47,10 +50,36 @@ func _capture() -> void:
 	await _shot("app_saves")
 	_app.flow.show_story(alice)
 	await _shot("app_story")
-	_app.flow.play(_app.repository.load_all().games[2])
+	_app.flow.play(_develop(_app.repository.load_all().games[2]))
 	await _shot("app_game")
+	var hud := _app.flow.current as GameHud
+	hud.open_settings()
+	await _shot("app_game_settings")
+	_app.modals.close_top()
+	hud.resource_bar.items[ResourceType.Value.ENERGY].pressed.emit()
+	await _shot("app_game_resource")
+	_app.modals.close_top()
+	hud.show_tab(GameTab.Value.TECH)
+	await _shot("app_game_tech")
 	_folder.remove()
 	quit(0)
+
+
+## [param game] with a base that has grown: the buildings of the models, some
+## stock and a few scouts to feed, so that the bar shows rates.
+static func _develop(game: Game) -> Game:
+	var player := game.human_player()
+	var levels: Dictionary[BuildingType.Value, int] = {
+		BuildingType.Value.HEADQUARTERS: 4, BuildingType.Value.ALGAE_FARM: 2,
+		BuildingType.Value.CORAL_MINE: 2, BuildingType.Value.SOLAR_PANEL: 1,
+		BuildingType.Value.BARRACKS: 1, BuildingType.Value.CORAL_CITADEL: 1,
+	}
+	for type in levels:
+		player.buildings[type].level = levels[type]
+	player.resources[ResourceType.Value.ALGAE].amount = 412
+	player.resources[ResourceType.Value.ENERGY].amount = 38
+	player.units_per_level[1][UnitType.Value.SCOUT].count = 6
+	return game
 
 
 func _start() -> void:

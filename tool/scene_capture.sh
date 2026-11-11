@@ -4,7 +4,8 @@
 #   tool/scene_capture.sh [out dir] [scene | app | kit]
 # With no scene, it writes default.png, rotated.png, close.png and top.png from
 # the views of godot/tool/scene/capture.gd, then app_menu_empty.png,
-# app_menu.png, app_new_game.png, app_saves.png, app_story.png and app_game.png
+# app_menu.png, app_new_game.png, app_saves.png, app_story.png, app_game.png,
+# app_game_settings.png, app_game_resource.png and app_game_tech.png
 # from godot/tool/scene/app_capture.gd, then kit_a.png, kit_b.png, kit_b_en.png,
 # kit_dialog.png, kit_sheet.png and kit_page.png from
 # godot/tool/scene/kit_capture.gd, and prints each view's draw calls and
@@ -39,7 +40,7 @@ if [[ $which != kit && $which != app ]]; then
 fi
 if [[ -z $which || $which == app ]]; then
   capture res://tool/scene/app_capture.gd
-  [[ -f $out/app_game.png ]] || { echo "The app did not render." >&2; exit 1; }
+  [[ -f $out/app_game_tech.png ]] || { echo "The app did not render." >&2; exit 1; }
 fi
 if [[ -z $which || $which == kit ]]; then
   capture res://tool/scene/kit_capture.gd

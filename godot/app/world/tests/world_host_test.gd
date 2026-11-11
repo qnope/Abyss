@@ -104,6 +104,29 @@ func test_shows_the_base_first_and_the_parade_ground_on_the_army_tab() -> void:
 	assert_false(_world.parade.visible)
 
 
+func test_shows_the_map_of_a_level_with_its_own_camera() -> void:
+	_world.show_view(WorldHost.View.MAP)
+	assert_true(_world.map.visible)
+	assert_eq(_world.map.process_mode, Node.PROCESS_MODE_INHERIT)
+	assert_true(_world.map.camera.current)
+	assert_false(_world.base.visible)
+	assert_false(_world.parade.visible)
+	_world.show_view(WorldHost.View.PARADE)
+	assert_false(_world.map.visible)
+	assert_eq(_world.map.process_mode, Node.PROCESS_MODE_DISABLED)
+	assert_true(_world.parade.camera.current)
+
+
+func test_frames_the_map_between_the_bars_too() -> void:
+	var map := MapSamples.plain_map(26, 26)
+	_world.map.show_level(MapLevelState.new(1, map, "me"))
+	_world.frame_between(0.1, 0.2)
+	var size := _world.get_viewport().get_visible_rect().size
+	var fitted := OrbitFrame.fit(MapGrid.outline(26, 26), MapRig.YAW, MapRig.PITCH,
+		size.x / size.y, OrbitCamera.FOV, 0.1 + MapScene.LEVEL_BAR_ROOM, 0.2)
+	assert_almost_eq(_world.map.camera.rig.default_distance, fitted.x, 1e-4)
+
+
 func test_the_ambience_goes_back_to_the_base() -> void:
 	_world.show_view(WorldHost.View.PARADE)
 	_world.show_ambience()

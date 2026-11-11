@@ -65,16 +65,13 @@ func test_a_tab_covers_the_world_with_its_page_and_tells_the_view_to_show() -> v
 	press("Carte")
 	assert_eq(_tabs, [GameTab.Value.MAP] as Array[GameTab.Value])
 	assert_eq(hud.tab, GameTab.Value.MAP)
-	assert_not_null(find_text("Carte", hud.content))
-	assert_not_null(find_text("Bientôt disponible", hud.content))
-	assert_eq(_visible_pages(hud), 1)
+	assert_false(hud.page.visible, "the map shows through")
 	assert_false(hud.tech_tab.visible)
 	press("Tech")
+	assert_true(hud.page.visible)
 	assert_true(hud.tech_tab.visible, "the research tree is the page of this tab")
-	assert_eq(_visible_pages(hud), 0)
-	assert_null(find_text("Carte", hud.content))
 	press("Base")
-	assert_eq(_visible_pages(hud), 0)
+	assert_false(hud.page.visible)
 	assert_false(hud.tech_tab.visible)
 	assert_eq(_tabs, [GameTab.Value.MAP, GameTab.Value.TECH, GameTab.Value.BASE] as Array[GameTab.Value])
 
@@ -91,7 +88,6 @@ func test_a_tab_can_be_shown_from_outside() -> void:
 	assert_eq(hud.tab_bar.selected(), GameTab.Value.ARMY)
 	assert_eq(_tabs, [GameTab.Value.ARMY] as Array[GameTab.Value])
 	assert_false(hud.page.visible, "the parade ground shows through")
-	assert_eq(_visible_pages(hud), 0)
 
 
 func test_the_next_turn_button_only_asks_for_the_end_of_the_turn() -> void:
@@ -101,22 +97,14 @@ func test_the_next_turn_button_only_asks_for_the_end_of_the_turn() -> void:
 	assert_eq(_game.turn, 1, "the flow behind it is another lot's")
 
 
-func test_follows_the_language_in_the_bars_and_the_pages() -> void:
+func test_follows_the_language_in_the_bars() -> void:
 	var hud := _show()
-	press("Carte")
 	use_language("en")
 	assert_eq(hud.turn_bar.turn_label.text, "Turn 1")
 	assert_eq(texts(hud.tab_bar), PackedStringArray(["Base", "Map", "Army", "Tech"]))
-	assert_not_null(find_text("Map", hud.content))
-	assert_not_null(find_text("Coming soon", hud.content))
 
 
 func test_has_a_place_for_the_status_strips_under_the_resource_bar() -> void:
 	var hud := _show()
 	assert_eq(hud.status_bars.get_index(), hud.resource_bar.get_index() + 1)
 	assert_false(hud.status_bars.bars().is_empty(), "the lots of the threats add their strips")
-
-
-## How many pages of the tabs to come show.
-func _visible_pages(hud: GameHud) -> int:
-	return hud.pages.values().filter(func(each: TabPlaceholder) -> bool: return each.visible).size()

@@ -12,6 +12,8 @@ signal settings_requested
 signal end_turn_requested
 
 const ICON_SIZE := 24.0
+## The icon of the next turn button, as Flutter's.
+const BUTTON_ICON_SIZE := 20
 
 var turn := 1
 var turn_label := Label.new()
@@ -32,7 +34,7 @@ func _init(turn_ := 1) -> void:
 	turn_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	turn_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	next_turn_button.icon = load(UiIcon.glyph_path(&"skip_next")) as Texture2D
-	next_turn_button.expand_icon = true
+	next_turn_button.add_theme_constant_override(&"icon_max_width", BUTTON_ICON_SIZE)
 	next_turn_button.pressed.connect(end_turn_requested.emit)
 	row.add_child(settings_button)
 	row.add_child(turn_label)

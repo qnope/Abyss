@@ -12,9 +12,10 @@ extends RefCounted
 ## The lots that own a page add a step to [method default_steps], in the
 ## order Flutter shows them:
 ##
-## - to come, after the summary: the raid and the predators' report and the
-##   kraken wave lost (lot 11), the card of the event drawn (lot 14), then the
-##   next tip (lot 15). The turn's story told on the map is step 7's.
+## - after the summary, the reports of the raid, of the predators and of a
+##   kraken wave lost ([ThreatPages]);
+## - to come: the card of the event drawn (lot 14), then the next tip
+##   (lot 15). The turn's story told on the map is step 7's.
 
 ## The turn lost the game: the defeat screen is next.
 signal defeated
@@ -37,7 +38,7 @@ func _init(game_: Game, result_: TurnResult, modals: ModalLayer, steps_: Array[C
 
 ## The steps of a turn, in order.
 static func default_steps() -> Array[Callable]:
-	return [summary_page]
+	return [summary_page, ThreatPages.raid, ThreatPages.predators, ThreatPages.volcano]
 
 
 ## The summary of the turn: always shown.

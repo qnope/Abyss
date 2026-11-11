@@ -122,12 +122,15 @@ func test_a_raid_that_can_end_the_game_does_not_stop_the_question() -> void:
 	assert_eq(_game.status, GameStatus.Value.DEFEAT)
 
 
-func test_a_lost_game_is_told_once_the_summary_is_closed() -> void:
+func test_a_lost_game_is_told_once_the_raid_report_is_closed() -> void:
 	_last_chance()
 	_flow.request()
 	press("Confirmer")
 	assert_eq(_told, [] as Array[String])
 	press("OK")
+	assert_true(current_modal() is RaidReportPage, "the raid that lost the game is told first")
+	assert_eq(_told, [] as Array[String])
+	press("Retour à la base")
 	assert_eq(_told, ["defeated"] as Array[String])
 
 

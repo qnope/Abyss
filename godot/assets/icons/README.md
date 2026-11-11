@@ -12,7 +12,8 @@ them until step 7). `ui/` holds the glyphs the components need
 `map`, `shield`, `science` and `skip_next`, and the base's `lock`,
 `arrow_upward`, `graphic_eq`, `construction` and `fort`, and the end of a turn and of a game's `timer`,
 `dangerous`, `flag`, `inventory`, `heart_broken`, `explore` and `error`, and the history's `auto_awesome`, `build`, `group_add`, `groups`,
-`arrow_downward`, `hourglass_bottom`, `volcano` and `sports_kabaddi`), drawn for the game as
+`arrow_downward`, `hourglass_bottom`, `volcano` and `sports_kabaddi`, and the objectives' `check_circle`,
+`radio_button_unchecked` and `hourglass_disabled`, and the Guide's `help_outline`), drawn for the game as
 white strokes on 24 x 24 and tinted by the node that shows them: Flutter's
 Material icons have no equivalent in Godot, and a screen that needs another
 glyph adds its SVG here.

@@ -121,3 +121,8 @@ func test_the_research_discount_lowers_the_cost() -> void:
 	var half := DartMath.trunc_div(coral * 50, 100)
 	assert_not_null(find_text("%d/%d" % [human.resources[ResourceType.Value.CORAL].amount, half], section))
 
+
+func test_the_headquarters_asks_for_no_other_building() -> void:
+	set_levels({Type.HEADQUARTERS: 1})
+	var section := _section(Type.HEADQUARTERS)
+	assert_null(requirement(section, "Quartier Général"))

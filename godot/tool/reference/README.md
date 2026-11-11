@@ -49,6 +49,15 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   (`tool/reference/sha256_hex.dart`): the SHA-256 of the UTF-8 bytes of a
   canonical text, in lowercase hex. `GameSnapshot.digests` (`domain/reference/`)
   takes it as a `Callable`, as the Dart domain leaves `crypto` to its tools.
+- `ClassFields` reads the state of a game as the port's classes declare
+  it, for the completeness guard of the snapshots
+  (`domain/reference/tests/snapshot_completeness_test.gd`), as
+  `hive_source.dart` reads the `@HiveField`s on the Dart side: every class a
+  `Game` reaches through its typed fields (and `HELD_UNTYPED`, held in a
+  collection inside a collection), and their subclasses, each with its
+  fields in Dart names (`max_storage` is `maxStorage`, the `map_seed` of a
+  `GameMap` is `seed`). A class whose subclasses are reached is written as
+  them (`HistoryEntry`).
 - `ReferenceFiles` finds the repository: the folder above `res://`, or the one
   `ABYSS_REPO_ROOT` names. `tool/godot_coverage.py` sets it, as it runs the
   tests on a copy of the project in a temporary folder.

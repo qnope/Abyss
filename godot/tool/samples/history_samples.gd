@@ -22,6 +22,16 @@ static func fight(player_wins: bool, initial_monsters := 4, final_monsters := 0)
 	)
 
 
+## `combatEntry`: a combat on (3, 4) at turn 5, won or lost.
+static func combat_entry(victory: bool) -> CombatEntry:
+	return CombatEntry.new(5, victory, 3, 4, _lair(), fight(victory), {}, {}, {}, {}, {})
+
+
+## `turnEndEntry`: the end of `turn`, with nothing produced nor lost.
+static func turn_end_entry(turn: int) -> TurnEndEntry:
+	return TurnEndEntry.new(turn, [], [], {})
+
+
 ## The capture, won in two fight turns, of the base named `name`.
 static func capture_entry(name: String) -> CaptureEntry:
 	return CaptureEntry.new(6, name, fight(true))

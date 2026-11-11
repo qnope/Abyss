@@ -5,17 +5,23 @@ extends RefCounted
 ## script for the human, as ScriptRunner.runOn does, each turn ended by
 ## EndTurnAction (the factions playing first); after each turn, the moves,
 ## the TurnResult, the TurnEndEntry, the game and the next die, then the
-## state of every player (TurnStates).
+## state of every player (TurnStates). `on_state`, when given, sees the
+## game as each turn starts, with `false`, and once more when it stops, with
+## `true` (GameSnapshotDigests).
 
 
 ## Plays `script` for the human of `game` until `turns` or the end of the
 ## game, with the dice `Random(seed_)`. Two lines a turn.
-static func play(game: Game, script: GameScript, seed_: int, turns: int) -> PackedStringArray:
+static func play(
+	game: Game, script: GameScript, seed_: int, turns: int, on_state := Callable(),
+) -> PackedStringArray:
 	var random := DartRandom.new(seed_, false)
 	var log: Array[ScriptLogEntry] = []
 	var executor := ActionExecutor.new()
 	var lines := PackedStringArray()
 	while game.status == GameStatus.Value.PLAYING and game.turn <= turns:
+		if on_state.is_valid():
+			on_state.call(game, false)
 		var from := log.size()
 		var turn := ScriptTurn.new(game, random, log, null, executor)
 		script.play_turn(turn)
@@ -37,6 +43,8 @@ static func play(game: Game, script: GameScript, seed_: int, turns: int) -> Pack
 		for p: Player in game.players.values():
 			players.append("%s=%s" % [p.id, TurnStates.state(game, p)])
 		lines.append("  " + " ; ".join(players))
+	if on_state.is_valid():
+		on_state.call(game, true)
 	return lines
 
 

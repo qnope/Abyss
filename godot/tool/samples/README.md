@@ -25,9 +25,10 @@ player named after its id (`player`), one holding only the buildings given
 `two_players`, the twin of `test/helpers/two_player_game.dart`. A game from a
 seed comes from `GameFactory` itself.
 
-`HistorySamples` builds the entries of the fights of
-`test/helpers/history_entry_samples.dart` and the fight of two turns they
-hold (`buildTestFight`, its `fight` here), and the fights, combats and
+`HistorySamples` builds the entries of
+`test/helpers/history_entry_samples.dart` (the fights, a combat, an end of
+turn) and the fight of two turns they hold (`buildTestFight`, its `fight`
+here), and the fights, combats and
 game of `test/domain/game/game_statistics_helper.dart` (`statistics_*`).
 
 `EventSamples` builds what the tests of the random events take from
@@ -194,3 +195,12 @@ plays a script as `ScriptRunner.runOn` does, each turn ended by
 and `TurnStates` the state of every player after it. `TurnHistoriesBalanced7`,
 `TurnHistoriesConquest11`, `TurnHistoriesEconomy24` and `TurnHistoriesIdle5`
 hold what the scratch Dart script printed.
+
+`SectionChanges` and `LaterSectionChanges` are the twins of
+`test/domain/reference/section_changes.dart` and
+`later_section_changes.dart`: for each section of a game snapshot, changes
+of state it alone must show, each a `Callable` taking the `Game`.
+`GameSnapshotDigests` collects, through the `on_state` of
+`TurnDigests.play`, the snapshot digests of the games of the whole-games
+digest test as turns start and when they stop; `SnapshotHistories` holds
+what the scratch Dart script printed through `GameSnapshot`.

@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" uid="uid://be8ym51o00tn3" path="res://app/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://be8ym51o00tn3" path="res://app/prototype/prototype.gd" id="1_main"]
 [ext_resource type="Script" uid="uid://b3cpjnvhw40an" path="res://presentation/world/base/base_scene.gd" id="2_base"]
 [ext_resource type="Script" uid="uid://kwcnv46hy1u4" path="res://presentation/ui/perf/frame_counter.gd" id="3_counter"]
 [ext_resource type="Script" uid="uid://b6nx5bibyt70n" path="res://presentation/ui/perf/quality_panel.gd" id="4_quality"]
 
-[node name="Main" type="Control"]
+[node name="Prototype" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

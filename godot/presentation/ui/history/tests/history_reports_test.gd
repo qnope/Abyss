@@ -49,7 +49,28 @@ func test_a_kraken_wave_reopens_its_report() -> void:
 	assert_no_raw_keys()
 
 
-func test_the_other_entries_have_no_report_yet() -> void:
+func test_a_base_assault_reopens_its_summary_from_the_side_of_the_player() -> void:
+	var attacker_entry := HistorySamples.base_assault_entry(true, false)
+	var attacker := _page(attacker_entry) as BaseAssaultSummaryPage
+	assert_not_null(attacker)
+	assert_eq(attacker.entry, attacker_entry)
+	assert_true(attacker.victory)
+	assert_not_null(find_text("Vous avez attaqué Nacre", attacker))
+	attacker.close()
+	var defender := _page(HistorySamples.base_assault_entry(true, true)) as BaseAssaultSummaryPage
+	assert_false(defender.victory, "the attack won is the defender's loss")
+	assert_not_null(find_text("Nacre vous a attaqué", defender))
+	assert_no_raw_keys()
+
+
+func test_the_builder_makes_the_page_of_an_assault() -> void:
+	var entry := HistorySamples.base_assault_entry(false, true, "faille:1")
+	var page := HistoryReports.base_assault(entry)
+	assert_eq(page.entry, entry)
+	assert_true(page.victory)
+	page.free()
+
+
+func test_the_other_entries_have_no_report() -> void:
 	assert_null(_reports.page_for(HistorySamples.capture_entry("Abysse")))
-	assert_null(_reports.page_for(HistorySamples.base_assault_entry(true, false)), "the assault summary comes with the factions")
 	assert_null(_reports.page_for(BuildingEntry.new(1, BuildingType.Value.ALGAE_FARM, 2)))

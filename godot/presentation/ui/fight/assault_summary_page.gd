@@ -10,7 +10,10 @@ extends FullPage
 ## "back to the map" is pressed.
 ##
 ## A page per place derives from it with its title and its words for a
-## capture; the rival bases of lot 13 may do the same.
+## capture, and may change the cards between the banner and the turns by
+## overriding [method _lead] (a line after the banner), [method _kill_count]
+## (the figures of the enemies down) and [method _details] (the cards after
+## them): the rival bases do ([BaseAssaultSummaryPage]).
 
 const GAP := 12
 
@@ -36,9 +39,14 @@ func _init(
 	body.add_theme_constant_override(&"separation", GAP)
 	body.add_child(FightResultBanner.new(victory, fight.turn_count if fight != null else -1,
 		captured_key if captured else &""))
+	var lead := _lead()
+	if lead != null:
+		body.add_child(lead)
 	body.add_child(FightUnitAccounting.new(sent, intact, wounded, dead))
 	if fight != null:
-		body.add_child(FightKillCount.new(fight, true))
+		body.add_child(_kill_count())
+		for card in _details():
+			body.add_child(card)
 		body.add_child(FightTurnList.new(fight.turn_summaries))
 	map_button.pressed.connect(close)
 	body.add_child(map_button)
@@ -48,3 +56,18 @@ func _init(
 func refresh() -> void:
 	set_title(str(_title.call()))
 	map_button.text = Texts.t(&"commonBackToMap")
+
+
+## A card between the banner and the units sent, null for none.
+func _lead() -> Control:
+	return null
+
+
+## The card of the enemies put down, the guardians of the place by default.
+func _kill_count() -> Control:
+	return FightKillCount.new(fight, true)
+
+
+## The cards after the enemies put down, none by default.
+func _details() -> Array[Control]:
+	return []

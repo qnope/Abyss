@@ -15,6 +15,17 @@ func test_a_touch_on_a_combat_reopens_its_fight_summary() -> void:
 	assert_null(sheet.cards[0].tap_button, "a building has nothing to reopen")
 
 
+func test_a_touch_on_an_assault_reopens_its_summary_for_either_side() -> void:
+	for defending: bool in [false, true]:
+		var sheet := _sheet([HistorySamples.base_assault_entry(true, defending)], HistoryReports.new(), true)
+		press(sheet.cards[0].tap_button)
+		var page := current_modal() as BaseAssaultSummaryPage
+		assert_not_null(page)
+		assert_eq(page.entry.defending, defending)
+		page.close()
+		sheet.close()
+
+
 func test_a_touch_on_a_capture_opens_nothing() -> void:
 	var sheet := _sheet([HistorySamples.capture_entry("Abysse")], HistoryReports.new(), true)
 	press(sheet.cards[0].tap_button)

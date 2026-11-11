@@ -30,7 +30,15 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   the main menu (`MainMenuScreen`: title, entries, beta notice, settings
   gear), the new game form with its pickers, the saved games (cards, list,
   empty state, confirmed deletion), the opening story and the language
-  dialog, and `GamePlaceholderScreen`, what stands for the game until the base,
-  the map and the army are built. They save and navigate nothing: `app/` does
-  (`app/navigation/app_flow.gd`).
-- `resource/`: the strip of resource amounts (`ResourceAmountStrip`).
+  dialog, the settings of a game (`SettingsDialog`: language, guide and tip
+  switches, save and quit) and the game screen (`game/`: `GameHud` with the
+  resource bar, the content area left clear for the 3D base, the turn bar, the
+  four tabs (`GameTabBar`) and a placeholder page for the tabs not built yet;
+  `GameActions`, the one door the screen's actions go through, tells each
+  success with `acted`; `TurnFigures` the production and consumption of a
+  turn). They save and navigate nothing: `app/` does (`app/navigation/app_flow.gd`,
+  `app/game/`).
+- `resource/`: the resource bar (`ResourceBar`, a `ResourceBarItem` per
+  resource with its amount, rate and shortage state, `AnimatedAmount` flashing
+  and popping when an amount changes), the detail sheet a touch opens and the
+  gain dialog and row.

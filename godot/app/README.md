@@ -24,8 +24,17 @@ a screen is shown, and replaces the screen on show.
     menu -> new game -> (game created, saved) -> opening story -> the game
     menu -> saved games -> the game (a lost game opens it too, for now)
     menu -> the game (continue: the latest in progress)
-    the game -> (saved) -> menu
+    the game -> settings -> save and quit -> (saved) -> menu
+    the game -> settings -> language -> kept, the language set
     new game, saved games -> menu: back
+
+`game/` is the game played: `GameSession` holds the game, the repository and
+the `GameActions`, and saves the game each time an action succeeds (`acted`)
+before telling `changed`; `GameController` joins the `GameHud` and the
+`WorldHost`: the tab on show decides whether the world shows (the base) or
+rests, `changed` redraws both, the island is framed between the bars, and
+`quit_requested` and `language_chosen` go on to the flow. `AppFlow.play` builds
+the three and `_leave_game` gives the world back to the menus.
 
 A save that cannot be read is skipped and named in a warning (and in
 `AppFlow.unreadable`), never stopping the others; a save or a deletion that

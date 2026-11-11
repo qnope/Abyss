@@ -23,8 +23,11 @@ under `user://` and removed at the end, in French, and renders what the player
 meets: `app_menu_empty.png` (the menu with no save: two entries), `app_menu.png`
 (three saves: the continue shortcut, the count badge), `app_new_game.png`,
 `app_saves.png` (the list, the latest game glowing), `app_story.png` (the first
-card of the opening story) and `app_game.png` (the game placeholder over the
-world), each with its draw calls and primitives. Never commit the renders.
+card of the opening story) `app_game.png` (the game screen: the resource bar with
+the energy shortage in red, the island with the buildings built, the turn bar
+and the tabs), `app_game_settings.png` (the settings dialog over it),
+`app_game_resource.png` (the energy detail sheet) and `app_game_tech.png` (a
+tab not built yet, the world hidden), each with its draw calls and primitives. Never commit the renders.
 
 ## The UI kit
 

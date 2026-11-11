@@ -6,7 +6,7 @@ extends Label3D
 const FONT_SIZE := 72
 const OUTLINE := 18
 ## A glyph's height in metres at [constant FONT_SIZE].
-const PIXEL_SIZE := 0.005
+const PIXEL_SIZE := 0.008
 
 
 func _init(level: int) -> void:

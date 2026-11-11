@@ -43,3 +43,11 @@ func test_release_takes_the_aim_away() -> void:
 	_guide.release()
 	assert_false(_guide.has_aim)
 	assert_false(_guide.visible)
+
+
+func test_is_thicker_than_the_ring_of_the_base() -> void:
+	assert_true(_guide.tube > GuideRing.TUBE)
+	_guide.shown_on(level_of(6, 6, []))
+	_guide.aim(1, 1, 1)
+	var outer := (_guide.ring.mesh as TorusMesh).outer_radius
+	assert_true(is_equal_approx(outer, _guide.radius + MapGuide.MAP_TUBE))

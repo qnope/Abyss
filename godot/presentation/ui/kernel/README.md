@@ -21,6 +21,6 @@ session's (`GameActions.victory_reached`, the screen of `../game_over/`).
 
 - The kernel's picture is a `Portrait` until step 7.
 - The garrison's news (its size, a refusal) is a `MessageDialog`, not a snack bar.
-- The guide's halo reads `GuideAdvisor` itself (`target.garrison`); the guide's own
-  wiring is lot 15's.
+- The guide's halo reads `GuideAdvisor` itself (`target.garrison`); the ring on
+  the volcano's cell of the map is `app/game/GuideController`'s.
 - The kernel a rival holds opens `../post/RivalPostSheet` (no post): `app/game/FactionController` runs the attack.

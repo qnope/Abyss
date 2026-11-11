@@ -47,6 +47,12 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
 - `turn/`: the end of a turn (`turn/README.md`): the question (`TurnConfirmation`),
   the summary (`TurnSummary`), the queue of pages `TurnOutcome` and the chain
   that joins them, `EndTurnFlow`.
+- `guide/`, `tip/`, `objective/`: the tutorial (`guide/README.md`,
+  `tip/README.md`, `objective/README.md`): the guide's bubble and the halos that
+  follow what it points at, the « première fois » tip cards and their Guide, the
+  banner and the sheet of the objectives. `PARITY.md` lists every screen,
+  sheet, dialog and element of the Flutter interface with its class here, or the
+  reason it has none.
 - `game_over/`: the end of a game: `DefeatScreen` and `VictoryScreen`, two
   configurations of `GameOverScreen`, with the statistics and the cause of a
   fall (`GameOverScreens` builds them from a game).

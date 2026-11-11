@@ -68,8 +68,9 @@ levels (level 0 is the branch, where Dart has null). `TechColors` and
   the sheet was built.
 - While the laboratory is to build, a notice at the top says so (Flutter tells
   it in the panel of a branch only); the panel says it too.
-- The guide's halo around a branch or a node is lot 15's: the components take
-  no `guide_target` yet.
+- The guide's halo around a medallion or a node is a `../guide/GuidedHalo`
+  that follows the `GuideScope` the tab is given (`GameActions.guide`): the
+  medallion lights for `unlock`, the first node of the branch for `research`.
 
 The tests are in `tests/`, on `TechTestCase` (a new game and helpers to set the
 laboratory and the branches). `tool/scene_capture.sh [out dir] tech` renders the

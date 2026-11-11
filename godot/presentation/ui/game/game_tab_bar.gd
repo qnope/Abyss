@@ -54,6 +54,11 @@ func select(tab: GameTab.Value) -> void:
 		_halos[each].follow()
 
 
+## The halo around the button of [param tab].
+func halo_of(tab: GameTab.Value) -> GuidedHalo:
+	return _halos[tab]
+
+
 ## The tab lit.
 func selected() -> GameTab.Value:
 	var lit := GameTab.Value.BASE

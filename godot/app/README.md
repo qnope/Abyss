@@ -155,3 +155,19 @@ other) and sets the `TranslationServer`, at startup and each time the setting
 changes. `app.gd` builds both. The `.po` files it switches between are made
 from the ARB files (`presentation/ui/l10n/README.md`); its `debug_reset()` puts
 the language back to French between test files.
+
+## The guide and the tips
+
+`GameActions.guide` (a `GuideScope`) reads the tutorial's advice after every action,
+before the session saves and redraws; the bubble, the objective banner and the 2D halos
+(tabs, turn button, level chips, research) follow it themselves
+(`presentation/ui/guide/README.md`). Two classes of `game/` join it to the rest:
+
+- `GuideController`: on `guide.changed`, rings what the advice points at on the floor of
+  the world: the pad of a building on the base, the drill pad of a unit on the parade
+  ground, a cell on the map (`world.base.guide`, `world.parade.guide`, `world.map.guide`).
+- `TipWatcher`: on `session.changed`, once the frame is drawn and when no modal covers
+  the screen, opens the stack of the tips waiting (`TipPresenter`), which marks them seen
+  and saves them first. The tips of a turn come last in its pages (`TurnOutcome`).
+
+Both are made by the `GameController` and let go in `close()`.

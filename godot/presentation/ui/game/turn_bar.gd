@@ -19,6 +19,8 @@ var turn := 1
 var turn_label := Label.new()
 var settings_button := Button.new()
 var next_turn_button := Button.new()
+## The guide's halo around the next turn button.
+var halo: GuidedHalo
 
 
 ## The button is surrounded by the guide's halo when it asks to end the turn.
@@ -39,7 +41,8 @@ func _init(turn_ := 1, guide: GuideScope = null) -> void:
 	next_turn_button.pressed.connect(end_turn_requested.emit)
 	row.add_child(settings_button)
 	row.add_child(turn_label)
-	row.add_child(GuidedHalo.new(next_turn_button, guide, func(target: GuideTarget) -> bool: return target.end_turn))
+	halo = GuidedHalo.new(next_turn_button, guide, func(target: GuideTarget) -> bool: return target.end_turn)
+	row.add_child(halo)
 	add_child(row)
 	refresh()
 

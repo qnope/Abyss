@@ -30,6 +30,20 @@ camera.
 - `buildings.use_models = false` shows every building as its stand-in, to
   review the shapes (`tool/scene_capture.sh`).
 
+## guide/
+
+The tutorial's halo in 3D: `GuideRing`, a pulsing cyan torus lying on the floor
+(Flutter's `BaseSlotHalo` and `GuideCellHalo`), with the name of what it points
+at floating over it. Each scene carries one: `BaseScene.guide` around the pad of
+a building (`BasePads.radius_of` gives the pad's reach), `ParadeScene.guide`
+around a squad's drill pad, `MapScene.guide` (a `MapGuide`) around a cell of a
+level. `point_at(at, radius, name)` rings, `clear()` takes it away; the pulse
+holds still with `reduced_motion`. `MapGuide.aim(level, x, y)` is told once and
+follows the level the map shows (`shown_on`), so a level opened later finds its
+cell ringed. This layer knows nothing of the guide's advice: `app/game/GuideController`
+aims the rings. The ring's colour is `WorldPalette.GUIDE`, held equal to the
+interface's cyan by a test in `app/`.
+
 ## parade/
 
 The army's parade ground (`ParadeScene`), shown on the army tab as the base is

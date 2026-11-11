@@ -45,6 +45,10 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   on a section that is in neither state or in both, on a test that does not
   read its section, and on a module that does not exist: porting a module
   moves its sections from pending to its test.
+- `Sha256Hex` is the digest of the reference games
+  (`tool/reference/sha256_hex.dart`): the SHA-256 of the UTF-8 bytes of a
+  canonical text, in lowercase hex. `GameSnapshot.digests` (`domain/reference/`)
+  takes it as a `Callable`, as the Dart domain leaves `crypto` to its tools.
 - `ReferenceFiles` finds the repository: the folder above `res://`, or the one
   `ABYSS_REPO_ROOT` names. `tool/godot_coverage.py` sets it, as it runs the
   tests on a copy of the project in a temporary folder.

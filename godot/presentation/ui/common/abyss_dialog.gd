@@ -27,6 +27,7 @@ var body: VBoxContainer
 var _title := Label.new()
 var _scroll := ScrollBody.new()
 var _actions := HBoxContainer.new()
+var _area := Vector2.ZERO
 
 
 func _init(title_text := "") -> void:
@@ -45,6 +46,8 @@ func _init(title_text := "") -> void:
 	add_child(column)
 	body = _scroll.content
 	set_title(title_text)
+	# Once laid out, the texts wrap at their true width: the chrome is measured again.
+	resized.connect(_refit)
 
 
 ## Writes the title; none is shown when it is empty.
@@ -85,6 +88,11 @@ static func width_in(area: Vector2) -> float:
 
 
 func fit(area: Vector2) -> void:
+	_area = area
 	custom_minimum_size.x = width_in(area)
 	var chrome := get_combined_minimum_size().y - _scroll.custom_minimum_size.y
 	_scroll.max_height = maxf(area.y * MAX_HEIGHT_SHARE - chrome, 0.0)
+
+
+func _refit() -> void:
+	fit(_area)

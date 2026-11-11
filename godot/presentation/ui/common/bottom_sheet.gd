@@ -14,6 +14,7 @@ const MAX_HEIGHT_SHARE := 0.9
 var body: VBoxContainer
 var handle := SheetDragHandle.new(AbyssCardTheme.DRAG_HANDLE)
 var _scroll := ScrollBody.new()
+var _area := Vector2.ZERO
 
 
 func _init() -> void:
@@ -27,9 +28,12 @@ func _init() -> void:
 	add_child(column)
 	body = _scroll.content
 	handle.pulled.connect(_pulled)
+	# Once laid out, the texts wrap at their true width: the chrome is measured again.
+	resized.connect(_refit)
 
 
 func fit(area: Vector2) -> void:
+	_area = area
 	custom_minimum_size.x = area.x
 	var chrome := get_combined_minimum_size().y - _scroll.custom_minimum_size.y
 	_scroll.max_height = maxf(area.y * MAX_HEIGHT_SHARE - chrome, 0.0)
@@ -38,3 +42,7 @@ func fit(area: Vector2) -> void:
 func _pulled(distance: float) -> void:
 	if dismissible and distance >= DISMISS_PULL:
 		close()
+
+
+func _refit() -> void:
+	fit(_area)

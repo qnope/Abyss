@@ -22,7 +22,7 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   `UnitTexts`, `ResourceTexts`, `TechBranchTexts`, `TechNodeTexts`,
   `TerrainTexts`, `MonsterFamilyTexts`, `DifficultyTexts`,
   `LanguageChoiceTexts`, `ActionFailureTexts`, `RampartTexts`,
-  `BuildingDegradationTexts`, `TransitionBaseTexts`), each tested for a key in
+  `BuildingDegradationTexts`, `TransitionBaseTexts`, `MonsterLairTexts`), each tested for a key in
   all three languages. A key is built from the enum value's Dart name
   (`TextKeys`).
 - `menu/`, `new_game/`, `save/`, `opening/`, `settings/`, `game/`: the screens of
@@ -39,6 +39,12 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   success with `acted`; `TurnFigures` the production and consumption of a
   turn). They save and navigate nothing: `app/` does (`app/navigation/app_flow.gd`,
   `app/game/`).
+- `turn/`: the end of a turn (`turn/README.md`): the question (`TurnConfirmation`),
+  the summary (`TurnSummary`), the queue of pages `TurnOutcome` and the chain
+  that joins them, `EndTurnFlow`.
+- `game_over/`: the end of a game: `DefeatScreen` and `VictoryScreen`, two
+  configurations of `GameOverScreen`, with the statistics and the cause of a
+  fall (`GameOverScreens` builds them from a game).
 - `building/`: a building of the base (`BuildingSheet`, the bottom sheet a tap on
   a pad opens: `BuildingHeader`, the `UpgradeSection` with its `RequirementRow`s
   and `NoiseCostRow`, the `CitadelSection`, the `DegradedBadge`; `BuildingCard`

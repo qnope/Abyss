@@ -22,7 +22,9 @@ role or widget:
 - `Button`: plain is the filled `ElevatedButton`; `OutlinedButton`,
   `TextButton`, `OverMapButton`, `MenuPrimaryButton`, `MenuOutlinedButton`,
   `Segment` (a toggle button in a `ButtonGroup`, inside a `SegmentedTray`),
-  `HudToggle` (a switch over the 3D world, tinted and rimmed when on).
+  `HudToggle` (a switch over the 3D world, tinted and rimmed when on),
+  `ChipButton` and `ChipButtonActive` (`AbyssChipTheme`: the small chips of the
+  map's level selector, the lit one filled with cyan).
 - `PanelContainer`: plain is the card; `DialogPanel`, `BottomSheetPanel`,
   `AppBarPanel`, `SavePanel`, `SavePanelHighlighted`, `SavePanelFaded`,
   `SegmentedTray`, and `HudPanel`, translucent over the 3D world, with its

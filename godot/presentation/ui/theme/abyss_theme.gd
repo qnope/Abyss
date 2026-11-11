@@ -10,6 +10,7 @@ static func build() -> Theme:
 	var theme := Theme.new()
 	AbyssTextTheme.apply(theme)
 	AbyssButtonTheme.apply(theme)
+	AbyssChipTheme.apply(theme)
 	AbyssCardTheme.apply(theme)
 	AbyssPopupTheme.apply(theme)
 	AbyssInputTheme.apply(theme)

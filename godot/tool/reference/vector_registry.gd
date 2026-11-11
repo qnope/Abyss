@@ -104,7 +104,9 @@ const FILES: Dictionary[String, Dictionary] = {
 	},
 	"factions": {
 		"res://domain/faction/tests/faction_catalogue_test.gd": ["draw"],
-		PENDING + "faction": ["traits", "slots", "siege", "siegesPerTurn", "explorationBias"],
+		"res://domain/faction/tests/faction_vectors_test.gd": [
+			"traits", "slots", "siege", "siegesPerTurn", "explorationBias"
+		],
 	},
 }
 

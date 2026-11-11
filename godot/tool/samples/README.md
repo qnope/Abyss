@@ -141,9 +141,8 @@ of a game for a player, its dice the plain `Random(1)` of the Dart tests
 (`DartRandom.new(1, false)`, no `SeededRandom`), its log the list given.
 `DeepScouts` is the twin of `test/helpers/deep_scout_helper.dart`: a game
 against six factions whose first one scouts, the posts it holds, its
-scouts by level and the targets of its explorations; its `turn` gives each
-action a fresh `SeededRandom` drawn from `Random(3)`, as a `FactionTurn`
-does (`FactionDice`, until `faction` ports it). `EventMoveSamples` is
+scouts by level and the targets of its explorations; its `turn` is the
+`FactionTurn` of the faction, its seeds `Random(3)`. `EventMoveSamples` is
 the twin of `strategies/event_moves_test_helper.dart`: the turn of a
 player waiting for a choice on an event and the choice it made; the
 producing base of `event_test_helper.dart` is

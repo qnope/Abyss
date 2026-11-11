@@ -132,6 +132,6 @@ scheduled the guardians' return (`of`), and the functions of its extension,
 which take the war first (`strike_turn`, `play_until`, `end_turn`: the
 Leviathan step of the end of a turn alone). `LeviathanDigests` writes what
 the digest test of the Leviathan (`leviathan_digest_test.gd`) compares, an
-announcement, a report of the guardians' attack, the state of their return
-and one end of turn; `LeviathanHistories` holds what the scratch Dart
+assault of the human on a post nobody holds, an announcement, a report of
+the guardians' attack, the state of their return and one end of turn; `LeviathanHistories` holds what the scratch Dart
 script printed.

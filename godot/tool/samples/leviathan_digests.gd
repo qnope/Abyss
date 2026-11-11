@@ -1,7 +1,8 @@
 class_name LeviathanDigests
 extends RefCounted
 ## The short texts the digest test of the Leviathan (leviathan_digest_test.gd)
-## compares with what a scratch Dart script printed: an announcement, a
+## compares with what a scratch Dart script printed: an assault on a post
+## nobody holds, an announcement, a
 ## report of the guardians' attack, the state of their return, and one end
 ## of turn of the Leviathan step. Each text writes what the Dart script
 ## writes, in its order, the maps as `name:count`.
@@ -66,3 +67,36 @@ static func step(game: Game, post: TransitionBase, dice: int) -> String:
 	]
 	game.turn += 1
 	return line
+
+
+## An assault of the human on the first post of `kind` on `level` with
+## `army` put there, through ActionExecutor, the dice `DartRandom(dice)`:
+## `victory captured turns | sent | intact | wounded | dead` or the
+## failure's name, then the units of `level`, the post's holder, the noise,
+## the history with its last capture entry, and the state of the return.
+static func assault(
+	game: Game, kind: TransitionBaseType.Value, level: int, army: Dictionary[UnitType.Value, int], dice: int
+) -> String:
+	var human := game.human_player()
+	var map: GameMap = game.levels[level]
+	var at := WarDigests.first(map, func(x: int, y: int) -> bool:
+		var base := map.cell_at(x, y).transition_base
+		return base != null and base.type == kind)
+	WarDigests.put(human, level, army)
+	var action := AttackTransitionBaseAction.new(at.x, at.y, level, army, DartRandom.new(dice))
+	var r := ActionExecutor.new().execute(action, game, human)
+	var entry := "-"
+	if not human.history_entries.is_empty() and human.history_entries[-1] is CaptureEntry:
+		var last: CaptureEntry = human.history_entries[-1]
+		entry = "%d %s %s %d" % [last.turn, last.transition_base_name, last.captured, last.fight_result.turn_count]
+	var head := WarDigests.outcome(r)
+	if r.is_success:
+		var b: AttackTransitionBaseResult = r
+		head = "%s %s %d | %s | %s | %s | %s" % [
+			b.victory, b.captured, b.fight.turn_count, counts(b.sent), counts(b.survivors_intact),
+			counts(b.wounded), counts(b.dead),
+		]
+	return "assault %s | %s | %s n%d h%d %s | %s" % [
+		head, counts(human.unit_counts_on_level(level)), WarDigests.text(map.cell_at(at.x, at.y).transition_base.captured_by),
+		human.raid_state.noise, human.history_entries.size(), entry, state(game.leviathan_return),
+	]

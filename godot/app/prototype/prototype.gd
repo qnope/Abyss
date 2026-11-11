@@ -1,18 +1,19 @@
+class_name Prototype
 extends Control
-## The startup screen of the 3D prototype: the player's base, the frame
-## counter and the quality panel over it, and a bench when the launch asks
-## for one (BenchOptions). Every screen shows under it, so it gives its
-## window the game's theme.
+## The 3D prototype: the player's base, the frame counter and the quality
+## panel over it, and a bench when the launch asks for one (BenchOptions).
+## The app shows it instead of the menus for a bench (`?bench=1`); the scene
+## capture opens it alone, so it gives its window the game's theme too.
 
 ## The gap between the screen's safe edges and the panels, in points.
 const MARGIN := 10
 
 var idle: IdleFrameCap
 var settings: QualitySettings
-## The player's language, kept in user://settings.json, and the locale it
-## sets on the TranslationServer (now and when the player picks another).
-var language: LanguageSettings
-var locale: AppLocale
+
+## What the launch asks to bench; the app sets it before the prototype enters
+## the tree, a prototype opened alone reads the launch.
+var bench := BenchOptions.from_launch()
 
 @onready var base: BaseScene = $Base
 @onready var counter: FrameCounter = $Hud/Top/FrameCounter
@@ -25,8 +26,6 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	language = LanguageSettings.new()
-	locale = AppLocale.new(language)
 	idle = IdleFrameCap.new(base.camera)
 	add_child(idle)
 	settings = QualitySettings.new(base, get_viewport(), idle)
@@ -35,7 +34,7 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(_frame)
 	counter.resized.connect(_frame)
 	_frame()
-	start_bench(BenchOptions.from_launch())
+	start_bench(bench)
 
 
 ## Runs the bench [param options] ask for, if any, the frame rate uncapped.
@@ -53,11 +52,8 @@ func _frame() -> void:
 	base.frame(clampf(under, 0.0, 0.5))
 
 
-## Keeps the panels off the notch: the safe area's top, in points.
+## Keeps the panels off the notch.
 func _fit_safe_area() -> void:
-	var safe := DisplayServer.get_display_safe_area()
-	var points := get_viewport_rect().size.y / maxf(get_window().size.y, 1.0)
-	var notch := roundi(safe.position.y * points) if safe.has_area() else 0
 	for side: StringName in [&"margin_left", &"margin_right", &"margin_bottom"]:
 		_hud.add_theme_constant_override(side, MARGIN)
-	_hud.add_theme_constant_override(&"margin_top", MARGIN + notch)
+	_hud.add_theme_constant_override(&"margin_top", MARGIN + SafeArea.top(get_viewport()))

@@ -4,7 +4,7 @@ extends TestCase
 
 func test_finds_every_test_file_of_the_project_by_default() -> void:
 	var files := TestDiscovery.find(PackedStringArray())
-	assert_has(files, "res://app/main_test.gd")
+	assert_has(files, "res://app/tests/app_test.gd")
 	assert_has(files, "res://tool/test/test_discovery_test.gd")
 
 
@@ -27,8 +27,8 @@ func test_finds_the_fixtures_when_asked_for_their_folder() -> void:
 
 func test_keeps_a_file_given_by_path() -> void:
 	assert_eq(
-		TestDiscovery.find(PackedStringArray(["app/main_test.gd", "res://x_test.gd"])),
-		PackedStringArray(["res://app/main_test.gd", "res://x_test.gd"])
+		TestDiscovery.find(PackedStringArray(["app/tests/app_test.gd", "res://x_test.gd"])),
+		PackedStringArray(["res://app/tests/app_test.gd", "res://x_test.gd"])
 	)
 
 

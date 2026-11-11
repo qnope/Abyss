@@ -17,10 +17,8 @@ func faction() -> Player:
 
 
 ## `turn()`: the `FactionTurn` of the faction, its seeds `Random(3)`.
-## FactionTurn waits for the `faction` module: FactionDice does what it
-## does, a fresh SeededRandom for every action that rolls dice.
 func turn() -> ScriptTurn:
-	return FactionDice.new(game, faction(), DartRandom.new(3, false))
+	return FactionTurn.new(game, faction(), ActionExecutor.new(), DartRandom.new(3, false))
 
 
 ## Puts `n` scouts on `level` of the faction.
@@ -83,18 +81,3 @@ func targets(level: int) -> Array[GridPosition]:
 			found.append(o.target)
 	return found
 
-
-## What `FactionTurn` (lib/domain/faction/faction_turn.dart) does to the
-## dice of a ScriptTurn: every action that rolls dice gets a SeededRandom
-## drawn from `seeds`.
-class FactionDice:
-	extends ScriptTurn
-
-	var _seeds: DartRandom
-
-	func _init(game_: Game, player_: Player, seeds: DartRandom) -> void:
-		super(game_, seeds, [], player_, ActionExecutor.new())
-		_seeds = seeds
-
-	func random() -> DartRandom:
-		return DartRandom.new(_seeds.next_int(0x7FFFFFFF))

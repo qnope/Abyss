@@ -1,8 +1,5 @@
 extends TestCase
-## test/domain/replay/replay_export_test.dart. 'replays an ongoing game turn
-## for turn' and 'replays fights, raids and descents with the same dice' play
-## the export through `ScenarioParser` and `ScriptRunner`: they wait for the
-## runners of `script`.
+## test/domain/replay/replay_export_test.dart.
 
 
 func test_a_new_game_keeps_a_journal_with_its_map_seed() -> void:
@@ -36,6 +33,26 @@ func test_names_the_file_after_the_player_and_the_turn() -> void:
 	var game := GameFactory.new_single_player("Le Nautile")
 
 	assert_eq(ReplayExport.file_name(game), "replay-Le_Nautile-tour-1.json")
+
+
+func test_replays_an_ongoing_game_turn_for_turn() -> void:
+	var live := LiveGames.play_live_game(BalancedStrategy.new(), 25)
+	var replayed := _replay(live)
+
+	assert_eq(ReplayExport.to_json(live)["exact"], true)
+	assert_eq(LiveGames.snapshot_of(replayed), LiveGames.snapshot_of(live))
+	assert_eq(DartJson.encode(ReplayExport.to_json(replayed)), DartJson.encode(ReplayExport.to_json(live)))
+
+
+func test_replays_fights_raids_and_descents_with_the_same_dice() -> void:
+	var live := LiveGames.play_live_game(ConquestStrategy.new(), 70, 25)
+	var replayed := _replay(live)
+	var file := ReplayExport.to_text(live)
+
+	assert_true(file.contains('"do": "fight"'))
+	assert_true(file.contains('"seed"'))
+	assert_true(live.levels.size() > 1)
+	assert_eq(LiveGames.snapshot_of(replayed), LiveGames.snapshot_of(live))
 
 
 ## Not in the Dart file: the last turn is the game's, whatever ends the
@@ -79,3 +96,11 @@ func test_writes_the_scenario_as_dart_does() -> void:
 		'        "player": "x"', '      }', '    ]', '  },', '  "endTurnSeeds": {', '    "1": 4,', '    "2": 5',
 		'  }', '}',
 	]))
+
+
+## `_replay`: plays the export of `live` again, from a seed of its own.
+static func _replay(live: Game) -> Game:
+	var spy := LiveGames.SpyExecutor.new()
+	var runner := ScriptRunner.new(500, Difficulty.Value.NORMAL, null, spy)
+	runner.run(ScenarioParser.parse(ReplayExport.to_text(live)), 12345)
+	return spy.game

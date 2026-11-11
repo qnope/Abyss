@@ -208,5 +208,8 @@ what the scratch Dart script printed through `GameSnapshot`.
 `LiveGames` is the twin of `test/domain/replay/live_game_helper.dart` and
 `two_player_replay_helper.dart`: a game played as in the game screen, every
 die a fresh `SeededRandom` (`play_live_game`), the human and a rival playing
-turn about (`play_two`, its rival `RIVAL_ID`), and the snapshot a replay
-must reproduce of a player (`snapshot_of`, `both`).
+turn about (`play_two`, its rival `RIVAL_ID`), the snapshot a replay
+must reproduce of a player (`snapshot_of`, `both`), and what replays them
+through `ScriptRunner`: `SpyExecutor` captures the game it plays,
+`replay_on` replays an export on a fresh two-player game, and `Fallback`
+plays a second script beside the replay.

@@ -3,8 +3,8 @@ extends RefCounted
 ## The twin of test/domain/replay/live_game_helper.dart and
 ## two_player_replay_helper.dart: games played as in the game screen, every
 ## die a new `SeededRandom` (FactionGames.LiveTurn), and what a replay must
-## reproduce of them. `SpyExecutor`, `replayOn` and `Fallback` serve the
-## replays through `ScriptRunner`, left for a later lot (domain/README.md).
+## reproduce of them; `SpyExecutor`, `replay_on` and `Fallback` replay
+## them through `ScriptRunner`.
 
 const RIVAL_ID := "rival-1"
 
@@ -36,6 +36,14 @@ static func play_two(turns: int) -> Game:
 		EconomyStrategy.new().play_turn(FactionGames.LiveTurn.new(game, game.players[RIVAL_ID], seeds))
 		executor.execute(EndTurnAction.new(DartRandom.new(seeds.next_int(1 << 30))), game, game.human_player())
 	return game
+
+
+## `replayOn`: replays `source` (an export) on a fresh two-player game.
+static func replay_on(source: Dictionary) -> Game:
+	var fresh := GameSamples.two_players(3, RIVAL_ID)
+	var script := ScenarioParser.parse(DartJson.encode(source))
+	ScriptRunner.new(500).run_on(fresh, script, DartRandom.new(1, false), 1)
+	return fresh
 
 
 ## `both`: the snapshots of the human and of the rival.
@@ -78,3 +86,36 @@ static func snapshot_of(game: Game, of: Player = null) -> Dictionary:
 		"attacks": attacks,
 		"history": history,
 	}
+
+
+## `SpyExecutor`: captures the game a `ScriptRunner` plays.
+class SpyExecutor extends ActionExecutor:
+	var game: Game
+
+	func execute(action: Action, game_: Game, player: Player) -> ActionResult:
+		game = game_
+		return super.execute(action, game_, player)
+
+
+## `Fallback`: the replay script, with `spy` as fallback for turns it leaves
+## out.
+class Fallback extends GameScript:
+	var inner: GameScript
+	var spy: GameScript
+
+	func _init(inner_: GameScript, spy_: GameScript) -> void:
+		inner = inner_
+		spy = spy_
+
+	func name() -> String:
+		return inner.name()
+
+	func last_turn() -> Variant:
+		return inner.last_turn()
+
+	func end_turn_random(turn: int) -> DartRandom:
+		return inner.end_turn_random(turn)
+
+	func play_turn(turn: ScriptTurn) -> void:
+		inner.play_turn(turn)
+		spy.play_turn(turn)

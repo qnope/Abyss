@@ -10,9 +10,9 @@ extends VBoxContainer
 ## The player touched the branch's medallion or one of its nodes.
 signal target_tapped(target: TechTarget)
 
-const NODE_SIZE := 40.0
+const NODE_SIZE := 44.0
 const NODE_GAP := 12
-const LINK_HEIGHT := 16.0
+const LINK_HEIGHT := 20.0
 
 var branch: TechBranch.Value
 var medallion: TechBranchMedallion

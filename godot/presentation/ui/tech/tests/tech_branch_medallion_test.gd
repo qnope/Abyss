@@ -19,7 +19,6 @@ func test_an_unlocked_branch_shows_its_emblem_in_colour_with_its_level() -> void
 	assert_null(medallion.lock_icon)
 	assert_eq(medallion.name_label.text, "Militaire")
 	assert_eq(medallion.name_label.get_theme_color(&"font_color"), AbyssColors.BIOLUM_PINK)
-	assert_true(medallion.level_label.visible)
 	assert_eq(medallion.level_label.text, "Niv. 3")
 
 
@@ -29,7 +28,7 @@ func test_a_locked_branch_is_grey_with_a_padlock_and_no_level() -> void:
 	assert_not_null(medallion.lock_icon)
 	assert_eq(medallion.lock_icon.icon_path, UiIcon.glyph_path(&"lock"))
 	assert_eq(medallion.name_label.get_theme_color(&"font_color"), AbyssColors.ON_SURFACE_DIM)
-	assert_false(medallion.level_label.visible)
+	assert_eq(medallion.level_label.text, "", "no level, but the room of one")
 	assert_null(find_text("Niv. 0"))
 
 

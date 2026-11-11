@@ -10,6 +10,8 @@ class_name AbyssGuideTheme
 ## the crisp stroke and the shadow the blur: 6 to 12 px wide.
 
 const CYAN := AbyssColors.BIOLUM_CYAN
+## The type variation of the guide's speech bubble (guide_bubble.dart).
+const BUBBLE := &"GuideBubble"
 ## Width of the crisp rim, also the gap between the halo and what it surrounds.
 const RIM_WIDTH := 2
 const GLOW_MIN := 6
@@ -35,3 +37,16 @@ static func idle() -> StyleBoxEmpty:
 	var box := StyleBoxEmpty.new()
 	box.set_content_margin_all(RIM_WIDTH)
 	return box
+
+
+## Adds the speech bubble to [param theme].
+static func apply(theme: Theme) -> void:
+	theme.set_type_variation(BUBBLE, &"PanelContainer")
+	theme.set_stylebox(&"panel", BUBBLE, bubble())
+
+
+## The bubble the guide speaks in: surface light, rimmed and glowing faintly
+## in cyan, padded as guide_bubble.dart (8 around, 12 at the right).
+static func bubble() -> StyleBoxFlat:
+	var box := AbyssBox.flat(AbyssColors.SURFACE_LIGHT, 16, Vector2i(10, 8))
+	return AbyssBox.glowing(AbyssBox.rimmed(box, Color(CYAN, 0.4)), Color(CYAN, 0.15), 12)

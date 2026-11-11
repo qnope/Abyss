@@ -16,11 +16,16 @@ signal acted(result: Variant)
 signal victory_reached
 
 var game: Game
+## What the guide of the tutorial points at, read again before [signal acted]
+## reaches whoever saves and redraws (ui/guide/guide_scope.gd).
+var guide: GuideScope
 var _executor := ActionExecutor.new()
 
 
 func _init(game_: Game) -> void:
 	game = game_
+	guide = GuideScope.new(game)
+	acted.connect(guide.refresh)
 
 
 ## Runs [param action] for the human player and returns its result. A
@@ -67,6 +72,13 @@ func set_tips_enabled(enabled: bool) -> void:
 ## Records the tip [param id] as seen.
 func mark_tip_seen(id: TipId.Value) -> void:
 	mark(func(_game: Game) -> void: _objectives().mark_seen(id))
+
+
+## Records the tips [param ids] as seen, in one mark: one save.
+func mark_tips_seen(ids: Array[TipId.Value]) -> void:
+	mark(func(_game: Game) -> void:
+		for id in ids:
+			_objectives().mark_seen(id))
 
 
 ## Plays on after the victory.

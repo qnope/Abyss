@@ -20,4 +20,5 @@ static func build() -> Theme:
 	AbyssSurfaceTheme.apply(theme)
 	AbyssSwitchTheme.apply(theme)
 	AbyssChromeTheme.apply(theme)
+	AbyssGuideTheme.apply(theme)
 	return theme

@@ -7,6 +7,7 @@ extends TestCase
 var _game: Game
 var _actions: GameActions
 var _acted: Array = []
+var _guide_silent: Array[bool] = []
 
 
 func before_each() -> void:
@@ -52,6 +53,26 @@ func test_marks_a_tip_as_seen_once() -> void:
 	_actions.mark_tip_seen(TipId.Value.WORKSITES)
 	assert_eq(state.seen_tips, [TipId.Value.WORKSITES] as Array[TipId.Value])
 	assert_eq(_acted.size(), 2, "each mark is a change to save")
+
+
+func test_marks_several_tips_as_seen_in_one_change() -> void:
+	var state := ObjectiveMigration.state_of(_game, _game.human_player())
+	_actions.mark_tips_seen([TipId.Value.WORKSITES, TipId.Value.NOISE_GAUGE] as Array[TipId.Value])
+	assert_true(state.has_seen(TipId.Value.WORKSITES) and state.has_seen(TipId.Value.NOISE_GAUGE))
+	assert_eq(_acted.size(), 1, "one save for the lot")
+
+
+func test_the_guide_reads_the_game_again_before_whoever_saves_it() -> void:
+	var actions := GameActions.new(GuideSamples.guide_game(ObjectiveId.Value.MINES))
+	actions.guide.changed.connect(_note_guide.bind(actions.guide))
+	assert_not_null(actions.guide.advice)
+	actions.set_guide_enabled(false)
+	assert_null(actions.guide.advice)
+	assert_eq(_guide_silent, [true] as Array[bool])
+
+
+func _note_guide(scope: GuideScope) -> void:
+	_guide_silent.append(scope.advice == null)
 
 
 func test_goes_on_in_free_play() -> void:

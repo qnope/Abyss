@@ -20,8 +20,21 @@ const _BUILDINGS: Dictionary[BuildingType.Value, Color] = {
 	BuildingType.Value.VOLCANIC_KERNEL: Color("ff6d00"),
 }
 
+## The units' stand-ins, one colour each (the interface's `UnitColors`
+## repeats them).
+const _UNITS: Dictionary[UnitType.Value, Color] = {
+	UnitType.Value.SCOUT: Color("448aff"),
+	UnitType.Value.HARPOONIST: Color("ff5252"),
+	UnitType.Value.GUARDIAN: Color("b0bec5"),
+	UnitType.Value.DOME_BREAKER: Color("ff9100"),
+	UnitType.Value.ABYSS_ADMIRAL: Color("b388ff"),
+	UnitType.Value.SABOTEUR: Color("69f0ae"),
+}
+
 ## A degraded building, greyed and dull.
 const DEGRADED := Color("78909c")
+## The ghost of a locked unit: the grey, and how much of it shows.
+const GHOST_OPACITY := 0.5
 ## How much of its colour a stand-in glows with, to read in the dark water.
 const GLOW := 0.22
 
@@ -39,3 +52,8 @@ const LEVEL_OUTLINE := Color("0a0e1a")
 ## The colour of the building [param type].
 static func of(type: BuildingType.Value) -> Color:
 	return _BUILDINGS[type]
+
+
+## The colour of the unit [param type].
+static func unit(type: UnitType.Value) -> Color:
+	return _UNITS[type]

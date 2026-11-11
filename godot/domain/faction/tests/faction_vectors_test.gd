@@ -52,16 +52,20 @@ func test_lays_the_sieges_dart_lays() -> void:
 		assert_same(KernelSiege.won_per_turn(difficulty), case["out"], str(case))
 
 
-## The off slots of the kernel sieges; FactionWar gives the others.
 func test_strikes_on_the_slots_dart_strikes_on() -> void:
 	for case: Dictionary in VectorFile.new("factions").cases("slots"):
 		var p := VectorInputs.value(Personality, case["personality"]) as Personality
+		var due: Array = []
+		var grudge: Array = []
 		var off_slot: Array = []
 		for turn: int in 48:
+			if FactionWar.is_due(turn, p):
+				due.append(turn)
+			if FactionWar.is_grudge_slot(turn, p):
+				grudge.append(turn)
 			if KernelSiege.is_off_slot(turn, p):
 				off_slot.append(turn)
-		var out: Dictionary = case["out"]
-		assert_same(off_slot, out["offSlot"], str(case))
+		assert_same({"due": due, "grudge": grudge, "offSlot": off_slot}, case["out"], str(case))
 
 
 func test_explores_where_dart_explores() -> void:

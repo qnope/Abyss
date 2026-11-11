@@ -52,6 +52,19 @@ func test_shows_the_base_of_a_game_in_place_of_the_ambience() -> void:
 	assert_eq(_world.base.buildings.names(), BaseScene.BUILT)
 
 
+func test_signs_the_pads_of_the_game() -> void:
+	var player := GameSamples.player_with("Nemo", {
+		BuildingType.Value.HEADQUARTERS: 1, BuildingType.Value.LABORATORY: 0,
+	})
+	_world.show_game(player.buildings, {BuildingType.Value.HEADQUARTERS: true},
+		{BuildingType.Value.LABORATORY: true})
+	var kinds: Array[PadMark.Kind] = []
+	for mark: Node in _world.base.marks.get_children():
+		if mark is PadMark:
+			kinds.append((mark as PadMark).kind)
+	assert_eq(kinds, [PadMark.Kind.UPGRADE, PadMark.Kind.LOCKED] as Array[PadMark.Kind])
+
+
 func test_frames_the_island_between_the_bars_of_the_game() -> void:
 	_world.frame_between(0.1, 0.2)
 	var size := _world.get_viewport().get_visible_rect().size

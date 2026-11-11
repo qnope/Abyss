@@ -46,6 +46,7 @@ found wrong (`CaseChecks`, an `expect` per line):
 | `careful-script` | 'the careful script loses most games' of `strategies_test.dart` |
 | `faction-race-<personality>`, one per personality (`faction-race-magmaSmiths`...) | `faction_race_test.dart`: the six games of 200 turns where a lone faction tames the volcano (`FactionRaceCases`), 35 to 95 s each |
 | `script-performance` | `script_runner_performance_test.dart`: a conquest of 100 turns within 120 s, ten times what Godot takes (Dart's budget is 8 s, ten times its own) |
+| `saves-<game>`, one per reference game (`SaveCases`) | not a Dart test: the game saved and loaded as its turns start, each loaded game the game saved, and played on from the saves of a third and two thirds of the way as the game never saved (`SaveRoundTrip`, `tool/reference/`). A game against `n` factions is checked every `n + 1` turns, and against 3 or more played on from two thirds only: their saves weigh megabytes (8.6 MB at the end of `conquest-normal-10-factions`) |
 
 To find what went wrong, dump the turn on the Dart side
 (`dart run bin/export_reference.dart --reference reference/games/x.json

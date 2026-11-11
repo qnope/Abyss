@@ -8,26 +8,44 @@ extends RefCounted
 ## `differences()` compares what it went through with the file.
 
 var committed: CommittedGame
-var recorder := ReferenceRecorder.new(Sha256Hex.of)
+var recorder: ReferenceRecorder
 var report: ScriptRunReport
 var game: Game
 ## The digests when the game stopped.
 var final_digests: PackedStringArray
 
 
-func _init(committed_: CommittedGame) -> void:
+## `recorder_`: a ReferenceRecorder of Sha256Hex.of when null; a subclass
+## may check more as it records (SaveCheckRecorder).
+func _init(committed_: CommittedGame, recorder_: ReferenceRecorder = null) -> void:
 	committed = committed_
+	recorder = recorder_ if recorder_ != null else ReferenceRecorder.new(Sha256Hex.of)
+	report = runner(recorder).run(script(), seed_of())
+	game = recorder.game()
+	final_digests = GameSnapshot.digests(game, Sha256Hex.of)
+
+
+## The runner of the replay, with the turn limit, the difficulty and the
+## human id of the source, its moves executed by `executor`.
+func runner(executor: ActionExecutor) -> ScriptRunner:
 	var source := committed.source()
 	var difficulty_name: String = source["difficulty"]
 	var difficulty: Difficulty.Value = DartEnum.by_name(Difficulty.Value, difficulty_name)
 	var turns: int = source["turns"]
-	var seed_: int = source["seed"]
-	var runner := ScriptRunner.new(turns, difficulty, CommittedGame.HUMAN_ID, recorder)
+	return ScriptRunner.new(turns, difficulty, CommittedGame.HUMAN_ID, executor)
+
+
+## The journal of the file as the script that plays it again.
+func script() -> TimelineScript:
 	var journal: Dictionary = ReplayJournal.whole_numbers(committed.journal())
 	# jsonEncode keeps the order of every map: an army is played in its order.
-	report = runner.run(ScenarioParser.parse(JSON.stringify(journal, "", false)), seed_)
-	game = recorder.game()
-	final_digests = GameSnapshot.digests(game, Sha256Hex.of)
+	return ScenarioParser.parse(JSON.stringify(journal, "", false))
+
+
+## The seed of the source.
+func seed_of() -> int:
+	var seed_: int = committed.source()["seed"]
+	return seed_
 
 
 ## What differs from the file (or from `file`, another one), one line each,

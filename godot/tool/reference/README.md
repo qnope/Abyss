@@ -75,6 +75,15 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   the result, the journal and the coverage. The unit tests replay the short
   games (`reference_replay_test.gd`); `tool/godot_reference.sh` replays all
   19 (`tool/replay/README.md`).
+- `SaveRoundTrip` replays a `CommittedGame` through a `SaveCheckRecorder`, a
+  `ReferenceRecorder` (`ReferenceReplay` takes one) that also saves the game
+  as each chosen turn starts and loads it back (`SaveCodec`, `data/`): the
+  loaded game must have the digests of the game, its dates, and give the same
+  text when saved again. From the saves of the turns it is asked to resume,
+  it plays the rest of the journal on the loaded game (`ReferenceReplay.runner`,
+  `script`, `seed_of`), whose turns, end and journal must be those of the game
+  never saved. `save_round_trip_test.gd` does it on the short games; the long
+  cases `saves-<game>` on all of them (`tool/replay/README.md`).
 - `CodecTestCase` is the base of the tests of the codecs of `data/save/`: an
   object written, turned into the text of a save, parsed and read back must be
   the object written, as the snapshot of its class sees it.

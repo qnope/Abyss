@@ -24,16 +24,23 @@ func _init(name_: String, text: String) -> void:
 
 ## The games committed in `reference/games/`, by name.
 static func all() -> Array[CommittedGame]:
-	var folder := _folder()
+	var games: Array[CommittedGame] = []
+	for name_: String in names():
+		games.append(named(name_))
+	return games
+
+
+## The names of the games committed, without reading them.
+static func names() -> Array[String]:
 	var files: Array[String] = []
-	for file: String in DirAccess.get_files_at(folder):
+	for file: String in DirAccess.get_files_at(_folder()):
 		if file.ends_with(".json") and not file.ends_with(".dump.json") and not file.ends_with(".trace.json"):
 			files.append(file)
 	CanonicalKeys.sort(files)
-	var games: Array[CommittedGame] = []
+	var found: Array[String] = []
 	for file: String in files:
-		games.append(CommittedGame.new(file.trim_suffix(".json"), FileAccess.get_file_as_string(folder.path_join(file))))
-	return games
+		found.append(file.trim_suffix(".json"))
+	return found
 
 
 ## The game of `reference/games/` named `name_`, or null.

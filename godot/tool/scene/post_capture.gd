@@ -9,8 +9,8 @@ extends SceneTree
 ## post_descent.png, post_descent_done.png (the units sent down), post_rival.png
 ## (a post a faction holds), post_kernel_guarded.png, post_kernel_report.png,
 ## post_kernel_held.png (the garrison panel), post_garrison_picker.png and
-## post_kernel_garrisoned.png, each with its draw calls and primitives. The
-## save goes under user:// and is removed at the end.
+## post_kernel_garrisoned.png, each with its draw calls and primitives, on the
+## game of PostCaptureGame. The save goes under user:// and is removed at the end.
 
 const MainScene := preload("res://app/main.tscn")
 const WARM_UP := 120
@@ -18,7 +18,7 @@ const SETTLE := 20
 const Admiral := UnitType.Value.ABYSS_ADMIRAL
 const Harpoonist := UnitType.Value.HARPOONIST
 const Guardian := UnitType.Value.GUARDIAN
-const VOLCANO := KernelGarrison.VOLCANO_LEVEL
+const VOLCANO := PostCaptureGame.VOLCANO
 
 var _out := ""
 var _app: App
@@ -43,17 +43,10 @@ func _initialize() -> void:
 func _capture() -> void:
 	_start()
 	await _frames(WARM_UP)
-	_game = MapCaptureGame.of_three_levels()
+	_game = PostCaptureGame.of_posts()
 	_human = _game.human_player()
-	_faille = _find(1, CellContentType.Value.TRANSITION_BASE)
-	_kernel = _find(VOLCANO, CellContentType.Value.VOLCANIC_KERNEL)
-	_human.add_revealed_cell(1, GridPosition.new(_faille.x, _faille.y))
-	_human.add_revealed_cell(VOLCANO, GridPosition.new(_kernel.x, _kernel.y))
-	_human.units_per_level[1] = DomainSamples.units({Admiral: 1, Harpoonist: 150, Guardian: 100})
-	_human.units_per_level[2] = DomainSamples.units({Harpoonist: 12, Guardian: 3})
-	_human.units_per_level[VOLCANO] = DomainSamples.units({Admiral: 1, Harpoonist: 150, Guardian: 100})
-	_human.buildings[BuildingType.Value.DESCENT_MODULE] = Building.new(BuildingType.Value.DESCENT_MODULE, 1)
-	_human.buildings[BuildingType.Value.VOLCANIC_KERNEL] = Building.new(BuildingType.Value.VOLCANIC_KERNEL, 3)
+	_faille = PostCaptureGame.find(_game, 1, CellContentType.Value.TRANSITION_BASE)
+	_kernel = PostCaptureGame.find(_game, VOLCANO, CellContentType.Value.VOLCANIC_KERNEL)
 	_app.flow.play(_game)
 	(_app.flow.current as GameHud).show_tab(GameTab.Value.MAP)
 	await _faille_flow()
@@ -128,15 +121,6 @@ func _press(text: String) -> void:
 func _tap(level: int, at: Vector2i) -> void:
 	_app.world.map.cell_tapped.emit(level, at.x, at.y)
 	await _frames(1)
-
-
-func _find(level: int, content: CellContentType.Value) -> Vector2i:
-	var map: GameMap = _game.levels[level]
-	for y in map.height:
-		for x in map.width:
-			if map.cell_at(x, y).content == content:
-				return Vector2i(x, y)
-	return Vector2i.ZERO
 
 
 func _start() -> void:

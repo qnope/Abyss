@@ -65,6 +65,13 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   in `reference/README.md`). `reference_games_test.gd` checks every section
   of that game against the first digests of each file; the turns after it
   wait for the codec of the actions, which decodes the journal.
+- `ReferenceReplay` replays a `CommittedGame` as "Replaying it" says, the
+  way `ScriptRunner.runOn` plays the `TimelineScript` of its journal, and
+  records the digests as each turn starts and when it stops, to compare
+  with `ReplayComparison` (`domain/reference/`). It takes the decoder of
+  the moves as a `Callable` (a move and the dice of the turn give an
+  `Action`): the codec of the actions plugs in there. `idle-normal`, whose
+  journal holds no move, replays whole already.
 - `ReferenceFiles` finds the repository: the folder above `res://`, or the one
   `ABYSS_REPO_ROOT` names. `tool/godot_coverage.py` sets it, as it runs the
   tests on a copy of the project in a temporary folder.

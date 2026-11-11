@@ -23,7 +23,7 @@ if [[ ${1:-} == --one ]]; then
   status=0
   out=$(${limit[@]+"${limit[@]}"} "$godot" --headless --path . \
     --script res://tool/replay/run_references.gd -- "$2" 2>&1) || status=$?
-  grep -v '^Godot Engine v' <<< "$out" || true
+  grep -v -e '^Godot Engine v' -e '^$' <<< "$out" || true
   if [[ $status -eq 124 || $status -eq 137 ]]; then
     echo "$2: FAILED, not finished within $seconds s (GODOT_TEST_TIMEOUT)"
   elif [[ $status -eq 0 ]] && ! grep -q "^$2: .* ok\$" <<< "$out"; then
@@ -51,6 +51,10 @@ if [[ ${#games[@]} -eq 0 ]]; then
     games+=("$name")
   done < <("$godot" --headless --path . --script res://tool/replay/run_references.gd -- --list \
     | grep -v '^Godot Engine v')
+  if [[ ${#games[@]} -eq 0 ]]; then
+    echo "The runner listed no game: does res://tool/replay/run_references.gd compile?" >&2
+    exit 1
+  fi
 fi
 jobs="${GODOT_REFERENCE_JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 2)}"
 start=$SECONDS

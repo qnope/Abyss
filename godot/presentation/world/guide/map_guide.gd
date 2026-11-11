@@ -7,10 +7,17 @@ extends GuideRing
 
 ## How wide the ring is in cells, as Flutter's halo is the cell's own box.
 const SHARE := 0.55
+## Its thickness in metres, over tiles of a light blue.
+const MAP_TUBE := 0.14
 
 var has_aim := false
 var _aim := Vector3i.ZERO
 var _state: MapLevelState
+
+
+func _init() -> void:
+	super()
+	tube = MAP_TUBE
 
 
 ## Rings the cell ([param x], [param y]) of [param level].

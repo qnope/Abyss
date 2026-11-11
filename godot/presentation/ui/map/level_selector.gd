@@ -13,6 +13,8 @@ signal level_selected(level: int)
 ## Room between the chips.
 const GAP := 4
 const HALO_RADIUS := 8
+## The padlock of a level not unlocked.
+const LOCK_SIZE := 16
 
 var current := 1
 var unlocked: Array[int] = [1]
@@ -37,6 +39,7 @@ func _init(guide: GuideScope = null) -> void:
 	add_child(scroll)
 	for level in MapLevelTexts.LEVELS:
 		var chip := Button.new()
+		chip.add_theme_constant_override(&"icon_max_width", LOCK_SIZE)
 		chip.pressed.connect(_touched.bind(level))
 		chips[level] = chip
 		_halos[level] = GuidedHalo.new(chip, guide, _opens.bind(level), HALO_RADIUS)

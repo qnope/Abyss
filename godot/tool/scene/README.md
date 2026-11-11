@@ -3,7 +3,7 @@
 Review renders of the game's 3D prototype and screens, not game code, left out
 of exports.
 
-    tool/scene_capture.sh [out dir] [scene | app | base | army | turn | tech | threat | kit]
+    tool/scene_capture.sh [out dir] [scene | app | base | army | turn | tech | threat | guide | kit]
 
     tool/scene_capture.sh [out dir] [scene | app | base | army | map | fight | turn | kit]
 
@@ -185,3 +185,16 @@ and `post_descent_done.png` (the units sent down, the level reached), `post_riva
 captured), `post_kernel_held.png` (its garrison panel), `post_garrison_picker.png` and
 `post_kernel_garrisoned.png` (the garrison filled, a wave announced), each with its draw
 calls and primitives. Never commit the renders.
+
+## The tutorial
+
+`guide_capture.gd` (`tool/scene_capture.sh [out dir] guide`, or after the factions' views when no
+scene is given) plays a new game with the tutorial on, then games on an objective of it, through
+the real screens, and renders: `guide_first.png` (the guide's bubble over the turn bar, the ring on
+the headquarters' pad with its name, the objective banner), `guide_tab.png` (the advice to explore:
+the halo on the Carte tab), `guide_tech.png` (the halo on the medallion of a branch of the research),
+`guide_cell.png` (the ring on a cell of the map), `guide_tip.png` (two tips stacked, « 1 / 2 »),
+`guide_objectives.png` (the sheet of the objectives, those done ticked), `guide_summary.png` and
+`guide_summary_en.png` (a turn that explored, completed two objectives and missed a temporary one,
+in French and in English), each with its draw calls and primitives. The advice of the research and of
+the map is set by hand (`GuideScope`), as the game would give it. Never commit the renders.

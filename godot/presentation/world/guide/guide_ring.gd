@@ -29,6 +29,8 @@ var ring := MeshInstance3D.new()
 var caption := Label3D.new()
 ## The radius of the ring on show, in metres.
 var radius := 0.0
+## The thickness of the ring in metres: a bare floor of the map asks for more.
+var tube := TUBE
 ## Fewer animations: the ring holds still, at its brightest.
 var reduced_motion := false
 ## Where the pulse is now, from 0 (dimmest) to 1 (brightest).
@@ -77,8 +79,8 @@ func _exit_tree() -> void:
 func point_at(at: Vector3, ring_radius: float, name_text := "") -> void:
 	position = at + Vector3.UP * LIFT
 	radius = ring_radius
-	_torus.inner_radius = maxf(ring_radius - TUBE, 0.0)
-	_torus.outer_radius = ring_radius + TUBE
+	_torus.inner_radius = maxf(ring_radius - tube, 0.0)
+	_torus.outer_radius = ring_radius + tube
 	caption.text = name_text
 	caption.visible = not name_text.is_empty()
 	visible = true

@@ -42,7 +42,8 @@ when tappable), `SegmentedBar` of `SegmentItem`s (a `chosen` signal),
 `LabeledSwitch` (a `toggled` signal), `ChipRow` (filter chips, a `chosen` signal), `StripLine` (a glyph and a short text of a
 status strip), `LoreText` (dimmed italics, the Body
 font leaned), `GuideHalo` (a pulsing cyan halo around any control while
-`active`; a rounded rectangle or circle, not Flutter's traced paths) and
+`active`; a rounded rectangle or circle, not Flutter's traced paths; the
+`../guide/` halos follow the guide's scope) and
 `TabPlaceholder` ("coming soon" follows the language). `Greyscale` turns any
 icon grey with a shader (a locked or given-up technology).
 

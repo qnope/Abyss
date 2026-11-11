@@ -6,6 +6,7 @@ extends RefCounted
 
 var _failures: PackedStringArray = PackedStringArray()
 var _expected_errors: PackedStringArray = PackedStringArray()
+var _cleanups: Array[Callable] = []
 
 
 ## Runs before each test, on the test's own instance.
@@ -16,6 +17,21 @@ func before_each() -> void:
 ## Runs after each test, whether it passed or not.
 func after_each() -> void:
 	pass
+
+
+## Registers `cleanup` to be called once the test is over, after
+## after_each() whether or not the test defines it: for what a helper makes
+## (a mounted node, a setting changed) and must undo. The last registered
+## runs first.
+func add_cleanup(cleanup: Callable) -> void:
+	_cleanups.append(cleanup)
+
+
+## For the runner: calls the cleanups, the last registered first.
+func run_cleanups() -> void:
+	while not _cleanups.is_empty():
+		var cleanup: Callable = _cleanups.pop_back()
+		cleanup.call()
 
 
 ## What went wrong in this test so far, one message per failure.

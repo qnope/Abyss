@@ -42,6 +42,7 @@ static func _run_test(script: GDScript, path: String, test_name: String) -> Test
 		test.before_each()
 		test.call(test_name)
 		test.after_each()
+		test.run_cleanups()
 		failures = test.failures()
 		expected = test.expected_errors()
 	OS.remove_logger(error_log)

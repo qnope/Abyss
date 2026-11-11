@@ -47,13 +47,16 @@ func test_sums_up_the_run() -> void:
 	assert_not_null(pattern.search(summary), summary)
 
 
-func test_runs_each_test_on_a_fresh_instance_between_its_hooks() -> void:
+func test_runs_each_test_on_a_fresh_instance_between_its_hooks_then_its_cleanups() -> void:
 	HooksFixture.events = PackedStringArray()
 	var run := TestSuite.run(PackedStringArray([FIXTURES + "hooks_test.gd"]))
 	assert_eq(run.failed_count(), 0)
 	assert_eq(
 		HooksFixture.events,
-		PackedStringArray(["before", "first", "after", "before", "second", "after"])
+		PackedStringArray([
+			"before", "first", "after", "cleanup last", "cleanup first",
+			"before", "second", "after", "cleanup last", "cleanup first",
+		])
 	)
 
 

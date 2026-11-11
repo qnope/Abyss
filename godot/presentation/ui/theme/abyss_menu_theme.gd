@@ -42,6 +42,9 @@ static func apply(theme: Theme) -> void:
 	_add_glowing(theme, &"HeroSubtitle", subtitle, Color(BLACK, 0.8), 6)
 	var dim := AbyssColors.ON_SURFACE_DIM
 	AbyssTextTheme.add_label(theme, &"MenuButtonSubtitle", AbyssTextStyle.new(13, D, dim))
+	# The label of a menu button drawn over it (MenuEntry), as the button's own.
+	AbyssTextTheme.add_label(theme, &"MenuButtonLabel", AbyssTextStyle.new(20, B, CYAN, 3))
+	AbyssTextTheme.add_label(theme, &"MenuPrimaryLabel", AbyssTextStyle.new(20, B, PRIMARY_INK, 3))
 	var on_fill := Color(PRIMARY_INK, 0.75)
 	AbyssTextTheme.add_label(theme, &"MenuPrimarySubtitle", AbyssTextStyle.new(13, D, on_fill))
 	# Flutter's footnote is 12.5 high; Godot's sizes are whole pixels.

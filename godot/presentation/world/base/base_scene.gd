@@ -74,23 +74,33 @@ func _init() -> void:
 	camera.tapped.connect(_on_tapped)
 
 
-## Stands the buildings [param names] on their pads, the others empty.
+## Stands the buildings [param names] on their pads, the others empty. One
+## with no model yet leaves its pad bare, not marked as empty.
 func build(names: Array[StringName]) -> void:
 	buildings.build(names, pads)
 	pads.mark(names)
 	motion.track()
 	var sources := PackedVector3Array()
-	for name in names:
+	for name in buildings.names():
 		sources.append(pads.origin_of(name))
-	bubbles.rise_from(sources)
-	for name in names:
 		_quiet_shadows(buildings.building(name))
+	bubbles.rise_from(sources)
 
 
-## Fits the default view to the screen, the island centred under the top
-## [param hud] share of it.
-func frame(hud: float) -> void:
-	camera.fit(OUTLINE, hud)
+## Shows the base of a game: the buildings of [param held] that stand (a
+## level of 1 or more) on their pads.
+func show_base(held: Dictionary[BuildingType.Value, Building]) -> void:
+	var names: Array[StringName] = []
+	for type: BuildingType.Value in held:
+		if held[type].level > 0:
+			names.append(BaseBuildings.pad_of(type))
+	build(names)
+
+
+## Fits the default view to the screen, the island centred between the top
+## [param hud] share of it and its bottom [param foot] share.
+func frame(hud: float, foot := 0.0) -> void:
+	camera.fit(OUTLINE, hud, foot)
 
 
 ## Turns the key light's shadows on or off.

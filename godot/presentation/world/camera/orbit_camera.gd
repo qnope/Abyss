@@ -37,13 +37,14 @@ func _process(delta: float) -> void:
 
 ## Fits the default view to the screen (OrbitFrame): [param outline], the
 ## points around the target that must show, as wide as the screen's narrow
-## side allows, centred under the top [param hud] share of the screen.
-func fit(outline: PackedVector3Array, hud: float) -> void:
+## side allows, centred between the top [param hud] share of the screen and
+## its bottom [param foot] share.
+func fit(outline: PackedVector3Array, hud: float, foot := 0.0) -> void:
 	var size := get_viewport().get_visible_rect().size
 	var aspect := size.x / size.y
 	keep_aspect = KEEP_WIDTH if aspect < 1.0 else KEEP_HEIGHT
 	var fitted := OrbitFrame.fit(outline, OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH,
-		aspect, FOV, hud)
+		aspect, FOV, hud, foot)
 	rig.frame(fitted.x, fitted.y)
 	transform = rig.transform()
 

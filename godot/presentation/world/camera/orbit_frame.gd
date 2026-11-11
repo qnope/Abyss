@@ -23,16 +23,16 @@ static func tangents(aspect: float, fov: float) -> Vector2:
 ## The distance (x) and the rise, as a share of the distance (y), that fit
 ## [param points] (around the target) seen from [param yaw] and
 ## [param pitch] on a screen of [param aspect] whose top [param hud] share
-## is covered.
+## is covered, and its bottom [param foot] share (the bar of the tabs).
 static func fit(points: PackedVector3Array, yaw: float, pitch: float, aspect: float,
-		fov: float, hud: float) -> Vector2:
+		fov: float, hud: float, foot := 0.0) -> Vector2:
 	var tans := tangents(aspect, fov)
 	var basis := _basis(yaw, pitch)
 	var near := 0.0
 	for point in points:
 		var across := absf(point.dot(basis.x)) / ((1.0 - MARGIN) * tans.x)
 		near = maxf(near, point.dot(basis.z) + across)
-	var band := Vector2(-1.0 + MARGIN, 1.0 - 2.0 * hud - MARGIN)
+	var band := Vector2(-1.0 + 2.0 * foot + MARGIN, 1.0 - 2.0 * hud - MARGIN)
 	var far := near * 8.0
 	var distance := near
 	if _span(points, yaw, pitch, near, tans, band) > band.y - band.x:

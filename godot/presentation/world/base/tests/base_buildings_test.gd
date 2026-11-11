@@ -38,3 +38,16 @@ func test_builds_anew_in_place_of_the_last_ones() -> void:
 func test_has_a_model_for_each_building_of_the_prototype() -> void:
 	for name: StringName in [&"Headquarters", &"SolarPanel", &"CoralCitadel"]:
 		assert_has(BaseBuildings.MODELS, name)
+
+
+func test_names_the_pad_of_each_building_of_the_game() -> void:
+	assert_eq(BaseBuildings.pad_of(BuildingType.Value.HEADQUARTERS), &"Headquarters")
+	assert_eq(BaseBuildings.pad_of(BuildingType.Value.SOLAR_PANEL), &"SolarPanel")
+	for type: BuildingType.Value in BuildingType.Value.values():
+		assert_has(_pads.names(), BaseBuildings.pad_of(type))
+
+
+func test_shows_nothing_of_a_building_that_has_no_model_yet() -> void:
+	_buildings.build([&"Headquarters", &"Barracks"] as Array[StringName], _pads)
+	assert_eq(_buildings.names(), [&"Headquarters"] as Array[StringName])
+	assert_null(_buildings.building(&"Barracks"))

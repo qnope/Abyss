@@ -15,7 +15,7 @@ its style box with `AbyssBox` from it. Depends on `domain/` and `../theme`,
 | `RefreshingPanel` | base of a panel that writes texts: `refresh()` rewrites them when the state changes (the owner calls it) and on `NOTIFICATION_TRANSLATION_CHANGED` (it calls itself), so the language needs no wiring. Draws nothing (`BarePanel`); Godot's automatic translation is off under it |
 | `ModalPanel` | what a `ModalLayer` stacks: `placement` (centre, bottom, full), `dismissible`, `fit(area)`, `close(result)` and the `closed(result)` signal, once |
 | `ModalLayer` | `open(modal)`, `close_top()`, `top()`, `depth()`: each modal over a scrim of its own, touches let through while empty, a touch on the scrim or Escape closes the top one when dismissible, a short fade in unless `reduced_motion`. A flow is `closed` connected to the next `open`, never an `await` |
-| `AbyssDialog` | title, `body` that scrolls past 90 % of the screen, `add_action(text, result, variation)` ending it with the result |
+| `AbyssDialog` | title, `body` that scrolls past 90 % of the screen, `add_action(text, result, variation)` ending it with the result, `add_button(text, variation)` leaving it open |
 | `BottomSheet` | `SheetDragHandle` (a pull of 64 px dismisses it) over a scrolling `body`, the full width |
 | `FullPage` | app bar (back button, centred title) over a padded scrolling `body`; back ends it with null |
 | `PageBar` | the app bar of both pages: a back button and a centred title (`back_pressed`, `set_title`) |
@@ -38,7 +38,7 @@ its style box with `AbyssBox` from it. Depends on `domain/` and `../theme`,
 `InfoBadge` (a line of text and an icon in a box rimmed with a colour, the
 base's banners), `StatusPill`, `CountBadge`, `NoticeBanner`, `ThreatBanner` (a `tapped` signal
 when tappable), `SegmentedBar` of `SegmentItem`s (a `chosen` signal),
-`LabeledSwitch` (a `toggled` signal), `StripLine` (a glyph and a short text of a
+`LabeledSwitch` (a `toggled` signal), `ChipRow` (filter chips, a `chosen` signal), `StripLine` (a glyph and a short text of a
 status strip), `LoreText` (dimmed italics, the Body
 font leaned), `GuideHalo` (a pulsing cyan halo around any control while
 `active`; a rounded rectangle or circle, not Flutter's traced paths) and

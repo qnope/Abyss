@@ -65,10 +65,17 @@ func title() -> String:
 ## when pressed, in the Button variation [param variation] (the text button
 ## by default, &"" for the filled one).
 func add_action(label: String, result: Variant = null, variation := &"TextButton") -> Button:
+	var button := add_button(label, variation)
+	button.pressed.connect(close.bind(result))
+	return button
+
+
+## Adds a button to the actions that does not end the dialog: whoever adds it
+## connects its `pressed`.
+func add_button(label: String, variation := &"TextButton") -> Button:
 	var button := Button.new()
 	button.text = label
 	button.theme_type_variation = variation
-	button.pressed.connect(close.bind(result))
 	_actions.add_child(button)
 	return button
 

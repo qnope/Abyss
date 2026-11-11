@@ -29,8 +29,9 @@ a screen is shown, and replaces the screen on show.
     the game -> settings -> save and quit -> (saved) -> menu
     the game -> settings -> language -> kept, the language set
     the game -> next turn -> question (threats due warned) -> turn ended (saved)
-      -> summary -> the reports of the raid, the predators and a kraken wave lost -> the game
-    the game -> a turn lost it -> summary -> defeat screen -> menu
+      -> summary -> the reports of the raid, the predators and a kraken wave lost
+      -> the card of an event drawn -> the game
+    the game -> a turn lost it -> summary -> defeat screen -> menu, or the replay export over it
     the game -> the kernel at the last level -> victory screen over the game
       -> continue: free play, saved | menu: saved, then the menu
     new game, saved games -> menu: back

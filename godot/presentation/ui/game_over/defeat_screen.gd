@@ -3,10 +3,8 @@ extends GameOverScreen
 ## Shown when the base fell, to the raids or to a faction that tamed the
 ## volcano first (lib/presentation/screens/game/defeat_screen.dart): the title
 ## in red, when and why the base fell, a card with the raids that did it, the
-## statistics, and the only way out, the menu. The game is over.
-##
-## Not here yet: "Exporter la partie" (the replay export, lot 14), which will
-## be one more [GameOverAction].
+## statistics, and the way out, the menu, or the replay export of the game
+## that is over.
 
 ## The turn at the end of which the base fell.
 var fall_turn: int
@@ -21,8 +19,11 @@ var winner_name: Variant
 func _init(statistics: GameStatistics, fall_turn_: int, winner_name_: Variant, analysis: DefeatAnalysis) -> void:
 	fall_turn = fall_turn_
 	winner_name = winner_name_
-	var menu: Array[GameOverAction] = [GameOverAction.new(GameOverAction.MENU, &"gameOverBackToMenu", true)]
-	super(AbyssColors.ERROR, statistics, null if analysis == null else DefeatCauseCard.new(analysis), menu)
+	var ways: Array[GameOverAction] = [
+		GameOverAction.new(GameOverAction.MENU, &"gameOverBackToMenu", true),
+		GameOverAction.new(GameOverAction.EXPORT, &"screenExportGame"),
+	]
+	super(AbyssColors.ERROR, statistics, null if analysis == null else DefeatCauseCard.new(analysis), ways)
 
 
 func emblem_name() -> String:

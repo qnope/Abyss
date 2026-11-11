@@ -7,20 +7,17 @@ extends RefCounted
 ##     menu -> new game -> opening story -> the game
 ##     menu -> saved games -> the game, or the defeat screen of a lost game
 ##     the game -> (settings: save and quit) -> menu
-##     the game -> a turn lost it -> the defeat screen -> menu
+##     the game -> a turn lost it -> the defeat screen -> menu or replay export
 ##
 ## The screens only tell what the player wants, with signals; the flow saves
-## and deletes through the GameRepository and shows what follows: a chain of
-## signals, no await. The saves are read again each time a screen is shown.
+## and deletes through the GameRepository and shows what follows, no await.
+## The saves are read again each time a screen is shown.
 
 ## A screen shows: whether it is the game, over the world, or a menu.
 signal playing_changed(playing: bool)
 
-## The screen on show, null before the first.
 var current: Control
-## What runs the game on show, null while a menu shows.
 var controller: GameController
-## The files the last read of the saves skipped, by name, with why.
 var unreadable: Dictionary[String, String] = {}
 var repository: GameRepository
 var language: LanguageSettings
@@ -66,7 +63,6 @@ func show_load_game() -> void:
 	_show(screen, false)
 
 
-## The story that opens a new game, then the game.
 func show_story(game: Game) -> void:
 	var story := OpeningStoryScreen.new()
 	story.finished.connect(play.bind(game))
@@ -94,6 +90,7 @@ func play(game: Game) -> void:
 func show_defeat(game: Game) -> void:
 	var screen := GameOverScreens.defeat(game)
 	screen.menu_requested.connect(show_menu)
+	screen.export_requested.connect(_export.bind(game))
 	_show(screen, false)
 
 
@@ -105,6 +102,10 @@ func _begin(game: Game) -> void:
 func _quit(game: Game) -> void:
 	GameSession.save_game(repository, game)
 	show_menu()
+
+
+func _export(game: Game) -> void:
+	_modals.open(ReplayExportDialog.new(game))
 
 
 func _delete(game: Game) -> void:
@@ -143,7 +144,6 @@ func _show(screen: Control, playing: bool) -> void:
 	playing_changed.emit(playing)
 
 
-## Gives the world back to the menus when a game was on show.
 func _leave_game() -> void:
 	if controller != null:
 		controller.close()

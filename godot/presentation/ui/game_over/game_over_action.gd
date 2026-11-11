@@ -7,6 +7,7 @@ extends RefCounted
 
 const MENU := &"menu"
 const CONTINUE := &"continue"
+const EXPORT := &"export"
 
 var id: StringName
 var text_key: StringName

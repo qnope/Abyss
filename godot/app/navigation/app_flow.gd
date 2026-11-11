@@ -5,16 +5,15 @@ extends RefCounted
 ## [member screens], and each leads to the next.
 ##
 ##     menu -> new game -> opening story -> the game
-##     menu -> saved games -> the game (a lost game too, until its own screen)
+##     menu -> saved games -> the game, or the defeat screen of a lost game
 ##     the game -> (settings: save and quit) -> menu
+##     the game -> a turn lost it -> the defeat screen -> menu
 ##
 ## The screens only tell what the player wants, with signals; the flow saves
-## and deletes through the GameRepository and shows what follows, never
-## waiting: a chain of signals, no await. The saves are read again each time
-## a screen is shown, so that it shows what the folder holds.
+## and deletes through the GameRepository and shows what follows: a chain of
+## signals, no await. The saves are read again each time a screen is shown.
 
-## A screen shows: whether it is the game being played, over the world the
-## player moves in, or a menu over its ambience.
+## A screen shows: whether it is the game, over the world, or a menu.
 signal playing_changed(playing: bool)
 
 ## The screen on show, null before the first.
@@ -75,15 +74,27 @@ func show_story(game: Game) -> void:
 
 
 ## The game [param game], where it stands: its screen over its base in the
-## world, every change of it saved (GameSession).
+## world, every change of it saved (GameSession). A lost game reopens on its
+## defeat screen (lib/presentation/screens/game/resume_game.dart).
 func play(game: Game) -> void:
+	if game.status == GameStatus.Value.DEFEAT:
+		show_defeat(game)
+		return
 	_leave_game()
 	var session := GameSession.new(game, repository)
 	var screen := GameHud.new(session.actions, language.choice(), _modals)
-	controller = GameController.new(session, screen, world)
+	controller = GameController.new(session, screen, world, _modals)
 	controller.quit_requested.connect(_quit.bind(game))
+	controller.defeated.connect(show_defeat.bind(game))
 	controller.language_chosen.connect(_choose_language)
 	_show(screen, true)
+
+
+## The defeat screen of the lost [param game], the menu its only way out.
+func show_defeat(game: Game) -> void:
+	var screen := GameOverScreens.defeat(game)
+	screen.menu_requested.connect(show_menu)
+	_show(screen, false)
 
 
 func _begin(game: Game) -> void:
@@ -119,8 +130,7 @@ func _read_saves() -> Array[Game]:
 	return found.games
 
 
-## Puts [param screen] in place of the one on show. The old one may be the
-## node whose signal led here, so it goes at the end of the frame.
+## Puts [param screen] in place of the one on show, freed at the end of the frame.
 func _show(screen: Control, playing: bool) -> void:
 	if not playing:
 		_leave_game()

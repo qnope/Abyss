@@ -24,7 +24,7 @@ func before_each() -> void:
 	add_cleanup(_world.free)
 	_hud = GameHud.new(_session.actions, LanguageChoice.Value.FRENCH, modals())
 	mount(_hud)
-	_controller = GameController.new(_session, _hud, _world)
+	_controller = GameController.new(_session, _hud, _world, modals())
 	_controller.quit_requested.connect(func() -> void: _quits += 1)
 	_controller.language_chosen.connect(_languages.append)
 	# The listener of `quit_requested` holds the test: let go of the controller.
@@ -80,7 +80,7 @@ func test_frames_the_island_between_the_bars_when_the_area_moves() -> void:
 func test_waits_for_the_screen_to_be_in_the_tree_to_frame_the_island() -> void:
 	var distance := _world.base.camera.rig.default_distance
 	var screen := GameHud.new(_session.actions, LanguageChoice.Value.FRENCH, modals())
-	GameController.new(_session, screen, _world)
+	GameController.new(_session, screen, _world, modals())
 	assert_eq(_world.base.camera.rig.default_distance, distance)
 	screen.free()
 

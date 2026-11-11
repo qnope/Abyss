@@ -24,7 +24,7 @@ func before_each() -> void:
 	add_cleanup(_world.free)
 	_hud = GameHud.new(_session.actions, LanguageChoice.Value.FRENCH, modals())
 	mount(_hud)
-	_controller = GameController.new(_session, _hud, _world)
+	_controller = GameController.new(_session, _hud, _world, modals())
 	add_cleanup(func() -> void: _controller = null)
 
 

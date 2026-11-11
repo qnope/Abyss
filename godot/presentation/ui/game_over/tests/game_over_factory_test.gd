@@ -48,3 +48,11 @@ func test_the_victory_of_a_game_shows_its_statistics() -> void:
 	var screen := mount(GameOverScreens.victory(game)) as VictoryScreen
 	assert_eq(screen.statistics_card.statistics.turns_played, 31)
 	assert_eq(screen.statistics_card.statistics.turns_played, GameStatisticsCalculator.new().compute(game).turns_played)
+
+
+func test_the_bare_layout_has_no_texts_of_its_own() -> void:
+	var screen := mount(GameOverScreen.new(Color.WHITE, GameStatistics.new(1, 1, 0, 0), null, [])) as GameOverScreen
+	assert_eq(screen.emblem_name(), "")
+	assert_eq(screen.title_text(), "")
+	assert_eq(screen.subtitle_text(), "")
+	assert_eq(screen.lore_text(), "")

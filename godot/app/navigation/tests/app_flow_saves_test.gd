@@ -12,12 +12,17 @@ func test_resumes_a_game_chosen_among_the_saves() -> void:
 	assert_eq(bob.turn, 9)
 
 
-func test_resumes_a_lost_game_on_the_placeholder_too() -> void:
+func test_resumes_a_lost_game_on_its_defeat_screen() -> void:
 	var lost := SavedGameSamples.game("Cousteau", 8, GameStatus.Value.DEFEAT)
 	_repository.save(lost)
 	_flow.show_load_game()
 	press(_card_of("Cousteau").tap_button)
-	assert_true(_flow.current is GameHud)
+	assert_true(_flow.current is DefeatScreen)
+	assert_eq((_flow.current as DefeatScreen).fall_turn, 7)
+	assert_null(_flow.controller, "no game is being played")
+	assert_eq(_playing, [false, false] as Array[bool], "a menu then the defeat, over the ambience")
+	press("Retour au menu")
+	assert_true(_flow.current is MainMenuScreen)
 
 
 func test_deletes_a_game_once_confirmed_and_shows_the_others() -> void:

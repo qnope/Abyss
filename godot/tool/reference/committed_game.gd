@@ -71,6 +71,15 @@ func turns() -> Array[int]:
 	return found
 
 
+## The digests as each turn started, for ReplayComparison.same_turns.
+func played_turns() -> Array[ReplayComparison.Turn]:
+	var played: Array[ReplayComparison.Turn] = []
+	var rows := turn_digests()
+	for i: int in rows.size():
+		played.append(ReplayComparison.Turn.new(turns()[i], rows[i]))
+	return played
+
+
 ## The digests when the game stopped.
 func final_digests() -> PackedStringArray:
 	var digests: Array = json["final"]

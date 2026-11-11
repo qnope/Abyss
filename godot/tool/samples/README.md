@@ -125,3 +125,13 @@ actions compares with what a scratch Dart script printed on the games of
 revealed and collected, the noise, the pending orders and the last history
 entry; it also picks the first target an action may take, row by row.
 `ActionHistories` holds what the Dart script printed.
+
+`LeviathanScene` is the twin of `test/domain/leviathan/leviathan_scene.dart`:
+the `PostWar` where the human holds a Faille whose capture this very turn
+scheduled the guardians' return (`of`), and the functions of its extension,
+which take the war first (`strike_turn`, `play_until`, `end_turn`: the
+Leviathan step of the end of a turn alone). `LeviathanDigests` writes what
+the digest test of the Leviathan (`leviathan_digest_test.gd`) compares, an
+announcement, a report of the guardians' attack, the state of their return
+and one end of turn; `LeviathanHistories` holds what the scratch Dart
+script printed.

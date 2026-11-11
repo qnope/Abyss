@@ -62,7 +62,7 @@ const FILES: Dictionary[String, Dictionary] = {
 		"res://domain/fight/tests/monster_unit_stats_test.gd": ["monsters", "monsterLevels"],
 		"res://domain/fight/tests/fight_rule_vectors_test.gd": ["damage", "attackDamage", "guardians"],
 		"res://domain/volcano/tests/volcano_rule_vectors_test.gd": ["magmaRampart"],
-		PENDING + "leviathan": ["leviathan"],
+		"res://domain/leviathan/tests/leviathan_force_vectors_test.gd": ["leviathan"],
 	},
 	"fight_engine": {
 		"res://domain/fight/tests/fight_engine_vectors_test.gd": [

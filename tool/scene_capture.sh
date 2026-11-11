@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Renders the 3D prototype, the app's screens and the UI kit for review, as a
 # phone held upright shows them (390 x 844 points at 2x):
-#   tool/scene_capture.sh [out dir] [scene | app | base | army | turn | tech | threat | kit]
+#   tool/scene_capture.sh [out dir] [scene | app | base | army | map | turn | tech | threat | kit]
 # With no scene, it writes default.png, rotated.png, close.png and top.png from
 # the views of godot/tool/scene/capture.gd, then app_menu_empty.png,
 # app_menu.png, app_new_game.png, app_saves.png, app_story.png, app_game.png,
@@ -11,7 +11,9 @@
 # _locked.png from godot/tool/scene/base_capture.gd, then army_parade.png,
 # army_places.png, army_close.png, army_sheet_unit.png, _recruit.png and
 # _locked.png, army_reinforcement.png, army_picker.png and
-# army_barracks_empty.png from godot/tool/scene/army_capture.gd, then kit_a.png, kit_b.png, kit_b_en.png,
+# army_barracks_empty.png from godot/tool/scene/army_capture.gd, then map_level1.png, _level2.png, _level3.png,
+# map_close.png, map_exploration_sheet.png, _storm.png, map_treasure_sheet.png, map_found.png and
+# map_visited.png from godot/tool/scene/map_capture.gd, then kit_a.png, kit_b.png, kit_b_en.png,
 # kit_dialog.png, kit_sheet.png and kit_page.png from
 # godot/tool/scene/kit_capture.gd, then turn_confirm.png, turn_summary.png,
 # turn_summary_en.png, turn_victory.png and turn_defeat.png from
@@ -22,7 +24,7 @@
 # _raid_report_end, _predators_report, _raid_report_won, _wave_report and _wave_report_en from
 # godot/tool/scene/threat_capture.gd,
 # and prints each view's draw calls and primitives. With a scene (res://...tscn) only the first, on that scene; with
-# `app` only the second; with `base` only the third; with `army` only the army tab's; with `kit` only the kit's;
+# `app` only the second; with `base` only the third; with `army` only the army tab's; with `map` only the map's; with `kit` only the kit's;
 # with `turn` only the end of a turn and of a game; with `tech` only the research; with `threat` only the raid, guardians and kraken wave. The out dir defaults to
 # /tmp/scene_capture: never write the renders in the repo. Godot draws with
 # its Compatibility renderer (the web's) in a virtual X display (xvfb-run), in
@@ -47,7 +49,7 @@ capture() {
     --script "$1" -- "$out" ${2:+"$2"} 2>&1 | grep -vE "^(Godot Engine|OpenGL API|$)" || true
 }
 
-if [[ $which != kit && $which != app && $which != base && $which != army && $which != turn && $which != tech && $which != threat ]]; then
+if [[ $which != kit && $which != app && $which != base && $which != army && $which != map && $which != turn && $which != tech && $which != threat ]]; then
   capture res://tool/scene/capture.gd "$which"
   [[ -f $out/default.png ]] || { echo "The scene did not render." >&2; exit 1; }
 fi
@@ -62,6 +64,10 @@ fi
 if [[ -z $which || $which == army ]]; then
   capture res://tool/scene/army_capture.gd
   [[ -f $out/army_barracks_empty.png ]] || { echo "The army tab did not render." >&2; exit 1; }
+fi
+if [[ -z $which || $which == map ]]; then
+  capture res://tool/scene/map_capture.gd
+  [[ -f $out/map_visited.png ]] || { echo "The map did not render." >&2; exit 1; }
 fi
 if [[ -z $which || $which == kit ]]; then
   capture res://tool/scene/kit_capture.gd

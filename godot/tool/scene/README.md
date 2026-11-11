@@ -5,6 +5,8 @@ of exports.
 
     tool/scene_capture.sh [out dir] [scene | app | base | army | turn | tech | threat | kit]
 
+    tool/scene_capture.sh [out dir] [scene | app | base | army | map | turn | kit]
+
 `capture.gd` opens `app/prototype/prototype.tscn` (or `scene`) in a window the size of a
 phone held upright at 2x (780 x 1688, the project's 390 x 844 points), lets
 it run 240 frames, then writes `default.png` (the game's view),
@@ -59,6 +61,23 @@ with four to recruit: the cost in resources, the noise), `army_sheet_locked.png`
 `army_picker.png` (the dialogs that pick units) and `army_barracks_empty.png`
 (no barracks yet), each with its draw calls and primitives. Never commit the
 renders.
+
+## The map
+
+`map_capture.gd` (`tool/scene_capture.sh [out dir] map`, or after the army's shots
+when no scene is given) plays a game against three factions, the surface seen
+around the base (the rest in the dark), ruins and a treasure beside it, three
+scouts and one of them on its way, the other depths seen where a passage and
+the volcano lie, opens the Map tab and renders: `map_level1.png`,
+`map_level2.png` and `map_level3.png` (a level each: seen tiles in blue-grey,
+the fog dark and lower, stand-ins of the lairs, treasures, ruins, posts, the
+player's base and the volcano, the selector at the top with the level on show
+filled), `map_close.png` (the camera brought close), `map_exploration_sheet.png`
+(a hidden cell next to the seen ones: cost, scouts, area and noise),
+`map_exploration_storm.png` (the same under a storm: the button off and the
+reason), `map_treasure_sheet.png`, `map_found.png` (what the search gave) and
+`map_visited.png` (the cell once searched), each with its draw calls and
+primitives. Never commit the renders.
 
 ## The end of a turn and of a game
 

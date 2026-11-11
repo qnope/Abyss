@@ -93,3 +93,11 @@ func test_an_announced_raid_it_cannot_hold_keeps_everyone_home() -> void:
 	d.war.attacker().buildings[BuildingType.Value.DESCENT_MODULE].level = 0
 	FactionKernelGuard.play(d.turn())
 	assert_eq(d.count(1, HARPOONIST), 6)
+
+
+## Not in the Dart file: a kernel at level 1, the lowest, is guarded too.
+func test_it_guards_a_kernel_at_level_1() -> void:
+	var d := _holder(550, 0, {HARPOONIST: 1})
+	d.war.attacker().buildings[BuildingType.Value.VOLCANIC_KERNEL].level = 1
+	FactionKernelGuard.play(d.turn(), 0.7)
+	assert_true(d.count(3, HARPOONIST) > 1, str(d.count(3, HARPOONIST)))

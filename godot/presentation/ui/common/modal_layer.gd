@@ -48,6 +48,15 @@ func open(modal: ModalPanel) -> void:
 		tween.tween_property(slot, "modulate:a", 1.0, fade)
 
 
+## The layer that holds [param node], one of its modals or a part of one; null
+## when it is not under any. A part of a dialog opens a page over it with it.
+static func enclosing(node: Node) -> ModalLayer:
+	var found := node
+	while found != null and not found is ModalLayer:
+		found = found.get_parent()
+	return found as ModalLayer
+
+
 ## Ends the top modal with a null result; nothing when none is open.
 func close_top() -> void:
 	var modal := top()

@@ -12,6 +12,7 @@ signal changed(value: int)
 const PORTRAIT_SIZE := 40.0
 const GAP := 12
 const VALUE_WIDTH := 28.0
+const ICON_SIZE := 24
 const SLIDER_MARGIN := 12
 
 var type: UnitType.Value
@@ -23,6 +24,8 @@ var value_label := Label.new()
 var minus_button := Button.new()
 var plus_button := Button.new()
 var slider := HSlider.new()
+var _minus_icon := UiIcon.glyph(&"remove", ICON_SIZE, AbyssColors.ON_SURFACE)
+var _plus_icon := UiIcon.glyph(&"add", ICON_SIZE, AbyssColors.ON_SURFACE)
 
 
 func _init(type_: UnitType.Value, stock_: int, value_ := 0) -> void:
@@ -36,15 +39,14 @@ func _init(type_: UnitType.Value, stock_: int, value_ := 0) -> void:
 	value_label.theme_type_variation = &"TitleMedium"
 	value_label.custom_minimum_size.x = VALUE_WIDTH
 	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	var texts := VBoxContainer.new()
 	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	texts.alignment = BoxContainer.ALIGNMENT_CENTER
 	texts.add_child(name_label)
 	texts.add_child(stock_label)
-	for button: Button in [minus_button, plus_button]:
-		button.theme_type_variation = &"TextButton"
-	minus_button.icon = load(UiIcon.glyph_path(&"remove")) as Texture2D
-	plus_button.icon = load(UiIcon.glyph_path(&"add")) as Texture2D
+	_arrange(minus_button, _minus_icon)
+	_arrange(plus_button, _plus_icon)
 	minus_button.pressed.connect(set_value.bind(-1, true))
 	plus_button.pressed.connect(set_value.bind(1, true))
 	var row := HBoxContainer.new()
@@ -77,6 +79,8 @@ func set_value(next: int, by_step := false) -> void:
 	value_label.text = str(value)
 	minus_button.disabled = value <= 0
 	plus_button.disabled = value >= stock
+	_minus_icon.self_modulate = AbyssColors.DISABLED if minus_button.disabled else AbyssColors.ON_SURFACE
+	_plus_icon.self_modulate = AbyssColors.DISABLED if plus_button.disabled else AbyssColors.ON_SURFACE
 	if moved:
 		changed.emit(value)
 
@@ -84,3 +88,11 @@ func set_value(next: int, by_step := false) -> void:
 func refresh() -> void:
 	name_label.text = UnitTexts.display_name(type)
 	stock_label.text = Texts.t(&"fightStock", {"count": stock})
+
+
+## A button of the size of a touch with [param icon] at its centre.
+func _arrange(button: Button, icon: UiIcon) -> void:
+	button.theme_type_variation = &"TextButton"
+	button.custom_minimum_size = Vector2.ONE * AbyssHudTheme.TOUCH_SIZE
+	icon.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	button.add_child(icon)

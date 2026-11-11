@@ -91,10 +91,16 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
 - `fight/`: the cards of a fight report (`FightResultBanner`, `MonsterPreview`,
   `FightUnitAccounting`, `FightKillCount`, `FightLootCard`, `FightTurnList`),
   used by the reports of `threat/` and by the monsters' fights: the sheet of a lair
-  (`MonsterLairSheet`), the army selection page (`ArmySelection`, generic) and the
-  report (`FightSummaryPage`, which the history reopens from an entry with
+  (`MonsterLairSheet`), the army selection page (`ArmySelection`, generic, led by an
+  Abyss Admiral for an assault: `AssaultSelections`), the report of an assault
+  (`AssaultSummaryPage`) and the report (`FightSummaryPage`, which the history reopens from an entry with
   `HistoryReports.fight_summary`) (`fight/README.md`).
 
+- `post/`, `kernel/`: the Faille, the Cheminée and the Volcanic Kernel of the map
+  (`post/README.md`, `kernel/README.md`): their sheets (`TransitionBaseSheet`,
+  `RivalPostSheet`, `VolcanicKernelSheet`), the defence and garrison panels, the
+  descent dialog and the reports of their assaults. `app/game/PostController` and
+  `KernelController` register them on the map's router.
 - `map/`: the 2D part of the map tab over the map in 3D (`world/map/`):
   `MapTab` (the `LevelSelector`, small chips for the three depths, a locked one
   disabled with a padlock) and, for a touch on a cell, `CellRoute` (the port of
@@ -107,8 +113,8 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   are `MapSheet`s (a picture, a title, rows of `SheetInfoRow`, a `SheetNotice`,
   a button and the line that says why an action was refused). A kind whose sheet
   another lot builds (`LAIR`, `POST`, `KERNEL`, `FACTION_BASE`) is handed to the
-  handler registered with `CellRouter.register(kind, handler)`; until then it opens
-  a "coming soon" sheet.
+  handler registered with `CellRouter.register(kind, handler)` (`FACTION_BASE` is
+  lot 13's: until then it opens a "coming soon" sheet).
 
 - `event/`: the random events (`event/README.md`): `EventCard` (an
   `IllustratedCard` whose options go through `GameActions`), `EventStatusBar`

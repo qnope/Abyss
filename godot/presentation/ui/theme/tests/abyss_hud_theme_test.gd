@@ -48,3 +48,25 @@ func test_a_toggle_on_is_tinted_and_rimmed_not_filled() -> void:
 
 func test_a_finger_gets_room() -> void:
 	assert_true(AbyssHudTheme.TOUCH_SIZE >= 44.0)
+
+
+func test_the_strips_of_the_game_screen_are_veils_of_the_abyss() -> void:
+	var bar := _theme.get_stylebox("panel", "ResourceBarPanel") as StyleBoxFlat
+	assert_eq(_theme.get_type_variation_base("ResourceBarPanel"), &"PanelContainer")
+	assert_eq(bar.bg_color, Color(AbyssColors.ABYSS_BLACK, 0.9))
+	assert_eq(bar.content_margin_left, 8.0)
+	assert_eq(bar.content_margin_top, 6.0)
+	var row := _theme.get_stylebox("panel", "ActionRowPanel") as StyleBoxFlat
+	assert_eq(_theme.get_type_variation_base("ActionRowPanel"), &"PanelContainer")
+	assert_eq(row.bg_color, AbyssColors.DEEP_NAVY)
+	assert_eq(row.content_margin_left, 12.0)
+	assert_eq(row.content_margin_top, 6.0)
+
+
+func test_the_turn_counter_is_bold_cyan_and_the_amounts_bold() -> void:
+	assert_eq(_theme.get_color("font_color", "HudTurn"), AbyssColors.BIOLUM_CYAN)
+	assert_eq(_theme.get_font_size("font_size", "HudTurn"), 16)
+	assert_eq(_theme.get_font_size("font_size", "ResourceAmount"), 14)
+	assert_eq(_theme.get_font("font", "ResourceAmount"), AbyssFonts.BOLD)
+	assert_eq(_theme.get_font_size("font_size", "ResourceRate"), 11)
+	assert_eq(_theme.get_color("font_color", "ResourceRate"), AbyssColors.ON_SURFACE_DIM)

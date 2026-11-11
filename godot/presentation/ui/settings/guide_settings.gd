@@ -30,9 +30,6 @@ func _init(actions_: GameActions) -> void:
 
 
 func refresh() -> void:
-	# Called once by the base class, before there are actions to read.
-	if actions == null:
-		return
 	var state := ObjectiveMigration.state_of(actions.game, actions.game.human_player())
 	_write(guide_switch, &"tutorialGuideSwitch", &"tutorialGuideSwitchHint", state.tutorial_enabled)
 	_write(tips_switch, &"tutorialTipsSwitch", &"tutorialTipsSwitchHint", state.tips_enabled)

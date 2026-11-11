@@ -16,6 +16,7 @@ its style box with `AbyssBox` from it. Depends on `domain/` and `../theme`,
 | `ModalPanel` | what a `ModalLayer` stacks: `placement` (centre, bottom, full), `dismissible`, `fit(area)`, `close(result)` and the `closed(result)` signal, once |
 | `ModalLayer` | `open(modal)`, `close_top()`, `top()`, `depth()`: each modal over a scrim of its own, touches let through while empty, a touch on the scrim or Escape closes the top one when dismissible, a short fade in unless `reduced_motion`. A flow is `closed` connected to the next `open`, never an `await` |
 | `AbyssDialog` | title, `body` that scrolls past 90 % of the screen, `add_action(text, result, variation)` ending it with the result, `add_button(text, variation)` leaving it open |
+| `MessageDialog` | a line of news and an OK, where Flutter shows a snack bar (a descent done, the garrison's size, an action refused): the text is a function, so it follows the language |
 | `BottomSheet` | `SheetDragHandle` (a pull of 64 px dismisses it) over a scrolling `body`, the full width |
 | `FullPage` | app bar (back button, centred title) over a padded scrolling `body`; back ends it with null |
 | `PageBar` | the app bar of both pages: a back button and a centred title (`back_pressed`, `set_title`) |

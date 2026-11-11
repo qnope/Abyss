@@ -18,12 +18,13 @@ const TOP := 4
 
 var game: Game
 var level := 1
-var selector := LevelSelector.new()
+var selector: LevelSelector
 
 
-func _init(game_: Game) -> void:
+func _init(game_: Game, guide: GuideScope = null) -> void:
 	super()
 	game = game_
+	selector = LevelSelector.new(guide)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	selector.level_selected.connect(choose)
 	var margin := MarginContainer.new()

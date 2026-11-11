@@ -13,6 +13,8 @@ signal target_tapped(target: TechTarget)
 const NODE_SIZE := 44.0
 const NODE_GAP := 12
 const LINK_HEIGHT := 20.0
+## The corner of the halo around a medallion.
+const GUIDE_RADIUS := 16
 
 var branch: TechBranch.Value
 var medallion: TechBranchMedallion
@@ -22,14 +24,15 @@ var nodes: Dictionary[String, TechNode] = {}
 var links: Array[TechLink] = []
 
 
-func _init(branch_: TechBranch.Value, view: TechView) -> void:
+func _init(branch_: TechBranch.Value, view: TechView, guide: GuideScope = null) -> void:
 	branch = branch_
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	add_theme_constant_override(&"separation", 0)
 	var color := TechColors.of(branch)
 	medallion = TechBranchMedallion.new(branch, view.is_unlocked(branch), view.research_level(branch))
 	medallion.tapped.connect(target_tapped.emit.bind(TechTarget.new(branch)))
-	add_child(medallion)
+	add_child(GuidedHalo.new(medallion, guide, func(target: GuideTarget) -> bool: return target.is_branch(branch_),
+		GUIDE_RADIUS))
 	for level in range(1, TechTree.MAX_LEVEL + 1):
 		var link := TechLink.new(color, view.is_unlocked(branch) and view.research_level(branch) >= level - 1,
 			LINK_HEIGHT)
@@ -42,7 +45,7 @@ func _init(branch_: TechBranch.Value, view: TechView) -> void:
 			var node := TechNode.new(branch, level, option, view.node_state(branch, level, option), NODE_SIZE)
 			node.tapped.connect(target_tapped.emit.bind(TechTarget.new(branch, level)))
 			nodes[TechIcons.node_id(level, option)] = node
-			row.add_child(node)
+			row.add_child(_guided(node, level, option, guide))
 		add_child(row)
 
 
@@ -54,5 +57,14 @@ func node_at(level: int, option: Variant = null) -> TechNode:
 
 
 ## One node on a level of tier, the two options on a level of choice.
+## The node in the guide's halo, which surrounds the first node of a branch
+## to research (a node of choice has none, as Flutter's).
+func _guided(node: TechNode, level: int, option: Variant, guide: GuideScope) -> Control:
+	if option != null:
+		return node
+	return GuidedHalo.new(node, guide, func(target: GuideTarget) -> bool: return target.is_tech_node(branch, level),
+		GuideHalo.CIRCLE)
+
+
 func _options(level: int) -> Array:
 	return [TechOption.Value.A, TechOption.Value.B] if TechTree.is_choice_level(level) else [null]

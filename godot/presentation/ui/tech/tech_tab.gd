@@ -43,7 +43,7 @@ func refresh() -> void:
 	if tree != null:
 		_padding.remove_child(tree)
 		tree.free()
-	tree = TechTreeView.new(TechView.of(actions.game))
+	tree = TechTreeView.new(TechView.of(actions.game), actions.guide)
 	tree.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tree.target_tapped.connect(_open)
 	_padding.add_child(tree)

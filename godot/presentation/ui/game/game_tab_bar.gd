@@ -13,11 +13,15 @@ signal tab_chosen(tab: GameTab.Value)
 
 ## The height of a tab, as Flutter's bottom navigation bar.
 const TAB_HEIGHT := 56.0
+const GUIDE_RADIUS := 12
 
 var _buttons: Dictionary[GameTab.Value, Button] = {}
+var _halos: Dictionary[GameTab.Value, GuidedHalo] = {}
 
 
-func _init() -> void:
+## The tab the guide points at is surrounded by its halo, unless it is lit
+## already.
+func _init(guide: GuideScope = null) -> void:
 	super()
 	theme_type_variation = AbyssChromeTheme.BAR
 	var row := HBoxContainer.new()
@@ -35,7 +39,9 @@ func _init() -> void:
 		button.custom_minimum_size.y = TAB_HEIGHT
 		button.pressed.connect(tab_chosen.emit.bind(tab))
 		_buttons[tab] = button
-		row.add_child(button)
+		_halos[tab] = GuidedHalo.new(button, guide, _opens.bind(tab), GUIDE_RADIUS)
+		_halos[tab].size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(_halos[tab])
 	add_child(row)
 	select(GameTab.Value.BASE)
 	refresh()
@@ -45,6 +51,7 @@ func _init() -> void:
 func select(tab: GameTab.Value) -> void:
 	for each: GameTab.Value in _buttons:
 		_buttons[each].set_pressed_no_signal(each == tab)
+		_halos[each].follow()
 
 
 ## The tab lit.
@@ -59,6 +66,11 @@ func selected() -> GameTab.Value:
 ## The button of [param tab].
 func button(tab: GameTab.Value) -> Button:
 	return _buttons[tab]
+
+
+## Whether the guide asks to open [param tab], which is not the one lit.
+func _opens(target: GuideTarget, tab: GameTab.Value) -> bool:
+	return target.area == GameTab.AREAS[tab] and not _buttons[tab].button_pressed
 
 
 func refresh() -> void:

@@ -15,6 +15,13 @@ const KEYS: Dictionary[Value, StringName] = {
 }
 
 
+## The place of the guide's advice each tab opens (game_screen_tabs.dart: tabAreas).
+const AREAS: Dictionary[Value, GuideArea.Value] = {
+	Value.BASE: GuideArea.Value.BASE, Value.MAP: GuideArea.Value.MAP,
+	Value.ARMY: GuideArea.Value.ARMY, Value.TECH: GuideArea.Value.RESEARCH,
+}
+
+
 ## The name of [param tab] in the language on: "Base", "Carte"...
 static func label(tab: Value) -> String:
 	return Texts.t(KEYS[tab])

@@ -58,6 +58,24 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   states) and the sheet a touch opens (`TechTargetSheet`: effect, cost or
   blocker, the two options of a choice). Built from a `TechView` of the game;
   unlocking and researching go through `GameActions`.
+
+- `unit/`: a unit (`UnitSheet`, the bottom sheet a tap on a squad opens: the
+  `UnitPortrait`, the `UnitCountPanel`s, the `RecruitmentSection` with its
+  quantity slider, its cost in resources and its `NoiseCostRow`; `UnitCard` for
+  a list). A sheet reads the game through a `UnitView` taken at one moment,
+  recruits through `GameActions` (`RecruitUnitAction`), closes with the result
+  when it succeeds and tells a refusal in itself (`ActionFailureTexts`). The
+  pickers: `UnitQuantityRow` (how many of a type, shared with the other
+  lots), `UnitTransferDialog` (the rows, a confirm button written with the
+  total, `confirmed(picks)`), `UnitPickerDialog` and `ReinforcementDialog`: they
+  only pick, what moves the units is the owner's. The colour of each unit is
+  `theme/UnitColors`.
+- `army/`: the 2D part of the army tab over the parade ground in 3D
+  (`world/parade/`): `ArmyTab` (the rampart's badge and the `ArmyPlaceBar`,
+  shown while the army serves in more than one place), `ArmyPlaces` (where the
+  units are, by level and in the kernel's stock), `ArmyRoster` and
+  `RecruitableUnits` (what the parade draws). It tells the roster at the place
+  shown with `changed`; `app/game/ArmyController` writes it for the world.
 - `threat/`: the parts of the raid gauge (`NoiseCostRow`).
 - `resource/`: the resource bar (`ResourceBar`, a `ResourceBarItem` per
   resource with its amount, rate and shortage state, `AnimatedAmount` flashing

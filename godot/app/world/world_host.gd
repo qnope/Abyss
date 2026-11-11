@@ -4,6 +4,10 @@ extends Node3D
 ## view. While a menu shows it drifts slowly around the island, out of reach
 ## of the touches (the ambience); once a game is played the camera is the
 ## player's again. The 2D screens draw over it.
+##
+## What it shows is one view at a time ([enum View]): the base, the army's
+## parade ground, or nothing behind a page that covers the world. The
+## ambience (the water, the sky) is the base's and stays on for every view.
 
 ## How fast the ambience turns around the island, in degrees per second.
 const DRIFT := 4.0
@@ -11,7 +15,13 @@ const DRIFT := 4.0
 ## it sits mid-screen between the title and the entries of the menu.
 const HUD := 0.0
 
+## What the world shows: the base, the parade ground of the army, or none.
+enum View { BASE, PARADE, NONE }
+
 var base := BaseScene.new()
+var parade := ParadeScene.new()
+## The view on show.
+var view := View.BASE
 var _top := HUD
 var _bottom := 0.0
 ## Whether the camera turns by itself, deaf to the touches.
@@ -21,6 +31,8 @@ var drifting := true:
 
 func _init() -> void:
 	add_child(base)
+	add_child(parade)
+	show_view(View.BASE)
 
 
 func _ready() -> void:
@@ -58,7 +70,7 @@ func show_game(
 func show_ambience() -> void:
 	base.build(BaseScene.BUILT)
 	frame_between(HUD, 0.0)
-	set_shown(true)
+	show_view(View.BASE)
 
 
 ## Frames the island between the bars of the game screen: the top
@@ -69,11 +81,24 @@ func frame_between(top: float, bottom: float) -> void:
 	_frame()
 
 
-## Shows the world, or hides it and pauses it behind a page that covers it.
-func set_shown(shown: bool) -> void:
-	visible = shown
-	process_mode = Node.PROCESS_MODE_INHERIT if shown else Node.PROCESS_MODE_DISABLED
+## Shows [param next]: the base or the parade ground, with its camera the
+## current one and the other scene hidden and paused, or neither, the whole
+## world hidden and paused behind a page that covers it.
+func show_view(next: View) -> void:
+	view = next
+	visible = next != View.NONE
+	process_mode = Node.PROCESS_MODE_INHERIT if visible else Node.PROCESS_MODE_DISABLED
+	_activate(base, next == View.BASE)
+	_activate(parade, next == View.PARADE)
+	if next != View.NONE:
+		(base.camera if next == View.BASE else parade.camera).current = true
+
+
+func _activate(scene: Node3D, active: bool) -> void:
+	scene.visible = active
+	scene.process_mode = Node.PROCESS_MODE_INHERIT if active else Node.PROCESS_MODE_DISABLED
 
 
 func _frame() -> void:
 	base.frame(_top, _bottom)
+	parade.frame(_top, _bottom)

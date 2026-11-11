@@ -13,6 +13,8 @@ window the game's theme, opens the saves (`GameRepository`) and the settings
 
 - `World` (`world/WorldHost`): the base in 3D (`presentation/world/`), drifting
   slowly around while a menu shows, the player's camera once a game is played;
+  and the army's parade ground, one `WorldHost.View` at a time (base, parade or
+  none, each with its own camera; the water and the sky are the base's);
 - `Screens`: one screen at a time, kept off the notch (`SafeArea`);
 - `Modals`: the `ModalLayer` dialogs and sheets open on.
 
@@ -35,8 +37,8 @@ a screen is shown, and replaces the screen on show.
 `game/` is the game played: `GameSession` holds the game, the repository and
 the `GameActions`, and saves the game each time an action succeeds (`acted`)
 before telling `changed`; `GameController` joins the `GameHud` and the
-`WorldHost`: the tab on show decides whether the world shows (the base) or
-rests, `changed` redraws both, the island is framed between the bars, and
+`WorldHost`: the tab on show decides what the world shows (`TabViews`: the base,
+the parade ground or nothing, resting behind a page), `changed` redraws both, the island is framed between the bars, and
 `quit_requested` and `language_chosen` go on to the flow. A tap on a pad of
 the base (`BaseScene.building_tapped`) opens the sheet of its building
 (`GameHud.open_building`); its upgrade goes through the actions, which save
@@ -52,6 +54,16 @@ its sheet, and unlocking or researching goes through the same actions: node
 touched -> sheet -> `GameActions.execute` -> `acted` -> save -> `changed` ->
 `GameHud.refresh()` redraws the tree. `GameController` has nothing of its own to
 do for it.
+
+The army tab is the `ArmyController`, made by the `GameController`: it puts the
+`ArmyTab` (`presentation/ui/army/`) over the world on the Army tab only and
+writes the army the tab tells (`changed`, the roster at the place shown) as the
+squads and the barracks of the `ParadeScene` (`ParadeStates`: the counts, the
+captions in the language on, the plus of a type that can recruit, the padlock
+of one the barracks is too low for). Flow: squad tapped
+(`ParadeScene.squad_tapped`) -> `UnitSheet` -> recruit ->
+`GameActions.execute` -> `acted` -> save -> `changed` -> `ArmyTab.refresh` ->
+`changed` -> parade redrawn; the barracks tapped opens its `BuildingSheet`.
 
 The end of a turn is `EndTurnFlow` (`presentation/ui/turn/`), made by the
 `GameController`: the HUD's `end_turn_requested` asks, the confirmed turn goes

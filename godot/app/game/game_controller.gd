@@ -3,7 +3,8 @@ extends RefCounted
 ## The glue of the game screen: it connects the HUD (UI), the world (3D) and
 ## the session (the game and its saves), none of which knows the others.
 ##
-## - The tab on show chooses what the world shows: the base on the Base tab;
+## - The tab on show chooses what the world shows ([TabViews]): the base on
+##   the Base tab, the army's parade ground on the Army tab ([ArmyController]);
 ##   the other tabs cover it with their page until their views are built, and
 ##   the world is hidden and paused behind them.
 ## - A change of the game, once saved by the session, redraws the HUD and the
@@ -33,6 +34,7 @@ var session: GameSession
 var hud: GameHud
 var world: WorldHost
 var end_turn: EndTurnFlow
+var army: ArmyController
 var _modals: ModalLayer
 
 
@@ -51,6 +53,7 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost, modals: Moda
 	hud.language_chosen.connect(language_chosen.emit)
 	hud.content.item_rect_changed.connect(_frame)
 	world.base.building_tapped.connect(hud.open_building)
+	army = ArmyController.new(session, hud, world, modals)
 	session.changed.connect(_on_changed)
 	_show_base()
 	_frame()
@@ -58,6 +61,7 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost, modals: Moda
 
 ## The screen is gone: the world goes back to the menus' ambience.
 func close() -> void:
+	army.close()
 	session.changed.disconnect(_on_changed)
 	session.actions.victory_reached.disconnect(_on_victory)
 	world.base.building_tapped.disconnect(hud.open_building)
@@ -89,7 +93,7 @@ func _leave_for_menu(screen: GameOverScreen) -> void:
 
 
 func _on_tab_changed(tab: GameTab.Value) -> void:
-	world.set_shown(tab == GameTab.Value.BASE)
+	world.show_view(TabViews.of(tab))
 
 
 func _show_base() -> void:

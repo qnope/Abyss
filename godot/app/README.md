@@ -28,7 +28,8 @@ a screen is shown, and replaces the screen on show.
     menu -> the game (continue: the latest in progress)
     the game -> settings -> save and quit -> (saved) -> menu
     the game -> settings -> language -> kept, the language set
-    the game -> next turn -> question -> turn ended (saved) -> summary -> the game
+    the game -> next turn -> question (threats due warned) -> turn ended (saved)
+      -> summary -> the reports of the raid, the predators and a kraken wave lost -> the game
     the game -> a turn lost it -> summary -> defeat screen -> menu
     the game -> the kernel at the last level -> victory screen over the game
       -> continue: free play, saved | menu: saved, then the menu
@@ -77,6 +78,14 @@ of the actions, set by the action that raised the kernel to the last level)
 opens the `VictoryScreen` over the game: "continue" sets free play through
 `GameActions.continue_in_free_play` (saved, the same game goes on), "menu"
 saves and leaves through `quit_requested`.
+
+The threats show without `app/`: the `GameHud` stacks the raid, Leviathan and
+kraken strips in its status bars (`ThreatBars`) and `session.changed` redraws
+them with the rest; the warnings of the question and the reports after the
+summary are read from the game and the turn's result by `EndTurnFlow`'s
+`TurnWarnings` and `TurnOutcome`. Flow: turn ended -> `TurnResult` ->
+`TurnOutcome` steps (`ThreatPages`) -> `RaidReportPage` or `VolcanoReportPage`
+closed by "back to the base" -> the next step, or `finished` / `defeated`.
 
 A save that cannot be read is skipped and named in a warning (and in
 `AppFlow.unreadable`), never stopping the others; a save or a deletion that

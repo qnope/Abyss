@@ -34,17 +34,20 @@ A lot that owns a part of the turn adds to one of three places, and nothing else
 changes.
 
 - `SummarySections.of(result)`: a section of the summary is a `Control` added
-  at the place Flutter puts it, after the losses. To come: the exploration
-  summary (lot 9), the attacks of the factions (lots 10 and 13), the raid and
-  the kraken wave (lot 11), the event (lot 14), the objectives completed
-  (lot 15).
-- `TurnWarnings.of(game, player)`: a warning of the question. Today the
-  undefended posts; to come: the raid announced (lot 11).
+  at the place Flutter puts it, after the losses: the raid and the kraken wave
+  are in (`ThreatSections`). To come: the exploration summary (lot 9) before the
+  raid, the attacks of the factions (lots 10 and 13) between the raid and the
+  wave, the event (lot 14) and the objectives completed (lot 15) after it.
+- `TurnWarnings.of(game, player)`: a warning of the question. The threats
+  (`ThreatWarnings`: the raid, the predators, the guardians of a Faille, the
+  kraken wave) come first, then the undefended posts; to come: the event
+  waiting for a choice (lot 14).
 - `TurnOutcome.default_steps()`: a step is a `Callable` returning the next page
-  (a `Control` with a `closed` signal) or null when it has nothing to show. Pages
-  that follow the summary in Flutter (the raid and fight reports, the event
-  card, the objective and tip cards) are steps added after `summary_page`.
-  The turn's stories (animations) are step 7's.
+  (a `Control` with a `closed` signal) or null when it has nothing to show. After
+  `summary_page` come the reports of the raid, of the predators and of a kraken
+  wave lost (`ThreatPages`). To come, in Flutter's order: the event card (lot
+  14), the objective and tip cards (lot 15). The turn's stories (animations)
+  are step 7's.
 
-Shown: resources, shutdowns, lost units, and the recruitment now open. Not
-shown yet: everything above.
+Shown: resources, shutdowns, lost units, the raid and the kraken wave, and the
+recruitment now open. Not shown yet: what the lots above bring.

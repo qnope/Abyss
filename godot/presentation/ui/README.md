@@ -22,7 +22,7 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   `UnitTexts`, `ResourceTexts`, `TechBranchTexts`, `TechNodeTexts`,
   `TerrainTexts`, `MonsterFamilyTexts`, `DifficultyTexts`,
   `LanguageChoiceTexts`, `ActionFailureTexts`, `RampartTexts`,
-  `BuildingDegradationTexts`, `TransitionBaseTexts`, `MonsterLairTexts`), each tested for a key in
+  `BuildingDegradationTexts`, `TransitionBaseTexts`, `MonsterLairTexts`, `MonsterDifficultyTexts`), each tested for a key in
   all three languages. A key is built from the enum value's Dart name
   (`TextKeys`).
 - `menu/`, `new_game/`, `save/`, `opening/`, `settings/`, `game/`: the screens of
@@ -76,7 +76,17 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   units are, by level and in the kernel's stock), `ArmyRoster` and
   `RecruitableUnits` (what the parade draws). It tells the roster at the place
   shown with `changed`; `app/game/ArmyController` writes it for the world.
-- `threat/`: the parts of the raid gauge (`NoiseCostRow`).
+- `threat/`: the raid, the guardians of the Faille and the kraken waves
+  (`threat/README.md`): the strips under the resource bar (`RaidStatusBar`,
+  `LeviathanStatusBar`, `VolcanoStatusBar`, added by `ThreatBars`), the warnings
+  of the question (`ThreatWarnings`), the lines of the summary
+  (`ThreatSections`), the reports opened after it (`RaidReportPage`,
+  `VolcanoReportPage`, steps of `TurnOutcome` made by `ThreatPages`) and
+  `NoiseCostRow`.
+- `fight/`: the cards of a fight report (`FightResultBanner`, `MonsterPreview`,
+  `FightUnitAccounting`, `FightKillCount`, `FightLootCard`, `FightTurnList`),
+  used by the reports of `threat/` and, next, by the monsters' fights
+  (`fight/README.md`).
 - `resource/`: the resource bar (`ResourceBar`, a `ResourceBarItem` per
   resource with its amount, rate and shortage state, `AnimatedAmount` flashing
   and popping when an amount changes), the detail sheet a touch opens and the

@@ -79,6 +79,9 @@ func test_a_turn_that_lost_the_game_leads_to_the_defeat_screen_then_the_menu() -
 	assert_eq(hud.game.status, GameStatus.Value.DEFEAT)
 	assert_true(_flow.current is GameHud, "the summary comes first")
 	press("OK")
+	assert_true(current_modal() is RaidReportPage, "then the raid that lost it")
+	assert_true(_flow.current is GameHud)
+	press("Retour à la base")
 	var screen := _flow.current as DefeatScreen
 	assert_not_null(screen)
 	assert_eq(screen.fall_turn, 12)
@@ -98,6 +101,7 @@ func test_the_game_lost_reopens_on_its_defeat_screen() -> void:
 	press("Tour suivant")
 	press("Confirmer")
 	press("OK")
+	press("Retour à la base")
 	press("Retour au menu")
 	_flow.show_load_game()
 	press(_card_of("Alice").tap_button)

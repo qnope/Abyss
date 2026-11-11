@@ -148,3 +148,11 @@ the twin of `strategies/event_moves_test_helper.dart`: the turn of a
 player waiting for a choice on an event and the choice it made; the
 producing base of `event_test_helper.dart` is
 `EventSamples.producing_player`.
+
+`ScriptDigests` serves the digest test of the scripts
+(`script_digest_test.gd`): it develops each player of the games of
+`GameFactory` between the turns as the scratch Dart script did (stocks
+credited, barracks and harpoonists, a raid, an event to choose, a Faille, a
+Cheminée and the kernel taken), plays the moves of a turn in the script's
+order, and writes the state of a player after them; `ScriptHistories` holds
+what the Dart script printed.

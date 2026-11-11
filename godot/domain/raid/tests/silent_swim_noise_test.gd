@@ -1,8 +1,6 @@
 extends TestCase
 ## test/domain/raid/silent_swim_noise_test.dart: the Nage silencieuse of the
-## explorer branch silences exploring and fighting. Its
-## AttackTransitionBaseAction waits for `leviathan`: the fights here are the
-## other two of the Dart list.
+## explorer branch silences exploring and fighting.
 
 const UNITS: Dictionary[UnitType.Value, int] = {UnitType.Value.HARPOONIST: 1}
 
@@ -14,7 +12,10 @@ func _silence(player: Player, option := TechOption.Value.B) -> void:
 
 
 func _fights() -> Array[Action]:
-	return [FightMonsterAction.new(1, 1, 1, UNITS), AttackVolcanicKernelAction.new(1, 1, 1, UNITS)]
+	return [
+		FightMonsterAction.new(1, 1, 1, UNITS), AttackTransitionBaseAction.new(1, 1, 1, UNITS),
+		AttackVolcanicKernelAction.new(1, 1, 1, UNITS),
+	]
 
 
 ## Not in the Dart file: the attacks on the other players are fights too.

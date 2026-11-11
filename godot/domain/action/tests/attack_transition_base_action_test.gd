@@ -1,9 +1,6 @@
 extends TestCase
 ## test/domain/action/attack_transition_base_action_test.dart: whether an
-## assault on the guardians of a post may start. AttackTransitionBaseAction
-## waits for the leviathan module; its `validate` is
-## AttackTransitionBaseValidator.check with its own fields, which these
-## tests call.
+## assault on the guardians of a post may start.
 
 const ADMIRAL := UnitType.Value.ABYSS_ADMIRAL
 const HARPOONIST := UnitType.Value.HARPOONIST
@@ -11,7 +8,7 @@ const ARMY: Dictionary[UnitType.Value, int] = {ADMIRAL: 1, HARPOONIST: 5}
 
 
 func _validate(game: Game, units: Dictionary[UnitType.Value, int] = ARMY) -> ActionResult:
-	return AttackTransitionBaseValidator.check(game, game.human_player(), 1, 1, 1, units)
+	return AttackTransitionBaseAction.new(1, 1, 1, units).validate(game, game.human_player())
 
 
 func test_validate_fails_when_map_is_null() -> void:

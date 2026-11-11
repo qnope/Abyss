@@ -196,8 +196,6 @@ Files and tests of the modules above that wait for another module:
 | `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
 | `action/announced_attack_resolver.dart`, `held_attack_reports.dart` | nothing left: `FactionAttackReport` is there, they come next |
 | `held_attack_report/held_kernel_report_test.dart`, `held_post_report_test.dart`; `announce_attack/announced_attack_report_test.dart`, `announced_attack_resolve_test.dart` (they end the turn) | `turn` (`EndTurnAction`, `TurnResult.attacks`) |
-| `action/attack_transition_base_action.dart`, `attack_transition_base_execute_test.dart`, `attack_transition_base_history_test.dart` (the tests of its `validate` call `AttackTransitionBaseValidator.check`, which it is); three tests of `leviathan/leviathan_schedule_test.dart` (they capture with the action) | nothing left: `LeviathanResolver` is there, they come next |
-| The row of `AttackTransitionBaseAction` in `action_identity_test.dart`, and in the fights of `silent_swim_noise_test.dart` | `AttackTransitionBaseAction` above |
 | `volcano/wave_held_back_turn_test.dart` | `turn` (`TurnResolver`) |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it; the last test of `choose_event_action_test.dart` (the choice is written in the replay journal) | `action` (`ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |

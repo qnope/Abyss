@@ -13,6 +13,7 @@ func test_gathers_every_family() -> void:
 	for variation: String in [
 		"TitleLarge", "OutlinedButton", "DialogPanel", "ErrorLineEdit",
 		"SegmentedTray", "Segment", "HeroTitle", "MenuPrimaryButton", "HudPanel",
+		"ModalScrim", "BarePanel", "TapSurface", "Switch", "SnackBarPanel", "NavigationItem",
 	]:
 		assert_ne(_theme.get_type_variation_base(variation), &"", variation)
 	assert_true(_theme.has_stylebox("panel", "PopupMenu"))

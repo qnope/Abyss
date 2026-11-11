@@ -16,4 +16,7 @@ static func build() -> Theme:
 	AbyssSegmentedTheme.apply(theme)
 	AbyssMenuTheme.apply(theme)
 	AbyssHudTheme.apply(theme)
+	AbyssSurfaceTheme.apply(theme)
+	AbyssSwitchTheme.apply(theme)
+	AbyssChromeTheme.apply(theme)
 	return theme

@@ -195,7 +195,8 @@ Files and tests of the modules above that wait for another module:
 | --- | --- |
 | The last test of `tutorial_strategy_test.dart` (`ScriptLibrary`) | the runners of `script` |
 | The second test of `script_player_helpers_test.dart` (`ScriptMilestones`) | the runners of `script` |
-| `faction_replay_test.dart` but its last test (`ReplayExport`, `ScenarioParser`, `ScriptRunner`, `TimelineScript`, `GameScript.factionsPlay`) | `replay_export.dart` and the runners of `script` |
+| `faction_replay_test.dart` but its last test (`ScenarioParser`, `ScriptRunner`, `TimelineScript`, `GameScript.factionsPlay`) | the runners of `script` |
+| The replays of `test/domain/replay/` through `ScenarioParser` and `ScriptRunner`: the last two tests of `replay_export_test.dart` and of `replay_difficulty_test.dart`, three of `replay_all_players_test.dart`, `announced_attack_replay_test.dart`, `base_attack_replay_test.dart`, `leviathan_replay_test.dart`; `SpyExecutor`, `replayOn` and `Fallback` of their helpers | the runners of `script` |
 | `faction_attack_play_test.dart`: games of 100 turns (`playFactionGame`, `playIdleFactionGame`), one replayed through `ScriptRunner` | a slower tier of tests, and the runners of `script` |
 | The test of 60 turns of `faction_play_test.dart` (3 and 10 factions), `faction_research_play_test.dart` (40 turns of 3 factions, 7 s here), `faction_race_test.dart` (60 games of 200 turns): whole games too long for the suite | a slower tier of tests, with `playIdleFactionGame` and `faction_race.dart` |
 | `script/strategies_test.dart` (whole games through `ScriptRunner` and `BatchRunner`) | the runners of `script` |

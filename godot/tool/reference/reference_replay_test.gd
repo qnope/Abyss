@@ -1,9 +1,8 @@
 extends TestCase
 ## The replay of a reference game (ReferenceReplay): `idle-normal`, whose
 ## journal holds no move, replays whole, its 48 turns, the raids that end
-## it and its defeat, through the state Dart went through. Its journal
-## records no end of turn until `ReplayJournal.record` is ported: that
-## section alone differs after the first turn.
+## it and its defeat, through the state Dart went through, every section
+## of every turn, its journal included.
 
 
 func _committed(name: String) -> CommittedGame:
@@ -18,9 +17,8 @@ func test_replays_a_game_without_moves_through_the_states_dart_went_through() ->
 	assert_eq(replay.turns.size(), played.size())
 	for i: int in mini(replay.turns.size(), played.size()):
 		assert_eq(replay.turns[i].turn, played[i].turn)
-		var expected := PackedStringArray() if i == 0 else PackedStringArray(["journal"])
-		assert_eq(ReplayComparison.differing(played[i].digests, replay.turns[i].digests), expected, "turn %d" % played[i].turn)
-	assert_eq(ReplayComparison.differing(committed.final_digests(), replay.final_digests), PackedStringArray(["journal"]))
+		assert_eq(ReplayComparison.differing(played[i].digests, replay.turns[i].digests), PackedStringArray(), "turn %d" % played[i].turn)
+	assert_eq(ReplayComparison.differing(committed.final_digests(), replay.final_digests), PackedStringArray())
 	assert_eq([DartEnum.name_of(GameStatus.Value, replay.game.status), replay.game.turn], [committed.status(), committed.turn()])
 
 

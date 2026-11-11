@@ -12,12 +12,18 @@ extends RefCounted
 ##   building; the sheet's upgrade goes through the session's actions, which
 ##   save and redraw.
 ## - The island is framed in the area the HUD leaves clear between its bars.
+## - The "next turn" button starts the [EndTurnFlow]: the question, the turn
+##   (saved and redrawn by the session), the summary, and once the pages are
+##   seen the screen is redrawn again. A game lost is told with
+##   [signal defeated], for `app/` to show the defeat screen.
+## - A kernel raised to the last level (the actions tell [signal
+##   GameActions.victory_reached]) opens the victory screen over the game:
+##   "continue" goes on in free play, "menu" leaves as saving and quitting does.
 ## - The ways out of the screen are told on: [signal quit_requested] and
 ##   [signal language_chosen].
-##
-## The "next turn" button is the next lot's: the HUD tells it, nobody hears
-## it yet.
 
+## The turn that just ended lost the game.
+signal defeated
 ## The player wants to save the game and leave it.
 signal quit_requested
 ## The player picked [param choice] in the settings: `app/` keeps it.
@@ -26,12 +32,20 @@ signal language_chosen(choice: LanguageChoice.Value)
 var session: GameSession
 var hud: GameHud
 var world: WorldHost
+var end_turn: EndTurnFlow
+var _modals: ModalLayer
 
 
-func _init(session_: GameSession, hud_: GameHud, world_: WorldHost) -> void:
+func _init(session_: GameSession, hud_: GameHud, world_: WorldHost, modals: ModalLayer) -> void:
 	session = session_
 	hud = hud_
 	world = world_
+	_modals = modals
+	end_turn = EndTurnFlow.new(session.actions, modals)
+	hud.end_turn_requested.connect(end_turn.request)
+	end_turn.finished.connect(_on_changed)
+	end_turn.defeated.connect(defeated.emit)
+	session.actions.victory_reached.connect(_on_victory)
 	hud.tab_changed.connect(_on_tab_changed)
 	hud.quit_requested.connect(quit_requested.emit)
 	hud.language_chosen.connect(language_chosen.emit)
@@ -45,6 +59,7 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost) -> void:
 ## The screen is gone: the world goes back to the menus' ambience.
 func close() -> void:
 	session.changed.disconnect(_on_changed)
+	session.actions.victory_reached.disconnect(_on_victory)
 	world.base.building_tapped.disconnect(hud.open_building)
 	world.show_ambience()
 
@@ -52,6 +67,25 @@ func close() -> void:
 func _on_changed() -> void:
 	hud.refresh()
 	_show_base()
+
+
+## The game is won: the victory screen over the game, until the player picks
+## what follows.
+func _on_victory() -> void:
+	var screen := GameOverScreens.victory(session.game)
+	screen.continue_requested.connect(_continue_in_free_play.bind(screen))
+	screen.menu_requested.connect(_leave_for_menu.bind(screen))
+	_modals.open(screen)
+
+
+func _continue_in_free_play(screen: GameOverScreen) -> void:
+	screen.close()
+	session.actions.continue_in_free_play()
+
+
+func _leave_for_menu(screen: GameOverScreen) -> void:
+	screen.close()
+	quit_requested.emit()
 
 
 func _on_tab_changed(tab: GameTab.Value) -> void:

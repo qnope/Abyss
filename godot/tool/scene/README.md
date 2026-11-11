@@ -7,6 +7,8 @@ of exports.
 
     tool/scene_capture.sh [out dir] [scene | app | base | army | map | turn | kit]
 
+    tool/scene_capture.sh [out dir] [scene | app | base | army | turn | tech | event | kit]
+
 `capture.gd` opens `app/prototype/prototype.tscn` (or `scene`) in a window the size of a
 phone held upright at 2x (780 x 1688, the project's 390 x 844 points), lets
 it run 240 frames, then writes `default.png` (the game's view),
@@ -104,6 +106,23 @@ research, its effect and cost), `tech_choice.png` (a choice, two options face to
 face), `tech_done.png` (a choice already made), `tech_blocked.png` (a choice held
 back by the laboratory) and `tech_branch.png` (a branch to unlock, with the
 surcharge), each with its draw calls and primitives. Never commit the renders.
+
+## The events, the history and the replay export
+
+`event_capture.gd` (`tool/scene_capture.sh [out dir] event`, or after the
+research's views when no scene is given) plays a game at turn 8 with a survivors
+event waiting and a history of every kind of entry, and renders:
+`event_strip.png` (the strip under the resource bar that reminds of the event),
+`event_card.png` and `event_card_en.png` (the card of the survivors over the
+game: the picture, two lines, the filled first option, the outlined prudent one
+and "later"), `event_card_trade.png` (the caravan's trade with the stock empty:
+the first option greyed with its reason under it), `history_settings.png` (the
+settings with the history and export rows), `history_all.png`,
+`history_combat.png` and `history_en.png` (the sheet, 80% high: the filter chips
+and the tinted cards, newest first; a combat filter keeps the fights, raids and
+the kraken wave), `export_dialog.png`, `export_copied.png` (the confirmation line
+after a copy) and `export_old.png` (a game with no journal), each with its draw
+calls and primitives. Never commit the renders.
 
 ## The UI kit
 

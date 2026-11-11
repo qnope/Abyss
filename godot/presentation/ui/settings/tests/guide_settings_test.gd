@@ -19,7 +19,7 @@ func test_speaks_the_guide_switches_and_the_story_in_french() -> void:
 	_settings()
 	var shown: Array[String] = ["Guide du tutoriel",
 		"Le guide te montre quoi faire, objectif après objectif", "Conseils",
-		"Une fiche explique chaque nouveauté à sa première apparition", "L'histoire du jeu"]
+		"Une fiche explique chaque nouveauté à sa première apparition", "Revoir les fiches", "L'histoire du jeu"]
 	for words in shown:
 		assert_not_null(find_text(words), words)
 	assert_no_raw_keys()
@@ -76,6 +76,20 @@ func test_the_story_row_asks_for_the_story() -> void:
 	press("L'histoire du jeu")
 	assert_eq(_stories, 1)
 	assert_eq(_acted, [])
+
+
+func test_the_tips_row_opens_the_guide_of_the_tips_over_the_settings() -> void:
+	var settings := GuideSettings.new(_actions)
+	modals().add_child(settings)
+	press("Revoir les fiches")
+	assert_true(current_modal() is TipGuide)
+	assert_eq(_acted, [])
+
+
+func test_the_tips_row_does_nothing_outside_the_modals() -> void:
+	_settings()
+	press("Revoir les fiches")
+	assert_null(current_modal())
 
 
 func _settings() -> GuideSettings:

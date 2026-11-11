@@ -14,9 +14,8 @@ extends RefCounted
 ##
 ## - after the summary, the reports of the raid, of the predators and of a
 ##   kraken wave lost ([ThreatPages]), then the card of the event drawn
-##   ([EventStep]);
-## - to come: the next tip (lot 15). The turn's story told on the map is
-##   step 7's.
+##   ([EventStep]), then the tips the turn brought ([TipPresenter]).
+##   The turn's story told on the map is step 7's.
 
 ## The turn lost the game: the defeat screen is next.
 signal defeated
@@ -41,7 +40,7 @@ func _init(game_: Game, result_: TurnResult, modals: ModalLayer, steps_: Array[C
 ## that change the game (the choice of an event) go through them.
 static func default_steps(actions: GameActions) -> Array[Callable]:
 	return [summary_page, ThreatPages.raid, ThreatPages.predators, ThreatPages.volcano,
-		EventStep.of(actions)]
+		EventStep.of(actions), TipPresenter.new(actions).step()]
 
 
 ## The summary of the turn: always shown.

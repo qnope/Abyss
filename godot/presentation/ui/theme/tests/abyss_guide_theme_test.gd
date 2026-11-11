@@ -33,3 +33,13 @@ func test_the_halo_is_rounded_and_drawn_inside_by_its_inset() -> void:
 func test_the_content_sits_in_from_the_rim_whether_or_not_the_halo_shows() -> void:
 	assert_eq(AbyssGuideTheme.halo(0.5, 12).get_minimum_size(), Vector2(4, 4))
 	assert_eq(AbyssGuideTheme.idle().get_minimum_size(), Vector2(4, 4))
+
+
+func test_the_bubble_is_a_panel_variation_rimmed_and_glowing_in_cyan() -> void:
+	var theme := AbyssTheme.build()
+	assert_eq(theme.get_type_variation_base(AbyssGuideTheme.BUBBLE), &"PanelContainer")
+	var box := theme.get_stylebox(&"panel", AbyssGuideTheme.BUBBLE) as StyleBoxFlat
+	assert_eq(box.border_color, Color(CYAN, 0.4))
+	assert_eq(box.shadow_color, Color(CYAN, 0.15))
+	assert_eq(box.corner_radius_top_left, 16)
+	assert_eq(box.bg_color, AbyssColors.SURFACE_LIGHT)

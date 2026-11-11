@@ -71,6 +71,21 @@ func test_presses_a_button_or_the_text_of_one() -> void:
 	assert_eq(_probe.failures(), PackedStringArray())
 
 
+func test_presses_the_button_a_label_is_drawn_over() -> void:
+	var presses := []
+	var button := Button.new()
+	button.pressed.connect(func() -> void: presses.append("go"))
+	var label := Label.new()
+	label.text = "Over"
+	button.add_child(label)
+	_probe.mount(button)
+	_probe.press("Over")
+	_probe.mount(Label.new()).set("text", "Alone")
+	_probe.press("Alone")
+	assert_eq(presses, ["go"])
+	assert_eq(_probe.failures().size(), 1)
+
+
 func test_a_toggle_changes_state_as_a_touch_does() -> void:
 	var toggle := Button.new()
 	toggle.toggle_mode = true

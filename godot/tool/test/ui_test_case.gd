@@ -78,7 +78,8 @@ func find_named(node_name: String, root: Node = null) -> Node:
 	return (root if root != null else host()).find_child(node_name, true, false)
 
 
-## Presses [param target]: a button, or the text of a button shown. A toggle
+## Presses [param target]: a button, or a text shown on one (the button's own
+## text, or a label drawn over it, as a player touches either). A toggle
 ## button changes state as a touch does (the lit button of a group stays
 ## lit). A player cannot press a button that is disabled or hidden, nor one
 ## that is not there: the test fails.
@@ -86,7 +87,7 @@ func press(target: Variant) -> void:
 	var button: BaseButton = target if target is BaseButton else null
 	if target is String:
 		var shown: String = target
-		button = find_text(shown) as BaseButton
+		button = _button_under(find_text(shown))
 	if button == null:
 		fail("press: no button for %s" % TestValues.describe(target))
 	elif button.disabled or not button.is_visible_in_tree():
@@ -115,6 +116,13 @@ func assert_no_raw_keys(root: Node = null) -> void:
 	for shown in texts(root):
 		if Texts.has(StringName(shown), "fr"):
 			fail('"%s" is shown as the key it should have been translated from' % shown)
+
+
+## The button [param node] is, or is drawn over; null for none.
+static func _button_under(node: Node) -> BaseButton:
+	while node != null and not node is BaseButton:
+		node = node.get_parent()
+	return node as BaseButton
 
 
 ## Whether [param button] is the lit one of a group that does not let it go.

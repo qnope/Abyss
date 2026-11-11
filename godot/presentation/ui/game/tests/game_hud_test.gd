@@ -114,7 +114,7 @@ func test_follows_the_language_in_the_bars_and_the_pages() -> void:
 func test_has_a_place_for_the_status_strips_under_the_resource_bar() -> void:
 	var hud := _show()
 	assert_eq(hud.status_bars.get_index(), hud.resource_bar.get_index() + 1)
-	assert_eq(hud.status_bars.bars(), [] as Array[Control])
+	assert_false(hud.status_bars.bars().is_empty(), "the lots of the threats add their strips")
 
 
 ## How many pages of the tabs to come show.

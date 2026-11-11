@@ -45,9 +45,6 @@ func go(next: int) -> void:
 
 ## Writes the card on show again, in the language on.
 func refresh() -> void:
-	# Called once by the base class, before there are tips to show.
-	if tips.is_empty():
-		return
 	if next_button.get_parent() != null:
 		next_button.get_parent().remove_child(next_button)
 	for old in _scroll.content.get_children():

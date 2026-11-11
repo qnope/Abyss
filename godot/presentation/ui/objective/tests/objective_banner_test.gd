@@ -29,6 +29,7 @@ func test_names_the_chapter_and_the_post_to_take() -> void:
 	assert_not_null(find_text("Prends la Faille : 0/1"))
 	assert_true(banner.lead.get_child(0) is Portrait, "the post, still guarded")
 	assert_true(_banner(game_with_completed(0)).lead.get_child(0) is UiIcon, "the flag")
+	assert_true(_banner(game_on(ObjectiveId.Value.TAKE_CHEMINEE)).lead.get_child(0) is Portrait, "the other post")
 
 
 func test_speaks_english_and_spanish() -> void:

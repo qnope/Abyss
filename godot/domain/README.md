@@ -199,7 +199,6 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
-| `faction_race_test.dart` (60 games of 200 turns): whole games too long even for the long cases of `tool/replay/`, which play `faction_play_test.dart`'s games of 60 turns, `faction_research_play_test.dart` and `faction_attack_play_test.dart` | `faction_race.dart`, and a longer tier |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
 | `choiceEvents` of `event_test_helper.dart` (no test of `domain` reads it; `producingPlayer` is `EventSamples.producing_player`) | the tests of the presentation that use it |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

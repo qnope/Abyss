@@ -1,7 +1,5 @@
 extends TestCase
 ## test/domain/faction/faction_scouting_test.dart: how deep a faction scouts.
-## Its test of the exploration of a slot waits for FactionBrain
-## (domain/README.md, "Left for a later lot").
 
 const Personality := FactionPersonality.Value
 
@@ -39,6 +37,19 @@ func test_the_spy_slot_recruits_the_whole_need_of_scouts_at_once() -> void:
 		AssaultSamples.standing(war.attacker(), UnitType.Value.SCOUT), wanted + 1,
 		"the need, plus the spy of the slot"
 	)
+
+
+func test_a_slot_does_not_cost_the_exploration_of_the_turn() -> void:
+	var war := _rich_and_blind()
+	var p := war.personality()
+
+	FactionBrain.new(p).play_turn(war.turn())
+
+	var level1 := 0
+	for o: ExplorationOrder in war.attacker().pending_explorations:
+		if o.level == 1:
+			level1 += 1
+	assert_eq(level1, FactionTraits.of(p).explorers)
 
 
 func test_a_poor_faction_still_keeps_one_scout_for_the_spy() -> void:

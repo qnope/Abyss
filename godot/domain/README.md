@@ -193,10 +193,8 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
-| `ExpeditionMoves.assault` (`script/strategies/expedition_moves.dart`) | nothing now that `AttackTransitionBaseAction` is ported: with the next lot of `script` |
-| `ConquestMoves` but its constants (`advanceConquest`), `conquest_strategy.dart`, `tutorial_strategy.dart`, `contest_moves.dart`, `siege_moves.dart`, `leviathan_guard_moves.dart`, their tests and those that play them (the last test of `attack_defence_test.dart`, `hunt_under_raid_test.dart`, `leviathan_guard_test.dart`, `contest_moves_test.dart`, `siege_moves_test.dart`, `tutorial_strategy_test.dart`) | `ExpeditionMoves.assault` above, `faction` (`FactionKernelWar`, `FactionPostWar`, `KernelSiege`), `leviathan` |
+| `tutorial_strategy_test.dart` (whole turns through `EndTurnAction`, and `ScriptLibrary` in its last test) | `turn` (`EndTurnAction`), then the runners of `script` |
 | The second test of `script_player_helpers_test.dart` (`ScriptMilestones`) | the runners of `script` |
-| `faction/faction_brain.dart`, `faction_turns.dart`; the third test of `faction_scouting_test.dart` (the brain explores on a war slot) | the next step of this lot |
 | `faction_attack_play_test.dart`, `faction_play_test.dart`, `faction_race_test.dart`, `faction_replay_test.dart`, `faction_research_play_test.dart` (whole games through `playFactionGame`, `playIdleFactionGame` or `faction_race.dart`) | `turn` (`EndTurnAction`), then the runners of `script` for the replays |
 | `script/strategies_test.dart` (whole games through `ScriptRunner` and `BatchRunner`) | `turn` (`EndTurnAction`), then the runners of `script` |
 | `script/action_spec.dart` (a typedef: an `ActionSpec` is a `Callable` taking a `DartRandom` and giving an `Action`) | `script/action_codec.dart`, its only reader |

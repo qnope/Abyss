@@ -74,6 +74,17 @@ func test_the_noise_gauge_fills_a_trench_track_with_warning() -> void:
 	assert_eq(_box("fill", AbyssInputTheme.NOISE_GAUGE).bg_color, AbyssColors.WARNING)
 
 
+func test_the_chance_gauges_are_progress_bars_filled_by_rating() -> void:
+	var fills := {
+		AbyssInputTheme.CHANCE_HIGH: AbyssColors.SUCCESS,
+		AbyssInputTheme.CHANCE_RISKY: AbyssColors.WARNING,
+		AbyssInputTheme.CHANCE_LOW: AbyssColors.ERROR,
+	}
+	for gauge: StringName in fills:
+		assert_eq(_theme.get_type_variation_base(gauge), &"ProgressBar")
+		assert_eq(_box("fill", gauge).bg_color, fills[gauge])
+
+
 func test_a_slider_lights_its_track_up_to_a_cyan_thumb() -> void:
 	assert_eq(_box("slider", "HSlider").bg_color, AbyssColors.SURFACE_BRIGHT)
 	assert_eq(_box("grabber_area", "HSlider").bg_color, CYAN)

@@ -39,6 +39,8 @@ var key_light := KeyLight.new()
 var water := UnderwaterEnvironment.new()
 var buildings := BaseBuildings.new()
 var marks := PadMarks.new()
+## The ring the tutorial's guide puts around the pad it points at.
+var guide := GuideRing.new()
 var pads: BasePads
 var motion: BaseMotion
 var snow := MarineSnow.new()
@@ -56,6 +58,7 @@ func _init() -> void:
 	add_child(_rampart)
 	add_child(buildings)
 	add_child(marks)
+	add_child(guide)
 	add_child(key_light)
 	add_child(water)
 	add_child(LightShafts.new(RAYS))

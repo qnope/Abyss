@@ -22,6 +22,8 @@ var key_light := KeyLight.new()
 var tiles := MapTiles.new()
 var contents := MapContents.new()
 var scouts := MapScouts.new()
+## The ring the tutorial's guide puts around the cell it points at.
+var guide := MapGuide.new()
 ## The level on show, 0 before the first.
 var level := 0
 var state: MapLevelState
@@ -31,7 +33,7 @@ var _foot := 0.0
 
 func _init() -> void:
 	name = &"Map"
-	for part: Node in [tiles, contents, scouts, key_light, camera]:
+	for part: Node in [tiles, contents, scouts, guide, key_light, camera]:
 		add_child(part)
 	camera.tapped.connect(_on_tapped)
 
@@ -48,6 +50,7 @@ func show_level(next: MapLevelState) -> void:
 	tiles.show_looks(looks, next.map.width, next.map.height)
 	contents.show_looks(looks, next.map.width, next.map.height)
 	scouts.show_scouts(next.pending, level, next.map.width, next.map.height)
+	guide.shown_on(next)
 	if changed:
 		frame(_hud, _foot)
 		camera.home()

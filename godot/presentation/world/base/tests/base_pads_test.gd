@@ -55,3 +55,8 @@ func test_picks_the_pad_a_ray_meets_first() -> void:
 
 func _pad(name: StringName) -> MeshInstance3D:
 	return _island.get_node("Pads/" + name) as MeshInstance3D
+
+
+func test_tells_how_far_a_pad_reaches() -> void:
+	for name: StringName in _pads.names():
+		assert_true(_pads.radius_of(name) > 0.0, str(name))

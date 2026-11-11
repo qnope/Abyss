@@ -76,7 +76,8 @@ jobs:
   reference:
     name: Reference
     # What the Godot port is checked against (reference/README.md): the
-    # committed games and vectors must be what the Dart rules give today.
+    # committed games, vectors and simulations must be what the Dart rules
+    # give today.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -90,6 +91,8 @@ jobs:
         run: dart run bin/export_reference.dart --check
       - name: The vectors are what the rules compute
         run: dart run bin/export_vectors.dart --check
+      - name: The simulations print what was committed
+        run: python3 tool/simulations.py
 
   build-web:
     name: Build Web
@@ -226,8 +229,9 @@ jobs:
           retention-days: 14
 
   # Every game of reference/games/ replayed by the Godot port, every digest
-  # of every turn compared with Dart's (godot/tool/replay/README.md): too
-  # long for the unit tests, so a job of its own, the games in parallel.
+  # of every turn compared with Dart's (godot/tool/replay/README.md), and
+  # the simulations of reference/simulations/: too long for the unit tests,
+  # so a job of its own, the games in parallel.
   godot-reference:
     name: Godot Reference
     runs-on: ubuntu-latest
@@ -241,6 +245,8 @@ jobs:
         run: godot --headless --path godot --import || godot --headless --path godot --import
       - name: The reference games replay in Godot as in Dart
         run: tool/godot_reference.sh
+      - name: The Godot simulator prints what Dart printed
+        run: python3 tool/simulations.py --engine godot
 
   godot-web:
     name: Godot Web

@@ -1,0 +1,212 @@
+{
+  "summary": {
+    "games": 2,
+    "defeats": 0,
+    "victories": 0,
+    "factionVictories": 0,
+    "survivalRate": 1.0,
+    "averageTurns": 40.0,
+    "averageRaidsLost": 1.0,
+    "averageRaidsRepelled": 7.5,
+    "averageNoise": 496.0,
+    "earliestDefeat": null
+  },
+  "runs": [
+    {
+      "script": "replay-Test-tour-84 (autre carte, autres dés, armée ×1.2, retard 0-2, tempo ×1.1, défense prudente)",
+      "seed": 1,
+      "status": "playing",
+      "turnsPlayed": 40,
+      "raidsRepelled": 8,
+      "raidsLost": 0,
+      "monstersDefeated": 18,
+      "totalNoise": 490,
+      "failedActions": 50,
+      "buildings": {
+        "headquarters": 7,
+        "algaeFarm": 4,
+        "coralMine": 4,
+        "oreExtractor": 3,
+        "solarPanel": 4,
+        "laboratory": 3,
+        "barracks": 3,
+        "coralCitadel": 1,
+        "descentModule": 1,
+        "pressureCapsule": 0,
+        "volcanicKernel": 0
+      },
+      "baseUnits": {
+        "scout": 0,
+        "harpoonist": 48,
+        "guardian": 8,
+        "domeBreaker": 0,
+        "abyssAdmiral": 0,
+        "saboteur": 0
+      },
+      "resources": {
+        "algae": 3232,
+        "coral": 1276,
+        "ore": 1999,
+        "energy": 679,
+        "pearl": 40
+      },
+      "failleCaptured": 34,
+      "chemineeCaptured": 40,
+      "kernelCaptured": null,
+      "leviathanStruck": 40,
+      "leviathanHeld": true,
+      "raids": [
+        {
+          "turn": 13,
+          "monsters": 26,
+          "level": 1,
+          "victory": true
+        },
+        {
+          "turn": 18,
+          "monsters": 53,
+          "level": 1,
+          "victory": true
+        },
+        {
+          "turn": 21,
+          "monsters": 50,
+          "level": 2,
+          "victory": true
+        },
+        {
+          "turn": 24,
+          "monsters": 47,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 27,
+          "monsters": 30,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 30,
+          "monsters": 25,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 32,
+          "monsters": 25,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 36,
+          "monsters": 22,
+          "level": 3,
+          "victory": true
+        }
+      ],
+      "waves": []
+    },
+    {
+      "script": "replay-Test-tour-84 (autre carte, autres dés, armée ×1.2, retard 0-2, tempo ×1.1, défense prudente)",
+      "seed": 2,
+      "status": "playing",
+      "turnsPlayed": 40,
+      "raidsRepelled": 7,
+      "raidsLost": 2,
+      "monstersDefeated": 96,
+      "totalNoise": 502,
+      "failedActions": 61,
+      "buildings": {
+        "headquarters": 7,
+        "algaeFarm": 4,
+        "coralMine": 4,
+        "oreExtractor": 3,
+        "solarPanel": 4,
+        "laboratory": 3,
+        "barracks": 3,
+        "coralCitadel": 1,
+        "descentModule": 0,
+        "pressureCapsule": 0,
+        "volcanicKernel": 0
+      },
+      "baseUnits": {
+        "scout": 1,
+        "harpoonist": 55,
+        "guardian": 5,
+        "domeBreaker": 0,
+        "abyssAdmiral": 0,
+        "saboteur": 0
+      },
+      "resources": {
+        "algae": 3511,
+        "coral": 964,
+        "ore": 1479,
+        "energy": 513,
+        "pearl": 22
+      },
+      "failleCaptured": null,
+      "chemineeCaptured": null,
+      "kernelCaptured": null,
+      "leviathanStruck": null,
+      "leviathanHeld": null,
+      "raids": [
+        {
+          "turn": 13,
+          "monsters": 9,
+          "level": 1,
+          "victory": false
+        },
+        {
+          "turn": 19,
+          "monsters": 56,
+          "level": 1,
+          "victory": true
+        },
+        {
+          "turn": 22,
+          "monsters": 38,
+          "level": 2,
+          "victory": true
+        },
+        {
+          "turn": 25,
+          "monsters": 19,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 28,
+          "monsters": 19,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 31,
+          "monsters": 69,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 33,
+          "monsters": 71,
+          "level": 3,
+          "victory": false
+        },
+        {
+          "turn": 38,
+          "monsters": 14,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 40,
+          "monsters": 29,
+          "level": 3,
+          "victory": true
+        }
+      ],
+      "waves": []
+    }
+  ]
+}

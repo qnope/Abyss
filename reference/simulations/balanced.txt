@@ -1,0 +1,6 @@
+Stratégie : balanced, 3 parties
+Survie : 100 % (0 défaites, 0 victoires)
+Tours joués en moyenne : 30.0
+Raids repoussés / perdus en moyenne : 4.7 / 1.3
+Bruit total moyen : 307.7
+Première défaite : tour -

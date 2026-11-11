@@ -1,0 +1,6 @@
+Stratégie : economy, 0 parties
+Survie : 0 % (0 défaites, 0 victoires)
+Tours joués en moyenne : 0.0
+Raids repoussés / perdus en moyenne : 0.0 / 0.0
+Bruit total moyen : 0.0
+Première défaite : tour -

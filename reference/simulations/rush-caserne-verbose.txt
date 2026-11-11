@@ -1,0 +1,37 @@
+seed 9: defeat au tour 28, raids 0 repoussés / 3 perdus, bruit 142
+seed 10: defeat au tour 28, raids 0 repoussés / 3 perdus, bruit 142
+
+Journal de la partie seed 9 :
+T1 ✓ Ameliorer BuildingType.headquarters
+T1 ✗ Ameliorer BuildingType.algaeFarm (worksitesBusy)
+T1 ✗ Ameliorer BuildingType.coralMine (worksitesBusy)
+T2 ✓ Ameliorer BuildingType.solarPanel
+T3 ✓ Ameliorer BuildingType.algaeFarm
+T4 ✓ Ameliorer BuildingType.coralMine
+T5 ✓ Ameliorer BuildingType.oreExtractor
+T6 ✓ Ameliorer BuildingType.headquarters
+T7 ✓ Ameliorer BuildingType.solarPanel
+T8 ✓ Ameliorer BuildingType.headquarters
+T9 ✓ Ameliorer BuildingType.algaeFarm
+T10 ✓ Ameliorer BuildingType.coralMine
+T11 ✗ Ameliorer BuildingType.headquarters (notEnoughResources)
+T12 ✓ Ameliorer BuildingType.barracks
+T13 ✗ Recruter 10 UnitType.harpoonist (notEnoughResources)
+T14 ✓ Ameliorer BuildingType.oreExtractor
+T15 ✓ Ameliorer BuildingType.headquarters
+T16 ✓ Ameliorer BuildingType.solarPanel
+T17 ✓ Ameliorer BuildingType.algaeFarm
+T18 ✓ Ameliorer BuildingType.coralMine
+T19 ✓ Ameliorer BuildingType.oreExtractor
+T22 ✓ Ameliorer BuildingType.headquarters
+T25 ✓ Ameliorer BuildingType.headquarters
+T25 ✓ Ameliorer BuildingType.coralMine
+T26 ✓ Ameliorer BuildingType.solarPanel
+T28 ✓ Ameliorer BuildingType.algaeFarm
+
+Stratégie : rush-caserne, 2 parties
+Survie : 0 % (2 défaites, 0 victoires)
+Tours joués en moyenne : 28.0
+Raids repoussés / perdus en moyenne : 0.0 / 3.0
+Bruit total moyen : 142.0
+Première défaite : tour 28

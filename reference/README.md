@@ -12,7 +12,11 @@ The Dart side lives in `lib/domain/reference/`.
 Beside the games, `reference/vectors/` holds inputs and outputs of single
 pieces of the rules (Dart's random generator, sort and arithmetic, costs,
 fights, maps...), for the modules ported before a whole game can be replayed:
-see `reference/vectors/README.md`. CI's `Reference` job checks both.
+see `reference/vectors/README.md`. And `reference/simulations/` holds what
+`bin/simulate.dart` prints for a few sets of options, which the Godot
+simulator must print the same (`reference/simulations/README.md`): after a
+change of rules, `python3 tool/simulations.py --update` writes them again.
+CI's `Reference` job checks all three.
 
 ## Canonical text
 

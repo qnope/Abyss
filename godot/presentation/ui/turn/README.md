@@ -22,7 +22,9 @@ is a chain of signals, no `await`. It saves and navigates nothing: `app/` joins
   "no production" line shows when there is nothing to tell.
 - `TurnSummary`: the dialog of what the turn did, one section per line of
   `SummarySections.of(result)`.
-- `TurnOutcome`: the ordered queue of pages shown after a turn.
+- `TurnOutcome`: the ordered queue of pages shown after a turn
+  (`default_steps(actions)`: the summary, then the card of the event drawn,
+  `EventStep`).
 - Components: `SummaryLine`, `ResourceChangeLine`, `LossSection` (built by
   `TurnLosses`, `UndefendedPostWarning` by `TurnWarnings`). Factories are in
   `RefCounted` classes, not static functions of the nodes: a node class that
@@ -35,19 +37,21 @@ changes.
 
 - `SummarySections.of(result)`: a section of the summary is a `Control` added
   at the place Flutter puts it, after the losses: the raid and the kraken wave
-  are in (`ThreatSections`). To come: the exploration summary (lot 9) before the
-  raid, the attacks of the factions (lots 10 and 13) between the raid and the
-  wave, the event (lot 14) and the objectives completed (lot 15) after it.
+  (`ThreatSections`), then the event lines (`EventTurnSection`). To come: the
+  exploration summary (lot 9) before the raid, the attacks of the factions
+  (lots 10 and 13) between the raid and the wave, the objectives completed
+  (lot 15) after them.
 - `TurnWarnings.of(game, player)`: a warning of the question. The threats
   (`ThreatWarnings`: the raid, the predators, the guardians of a Faille, the
-  kraken wave) come first, then the undefended posts; to come: the event
-  waiting for a choice (lot 14).
-- `TurnOutcome.default_steps()`: a step is a `Callable` returning the next page
-  (a `Control` with a `closed` signal) or null when it has nothing to show. After
-  `summary_page` come the reports of the raid, of the predators and of a kraken
-  wave lost (`ThreatPages`). To come, in Flutter's order: the event card (lot
-  14), the objective and tip cards (lot 15). The turn's stories (animations)
-  are step 7's.
+  kraken wave) come first, then the undefended posts, then the event waiting
+  for a choice (`EventPendingWarning`).
+- `TurnOutcome.default_steps(actions)`: a step is a `Callable` returning the
+  next page (a `Control` with a `closed` signal) or null when it has nothing to
+  show; a page that changes the game (the event's choice) is built with the
+  `actions`. After `summary_page` come the reports of the raid, of the
+  predators and of a kraken wave lost (`ThreatPages`), then the event card
+  (`EventStep`). To come, in Flutter's order: the objective and tip cards
+  (lot 15). The turn's stories (animations) are step 7's.
 
-Shown: resources, shutdowns, lost units, the raid and the kraken wave, and the
-recruitment now open. Not shown yet: what the lots above bring.
+Shown: resources, shutdowns, lost units, the recruitment now open and the
+events. Not shown yet: everything else above.

@@ -106,6 +106,12 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   another lot builds (`LAIR`, `POST`, `KERNEL`, `FACTION_BASE`) is handed to the
   handler registered with `CellRouter.register(kind, handler)`; until then it opens
   a "coming soon" sheet.
+
+- `event/`: the random events (`event/README.md`): `EventCard` (an
+  `IllustratedCard` whose options go through `GameActions`), `EventStatusBar`
+  (the strip of the game screen that reopens the pending card), the warning of
+  the question, the lines of the summary and `EventStep`, the page of the turn's
+  queue.
 - `threat/`: the parts of the raid gauge (`NoiseCostRow`).
 - `resource/`: the resource bar (`ResourceBar`, a `ResourceBarItem` per
   resource with its amount, rate and shortage state, `AnimatedAmount` flashing

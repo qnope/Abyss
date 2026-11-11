@@ -140,6 +140,9 @@ func test_ten_turns_in_a_row_each_ask_each_summary() -> void:
 		press("Confirmer")
 		assert_eq((current_modal() as TurnSummary).title(), "Tour %d → Tour %d" % [turn, turn + 1])
 		press("OK")
+		# An event drawn this turn has its card after the summary: put off.
+		if current_modal() is EventCard:
+			current_modal().close()
 	assert_eq(_game.turn, 11)
 	assert_eq(_results.size(), 10)
 	assert_eq(_told.size(), 10)

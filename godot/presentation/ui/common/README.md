@@ -38,7 +38,8 @@ its style box with `AbyssBox` from it. Depends on `domain/` and `../theme`,
 `InfoBadge` (a line of text and an icon in a box rimmed with a colour, the
 base's banners), `StatusPill`, `CountBadge`, `NoticeBanner`, `ThreatBanner` (a `tapped` signal
 when tappable), `SegmentedBar` of `SegmentItem`s (a `chosen` signal),
-`LabeledSwitch` (a `toggled` signal), `LoreText` (dimmed italics, the Body
+`LabeledSwitch` (a `toggled` signal), `StripLine` (a glyph and a short text of a
+status strip), `LoreText` (dimmed italics, the Body
 font leaned), `GuideHalo` (a pulsing cyan halo around any control while
 `active`; a rounded rectangle or circle, not Flutter's traced paths) and
 `TabPlaceholder` ("coming soon" follows the language). `Greyscale` turns any

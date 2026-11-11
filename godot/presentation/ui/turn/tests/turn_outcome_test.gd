@@ -23,7 +23,7 @@ func _run(steps: Array[Callable]) -> void:
 
 
 func test_the_default_queue_is_the_summary_of_the_turn() -> void:
-	_run(TurnOutcome.default_steps())
+	_run(TurnOutcome.default_steps(GameActions.new(_game)))
 	var summary := current_modal() as TurnSummary
 	assert_not_null(summary)
 	assert_eq(summary.result, _result)

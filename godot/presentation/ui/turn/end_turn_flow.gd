@@ -44,7 +44,7 @@ func _on_answer(confirmed: Variant) -> void:
 		return
 	var result := actions.end_turn()
 	turn_ended.emit(result)
-	outcome = TurnOutcome.new(actions.game, result, _modals, TurnOutcome.default_steps())
+	outcome = TurnOutcome.new(actions.game, result, _modals, TurnOutcome.default_steps(actions))
 	outcome.defeated.connect(defeated.emit)
 	outcome.finished.connect(finished.emit)
 	outcome.run()

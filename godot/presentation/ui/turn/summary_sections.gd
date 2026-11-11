@@ -7,10 +7,11 @@ extends RefCounted
 ## tell about it; a lot that owns a section adds a line to [method of], at the
 ## place Flutter puts it:
 ##
-## - after the losses, the raid and the kraken wave ([ThreatSections]);
+## - after the losses, the raid and the kraken wave ([ThreatSections]), then
+##   the event lines ([EventTurnSection]);
 ## - to come, around them: the exploration summary (lot 9) before the raid, the
-##   attacks of the factions (lots 10 and 13) between the two, the event
-##   (lot 14) and the objectives completed (lot 15) after the wave.
+##   attacks of the factions (lots 10 and 13) between the two and the
+##   objectives completed (lot 15) after the wave.
 
 
 ## The sections of [param result], top to bottom.
@@ -24,6 +25,7 @@ static func of(result: TurnResult) -> Array[Control]:
 		found.append(TurnLosses.lost_units(result.lost_units))
 	found.append_array(ThreatSections.raid(result))
 	found.append_array(ThreatSections.volcano(result))
+	found.append_array(EventTurnSection.of(result))
 	if result.had_recruited_units:
 		if not found.is_empty():
 			found.append(HSeparator.new())

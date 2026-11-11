@@ -3,7 +3,7 @@
 Review renders of the game's 3D prototype and screens, not game code, left out
 of exports.
 
-    tool/scene_capture.sh [out dir] [scene | app | base | kit]
+    tool/scene_capture.sh [out dir] [scene | app | base | turn | kit]
 
 `capture.gd` opens `app/prototype/prototype.tscn` (or `scene`) in a window the size of a
 phone held upright at 2x (780 x 1688, the project's 390 x 844 points), lets
@@ -42,6 +42,17 @@ are, in place of their stand-ins) and the sheets of a building that can rise,
 a degraded one, the Coral Citadel and a plot held back by a prerequisite
 (`base_sheet_upgrade.png`, `_degraded.png`, `_citadel.png`, `_locked.png`), each
 with its draw calls and primitives. Never commit the renders.
+
+## The end of a turn and of a game
+
+`turn_capture.gd` (`tool/scene_capture.sh [out dir] turn`, or after the kit's
+views when no scene is given) plays a game three turns through the real
+screens, then stops its algae and energy and renders: `turn_confirm.png` (the
+question: what the base will make, the buildings that will shut down, the units
+that will starve), `turn_summary.png` (what the turn did), `turn_summary_en.png`
+(the same after the language changed), `turn_victory.png` and `turn_defeat.png`
+(the two screens of a game's end), each with its draw calls and primitives.
+Never commit the renders.
 
 ## The UI kit
 

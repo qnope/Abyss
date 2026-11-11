@@ -45,6 +45,23 @@ static func of(type: BuildingType.Value) -> StandInShape:
 	return StandInShape.new(Kind.SPHERE, Vector3(1.6, 1.6, 1.6))
 
 
+## The shape of the unit [param type], smaller than a building's: told from
+## the five others by its kind, a figure of the squad.
+static func of_unit(type: UnitType.Value) -> StandInShape:
+	match type:
+		UnitType.Value.SCOUT:
+			return StandInShape.new(Kind.SPHERE, Vector3(0.6, 0.6, 0.6))
+		UnitType.Value.HARPOONIST:
+			return StandInShape.new(Kind.PRISM, Vector3(0.55, 1.3, 0.55))
+		UnitType.Value.GUARDIAN:
+			return StandInShape.new(Kind.BOX, Vector3(0.8, 0.9, 0.5))
+		UnitType.Value.DOME_BREAKER:
+			return StandInShape.new(Kind.CYLINDER, Vector3(0.8, 0.7, 0.8), 0.6)
+		UnitType.Value.ABYSS_ADMIRAL:
+			return StandInShape.new(Kind.CAPSULE, Vector3(0.7, 1.6, 0.7))
+	return StandInShape.new(Kind.TORUS, Vector3(0.9, 0.3, 0.9))
+
+
 ## A mesh of the solid, centred on its box.
 func mesh() -> PrimitiveMesh:
 	match kind:

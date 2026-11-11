@@ -67,3 +67,38 @@ func _make(type: BuildingType.Value, level: int, degraded := false) -> Node3D:
 	(Engine.get_main_loop() as SceneTree).root.add_child(node)
 	_made.append(node)
 	return node
+
+
+func test_gives_a_stand_in_for_every_unit_until_step_7() -> void:
+	for type: UnitType.Value in UnitType.Value.values():
+		var node := _unit(type)
+		assert_true(node is UnitStandIn, str(type))
+		assert_eq((node as UnitStandIn).type, type)
+		assert_false((node as UnitStandIn).ghost)
+
+
+func test_gives_the_ghost_of_a_locked_unit() -> void:
+	var node := _unit(UnitType.Value.GUARDIAN, true)
+	assert_true((node as UnitStandIn).ghost)
+
+
+func test_gives_the_model_of_a_unit_when_there_is_one() -> void:
+	var models: Dictionary[UnitType.Value, PackedScene] = {
+		UnitType.Value.SCOUT: WorldModels.MODELS[BuildingType.Value.HEADQUARTERS],
+	}
+	var model := _unit(UnitType.Value.SCOUT, false, models)
+	assert_false(model is UnitStandIn)
+	for mesh: Node in model.find_children("*", "GeometryInstance3D", true, false):
+		assert_null((mesh as GeometryInstance3D).material_overlay)
+	var ghost := _unit(UnitType.Value.SCOUT, true, models)
+	for mesh: Node in ghost.find_children("*", "GeometryInstance3D", true, false):
+		assert_not_null((mesh as GeometryInstance3D).material_overlay)
+	assert_true(_unit(UnitType.Value.GUARDIAN, false, models) is UnitStandIn, "the others stay stand-ins")
+
+
+func _unit(type: UnitType.Value, ghost := false,
+		models: Dictionary[UnitType.Value, PackedScene] = WorldModels.UNIT_MODELS) -> Node3D:
+	var node := WorldModels.unit(type, ghost, models)
+	(Engine.get_main_loop() as SceneTree).root.add_child(node)
+	_made.append(node)
+	return node

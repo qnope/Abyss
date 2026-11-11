@@ -99,3 +99,13 @@ static func _motion(y: float) -> InputEventMouseMotion:
 	var event := InputEventMouseMotion.new()
 	event.position = Vector2(20.0, y)
 	return event
+
+
+func test_measures_its_chrome_again_once_laid_out() -> void:
+	var sheet := mount(BottomSheet.new()) as BottomSheet
+	var scroll := sheet._scroll as ScrollBody
+	sheet.fit(Vector2(400.0, 800.0))
+	sheet.body.add_child(Label.new())
+	sheet.resized.emit()
+	var chrome := sheet.get_combined_minimum_size().y - scroll.custom_minimum_size.y
+	assert_almost_eq(scroll.max_height, maxf(800.0 * BottomSheet.MAX_HEIGHT_SHARE - chrome, 0.0), 0.5)

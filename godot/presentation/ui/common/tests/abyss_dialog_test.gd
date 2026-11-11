@@ -82,6 +82,18 @@ func test_scrolls_its_body_when_it_is_taller_than_the_screen() -> void:
 	assert_true(scroll.custom_minimum_size.y <= 20.0, "a short body is not stretched")
 
 
+func test_measures_its_chrome_again_once_laid_out() -> void:
+	var dialog := mount(AbyssDialog.new("Settings")) as AbyssDialog
+	var scroll := dialog._scroll as ScrollBody
+	dialog.fit(Vector2(400.0, 800.0))
+	var chrome := dialog.get_combined_minimum_size().y - scroll.custom_minimum_size.y
+	dialog.set_title("A title of the settings of a game")
+	dialog.resized.emit()
+	var longer := dialog.get_combined_minimum_size().y - scroll.custom_minimum_size.y
+	assert_almost_eq(scroll.max_height, maxf(800.0 * AbyssDialog.MAX_HEIGHT_SHARE - longer, 0.0), 0.5)
+	assert_true(longer >= chrome)
+
+
 func test_a_subclass_follows_the_language_through_refresh() -> void:
 	var dialog := mount(LanguageAware.new()) as AbyssDialog
 	assert_eq(dialog.title(), "Fermer")

@@ -205,10 +205,9 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_solo_test.dart` | `script` |
 | `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
-| `objective/guide/guide_leviathan.dart`, `guide_leviathan_test.dart` | nothing left: `LeviathanResolver` and `LeviathanDefenceAdvisor` are there, they come next |
 | `leviathan/leviathan_turn_test.dart` (the guardians through `EndTurnAction` and `TurnResult`) | `turn` |
 | `objective/guide/guide_alerts.dart` | `faction` (`UndefendedPosts`, which reads `action`'s `PostTakeover`) |
 | `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` above |
-| `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own) | `GuideCampaign` and `GuideLeviathan` above |
+| `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own); the last test of `guide_leviathan_test.dart` (the tutorial off: the others read `GuideLeviathan` itself) | `GuideCampaign` above |
 | `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `script` |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

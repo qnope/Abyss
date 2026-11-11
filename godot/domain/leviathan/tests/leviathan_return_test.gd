@@ -1,8 +1,8 @@
 extends TestCase
 ## Not in the Dart tests, which read a LeviathanReturn through the capture
 ## of a Faille and the ends of turn (test/domain/leviathan/
-## leviathan_schedule_test.dart, _once_, _postponed_: the action and
-## leviathan modules): the bookkeeping itself, as lib/domain/leviathan/
+## leviathan_schedule_test.dart, _once_, _postponed_, ported beside this
+## file): the bookkeeping itself, as lib/domain/leviathan/
 ## leviathan_return.dart answers.
 
 

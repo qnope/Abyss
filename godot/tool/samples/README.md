@@ -204,3 +204,9 @@ of state it alone must show, each a `Callable` taking the `Game`.
 `TurnDigests.play`, the snapshot digests of the games of the whole-games
 digest test as turns start and when they stop; `SnapshotHistories` holds
 what the scratch Dart script printed through `GameSnapshot`.
+
+`LiveGames` is the twin of `test/domain/replay/live_game_helper.dart` and
+`two_player_replay_helper.dart`: a game played as in the game screen, every
+die a fresh `SeededRandom` (`play_live_game`), the human and a rival playing
+turn about (`play_two`, its rival `RIVAL_ID`), and the snapshot a replay
+must reproduce of a player (`snapshot_of`, `both`).

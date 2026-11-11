@@ -3,7 +3,7 @@
 Review renders of the game's 3D prototype and screens, not game code, left out
 of exports.
 
-    tool/scene_capture.sh [out dir] [scene | app | base | turn | kit]
+    tool/scene_capture.sh [out dir] [scene | app | base | army | turn | kit]
 
 `capture.gd` opens `app/prototype/prototype.tscn` (or `scene`) in a window the size of a
 phone held upright at 2x (780 x 1688, the project's 390 x 844 points), lets
@@ -42,6 +42,23 @@ are, in place of their stand-ins) and the sheets of a building that can rise,
 a degraded one, the Coral Citadel and a plot held back by a prerequisite
 (`base_sheet_upgrade.png`, `_degraded.png`, `_citadel.png`, `_locked.png`), each
 with its draw calls and primitives. Never commit the renders.
+
+## The army
+
+`army_capture.gd` (`tool/scene_capture.sh [out dir] army`, or after the base's
+shots when no scene is given) plays a game whose army serves on two levels,
+with a barracks at level 3 and full stores, opens the Army tab and renders:
+`army_parade.png` (the parade ground: a squad of stand-ins on each of the six
+pads, a shape and a colour per unit, its count and name over it, the green plus
+where recruiting is possible, a ghost and a padlock where the barracks is too
+low, the barracks at the back and the bar of places at the foot),
+`army_places.png` (the second level only), `army_close.png` (nearer),
+`army_sheet_unit.png` and `army_sheet_recruit.png` (the sheet of a unit, then
+with four to recruit: the cost in resources, the noise), `army_sheet_locked.png`
+(a unit the barracks is too low for), `army_reinforcement.png` and
+`army_picker.png` (the dialogs that pick units) and `army_barracks_empty.png`
+(no barracks yet), each with its draw calls and primitives. Never commit the
+renders.
 
 ## The end of a turn and of a game
 

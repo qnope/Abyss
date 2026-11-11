@@ -10,7 +10,7 @@ extends Node3D
 ## The pad's thickness, and how high the plaque and the sign float.
 const PAD_HEIGHT := 0.12
 const PLAQUE_HEIGHT := 2.2
-const SIGN_HEIGHT := 3.0
+const SIGN_HEIGHT := 3.2
 ## How high a tap picks the squad.
 const REACH := 2.2
 

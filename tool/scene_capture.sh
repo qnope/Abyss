@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 # Renders the 3D prototype, the app's screens and the UI kit for review, as a
 # phone held upright shows them (390 x 844 points at 2x):
-#   tool/scene_capture.sh [out dir] [scene | app | base | turn | tech | kit]
+#   tool/scene_capture.sh [out dir] [scene | app | base | army | turn | tech | kit]
 # With no scene, it writes default.png, rotated.png, close.png and top.png from
 # the views of godot/tool/scene/capture.gd, then app_menu_empty.png,
 # app_menu.png, app_new_game.png, app_saves.png, app_story.png, app_game.png,
 # app_game_settings.png, app_game_resource.png and app_game_tech.png
 # from godot/tool/scene/app_capture.gd, then base_standins.png, base_close.png,
 # base_models.png and base_sheet_upgrade.png, _degraded.png, _citadel.png and
-# _locked.png from godot/tool/scene/base_capture.gd, then kit_a.png, kit_b.png, kit_b_en.png,
+# _locked.png from godot/tool/scene/base_capture.gd, then army_parade.png,
+# army_places.png, army_close.png, army_sheet_unit.png, _recruit.png and
+# _locked.png, army_reinforcement.png, army_picker.png and
+# army_barracks_empty.png from godot/tool/scene/army_capture.gd, then kit_a.png, kit_b.png, kit_b_en.png,
 # kit_dialog.png, kit_sheet.png and kit_page.png from
 # godot/tool/scene/kit_capture.gd, then turn_confirm.png, turn_summary.png,
 # turn_summary_en.png, turn_victory.png and turn_defeat.png from
@@ -16,7 +19,7 @@
 # tech_tree_en.png, tech_node.png, tech_choice.png, tech_done.png,
 # tech_blocked.png and tech_branch.png from godot/tool/scene/tech_capture.gd,
 # and prints each view's draw calls and primitives. With a scene (res://...tscn) only the first, on that scene; with
-# `app` only the second; with `base` only the third; with `kit` only the kit's;
+# `app` only the second; with `base` only the third; with `army` only the army tab's; with `kit` only the kit's;
 # with `turn` only the end of a turn and of a game; with `tech` only the research. The out dir defaults to
 # /tmp/scene_capture: never write the renders in the repo. Godot draws with
 # its Compatibility renderer (the web's) in a virtual X display (xvfb-run), in
@@ -41,7 +44,7 @@ capture() {
     --script "$1" -- "$out" ${2:+"$2"} 2>&1 | grep -vE "^(Godot Engine|OpenGL API|$)" || true
 }
 
-if [[ $which != kit && $which != app && $which != base && $which != turn && $which != tech ]]; then
+if [[ $which != kit && $which != app && $which != base && $which != army && $which != turn && $which != tech ]]; then
   capture res://tool/scene/capture.gd "$which"
   [[ -f $out/default.png ]] || { echo "The scene did not render." >&2; exit 1; }
 fi
@@ -52,6 +55,10 @@ fi
 if [[ -z $which || $which == base ]]; then
   capture res://tool/scene/base_capture.gd
   [[ -f $out/base_sheet_locked.png ]] || { echo "The base did not render." >&2; exit 1; }
+fi
+if [[ -z $which || $which == army ]]; then
+  capture res://tool/scene/army_capture.gd
+  [[ -f $out/army_barracks_empty.png ]] || { echo "The army tab did not render." >&2; exit 1; }
 fi
 if [[ -z $which || $which == kit ]]; then
   capture res://tool/scene/kit_capture.gd

@@ -105,6 +105,14 @@ post with its passage, or the volcanic kernel, and the other stands ready
 to strike, with the armies of those files as constants; `strike` is the
 attack on the post, or on the kernel, with its dice `SeededRandom(seed)`.
 
+`War` is the twin of `test/helpers/faction_war_helper.dart`: a game
+against two factions whose first one stands on its war slot with the horde
+of `AssaultSamples`, `play` its `FactionWar` with the dice `Random(2)`, and
+`see`, which shows it a base; `assaults` lists the assault entries of a
+player. `KernelDescent` is the twin of `kernel_descent_helper.dart`: a
+`KernelWar` whose attacker holds the Faille and the Cheminée with their
+passages.
+
 `WarDigests` writes what the digest test of the wars between players
 (`war_digest_test.gd`) compares, an attack on a post or on a held kernel,
 the last assault entry of a player and the attacks pending on the human

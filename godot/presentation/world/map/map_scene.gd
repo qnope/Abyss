@@ -1,0 +1,81 @@
+class_name MapScene
+extends Node3D
+## The map of a level in 3D, shown on the map tab as the base is on the base
+## tab: a tile for each cell (dark and lower while it is not seen), what stands
+## on the cells seen (a stand-in until step 7: treasures, lairs, posts, bases,
+## the volcano...) and the scouts on their way. Lit from the surface and seen by
+## a camera that pans and zooms; the ambience (the water, the sky) is the
+## base's, which shares it.
+##
+## One level at a time: [method show_level] draws what `app/` reads from the
+## game, and a tap on a cell is told by [signal cell_tapped] with the level.
+
+## The player tapped the cell ([param x], [param y]) of [param level].
+signal cell_tapped(level: int, x: int, y: int)
+
+## The share of the screen kept free at the top for the level selector, which
+## floats there.
+const LEVEL_BAR_ROOM := 0.08
+
+var camera := MapCamera.new()
+var key_light := KeyLight.new()
+var tiles := MapTiles.new()
+var contents := MapContents.new()
+var scouts := MapScouts.new()
+## The level on show, 0 before the first.
+var level := 0
+var state: MapLevelState
+var _hud := 0.0
+var _foot := 0.0
+
+
+func _init() -> void:
+	name = &"Map"
+	for part: Node in [tiles, contents, scouts, key_light, camera]:
+		add_child(part)
+	camera.tapped.connect(_on_tapped)
+
+
+## Shows the level of [param next]: its floor, its contents and its scouts. A
+## level not on show before is framed anew, the view back on the middle of the
+## map; the same level again (a change of the game) keeps the view where the
+## player left it.
+func show_level(next: MapLevelState) -> void:
+	var changed := next.level != level
+	state = next
+	level = next.level
+	var looks := MapLooks.of(next)
+	tiles.show_looks(looks, next.map.width, next.map.height)
+	contents.show_looks(looks, next.map.width, next.map.height)
+	scouts.show_scouts(next.pending, level, next.map.width, next.map.height)
+	if changed:
+		frame(_hud, _foot)
+		camera.home()
+
+
+## Fits the default view to the screen, the map centred between the top
+## [param hud] share of it and its bottom [param foot] share (and the room of
+## the level selector).
+func frame(hud: float, foot := 0.0) -> void:
+	_hud = hud
+	_foot = foot
+	if state != null and is_inside_tree():
+		camera.fit_map(state.map.width, state.map.height, hud + LEVEL_BAR_ROOM, foot)
+
+
+## Turns the key light's shadows on or off.
+func set_shadows(enabled: bool) -> void:
+	key_light.set_shadows(enabled)
+
+
+func _on_tapped(position: Vector2) -> void:
+	if state == null:
+		return
+	# The cells are in the map's space.
+	var to_map := global_transform.affine_inverse()
+	var origin := to_map * camera.project_ray_origin(position)
+	var picked: Variant = MapPick.cell(origin, to_map.basis * camera.project_ray_normal(position),
+		state.map.width, state.map.height)
+	if picked != null:
+		var cell: Vector2i = picked
+		cell_tapped.emit(level, cell.x, cell.y)

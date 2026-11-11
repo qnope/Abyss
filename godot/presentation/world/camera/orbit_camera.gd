@@ -16,7 +16,12 @@ var rig := OrbitRig.new()
 var _gestures := OrbitGestures.new(rig)
 
 
-func _init() -> void:
+## [param rig_] is the view another camera drives (the map's pans where this
+## one orbits); none makes the orbit's own.
+func _init(rig_: OrbitRig = null) -> void:
+	if rig_ != null:
+		rig = rig_
+		_gestures = OrbitGestures.new(rig)
 	fov = FOV
 	keep_aspect = KEEP_WIDTH
 	near = 0.5
@@ -38,13 +43,14 @@ func _process(delta: float) -> void:
 ## Fits the default view to the screen (OrbitFrame): [param outline], the
 ## points around the target that must show, as wide as the screen's narrow
 ## side allows, centred between the top [param hud] share of the screen and
-## its bottom [param foot] share.
-func fit(outline: PackedVector3Array, hud: float, foot := 0.0) -> void:
+## its bottom [param foot] share, seen from [param yaw] and [param pitch] (the
+## orbit's default angles unless a camera has its own).
+func fit(outline: PackedVector3Array, hud: float, foot := 0.0,
+		yaw := OrbitRig.DEFAULT_YAW, pitch := OrbitRig.DEFAULT_PITCH) -> void:
 	var size := get_viewport().get_visible_rect().size
 	var aspect := size.x / size.y
 	keep_aspect = KEEP_WIDTH if aspect < 1.0 else KEEP_HEIGHT
-	var fitted := OrbitFrame.fit(outline, OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH,
-		aspect, FOV, hud, foot)
+	var fitted := OrbitFrame.fit(outline, yaw, pitch, aspect, FOV, hud, foot)
 	rig.frame(fitted.x, fitted.y)
 	transform = rig.transform()
 

@@ -21,7 +21,7 @@ func test_finds_only_files_named_like_tests() -> void:
 
 func test_finds_the_fixtures_when_asked_for_their_folder() -> void:
 	var files := TestDiscovery.find(PackedStringArray(["tool/test/fixtures"]))
-	assert_eq(files.size(), 6)
+	assert_eq(files.size(), 7)
 	assert_has(files, "res://tool/test/fixtures/passing_test.gd")
 
 

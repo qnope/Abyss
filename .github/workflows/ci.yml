@@ -246,6 +246,9 @@ jobs:
             }
       - name: Upload coverage
         if: ${{ !cancelled() && hashFiles('coverage/godot/lcov.info') != '' }}
+        # A report for reading, not a check: an outage of the artifact store
+        # must not fail a suite that passed.
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: godot-coverage

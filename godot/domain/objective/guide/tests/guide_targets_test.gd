@@ -2,7 +2,7 @@ extends TestCase
 ## Not in the Dart files: the halo of each objective of the tutorial
 ## (GuideTargets) and the end of the turn when the worksite or the
 ## recruitment it asks for is taken (GuideBusy). The Dart tests read both
-## through GuideAdvisor, which waits for `leviathan` (guide_advisor_test.dart,
+## through GuideAdvisor (guide_advisor_test.dart, ported too,
 ## "the halo points at what to touch"); the values are what a scratch Dart
 ## script printed.
 

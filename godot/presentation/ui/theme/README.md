@@ -26,6 +26,15 @@ role or widget:
   has no Flutter original).
 - `LineEdit`: plain, or `ErrorLineEdit` for a field in error. `TextEdit`,
   `ProgressBar`, `HSlider`, `PopupMenu` and tooltips are styled as they are.
+- Surfaces (`AbyssSurfaceTheme`): `Panel` `ModalScrim` (behind a modal),
+  `PanelContainer` `BarePanel` (draws nothing, only lays out), `Button`
+  `TapSurface` (a touch area lit when pointed at or pressed), the dividers
+  (`HSeparator`, `VSeparator`) and the scrollbars, as they are.
+- `CheckButton` `Switch` (`AbyssSwitchTheme`): the switch, whose four icons
+  are drawn in code.
+- Chrome (`AbyssChromeTheme`): `PanelContainer` `SnackBarPanel` with the
+  `Label` `SnackBarLabel`, `NavigationBarPanel`, and `Button` `NavigationItem`
+  (a destination of the navigation bar, in a `ButtonGroup`).
 
 Colours are `AbyssColors`, `FactionColors` and `AbyssArmyColors`; durations
 and curves are `AbyssMotion`. What a theme cannot hold (a minimum height, a
@@ -56,5 +65,8 @@ Godot test fails until the port follows.
   set per node.
 - Curves: Godot's tween equations differ from Flutter's Bézier fits by at most
   2–5 % of the move (see `abyss_motion.gd`).
-- Not ported yet: the switch (Godot draws it from icons), the floating label
-  of a field, the snack bar and the navigation bar, until a screen needs them.
+- The switch is drawn in code as the CheckButton's icons (52 x 32, Material
+  3's), the snack bar and the navigation bar are styles only: no animation of
+  the thumb, and every name of the navigation bar is in 600 where Flutter
+  writes the unselected ones in the regular weight.
+- Not ported yet: the floating label of a field, until a screen needs it.

@@ -21,9 +21,6 @@ static func squads(roster: ArmyRoster) -> Array[SquadState]:
 ## The barracks of the human player's base, with the signs of a plot that can
 ## be built on and of one a prerequisite holds back.
 static func barracks(game: Game) -> PadState:
-	var states := PadState.of_base(game.human_player().buildings, BaseReadiness.upgradable(game),
-		BaseReadiness.locked(game))
-	for state in states:
-		if state.type == BuildingType.Value.BARRACKS:
-			return state
-	return PadState.new(BuildingType.Value.BARRACKS)
+	var held := game.human_player().buildings
+	var states := PadState.of_base(held, BaseReadiness.upgradable(game), BaseReadiness.locked(game))
+	return states[held.keys().find(BuildingType.Value.BARRACKS)]

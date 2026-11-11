@@ -68,11 +68,14 @@ func test_a_tab_covers_the_world_with_its_page_and_tells_the_view_to_show() -> v
 	assert_not_null(find_text("Carte", hud.content))
 	assert_not_null(find_text("Bientôt disponible", hud.content))
 	assert_eq(_visible_pages(hud), 1)
+	assert_false(hud.tech_tab.visible)
 	press("Tech")
-	assert_not_null(find_text("Tech", hud.content))
+	assert_true(hud.tech_tab.visible, "the research tree is the page of this tab")
+	assert_eq(_visible_pages(hud), 0)
 	assert_null(find_text("Carte", hud.content))
 	press("Base")
 	assert_eq(_visible_pages(hud), 0)
+	assert_false(hud.tech_tab.visible)
 	assert_eq(_tabs, [GameTab.Value.MAP, GameTab.Value.TECH, GameTab.Value.BASE] as Array[GameTab.Value])
 
 

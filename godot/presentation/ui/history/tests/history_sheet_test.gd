@@ -1,45 +1,6 @@
-extends UiTestCase
+extends HistorySheetCase
 ## test/presentation/widgets/history/history_sheet_test.dart: the log of the
-## player, newest first, filtered by category, and the reports its cards
-## reopen.
-
-
-## A hook for the reports: opens a plain page for the combats, as the lot that
-## builds the fight summary will.
-class FakeReports:
-	extends HistoryReports
-
-	var asked: Array[HistoryEntry] = []
-	var page: ModalPanel
-
-	func page_for(entry: HistoryEntry) -> ModalPanel:
-		asked.append(entry)
-		return page if entry is CombatEntry else null
-
-
-func _entries() -> Array[HistoryEntry]:
-	return [
-		BuildingEntry.new(1, BuildingType.Value.ALGAE_FARM, 2),
-		ResearchEntry.new(2, TechBranch.Value.MILITARY, false, 1),
-		HistorySamples.combat_entry(true),
-	]
-
-
-## The sheet of [param entries] (the sample ones when none), on the window or,
-## when [param on_modals], opened on the modals.
-func _sheet(entries: Array[HistoryEntry] = [], reports := HistoryReports.new(), on_modals := false) -> HistorySheet:
-	var sheet := HistorySheet.new(entries if not entries.is_empty() else _entries(), modals(), reports)
-	if on_modals:
-		modals().open(sheet)
-		return sheet
-	return mount(sheet) as HistorySheet
-
-
-func _turns(sheet: HistorySheet) -> Array[int]:
-	var turns: Array[int] = []
-	for card in sheet.cards:
-		turns.append(card.entry.turn)
-	return turns
+## player, newest first, filtered by category.
 
 
 func test_an_empty_history_shows_the_empty_text() -> void:
@@ -98,59 +59,6 @@ func test_a_card_that_is_freed_by_the_filter_leaves_the_list() -> void:
 	var before := sheet.list.get_child_count()
 	press("Combats")
 	assert_eq(sheet.list.get_child_count(), before - 2)
-
-
-func test_a_touch_on_a_card_without_a_report_does_nothing() -> void:
-	var sheet := _sheet()
-	press(sheet.cards[0].tap_button)
-	assert_null(current_modal(), "no report page exists yet")
-	press("Construction")
-	assert_null(sheet.cards[0].tap_button, "a building has nothing to reopen")
-
-
-func test_a_touch_on_a_card_opens_the_report_the_hook_gives() -> void:
-	var reports := FakeReports.new()
-	reports.page = ModalPanel.new()
-	var sheet := _sheet([], reports, true)
-	press(sheet.cards[0].tap_button)
-	assert_eq(reports.asked, [sheet.cards[0].entry] as Array[HistoryEntry])
-	assert_eq(current_modal(), reports.page)
-	assert_eq(modals().depth(), 2, "over the history")
-	reports.page.close()
-	assert_eq(current_modal(), sheet, "back to the history")
-
-
-func test_a_touch_on_a_card_whose_report_is_none_opens_nothing() -> void:
-	var reports := FakeReports.new()
-	var sheet := _sheet([HistorySamples.raid_entry(true)], reports, true)
-	press(sheet.cards[0].tap_button)
-	assert_eq(reports.asked.size(), 1)
-	assert_eq(current_modal(), sheet)
-
-
-func test_is_a_bottom_sheet_eighty_percent_high() -> void:
-	var sheet := _sheet()
-	assert_eq(sheet.placement, ModalPanel.Placement.BOTTOM)
-	assert_eq(sheet.theme_type_variation, &"BottomSheetPanel")
-	sheet.fit(Vector2(390.0, 800.0))
-	assert_eq(sheet.custom_minimum_size, Vector2(390.0, 640.0))
-
-
-func test_dragging_the_handle_down_far_enough_closes_it() -> void:
-	var sheet := _sheet()
-	var closed := []
-	sheet.closed.connect(closed.append)
-	sheet.handle.pulled.emit(BottomSheet.DISMISS_PULL - 1.0)
-	assert_eq(closed, [])
-	sheet.handle.pulled.emit(BottomSheet.DISMISS_PULL)
-	assert_eq(closed, [null])
-
-
-func test_a_sheet_that_cannot_be_dismissed_stays_when_dragged() -> void:
-	var sheet := _sheet()
-	sheet.dismissible = false
-	sheet.handle.pulled.emit(500.0)
-	assert_false(sheet.is_closed())
 
 
 func test_follows_the_language() -> void:

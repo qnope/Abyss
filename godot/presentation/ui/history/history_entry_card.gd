@@ -69,9 +69,6 @@ func _init(entry_: HistoryEntry) -> void:
 
 
 func refresh() -> void:
-	# Called once by the base class, before the labels are made.
-	if entry == null:
-		return
 	title_label.text = HistoryEntryTexts.title(entry)
 	var extra: Variant = HistoryEntryTexts.subtitle(entry)
 	var turn := Texts.t(&"commonTurn", {"turn": entry.turn})

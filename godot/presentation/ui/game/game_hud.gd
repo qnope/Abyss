@@ -10,9 +10,8 @@ extends RefreshingPanel
 ##
 ## It tells what the player wants with signals and changes the game only
 ## through the [GameActions]. The tab on show is its own state; it is not
-## saved. [method refresh] redraws it from the game: the owner calls it after
-## each change. [method open_building] opens the sheet of a building of the
-## base; the banners of the worksites and the rampart float over its corner.
+## saved: the owner calls [method refresh] after each change. [method
+## open_building] opens a building's sheet; the banners float over the base.
 
 ## The tab on show changed: the world shows the view of [param tab].
 signal tab_changed(tab: GameTab.Value)
@@ -62,6 +61,7 @@ func _init(actions_: GameActions, language_: LanguageChoice.Value, modals: Modal
 		TurnFigures.consumption(game, human), _modals)
 	turn_bar = TurnBar.new(game.turn)
 	banners = BaseBanners.new(human)
+	ThreatBars.add_to(status_bars, game)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override(&"separation", 0)
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE

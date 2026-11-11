@@ -1,6 +1,7 @@
 class_name AbyssSurfaceTheme
 ## The surfaces under and between the components, where Flutter leaves them
 ## to Material: the scrim behind a modal (a Panel variation, ModalScrim),
+## the darker veil of a screen over the world (PageVeil),
 ## the panel that draws nothing and only lays its content out (BarePanel),
 ## the page of a full-screen modal, abyss black (PagePanel),
 ## the button that is only a touch area, lit while pointed at or pressed
@@ -10,11 +11,14 @@ class_name AbyssSurfaceTheme
 const CYAN := AbyssColors.BIOLUM_CYAN
 
 const SCRIM := &"ModalScrim"
+const VEIL := &"PageVeil"
 const BARE := &"BarePanel"
 const PAGE := &"PagePanel"
 const TAP := &"TapSurface"
 ## Material's barrier colour, black at 54 %.
 const SCRIM_COLOR := Color(0, 0, 0, 0.54)
+## What a screen's forms and lists read on: the world shows through, dim.
+const VEIL_COLOR := Color(0, 0, 0, 0.8)
 const DIVIDER := Color(CYAN, 0.1)
 ## Width of a scrollbar's grabber.
 const SCROLL_WIDTH := 6
@@ -24,6 +28,8 @@ const SCROLL_WIDTH := 6
 static func apply(theme: Theme) -> void:
 	theme.set_type_variation(SCRIM, &"Panel")
 	theme.set_stylebox(&"panel", SCRIM, AbyssBox.flat(SCRIM_COLOR, 0))
+	theme.set_type_variation(VEIL, &"Panel")
+	theme.set_stylebox(&"panel", VEIL, AbyssBox.flat(VEIL_COLOR, 0))
 	theme.set_type_variation(BARE, &"PanelContainer")
 	theme.set_stylebox(&"panel", BARE, StyleBoxEmpty.new())
 	theme.set_type_variation(PAGE, &"PanelContainer")

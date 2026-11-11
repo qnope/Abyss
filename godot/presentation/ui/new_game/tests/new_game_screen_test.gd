@@ -1,10 +1,6 @@
-extends UiTestCase
-## test/presentation/screens/menu/new_game_screen_test.dart (and its l10n and
-## keyboard tests): the name, the difficulty, the factions, the tutorial.
-
-var _created: Array[Game] = []
-var _backs := 0
-var _open_screen: NewGameScreen
+extends NewGameCase
+## test/presentation/screens/menu/new_game_screen_test.dart (and its l10n
+## tests): the difficulty, the factions, the tutorial, the seed.
 
 
 func test_asks_for_the_name_of_the_player() -> void:
@@ -87,45 +83,6 @@ func test_keeps_the_name_without_its_blanks_and_applies_the_cheat_code() -> void
 	assert_eq(player.buildings[BuildingType.Value.HEADQUARTERS].level, 7)
 
 
-func test_complains_of_an_empty_name() -> void:
-	var screen := _screen()
-	press("Commencer")
-	assert_eq(screen.error_label.text, "Veuillez entrer un nom")
-	assert_true(screen.error_label.visible)
-	assert_eq(screen.name_field.theme_type_variation, &"ErrorLineEdit")
-	assert_eq(_created.size(), 0)
-
-
-func test_complains_of_a_name_that_is_too_short() -> void:
-	var screen := _screen()
-	_type(screen, "A")
-	press("Commencer")
-	assert_eq(screen.error_label.text, "Le nom doit contenir au moins 2 caractères")
-	assert_eq(_created.size(), 0)
-
-
-func test_counts_utf16_units_as_dart_does() -> void:
-	assert_eq(NewGameScreen.name_error_key("😀"), &"")
-	assert_eq(NewGameScreen.name_error_key("é"), &"newGameNameTooShort")
-	assert_eq(NewGameScreen.name_error_key("   "), &"newGameNameEmpty")
-	assert_eq(NewGameScreen.name_error_key(" ab "), &"")
-
-
-func test_typing_clears_the_complaint() -> void:
-	var screen := _screen()
-	press("Commencer")
-	_type(screen, "N")
-	assert_false(screen.error_label.visible)
-	assert_eq(screen.name_field.theme_type_variation, &"")
-
-
-func test_enter_in_the_field_starts_the_game_too() -> void:
-	var screen := _screen()
-	_type(screen, "Nemo")
-	screen.name_field.text_submitted.emit("Nemo")
-	assert_eq(_created.size(), 1)
-
-
 func test_the_same_seed_makes_the_same_map() -> void:
 	_screen([], 7)
 	_start("Nemo")
@@ -148,24 +105,3 @@ func test_follows_the_language() -> void:
 	assert_eq(screen.start_button.text, "Start")
 	assert_eq(screen.tutorial_switch.title_label.text, "Tutorial")
 	assert_no_raw_keys()
-
-
-func _screen(saved: Array[Game] = [], map_seed: Variant = 1) -> NewGameScreen:
-	var screen := mount(NewGameScreen.new(saved, map_seed)) as NewGameScreen
-	_open_screen = screen
-	screen.game_created.connect(func(game: Game) -> void: _created.append(game))
-	screen.back_pressed.connect(func() -> void: _backs += 1)
-	return screen
-
-
-## Types [param name_written] and presses Start, after the setup [param before].
-func _start(name_written: String, before := Callable()) -> void:
-	_type(_open_screen, name_written)
-	if before.is_valid():
-		before.call()
-	press("Commencer")
-
-
-func _type(screen: NewGameScreen, typed: String) -> void:
-	screen.name_field.text = typed
-	screen.name_field.text_changed.emit(typed)

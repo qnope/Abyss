@@ -45,7 +45,6 @@ func _init(label_text: String, look_ := Look.PRIMARY, subtitle := "", badge_coun
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_theme_constant_override(&"separation", 10)
 	label.theme_type_variation = &"MenuPrimaryLabel" if primary else &"MenuButtonLabel"
-	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(label)
 	if badge_count > 0:

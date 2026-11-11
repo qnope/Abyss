@@ -10,7 +10,7 @@ func test_shows_its_title_in_the_app_bar_over_a_veil() -> void:
 	assert_eq(page.bar.title(), "Charger une partie")
 	assert_eq(page.bar.theme_type_variation, &"AppBarPanel")
 	var veil := page.get_child(0) as Panel
-	assert_eq(veil.theme_type_variation, AbyssSurfaceTheme.SCRIM)
+	assert_eq(veil.theme_type_variation, AbyssSurfaceTheme.VEIL)
 	assert_eq(veil.mouse_filter, Control.MOUSE_FILTER_IGNORE, "touches go through the veil")
 	assert_eq(page.body.theme_type_variation, AbyssSurfaceTheme.BARE)
 	assert_eq(page.body.size_flags_vertical, Control.SIZE_EXPAND_FILL)

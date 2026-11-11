@@ -19,7 +19,7 @@ func test_shows_the_empty_state_when_there_is_no_save() -> void:
 func test_sits_on_the_dimmed_world_under_its_title() -> void:
 	var screen := _screen([SavedGameSamples.game("Alice")])
 	assert_eq(screen.bar.title(), "Charger une partie")
-	assert_eq((screen.get_child(0) as Control).theme_type_variation, AbyssSurfaceTheme.SCRIM)
+	assert_eq((screen.get_child(0) as Control).theme_type_variation, AbyssSurfaceTheme.VEIL)
 	assert_null(screen.empty)
 
 

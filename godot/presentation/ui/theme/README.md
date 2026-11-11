@@ -2,7 +2,7 @@
 
 The game's theme, ported from the Flutter one (`lib/presentation/theme/`): the
 single source of the interface's styling. `AbyssTheme.build()` makes the
-`Theme` in code from the constants here, and `app/main.gd` gives it to the
+`Theme` in code from the constants here, and `app/app.gd` gives it to the
 window at startup, so every control under it inherits it. It is not a `.tres`
 file, so that its values have one source and the tests can read them.
 
@@ -31,6 +31,7 @@ role or widget:
 - `LineEdit`: plain, or `ErrorLineEdit` for a field in error. `TextEdit`,
   `ProgressBar`, `HSlider`, `PopupMenu` and tooltips are styled as they are.
 - Surfaces (`AbyssSurfaceTheme`): `Panel` `ModalScrim` (behind a modal),
+  `Panel` `PageVeil` (darker, under a screen's forms and lists),
   `PanelContainer` `BarePanel` (draws nothing, only lays out), `Button`
   `TapSurface` (a touch area lit when pointed at or pressed), the dividers
   (`HSeparator`, `VSeparator`) and the scrollbars, as they are.

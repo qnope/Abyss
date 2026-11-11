@@ -17,3 +17,11 @@ func test_follows_the_language() -> void:
 	use_language("en")
 	assert_eq(row.label.text, Texts.t(&"raidNoise"))
 	assert_ne(row.label.text, "Bruit")
+
+
+func test_tells_another_noise_when_the_quantity_changes() -> void:
+	var row := NoiseCostRow.new(0)
+	mount(row)
+	row.set_noise(4)
+	assert_eq(row.noise, 4)
+	assert_eq(row.amount_label.text, "+4")

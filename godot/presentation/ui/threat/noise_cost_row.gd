@@ -24,6 +24,12 @@ func _init(noise_: int) -> void:
 	refresh()
 
 
+## Tells another noise: the one of a quantity the player changes.
+func set_noise(noise_: int) -> void:
+	noise = noise_
+	amount_label.text = "+%d" % noise
+
+
 ## Writes the label in the language on.
 func refresh() -> void:
 	label.text = Texts.t(&"raidNoise")

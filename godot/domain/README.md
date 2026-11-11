@@ -193,7 +193,7 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
-| `ExpeditionMoves.assault` (`script/strategies/expedition_moves.dart`) | `AttackTransitionBaseAction` |
+| `ExpeditionMoves.assault` (`script/strategies/expedition_moves.dart`) | nothing now that `AttackTransitionBaseAction` is ported: with the next lot of `script` |
 | `ConquestMoves` but its constants (`advanceConquest`), `conquest_strategy.dart`, `tutorial_strategy.dart`, `contest_moves.dart`, `siege_moves.dart`, `leviathan_guard_moves.dart`, their tests and those that play them (the last test of `attack_defence_test.dart`, `hunt_under_raid_test.dart`, `leviathan_guard_test.dart`, `contest_moves_test.dart`, `siege_moves_test.dart`, `tutorial_strategy_test.dart`) | `ExpeditionMoves.assault` above, `faction` (`FactionKernelWar`, `FactionPostWar`, `KernelSiege`), `leviathan` |
 | The second test of `script_player_helpers_test.dart` (`ScriptMilestones`); `DeepScouts.turn` builds the dice of a `FactionTurn` itself (`tool/samples/deep_scouts.gd`) | the runners of `script`; `faction` (`FactionTurn`) |
 | `script/strategies_test.dart` (whole games through `ScriptRunner` and `BatchRunner`) | `turn` (`EndTurnAction`), then the runners of `script` |
@@ -213,8 +213,5 @@ Files and tests of the modules above that wait for another module:
 | `objective/guide/guide_alerts.dart` | `faction` (`UndefendedPosts`, which reads `action`'s `PostTakeover`) |
 | `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` above |
 | `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own); the last test of `guide_leviathan_test.dart` (the tutorial off: the others read `GuideLeviathan` itself) | `GuideCampaign` above |
-| `producingPlayer` and `choiceEvents` of `event_test_helper.dart` | the tests that use them: `turn`, `script` |
-
-| `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own) | `GuideCampaign` and `GuideLeviathan` above |
 | `choiceEvents` of `event_test_helper.dart` (no test of `domain` reads it; `producingPlayer` is `EventSamples.producing_player`) | the tests of the presentation that use it |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

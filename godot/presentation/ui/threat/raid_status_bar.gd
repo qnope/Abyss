@@ -23,8 +23,9 @@ var streak_label := label_of(&"BodySmall", AbyssColors.ERROR)
 func _init(game_: Game) -> void:
 	game = game_
 	super()
-	noise_name.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	noise_label.size_flags_horizontal = Control.SIZE_SHRINK_END
+	for short: Label in [noise_name, noise_label]:
+		short.autowrap_mode = TextServer.AUTOWRAP_OFF
+		short.size_flags_horizontal = Control.SIZE_SHRINK_END
 	gauge.theme_type_variation = AbyssInputTheme.NOISE_GAUGE
 	gauge.max_value = NoiseRules.THRESHOLD
 	gauge.show_percentage = false

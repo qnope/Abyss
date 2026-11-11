@@ -38,6 +38,7 @@ func _init(lair_: MonsterLair) -> void:
 	for _chip in 3:
 		var label := text_label(&"LabelLarge")
 		label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		label.autowrap_mode = TextServer.AUTOWRAP_OFF
 		var box := AbyssBox.flat(AbyssColors.SURFACE_DIM, CHIP_RADIUS, CHIP_PADDING)
 		var chip := PanelContainer.new()
 		chip.add_theme_stylebox_override(&"panel", AbyssBox.rimmed(box, Color(AbyssColors.BIOLUM_CYAN, 0.2)))

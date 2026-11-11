@@ -1,42 +1,58 @@
 extends TestCase
-## The replay of a reference game (ReferenceReplay): `idle-normal`, whose
-## journal holds no move, replays whole, its 48 turns, the raids that end
-## it and its defeat, through the state Dart went through, every section
-## of every turn, its journal included.
+## The replay of a reference game (ReferenceReplay), on the short games:
+## `idle-normal`, whose journal holds no move, and `economy-hard`, 27 turns
+## of moves, go through the states Dart went through, every section of
+## every turn, and end with its result, journal and coverage. The other
+## games take minutes: `tool/godot_reference.sh` replays them all
+## (tool/replay/README.md). A replay that differs names where.
 
 
-func _committed(name: String) -> CommittedGame:
-	var games := CommittedGame.all()
-	return games[games.find_custom(func(g: CommittedGame) -> bool: return g.name == name)]
+func test_replays_a_game_without_moves_as_dart_did() -> void:
+	var replay := ReferenceReplay.new(CommittedGame.named("idle-normal"))
+	assert_eq(replay.differences(), PackedStringArray())
+	assert_eq(replay.recorder.turns.size(), 48)
+	assert_eq(replay.game.status, GameStatus.Value.DEFEAT)
 
 
-func test_replays_a_game_without_moves_through_the_states_dart_went_through() -> void:
-	var committed := _committed("idle-normal")
-	var replay := ReferenceReplay.new(committed)
-	var played := committed.played_turns()
-	assert_eq(replay.turns.size(), played.size())
-	for i: int in mini(replay.turns.size(), played.size()):
-		assert_eq(replay.turns[i].turn, played[i].turn)
-		assert_eq(ReplayComparison.differing(played[i].digests, replay.turns[i].digests), PackedStringArray(), "turn %d" % played[i].turn)
-	assert_eq(ReplayComparison.differing(committed.final_digests(), replay.final_digests), PackedStringArray())
-	assert_eq([DartEnum.name_of(GameStatus.Value, replay.game.status), replay.game.turn], [committed.status(), committed.turn()])
+func test_replays_a_game_with_moves_as_dart_did() -> void:
+	var replay := ReferenceReplay.new(CommittedGame.named("economy-hard"))
+	assert_eq(replay.differences(), PackedStringArray())
+	assert_eq(replay.recorder.turns.size(), 27)
+	assert_true(replay.recorder.actions[ActionType.Value.UPGRADE_BUILDING] > 10)
 
 
-func test_plays_each_move_as_its_player_with_what_decode_gives() -> void:
-	var committed := _committed("idle-normal")
-	var json := committed.json.duplicate(true)
-	json["journal"]["lastTurn"] = 2
-	json["journal"]["turns"] = {"1": [
-		{"do": "upgrade", "building": "headquarters"},
-		{"do": "upgrade", "building": "headquarters", "player": CommittedGame.HUMAN_ID},
-	]}
-	var decoded: Array[Dictionary] = []
-	var decode := func(move: Dictionary, random: DartRandom) -> Action:
-		assert_not_null(random)
-		decoded.append(move)
-		return UpgradeBuildingAction.new(BuildingType.Value.HEADQUARTERS)
-	var replay := ReferenceReplay.new(CommittedGame.new("two-moves", JSON.stringify(json)), decode)
-	assert_eq(decoded.size(), 2)
-	assert_eq(replay.turns.size(), 2, "the start, then the end of turn 1; turn 2 is the last")
-	assert_eq(replay.game.turn, 2)
-	assert_eq(replay.game.human_player().buildings[BuildingType.Value.HEADQUARTERS].level, 1)
+func test_names_the_first_turn_that_differs_the_missing_turns_and_the_rest() -> void:
+	var replay := ReferenceReplay.new(CommittedGame.named("idle-normal"))
+	var json := _idle_normal()
+	json["turns"][4]["digests"][3] = "0".repeat(64)
+	json["turns"][4]["digests"][1] = "0".repeat(64)
+	json["turns"][9]["digests"][1] = "0".repeat(64)
+	assert_eq(_against(replay, json), PackedStringArray(["turn 5 started as turn 5, differing in: events, game"]))
+
+	json = _idle_normal()
+	var turns: Array = json["turns"]
+	turns.pop_back()
+	json["final"][19] = "0".repeat(64)
+	assert_eq(_against(replay, json), PackedStringArray([
+		"48 turns started, 47 in the file", "when it stopped, differing in: worksite",
+	]))
+
+	json = _idle_normal()
+	json["result"]["turn"] = 47
+	json["journal"]["status"] = "playing"
+	json["coverage"]["actions"]["endTurn"] = 1
+	json["coverage"]["events"]["storm"] = 9
+	json["coverage"]["milestones"]["raidsLost"] = 0
+	var found := _against(replay, json)
+	assert_eq(Array(found).map(func(line: String) -> String: return line.get_slice(":", 0)), [
+		"result", "journal", "actions", "events", "milestones",
+	])
+	assert_eq(found[0], "result: [\"defeat\",48]")
+
+
+func _idle_normal() -> Dictionary:
+	return CommittedGame.named("idle-normal").json.duplicate(true)
+
+
+func _against(replay: ReferenceReplay, json: Dictionary) -> PackedStringArray:
+	return replay.differences(CommittedGame.new("changed", JSON.stringify(json, "", false)))

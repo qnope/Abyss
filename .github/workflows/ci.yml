@@ -225,6 +225,23 @@ jobs:
           path: coverage/godot
           retention-days: 14
 
+  # Every game of reference/games/ replayed by the Godot port, every digest
+  # of every turn compared with Dart's (godot/tool/replay/README.md): too
+  # long for the unit tests, so a job of its own, the games in parallel.
+  godot-reference:
+    name: Godot Reference
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot
+        run: .github/scripts/install_godot.sh "$(cat godot/GODOT_VERSION)"
+      - name: Import the project
+        # Once more on failure: Godot once crashed while importing a font.
+        run: godot --headless --path godot --import || godot --headless --path godot --import
+      - name: The reference games replay in Godot as in Dart
+        run: tool/godot_reference.sh
+
   godot-web:
     name: Godot Web
     runs-on: ubuntu-latest

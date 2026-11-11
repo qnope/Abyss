@@ -2,8 +2,8 @@ extends TestCase
 ## Not in the Dart files: the games of reference/games/, which Dart wrote,
 ## as Godot reads them (CommittedGame). Every section of the state each
 ## replay starts from (reference/README.md, "Replaying it", step 1) has
-## the digest of the first entry of `turns`. The turns after it wait for
-## the codec of the actions, which decodes the journal.
+## the digest of the first entry of `turns`. The turns after it are
+## replayed by ReferenceReplay (tool/replay/README.md).
 
 var games := CommittedGame.all()
 

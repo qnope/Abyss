@@ -32,7 +32,8 @@ func _run(result: TurnResult) -> void:
 
 func test_the_default_queue_follows_the_summary_with_the_reports_of_the_threats() -> void:
 	var steps := TurnOutcome.default_steps(GameActions.new(_game))
-	assert_eq(steps, [TurnOutcome.summary_page, ThreatPages.raid, ThreatPages.predators, ThreatPages.volcano] as Array[Callable])
+	assert_eq(steps.slice(0, 4), [TurnOutcome.summary_page, ThreatPages.raid, ThreatPages.predators, ThreatPages.volcano] as Array[Callable])
+	assert_eq(steps.size(), 5, "then the card of an event drawn")
 
 
 func test_a_raid_fought_opens_its_report_after_the_summary_and_closes_into_the_next_step() -> void:

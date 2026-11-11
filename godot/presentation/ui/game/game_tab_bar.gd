@@ -49,10 +49,11 @@ func select(tab: GameTab.Value) -> void:
 
 ## The tab lit.
 func selected() -> GameTab.Value:
+	var lit := GameTab.Value.BASE
 	for tab: GameTab.Value in _buttons:
 		if _buttons[tab].button_pressed:
-			return tab
-	return GameTab.Value.BASE
+			lit = tab
+	return lit
 
 
 ## The button of [param tab].

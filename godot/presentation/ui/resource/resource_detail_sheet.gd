@@ -66,9 +66,6 @@ func _init(resource_: GameResource, production_: int) -> void:
 
 
 func refresh() -> void:
-	# Called once by the base class, before there is a resource to show.
-	if resource == null:
-		return
 	name_label.text = ResourceTexts.display_name(resource.type)
 	flavor_label.text = ResourceTexts.flavor_text(resource.type)
 	stock_label.text = "%d / %d" % [resource.amount, resource.max_storage]

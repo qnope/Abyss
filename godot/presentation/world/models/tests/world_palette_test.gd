@@ -21,3 +21,16 @@ func test_no_two_buildings_share_a_colour_or_one_too_close() -> void:
 				color.b - seen[other].b).length()
 			assert_true(apart >= MIN_DISTANCE, "%s and %s: %f" % [name, other, apart])
 		seen[name] = color
+
+
+func test_no_two_units_share_a_colour_or_one_too_close() -> void:
+	var seen: Dictionary[String, Color] = {}
+	for type: UnitType.Value in UnitType.Value.values():
+		var name := DartEnum.name_of(UnitType.Value, type)
+		var color := WorldPalette.unit(type)
+		for other in seen:
+			var apart := Vector3(color.r - seen[other].r, color.g - seen[other].g,
+				color.b - seen[other].b).length()
+			assert_true(apart >= MIN_DISTANCE, "%s and %s: %f" % [name, other, apart])
+		seen[name] = color
+	assert_eq(seen.size(), 6)

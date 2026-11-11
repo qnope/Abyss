@@ -27,6 +27,8 @@ func before_each() -> void:
 	_controller = GameController.new(_session, _hud, _world)
 	_controller.quit_requested.connect(func() -> void: _quits += 1)
 	_controller.language_chosen.connect(_languages.append)
+	# The listener of `quit_requested` holds the test: let go of the controller.
+	add_cleanup(func() -> void: _controller = null)
 
 
 func test_shows_the_base_of_the_game_in_the_world() -> void:

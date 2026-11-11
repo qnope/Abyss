@@ -106,7 +106,12 @@ refusal stays in the page. Going down: `descend_requested` -> `DescentDialog` ->
 `UnitPickerDialog` -> `GarrisonKernelAction` -> a `MessageDialog` with its size. The victory of
 a kernel raised to the last level is `GameActions.victory_reached`, which the `GameController`
 turns into the victory screen. A post or a volcano a rival holds tells
-`rival_attack_requested(owner, level, x, y)` on its controller: the rival assault is lot 13's.
+`rival_attack_requested(owner, level, x, y)` on its controller: `FactionController` (`faction/`,
+`assault/`) listens to it and to the sheet of a rival base: `spy_requested` -> `SpyBaseAction` ->
+the sheet again with the report; `attack_requested` -> `AssaultSelections.rival` ->
+`AttackBaseAction` / `AttackPostAction` / `AttackHeldKernelAction` through `GameActions.execute` ->
+the page closes with the result -> `AttackBaseEntries.for_attacker` -> `BaseAssaultSummaryPage`; a
+refusal stays in the page, a refused spy is a `MessageDialog`.
 
 The end of a turn is `EndTurnFlow` (`presentation/ui/turn/`), made by the
 `GameController`: the HUD's `end_turn_requested` asks, the confirmed turn goes

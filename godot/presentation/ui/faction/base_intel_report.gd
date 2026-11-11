@@ -27,12 +27,23 @@ func _init(intel_: BaseIntel, turn_: int) -> void:
 	rampart_row = SheetInfoRow.new(Texts.t.bind(&"factionIntelRampart"), func() -> String: return str(intel.rampart_level))
 	army_row = SheetInfoRow.new(Texts.t.bind(&"factionIntelArmy"), _army)
 	stocks_row = SheetInfoRow.new(Texts.t.bind(&"factionIntelStocks"), _stocks)
+	for long_row: SheetInfoRow in [army_row, stocks_row]:
+		_wrap(long_row)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override(&"separation", GAP)
 	for part: Control in [title_label, freshness_label, rampart_row, army_row, stocks_row]:
 		column.add_child(part)
 	add_child(column)
 	refresh()
+
+
+## The value of a long row wraps, in two thirds of the row, so that the sheet
+## keeps its width.
+func _wrap(row: SheetInfoRow) -> void:
+	row.value_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	row.value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	row.value_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.value_label.size_flags_stretch_ratio = 2.0
 
 
 func refresh() -> void:

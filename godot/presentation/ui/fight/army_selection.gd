@@ -14,7 +14,7 @@ extends FullPage
 ##
 ## An assault is led by an Abyss Admiral ([param needs_admiral]): the page
 ## warns of it while none is picked and launches only with one. A plan of the
-## assault (lot 13) follows the picks on [signal picks_changed].
+## assault (`../assault/AssaultPlans`) follows the picks on [signal picks_changed].
 
 ## The units picked changed: [param chosen] are the ones that are not zero.
 signal picks_changed(chosen: Dictionary[UnitType.Value, int])

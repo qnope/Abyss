@@ -17,6 +17,14 @@ func test_shows_a_centred_title_between_the_arrow_and_a_balance() -> void:
 	assert_eq(balance.custom_minimum_size.x, bar.back_button.custom_minimum_size.x)
 
 
+func test_a_long_title_is_cut_and_does_not_widen_the_bar() -> void:
+	var bar := _bar()
+	bar.set_title("Assaut : ".repeat(30))
+	var title := find_text(bar.title()) as Label
+	assert_eq(title.text_overrun_behavior, TextServer.OVERRUN_TRIM_ELLIPSIS)
+	assert_true(title.get_minimum_size().x < 200.0)
+
+
 func test_the_arrow_is_a_touch_sized_cyan_glyph_that_tells_back() -> void:
 	var bar := _bar()
 	assert_true(bar.back_button.custom_minimum_size.y >= AbyssHudTheme.TOUCH_SIZE)

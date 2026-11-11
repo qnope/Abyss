@@ -28,6 +28,8 @@ func _init(title_text := "") -> void:
 	_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# A long title is cut with an ellipsis: it does not widen the page.
+	_title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	var balance := Control.new()
 	balance.custom_minimum_size = touch
 	row.add_child(back_button)

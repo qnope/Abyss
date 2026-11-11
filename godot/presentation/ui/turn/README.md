@@ -37,10 +37,10 @@ changes.
 
 - `SummarySections.of(result)`: a section of the summary is a `Control` added
   at the place Flutter puts it, after the losses: the raid and the kraken wave
-  (`ThreatSections`), then the event lines (`EventTurnSection`). To come: the
-  exploration summary (lot 9) before the raid, the attacks of the factions
-  (lots 10 and 13) between the raid and the wave, the objectives completed
-  (lot 15) after them.
+  (`ThreatSections`), the attacks of the factions between them
+  (`../faction/AttackSections`), then the event lines (`EventTurnSection`). To
+  come: the exploration summary (lot 9) before the raid, the objectives
+  completed (lot 15) after them.
 - `TurnWarnings.of(game, player)`: a warning of the question. The threats
   (`ThreatWarnings`: the raid, the predators, the guardians of a Faille, the
   kraken wave) come first, then the undefended posts, then the event waiting

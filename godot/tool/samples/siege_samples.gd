@@ -61,4 +61,4 @@ static func _game(
 	var per_level: Dictionary[int, Dictionary] = {level: units}
 	var player := Player.new("Test", "test-uuid", 0, 0, null, buildings, null, per_level)
 	var maps: Dictionary[int, GameMap] = {level: GameMap.new(5, 5, cells, 42)}
-	return Game.new(player.id, {player.id: player}, 1, maps)
+	return Game.new(player.id, {player.id: player}, 1, null, maps)

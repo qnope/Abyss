@@ -51,7 +51,7 @@ static func explore_game(scouts := 3, map: GameMap = null, player_id := "test-uu
 	var revealed: Dictionary[int, Array] = {1: EventSamples.square_around(3, 3, 1)}
 	var player := Player.new("Test", player_id, 3, 3, null, null, null, units, [], [], revealed)
 	var levels: Dictionary[int, GameMap] = {1: map if map != null else MapSamples.plain_map(7, 7, 42)}
-	return Game.new(player.id, {player.id: player}, 1, levels)
+	return Game.new(player.id, {player.id: player}, 1, null, levels)
 
 
 ## `buildCollectTestMap`: a 5x5 plain map (seed 42) whose cell (1, 1)
@@ -108,7 +108,7 @@ static func fight_game(
 	var levels: Dictionary[int, GameMap] = {
 		1: fight_map(difficulty, unit_count, collected_by, with_lair, content)
 	}
-	return Game.new(player.id, {player.id: player}, 1, levels)
+	return Game.new(player.id, {player.id: player}, 1, null, levels)
 
 
 ## `createCollectScenario`: the collect player alone on the collect map.
@@ -117,4 +117,4 @@ static func collect_game(
 ) -> Game:
 	var player := collect_player()
 	var levels: Dictionary[int, GameMap] = {1: collect_map(content, lair, collected_by)}
-	return Game.new(player.id, {player.id: player}, 1, levels)
+	return Game.new(player.id, {player.id: player}, 1, null, levels)

@@ -88,7 +88,7 @@ func test_notes_the_first_turn_the_kernel_is_held() -> void:
 	var cells: Array[MapCell] = [
 		MapCell.new(TerrainType.Value.PLAIN, CellContentType.Value.VOLCANIC_KERNEL, null, "p1"),
 	]
-	var game := Game.new(player.id, {player.id: player}, 1, {3: GameMap.new(cells.size(), 1, cells, 0)})
+	var game := Game.new(player.id, {player.id: player}, 1, null, {3: GameMap.new(cells.size(), 1, cells, 0)})
 	var milestones := ScriptMilestones.new()
 	milestones.observe(game, 70)
 	milestones.observe(game, 71)

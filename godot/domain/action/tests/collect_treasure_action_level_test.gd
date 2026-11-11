@@ -10,7 +10,7 @@ func _deep_game(level: int) -> Game:
 		1: ActionSamples.collect_map(CellContentType.Value.EMPTY),
 		level: ActionSamples.collect_map(CellContentType.Value.RUINS),
 	}
-	return Game.new(player.id, {player.id: player}, 1, levels)
+	return Game.new(player.id, {player.id: player}, 1, null, levels)
 
 
 func test_collect_treasure_action_on_deeper_levels_collects_ruins_on_level() -> void:

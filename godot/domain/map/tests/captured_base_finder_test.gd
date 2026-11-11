@@ -29,4 +29,4 @@ func _map_with(posts: Array) -> GameMap:
 
 
 func _game(levels: Dictionary[int, GameMap]) -> Game:
-	return Game.new("p", {"p": GameSamples.player("p")}, 1, levels)
+	return Game.new("p", {"p": GameSamples.player("p")}, 1, null, levels)

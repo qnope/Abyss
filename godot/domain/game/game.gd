@@ -1,14 +1,17 @@
 class_name Game
 extends RefCounted
 ## lib/domain/game/game.dart: a game, its players, its levels, where it
-## stands. Without `createdAt` and `lastPlayedAt`, wall-clock dates no rule
-## reads (reference/README.md, "Fields left out").
+## stands. A date is a whole number of milliseconds since 1970-01-01 UTC,
+## what Hive keeps of a DateTime (`millisecondsSinceEpoch`); no rule reads
+## one, only the list of saves (reference/README.md, "Fields left out").
 
 ## The players by id, the human first, then the factions in the order they
 ## play.
 var players: Dictionary[String, Player]
 var human_player_id: String
 var turn: int
+## When the game started.
+var created_at: int
 var levels: Dictionary[int, GameMap]
 var status: GameStatus.Value
 ## Every move played so far, to export the game as a replay.
@@ -21,30 +24,37 @@ var saved_difficulty: Difficulty.Value
 var saved_factions: Array[FactionPersonality.Value] = []
 ## The guardians' return to the human's first Faille.
 var leviathan_return: LeviathanReturn
+## Stamped by the repository on every save (an int); null for a game never
+## saved, last played when it was created.
+var saved_last_played_at: Variant
 
 
 func _init(
 	human_player_id_: String,
 	players_: Dictionary[String, Player],
 	turn_ := 1,
+	created_at_: Variant = null,
 	levels_: Dictionary[int, GameMap] = {},
 	status_ := GameStatus.Value.PLAYING,
 	replay_: ReplayJournal = null,
 	difficulty_ := Difficulty.Value.NORMAL,
+	last_played_at_: Variant = null,
 ) -> void:
 	human_player_id = human_player_id_
 	players = players_
 	turn = turn_
+	created_at = created_at_ if created_at_ != null else now()
 	levels = levels_
 	status = status_
 	replay = replay_
 	saved_difficulty = difficulty_
+	saved_last_played_at = last_played_at_
 	leviathan_return = LeviathanReturn.new()
 
 
 ## `Game.singlePlayer`: a game of `human` alone.
 static func single_player(human: Player, difficulty_ := Difficulty.Value.NORMAL) -> Game:
-	return Game.new(human.id, {human.id: human}, 1, {}, GameStatus.Value.PLAYING, null, difficulty_)
+	return Game.new(human.id, {human.id: human}, 1, null, {}, GameStatus.Value.PLAYING, null, difficulty_)
 
 
 ## The factions of the game, in the order they play; each one is the
@@ -58,6 +68,15 @@ func factions() -> Array[Faction]:
 
 func difficulty() -> Difficulty.Value:
 	return saved_difficulty
+
+
+func last_played_at() -> int:
+	return saved_last_played_at if saved_last_played_at != null else created_at
+
+
+## Not in the Dart class: `DateTime.now()`, in milliseconds since the epoch.
+static func now() -> int:
+	return int(Time.get_unix_time_from_system() * 1000.0)
 
 
 ## The human player. A game without it, where Dart throws, logs an error

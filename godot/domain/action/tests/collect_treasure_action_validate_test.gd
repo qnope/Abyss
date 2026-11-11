@@ -21,7 +21,7 @@ func test_collect_treasure_action_validate_fails_when_map_is_null() -> void:
 func test_collect_treasure_action_validate_fails_when_cell_is_not_revealed() -> void:
 	var levels := ActionSamples.collect_game().levels
 	var player := Player.new("Test", "test", 2, 2)
-	var game := Game.new(player.id, {player.id: player}, 1, levels)
+	var game := Game.new(player.id, {player.id: player}, 1, null, levels)
 	var result := _validate(game)
 	assert_false(result.is_success)
 	assert_eq(result.reason, ActionFailure.Value.CELL_NOT_REVEALED)

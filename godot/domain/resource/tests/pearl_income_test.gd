@@ -57,4 +57,4 @@ func _map(bases: Array[TransitionBase]) -> GameMap:
 
 func _game(levels: Dictionary[int, GameMap]) -> Game:
 	var player := Player.new("p", "p", 1, 1)
-	return Game.new("p", {"p": player}, 1, levels)
+	return Game.new("p", {"p": player}, 1, null, levels)

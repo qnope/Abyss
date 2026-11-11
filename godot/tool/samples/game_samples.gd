@@ -23,7 +23,7 @@ static func game(players: Array[Player], status := GameStatus.Value.PLAYING) -> 
 	var by_id: Dictionary[String, Player] = {}
 	for each: Player in players:
 		by_id[each.id] = each
-	return Game.new(players[0].id, by_id, 1, {}, status)
+	return Game.new(players[0].id, by_id, 1, null, {}, status)
 
 
 ## `TwoPlayerGame.create`: the single-player game of `map_seed`, its human

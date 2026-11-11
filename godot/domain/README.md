@@ -154,10 +154,18 @@ the tests through `ReferenceFiles.text_of`. It is static state, reset with
 `debug_reset()`.
 
 **No Hive.** No annotation, no adapter, `RefCounted` instead of
-`HiveObject`: saves come later, in `data/`. Every field of the state stays;
+`HiveObject`: the saves are versioned JSON files of `data/`
+(`data/README.md`), whose codecs write what the Hive adapters write. Every
+field of the state stays;
 the fields that only keep the layout of old saves (`reference/README.md`,
 "Fields left out") are dropped, and no rule may change for it. What only
 reads an old Hive save is not ported (`VolcanoFootprint.migrate`).
+
+**Dates** (first met in `Game`). A `DateTime` is a whole number of
+milliseconds since 1970-01-01 UTC, what Hive keeps of it
+(`millisecondsSinceEpoch`); `DateTime.now()` is `Game.now()`. No rule reads
+a date: only the list of saves (`SaveSections`, `SaveSummary`). A test
+writes `DateTime(2026, 3, 15)` as `DateSamples.at(2026, 3, 15)`.
 
 **State** (first met in `Game`, `Player` and what they hold). The rules
 change these objects in place: each field is a plain `var`, a map or a
@@ -199,7 +207,5 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
-| `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
 | `choiceEvents` of `event_test_helper.dart` (no test of `domain` reads it; `producingPlayer` is `EventSamples.producing_player`) | the tests of the presentation that use it |
-| `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |
 | The export of the reference games (`bin/export_reference.dart`): `reference/reference_exporter.dart`, `reference_cli`, `reference_arguments`, `reference_io`, `reference_layout`, `reference_set`, `reference_source`, `reference_trace`, `reference_game` (the writer of a file; `CommittedGame` and `ReferenceReplay` of `tool/reference/` read one and replay it as the exporter does, through the ported `ReferenceRecorder`); their tests, the last test of `reference_milestones_test.dart`, the group ReferenceLayout of `digest_rows_test.dart`, the list of the games of `reference_readme_test.dart` | an exporter on the Godot side, if one is ever needed: Godot replays what Dart writes |

@@ -1,16 +1,15 @@
 extends TestCase
-## Not in the Dart files: announced_attack_resolve_test.dart and
-## announced_attack_report_test.dart fight the attacks announced through
-## the end of a turn (`turn`); these call AnnouncedAttackResolver, the step
-## of the end of the turn that fights them, on the game of
-## AssaultSamples.announce_game at turn 12.
+## Not in the Dart files: what AnnouncedAttackResolver, the step of the
+## end of the turn that fights the attacks announced, does beyond the tests
+## of announced_attack_resolve_test.dart and announced_attack_report_test.dart
+## (the game of AssaultSamples.announce_game at turn 12): the noise of the
+## attacker, an attacker gone, an attack due later, the dice announced.
 
 const HARPOONIST := UnitType.Value.HARPOONIST
-const CULT := FactionPersonality.Value.ANGLER_CULT
 
 
-func _announced(rival_id := "rival-1") -> Game:
-	var game := AssaultSamples.announce_game(12, rival_id)
+func _announced() -> Game:
+	var game := AssaultSamples.announce_game()
 	AssaultSamples.station(game.human_player(), {})
 	AssaultSamples.announce().execute(game, AssaultSamples.rival_of(game))
 	return game
@@ -24,60 +23,20 @@ func _assaults(p: Player) -> Array[BaseAssaultEntry]:
 	return found
 
 
-func test_the_attack_is_fought_on_the_turn_it_is_decided() -> void:
+func test_the_attacker_makes_its_noise_and_resolve_gives_the_results() -> void:
 	var game := _announced()
-	assert_eq(AnnouncedAttackResolver.resolve(game).size(), 1)
-	var entries := _assaults(game.human_player())
-	assert_eq([entries.size(), entries[0].turn], [1, 12])
-	assert_eq(game.human_player().raid_state.attacks.size(), 0)
+	var results := AnnouncedAttackResolver.resolve(game)
+	assert_eq(results.size(), 1)
+	assert_true(results[0].victory)
+	assert_true(AssaultSamples.rival_of(game).raid_state.noise > 0)
 
 
-func test_the_units_standing_on_the_base_defend_and_a_won_attack_razes_it() -> void:
-	var game := _announced()
-	var hq := game.human_player().buildings[BuildingType.Value.HEADQUARTERS].level
-	var fought := AnnouncedAttackResolver.fight(game)
-	assert_true(fought[0].result.victory)
-	assert_eq(game.human_player().buildings[BuildingType.Value.HEADQUARTERS].level, hq - 1)
-	var rival := AssaultSamples.rival_of(game)
-	var mine := _assaults(rival)
-	assert_eq([mine.size(), mine[0].defending], [1, false])
-	assert_true(rival.raid_state.noise > 0)
-	assert_eq(fought[0].report.outcome(), AttackOutcome.Value.PILLAGED)
-	assert_null(fought[0].report.personality)
-	var walled := _announced()
-	AssaultSamples.station(walled.human_player(), AssaultSamples.WALL)
-	var held := AnnouncedAttackResolver.fight(walled)[0]
-	assert_eq([held.report.entry.victory, held.report.outcome()], [false, AttackOutcome.Value.REPELLED])
-	assert_eq(_assaults(walled.human_player())[0].units, AssaultSamples.WALL)
-
-
-func test_a_faction_is_reported_with_its_personality() -> void:
-	var game := _announced(Faction.new(CULT).id())
-	game.saved_factions.assign([CULT])
-	var report := AnnouncedAttackResolver.fight(game)[0].report
-	assert_eq([report.attacker_id, report.personality], [AssaultSamples.rival_of(game).id, CULT])
-	assert_true(report.entry.defending)
-
-
-func test_the_attack_goes_with_the_units_the_attacker_still_has() -> void:
-	var game := _announced()
-	var rival := AssaultSamples.rival_of(game)
-	AssaultSamples.station(rival, {HARPOONIST: 10})
-	AnnouncedAttackResolver.resolve(game)
-	assert_eq(_assaults(rival)[0].units, {HARPOONIST: 10})
-
-
-func test_a_fallen_attacker_or_one_with_nothing_left_cancels_the_attack() -> void:
-	var fallen := _announced()
-	AssaultSamples.rival_of(fallen).saved_fallen = true
-	var empty := _announced()
-	AssaultSamples.station(AssaultSamples.rival_of(empty), {})
+func test_an_attacker_gone_from_the_game_cancels_the_attack() -> void:
 	var gone := _announced()
 	gone.players.erase(AssaultSamples.rival_of(gone).id)
-	for game: Game in [fallen, empty, gone]:
-		assert_eq(AnnouncedAttackResolver.resolve(game), [])
-		assert_eq(_assaults(game.human_player()), [])
-		assert_eq(game.human_player().raid_state.attacks.size(), 0)
+	assert_eq(AnnouncedAttackResolver.resolve(gone), [])
+	assert_eq(_assaults(gone.human_player()), [])
+	assert_eq(gone.human_player().raid_state.attacks.size(), 0)
 
 
 func test_an_attack_due_later_waits() -> void:

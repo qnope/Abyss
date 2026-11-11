@@ -198,8 +198,6 @@ Files and tests of the modules above that wait for another module:
 | `faction_attack_play_test.dart`, `faction_play_test.dart`, `faction_race_test.dart`, `faction_replay_test.dart`, `faction_research_play_test.dart` (whole games through `playFactionGame`, `playIdleFactionGame` or `faction_race.dart`) | `turn` (`EndTurnAction`), then the runners of `script` for the replays |
 | `script/strategies_test.dart` (whole games through `ScriptRunner` and `BatchRunner`) | `turn` (`EndTurnAction`), then the runners of `script` |
 | `script/action_spec.dart` (a typedef: an `ActionSpec` is a `Callable` taking a `DartRandom` and giving an `Action`) | `script/action_codec.dart`, its only reader |
-| `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
-| `held_attack_report/held_kernel_report_test.dart`, `held_post_report_test.dart`; `announce_attack/announced_attack_report_test.dart`, `announced_attack_resolve_test.dart` (they end the turn; `held_attack_reports_test.gd` and `announced_attack_resolver_test.gd` call the two steps meanwhile) | `turn` (`EndTurnAction`, `TurnResult.attacks`) |
 | `volcano/wave_held_back_turn_test.dart` | `turn` (`TurnResolver`) |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it; the last test of `choose_event_action_test.dart` (the choice is written in the replay journal) | `action` (`ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
@@ -208,7 +206,6 @@ Files and tests of the modules above that wait for another module:
 | `resource/consumption_integration_test.dart` | `turn` |
 | `building_degradation_solo_test.dart` | `script` |
 | `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
-| `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart` | `EndTurnAction`, its only caller |
 | `leviathan/leviathan_turn_test.dart` (the guardians through `EndTurnAction` and `TurnResult`) | `turn` |
 | `choiceEvents` of `event_test_helper.dart` (no test of `domain` reads it; `producingPlayer` is `EventSamples.producing_player`) | the tests of the presentation that use it |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

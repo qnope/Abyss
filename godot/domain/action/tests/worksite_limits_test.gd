@@ -1,7 +1,6 @@
 extends TestCase
 ## test/domain/action/worksite_limits_test.dart: the building sites and the
-## laboratory, one task each a turn. 'the end of the turn frees the sites
-## and the laboratory' waits for `turn` (PlayerTurnResolver).
+## laboratory, one task each a turn, freed at its end.
 
 
 func _scenario(hq_level := 1) -> Player:
@@ -41,3 +40,15 @@ func test_one_research_per_turn() -> void:
 	var second := ResearchTechAction.new(TechBranch.Value.RESOURCES).execute(game, player)
 	assert_false(second.is_success)
 	assert_eq(second.reason, ActionFailure.Value.RESEARCH_ALREADY_STARTED)
+
+
+func test_the_end_of_the_turn_frees_the_sites_and_the_laboratory() -> void:
+	var player := _scenario()
+	var game := ActionSamples.game_of(player)
+	_upgrade(player, BuildingType.Value.ALGAE_FARM)
+	ResearchTechAction.new(TechBranch.Value.MILITARY).execute(game, player)
+	PlayerTurnResolver.resolve(player, 1)
+	assert_eq(player.worksite.upgrades, 0)
+	assert_true(player.worksite.can_research())
+	assert_true(_upgrade(player, BuildingType.Value.CORAL_MINE).is_success)
+	assert_true(player.resources[ResourceType.Value.CORAL].amount > 0)

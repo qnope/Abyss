@@ -87,15 +87,13 @@ func press(target: Variant) -> void:
 	var button: BaseButton = target if target is BaseButton else null
 	if target is String:
 		var shown: String = target
-		button = _button_under(find_text(shown))
+		button = UiButtons.under(find_text(shown))
 	if button == null:
 		fail("press: no button for %s" % TestValues.describe(target))
 	elif button.disabled or not button.is_visible_in_tree():
 		fail("press: %s is %s" % [button.name, "disabled" if button.disabled else "hidden"])
 	else:
-		if button.toggle_mode and not _is_held_in_group(button):
-			button.button_pressed = not button.button_pressed
-		button.pressed.emit()
+		UiButtons.touch(button)
 
 
 ## The text the game writes for [param key]: what a component must show.
@@ -116,19 +114,6 @@ func assert_no_raw_keys(root: Node = null) -> void:
 	for shown in texts(root):
 		if Texts.has(StringName(shown), "fr"):
 			fail('"%s" is shown as the key it should have been translated from' % shown)
-
-
-## The button [param node] is, or is drawn over; null for none.
-static func _button_under(node: Node) -> BaseButton:
-	while node != null and not node is BaseButton:
-		node = node.get_parent()
-	return node as BaseButton
-
-
-## Whether [param button] is the lit one of a group that does not let it go.
-static func _is_held_in_group(button: BaseButton) -> bool:
-	var group := button.button_group
-	return button.button_pressed and group != null and not group.allow_unpress
 
 
 func _unmount() -> void:

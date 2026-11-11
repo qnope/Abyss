@@ -60,7 +60,3 @@ func see_only(cells: Array[Vector2i]) -> void:
 func cell_of(content: Content, changes := {}) -> MapCell:
 	return MapCell.new(TerrainType.Value.PLAIN, content).copy_with(changes)
 
-
-## The stock of [param resource] of the player.
-func stock(resource: ResourceType.Value) -> int:
-	return human.resources[resource].amount

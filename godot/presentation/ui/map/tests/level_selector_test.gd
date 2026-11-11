@@ -56,8 +56,8 @@ func test_every_level_unlocked_has_no_padlock() -> void:
 
 func test_the_level_on_show_is_filled_and_the_others_outlined() -> void:
 	var selector := _selector(2, [1, 2, 3])
-	assert_eq(selector.chips[2].theme_type_variation, &"")
-	assert_eq(selector.chips[1].theme_type_variation, LevelSelector.OUTLINED)
+	assert_eq(selector.chips[2].theme_type_variation, AbyssChipTheme.ACTIVE)
+	assert_eq(selector.chips[1].theme_type_variation, AbyssChipTheme.CHIP)
 	selector.show_state(1, [1, 2, 3])
-	assert_eq(selector.chips[2].theme_type_variation, LevelSelector.OUTLINED)
-	assert_eq(selector.chips[1].theme_type_variation, &"")
+	assert_eq(selector.chips[2].theme_type_variation, AbyssChipTheme.CHIP)
+	assert_eq(selector.chips[1].theme_type_variation, AbyssChipTheme.ACTIVE)

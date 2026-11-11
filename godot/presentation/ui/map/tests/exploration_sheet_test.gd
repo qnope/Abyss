@@ -74,6 +74,8 @@ func test_a_wreck_lying_there_tells_its_countdown() -> void:
 	human.event_state.wreck_until_turn = 6
 	modals().open(ExplorationSheet.new(actions, 6, 6, 1))
 	assert_not_null(find_text("Épave : encore 3 tours"))
+	use_language("en")
+	assert_not_null(find_text("Wreck: 3 turns left"))
 
 
 func test_a_refusal_at_the_moment_of_sending_is_told_in_the_sheet() -> void:

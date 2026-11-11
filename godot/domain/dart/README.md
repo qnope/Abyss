@@ -1,12 +1,16 @@
 # domain/dart
 
 What the Dart language does and GDScript does otherwise: its random
-generator, its sort, part of its arithmetic, the names of its enum values. The rules of `lib/domain` are
+generator, its sort, part of its arithmetic, the names of its enum values,
+the texts of its doubles and of its JSON. The rules of `lib/domain` are
 ported to give **the same game**, to the last die; wherever one of them
 draws, shuffles, sorts with a comparator, divides or rounds, the port goes
 through here. Each class is held against `reference/vectors/dart_*.json`
 (`reference/vectors/README.md` has the algorithms). `DartInt` has no vector
-yet: its test lists what the Dart VM answered.
+yet: its test lists what the Dart VM answered, as do those of `DartDouble`
+and `DartJson`. `DartDouble` reads the exact digits of a double
+(`DartDecimal`, over the whole numbers of any size of `DecimalLimbs`) and
+the reals that read back as it (`DoubleInterval`).
 
 ## What a ported rule writes
 
@@ -30,6 +34,9 @@ yet: its test lists what the Dart VM answered.
 | `min`, `max`, `clamp` with a float | `DartNum.min`, `max`, `clamp` if a zero's sign or a NaN matters, else `minf`, `maxf`, `clampf` | |
 | `value.name`, `Enum.values.asNameMap()[name]` | `DartEnum.name_of(Enum.Value, value)`, `DartEnum.by_name(Enum.Value, name)` (null when none) | `Enum.Value.keys()`, `find_key`: GDScript's constants, not Dart's names |
 | `int.tryParse(text)` | `DartInt.try_parse(text)` (null when none) | `to_int`, `is_valid_int`: they read other texts |
+| `x.toString()`, `'$x'` of a double | `DartDouble.text_of(x)`: `2.0`, `1e-7`, the fewest digits | `str(x)`, `%s`, `String.num_scientific`: `2`, up to 17 digits |
+| `x.toStringAsFixed(n)` | `DartDouble.text_as_fixed(x, n)`: an exact half away from zero | `"%.1f" % x`, which rounds it to even |
+| `jsonEncode(v)`, `JsonEncoder.withIndent('  ').convert(v)` | `DartJson.encode(v)`, `DartJson.encode(v, "  ")`: the keys in their order | `JSON.stringify`, which sorts them and writes `2` for `2.0` |
 | `value.index`, `Enum.values[i]` | the value itself, `i as Enum.Value`: the port declares the values in the Dart order | |
 
 `godot/domain/native_calls_test.gd` fails on the calls of the last column
@@ -70,3 +77,6 @@ a negative shift, `clamp` with bounds out of order) logs an error with
 - The smallest int divided by -1, with `/` or `%`, crashes the engine.
 - From 2^63 up, `int(x)` and `roundi(x)` depend on the processor, as does a
   shift of 64 or more.
+- `String.to_float` is not Dart's `double.parse`: past 15 significant
+  digits it may read a text one or two bits away (`197.55555555555554`).
+  A text of up to 15 digits without exponent (`1.2`) reads as in Dart.

@@ -59,19 +59,21 @@ the same answers, to the last bit. Its test extends `VectorTestCase`:
   `GameMap` is `seed`). A class whose subclasses are reached is written as
   them (`HistoryEntry`).
 - `CommittedGame` reads a game of `reference/games/` (`committed_games.dart`):
-  its result, its sections, the digests of each turn with the `=` written
-  out (`DigestRows.expand`), its final digests and its journal, and builds
-  the game its replay starts from (`starting_game`, step 1 of "Replaying it"
-  in `reference/README.md`). `reference_games_test.gd` checks every section
-  of that game against the first digests of each file; the turns after it
-  wait for the codec of the actions, which decodes the journal.
-- `ReferenceReplay` replays a `CommittedGame` as "Replaying it" says, the
-  way `ScriptRunner.runOn` plays the `TimelineScript` of its journal, and
-  records the digests as each turn starts and when it stops, to compare
-  with `ReplayComparison` (`domain/reference/`). It takes the decoder of
-  the moves as a `Callable` (a move and the dice of the turn give an
-  `Action`): the codec of the actions plugs in there. `idle-normal`, whose
-  journal holds no move, replays whole already.
+  its source, result and coverage, its sections, the digests of each turn
+  with the `=` written out (`DigestRows.expand`), its final digests and its
+  journal, and builds the game its replay starts from (`starting_game`, step
+  1 of "Replaying it" in `reference/README.md`). `reference_games_test.gd`
+  checks every section of that game against the first digests of each file.
+- `ReferenceReplay` replays a `CommittedGame` as Dart's `ReferenceExporter`
+  does: its journal read by `ScenarioParser` (written with its maps in their
+  order: an army fights in its order) and played by `ScriptRunner` through a
+  `ReferenceRecorder` (`domain/`), with the human id, the turn limit, the
+  difficulty and the seed of its source. `differences()` names what does not
+  match the file: the first turn that started differently and its sections
+  (`ReplayComparison.differing`), the number of turns, the final digests,
+  the result, the journal and the coverage. The unit tests replay the short
+  games (`reference_replay_test.gd`); `tool/godot_reference.sh` replays all
+  19 (`tool/replay/README.md`).
 - `ReferenceFiles` finds the repository: the folder above `res://`, or the one
   `ABYSS_REPO_ROOT` names. `tool/godot_coverage.py` sets it, as it runs the
   tests on a copy of the project in a temporary folder.

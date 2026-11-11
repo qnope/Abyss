@@ -2,9 +2,9 @@ class_name CommittedGame
 extends RefCounted
 ## test/domain/reference/committed_games.dart: a reference game of
 ## `reference/games/`, as its file tells it (reference/README.md, "A
-## reference game"). The moves of its journal wait for the codec of the
-## actions; what does not need them is here: the digests turn after turn,
-## and the game the replay starts from.
+## reference game"): its source, its result, the digests turn after turn,
+## its coverage and its journal, and the game the replay starts from.
+## ReferenceReplay replays it.
 
 ## The id the reference games are played with (ReferenceExporter.humanId).
 const HUMAN_ID := "00000000-0000-4000-8000-000000000000"
@@ -12,16 +12,19 @@ const HUMAN_ID := "00000000-0000-4000-8000-000000000000"
 ## Name of the file, without `.json`.
 var name: String
 var json: Dictionary
+## The length of its file, which grows with the time its replay takes.
+var text_length: int
 
 
 func _init(name_: String, text: String) -> void:
 	name = name_
 	json = JSON.parse_string(text)
+	text_length = text.length()
 
 
 ## The games committed in `reference/games/`, by name.
 static func all() -> Array[CommittedGame]:
-	var folder := ReferenceFiles.repo_root().path_join("reference/games")
+	var folder := _folder()
 	var files: Array[String] = []
 	for file: String in DirAccess.get_files_at(folder):
 		if file.ends_with(".json") and not file.ends_with(".dump.json") and not file.ends_with(".trace.json"):
@@ -31,6 +34,25 @@ static func all() -> Array[CommittedGame]:
 	for file: String in files:
 		games.append(CommittedGame.new(file.trim_suffix(".json"), FileAccess.get_file_as_string(folder.path_join(file))))
 	return games
+
+
+## The game of `reference/games/` named `name_`, or null.
+static func named(name_: String) -> CommittedGame:
+	var path := _folder().path_join(name_ + ".json")
+	return CommittedGame.new(name_, FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
+
+
+static func _folder() -> String:
+	return ReferenceFiles.repo_root().path_join("reference/games")
+
+
+## `source` and `coverage` of the file, their whole numbers ints.
+func source() -> Dictionary:
+	return ReplayJournal.whole_numbers(_map("source"))
+
+
+func coverage() -> Dictionary:
+	return ReplayJournal.whole_numbers(_map("coverage"))
 
 
 func status() -> String:

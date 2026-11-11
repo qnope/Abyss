@@ -2,7 +2,7 @@ class_name FactionGames
 extends RefCounted
 ## The twin of test/helpers/faction_game.dart: games against the factions
 ## played turn after turn through EndTurnAction, the human balanced
-## (`play`), and the growth of a player. `LiveTurn` is
+## (`play`) or idle (`play_idle`), and the growth of a player. `LiveTurn` is
 ## the twin of the one of test/domain/replay/two_player_replay_helper.dart.
 
 
@@ -43,3 +43,15 @@ static func growth_of(player: Player) -> int:
 		for u: Unit in player.units_on_level(level).values():
 			total += u.count
 	return total
+
+
+## `playIdleFactionGame`: a game against `factions` factions where the
+## human does nothing but end its turns, so the factions find an easy prey;
+## played until `turns` or the end of the game.
+static func play_idle(factions: int, turns: int, seed_ := 1) -> Game:
+	var seeds := DartRandom.new(seed_, false)
+	var game := GameFactory.new_game("Nemo", seeds.next_int(0x7FFFFFFF), Difficulty.Value.NORMAL, false, factions)
+	var executor := ActionExecutor.new()
+	while game.status == GameStatus.Value.PLAYING and game.turn < turns:
+		executor.execute(EndTurnAction.new(DartRandom.new(seeds.next_int(1 << 30))), game, game.human_player())
+	return game

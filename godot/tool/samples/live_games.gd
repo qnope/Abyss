@@ -4,7 +4,7 @@ extends RefCounted
 ## two_player_replay_helper.dart: games played as in the game screen, every
 ## die a new `SeededRandom` (FactionGames.LiveTurn), and what a replay must
 ## reproduce of them. `SpyExecutor`, `replayOn` and `Fallback` serve the
-## runners of `script`, not ported.
+## replays through `ScriptRunner`, left for a later lot (domain/README.md).
 
 const RIVAL_ID := "rival-1"
 

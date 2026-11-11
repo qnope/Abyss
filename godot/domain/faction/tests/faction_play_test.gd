@@ -1,7 +1,8 @@
 extends TestCase
 ## test/domain/faction/faction_play_test.dart: the factions playing inside
 ## the ends of turn (FactionGames). '3 factions play 60 turns and every one
-## of them grows' (and 10) plays whole games too long for the suite.
+## of them grows' (and 10) plays whole games too long for the suite: the
+## long cases `faction-play-3` and `faction-play-10` of tool/replay/.
 
 
 func test_the_factions_play_after_the_human_in_a_fixed_order_and_are_journalled() -> void:

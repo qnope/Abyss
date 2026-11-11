@@ -1,7 +1,6 @@
 extends TestCase
 ## test/domain/script/strategies/tutorial_strategy_test.dart: the strategy
-## of the tutorial, through whole turns. Its last test, 'is a strategy of the
-## library', reads ScriptLibrary and waits for the runners of `script`.
+## of the tutorial, through whole turns.
 
 const HARPOONIST := UnitType.Value.HARPOONIST
 
@@ -99,3 +98,7 @@ func test_plays_like_the_careful_script_once_the_first_raid_is_fought() -> void:
 ## Not in the Dart file: the name the library would list it under.
 func test_is_named_tutorial() -> void:
 	assert_eq(TutorialStrategy.new().name(), "tutorial")
+
+
+func test_is_a_strategy_of_the_library() -> void:
+	assert_eq(ScriptLibrary.by_name("tutorial").name(), "tutorial")

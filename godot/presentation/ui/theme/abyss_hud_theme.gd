@@ -18,6 +18,14 @@ const GAP := 6
 
 const PANEL := &"HudPanel"
 const TOGGLE := &"HudToggle"
+## The strips of the game screen: the resource bar over the world, a veil of
+## abyss black (padded 8 and 6), and the row of the turn counter and the next
+## turn button over the tabs, deep navy (padded 12 and 6).
+const RESOURCE_BAR := &"ResourceBarPanel"
+const ACTION_ROW := &"ActionRowPanel"
+const RESOURCE_BAR_FILL := Color(AbyssColors.ABYSS_BLACK, 0.9)
+const RESOURCE_BAR_PADDING := Vector2i(8, 6)
+const ACTION_ROW_PADDING := Vector2i(12, 6)
 ## A toggle on: a tint and a rim of cyan, its name in cyan; off: only a
 ## faint rim, its name dim.
 const TOGGLE_TINT := Color(AbyssColors.BIOLUM_CYAN, 0.14)
@@ -39,10 +47,19 @@ static func apply(theme: Theme) -> void:
 		&"HudHeadline": AbyssTextStyle.new(20, BOLD, AbyssColors.BIOLUM_CYAN),
 		&"HudFigure": AbyssTextStyle.new(12, SEMI, AbyssColors.ON_SURFACE),
 		&"HudCaption": AbyssTextStyle.new(11, SEMI, AbyssColors.ON_SURFACE_DIM, 1),
+		# The turn counter; an amount of the resource bar, which takes its
+		# resource's colour, and the rate of production under it.
+		&"HudTurn": AbyssTextStyle.new(16, BOLD, AbyssColors.BIOLUM_CYAN, 1),
+		&"ResourceAmount": AbyssTextStyle.new(14, BOLD, AbyssColors.ON_SURFACE),
+		&"ResourceRate": AbyssTextStyle.new(11, AbyssFonts.Weight.DEFAULT, AbyssColors.ON_SURFACE_DIM),
 	}
 	for name in styles:
 		AbyssTextTheme.add_label(theme, name, styles[name])
 	_toggle(theme)
+	theme.set_type_variation(RESOURCE_BAR, &"PanelContainer")
+	theme.set_stylebox(&"panel", RESOURCE_BAR, AbyssBox.flat(RESOURCE_BAR_FILL, 0, RESOURCE_BAR_PADDING))
+	theme.set_type_variation(ACTION_ROW, &"PanelContainer")
+	theme.set_stylebox(&"panel", ACTION_ROW, AbyssBox.flat(AbyssColors.DEEP_NAVY, 0, ACTION_ROW_PADDING))
 
 
 static func _toggle(theme: Theme) -> void:

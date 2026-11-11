@@ -1,12 +1,12 @@
 extends SceneTree
-## Renders the game's startup scene for review, as a phone held upright
+## Renders the 3D prototype for review, as a phone held upright
 ## shows it, from a few views of the base. tool/scene_capture.sh runs it:
 ##   godot --path godot --resolution 780x1688 --script res://tool/scene/capture.gd -- <out dir> [scene]
 ## writes <out dir>/default.png (the game's view), rotated.png, close.png
 ## (zoomed on the headquarters) and top.png (from above, the quality panel
 ## open), the scene having run a few hundred frames first.
 
-const SCENE := "res://app/main.tscn"
+const SCENE := "res://app/prototype/prototype.tscn"
 ## Frames to let the scene run before a shot: particles fill the water.
 const WARM_UP := 240
 const SETTLE := 30

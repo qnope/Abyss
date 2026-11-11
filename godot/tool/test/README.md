@@ -38,7 +38,7 @@ A test of a UI component `extends UiTestCase` (`ui_test_case.gd`, itself a
 | `modals()`, `current_modal()` | the `ModalLayer` mounted over the window the first time (animations reduced), and the modal on top or null |
 | `find_text(text, root)`, `texts(root)` | the first visible label, button, rich text or field showing `text`, and every visible text, in tree order |
 | `find_type("Button", root)`, `find_named("Name", root)` | nodes by class name and by node name |
-| `press(button or text)` | a toggle changes state as a touch does (the lit button of a `ButtonGroup` stays lit) and `pressed` fires; a button that is disabled, hidden or absent fails the test, as a player could not press it |
+| `press(button or text)` | the button, or the text of a button or of a label drawn over one; a toggle changes state as a touch does (the lit button of a `ButtonGroup` stays lit) and `pressed` fires; a button that is disabled, hidden or absent fails the test, as a player could not press it |
 | `text(key, args)` | what `Texts` writes in the language on |
 | `use_language("en")` | switches the `TranslationServer`, which tells every mounted node (`NOTIFICATION_TRANSLATION_CHANGED`); French is back after the test |
 | `assert_no_raw_keys(root)` | fails for a shown text that is an ARB key as it is: a component forgot `Texts` |

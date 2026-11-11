@@ -38,10 +38,9 @@ func _block_folder() -> void:
 
 
 func _card_of(player_name: String) -> SaveCard:
-	for card in (_flow.current as LoadGameScreen).list.cards():
-		if card.summary.player_name == player_name:
-			return card
-	return null
+	var listed := (_flow.current as LoadGameScreen).list.cards()
+	var found := listed.filter(func(card: SaveCard) -> bool: return card.summary.player_name == player_name)
+	return null if found.is_empty() else found[0]
 
 
 func _tick() -> int:

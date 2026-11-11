@@ -114,7 +114,7 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   a button and the line that says why an action was refused). A kind whose sheet
   another lot builds (`LAIR`, `POST`, `KERNEL`, `FACTION_BASE`) is handed to the
   handler registered with `CellRouter.register(kind, handler)` (`FACTION_BASE` is
-  lot 13's: until then it opens a "coming soon" sheet).
+  handled by `app/game/FactionController`, with `faction/`).
 
 - `event/`: the random events (`event/README.md`): `EventCard` (an
   `IllustratedCard` whose options go through `GameActions`), `EventStatusBar`

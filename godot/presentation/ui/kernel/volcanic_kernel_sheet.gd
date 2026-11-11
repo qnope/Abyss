@@ -3,7 +3,7 @@ extends MapSheet
 ## What a touch on the volcano opens (lib/presentation/widgets/map/
 ## volcanic_kernel_sheet.dart): while the kraken guards it, its description
 ## and the button that launches the assault (above it, the plan of the assault
-## when lot 13 gives one); once the player holds it, its garrison and the
+## when `../assault/AssaultPlans` gives one); once the player holds it, its garrison and the
 ## buttons that move units in and out ([KernelGarrisonPanel]), the one that
 ## fills the garrison surrounded by the guide's halo when the tutorial asks.
 ##

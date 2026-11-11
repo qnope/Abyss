@@ -20,7 +20,7 @@ var section: SheetSection
 
 
 ## The sheet of [param base_] for the human of [param game]; [param plan] is
-## the plan of an assault on it (lot 13), shown above the assault button.
+## the plan of an assault on it (`../assault/`), shown above the assault button.
 func _init(game: Game, base_: TransitionBase, plan: Control = null) -> void:
 	base = base_
 	var human := game.human_player()

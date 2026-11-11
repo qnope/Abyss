@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Renders the 3D prototype, the app's screens and the UI kit for review, as a
 # phone held upright shows them (390 x 844 points at 2x):
-#   tool/scene_capture.sh [out dir] [scene | app | base | army | map | fight | turn | tech | threat | event | post | kit]
+#   tool/scene_capture.sh [out dir] [scene | app | base | army | map | fight | turn | tech | threat | event | post | faction | kit]
 # With no scene, it writes default.png, rotated.png, close.png and top.png from
 # the views of godot/tool/scene/capture.gd, then app_menu_empty.png,
 # app_menu.png, app_new_game.png, app_saves.png, app_story.png, app_game.png,
@@ -30,9 +30,11 @@
 # godot/tool/scene/event_capture.gd, then post_sheet_guarded.png, _selection, _report, _report_end,
 # _sheet_held, _sheet_held_en, _descent, _descent_done, _rival, post_kernel_guarded, _kernel_report,
 # _kernel_held, post_garrison_picker and post_kernel_garrisoned from godot/tool/scene/post_capture.gd,
+# faction_sheet.png, _sheet_intel, _selection, _report_won, _report_lost, _ranking and _attack_summary
+# from godot/tool/scene/faction_capture.gd,
 # and prints each view's draw calls and primitives. With a scene (res://...tscn) only the first, on that scene; with
 # `app` only the second; with `base` only the third; with `army` only the army tab's; with `map` only the map's; with `fight` only the fights of the lairs; with `kit` only the kit's;
-# with `turn` only the end of a turn and of a game; with `tech` only the research; with `threat` only the raid, guardians and kraken wave; with `event` only the events, the history and the replay export; with `post` only the posts and the Volcanic Kernel. The out dir defaults to
+# with `turn` only the end of a turn and of a game; with `tech` only the research; with `threat` only the raid, guardians and kraken wave; with `event` only the events, the history and the replay export; with `post` only the posts and the Volcanic Kernel; with `faction` only the rival factions. The out dir defaults to
 # /tmp/scene_capture: never write the renders in the repo. Godot draws with
 # its Compatibility renderer (the web's) in a virtual X display (xvfb-run), in
 # software: its frame rate means nothing. GODOT names the engine binary.
@@ -56,7 +58,7 @@ capture() {
     --script "$1" -- "$out" ${2:+"$2"} 2>&1 | grep -vE "^(Godot Engine|OpenGL API|$)" || true
 }
 
-if [[ $which != kit && $which != app && $which != base && $which != army && $which != map && $which != fight && $which != turn && $which != tech && $which != threat && $which != event && $which != post ]]; then
+if [[ $which != kit && $which != app && $which != base && $which != army && $which != map && $which != fight && $which != turn && $which != tech && $which != threat && $which != event && $which != post && $which != faction ]]; then
   capture res://tool/scene/capture.gd "$which"
   [[ -f $out/default.png ]] || { echo "The scene did not render." >&2; exit 1; }
 fi
@@ -105,4 +107,9 @@ fi
 if [[ -z $which || $which == post ]]; then
   capture res://tool/scene/post_capture.gd
   [[ -f $out/post_kernel_garrisoned.png ]] || { echo "The posts did not render." >&2; exit 1; }
+fi
+
+if [[ -z $which || $which == faction ]]; then
+  capture res://tool/scene/faction_capture.gd
+  [[ -f $out/faction_attack_summary.png ]] || { echo "The factions did not render." >&2; exit 1; }
 fi

@@ -52,8 +52,8 @@ for a wave that was lost; a wave repelled stays a line of the summary.
 ## Not ported
 
 - The turn's story told on the map (step 7) and the fight in 3D.
-- The guardians' attack report and the factions' attacks: lot 13 (they come
-  from `TurnResult.attacks` and `leviathan`).
+- The guardians' and the factions' attacks on the human come from
+  `TurnResult.attacks`: `../faction/AttackTurnSection`.
 - The kernel's garrison panel: `../kernel/`.
 
 The tests are in `tests/`, on `UiTestCase`, from real fights

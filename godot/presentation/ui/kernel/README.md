@@ -9,7 +9,7 @@ acts. Depends on `domain/`, `../theme`, `../l10n`, `../texts`, `../common`, `../
 
 | Component | Does |
 | --- | --- |
-| `VolcanicKernelSheet(game, captured, plan)` | a `MapSheet`: the volcano's picture and description; guarded, the `plan` (lot 13) and "Launch the assault"; held, the `KernelGarrisonPanel`. `attack_requested`, `garrison_requested` and `withdraw_requested` come after the sheet closed |
+| `VolcanicKernelSheet(game, captured, plan)` | a `MapSheet`: the volcano's picture and description; guarded, the `plan` (`../assault/`) and "Launch the assault"; held, the `KernelGarrisonPanel`. `attack_requested`, `garrison_requested` and `withdraw_requested` come after the sheet closed |
 | `KernelGarrisonPanel(player, guided)` | the kernel's level, the magma rampart, the garrison (`UnitCountPanel`), the units waiting outside it on the volcano level, the next kraken wave, the levels lost, and the buttons to garrison (inside the guide's `GuideHalo` when `guided`) and withdraw (off while nobody is in) |
 | `KernelFightSummaryPage(result, x, y)` | an `AssaultSummaryPage` (`../fight/`): "Assault: Volcanic Kernel", "kernel captured" |
 
@@ -23,4 +23,4 @@ session's (`GameActions.victory_reached`, the screen of `../game_over/`).
 - The garrison's news (its size, a refusal) is a `MessageDialog`, not a snack bar.
 - The guide's halo reads `GuideAdvisor` itself (`target.garrison`); the guide's own
   wiring is lot 15's.
-- The kernel a rival holds opens `../post/RivalPostSheet` (no post): the attack is lot 13's.
+- The kernel a rival holds opens `../post/RivalPostSheet` (no post): `app/game/FactionController` runs the attack.

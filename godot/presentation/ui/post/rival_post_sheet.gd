@@ -4,7 +4,7 @@ extends MapSheet
 ## holds opens (lib/presentation/widgets/map/rival_post_sheet.dart): who holds
 ## it, why the attack is refused if it is, and the attack button.
 ##
-## The attack itself is the rival assault of lot 13: the sheet only tells
+## The attack itself is the rival assault of `app/game/FactionController`: the sheet only tells
 ## [signal attack_requested], after it closed, and its owner opens what
 ## follows. Without a [member base] it is the volcanic kernel that is held.
 

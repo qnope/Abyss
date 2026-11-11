@@ -3,7 +3,7 @@ extends SheetSection
 ## The part of the sheet of a Faille or a Cheminée still guarded
 ## (lib/presentation/widgets/map/transition_base_uncaptured_section.dart): its
 ## difficulty, its income once taken, that its guardians are neutral, the
-## plan of the assault when one is given (lot 13's [param plan]) and the
+## plan of the assault when one is given ([param plan], made by `../assault/AssaultPlans`) and the
 ## button that prepares the assault.
 
 ## The player wants to assault the post.

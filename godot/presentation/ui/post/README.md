@@ -11,7 +11,7 @@ sheets only tell what the player wants, `app/game/PostController` acts. Depends 
 | Component | Does |
 | --- | --- |
 | `TransitionBaseSheet(game, base, plan)` | a `MapSheet`: the picture lit by who holds the post (`PostPicture`), its name, its kind, then the uncaptured or the captured section. `assault_requested` and `descend_requested` come after the sheet closed |
-| `TransitionBaseUncapturedSection(base, plan)` | difficulty `n/5`, income once taken, "neutral, guardians present", the `plan` of the assault (lot 13) and "Assault" |
+| `TransitionBaseUncapturedSection(base, plan)` | difficulty `n/5`, income once taken, "neutral, guardians present", the `plan` of the assault (`../assault/`) and "Assault" |
 | `TransitionBaseCapturedSection(base, human, defence)` | captured, pearls per turn, the defenders of the level below (`UnitCountPanel`), the `PostDefencePanel`, and the descent button, off with the building it asks for named (`PostRequirement`) |
 | `PostDefencePanel(post, defence)` | the largest faction army the scouts reported, what is lost if the post falls (the passage building, the units below, the reinforcements on their way) and that factions strike without warning |
 | `RivalPostSheet(base, owner_name, refusal)` | a post another player holds (the volcano when `base` is null): who holds it, the refusal of an attack told in the sheet and the attack button off, `attack_requested` |
@@ -23,10 +23,9 @@ sheets only tell what the player wants, `app/game/PostController` acts. Depends 
 - The picture of a post is a `Portrait` (initials) tinted by its holder, until step 7
   (the 3D map already lights posts through `MapLooks`).
 - Flutter shows the news of a descent in a snack bar: `MessageDialog` (`../common/`).
-- The rival post sheet is complete but its attack is lot 13's: the sheet tells
-  `attack_requested` and `PostController` tells `rival_attack_requested` for the
-  rival assault to listen to.
-- The assault plan panel and gauge are lot 13's: the sections take a `plan` control.
+- The rival post sheet only tells `attack_requested`; `PostController` tells
+  `rival_attack_requested` and `app/game/FactionController` runs the assault.
+- The assault plan panel and gauge are in `../assault/`: the sections take a `plan` control.
 - Sending reinforcements (`handleSendReinforcements`) has no caller in Flutter and
   is not ported; `ReinforcementDialog` stays in `../unit/`. The troops section of
   the Descent Module and Pressure Capsule building sheets (a descent from the

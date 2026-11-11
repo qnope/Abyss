@@ -1,47 +1,7 @@
-extends UiTestCase
+extends AttackTurnCase
 ## test/presentation/widgets/turn/attack_turn_section_test.dart,
 ## held_attack_lines_test.dart and leviathan_report_test.dart: the attacks of
 ## the factions in the end-of-turn summary.
-
-const Harpoonist := UnitType.Value.HARPOONIST
-const KERNEL := AttackHeldKernelAction.KERNEL_CODE
-
-var _answers: Array = []
-
-
-## The result of the turn the rival attacks the bare base (or the wall of
-## [param defenders]) and fights it, with the personality of a faction.
-func _fought(defenders: Dictionary[UnitType.Value, int] = {}) -> TurnResult:
-	var game := AssaultSamples.announce_game()
-	game.saved_factions.assign([FactionPersonality.Value.ANGLER_CULT])
-	AssaultSamples.station(game.human_player(), defenders)
-	AssaultSamples.announce().execute(game, AssaultSamples.rival_of(game))
-	var done: EndTurnActionResult = EndTurnAction.new(DartRandom.new(1), false).execute(game, game.human_player())
-	return done.turn_result
-
-
-## The result of a turn whose one attack is [param entry]'s, by [param attacker].
-func _reported(entry: BaseAssaultEntry, attacker := "Nacre") -> TurnResult:
-	var report := FactionAttackReport.new("nacre", attacker, null, entry)
-	return TurnResult.new([], 14, 15, false, [], {}, [], [], null, null, null, null, null, null, null, null, [], [], [report])
-
-
-func _show(result: TurnResult) -> TurnSummary:
-	var dialog := TurnSummary.new(result)
-	dialog.closed.connect(_answers.append)
-	modals().open(dialog)
-	return dialog
-
-
-func _section(result: TurnResult) -> AttackTurnSection:
-	return find_type("AttackTurnSection", _show(result))[0] as AttackTurnSection
-
-
-func _attack(victory: bool, post: Variant = null, kernel: Variant = null, lost := {}, destroyed := true) -> BaseAssaultEntry:
-	var lost_with: Dictionary[UnitType.Value, int] = {}
-	lost_with.assign(lost)
-	var dead: Dictionary[UnitType.Value, int] = {Harpoonist: 2}
-	return HistorySamples.base_assault_entry(victory, true, post, kernel, lost_with, dead, destroyed)
 
 
 func test_a_turn_without_an_attack_has_no_attack_section() -> void:
@@ -128,32 +88,3 @@ func test_the_guardians_of_the_faille_are_named_in_the_language_on() -> void:
 	assert_true(line.headline.label.text.begins_with("The Leviathan took"))
 	use_language("es")
 	assert_no_raw_keys()
-
-
-func test_the_button_opens_the_report_of_the_fight_over_the_summary() -> void:
-	var summary := _show(_fought())
-	press("Voir le rapport")
-	var report := current_modal() as BaseAssaultSummaryPage
-	assert_not_null(report)
-	assert_eq(modals().depth(), 2, "over the summary")
-	assert_not_null(find_text("%s vous a attaqué" % report.entry.opponent_name, report))
-	report.close()
-	assert_eq(current_modal(), summary, "back to the summary")
-	assert_eq(_answers, [], "the summary is still waiting")
-
-
-func test_each_attack_has_its_own_button() -> void:
-	var first := _attack(true)
-	var second := _attack(false, KERNEL, Vector2i(2, 2))
-	var result := _reported(first)
-	result.attacks.append(FactionAttackReport.new("other", "Corail", null, second))
-	var section := _section(result)
-	assert_eq(section.lines.size(), 2)
-	press(section.report_buttons[1])
-	assert_eq((current_modal() as BaseAssaultSummaryPage).entry, second)
-
-
-func test_a_section_outside_any_dialog_opens_nothing() -> void:
-	var section := mount(AttackTurnSection.new(_reported(_attack(true)).attacks)) as AttackTurnSection
-	press(section.report_buttons[0])
-	assert_null(current_modal())

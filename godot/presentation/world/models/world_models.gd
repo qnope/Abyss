@@ -19,6 +19,11 @@ const MODELS: Dictionary[BuildingType.Value, PackedScene] = {
 }
 
 
+## The units that have a model, by type: one figure of a squad. None yet; step
+## 7 adds them here.
+const UNIT_MODELS: Dictionary[UnitType.Value, PackedScene] = {}
+
+
 ## Whether the building [param type] has a model.
 static func has_model(type: BuildingType.Value) -> bool:
 	return MODELS.has(type)
@@ -34,6 +39,21 @@ static func building(
 		return StandIn.new(type, level, degraded)
 	var model := MODELS[type].instantiate() as Node3D
 	if degraded:
+		_grey(model)
+	return model
+
+
+## One figure of the squad of the unit [param type], its origin the floor
+## under it: its model, or its stand-in when it has none in [param models]
+## (the units' [constant UNIT_MODELS]; a test gives its own). A [param ghost]
+## is a locked unit's, greyed and half there.
+static func unit(
+	type: UnitType.Value, ghost := false, models: Dictionary[UnitType.Value, PackedScene] = UNIT_MODELS
+) -> Node3D:
+	if not models.has(type):
+		return UnitStandIn.new(type, ghost)
+	var model := models[type].instantiate() as Node3D
+	if ghost:
 		_grey(model)
 	return model
 

@@ -34,6 +34,7 @@ func _init(summary_: FightTurnSummary) -> void:
 	if summary.crit_count > 0:
 		crit_label = text_label(&"LabelMedium", AbyssColors.WARNING)
 		crit_label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		crit_label.autowrap_mode = TextServer.AUTOWRAP_OFF
 		var badge := PanelContainer.new()
 		var box := AbyssBox.flat(AbyssColors.SURFACE_DIM, CRIT_RADIUS, CRIT_PADDING)
 		badge.add_theme_stylebox_override(&"panel", AbyssBox.rimmed(box, Color(AbyssColors.WARNING, 0.4)))

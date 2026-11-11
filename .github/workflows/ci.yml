@@ -222,6 +222,8 @@ jobs:
         env:
           # Today's measure. It may be lowered only with the owner's approval.
           COVERAGE_MIN: 100
+          # The instrumented suite took 490 s of the default 600 at 4662 tests.
+          GODOT_TEST_TIMEOUT: 1500
         run: tool/godot_coverage.py
       - name: Coverage summary
         if: ${{ !cancelled() && hashFiles('coverage/godot/summary.md') != '' }}

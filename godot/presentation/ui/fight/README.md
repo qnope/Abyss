@@ -42,7 +42,7 @@ The pages and the sheet of a fight against a lair of the map
 | `SelectionSummaryCard(boost)` | the attack and defence of the units picked (`show_totals`) and the military bonus |
 | `ArmySelectionSummary` | the totals, with the `UnitBoost` the fight uses (`TechEffects.unit_boost(attacking)`) |
 | `ArmySelectionActions(launch_key)` | launch (off until `set_ready(true)`), cancel, and the warning of a missing admiral (`set_admiral_missing`, for the assaults) |
-| `FightSummaryPage(result, lair, x, y)` | the report: banner, monsters, units, kills, loot of a victory, turns, "back to the map". `FightSummaryPage.of_entry(combat_entry)` rebuilds it from the history's `CombatEntry` |
+| `FightSummaryPage(result, lair, x, y)` | the report: banner, monsters, units, kills, loot of a victory, turns, "back to the map". `HistoryReports.fight_summary(combat_entry)` (`ui/history/`) rebuilds it from the history's `CombatEntry` |
 
 Not one to one: the Flutter selection screen pops with the result even when
 the action failed (and its summary then reads a fight that is not there); here

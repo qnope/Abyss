@@ -89,7 +89,7 @@ func test_the_fights_report_is_what_the_history_reopens() -> void:
 	var report := current_modal() as FightSummaryPage
 	press("Retour à la carte")
 	var entry := human.history_entries[0] as CombatEntry
-	var again := FightSummaryPage.of_entry(entry)
+	var again := HistoryReports.fight_summary(entry)
 	modals().open(again)
 	assert_eq(again.title(), report.title())
 	assert_eq(again.result.victory, report.result.victory)

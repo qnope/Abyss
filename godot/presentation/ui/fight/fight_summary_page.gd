@@ -8,7 +8,10 @@ extends FullPage
 ##
 ## It is shown right after the fight, from the [FightMonsterResult] the action
 ## gave, and later by the history from the entry that recorded it
-## ([method of_entry], history_fight_launcher.dart).
+## ([method HistoryReports.fight_summary]).
+##
+## No static factory of its own: a script that builds itself in a static
+## function leaks at exit when another script loads it first.
 
 const GAP := 12
 
@@ -39,14 +42,6 @@ func _init(result_: FightMonsterResult, lair_: MonsterLair, x: int, y: int) -> v
 	map_button.pressed.connect(close)
 	body.add_child(map_button)
 	refresh()
-
-
-## The report of the fight a [CombatEntry] of the history recorded: the result
-## the action gave, rebuilt from what the entry kept.
-static func of_entry(entry: CombatEntry) -> FightSummaryPage:
-	var fought := FightMonsterResult.success(entry.victory, entry.fight_result, entry.loot, entry.sent,
-		entry.survivors_intact, entry.wounded, entry.dead)
-	return FightSummaryPage.new(fought, entry.lair, entry.target_x, entry.target_y)
 
 
 func refresh() -> void:

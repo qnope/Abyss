@@ -93,7 +93,7 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   used by the reports of `threat/` and by the monsters' fights: the sheet of a lair
   (`MonsterLairSheet`), the army selection page (`ArmySelection`, generic) and the
   report (`FightSummaryPage`, which the history reopens from an entry with
-  `of_entry`) (`fight/README.md`).
+  `HistoryReports.fight_summary`) (`fight/README.md`).
 
 - `map/`: the 2D part of the map tab over the map in 3D (`world/map/`):
   `MapTab` (the `LevelSelector`, small chips for the three depths, a locked one

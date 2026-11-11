@@ -22,10 +22,14 @@ flow saves and deletes through the repository, reads the saves again each time
 a screen is shown, and replaces the screen on show.
 
     menu -> new game -> (game created, saved) -> opening story -> the game
-    menu -> saved games -> the game (a lost game opens it too, for now)
+    menu -> saved games -> the game (a lost game opens its defeat screen)
     menu -> the game (continue: the latest in progress)
     the game -> settings -> save and quit -> (saved) -> menu
     the game -> settings -> language -> kept, the language set
+    the game -> next turn -> question -> turn ended (saved) -> summary -> the game
+    the game -> a turn lost it -> summary -> defeat screen -> menu
+    the game -> the kernel at the last level -> victory screen over the game
+      -> continue: free play, saved | menu: saved, then the menu
     new game, saved games -> menu: back
 
 `game/` is the game played: `GameSession` holds the game, the repository and
@@ -41,6 +45,19 @@ the base (`BaseScene.building_tapped`) opens the sheet of its building
 rampart's tier. Flow: pad tapped -> sheet -> `GameActions.execute` -> `acted`
 -> save -> `changed` -> HUD and base redrawn. `AppFlow.play` builds
 the three and `_leave_game` gives the world back to the menus.
+
+The end of a turn is `EndTurnFlow` (`presentation/ui/turn/`), made by the
+`GameController`: the HUD's `end_turn_requested` asks, the confirmed turn goes
+through `GameActions.end_turn()` (so it is saved by `acted` and redrawn before
+the summary opens), the pages of `TurnOutcome` open on the `ModalLayer`, and
+`finished` redraws the screen once the last is closed. `defeated` goes up to
+`AppFlow.show_defeat`, which replaces the game with the `DefeatScreen` (the
+world is the menus' again; its only way out is the menu); `AppFlow.play` shows
+the same screen for a saved game already lost. A victory (`victory_reached`
+of the actions, set by the action that raised the kernel to the last level)
+opens the `VictoryScreen` over the game: "continue" sets free play through
+`GameActions.continue_in_free_play` (saved, the same game goes on), "menu"
+saves and leaves through `quit_requested`.
 
 A save that cannot be read is skipped and named in a warning (and in
 `AppFlow.unreadable`), never stopping the others; a save or a deletion that

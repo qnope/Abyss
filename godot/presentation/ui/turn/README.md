@@ -23,24 +23,24 @@ is a chain of signals, no `await`. It saves and navigates nothing: `app/` joins
 - `TurnSummary`: the dialog of what the turn did, one section per line of
   `SummarySections.of(result)`.
 - `TurnOutcome`: the ordered queue of pages shown after a turn
-  (`default_steps(actions)`: the summary, then the card of the event drawn,
-  `EventStep`).
-- Components: `SummaryLine`, `ResourceChangeLine`, `LossSection` (built by
+  (`default_steps(actions)`: the summary, the reports, the card of the event
+  drawn `EventStep`, then the tips the turn brought, `TipPresenter`).
+- Components: `SummaryLine`, `SummaryNoteLine`, `MissedObjectiveLine`, `ResourceChangeLine`, `LossSection` (built by
   `TurnLosses`, `UndefendedPostWarning` by `TurnWarnings`). Factories are in
   `RefCounted` classes, not static functions of the nodes: a node class that
   builds itself in a static function leaks its script (Godot 4.7).
 
-## Extension points, and what is still to come
+## Extension points
 
 A lot that owns a part of the turn adds to one of three places, and nothing else
 changes.
 
 - `SummarySections.of(result)`: a section of the summary is a `Control` added
-  at the place Flutter puts it, after the losses: the raid and the kraken wave
-  (`ThreatSections`), the attacks of the factions between them
-  (`../faction/AttackSections`), then the event lines (`EventTurnSection`). To
-  come: the exploration summary (lot 9) before the raid, the objectives
-  completed (lot 15) after them.
+  at the place Flutter puts it, after the losses: the exploration summary
+  (`ExplorationTurnSection`), the raid and the kraken wave (`ThreatSections`),
+  the attacks of the factions between them (`../faction/AttackSections`), the
+  event lines (`EventTurnSection`), then the objectives completed or ended
+  (`ObjectiveTurnSection`).
 - `TurnWarnings.of(game, player)`: a warning of the question. The threats
   (`ThreatWarnings`: the raid, the predators, the guardians of a Faille, the
   kraken wave) come first, then the undefended posts, then the event waiting
@@ -50,8 +50,8 @@ changes.
   show; a page that changes the game (the event's choice) is built with the
   `actions`. After `summary_page` come the reports of the raid, of the
   predators and of a kraken wave lost (`ThreatPages`), then the event card
-  (`EventStep`). To come, in Flutter's order: the objective and tip cards
-  (lot 15). The turn's stories (animations) are step 7's.
+  (`EventStep`), then the tips (`../tip/TipPresenter`). The turn's stories
+  (animations) are step 7's.
 
-Shown: resources, shutdowns, lost units, the recruitment now open and the
-events. Not shown yet: everything else above.
+Shown: resources, shutdowns, lost units, the explorations, the threats, the
+events, the objectives and the recruitment now open.

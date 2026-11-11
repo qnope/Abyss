@@ -80,12 +80,43 @@ func test_frames_the_island_between_the_bars_of_the_game() -> void:
 
 
 func test_hides_and_pauses_for_a_tab_with_no_view_of_the_world() -> void:
-	_world.set_shown(false)
+	_world.show_view(WorldHost.View.NONE)
 	assert_false(_world.visible)
 	assert_eq(_world.process_mode, Node.PROCESS_MODE_DISABLED)
-	_world.set_shown(true)
+	_world.show_view(WorldHost.View.BASE)
 	assert_true(_world.visible)
 	assert_eq(_world.process_mode, Node.PROCESS_MODE_INHERIT)
+
+
+func test_shows_the_base_first_and_the_parade_ground_on_the_army_tab() -> void:
+	assert_eq(_world.view, WorldHost.View.BASE)
+	assert_true(_world.base.visible)
+	assert_false(_world.parade.visible)
+	_world.show_view(WorldHost.View.PARADE)
+	assert_false(_world.base.visible)
+	assert_eq(_world.base.process_mode, Node.PROCESS_MODE_DISABLED)
+	assert_true(_world.parade.visible)
+	assert_eq(_world.parade.process_mode, Node.PROCESS_MODE_INHERIT)
+	assert_true(_world.parade.camera.current)
+	assert_false(_world.base.camera.current)
+	_world.show_view(WorldHost.View.BASE)
+	assert_true(_world.base.camera.current)
+	assert_false(_world.parade.visible)
+
+
+func test_the_ambience_goes_back_to_the_base() -> void:
+	_world.show_view(WorldHost.View.PARADE)
+	_world.show_ambience()
+	assert_eq(_world.view, WorldHost.View.BASE)
+	assert_true(_world.base.camera.current)
+
+
+func test_frames_the_parade_ground_between_the_bars_too() -> void:
+	_world.frame_between(0.1, 0.2)
+	var size := _world.get_viewport().get_visible_rect().size
+	var fitted := OrbitFrame.fit(ParadeLayout.OUTLINE, OrbitRig.DEFAULT_YAW, OrbitRig.DEFAULT_PITCH,
+		size.x / size.y, OrbitCamera.FOV, 0.1, 0.2 + ParadeScene.PLACE_BAR_ROOM)
+	assert_almost_eq(_world.parade.camera.rig.default_distance, fitted.x, 1e-4)
 
 
 func add_child_to_window(node: Node) -> void:

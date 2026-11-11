@@ -90,6 +90,8 @@ func test_a_tab_can_be_shown_from_outside() -> void:
 	hud.show_tab(GameTab.Value.ARMY)
 	assert_eq(hud.tab_bar.selected(), GameTab.Value.ARMY)
 	assert_eq(_tabs, [GameTab.Value.ARMY] as Array[GameTab.Value])
+	assert_false(hud.page.visible, "the parade ground shows through")
+	assert_eq(_visible_pages(hud), 0)
 
 
 func test_the_next_turn_button_only_asks_for_the_end_of_the_turn() -> void:

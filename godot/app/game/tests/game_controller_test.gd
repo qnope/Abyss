@@ -45,8 +45,12 @@ func test_the_world_follows_the_tab_on_show() -> void:
 	assert_eq(_world.process_mode, Node.PROCESS_MODE_DISABLED)
 	press("Tech")
 	assert_false(_world.visible)
+	press("Armée")
+	assert_true(_world.visible)
+	assert_eq(_world.view, WorldHost.View.PARADE)
 	press("Base")
 	assert_true(_world.visible)
+	assert_eq(_world.view, WorldHost.View.BASE)
 	assert_eq(_world.process_mode, Node.PROCESS_MODE_INHERIT)
 
 

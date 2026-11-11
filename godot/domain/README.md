@@ -194,8 +194,7 @@ Files and tests of the modules above that wait for another module:
 | Dart | Waits for |
 | --- | --- |
 | `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
-| `action/announced_attack_resolver.dart`, `held_attack_reports.dart` | nothing left: `FactionAttackReport` is there, they come next |
-| `held_attack_report/held_kernel_report_test.dart`, `held_post_report_test.dart`; `announce_attack/announced_attack_report_test.dart`, `announced_attack_resolve_test.dart` (they end the turn) | `turn` (`EndTurnAction`, `TurnResult.attacks`) |
+| `held_attack_report/held_kernel_report_test.dart`, `held_post_report_test.dart`; `announce_attack/announced_attack_report_test.dart`, `announced_attack_resolve_test.dart` (they end the turn; `held_attack_reports_test.gd` and `announced_attack_resolver_test.gd` call the two steps meanwhile) | `turn` (`EndTurnAction`, `TurnResult.attacks`) |
 | `volcano/wave_held_back_turn_test.dart` | `turn` (`TurnResolver`) |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it; the last test of `choose_event_action_test.dart` (the choice is written in the replay journal) | `action` (`ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |

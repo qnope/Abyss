@@ -15,7 +15,7 @@ func before_each() -> void:
 	_island = ISLAND.instantiate() as Node3D
 	_pads = BasePads.new(_island.get_node("Pads") as Node3D)
 	_buildings = BaseBuildings.new()
-	_buildings.build(BaseScene.BUILT, _pads)
+	_buildings.build(PadState.standing(BaseScene.BUILT), _pads)
 	_motion = BaseMotion.new(_buildings, _pads.marker)
 	_motion.track()
 
@@ -52,10 +52,29 @@ func test_breathes_the_empty_pads() -> void:
 
 
 func test_runs_with_the_buildings_that_stand() -> void:
-	_buildings.build([&"SolarPanel"] as Array[StringName], _pads)
+	_buildings.build(PadState.standing([&"SolarPanel"] as Array[StringName]), _pads)
 	_motion.track()
 	_motion.advance(1.0)
 	assert_ne(_part(&"SolarPanel", "Array").rotation.y, 0.0)
+
+
+func test_leaves_a_stand_in_still() -> void:
+	_buildings.use_models = false
+	_buildings.build(PadState.standing(BaseScene.BUILT), _pads)
+	_motion.track()
+	_motion.advance(1.0)
+	assert_true(_buildings.building(&"Headquarters") is StandIn)
+	assert_eq(_buildings.building(&"CoralCitadel").scale, Vector3.ONE)
+
+
+func test_a_degraded_building_stays_still() -> void:
+	var states: Array[PadState] = [PadState.new(BuildingType.Value.CORAL_CITADEL, 2, true)]
+	_buildings.build(states, _pads)
+	_motion.track()
+	_motion.advance(1.0)
+	assert_true(_buildings.is_degraded(&"CoralCitadel"))
+	assert_eq(_part(&"CoralCitadel", "Heart").scale, Vector3.ONE)
+	assert_null((_part(&"CoralCitadel", "Heart") as MeshInstance3D).get_surface_override_material(1))
 
 
 func test_moves_frame_by_frame() -> void:

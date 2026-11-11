@@ -76,9 +76,13 @@ static func flash(t: float) -> float:
 
 func _track(building: StringName, part: StringName, lit: bool) -> void:
 	var model := _buildings.building(building)
-	if model == null:
+	# A degraded building is greyed and still.
+	if model == null or _buildings.is_degraded(building):
 		return
-	var node := model.get_node("%s/%s" % [building, part]) as Node3D
+	# A stand-in has no moving part.
+	var node := model.get_node_or_null("%s/%s" % [building, part]) as Node3D
+	if node == null:
+		return
 	_parts[part] = node
 	if lit:
 		var mesh := node as MeshInstance3D

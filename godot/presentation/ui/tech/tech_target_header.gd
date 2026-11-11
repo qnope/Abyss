@@ -47,6 +47,7 @@ func _init(target_: TechTarget, with_button: bool, can_act: bool) -> void:
 		act_button = Button.new()
 		act_button.text = Texts.t(&"techScreenUnlock" if target.is_branch() else &"techScreenResearch")
 		act_button.disabled = not can_act
+		act_button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		act_button.pressed.connect(act_pressed.emit)
 		add_child(act_button)
 

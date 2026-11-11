@@ -19,7 +19,8 @@ var icon: UiIcon
 ## The padlock of a locked branch, null once it is unlocked.
 var lock_icon: UiIcon
 var name_label := Label.new()
-## "Niv. 3", shown on an unlocked branch only.
+## "Niv. 3" on an unlocked branch; empty, but as tall, on a locked one, so
+## that the columns stay level.
 var level_label := Label.new()
 var tap_button := Button.new()
 
@@ -44,14 +45,15 @@ func _init(branch_: TechBranch.Value, is_unlocked: bool, research_level: int) ->
 	if not unlocked:
 		lock_icon = UiIcon.glyph(&"lock", LOCK_SIZE, AbyssColors.WARNING)
 		emblem.add_child(lock_icon)
-		lock_icon.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE)
+		lock_icon.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+		lock_icon.offset_left = -LOCK_SIZE
+		lock_icon.offset_top = -LOCK_SIZE
 	name_label.text = TechBranchTexts.display_name(branch)
 	name_label.theme_type_variation = &"LabelLarge"
 	name_label.add_theme_color_override(&"font_color", color if unlocked else AbyssColors.ON_SURFACE_DIM)
-	level_label.text = Texts.t(&"techScreenMedallionLevel", {"level": research_level})
+	level_label.text = Texts.t(&"techScreenMedallionLevel", {"level": research_level}) if unlocked else ""
 	level_label.theme_type_variation = &"BodySmall"
 	level_label.add_theme_color_override(&"font_color", color)
-	level_label.visible = unlocked
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override(&"separation", GAP)
 	column.add_child(emblem)

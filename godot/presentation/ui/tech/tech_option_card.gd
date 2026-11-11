@@ -43,6 +43,7 @@ func _init(branch: TechBranch.Value, level: int, option: TechOption.Value, statu
 	name_label.theme_type_variation = &"TitleSmall"
 	effect_label.text = TechNodeTexts.node_effect(branch, level, option)
 	effect_label.theme_type_variation = &"BodySmall"
+	effect_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	effect_label.add_theme_color_override(&"font_color", AbyssColors.ON_SURFACE_DIM)
 	if status == Status.DISCARDED:
 		name_label.add_theme_color_override(&"font_color", AbyssColors.ON_SURFACE_DIM)

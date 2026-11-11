@@ -1,6 +1,5 @@
 extends TestCase
-## test/domain/script/script_milestones_test.dart. Left out: "a batch tells
-## how many games reached a milestone" (`BatchRunner`, not ported).
+## test/domain/script/script_milestones_test.dart.
 
 
 func test_notes_the_first_turn_a_faille_is_held_and_only_the_first() -> void:
@@ -95,3 +94,13 @@ func test_notes_the_first_turn_the_kernel_is_held() -> void:
 	milestones.observe(game, 71)
 
 	assert_eq(milestones.kernel_captured, 70)
+
+
+func test_a_batch_tells_how_many_games_reached_a_milestone_and_when() -> void:
+	var report := BatchRunner.new(ScriptRunner.new(60)).run(func(_s: int) -> GameScript: return IdleScript.new(), 2, 8)
+
+	var fall := report.milestone(func(r: ScriptRunReport) -> Variant: return r.turns_played if r.is_defeat() else null)
+	var earliest: int = report.earliest_defeat()
+	assert_eq(fall.games, 2)
+	assert_eq(fall.average_turn, float(earliest))
+	assert_eq(report.milestone(func(r: ScriptRunReport) -> Variant: return r.milestones.kernel_captured).games, 0)

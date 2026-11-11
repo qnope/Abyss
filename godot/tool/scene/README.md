@@ -3,7 +3,7 @@
 Review renders of the game's 3D prototype and screens, not game code, left out
 of exports.
 
-    tool/scene_capture.sh [out dir] [scene | app | kit]
+    tool/scene_capture.sh [out dir] [scene | app | base | kit]
 
 `capture.gd` opens `app/prototype/prototype.tscn` (or `scene`) in a window the size of a
 phone held upright at 2x (780 x 1688, the project's 390 x 844 points), lets
@@ -28,6 +28,20 @@ the energy shortage in red, the island with the buildings built, the turn bar
 and the tabs), `app_game_settings.png` (the settings dialog over it),
 `app_game_resource.png` (the energy detail sheet) and `app_game_tech.png` (a
 tab not built yet, the world hidden), each with its draw calls and primitives. Never commit the renders.
+
+## The base and its buildings
+
+`base_capture.gd` (`tool/scene_capture.sh [out dir] base`, or after the app's
+shots when no scene is given) plays a game whose base shows every state of a
+pad and renders: `base_standins.png` (the eleven pads as stand-ins: a shape
+and a colour per building, the level over each, the arrow of a building that can
+rise, the warning of a degraded one, the plus of a plot to build on, the padlock
+of one held back, and the banners of the worksites and the rampart at the top
+left), `base_close.png` (the same, nearer), `base_models.png` (the models there
+are, in place of their stand-ins) and the sheets of a building that can rise,
+a degraded one, the Coral Citadel and a plot held back by a prerequisite
+(`base_sheet_upgrade.png`, `_degraded.png`, `_citadel.png`, `_locked.png`), each
+with its draw calls and primitives. Never commit the renders.
 
 ## The UI kit
 

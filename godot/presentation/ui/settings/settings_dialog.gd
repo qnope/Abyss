@@ -3,9 +3,9 @@ extends AbyssDialog
 ## The settings of a game being played: the language, the guide and tip
 ## switches of the game, and the ways out
 ## (lib/presentation/widgets/common/settings_dialog.dart). It ends with
-## [constant CANCEL] or [constant SAVE_AND_QUIT], null when dismissed. The
-## history, the ranking and the replay export are ways out of the lots that
-## build those pages; they come here as buttons with them.
+## [constant CANCEL], [constant SAVE_AND_QUIT] or one of the [SettingsLinks]
+## (the history, the replay export; the ranking comes with its lot), null when
+## dismissed.
 ##
 ## It saves nothing and navigates nowhere: a language picked is told by
 ## [signal language_chosen], the switches go through the [GameActions], and
@@ -23,6 +23,7 @@ signal story_requested
 
 var picker: LanguagePicker
 var guide: GuideSettings
+var links := SettingsLinks.new()
 var game_label := Label.new()
 
 
@@ -38,6 +39,9 @@ func _init(actions: GameActions, language: LanguageChoice.Value) -> void:
 	body.add_child(HSeparator.new())
 	body.add_child(game_label)
 	body.add_child(guide)
+	body.add_child(HSeparator.new())
+	body.add_child(links)
+	links.chosen.connect(close)
 	add_action("", CANCEL)
 	add_action("", SAVE_AND_QUIT, &"")
 	refresh()

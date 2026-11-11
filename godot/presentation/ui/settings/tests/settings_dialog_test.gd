@@ -83,6 +83,25 @@ func test_the_story_row_asks_for_the_story() -> void:
 	assert_not_null(current_modal(), "the settings stay open")
 
 
+func test_the_history_and_the_export_are_ways_out() -> void:
+	_open()
+	press("Voir l'historique")
+	assert_eq(_results, [SettingsLinks.HISTORY])
+	_open()
+	press("Exporter la partie")
+	assert_eq(_results, [SettingsLinks.HISTORY, SettingsLinks.EXPORT])
+	assert_null(current_modal())
+
+
+func test_the_links_follow_the_language() -> void:
+	var dialog := _open()
+	use_language("en")
+	assert_eq(dialog.links.history_row.title_label.text, "View history")
+	assert_eq(dialog.links.export_row.title_label.text, "Export the game")
+	use_language("es")
+	assert_no_raw_keys(dialog)
+
+
 func _open(choice := LanguageChoice.Value.FRENCH) -> SettingsDialog:
 	var dialog := SettingsDialog.new(_actions, choice)
 	dialog.language_chosen.connect(_languages.append)

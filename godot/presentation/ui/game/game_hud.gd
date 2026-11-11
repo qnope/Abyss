@@ -12,13 +12,13 @@ extends RefreshingPanel
 ## saved: the owner calls [method refresh] after each change. [method
 ## open_building] opens a building's sheet; the banners float over the base.
 
-## The tab on show changed: the world shows the view of [param tab].
+## The tab on show changed: the world shows [param tab].
 signal tab_changed(tab: GameTab.Value)
 ## The player wants to end the turn.
 signal end_turn_requested
 ## The player wants to save the game and leave it.
 signal quit_requested
-## The player picked [param choice] in the settings.
+## The player picked [param choice].
 signal language_chosen(choice: LanguageChoice.Value)
 
 ## How far the banners sit from the corner of the base.
@@ -33,7 +33,7 @@ var tab := GameTab.Value.BASE
 var language: LanguageChoice.Value
 var resource_bar: ResourceBar
 var status_bars := GameStatusBars.new()
-## The worksites free this turn and the rampart, over the base's corner.
+## The worksites and the rampart, over the base's corner.
 var banners: BaseBanners
 ## The area between the bars, where the world shows through.
 var content := Control.new()
@@ -44,6 +44,7 @@ var page := PanelContainer.new()
 ## The research tree, the page of the Tech tab.
 var tech_tab: TechTab
 var _modals: ModalLayer
+var _follow_up := SettingsFollowUp.new()
 
 
 func _init(actions_: GameActions, language_: LanguageChoice.Value, modals: ModalLayer) -> void:
@@ -131,6 +132,9 @@ func _on_language_chosen(choice: LanguageChoice.Value) -> void:
 func _on_settings_closed(result: Variant) -> void:
 	if result == SettingsDialog.SAVE_AND_QUIT:
 		quit_requested.emit()
+	var next := _follow_up.page(result, game, _modals)
+	if next != null:
+		_modals.open(next)
 
 
 ## The pages of the tabs under a solid page that hides the world behind.

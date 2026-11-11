@@ -76,3 +76,24 @@ func test_a_resource_opens_its_detail_on_the_same_modals() -> void:
 	_show()
 	press(_hud.resource_bar.items[ResourceType.Value.ORE])
 	assert_true(current_modal() is ResourceDetailSheet)
+
+
+func test_the_history_opens_its_sheet_when_the_settings_end() -> void:
+	_game.human_player().history_entries.append(BuildingEntry.new(1, BuildingType.Value.ALGAE_FARM, 2))
+	_show()
+	_hud.open_settings()
+	press("Voir l'historique")
+	var sheet := current_modal() as HistorySheet
+	assert_not_null(sheet)
+	assert_eq(sheet.cards.size(), 1)
+	assert_eq(modals().depth(), 1, "the settings are gone")
+	assert_eq(_quits, 0)
+
+
+func test_the_export_opens_its_dialog_when_the_settings_end() -> void:
+	_show()
+	_hud.open_settings()
+	press("Exporter la partie")
+	var dialog := current_modal() as ReplayExportDialog
+	assert_not_null(dialog)
+	assert_true(dialog.available)

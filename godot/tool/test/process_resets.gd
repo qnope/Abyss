@@ -18,4 +18,5 @@ static func all() -> Array[Callable]:
 		RaidDefenceAdvisor.debug_reset,
 		KernelDefenceAdvisor.debug_reset,
 		LeviathanDefenceAdvisor.debug_reset,
+		PlanLibrary.debug_reset,
 	]

@@ -1,9 +1,64 @@
 extends TestCase
-## test/domain/replay/replay_journal_test.dart: its three tests wait for
-## `record` and the actions it notes (the action module), the last one is a
-## Hive round-trip, which never comes. What follows is not in the Dart file:
-## the journal as the actions will find it, and actions_of, which the
-## snapshots and the exports read.
+## test/domain/replay/replay_journal_test.dart, but 'survives a save and a
+## reload', a Hive round-trip, which never comes. The tests after the first
+## two are not in the Dart file: the journal as the actions find it, and
+## actions_of, which the snapshots and the exports read.
+
+const EncoderTest := preload("res://domain/replay/tests/action_encoder_test.gd")
+
+
+func test_notes_moves_per_turn_and_the_dice_of_each_end_of_turn() -> void:
+	var journal := ReplayJournal.new(1, "Nemo")
+	journal.record(2, RecruitUnitAction.new(UnitType.Value.SCOUT, 3))
+	journal.record(2, EndTurnAction.new(DartRandom.new(8)))
+
+	assert_eq(journal.actions_of(2), [{"do": "recruit", "unit": "scout", "count": 3}] as Array[Dictionary])
+	assert_eq(journal.end_turn_seeds, {2: 8} as Dictionary[int, int])
+	assert_true(journal.exact)
+
+
+func test_is_no_longer_exact_once_a_turn_ends_on_unrecorded_dice() -> void:
+	var journal := ReplayJournal.new(1, "Nemo")
+	journal.record(1, EndTurnAction.new())
+
+	assert_false(journal.exact)
+	assert_eq(journal.end_turn_seeds, {} as Dictionary[int, int])
+
+
+## Not in the Dart file: a plain `Random(seed)` is no SeededRandom either.
+func test_an_end_of_turn_on_a_plain_generator_is_not_exact() -> void:
+	var journal := ReplayJournal.new(1, "Nemo")
+	journal.record(1, EndTurnAction.new(DartRandom.new(8, false)))
+
+	assert_false(journal.exact)
+	assert_eq(journal.end_turn_seeds, {} as Dictionary[int, int])
+
+
+## Not in the Dart file: the moves of another player carry its id, an
+## attack on the human its name, dice without a seed make the journal
+## inexact, and the text is Dart's `jsonEncode`, without spaces, its keys
+## in the order written.
+func test_writes_a_move_as_dart_encodes_it() -> void:
+	var journal := ReplayJournal.new(1, "Nemo")
+	var units: Dictionary[UnitType.Value, int] = {UnitType.Value.GUARDIAN: 2}
+	journal.record(3, AttackBaseAction.new("uuid", units, DartRandom.new(9)), "rival", "uuid")
+	assert_true(journal.exact)
+	journal.record(3, AnnounceAttackAction.new(units, DartRandom.new(9, false)), "rival")
+
+	assert_eq(journal.actions[3], [
+		'{"do":"attackPlayer","target":"human","units":{"guardian":2},"seed":9,"player":"rival"}',
+		'{"do":"announceAttack","units":{"guardian":2},"player":"rival"}',
+	] as Array[String])
+	assert_false(journal.exact)
+
+
+## Not in the Dart file: what is no move leaves the journal as it was.
+func test_an_action_that_is_no_move_is_not_noted() -> void:
+	var journal := ReplayJournal.new(1, "Nemo")
+	journal.record(1, EncoderTest.OtherAction.new())
+
+	assert_eq(journal.actions, {} as Dictionary[int, Array])
+	assert_true(journal.exact)
 
 
 func test_a_new_journal_holds_no_move_and_is_exact() -> void:

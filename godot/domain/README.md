@@ -195,10 +195,10 @@ Files and tests of the modules above that wait for another module:
 | --- | --- |
 | The last test of `tutorial_strategy_test.dart` (`ScriptLibrary`) | the runners of `script` |
 | The second test of `script_player_helpers_test.dart` (`ScriptMilestones`) | the runners of `script` |
-| `faction_attack_play_test.dart`, `faction_replay_test.dart` and the checks of the journal in `faction_play_test.dart` (`game.replay.actionsOf`, `ReplayExport`, `ScriptRunner`) | `action` (`ActionEncoder`) and the runners of `script` |
+| `faction_replay_test.dart` but its last test (`ReplayExport`, `ScenarioParser`, `ScriptRunner`, `TimelineScript`, `GameScript.factionsPlay`) | `replay_export.dart` and the runners of `script` |
+| `faction_attack_play_test.dart`: games of 100 turns (`playFactionGame`, `playIdleFactionGame`), one replayed through `ScriptRunner` | a slower tier of tests, and the runners of `script` |
 | The test of 60 turns of `faction_play_test.dart` (3 and 10 factions), `faction_research_play_test.dart` (40 turns of 3 factions, 7 s here), `faction_race_test.dart` (60 games of 200 turns): whole games too long for the suite | a slower tier of tests, with `playIdleFactionGame` and `faction_race.dart` |
 | `script/strategies_test.dart` (whole games through `ScriptRunner` and `BatchRunner`) | the runners of `script` |
-| `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it; the last test of `choose_event_action_test.dart` (the choice is written in the replay journal) | `action` (`ActionEncoder`) |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
 | `building_degradation_solo_test.dart` | `script` |
 | `choiceEvents` of `event_test_helper.dart` (no test of `domain` reads it; `producingPlayer` is `EventSamples.producing_player`) | the tests of the presentation that use it |

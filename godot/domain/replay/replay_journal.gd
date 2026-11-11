@@ -7,9 +7,8 @@ extends RefCounted
 ## Every player's moves share one list per turn, in the order played; a move
 ## of a player other than the human carries a `player` key. Unlike the
 ## history shown to the player, the journal is never trimmed.
-##
-## `record`, which notes an action that succeeded, needs the actions and
-## their encoder: it comes with the action module.
+## `ActionExecutor` fills it as actions succeed; `ReplayExport` turns it into
+## a scenario. Its Hive adapter (`replay_journal.g.dart`) never comes.
 
 var map_seed: int
 var player_name: String
@@ -33,6 +32,34 @@ func _init(
 	actions = actions_
 	end_turn_seeds = end_turn_seeds_
 	exact = exact_
+
+
+## Notes that `action` succeeded during `turn`. The human player's actions
+## carry no player; any other player's carry its `player_id` (a `String?`).
+## An action that targets the human is written with the human's name, not
+## its id (`human_id`, a `String?`), which is not the same in the game that
+## replays it.
+func record(turn: int, action: Action, player_id: Variant = null, human_id: Variant = null) -> void:
+	if action is EndTurnAction:
+		var ending: EndTurnAction = action
+		var random := ending.random
+		if random != null and random.is_seeded:
+			end_turn_seeds[turn] = random.initial_seed
+		else:
+			exact = false
+		return
+	var json: Variant = ActionEncoder.encode(action, human_id)
+	if json == null:
+		return
+	if not ActionEncoder.is_exact(action):
+		exact = false
+	var entry: Dictionary = json
+	if player_id != null:
+		entry["player"] = player_id
+	if not actions.has(turn):
+		actions[turn] = [] as Array[String]
+	var moves: Array[String] = actions[turn]
+	moves.append(JSON.stringify(entry, "", false))
 
 
 ## Decoded actions of `turn`, oldest first, each key in the order it was

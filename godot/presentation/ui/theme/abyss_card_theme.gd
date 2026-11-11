@@ -13,6 +13,15 @@ const CYAN := AbyssColors.BIOLUM_CYAN
 
 ## The drag handle at the top of a bottom sheet.
 const DRAG_HANDLE := Color(CYAN, 0.5)
+## The bar of a SheetDragHandle (lib/.../sheet_drag_handle.dart): on-surface
+## at 30 %, 40 x 4, 8 above and 4 below.
+const SHEET_HANDLE := Color(AbyssColors.ON_SURFACE, 0.3)
+const HANDLE_SIZE := Vector2i(40, 4)
+const HANDLE_PADDING := Vector2i(8, 4)
+## The gap between the title, the body and the actions of a dialog or a
+## sheet, and between two actions.
+const GAP := 16
+const ACTION_GAP := 8
 const SAVE_PANEL_RADIUS := 16
 const SAVE_PANEL_FILL := Color(AbyssColors.SURFACE_LIGHT, 0.78)
 

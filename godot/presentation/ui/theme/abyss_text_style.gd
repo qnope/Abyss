@@ -11,6 +11,9 @@ var weight: AbyssFonts.Weight
 var color: Color
 ## In pixels, as Flutter's letterSpacing; the font rounds it.
 var letter_spacing: float
+## How far the top of a glyph leans to the right, in glyph heights: 0.2 is
+## Flutter's FontStyle.italic, which no font of the game has a face for.
+var slant := 0.0
 
 
 func _init(
@@ -24,7 +27,13 @@ func _init(
 
 ## The font of this style.
 func font() -> Font:
-	return AbyssFonts.of(weight, letter_spacing)
+	var upright := AbyssFonts.of(weight, letter_spacing)
+	if slant == 0.0:
+		return upright
+	var leaning := FontVariation.new()
+	leaning.base_font = upright
+	leaning.variation_transform = Transform2D(Vector2(1.0, 0.0), Vector2(slant, 1.0), Vector2.ZERO)
+	return leaning
 
 
 ## Sets this style's font, size and colour on [param type] of [param theme].

@@ -5,6 +5,11 @@ class_name AbyssTextTheme
 ## reads as BodyMedium, as Flutter's default text does.
 
 const LABEL := &"Label"
+## The Body roles in dimmed italics (lib/.../lore_text.dart), by role.
+const LORE: Dictionary[StringName, StringName] = {
+	&"BodyLarge": &"LoreLarge", &"BodyMedium": &"Lore", &"BodySmall": &"LoreSmall",
+}
+const LEAN := 0.2
 
 
 ## Flutter's TextTheme roles, and the two named styles of the text theme.
@@ -54,6 +59,11 @@ static func apply(theme: Theme) -> void:
 	var all := roles()
 	for role in all:
 		add_label(theme, role, all[role])
+	for role in LORE:
+		var base: AbyssTextStyle = all[role]
+		var lore := AbyssTextStyle.new(base.size, base.weight, AbyssColors.ON_SURFACE_DIM)
+		lore.slant = LEAN
+		add_label(theme, LORE[role], lore)
 
 
 ## Adds [param style] to [param theme] as the Label variation [param name].

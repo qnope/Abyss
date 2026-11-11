@@ -49,5 +49,12 @@ func test_writes_the_segment_detail_in_small_semi_bold() -> void:
 	assert_eq(_theme.get_color("font_color", "SegmentDetail"), Color("5e7da3"))
 
 
+func test_writes_the_segment_name_in_bold() -> void:
+	assert_eq(_theme.get_type_variation_base("SegmentName"), &"Label")
+	assert_eq(_theme.get_font("font", "SegmentName"), AbyssFonts.BOLD)
+	assert_eq(_theme.get_font_size("font_size", "SegmentName"), 13)
+	assert_eq(_theme.get_color("font_color", "SegmentName"), AbyssSegmentedTheme.LABEL_COLOR)
+
+
 func _box(state: StringName, type: StringName) -> StyleBoxFlat:
 	return _theme.get_stylebox(state, type) as StyleBoxFlat

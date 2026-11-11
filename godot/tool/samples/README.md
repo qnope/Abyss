@@ -185,3 +185,12 @@ what the Dart script printed.
 against the factions where the human plays the balanced strategy, its dice
 drawn by a `LiveTurn` as the game screen journals them, and each turn ended
 by `EndTurnAction`; `growth_of` sums the levels and the units of a player.
+
+`TurnDigests` plays what the digest test of the whole games
+(`turn_digest_test.gd`) compares: a game of `GameFactory` whose human
+plays a script as `ScriptRunner.runOn` does, each turn ended by
+`EndTurnAction` with the factions playing first; it writes the moves, the
+`TurnResult`, the `TurnEndEntry`, the game and the next die of each turn,
+and `TurnStates` the state of every player after it. `TurnHistoriesBalanced7`,
+`TurnHistoriesConquest11`, `TurnHistoriesEconomy24` and `TurnHistoriesIdle5`
+hold what the scratch Dart script printed.

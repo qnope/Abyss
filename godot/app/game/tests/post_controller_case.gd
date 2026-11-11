@@ -72,8 +72,9 @@ func on_level(level: int, type: UnitType.Value) -> int:
 
 func _find(level: int, content: CellContentType.Value) -> Vector2i:
 	var map: GameMap = game.levels[level]
+	var found := Vector2i.ZERO
 	for y: int in map.height:
 		for x: int in map.width:
 			if map.cell_at(x, y).content == content:
-				return Vector2i(x, y)
-	return Vector2i.ZERO
+				found = Vector2i(x, y)
+	return found

@@ -42,6 +42,8 @@ var tab_bar := GameTabBar.new()
 ## placeholder of each, until their lots build them.
 var page := PanelContainer.new()
 var pages: Dictionary[GameTab.Value, TabPlaceholder] = {}
+## The research tree, the page of the Tech tab.
+var tech_tab: TechTab
 var _modals: ModalLayer
 
 
@@ -85,6 +87,7 @@ func show_tab(next: GameTab.Value) -> void:
 	page.visible = tab != GameTab.Value.BASE
 	for each: GameTab.Value in pages:
 		pages[each].visible = each == tab
+	tech_tab.visible = tab == GameTab.Value.TECH
 	if changed:
 		tab_changed.emit(tab)
 
@@ -100,6 +103,7 @@ func refresh() -> void:
 	turn_bar.set_turn(game.turn)
 	status_bars.refresh()
 	banners.refresh()
+	tech_tab.refresh()
 	for each: GameTab.Value in pages:
 		pages[each].name_label.text = GameTab.label(each)
 
@@ -132,12 +136,14 @@ func _on_settings_closed(result: Variant) -> void:
 		quit_requested.emit()
 
 
-## The pages of the tabs still to come, one over the other under a solid
-## page, so that the world behind is hidden.
+## The pages of the tabs, one over the other under a solid page, so that the
+## world behind is hidden: a placeholder for the tabs still to come.
 func _fill_page() -> void:
 	page.theme_type_variation = AbyssSurfaceTheme.PAGE
 	page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	for each: GameTab.Value in [GameTab.Value.MAP, GameTab.Value.ARMY, GameTab.Value.TECH]:
+	for each: GameTab.Value in [GameTab.Value.MAP, GameTab.Value.ARMY]:
 		var placeholder := TabPlaceholder.new(GameTab.icon_path(each), "")
 		pages[each] = placeholder
 		page.add_child(placeholder)
+	tech_tab = TechTab.new(actions, _modals)
+	page.add_child(tech_tab)

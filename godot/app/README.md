@@ -91,7 +91,7 @@ tapped -> sheet -> `prepare_requested` -> selection -> `execute` -> `acted` -> s
 changed) -> the page closes with the result -> `FightSummaryPage`; a refusal
 stays in the selection page. `FightController.report(result, route)` is where the
 fight ends: step 7 plays the strike on the map before it opens the report, and
-the history reopens one with `FightSummaryPage.of_entry(entry)` (`HistoryReports`).
+the history reopens one with `HistoryReports.fight_summary(entry)`.
 
 The end of a turn is `EndTurnFlow` (`presentation/ui/turn/`), made by the
 `GameController`: the HUD's `end_turn_requested` asks, the confirmed turn goes

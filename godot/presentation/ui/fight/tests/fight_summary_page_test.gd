@@ -92,10 +92,10 @@ func test_the_history_reopens_the_report_of_an_entry() -> void:
 	var loot: Dictionary[ResourceType.Value, int] = {ResourceType.Value.CORAL: 4}
 	entry.loot = loot
 	entry.sent = _counts(3, 0)
-	var page := _open(FightSummaryPage.of_entry(entry))
+	var page := _open(HistoryReports.fight_summary(entry))
 	assert_eq(page.title(), "Combat (3, 4)")
 	assert_not_null(find_text("Corail +4", page))
 	assert_eq((find_type("MonsterPreview", page)[0] as MonsterPreview).lair, entry.lair)
 	assert_eq((find_type("FightUnitAccounting", page)[0] as FightUnitAccounting).sent, entry.sent)
-	var lost := _open(FightSummaryPage.of_entry(HistorySamples.combat_entry(false)))
+	var lost := _open(HistoryReports.fight_summary(HistorySamples.combat_entry(false)))
 	assert_not_null(find_text("DÉFAITE", lost))

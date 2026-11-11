@@ -14,12 +14,20 @@ extends RefCounted
 ## The page that reopens the report of [param entry], null when it has none.
 func page_for(entry: HistoryEntry) -> ModalPanel:
 	if entry is CombatEntry:
-		return FightSummaryPage.of_entry(entry as CombatEntry)
+		return fight_summary(entry as CombatEntry)
 	if entry is RaidEntry:
 		return RaidReportPage.new(raid_report(entry as RaidEntry))
 	if entry is VolcanoEntry:
 		return VolcanoReportPage.new(volcano_report(entry as VolcanoEntry))
 	return null
+
+
+## The report of the fight the combat [param entry] stored, with the result the
+## action gave rebuilt from what the entry kept.
+static func fight_summary(entry: CombatEntry) -> FightSummaryPage:
+	var fought := FightMonsterResult.success(entry.victory, entry.fight_result, entry.loot, entry.sent,
+		entry.survivors_intact, entry.wounded, entry.dead)
+	return FightSummaryPage.new(fought, entry.lair, entry.target_x, entry.target_y)
 
 
 ## The report of the raid [param entry] stored, a school of predators under its

@@ -44,6 +44,12 @@ const UPGRADE := Color("69f0ae")
 const BUILD := Color("00e5ff")
 const LOCKED := Color("cfd8dc")
 const WARNING := Color("ffab40")
+## The parade ground: its deck, the plot of a barracks to build, the crest in
+## the middle, and how faint an empty squad's count is written.
+const GROUND := Color("2b3a4d")
+const PLOT := Color("56657a")
+const CREST := Color("00e5ff")
+const EMPTY_SQUAD := 0.55
 ## The level written over a building, and its outline.
 const LEVEL := Color("ffffff")
 const LEVEL_OUTLINE := Color("0a0e1a")

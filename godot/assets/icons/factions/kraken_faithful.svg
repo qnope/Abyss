@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs>
+<radialGradient id="kfWater" cx="32" cy="30" r="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1B2150"/><stop offset="0.6" stop-color="#0A0C22"/><stop offset="1" stop-color="#05080F"/></radialGradient>
+<radialGradient id="kfGlow" cx="32" cy="30" r="26" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7986CB" stop-opacity="0.5"/><stop offset="0.5" stop-color="#7986CB" stop-opacity="0.14"/><stop offset="1" stop-color="#7986CB" stop-opacity="0"/></radialGradient>
+<radialGradient id="kfEye" cx="32" cy="30" r="12" fx="29" fy="26" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.7" stop-color="#E8EAF6"/><stop offset="1" stop-color="#9FA8DA"/></radialGradient>
+<linearGradient id="kfTent" x1="0" y1="34" x2="0" y2="60" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7986CB"/><stop offset="0.6" stop-color="#3949AB"/><stop offset="1" stop-color="#1A237E"/></linearGradient>
+</defs>
+<circle cx="32" cy="32" r="30" fill="url(#kfWater)" stroke="#5C6BC0" stroke-width="2"/>
+<circle cx="32" cy="32" r="30" fill="url(#kfGlow)"/>
+<circle cx="32" cy="32" r="26.5" fill="none" stroke="#5C6BC0" stroke-opacity="0.45" stroke-width="0.9" stroke-dasharray="2 3"/>
+<path d="M14 36 C8 42 10 50 17 52 C21 53 23 50 21 48 C18 48 16 46 18 42 C19 40 21 38 22 36 Z" fill="url(#kfTent)" stroke="#1A237E" stroke-width="1"/>
+<path d="M50 36 C56 42 54 50 47 52 C43 53 41 50 43 48 C46 48 48 46 46 42 C45 40 43 38 42 36 Z" fill="url(#kfTent)" stroke="#1A237E" stroke-width="1"/>
+<path d="M27 40 C26 48 22 53 26 57 C29 59 30 55 29 53 C28 50 31 47 32 42 Z" fill="url(#kfTent)" stroke="#1A237E" stroke-width="1"/>
+<path d="M37 40 C38 48 42 53 38 57 C35 59 34 55 35 53 C36 50 33 47 32 42 Z" fill="url(#kfTent)" stroke="#1A237E" stroke-width="1"/>
+<g fill="#C5CAE9"><circle cx="18" cy="48" r="1"/><circle cx="46" cy="48" r="1"/><circle cx="27" cy="52" r="0.900"/><circle cx="37" cy="52" r="0.900"/></g>
+<path d="M32 8 C20 8 12 18 12 28 C12 36 20 42 32 42 C44 42 52 36 52 28 C52 18 44 8 32 8 Z" fill="url(#kfTent)" stroke="#1A237E" stroke-width="1.200"/>
+<path d="M16 22 C20 14 28 11 34 11" fill="none" stroke="#C5CAE9" stroke-opacity="0.55" stroke-width="1.400" stroke-linecap="round"/>
+<path d="M18 28 C23 20 41 20 46 28 C41 36 23 36 18 28 Z" fill="url(#kfEye)" stroke="#1A237E" stroke-width="1"/>
+<ellipse cx="32" cy="28" rx="4.200" ry="7" fill="#1A237E"/>
+<ellipse cx="32" cy="28" rx="1.800" ry="5.200" fill="#050714"/>
+<circle cx="29.800" cy="24.500" r="1.300" fill="#FFFFFF"/>
+<path d="M22 24 L20 21 M42 24 L44 21 M32 21 L32 18" stroke="#9FA8DA" stroke-width="1" stroke-linecap="round"/>
+<circle cx="12" cy="14" r="1.200" fill="#9FA8DA" fill-opacity="0.6"/><circle cx="54" cy="18" r="1.500" fill="#9FA8DA" fill-opacity="0.5"/>
+</svg>

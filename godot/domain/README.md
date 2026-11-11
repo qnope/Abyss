@@ -210,8 +210,5 @@ Files and tests of the modules above that wait for another module:
 | `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
 | `leviathan/leviathan_turn_test.dart` (the guardians through `EndTurnAction` and `TurnResult`) | `turn` |
-| `objective/guide/guide_alerts.dart` | nothing now that `UndefendedPosts` is ported: with a later step of this lot |
-| `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` above |
-| `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own); the last test of `guide_leviathan_test.dart` (the tutorial off: the others read `GuideLeviathan` itself) | `GuideCampaign` above |
 | `choiceEvents` of `event_test_helper.dart` (no test of `domain` reads it; `producingPlayer` is `EventSamples.producing_player`) | the tests of the presentation that use it |
 | `settings/language_choice.dart`, its test | none of these modules reads it: with the lot that ports the settings |

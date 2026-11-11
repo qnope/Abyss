@@ -1,8 +1,8 @@
 extends TestCase
 ## Not in the Dart files: lib/domain/objective/guide/guide_assault.dart has
 ## no test of its own, its advice is read through GuideCampaign
-## (guide_campaign_assault_test.dart), which waits for GuideAlerts
-## (`faction`). Each branch, on the game of SiegeSamples: a Faille nobody
+## (guide_campaign_assault_test.dart), ported too. Each
+## branch, on the game of SiegeSamples: a Faille nobody
 ## holds on (1, 1) of level 1.
 
 const Target := AssaultTarget.Value

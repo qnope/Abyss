@@ -1,18 +1,18 @@
 extends TestCase
 ## test/domain/objective/guide/guide_leviathan_test.dart: the guide's alert
 ## on the turn the guardians strike the Faille. The Dart tests read it
-## through GuideAdvisor.of, which puts it first and waits for GuideCampaign
-## (`faction`); these read GuideLeviathan.of, what GuideAdvisor returns
-## then. The last test, the tutorial off, waits for GuideAdvisor.
+## through GuideAdvisor.of, which puts it first; these read
+## GuideLeviathan.of, what GuideAdvisor returns then, but the last one,
+## the tutorial off, which reads GuideAdvisor.of.
 
 const HARPOONIST := UnitType.Value.HARPOONIST
 
 
 ## The scene on the turn the guardians strike, the tutorial on.
-func _strike_turn() -> PostWar:
+func _strike_turn(tutorial := true) -> PostWar:
 	var war := LeviathanScene.of()
 	LeviathanScene.play_until(war, LeviathanScene.strike_turn(war))
-	ObjectiveMigration.state_of(war.game, war.human()).tutorial_enabled = true
+	ObjectiveMigration.state_of(war.game, war.human()).tutorial_enabled = tutorial
 	return war
 
 
@@ -28,6 +28,7 @@ func test_comes_first_on_the_turn_the_guardians_strike() -> void:
 	var war := _strike_turn()
 	var expected := GuideAdvice.new(GuideLeviathanReturn.new(2, _needed(war)), GuideTarget.for_cell(war.level, war.at))
 	assert_true(_advice(war).equals(expected), str(_advice(war)))
+	assert_true(GuideAdvisor.of(war.game, war.human()).equals(expected), "GuideAdvisor puts it first")
 
 
 func test_counts_the_units_already_on_level_2() -> void:
@@ -49,6 +50,12 @@ func test_says_nothing_before_the_turn_they_strike() -> void:
 	LeviathanScene.play_until(war, LeviathanScene.strike_turn(war) - 1)
 	ObjectiveMigration.state_of(war.game, war.human()).tutorial_enabled = true
 	assert_null(_advice(war))
+
+
+
+func test_says_nothing_with_the_tutorial_off() -> void:
+	var war := _strike_turn(false)
+	assert_null(GuideAdvisor.of(war.game, war.human()))
 
 
 ## Not in the Dart file: the alert is the human's alone.

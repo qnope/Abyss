@@ -1,7 +1,7 @@
 extends TestCase
 ## Not in the Dart files: the advice against the first raid. The Dart tests
-## read it through GuideAdvisor, which waits for `leviathan`
-## (guide_advisor_raid_test.dart); here GuideRaid takes the target the
+## read it through GuideAdvisor (guide_advisor_raid_test.dart,
+## ported too); here GuideRaid takes the target the
 ## advisor passes it, the Harpoonists or, once recruited this turn, the end
 ## of the turn. The values are what a scratch Dart script printed.
 

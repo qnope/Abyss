@@ -70,6 +70,13 @@ a level, and the progress `expectProgress` compares, as
 `[current, target, done]`. `applies` is the `_applies` the Dart tests of
 the tips write, `TipCatalog.byId(id).appliesTo(game, game.humanPlayer)`.
 
+`GuideSamples` is the twin of `guide_helpers.dart` and
+`guide_campaign_helpers.dart`: an `ObjectiveSamples` game on an objective
+of the tutorial (`guide_game`) or of the campaign, with plain maps on
+levels 1 to 3 (`campaign_game`), a post or the kernel placed and seen, an
+admiral fallen in an assault won, and what `GuideAdvisor` tells the human
+(`advice_of`).
+
 `ObjectiveDigests` serves the digest test of the objectives
 (`objective_resolver_digest_test.gd`): it develops each player of the
 games of `GameFactory` between the turns as the scratch Dart script did

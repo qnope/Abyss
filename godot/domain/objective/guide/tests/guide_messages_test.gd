@@ -2,7 +2,7 @@ extends TestCase
 ## Not in the Dart files: every message of the guide reads as Dart prints it
 ## (`$runtimeType$_figures`), as a scratch Dart script printed them. The
 ## campaign messages come from GuideCampaign, GuideAssault, GuideAlerts and
-## GuideLeviathan, which wait for other modules.
+## GuideLeviathan.
 
 const Target := AssaultTarget.Value
 

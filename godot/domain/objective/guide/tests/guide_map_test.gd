@@ -1,7 +1,7 @@
 extends TestCase
 ## Not in the Dart files: the cells the halo points at, which the Dart tests
-## read through GuideCampaign (guide_campaign_*_test.dart), waiting for
-## AssaultPlan and UndefendedPosts. The values are what a scratch Dart
+## read through GuideCampaign (guide_campaign_*_test.dart), ported
+## too. The values are what a scratch Dart
 ## script printed on GameFactory.newGame(playerName: 'Nemo', mapSeed: 7,
 ## factionCount: 2, humanId: 'human').
 

@@ -1,7 +1,5 @@
 extends TestCase
-## test/domain/game/game_test.dart. Its check that `createdAt is set` never
-## comes: the date is left out of the state (reference/README.md, "Fields
-## left out").
+## test/domain/game/game_test.dart.
 
 
 func test_game_single_player_human_player_returns_the_provided_player() -> void:
@@ -20,7 +18,10 @@ func test_game_single_player_players_map_has_exactly_one_entry_keyed_by_player_i
 
 
 func test_game_single_player_turn_defaults_to_1_and_created_at_is_set() -> void:
-	assert_eq(Game.single_player(Player.new("A", "a", 5, 5)).turn, 1)
+	var before := Game.now()
+	var game := Game.single_player(Player.new("A", "a", 5, 5))
+	assert_eq(game.turn, 1)
+	assert_true(game.created_at >= before and game.created_at <= Game.now(), str(game.created_at))
 
 
 func test_game_single_player_levels_is_empty_initially() -> void:
@@ -69,4 +70,4 @@ func _with_kernel(collected_by: Variant) -> Game:
 	var cells: Array[MapCell] = [
 		MapCell.new(TerrainType.Value.PLAIN, CellContentType.Value.VOLCANIC_KERNEL, null, collected_by),
 	]
-	return Game.new(player.id, {player.id: player}, 1, {3: GameMap.new(cells.size(), 1, cells, 0)})
+	return Game.new(player.id, {player.id: player}, 1, null, {3: GameMap.new(cells.size(), 1, cells, 0)})

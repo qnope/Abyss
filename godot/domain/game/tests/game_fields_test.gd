@@ -18,7 +18,7 @@ func test_a_new_game_keeps_the_leviathan_and_plays_in_normal_without_faction() -
 func test_takes_the_status_the_journal_and_the_difficulty() -> void:
 	var p := Player.new("A", "a")
 	var journal := ReplayJournal.new(3, "A")
-	var game := Game.new("a", {"a": p}, 4, {}, GameStatus.Value.VICTORY, journal, Difficulty.Value.HARD)
+	var game := Game.new("a", {"a": p}, 4, null, {}, GameStatus.Value.VICTORY, journal, Difficulty.Value.HARD)
 	assert_eq([game.turn, game.status, game.difficulty()], [4, GameStatus.Value.VICTORY, Difficulty.Value.HARD])
 	assert_true(game.replay == journal)
 	assert_eq(Game.single_player(p, Difficulty.Value.EASY).saved_difficulty, Difficulty.Value.EASY)

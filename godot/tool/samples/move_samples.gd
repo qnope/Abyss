@@ -22,7 +22,7 @@ static func descend_game(
 	var units: Dictionary[int, Dictionary] = {1: ActionSamples.scouts_only(scouts)}
 	var player := Player.new("Test", "test", 0, 0, null, buildings, null, units)
 	var levels: Dictionary[int, GameMap] = {1: GameMap.new(10, 10, cells, 42)}
-	return Game.new(player.id, {player.id: player}, 1, levels)
+	return Game.new(player.id, {player.id: player}, 1, null, levels)
 
 
 ## `buildReinforcementMap`: a 5x5 plain map (seed 1), its centre holding
@@ -44,7 +44,7 @@ static func reinforcement_game(scouts := 5, captured_by := "p1", with_target_lev
 	var levels: Dictionary[int, GameMap] = {1: reinforcement_map(base)}
 	if with_target_level:
 		levels[2] = reinforcement_map()
-	return Game.new(player.id, {player.id: player}, 1, levels)
+	return Game.new(player.id, {player.id: player}, 1, null, levels)
 
 
 ## `volcanoGame`: the game of `player` whose 1x1 level 3 holds the kernel,
@@ -54,4 +54,4 @@ static func volcano_game(player: Player, captured := true) -> Game:
 		TerrainType.Value.PLAIN, CellContentType.Value.VOLCANIC_KERNEL, null, player.id if captured else null
 	)
 	var levels: Dictionary[int, GameMap] = {3: GameMap.new(1, 1, [cell], 0)}
-	return Game.new(player.id, {player.id: player}, 1, levels)
+	return Game.new(player.id, {player.id: player}, 1, null, levels)

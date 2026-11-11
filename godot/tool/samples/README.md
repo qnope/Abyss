@@ -25,6 +25,10 @@ player named after its id (`player`), one holding only the buildings given
 `two_players`, the twin of `test/helpers/two_player_game.dart`. A game from a
 seed comes from `GameFactory` itself.
 
+`DateSamples.at(2026, 3, 15, 14, 30)` is Dart's `DateTime(2026, 3, 15, 14,
+30)` as a `Game` holds a date, in milliseconds since the epoch (read in UTC:
+only the order and the equality of two dates matter to the tests).
+
 `HistorySamples` builds the entries of
 `test/helpers/history_entry_samples.dart` (the fights, a combat, an end of
 turn) and the fight of two turns they hold (`buildTestFight`, its `fight`

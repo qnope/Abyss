@@ -39,7 +39,7 @@ func _game_with(special: Dictionary[int, MapCell]) -> Game:
 		cells.append(special.get(i, MapCell.new(TerrainType.Value.PLAIN)))
 	var player := Player.new("Test", "p1")
 	var levels: Dictionary[int, GameMap] = {1: GameMap.new(4, 4, cells, 1)}
-	return Game.new(player.id, {player.id: player}, 1, levels)
+	return Game.new(player.id, {player.id: player}, 1, null, levels)
 
 
 func _base(type: TransitionBaseType.Value, captured_by: Variant = null) -> MapCell:

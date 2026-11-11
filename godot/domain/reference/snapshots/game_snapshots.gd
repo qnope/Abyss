@@ -2,8 +2,7 @@ class_name GameSnapshots
 extends RefCounted
 ## lib/domain/reference/snapshots/game_snapshots.dart: snapshot of what a
 ## game holds besides its players and its maps, which GameSnapshot writes in
-## sections of their own. `createdAt` and `savedLastPlayedAt`, which Dart
-## leaves out, are not in the port's Game.
+## sections of their own.
 
 
 static func game() -> ClassSnapshot:
@@ -21,4 +20,6 @@ static func game() -> ClassSnapshot:
 	}, {"savedDifficulty": "difficulty", "savedFactions": "factions"}, {
 		"players": "written by the sections of the players, one per group of Player fields (SnapshotSections.OF_PLAYERS)",
 		"levels": "written by the sections map1, map2 and map3",
+		"createdAt": "wall-clock date the game started; only the list of saves reads it",
+		"savedLastPlayedAt": "wall-clock date of the last save; only the list of saves reads it",
 	})

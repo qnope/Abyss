@@ -11,11 +11,19 @@ extends FullPage
 ## expects an [ActionResult]: a success ends the page with it, a refusal is told
 ## in the page, which stays open. Cancelling, or the back arrow, ends it with
 ## null.
+##
+## An assault is led by an Abyss Admiral ([param needs_admiral]): the page
+## warns of it while none is picked and launches only with one. A plan of the
+## assault (lot 13) follows the picks on [signal picks_changed].
+
+## The units picked changed: [param chosen] are the ones that are not zero.
+signal picks_changed(chosen: Dictionary[UnitType.Value, int])
 
 const GAP := 12
 
 var available: Dictionary[UnitType.Value, Unit]
 var boost: UnitBoost
+var needs_admiral: bool
 ## The units picked, by type: the types touched, zero included.
 var picked: Dictionary[UnitType.Value, int] = {}
 var rows: Dictionary[UnitType.Value, UnitQuantityRow] = {}
@@ -35,13 +43,14 @@ var _failure: ActionResult
 ## [param header] comes before the rows.
 func _init(
 	title_: Callable, available_: Dictionary[UnitType.Value, Unit], boost_: UnitBoost,
-	launch_key: StringName, confirm_: Callable, header: Control = null,
+	launch_key: StringName, confirm_: Callable, header: Control = null, needs_admiral_ := false,
 ) -> void:
 	_title = title_
 	_confirm = confirm_
 	super()
 	available = available_
 	boost = boost_
+	needs_admiral = needs_admiral_
 	body.add_theme_constant_override(&"separation", GAP)
 	if header != null:
 		body.add_child(header)
@@ -62,6 +71,7 @@ func _init(
 	actions_bar.launch_requested.connect(launch)
 	actions_bar.cancel_requested.connect(close)
 	body.add_child(actions_bar)
+	actions_bar.set_admiral_missing(needs_admiral)
 	refresh()
 
 
@@ -96,6 +106,9 @@ func _pick(count: int, type: UnitType.Value) -> void:
 	picked[type] = count
 	var chosen := picks()
 	summary.show_totals(ArmySelectionSummary.total_atk(chosen, boost), ArmySelectionSummary.total_def(chosen, boost))
-	actions_bar.set_ready(not chosen.is_empty())
+	var led: bool = not needs_admiral or chosen.get(UnitType.Value.ABYSS_ADMIRAL, 0) > 0
+	actions_bar.set_admiral_missing(not led)
+	actions_bar.set_ready(not chosen.is_empty() and led)
 	_failure = null
 	refresh()
+	picks_changed.emit(chosen)

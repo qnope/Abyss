@@ -12,15 +12,19 @@ signal level_selected(level: int)
 
 ## Room between the chips.
 const GAP := 4
+const HALO_RADIUS := 8
 
 var current := 1
 var unlocked: Array[int] = [1]
 ## The chip of each level.
 var chips: Dictionary[int, Button] = {}
+var _halos: Dictionary[int, GuidedHalo] = {}
 var _row := HBoxContainer.new()
 
 
-func _init() -> void:
+## The chip of the level the guide points at is surrounded by its halo, unless
+## that level is on show.
+func _init(guide: GuideScope = null) -> void:
 	super()
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_row.add_theme_constant_override(&"separation", GAP)
@@ -35,7 +39,8 @@ func _init() -> void:
 		var chip := Button.new()
 		chip.pressed.connect(_touched.bind(level))
 		chips[level] = chip
-		_row.add_child(chip)
+		_halos[level] = GuidedHalo.new(chip, guide, _opens.bind(level), HALO_RADIUS)
+		_row.add_child(_halos[level])
 	refresh()
 
 
@@ -43,6 +48,8 @@ func _init() -> void:
 func show_state(current_: int, unlocked_: Array[int]) -> void:
 	current = current_
 	unlocked = unlocked_
+	for halo: GuidedHalo in _halos.values():
+		halo.follow()
 	refresh()
 
 
@@ -53,6 +60,10 @@ func refresh() -> void:
 		chip.theme_type_variation = AbyssChipTheme.ACTIVE if level == current else AbyssChipTheme.CHIP
 		chip.disabled = not unlocked.has(level)
 		chip.icon = load(UiIcon.glyph_path(&"lock")) as Texture2D if chip.disabled else null
+
+
+func _opens(target: GuideTarget, level: int) -> bool:
+	return target.level == level and level != current
 
 
 func _touched(level: int) -> void:

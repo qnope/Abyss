@@ -21,7 +21,8 @@ var settings_button := Button.new()
 var next_turn_button := Button.new()
 
 
-func _init(turn_ := 1) -> void:
+## The button is surrounded by the guide's halo when it asks to end the turn.
+func _init(turn_ := 1, guide: GuideScope = null) -> void:
 	turn = turn_
 	super()
 	theme_type_variation = AbyssHudTheme.ACTION_ROW
@@ -38,7 +39,7 @@ func _init(turn_ := 1) -> void:
 	next_turn_button.pressed.connect(end_turn_requested.emit)
 	row.add_child(settings_button)
 	row.add_child(turn_label)
-	row.add_child(next_turn_button)
+	row.add_child(GuidedHalo.new(next_turn_button, guide, func(target: GuideTarget) -> bool: return target.end_turn))
 	add_child(row)
 	refresh()
 

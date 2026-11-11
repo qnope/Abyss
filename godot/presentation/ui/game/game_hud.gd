@@ -40,7 +40,7 @@ var banners: BaseBanners
 ## The area between the bars, where the world shows through.
 var content := Control.new()
 var turn_bar: TurnBar
-var tab_bar := GameTabBar.new()
+var tab_bar: GameTabBar
 ## What covers the world on the tabs it does not show through.
 var page := PanelContainer.new()
 ## The research tree, the page of the Tech tab.
@@ -59,7 +59,8 @@ func _init(actions_: GameActions, language_: LanguageChoice.Value, modals: Modal
 	var human := game.human_player()
 	resource_bar = ResourceBar.new(human.resources, TurnFigures.production(game, human),
 		TurnFigures.consumption(game, human), _modals)
-	turn_bar = TurnBar.new(game.turn)
+	turn_bar = TurnBar.new(game.turn, actions.guide)
+	tab_bar = GameTabBar.new(actions.guide)
 	banners = BaseBanners.new(human)
 	ThreatBars.add_to(status_bars, game, map_requested.emit)
 	var column := VBoxContainer.new()
@@ -71,10 +72,11 @@ func _init(actions_: GameActions, language_: LanguageChoice.Value, modals: Modal
 	banners.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE, BANNER_MARGIN)
 	_fill_page()
 	content.add_child(page)
-	for part: Control in [resource_bar, status_bars, content, turn_bar, tab_bar]:
+	for part: Control in [resource_bar, status_bars, content, GuideBubble.new(actions.guide), turn_bar, tab_bar]:
 		column.add_child(part)
 	add_child(column)
 	status_bars.add_bar(EventStatusBar.new(actions, _modals))
+	status_bars.add_bar(ObjectiveBanner.new(actions, _modals))
 	tab_bar.tab_chosen.connect(show_tab)
 	turn_bar.end_turn_requested.connect(end_turn_requested.emit)
 	turn_bar.settings_requested.connect(open_settings)

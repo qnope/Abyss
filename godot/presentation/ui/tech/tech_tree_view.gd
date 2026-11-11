@@ -21,7 +21,7 @@ var notice: NoticeBanner
 var columns: Dictionary[TechBranch.Value, TechBranchColumn] = {}
 
 
-func _init(view_: TechView) -> void:
+func _init(view_: TechView, guide: GuideScope = null) -> void:
 	view = view_
 	add_theme_constant_override(&"separation", GAP)
 	if view.lab_level < 1:
@@ -34,7 +34,7 @@ func _init(view_: TechView) -> void:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override(&"separation", COLUMNS_GAP)
 	for branch: TechBranch.Value in TechBranch.Value.values():
-		var column := TechBranchColumn.new(branch, view)
+		var column := TechBranchColumn.new(branch, view, guide)
 		column.target_tapped.connect(target_tapped.emit)
 		columns[branch] = column
 		row.add_child(column)

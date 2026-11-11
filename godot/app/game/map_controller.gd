@@ -27,7 +27,7 @@ func _init(session_: GameSession, hud: GameHud, world: WorldHost, modals: ModalL
 	session = session_
 	_hud = hud
 	_world = world
-	tab = MapTab.new(session.game)
+	tab = MapTab.new(session.game, session.actions.guide)
 	tab.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	hud.content.add_child(tab)
 	router = CellRouter.new(session.actions, modals)

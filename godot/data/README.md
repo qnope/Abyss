@@ -1,6 +1,7 @@
 # data
 
-Saving and loading: turning the domain's state into a versioned save and back.
+Saving and loading: turning the domain's state into a versioned save and back,
+and the settings kept across launches.
 
 Depends on `domain/` only. The domain never depends on this layer.
 
@@ -91,8 +92,40 @@ format up. The save is written back in the new format at its next save. A
 save of a newer format is never read, so an older version never damages
 what a newer one wrote.
 
+## The saves folder
+
+`repository/`: `GameRepository` is `lib/data/game_repository.dart`. Each game
+is a file of its own in `user://saves/`, `game-<n>.json`, `n` counting up from
+1 past the highest file there, as Hive numbers what it adds to a box; the
+games load in that order. One file per game and no index: nothing to keep in
+step, and a file that cannot be read loses that game only. `load_all` gives
+`SavedGames`, the games and the files it skipped with why, never stopping on
+one. The repository keeps the file of each game it saved or loaded, so that
+saving it again replaces that file, as Hive saves a game already in its box;
+`delete_game` removes it.
+
+`save` stamps the game as last played (`now`, a `Callable` the tests replace)
+and writes it through `AtomicFile`: the whole text to `game-<n>.json.tmp`,
+then a rename over the save. A crash or a full disk while writing leaves the
+previous save whole; a `.tmp` left behind is ignored, and replaced by the next
+save of that game.
+
+## The settings
+
+`settings/`: `LanguageSettings` is `lib/data/language_settings.dart`: the
+`LanguageChoice` of the player in `user://settings.json`,
+`{"format":1,"language":"fr"}`, the language left out while the device
+decides. A file missing, unreadable, of another format or holding an unknown
+code reads as the device's language; its `changed` signal tells each real
+change.
+
 ## Tests
 
 Each codec is tested by writing objects, parsing the text and reading them
 back, compared through the snapshot of their class (`CodecTestCase`,
-`tool/reference/`).
+`tool/reference/`). The files are written in a folder of `user://` of their
+own (`TempFolder`, `tool/samples/`), removed after each test. The whole games
+go through their saves in `tool/reference/save_round_trip_test.gd` (two short
+reference games, saved and loaded at every turn, played on from three turns)
+and in the long cases `saves-<game>` of `tool/godot_reference.sh`, one per
+reference game (`tool/replay/README.md`).

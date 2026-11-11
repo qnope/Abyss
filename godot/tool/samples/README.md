@@ -25,6 +25,10 @@ player named after its id (`player`), one holding only the buildings given
 `two_players`, the twin of `test/helpers/two_player_game.dart`. A game from a
 seed comes from `GameFactory` itself.
 
+`TempFolder` is a folder of its own under `user://` for a test of the files
+of `data/`, removed with what it holds by `remove()` in the test's
+`after_each`.
+
 `DateSamples.at(2026, 3, 15, 14, 30)` is Dart's `DateTime(2026, 3, 15, 14,
 30)` as a `Game` holds a date, in milliseconds since the epoch (read in UTC:
 only the order and the equality of two dates matter to the tests).

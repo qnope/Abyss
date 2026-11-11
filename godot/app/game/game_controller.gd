@@ -5,7 +5,8 @@ extends RefCounted
 ##
 ## - The tab on show chooses what the world shows ([TabViews]): the base on
 ##   the Base tab, the army's parade ground on the Army tab ([ArmyController]),
-##   the map of the levels on the Map tab ([MapController]); the other tabs
+##   the map of the levels on the Map tab ([MapController]), whose lairs open
+##   the fights ([FightController]); the other tabs
 ##   cover it with their page until their views are built, and the world is
 ##   hidden and paused behind them.
 ## - A change of the game, once saved by the session, redraws the HUD and the
@@ -37,6 +38,7 @@ var world: WorldHost
 var end_turn: EndTurnFlow
 var army: ArmyController
 var map: MapController
+var fight: FightController
 var _modals: ModalLayer
 
 
@@ -57,6 +59,7 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost, modals: Moda
 	world.base.building_tapped.connect(hud.open_building)
 	army = ArmyController.new(session, hud, world, modals)
 	map = MapController.new(session, hud, world, modals)
+	fight = FightController.new(session.actions, map.router, modals)
 	session.changed.connect(_on_changed)
 	_show_base()
 	_frame()

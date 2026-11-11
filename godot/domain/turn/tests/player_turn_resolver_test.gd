@@ -59,3 +59,27 @@ func test_the_worksite_of_the_turn_is_freed() -> void:
 	p.worksite.research = 1
 	PlayerTurnResolver.resolve(p, 4)
 	assert_eq([p.worksite.upgrades, p.worksite.research], [0, 0])
+
+
+func test_the_buildings_shut_down_spend_no_energy() -> void:
+	var p := Player.new("Nemo", "human", 5, 5)
+	p.buildings[BuildingType.Value.SOLAR_PANEL] = Building.new(BuildingType.Value.SOLAR_PANEL, 1)
+	p.buildings[BuildingType.Value.ALGAE_FARM] = Building.new(BuildingType.Value.ALGAE_FARM, 2)
+	p.buildings[BuildingType.Value.ORE_EXTRACTOR] = Building.new(BuildingType.Value.ORE_EXTRACTOR, 5)
+	p.resources[ResourceType.Value.ENERGY].amount = 0
+	var result := PlayerTurnResolver.resolve(p, 4)
+	var excluded: Dictionary[BuildingType.Value, bool] = {}
+	for type: BuildingType.Value in result.deactivated_buildings:
+		excluded[type] = true
+	assert_true(excluded.has(BuildingType.Value.ORE_EXTRACTOR))
+	var consumed := _change(result.changes, ResourceType.Value.ENERGY).consumed
+	assert_true(consumed > 0)
+	assert_eq(consumed, ConsumptionCalculator.total_building_consumption(p.buildings, excluded))
+	assert_true(consumed < ConsumptionCalculator.total_building_consumption(p.buildings))
+
+
+func test_a_stock_filled_to_the_brim_is_not_capped() -> void:
+	var p := _player()
+	p.resources[ALGAE] = GameResource.new(ALGAE, 500 - 140, 500)
+	var c := _change(PlayerTurnResolver.resolve(p, 4).changes, ALGAE)
+	assert_eq([c.produced, c.after_amount, c.was_capped], [140, 500, false])

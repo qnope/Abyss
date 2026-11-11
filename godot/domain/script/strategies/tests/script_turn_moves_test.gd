@@ -28,8 +28,10 @@ func test_a_share_of_the_affordable_recruits_joins() -> void:
 
 
 func test_a_share_rounding_down_to_nothing_recruits_nothing() -> void:
-	var turn := _turn({BARRACKS: 1}, 15)
+	var log_: Array[ScriptLogEntry] = []
+	var turn := ScriptSamples.turn(_turn({BARRACKS: 1}, 15).game, null, 1, log_)
 	assert_eq(ScriptTurnMoves.recruit_share(turn, HARPOONIST, 0.9), 0)
+	assert_true(log_.is_empty(), "nothing tried")
 	assert_eq(ScriptTurnMoves.recruit_share(_turn({BARRACKS: 0}), HARPOONIST, 1.0), 0)
 
 

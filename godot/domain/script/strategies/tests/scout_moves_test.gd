@@ -120,3 +120,14 @@ func _without_faille() -> DeepScouts:
 		if cell.transition_base != null:
 			cell.transition_base.captured_by = "someone"
 	return deep
+
+
+## Not in the Dart file: a base holding the scouts it wants recruits none.
+func test_a_base_holding_its_explorers_recruits_no_scout() -> void:
+	var deep := _without_faille()
+	deep.put(1, 2)
+	var log_: Array[ScriptLogEntry] = []
+	ScoutMoves.scout(ScriptTurn.new(deep.game, DartRandom.new(3), log_, deep.faction()), 2)
+	assert_eq(deep.targets(1).size(), 2)
+	for entry: ScriptLogEntry in log_:
+		assert_false(entry.description.begins_with("Recruter"), str(entry))

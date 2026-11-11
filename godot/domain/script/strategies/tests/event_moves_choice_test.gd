@@ -112,3 +112,16 @@ func test_what_an_event_lacks_is_never_taken_and_a_replay_does_not_choose() -> v
 	assert_null(EventMoveSamples.choice_of(player))
 	EventMoves.play_events(replay, _planner)
 	assert_eq(EventMoveSamples.choice_of(player), true)
+
+
+## Not in the Dart file: survivors the margin feeds to the last algae.
+func test_survivors_welcomed_when_the_margin_feeds_them_exactly() -> void:
+	var player := EventSamples.producing_player()
+	var turn := EventMoveSamples.choice_turn(player, Type.SURVIVORS)
+	var margin := RecruitMoves.algae_margin(turn)
+	player.units_on_level(1)[UnitType.Value.SCOUT].count = margin - 2 * DartMath.trunc_div(margin, 2)
+	var survivors := DartMath.trunc_div(RecruitMoves.algae_margin(turn), 2)
+	player.event_state.survivors = survivors
+	assert_eq(RecruitMoves.algae_margin(turn), 2 * survivors)
+	EventMoves.choose_event(turn, _planner)
+	assert_eq(EventMoveSamples.choice_of(player), true)

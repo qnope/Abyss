@@ -86,3 +86,15 @@ func test_when_no_mix_is_enough_the_first_usable_one_takes_the_share() -> void:
 	var locked := _turn(0)
 	assert_false(RecruitMoves.top_up(locked, {}, _enemy(400), [PAIR, SOLO], ArmyPlanner.new(), null))
 	assert_eq(RecruitMoves.barracks_level(locked), 0)
+
+
+func test_a_mix_eating_one_algae_is_capped_by_the_algae_and_none_tries_nothing() -> void:
+	var turn := _turn(3)
+	turn.player.units_on_level(1)[HARPOONIST].count = 4975
+	var scout: Dictionary[UnitType.Value, int] = {UnitType.Value.SCOUT: 1}
+	var room := RecruitMoves.algae_margin(turn) + 10000
+	assert_true(room > 0 and room < RecruitMoves.MAX_BATCH)
+	assert_eq(RecruitMoves.affordable(turn, scout), room)
+	var log_: Array[ScriptLogEntry] = []
+	assert_false(RecruitMoves.recruit_mix(ScriptSamples.turn(turn.game, null, 1, log_), PAIR, 0))
+	assert_true(log_.is_empty())

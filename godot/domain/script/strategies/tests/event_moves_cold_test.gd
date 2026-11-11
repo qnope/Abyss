@@ -43,3 +43,12 @@ func test_endured_when_the_energy_margin_cannot_pay_the_heating() -> void:
 	var turn := _cold(70, 100, 1)
 	assert_true(GrowthMoves.energy_margin(turn) < HEATING)
 	assert_eq(_choice(turn), false)
+
+
+## Not in the Dart file: an energy margin of exactly the heating pays it.
+func test_heated_when_the_energy_margin_is_exactly_the_heating() -> void:
+	var turn := _cold(70, 100, 3)
+	turn.player.buildings[BuildingType.Value.BARRACKS].level = 8
+	turn.player.buildings[BuildingType.Value.CORAL_CITADEL].level = 1
+	assert_eq(GrowthMoves.energy_margin(turn), HEATING)
+	assert_eq(_choice(turn), true)

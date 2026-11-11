@@ -65,3 +65,15 @@ func test_research_with_a_plan_of_its_own_the_default_plan_still_waits_for_what_
 
 	assert_false(turn.player.tech_branches[Branch.RESOURCES].unlocked)
 	assert_false(turn.player.tech_branches[Branch.MILITARY].unlocked)
+
+
+## Not in the Dart file: an upgrade that spends the energy margin to the
+## last unit still goes up.
+func test_an_upgrade_leaving_no_energy_to_spare_still_goes_up() -> void:
+	var turn := _turn()
+	for r: GameResource in turn.player.resources.values():
+		r.amount = 1000
+	var hq := ConsumptionCalculator.building_energy_consumption(BuildingType.Value.HEADQUARTERS, 1)
+	turn.player.resources[ResourceType.Value.ENERGY].amount = 10 * (hq - GrowthMoves.energy_margin(turn))
+	GrowthMoves.grow_in_order(turn, [BuildingType.Value.HEADQUARTERS])
+	assert_eq(turn.player.buildings[BuildingType.Value.HEADQUARTERS].level, 1)

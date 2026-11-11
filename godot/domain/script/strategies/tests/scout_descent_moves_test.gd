@@ -113,3 +113,10 @@ func test_a_degraded_passage_closes_the_road_and_an_empty_base_sends_nobody() ->
 	ScoutDescentMoves.send_scouts_down(empty.turn(), 6)
 	assert_eq(empty.scouts(3), 0)
 	assert_eq(ScoutDescentMoves.scouts_missing_below(empty.turn(), 6), 6)
+
+
+## Not in the Dart file: more scouts below than wanted leave none missing.
+func test_no_scout_is_missing_when_more_than_wanted_stand_below() -> void:
+	var deep := _holding(BOTH)
+	deep.put(3, 8)
+	assert_eq(ScoutDescentMoves.scouts_missing_below(deep.turn(), 6), 0)

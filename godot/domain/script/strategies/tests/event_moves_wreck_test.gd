@@ -112,3 +112,14 @@ func test_without_a_wreck_or_its_last_turn_nothing_is_sent() -> void:
 	_player(w).event_state.clear_wreck()
 	_fetch(w, true)
 	assert_true(_player(w).pending_explorations.is_empty())
+
+
+## Not in the Dart file: a player who is not bold recruits no scout for it.
+func test_a_cautious_player_recruits_no_scout_for_the_wreck() -> void:
+	var w := _wreck(13, 0)
+	for r: GameResource in _player(w).resources.values():
+		r.amount = r.max_storage
+	_player(w).buildings[BuildingType.Value.BARRACKS].level = 1
+	_fetch(w)
+	assert_eq(_player(w).units_on_level(1)[UnitType.Value.SCOUT].count, 0)
+	assert_true(_player(w).pending_explorations.is_empty())

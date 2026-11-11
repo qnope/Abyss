@@ -32,6 +32,9 @@ func test_the_step_is_the_first_objective_not_completed_until_a_raid_is_fought()
 	var fought := _turn()
 	fought.player.raid_state.raids_lost = 1
 	assert_null(TutorialMoves.tutorial_step(fought))
+	var repelled := _turn()
+	repelled.player.raid_state.raids_repelled = 1
+	assert_null(TutorialMoves.tutorial_step(repelled))
 
 
 func test_each_step_raises_what_it_asks_once() -> void:

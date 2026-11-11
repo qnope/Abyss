@@ -1,7 +1,6 @@
 extends TestCase
-## test/domain/game/game_factory_factions_test.dart. 'the human exploring
-## does not reveal anything to a faction' waits for the actions (an
-## exploration and an end of turn).
+## test/domain/game/game_factory_factions_test.dart: the games against the
+## factions, each faction a player of its own.
 
 const Personality := FactionPersonality.Value
 const HQ := BuildingType.Value.HEADQUARTERS
@@ -90,6 +89,23 @@ func test_no_personality_and_a_count_give_the_world_of_the_human_alone() -> void
 	assert_eq(game.players.size(), 1)
 	assert_eq(game.levels.keys(), [1, 2, 3])
 	assert_eq(game.factions().size(), 0)
+
+
+func test_the_human_exploring_does_not_reveal_anything_to_a_faction() -> void:
+	var game := _with_factions(3)
+	var faction: Player = game.players[game.factions()[0].id()]
+	var seen := faction.revealed_cells_on_level(1).size()
+	var human := game.human_player()
+	human.units_per_level[1][UnitType.Value.SCOUT] = Unit.new(UnitType.Value.SCOUT, 3)
+	var target := GridPosition.new((human.base_x + 3) % 20, (human.base_y + 3) % 20)
+
+	var result := ActionExecutor.new().execute(ExploreAction.new(target.x, target.y, 1), game, human)
+	ActionExecutor.new().execute(EndTurnAction.new(null, false), game, human)
+
+	assert_true(result.is_success)
+	assert_true(GridPosition.keys(human.revealed_cells_on_level(1)).has(target.key()))
+	assert_eq(faction.revealed_cells_on_level(1).size(), seen)
+	assert_false(is_same(faction.revealed_cells_per_level, human.revealed_cells_per_level))
 
 
 func _with_factions(count: int, seed_ := 11) -> Game:

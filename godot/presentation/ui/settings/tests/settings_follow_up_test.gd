@@ -18,6 +18,14 @@ func test_the_history_is_the_sheet_of_the_human_player() -> void:
 	page.free()
 
 
+func test_the_ranking_is_the_sheet_of_the_standings_of_the_game() -> void:
+	var rivals := GameFactory.new_game("Nemo", 7, Difficulty.Value.NORMAL, false, 2)
+	var page := _follow_up.page(SettingsLinks.RANKING, rivals, modals())
+	assert_true(page is FactionRankingSheet)
+	assert_eq((page as FactionRankingSheet).tiles.size(), 3)
+	page.free()
+
+
 func test_the_export_is_the_dialog_of_the_game() -> void:
 	var page := _follow_up.page(SettingsLinks.EXPORT, _game, modals())
 	assert_true(page is ReplayExportDialog)

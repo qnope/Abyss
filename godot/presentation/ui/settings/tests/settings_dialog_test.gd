@@ -93,6 +93,23 @@ func test_the_history_and_the_export_are_ways_out() -> void:
 	assert_null(current_modal())
 
 
+func test_the_ranking_is_a_way_out_of_a_game_with_factions_only() -> void:
+	var solo := _open()
+	assert_null(find_text("Classement"), "a solo game has no ranking")
+	assert_null(solo.links.ranking_row)
+	press("Annuler")
+	_game = GameFactory.new_game("Nemo", 7, Difficulty.Value.NORMAL, false, 1)
+	_actions = GameActions.new(_game)
+	var dialog := _open()
+	assert_true(dialog.links.ranking_row.get_index() > dialog.links.history_row.get_index())
+	press("Classement")
+	assert_eq(_results.back(), SettingsLinks.RANKING)
+	assert_null(current_modal())
+	_open()
+	use_language("en")
+	assert_not_null(find_text("Ranking"))
+
+
 func test_the_links_follow_the_language() -> void:
 	var dialog := _open()
 	use_language("en")

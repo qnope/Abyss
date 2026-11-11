@@ -65,7 +65,7 @@ func test_cancelling_changes_nothing() -> void:
 	assert_eq(on_level(VOLCANO, Harpoonist), 150)
 
 
-func test_a_volcano_a_rival_holds_opens_the_attack_to_lot_13() -> void:
+func test_a_volcano_a_rival_holds_tells_the_attack_to_the_factions() -> void:
 	var rival := game.players[game.factions()[0].id()]
 	var cell := game.levels[VOLCANO].cell_at(kernel_at.x, kernel_at.y)
 	game.levels[VOLCANO].set_cell(kernel_at.x, kernel_at.y, cell.copy_with({"collected_by": rival.id}))

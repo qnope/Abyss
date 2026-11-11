@@ -180,3 +180,8 @@ credited, barracks and harpoonists, a raid, an event to choose, a Faille, a
 Cheminée and the kernel taken), plays the moves of a turn in the script's
 order, and writes the state of a player after them; `ScriptHistories` holds
 what the Dart script printed.
+
+`FactionGames` is the twin of `test/helpers/faction_game.dart`: a game
+against the factions where the human plays the balanced strategy, its dice
+drawn by a `LiveTurn` as the game screen journals them, and each turn ended
+by `EndTurnAction`; `growth_of` sums the levels and the units of a player.

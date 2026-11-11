@@ -196,7 +196,7 @@ Files and tests of the modules above that wait for another module:
 | `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
 | `action/announced_attack_resolver.dart`, `held_attack_reports.dart` | nothing left: `FactionAttackReport` is there, they come next |
 | `held_attack_report/held_kernel_report_test.dart`, `held_post_report_test.dart`; `announce_attack/announced_attack_report_test.dart`, `announced_attack_resolve_test.dart` (they end the turn) | `turn` (`EndTurnAction`, `TurnResult.attacks`) |
-| `action/attack_transition_base_action.dart`, `attack_transition_base_execute_test.dart`, `attack_transition_base_history_test.dart` (the tests of its `validate` call `AttackTransitionBaseValidator.check`, which it is) | `leviathan` (`LeviathanResolver`) |
+| `action/attack_transition_base_action.dart`, `attack_transition_base_execute_test.dart`, `attack_transition_base_history_test.dart` (the tests of its `validate` call `AttackTransitionBaseValidator.check`, which it is); three tests of `leviathan/leviathan_schedule_test.dart` (they capture with the action) | nothing left: `LeviathanResolver` is there, they come next |
 | The row of `AttackTransitionBaseAction` in `action_identity_test.dart`, and in the fights of `silent_swim_noise_test.dart` | `AttackTransitionBaseAction` above |
 | `volcano/wave_held_back_turn_test.dart` | `turn` (`TurnResolver`) |
 | `ReplayJournal.record`, the three tests of `replay_journal_test.dart` (its Hive round-trip never comes); the call of `ActionExecutor` into it; the last test of `choose_event_action_test.dart` (the choice is written in the replay journal) | `action` (`ActionEncoder`) |
@@ -208,7 +208,8 @@ Files and tests of the modules above that wait for another module:
 | `building_degradation_solo_test.dart` | `script` |
 | `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
-| `objective/guide/guide_leviathan.dart`, `guide_leviathan_test.dart` | `leviathan` (`LeviathanResolver`, `LeviathanDefenceAdvisor`) |
+| `objective/guide/guide_leviathan.dart`, `guide_leviathan_test.dart` | nothing left: `LeviathanResolver` and `LeviathanDefenceAdvisor` are there, they come next |
+| `leviathan/leviathan_turn_test.dart` (the guardians through `EndTurnAction` and `TurnResult`) | `turn` |
 | `objective/guide/guide_alerts.dart` | `faction` (`UndefendedPosts`, which reads `action`'s `PostTakeover`) |
 | `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` above |
 | `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own) | `GuideCampaign` and `GuideLeviathan` above |

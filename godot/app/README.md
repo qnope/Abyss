@@ -77,10 +77,21 @@ tapped (`MapScene.cell_tapped(level, x, y)`) -> `CellRouter.route` -> sheet ->
 `GameActions.execute` -> `acted` -> save -> `changed` -> `MapTab.refresh` and the
 map redrawn; a search then tells what it found. A level chosen on the selector
 (`MapTab.level_changed`) is drawn at once. For the other lots:
-`map.router.register(CellRoute.Kind.LAIR | POST | KERNEL | FACTION_BASE, handler)` opens
+`map.router.register(CellRoute.Kind.POST | KERNEL | FACTION_BASE, handler)` opens
 their sheet (the handler takes the `CellRoute` and opens its own modals), and
 `map.show_level(level)` (after `hud.show_tab(GameTab.Value.MAP)`) shows a level
 from a status bar or the guide.
+
+The lairs are the `FightController` (`game/`), made by the `GameController`, which
+registers for `CellRoute.Kind.LAIR`: a touch opens the `MonsterLairSheet`,
+"prepare the fight" the `ArmySelection` page over the units of the level, and
+launching runs `FightMonsterAction` through `GameActions.execute`. Flow: cell
+tapped -> sheet -> `prepare_requested` -> selection -> `execute` -> `acted` -> save ->
+`changed` -> map redrawn (the lair of a victory dimmed, the stock and the noise
+changed) -> the page closes with the result -> `FightSummaryPage`; a refusal
+stays in the selection page. `FightController.report(result, route)` is where the
+fight ends: step 7 plays the strike on the map before it opens the report, and
+the history (lot 14) reopens one with `FightSummaryPage.of_entry(entry)`.
 
 The end of a turn is `EndTurnFlow` (`presentation/ui/turn/`), made by the
 `GameController`: the HUD's `end_turn_requested` asks, the confirmed turn goes

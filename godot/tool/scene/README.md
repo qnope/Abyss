@@ -5,7 +5,7 @@ of exports.
 
     tool/scene_capture.sh [out dir] [scene | app | base | army | turn | tech | threat | kit]
 
-    tool/scene_capture.sh [out dir] [scene | app | base | army | map | turn | kit]
+    tool/scene_capture.sh [out dir] [scene | app | base | army | map | fight | turn | kit]
 
     tool/scene_capture.sh [out dir] [scene | app | base | army | turn | tech | event | kit]
 
@@ -80,6 +80,22 @@ filled), `map_close.png` (the camera brought close), `map_exploration_sheet.png`
 reason), `map_treasure_sheet.png`, `map_found.png` (what the search gave) and
 `map_visited.png` (the cell once searched), each with its draw calls and
 primitives. Never commit the renders.
+
+## The fights
+
+`fight_capture.gd` (`tool/scene_capture.sh [out dir] fight`, or after the map's shots
+when no scene is given) plays a game with two lairs next to the base (three hunters, and
+three hundred generic monsters), six scouts, four harpoonists and two guardians, opens the
+Map tab and renders: `fight_lair_sheet.png` (the sheet of the hunters: picture,
+difficulty, level, count, stats, rule and weakness, cancel and prepare),
+`fight_lair_generic.png` (the generic monsters, no rule), `fight_selection.png` and
+`fight_selection_en.png` (the army page with units picked: the monsters, a row per type
+with its slider, the totals and the military bonus, launch and cancel), `fight_refused.png`
+(a launch refused because the units picked were gone: the reason over the buttons),
+`fight_report_won.png` and `fight_report_won_end.png` (the report of a victory: its top, then
+its end), `fight_map_beaten.png` (the map after it: the lair dimmed, the stocks and the noise
+changed) and `fight_report_lost.png` (a lost fight with no loot), each with its draw
+calls and primitives. Never commit the renders.
 
 ## The end of a turn and of a game
 

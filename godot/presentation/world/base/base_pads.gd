@@ -4,12 +4,15 @@ extends RefCounted
 ## building: where a building stands, the empty ones marked discreetly on
 ## the deck (PadMarker), and the one under a tap.
 
-## The height above a pad that a tap still picks it: its building.
-const PICK_HEIGHT := 3.2
+## How far above its top an empty pad is picked, and how far above a
+## building's top the building is: a finger rarely lands on the very edge.
+const EMPTY_REACH := 0.8
+const REACH_MARGIN := 0.3
 
 var marker: PadMarker
 var _pads: Dictionary[StringName, MeshInstance3D] = {}
 var _empty: Dictionary[StringName, bool] = {}
+var _reach: Dictionary[StringName, float] = {}
 
 
 ## Reads the pads under [param holder], the island's Pads node.
@@ -17,6 +20,7 @@ func _init(holder: Node3D) -> void:
 	for node: Node in holder.get_children():
 		var pad := node as MeshInstance3D
 		_pads[pad.name] = pad
+		_reach[pad.name] = EMPTY_REACH
 		# A slab a few centimetres thick: its shadow is not worth a pass.
 		pad.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var first: MeshInstance3D = _pads.values()[0]
@@ -39,9 +43,19 @@ func mark(occupied: Array[StringName]) -> void:
 	for name: StringName in _pads:
 		var empty := not occupied.has(name)
 		_empty[name] = empty
+		_reach[name] = EMPTY_REACH
 		var pad := _pads[name]
 		pad.set_surface_override_material(0, marker.stone if empty else null)
 		pad.set_surface_override_material(1, marker.glow if empty else null)
+
+
+## Lets a tap pick each pad up to the top of the building of
+## [param buildings] on it, a pad with none up to [constant EMPTY_REACH]: a
+## tall building over its pad is not hidden by the box of a short one behind.
+func fit_reach(buildings: BaseBuildings) -> void:
+	for name in buildings.names():
+		var top := ModelBounds.top_of(buildings.building(name))
+		_reach[name] = top - origin_of(name).y + REACH_MARGIN
 
 
 func is_empty(name: StringName) -> bool:
@@ -54,7 +68,7 @@ func pick(origin: Vector3, direction: Vector3) -> StringName:
 	var picked := &""
 	var nearest := INF
 	for name: StringName in _pads:
-		var hit: Variant = _box(_pads[name]).intersects_ray(origin, direction)
+		var hit: Variant = _box(name).intersects_ray(origin, direction)
 		if hit == null:
 			continue
 		var point: Vector3 = hit
@@ -64,8 +78,9 @@ func pick(origin: Vector3, direction: Vector3) -> StringName:
 	return picked
 
 
-static func _box(pad: MeshInstance3D) -> AABB:
+func _box(name: StringName) -> AABB:
+	var pad := _pads[name]
 	var footprint := pad.get_aabb()
 	var box := AABB(footprint.position + pad.position, footprint.size)
-	box.size.y = PICK_HEIGHT
+	box.size.y = _reach[name] - footprint.position.y
 	return box

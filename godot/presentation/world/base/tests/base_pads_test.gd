@@ -49,7 +49,7 @@ func test_picks_the_pad_a_ray_meets_first() -> void:
 	var aside := Vector3(-4.0, 0.12, 4.0)
 	assert_eq(_pads.pick(aside + Vector3.UP * 30.0, Vector3.DOWN), &"", "the deck between pads")
 	var barracks := _pads.origin_of(&"Barracks")
-	var low := barracks + Vector3(0.0, 1.0, 12.0)
+	var low := barracks + Vector3(0.0, 0.4, 12.0)
 	assert_eq(_pads.pick(low, Vector3.FORWARD), &"Barracks", "the nearest along the ray")
 
 

@@ -9,7 +9,7 @@ const ROOT := "res://assets/icons"
 ## at, from the viewBox (64, the glyphs' 24) and the import's svg/scale.
 const FOLDERS := {
 	"resources": [5, 256], "tech": [21, 256], "events": [7, 384], "factions": [10, 384],
-	"guide": [1, 384], "ui": [16, 192],
+	"guide": [1, 384], "ui": [21, 192],
 }
 
 

@@ -2,24 +2,18 @@ class_name BaseScene
 extends Node3D
 ## The player's base in 3D: the island and its rampart, the buildings on
 ## their pads and the empty pads marked on the deck, lit from the surface
-## and seen by the orbit camera. A tap on a pad, or on its building, is
-## told by pad_tapped.
+## and seen by the orbit camera. Each pad shows its building, a model or a
+## stand-in ([WorldModels]), its level and the signs that tell what it needs
+## ([PadMarks]); a tap on a pad, built or not, or on its building, is told by
+## building_tapped.
 
-## The player tapped the pad [param pad], or the building on it.
-signal pad_tapped(pad: StringName)
+## The player tapped the pad, or the building on it, of [param type].
+signal building_tapped(type: BuildingType.Value)
 
 const ISLAND := preload("res://assets/models/base_island.glb")
 const RAMPART := preload("res://assets/models/base_rampart.glb")
 ## The buildings of the 3D prototype.
 const BUILT: Array[StringName] = [&"Headquarters", &"SolarPanel", &"CoralCitadel"]
-## The meshes whose shadows are not worth their triangles in each of the
-## two shadow passes: glowing trims and algae, too thin to see; the deck,
-## which only shadows itself; the island's rocks, mostly under the deck,
-## and its coral, small on the rims. The buildings and the rampart keep
-## theirs: 124k triangles drawn, 88k more for the shadows, not 211k.
-const NO_SHADOW: Array[String] = [
-	"*_glow", "*_glow_pink", "*_algae", "Island_stone", "Island_rock", "Island_coral",
-]
 ## The way the rays of light fall: nearly straight down, steeper than the
 ## key light, so that they cross every view of the orbit instead of
 ## running along it.
@@ -36,19 +30,20 @@ const OUTLINE: PackedVector3Array = [
 	Vector3(-7.4, -1.5, -7.4), Vector3(0.4, 3.2, 0.4),
 ]
 
-## How far the rampart has grown with the coral citadel, from 1 to 3.
-@export_range(1, 3) var rampart_tier := 1:
+## How far the rampart has grown with the coral citadel, from 0 (none) to 3.
+@export_range(0, 3) var rampart_tier := 1:
 	set = set_rampart_tier
 
 var camera := OrbitCamera.new()
 var key_light := KeyLight.new()
 var water := UnderwaterEnvironment.new()
 var buildings := BaseBuildings.new()
+var marks := PadMarks.new()
 var pads: BasePads
 var motion: BaseMotion
 var snow := MarineSnow.new()
 var bubbles := RisingBubbles.new()
-var _standing: Array[StringName] = []
+var _shown := ""
 var _rampart := RAMPART.instantiate() as Node3D
 
 
@@ -60,6 +55,7 @@ func _init() -> void:
 	_rampart.name = &"Rampart"
 	add_child(_rampart)
 	add_child(buildings)
+	add_child(marks)
 	add_child(key_light)
 	add_child(water)
 	add_child(LightShafts.new(RAYS))
@@ -69,36 +65,32 @@ func _init() -> void:
 	add_child(bubbles)
 	add_child(camera)
 	build(BUILT)
-	set_rampart_tier(rampart_tier)
-	_quiet_shadows(island)
-	_quiet_shadows(_rampart)
+	BaseShadows.quiet(island)
+	BaseShadows.quiet(_rampart)
 	camera.tapped.connect(_on_tapped)
 
 
-## Stands the buildings [param names] on their pads, the others empty. One
-## with no model yet leaves its pad bare, not marked as empty.
+## Stands the buildings [param names] on their pads at level 1, the others
+## empty, and the rampart at its first tier if the citadel is among them: the
+## prototype's and the menus' base.
 func build(names: Array[StringName]) -> void:
-	_standing = names.duplicate()
-	buildings.build(names, pads)
-	pads.mark(names)
-	motion.track()
-	var sources := PackedVector3Array()
-	for name in buildings.names():
-		sources.append(pads.origin_of(name))
-		_quiet_shadows(buildings.building(name))
-	bubbles.rise_from(sources)
+	_show(PadState.standing(names))
+	set_rampart_tier(BuildingTier.rampart_of(1 if names.has(&"CoralCitadel") else 0))
 
 
-## Shows the base of a game: the buildings of [param held] that stand (a
-## level of 1 or more) on their pads. The same buildings again change
-## nothing.
-func show_base(held: Dictionary[BuildingType.Value, Building]) -> void:
-	var names: Array[StringName] = []
-	for type: BuildingType.Value in held:
-		if held[type].level > 0:
-			names.append(BaseBuildings.pad_of(type))
-	if names != _standing:
-		build(names)
+## Shows the base of a game: each building of [param held] on its pad at its
+## level (greyed when degraded), the rampart at the tier of the citadel's
+## level, and the signs: [param upgradable], the buildings that can rise now
+## (and the plots that can be built on), and [param locked], the plots held
+## back by a prerequisite. The same base again changes nothing.
+func show_base(
+	held: Dictionary[BuildingType.Value, Building],
+	upgradable: Dictionary[BuildingType.Value, bool] = {},
+	locked: Dictionary[BuildingType.Value, bool] = {},
+) -> void:
+	_show(PadState.of_base(held, upgradable, locked))
+	set_rampart_tier(BuildingTier.rampart_of(
+		Building.level_in(held, BuildingType.Value.CORAL_CITADEL)))
 
 
 ## Fits the default view to the screen, the island centred between the top
@@ -124,9 +116,26 @@ func set_particles(enabled: bool) -> void:
 
 
 func set_rampart_tier(tier: int) -> void:
-	rampart_tier = clampi(tier, 1, 3)
+	rampart_tier = clampi(tier, 0, 3)
 	for index in _rampart.get_child_count():
 		(_rampart.get_child(index) as Node3D).visible = index < rampart_tier
+
+
+func _show(states: Array[PadState]) -> void:
+	var signature := PadState.signature_of(states)
+	if signature == _shown:
+		return
+	_shown = signature
+	buildings.build(states, pads)
+	pads.mark(buildings.names())
+	pads.fit_reach(buildings)
+	motion.track()
+	marks.show_marks(states, pads, buildings)
+	var sources := PackedVector3Array()
+	for name in buildings.names():
+		sources.append(pads.origin_of(name))
+		BaseShadows.quiet(buildings.building(name))
+	bubbles.rise_from(sources)
 
 
 func _on_tapped(position: Vector2) -> void:
@@ -135,11 +144,4 @@ func _on_tapped(position: Vector2) -> void:
 	var origin := to_base * camera.project_ray_origin(position)
 	var picked := pads.pick(origin, to_base.basis * camera.project_ray_normal(position))
 	if picked != &"":
-		pad_tapped.emit(picked)
-
-
-static func _quiet_shadows(model: Node) -> void:
-	for node: Node in model.find_children("*", "GeometryInstance3D", true, false):
-		for pattern in NO_SHADOW:
-			if String(node.name).match(pattern):
-				(node as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		building_tapped.emit(BaseBuildings.type_of(picked))

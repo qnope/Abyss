@@ -4,12 +4,12 @@ extends TestCase
 ## and seen by the orbit camera, which picks the pad under a tap.
 
 var _base: BaseScene
-var _taps: Array[StringName] = []
+var _taps: Array[BuildingType.Value] = []
 
 
 func before_each() -> void:
 	_base = BaseScene.new()
-	_base.pad_tapped.connect(_taps.append)
+	_base.building_tapped.connect(_taps.append)
 	(Engine.get_main_loop() as SceneTree).root.add_child(_base)
 
 
@@ -91,10 +91,10 @@ func test_fits_the_island_to_the_screen() -> void:
 	assert_almost_eq(_base.camera.rig.lift, fitted.y, 1e-4)
 
 
-func test_tells_the_pad_under_a_tap() -> void:
+func test_tells_the_building_under_a_tap() -> void:
 	var headquarters := _base.pads.origin_of(&"Headquarters") + Vector3.UP
 	_base.camera.tapped.emit(_base.camera.unproject_position(headquarters))
-	assert_eq(_taps, [&"Headquarters"] as Array[StringName])
+	assert_eq(_taps, [BuildingType.Value.HEADQUARTERS] as Array[BuildingType.Value])
 	_base.camera.tapped.emit(Vector2(-1000.0, -1000.0))
 	assert_eq(_taps.size(), 1, "a tap on the sea picks nothing")
 

@@ -25,6 +25,8 @@ var camera := OrbitCamera.new()
 var key_light := KeyLight.new()
 var ground := ParadeGround.new()
 var barracks := ParadeBarracks.new()
+## The ring the tutorial's guide puts around the drill pad it points at.
+var guide := GuideRing.new()
 var squads: Dictionary[UnitType.Value, Squad] = {}
 var _shown := ""
 
@@ -37,6 +39,7 @@ func _init() -> void:
 		var squad := Squad.new(type)
 		squads[type] = squad
 		add_child(squad)
+	add_child(guide)
 	add_child(key_light)
 	add_child(camera)
 	camera.tapped.connect(_on_tapped)

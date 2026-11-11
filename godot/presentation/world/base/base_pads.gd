@@ -38,6 +38,12 @@ func origin_of(name: StringName) -> Vector3:
 	return _pads[name].position
 
 
+## How far the pad of [param name] reaches from its middle, in metres.
+func radius_of(name: StringName) -> float:
+	var size := _pads[name].get_aabb().size
+	return maxf(size.x, size.z) / 2.0
+
+
 ## Marks every pad but those of [param occupied] as empty.
 func mark(occupied: Array[StringName]) -> void:
 	for name: StringName in _pads:

@@ -50,6 +50,9 @@ const GROUND := Color("2b3a4d")
 const PLOT := Color("56657a")
 const CREST := Color("00e5ff")
 const EMPTY_SQUAD := 0.55
+## The guide's ring around the pad or the cell it points at (the interface's
+## cyan, which a test in app/ holds together with this one).
+const GUIDE := Color("00e5ff")
 ## The level written over a building, and its outline.
 const LEVEL := Color("ffffff")
 const LEVEL_OUTLINE := Color("0a0e1a")

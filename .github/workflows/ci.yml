@@ -262,7 +262,8 @@ jobs:
   godot-reference:
     name: Godot Reference
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # It took 10 to 16 minutes on the same tree tonight, and once outlasted 20.
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - name: Install Godot

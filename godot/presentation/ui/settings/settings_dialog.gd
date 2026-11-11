@@ -4,7 +4,7 @@ extends AbyssDialog
 ## switches of the game, and the ways out
 ## (lib/presentation/widgets/common/settings_dialog.dart). It ends with
 ## [constant CANCEL], [constant SAVE_AND_QUIT] or one of the [SettingsLinks]
-## (the history, the replay export; the ranking comes with its lot), null when
+## (the history, the ranking of a game with factions, the replay export), null when
 ## dismissed.
 ##
 ## It saves nothing and navigates nowhere: a language picked is told by
@@ -23,12 +23,13 @@ signal story_requested
 
 var picker: LanguagePicker
 var guide: GuideSettings
-var links := SettingsLinks.new()
+var links: SettingsLinks
 var game_label := Label.new()
 
 
 func _init(actions: GameActions, language: LanguageChoice.Value) -> void:
 	super()
+	links = SettingsLinks.new(not actions.game.factions().is_empty())
 	picker = LanguagePicker.new(language)
 	picker.language_chosen.connect(language_chosen.emit)
 	guide = GuideSettings.new(actions)

@@ -90,6 +90,18 @@ func test_the_history_opens_its_sheet_when_the_settings_end() -> void:
 	assert_eq(_quits, 0)
 
 
+func test_the_ranking_opens_its_sheet_when_the_settings_end() -> void:
+	var rivals := GameFactory.new_game("Nemo", 7, Difficulty.Value.NORMAL, false, 2)
+	_show(rivals)
+	_hud.open_settings()
+	press("Classement")
+	var sheet := current_modal() as FactionRankingSheet
+	assert_not_null(sheet)
+	assert_eq(sheet.tiles.size(), 3)
+	assert_eq(modals().depth(), 1, "the settings are gone")
+	assert_eq(_quits, 0)
+
+
 func test_the_export_opens_its_dialog_when_the_settings_end() -> void:
 	_show()
 	_hud.open_settings()

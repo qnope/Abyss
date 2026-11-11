@@ -6,13 +6,15 @@ extends RefCounted
 ## result opens nothing (cancel, save and quit, a dismissal).
 ##
 ## An instance, not a static function of the dialog, so that a lot adds its
-## page (the ranking) here and a test hands the HUD another one.
+## page here and a test hands the HUD another one.
 
 
 ## The page of [param result], not yet opened, null when there is none.
 func page(result: Variant, game: Game, modals: ModalLayer) -> ModalPanel:
 	if result == SettingsLinks.HISTORY:
 		return HistorySheet.new(game.human_player().history_entries, modals)
+	if result == SettingsLinks.RANKING:
+		return FactionRankingSheet.new(FactionStanding.ranking(game))
 	if result == SettingsLinks.EXPORT:
 		return ReplayExportDialog.new(game)
 	return null

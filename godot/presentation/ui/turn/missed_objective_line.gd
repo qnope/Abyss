@@ -35,8 +35,5 @@ func _init(objective_: TemporaryObjective) -> void:
 
 
 func refresh() -> void:
-	# Called once by the base class, before there is an objective to write.
-	if objective == null:
-		return
 	var title := TemporaryObjectiveTexts.display_title(objective).replace("[", "[lb]")
 	label.text = "[s]%s[/s] %s" % [title, Texts.t(&"objectiveMissed")]

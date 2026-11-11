@@ -139,14 +139,12 @@ func _on_settings_closed(result: Variant) -> void:
 		quit_requested.emit()
 
 
-## The pages of the tabs, one over the other under a solid page, so that the
-## world behind is hidden: a placeholder for the tabs still to come.
+## The pages of the tabs under a solid page that hides the world behind.
 func _fill_page() -> void:
 	page.theme_type_variation = AbyssSurfaceTheme.PAGE
 	page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	for each: GameTab.Value in [GameTab.Value.MAP]:
-		var placeholder := TabPlaceholder.new(GameTab.icon_path(each), "")
-		pages[each] = placeholder
-		page.add_child(placeholder)
+	var map := TabPlaceholder.new(GameTab.icon_path(GameTab.Value.MAP), "")
+	pages[GameTab.Value.MAP] = map
+	page.add_child(map)
 	tech_tab = TechTab.new(actions, _modals)
 	page.add_child(tech_tab)

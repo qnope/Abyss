@@ -19,6 +19,8 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	# The listener of `changed` holds the test: let go of the session it is on.
+	_session = null
 	_folder.remove()
 
 

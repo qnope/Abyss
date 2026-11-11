@@ -24,8 +24,9 @@ to tell, so that the stack closes up. In Flutter's order:
   the raids lost in a row (`n/3`) under either.
 - `LeviathanStatusBar`: the red `ThreatBanner` of the turn the guardians strike,
   the force and the units of the level that defends the Faille. `opened` tells
-  the Faille to open on when a touch is wanted (`tappable`, off until the map
-  lot wires it).
+  the Faille to open on when a touch is wanted (`tappable`: `ThreatBars.add_to` makes
+  it so when it is given an `open_map` callable, `GameHud.map_requested(level)`,
+  which `MapController` answers by showing the Map tab on that level).
 - `VolcanoStatusBar`: the wave due at the end of the turn against the kernel's
   garrison, red when nobody guards the kernel.
 
@@ -53,7 +54,7 @@ for a wave that was lost; a wave repelled stays a line of the summary.
 - The turn's story told on the map (step 7) and the fight in 3D.
 - The guardians' attack report and the factions' attacks: lot 13 (they come
   from `TurnResult.attacks` and `leviathan`).
-- The kernel's garrison panel: lot 12.
+- The kernel's garrison panel: `../kernel/`.
 
 The tests are in `tests/`, on `UiTestCase`, from real fights
 (`ThreatSamples`).

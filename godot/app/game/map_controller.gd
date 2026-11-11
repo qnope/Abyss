@@ -34,6 +34,7 @@ func _init(session_: GameSession, hud: GameHud, world: WorldHost, modals: ModalL
 	tab.level_changed.connect(_draw)
 	session.changed.connect(_on_changed)
 	hud.tab_changed.connect(_on_tab_changed)
+	hud.map_requested.connect(_open)
 	world.map.cell_tapped.connect(router.route)
 	_on_tab_changed(hud.tab)
 
@@ -43,6 +44,7 @@ func close() -> void:
 	tab.level_changed.disconnect(_draw)
 	session.changed.disconnect(_on_changed)
 	_hud.tab_changed.disconnect(_on_tab_changed)
+	_hud.map_requested.disconnect(_open)
 	_world.map.cell_tapped.disconnect(router.route)
 	_hud.content.remove_child(tab)
 	tab.free()
@@ -51,6 +53,12 @@ func close() -> void:
 ## Shows [param level] on the map, if the game holds it.
 func show_level(level: int) -> void:
 	tab.choose(level)
+
+
+## A strip points at [param level]: the Map tab shows it.
+func _open(level: int) -> void:
+	show_level(level)
+	_hud.show_tab(GameTab.Value.MAP)
 
 
 func _on_changed() -> void:

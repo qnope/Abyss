@@ -38,6 +38,7 @@ func test_a_won_assault_takes_the_faille_and_names_it_in_the_report() -> void:
 	assert_eq(on_level(1, Harpoonist), before - report.entry.dead.get(Harpoonist, 0))
 	assert_not_null(find_text("VICTOIRE", report))
 	assert_true(says(report, "est à vous"))
+	assert_false(says(report, "est à eux"))
 	assert_eq(find_type("AssaultDamageCard", report).size(), 0, "no base to damage")
 	assert_eq(saved().levels[1].cell_at(faille_at.x, faille_at.y).transition_base.captured_by, human.id)
 	assert_true(assaults(rival)[0].defending)

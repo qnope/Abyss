@@ -56,6 +56,17 @@ func test_a_label_takes_a_role_by_its_variation() -> void:
 	label.free()
 
 
+func test_the_lore_is_the_body_dimmed_and_slanted() -> void:
+	for pair: Array in [["Lore", "BodyMedium"], ["LoreLarge", "BodyLarge"], ["LoreSmall", "BodySmall"]]:
+		var lore: String = pair[0]
+		var body: String = pair[1]
+		assert_eq(_theme.get_type_variation_base(lore), &"Label", lore)
+		assert_eq(_theme.get_font_size("font_size", lore), _theme.get_font_size("font_size", body), lore)
+		assert_eq(_theme.get_color("font_color", lore), AbyssColors.ON_SURFACE_DIM, lore)
+		var font := _theme.get_font("font", lore) as FontVariation
+		assert_almost_eq(font.variation_transform.y.x, AbyssTextTheme.LEAN, 1e-6, lore)
+
+
 func _check(
 	role: StringName, weight: AbyssFonts.Weight, size: int, color: Color, spacing := 0
 ) -> void:

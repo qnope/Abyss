@@ -41,6 +41,9 @@ func test_a_bottom_sheet_rounds_its_top() -> void:
 	assert_eq(sheet.corner_radius_top_right, 24)
 	assert_eq(sheet.corner_radius_bottom_right, 0)
 	assert_eq(AbyssCardTheme.DRAG_HANDLE, Color(CYAN, 0.5))
+	assert_eq(AbyssCardTheme.SHEET_HANDLE, Color(AbyssColors.ON_SURFACE, 0.3))
+	assert_eq(AbyssCardTheme.HANDLE_SIZE, Vector2i(40, 4))
+	assert_eq(AbyssCardTheme.HANDLE_PADDING, Vector2i(8, 4))
 
 
 func test_an_app_bar_is_a_dark_veil_with_a_spaced_title() -> void:

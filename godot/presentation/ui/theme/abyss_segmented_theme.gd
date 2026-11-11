@@ -4,7 +4,7 @@ class_name AbyssSegmentedTheme
 ## lib/presentation/theme/abyss_segmented_theme.dart: a dark translucent
 ## tray (the SegmentedTray panel) of toggle buttons sharing a ButtonGroup
 ## (the Segment button), the pressed one lit in cyan, with an optional
-## detail below its name (the SegmentDetail label).
+## detail below its name (the SegmentName and SegmentDetail labels).
 ##
 ## The tray's height is the node's custom_minimum_size, which a theme
 ## cannot set. A segment's detail turns ON_SELECTED with it: the scene
@@ -54,6 +54,7 @@ static func apply(theme: Theme) -> void:
 	const SEMI_BOLD := AbyssFonts.Weight.SEMI_BOLD
 	var detail := AbyssTextStyle.new(11, SEMI_BOLD, DETAIL_COLOR)
 	AbyssTextTheme.add_label(theme, &"SegmentDetail", detail)
+	AbyssTextTheme.add_label(theme, &"SegmentName", AbyssTextStyle.new(13, BOLD, LABEL_COLOR))
 
 
 ## A segment's box, filled with [param fill]: its name 4 pixels in from

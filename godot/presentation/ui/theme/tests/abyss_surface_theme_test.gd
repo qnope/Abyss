@@ -25,6 +25,13 @@ func test_a_bare_panel_only_lays_out_its_content() -> void:
 	assert_true(_theme.get_stylebox("panel", "BarePanel") is StyleBoxEmpty)
 
 
+func test_a_page_is_abyss_black_all_over() -> void:
+	assert_eq(_theme.get_type_variation_base("PagePanel"), &"PanelContainer")
+	var page := _theme.get_stylebox("panel", "PagePanel") as StyleBoxFlat
+	assert_eq(page.bg_color, AbyssColors.ABYSS_BLACK)
+	assert_eq(page.content_margin_left, 0.0, "it pads nothing")
+
+
 func test_a_tap_surface_draws_only_its_feedback() -> void:
 	assert_eq(_theme.get_type_variation_base("TapSurface"), &"Button")
 	for state: String in ["normal", "disabled", "focus"]:

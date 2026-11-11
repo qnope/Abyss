@@ -33,6 +33,17 @@ func test_keeps_its_values() -> void:
 	assert_eq(AbyssTextStyle.new(12, AbyssFonts.Weight.BOLD, Color.RED).letter_spacing, 0.0)
 
 
+func test_leans_a_font_as_flutters_italic() -> void:
+	var style := AbyssTextStyle.new(14, AbyssFonts.Weight.DEFAULT, Color.RED)
+	assert_eq(style.slant, 0.0)
+	assert_eq(style.font(), ThemeDB.fallback_font, "upright by default")
+	style.slant = 0.2
+	var leaning := style.font() as FontVariation
+	assert_eq(leaning.base_font, ThemeDB.fallback_font)
+	assert_eq(leaning.variation_transform.y, Vector2(0.2, 1.0))
+	assert_eq(leaning.variation_transform.x, Vector2(1.0, 0.0))
+
+
 func test_sets_its_font_size_and_colour_on_a_theme_type() -> void:
 	var theme := Theme.new()
 	AbyssTextStyle.new(18, AbyssFonts.Weight.BOLD, Color.RED).apply_to(theme, "Label")

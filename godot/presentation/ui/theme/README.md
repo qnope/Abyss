@@ -14,7 +14,10 @@ role or widget:
 - `Label`: `DisplayLarge` … `LabelSmall` (Flutter's `TextTheme` roles),
   `SectionLabel`, `PillLabel`, `DialogTitle`, `AppBarTitle`, `HeroTitle`,
   `HeroSubtitle`, `MenuButtonSubtitle`, `MenuPrimarySubtitle`, `Footnote`,
-  `BadgeLabel`, `SegmentDetail`. A plain `Label` reads as `BodyMedium`.
+  `BadgeLabel`, `SegmentName`, `SegmentDetail`, and `Lore`, `LoreLarge`,
+  `LoreSmall` (the Body roles dimmed and leaned: `AbyssTextStyle.slant`, since
+  no font of the game has an italic face). A plain `Label` reads as
+  `BodyMedium`.
 - `Button`: plain is the filled `ElevatedButton`; `OutlinedButton`,
   `TextButton`, `OverMapButton`, `MenuPrimaryButton`, `MenuOutlinedButton`,
   `Segment` (a toggle button in a `ButtonGroup`, inside a `SegmentedTray`),
@@ -30,6 +33,8 @@ role or widget:
   `PanelContainer` `BarePanel` (draws nothing, only lays out), `Button`
   `TapSurface` (a touch area lit when pointed at or pressed), the dividers
   (`HSeparator`, `VSeparator`) and the scrollbars, as they are.
+- `AbyssGuideTheme.halo(pulse, radius, inset)`: the style box of the guide's
+  halo at a point of its pulse; `GuideHalo` animates it.
 - `CheckButton` `Switch` (`AbyssSwitchTheme`): the switch, whose four icons
   are drawn in code.
 - Chrome (`AbyssChromeTheme`): `PanelContainer` `SnackBarPanel` with the

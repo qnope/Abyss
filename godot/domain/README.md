@@ -196,7 +196,7 @@ Files and tests of the modules above that wait for another module:
 | `ExpeditionMoves.assault` (`script/strategies/expedition_moves.dart`) | nothing now that `AttackTransitionBaseAction` is ported: with the next lot of `script` |
 | `ConquestMoves` but its constants (`advanceConquest`), `conquest_strategy.dart`, `tutorial_strategy.dart`, `contest_moves.dart`, `siege_moves.dart`, `leviathan_guard_moves.dart`, their tests and those that play them (the last test of `attack_defence_test.dart`, `hunt_under_raid_test.dart`, `leviathan_guard_test.dart`, `contest_moves_test.dart`, `siege_moves_test.dart`, `tutorial_strategy_test.dart`) | `ExpeditionMoves.assault` above, `faction` (`FactionKernelWar`, `FactionPostWar`, `KernelSiege`), `leviathan` |
 | The second test of `script_player_helpers_test.dart` (`ScriptMilestones`) | the runners of `script` |
-| `faction/faction_war.dart`, `faction_base_war.dart`, `faction_post_war.dart`, `faction_kernel_war.dart`, `faction_kernel_guard.dart`, `faction_base_targets.dart`, `post_defence.dart`, `undefended_posts.dart`, `faction_brain.dart`, `faction_turns.dart`, their tests; the tests of `faction_scouting_test.dart` but its first, `kernel_siege_rules_test.dart` but its first, `kernel_siege_test.dart` | the next steps of this lot |
+| `faction/faction_war.dart`, `faction_base_war.dart`, `faction_post_war.dart`, `faction_kernel_war.dart`, `faction_kernel_guard.dart`, `faction_base_targets.dart`, `faction_brain.dart`, `faction_turns.dart`, their tests; the tests of `faction_scouting_test.dart` but its first, `kernel_siege_rules_test.dart` but its first, `kernel_siege_test.dart` | the next steps of this lot |
 | `faction_research_play_test.dart` (a whole game through `playFactionGame`) | `turn` (`EndTurnAction`) |
 | `script/strategies_test.dart` (whole games through `ScriptRunner` and `BatchRunner`) | `turn` (`EndTurnAction`), then the runners of `script` |
 | `script/action_spec.dart` (a typedef: an `ActionSpec` is a `Callable` taking a `DartRandom` and giving an `Action`) | `script/action_codec.dart`, its only reader |
@@ -212,7 +212,7 @@ Files and tests of the modules above that wait for another module:
 | `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |
 | `leviathan/leviathan_turn_test.dart` (the guardians through `EndTurnAction` and `TurnResult`) | `turn` |
-| `objective/guide/guide_alerts.dart` | `faction` (`UndefendedPosts`, which reads `action`'s `PostTakeover`) |
+| `objective/guide/guide_alerts.dart` | nothing now that `UndefendedPosts` is ported: with a later step of this lot |
 | `objective/guide/guide_campaign.dart`, `guide_campaign_alerts_test.dart`, `guide_campaign_assault_test.dart`, `guide_campaign_descent_test.dart`, `guide_campaign_steps_test.dart` | `GuideAlerts` above |
 | `objective/guide/guide_advisor.dart`, `guide_advisor_test.dart`, `guide_advisor_context_test.dart`, `guide_advisor_raid_test.dart` (the guide's messages, targets, raid and map are held by tests of their own); the last test of `guide_leviathan_test.dart` (the tutorial off: the others read `GuideLeviathan` itself) | `GuideCampaign` above |
 | `choiceEvents` of `event_test_helper.dart` (no test of `domain` reads it; `producingPlayer` is `EventSamples.producing_player`) | the tests of the presentation that use it |

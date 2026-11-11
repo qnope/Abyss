@@ -17,11 +17,15 @@ static func node_path(branch: TechBranch.Value, level: int, option: Variant = nu
 
 ## "military_2a", "explorer_5": the name of a node's file.
 static func node_key(branch: TechBranch.Value, level: int, option: Variant = null) -> String:
-	var chosen := ""
-	if option != null:
-		var taken: int = option
-		chosen = DartEnum.name_of(TechOption.Value, taken)
-	return "%s_%d%s" % [DartEnum.name_of(TechBranch.Value, branch), level, chosen]
+	return "%s_%s" % [DartEnum.name_of(TechBranch.Value, branch), node_id(level, option)]
+
+
+## "2a", "5": a node in its branch, as TechNodeTexts.NODES lists them.
+static func node_id(level: int, option: Variant = null) -> String:
+	if option == null:
+		return str(level)
+	var taken: int = option
+	return str(level) + DartEnum.name_of(TechOption.Value, taken)
 
 
 ## The emblem of [param branch], [param icon_size] points across, in

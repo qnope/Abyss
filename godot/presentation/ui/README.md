@@ -23,6 +23,10 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   `TerrainTexts`, `MonsterFamilyTexts`, `DifficultyTexts`,
   `LanguageChoiceTexts`, `ActionFailureTexts`, `RampartTexts`,
   `BuildingDegradationTexts`, `TransitionBaseTexts`, `MonsterLairTexts`, `MonsterDifficultyTexts`), each tested for a key in
+
+  `BuildingDegradationTexts`, `TransitionBaseTexts`, `MonsterLairTexts`, `RandomEventTexts`,
+  `EventStateTexts` (the countdowns), `HistoryCategoryTexts`, `HistoryEntryTexts`,
+  `TransitionBaseNameTexts`, `AttackerNameTexts`), each tested for a key in
   all three languages. A key is built from the enum value's Dart name
   (`TextKeys`).
 - `menu/`, `new_game/`, `save/`, `opening/`, `settings/`, `game/`: the screens of

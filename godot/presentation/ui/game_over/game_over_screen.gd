@@ -18,6 +18,8 @@ signal action_chosen(id: StringName)
 signal menu_requested
 ## The player pressed [constant GameOverAction.CONTINUE].
 signal continue_requested
+## The player pressed [constant GameOverAction.EXPORT].
+signal export_requested
 
 const SIDE := 32
 const TOP := 24
@@ -102,6 +104,8 @@ func _on_action_chosen(id: StringName) -> void:
 		menu_requested.emit()
 	elif id == GameOverAction.CONTINUE:
 		continue_requested.emit()
+	elif id == GameOverAction.EXPORT:
+		export_requested.emit()
 
 
 ## The name of the building that stands for the game's end in the emblem.

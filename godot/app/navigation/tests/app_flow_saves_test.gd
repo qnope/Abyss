@@ -25,6 +25,19 @@ func test_resumes_a_lost_game_on_its_defeat_screen() -> void:
 	assert_true(_flow.current is MainMenuScreen)
 
 
+func test_the_defeat_screen_offers_the_replay_export_of_the_lost_game() -> void:
+	var lost := SavedGameSamples.game("Cousteau", 8, GameStatus.Value.DEFEAT)
+	_repository.save(lost)
+	_flow.show_load_game()
+	press(_card_of("Cousteau").tap_button)
+	press("Exporter la partie")
+	var dialog := current_modal() as ReplayExportDialog
+	assert_not_null(dialog)
+	assert_eq(dialog.game.human_player().name, "Cousteau")
+	press("Fermer")
+	assert_true(_flow.current is DefeatScreen, "still the way out")
+
+
 func test_deletes_a_game_once_confirmed_and_shows_the_others() -> void:
 	_save("Alice")
 	_save("Bob")

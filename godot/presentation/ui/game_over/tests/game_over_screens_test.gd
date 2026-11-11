@@ -39,15 +39,18 @@ func test_the_defeat_shows_the_raid_statistics() -> void:
 	assert_not_null(find_text("Tours joués : 27"))
 
 
-func test_the_defeat_only_offers_to_return_to_the_menu() -> void:
+func test_the_defeat_offers_the_menu_and_the_replay_export() -> void:
 	var screen := _defeat()
 	assert_null(find_text("Continuer en mode libre"))
-	assert_eq(screen.buttons.keys(), [GameOverAction.MENU])
-	var menus: Array[bool] = []
-	screen.menu_requested.connect(menus.append.bind(true))
+	assert_eq(screen.buttons.keys(), [GameOverAction.MENU, GameOverAction.EXPORT])
+	assert_eq(screen.buttons[GameOverAction.EXPORT].theme_type_variation, &"OutlinedButton")
+	var asked: Array[StringName] = []
+	screen.menu_requested.connect(asked.append.bind(&"menu"))
+	screen.export_requested.connect(asked.append.bind(&"export"))
 	press("Retour au menu")
-	assert_eq(_told, [GameOverAction.MENU] as Array[StringName])
-	assert_eq(menus, [true] as Array[bool])
+	press("Exporter la partie")
+	assert_eq(_told, [GameOverAction.MENU, GameOverAction.EXPORT] as Array[StringName])
+	assert_eq(asked, [&"menu", &"export"] as Array[StringName])
 
 
 func test_the_defeat_explains_the_fall_when_it_has_an_analysis() -> void:

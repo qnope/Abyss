@@ -68,6 +68,12 @@ func test_a_progress_bar_fills_a_bright_track_with_cyan() -> void:
 	assert_eq(_box("fill", "ProgressBar").bg_color, CYAN)
 
 
+func test_the_noise_gauge_fills_a_trench_track_with_warning() -> void:
+	assert_eq(_theme.get_type_variation_base(AbyssInputTheme.NOISE_GAUGE), &"ProgressBar")
+	assert_eq(_box("background", AbyssInputTheme.NOISE_GAUGE).bg_color, AbyssColors.TRENCH)
+	assert_eq(_box("fill", AbyssInputTheme.NOISE_GAUGE).bg_color, AbyssColors.WARNING)
+
+
 func test_a_slider_lights_its_track_up_to_a_cyan_thumb() -> void:
 	assert_eq(_box("slider", "HSlider").bg_color, AbyssColors.SURFACE_BRIGHT)
 	assert_eq(_box("grabber_area", "HSlider").bg_color, CYAN)

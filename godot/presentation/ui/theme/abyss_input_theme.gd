@@ -15,6 +15,8 @@ const PADDING := Vector2i(16, 14)
 const TRACK_HALF_HEIGHT := 2
 ## Diameter of a slider's thumb.
 const THUMB := 20
+## The progress bar of the raid's noise gauge: warning on the trench.
+const NOISE_GAUGE := &"NoiseGauge"
 
 
 ## Adds the inputs to [param theme].
@@ -29,6 +31,9 @@ static func apply(theme: Theme) -> void:
 	_add_field(theme, &"ErrorLineEdit", AbyssColors.ERROR, AbyssColors.ERROR)
 	theme.set_stylebox(&"background", &"ProgressBar", track(AbyssColors.SURFACE_BRIGHT))
 	theme.set_stylebox(&"fill", &"ProgressBar", track(CYAN))
+	theme.set_type_variation(NOISE_GAUGE, &"ProgressBar")
+	theme.set_stylebox(&"background", NOISE_GAUGE, track(AbyssColors.TRENCH))
+	theme.set_stylebox(&"fill", NOISE_GAUGE, track(AbyssColors.WARNING))
 	theme.set_stylebox(&"slider", &"HSlider", track(AbyssColors.SURFACE_BRIGHT))
 	theme.set_stylebox(&"grabber_area", &"HSlider", track(CYAN))
 	theme.set_stylebox(&"grabber_area_highlight", &"HSlider", track(CYAN))

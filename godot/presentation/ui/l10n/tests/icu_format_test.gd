@@ -62,6 +62,11 @@ func test_an_argument_that_is_missing_is_an_error_and_writes_nothing() -> void:
 	assert_eq(IcuFormat.format(COUNT, {}, "en"), "none")
 
 
+func test_a_plural_that_matches_no_branch_writes_nothing() -> void:
+	# The tool refuses a message without `other`; this is only the fallback.
+	assert_eq(IcuFormat.format("[{n, plural, one{{n} cat}}]", {"n": 5}, "en"), "[]")
+
+
 func test_an_unclosed_brace_is_an_error_and_keeps_the_rest_as_text() -> void:
 	expect_error("unclosed")
 	assert_eq(IcuFormat.format("a {b", {"b": 1}, "en"), "a {b")

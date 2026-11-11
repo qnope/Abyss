@@ -1,0 +1,242 @@
+{
+  "summary": {
+    "games": 2,
+    "defeats": 1,
+    "victories": 0,
+    "factionVictories": 0,
+    "survivalRate": 0.5,
+    "averageTurns": 43.0,
+    "averageRaidsLost": 3.5,
+    "averageRaidsRepelled": 7.5,
+    "averageNoise": 690.5,
+    "earliestDefeat": 26
+  },
+  "runs": [
+    {
+      "script": "conquest",
+      "seed": 5,
+      "status": "defeat",
+      "turnsPlayed": 26,
+      "raidsRepelled": 0,
+      "raidsLost": 3,
+      "monstersDefeated": 0,
+      "totalNoise": 171,
+      "failedActions": 0,
+      "buildings": {
+        "headquarters": 4,
+        "algaeFarm": 3,
+        "coralMine": 3,
+        "oreExtractor": 3,
+        "solarPanel": 3,
+        "laboratory": 1,
+        "barracks": 2,
+        "coralCitadel": 0,
+        "descentModule": 0,
+        "pressureCapsule": 0,
+        "volcanicKernel": 0
+      },
+      "baseUnits": {
+        "scout": 0,
+        "harpoonist": 8,
+        "guardian": 0,
+        "domeBreaker": 0,
+        "abyssAdmiral": 0,
+        "saboteur": 0
+      },
+      "resources": {
+        "algae": 1112,
+        "coral": 327,
+        "ore": 547,
+        "energy": 229,
+        "pearl": 8
+      },
+      "failleCaptured": null,
+      "chemineeCaptured": null,
+      "kernelCaptured": null,
+      "leviathanStruck": null,
+      "leviathanHeld": null,
+      "raids": [
+        {
+          "turn": 11,
+          "monsters": 30,
+          "level": 1,
+          "victory": false
+        },
+        {
+          "turn": 21,
+          "monsters": 10,
+          "level": 2,
+          "victory": false
+        },
+        {
+          "turn": 26,
+          "monsters": 10,
+          "level": 2,
+          "victory": false
+        }
+      ],
+      "waves": []
+    },
+    {
+      "script": "conquest",
+      "seed": 6,
+      "status": "playing",
+      "turnsPlayed": 60,
+      "raidsRepelled": 15,
+      "raidsLost": 4,
+      "monstersDefeated": 253,
+      "totalNoise": 1210,
+      "failedActions": 0,
+      "buildings": {
+        "headquarters": 10,
+        "algaeFarm": 5,
+        "coralMine": 5,
+        "oreExtractor": 5,
+        "solarPanel": 5,
+        "laboratory": 5,
+        "barracks": 5,
+        "coralCitadel": 4,
+        "descentModule": 1,
+        "pressureCapsule": 0,
+        "volcanicKernel": 0
+      },
+      "baseUnits": {
+        "scout": 4,
+        "harpoonist": 75,
+        "guardian": 13,
+        "domeBreaker": 0,
+        "abyssAdmiral": 0,
+        "saboteur": 0
+      },
+      "resources": {
+        "algae": 5000,
+        "coral": 5000,
+        "ore": 5000,
+        "energy": 756,
+        "pearl": 84
+      },
+      "failleCaptured": 40,
+      "chemineeCaptured": null,
+      "kernelCaptured": null,
+      "leviathanStruck": 44,
+      "leviathanHeld": true,
+      "raids": [
+        {
+          "turn": 13,
+          "monsters": 11,
+          "level": 1,
+          "victory": false
+        },
+        {
+          "turn": 20,
+          "monsters": 11,
+          "level": 2,
+          "victory": true
+        },
+        {
+          "turn": 22,
+          "monsters": 17,
+          "level": 2,
+          "victory": false
+        },
+        {
+          "turn": 24,
+          "monsters": 13,
+          "level": 2,
+          "victory": false
+        },
+        {
+          "turn": 28,
+          "monsters": 38,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 30,
+          "monsters": 11,
+          "level": 3,
+          "victory": false
+        },
+        {
+          "turn": 33,
+          "monsters": 57,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 35,
+          "monsters": 66,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 37,
+          "monsters": 17,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 39,
+          "monsters": 21,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 42,
+          "monsters": 22,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 44,
+          "monsters": 109,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 47,
+          "monsters": 114,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 49,
+          "monsters": 28,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 51,
+          "monsters": 56,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 53,
+          "monsters": 61,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 55,
+          "monsters": 39,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 57,
+          "monsters": 185,
+          "level": 3,
+          "victory": true
+        },
+        {
+          "turn": 60,
+          "monsters": 197,
+          "level": 3,
+          "victory": true
+        }
+      ],
+      "waves": []
+    }
+  ]
+}

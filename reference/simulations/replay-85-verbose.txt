@@ -1,0 +1,132 @@
+seed 1: playing au tour 30, raids 3 repoussés / 1 perdus, bruit 268
+
+Journal de la partie seed 1 :
+T1 ✓ Ameliorer BuildingType.headquarters
+T2 ✓ Ameliorer BuildingType.algaeFarm
+T3 ✓ Ameliorer BuildingType.coralMine
+T4 ✓ Ameliorer BuildingType.solarPanel
+T5 ✓ Ameliorer BuildingType.oreExtractor
+T6 ✓ Ameliorer BuildingType.headquarters
+T8 ✓ Ameliorer BuildingType.coralMine
+T10 ✓ Ameliorer BuildingType.solarPanel
+T11 ✓ Ameliorer BuildingType.oreExtractor
+T12 ✓ Ameliorer BuildingType.headquarters
+T13 ✓ Ameliorer BuildingType.barracks
+T14 ✓ Ameliorer BuildingType.laboratory
+T15 ✓ Recruter 23 UnitType.scout
+T15 ✓ Recruter 20 UnitType.harpoonist
+T16 ✓ Ameliorer BuildingType.algaeFarm
+T17 ✓ Ameliorer BuildingType.laboratory
+T17 ✓ Debloquer branche TechBranch.military
+T17 ✓ Rechercher tech TechBranch.military
+T18 ✓ Ameliorer BuildingType.headquarters
+T18 ✓ Rechercher tech TechBranch.military
+T19 ✓ Ameliorer BuildingType.algaeFarm
+T20 ✓ Ameliorer BuildingType.coralMine
+T21 ✓ Ameliorer BuildingType.solarPanel
+T22 ✓ Ameliorer BuildingType.headquarters
+T22 ✓ Recruter 10 UnitType.harpoonist
+T23 ✓ Explorer (8, 6)
+T23 ✓ Explorer (14, 6)
+T23 ✓ Debloquer branche TechBranch.explorer
+T23 ✓ Rechercher tech TechBranch.explorer
+T23 ✓ Explorer (14, 12)
+T23 ✓ Explorer (8, 12)
+T24 ✓ Collecter (13, 6)
+T24 ✓ Collecter (14, 5)
+T24 ✗ Collecter (9, 6) (nothingToCollect)
+T24 ✗ Collecter (8, 5) (nothingToCollect)
+T24 ✗ Collecter (7, 11) (nothingToCollect)
+T24 ✗ Collecter (7, 12) (nothingToCollect)
+T24 ✗ Collecter (15, 12) (nothingToCollect)
+T24 ✗ Collecter (14, 11) (nothingToCollect)
+T24 ✗ Collecter (14, 12) (nothingToCollect)
+T24 ✗ Collecter (9, 12) (nothingToCollect)
+T24 ✗ Collecter (8, 12) (nothingToCollect)
+T24 ✓ Collecter (7, 5)
+T24 ✓ Ameliorer BuildingType.headquarters
+T25 ✗ Collecter (9, 6) (nothingToCollect)
+T25 ✗ Collecter (8, 5) (nothingToCollect)
+T25 ✗ Collecter (7, 11) (nothingToCollect)
+T25 ✗ Collecter (7, 12) (nothingToCollect)
+T25 ✗ Collecter (15, 12) (nothingToCollect)
+T25 ✗ Collecter (14, 11) (nothingToCollect)
+T25 ✗ Collecter (14, 12) (nothingToCollect)
+T25 ✗ Collecter (9, 12) (nothingToCollect)
+T25 ✗ Collecter (8, 12) (nothingToCollect)
+T25 ✓ Ameliorer BuildingType.algaeFarm
+T25 ✓ Ameliorer BuildingType.coralMine
+T26 ✗ Collecter (9, 6) (nothingToCollect)
+T26 ✗ Collecter (8, 5) (nothingToCollect)
+T26 ✗ Collecter (7, 11) (nothingToCollect)
+T26 ✗ Collecter (7, 12) (nothingToCollect)
+T26 ✗ Collecter (15, 12) (nothingToCollect)
+T26 ✗ Collecter (14, 11) (nothingToCollect)
+T26 ✗ Collecter (14, 12) (nothingToCollect)
+T26 ✗ Collecter (9, 12) (nothingToCollect)
+T26 ✗ Collecter (8, 12) (nothingToCollect)
+T26 ✓ Ameliorer BuildingType.solarPanel
+T26 ✗ Rechercher tech TechBranch.explorer (notEnoughResources)
+T26 ✓ Explorer (12, 14)
+T26 ✓ Explorer (14, 9)
+T26 ✓ Explorer (16, 4)
+T26 ✓ Explorer (10, 4)
+T26 ✓ Explorer (6, 4)
+T26 ✓ Explorer (6, 8)
+T26 ✓ Explorer (6, 10)
+T26 ✓ Explorer (6, 14)
+T26 ✓ Explorer (16, 14)
+T27 ✗ Collecter (9, 6) (nothingToCollect)
+T27 ✗ Collecter (8, 5) (nothingToCollect)
+T27 ✗ Collecter (7, 11) (nothingToCollect)
+T27 ✗ Collecter (7, 12) (nothingToCollect)
+T27 ✗ Collecter (15, 12) (nothingToCollect)
+T27 ✗ Collecter (14, 11) (nothingToCollect)
+T27 ✗ Collecter (14, 12) (nothingToCollect)
+T27 ✗ Collecter (9, 12) (nothingToCollect)
+T27 ✗ Collecter (8, 12) (nothingToCollect)
+T27 ✗ Rechercher tech TechBranch.explorer (notEnoughResources)
+T27 ✗ Recruter 41 UnitType.harpoonist (notEnoughResources)
+T28 ✗ Collecter (9, 6) (nothingToCollect)
+T28 ✗ Collecter (8, 5) (nothingToCollect)
+T28 ✗ Collecter (7, 11) (nothingToCollect)
+T28 ✗ Collecter (7, 12) (nothingToCollect)
+T28 ✗ Collecter (15, 12) (nothingToCollect)
+T28 ✗ Collecter (14, 11) (nothingToCollect)
+T28 ✗ Collecter (14, 12) (nothingToCollect)
+T28 ✗ Collecter (9, 12) (nothingToCollect)
+T28 ✗ Collecter (8, 12) (nothingToCollect)
+T28 ✓ Rechercher tech TechBranch.explorer
+T28 ✗ Recruter 41 UnitType.harpoonist (notEnoughResources)
+T28 ✓ Ameliorer BuildingType.oreExtractor
+T29 ✗ Collecter (9, 6) (nothingToCollect)
+T29 ✗ Collecter (8, 5) (nothingToCollect)
+T29 ✗ Collecter (7, 11) (nothingToCollect)
+T29 ✗ Collecter (7, 12) (nothingToCollect)
+T29 ✗ Collecter (15, 12) (nothingToCollect)
+T29 ✗ Collecter (14, 11) (nothingToCollect)
+T29 ✗ Collecter (14, 12) (nothingToCollect)
+T29 ✗ Collecter (9, 12) (nothingToCollect)
+T29 ✗ Collecter (8, 12) (nothingToCollect)
+T29 ✓ Recruter 41 UnitType.harpoonist
+T29 ✓ Ameliorer BuildingType.barracks
+T30 ✗ Collecter (9, 6) (nothingToCollect)
+T30 ✗ Collecter (8, 5) (nothingToCollect)
+T30 ✗ Collecter (7, 11) (nothingToCollect)
+T30 ✗ Collecter (7, 12) (nothingToCollect)
+T30 ✗ Collecter (15, 12) (nothingToCollect)
+T30 ✗ Collecter (14, 11) (nothingToCollect)
+T30 ✗ Collecter (14, 12) (nothingToCollect)
+T30 ✗ Collecter (9, 12) (nothingToCollect)
+T30 ✗ Collecter (8, 12) (nothingToCollect)
+T30 ✓ Ameliorer BuildingType.barracks
+T30 ✓ Recruter 2 UnitType.abyssAdmiral
+T30 ✓ Assaut base (16, 2)
+
+Stratégie : replay-Test-tour-85 (même carte, mêmes dés), 1 parties
+Survie : 100 % (0 défaites, 0 victoires)
+Tours joués en moyenne : 30.0
+Raids repoussés / perdus en moyenne : 3.0 / 1.0
+Bruit total moyen : 268.0
+Première défaite : tour -
+Faille prise : 1/1 parties, tour 30.0 en moyenne

@@ -1,0 +1,11 @@
+# What `dart run bin/simulate.dart <options>` prints for each case, kept in
+# <name>.txt, and what tool/godot_simulate.sh must print the same
+# (reference/simulations/README.md). One case per line: `name: options`.
+balanced: --strategy balanced --games 3 --turns 30
+conquest-hard-json: --json --strategy conquest --games 2 --turns 60 --seed 5 --difficulty hard
+plan85-late-easy-verbose: --verbose --strategy plan85-late --games 2 --turns 50 --difficulty easy
+plan85-victory: --strategy plan85 --games 1 --turns 90
+plan84-variant-json: --replay scenarios/replays/victoire-tour-84.json --new-map --new-dice --army 1.2 --jitter 2 --stretch 1.1 --patience 3 --defends --games 2 --turns 40 --json
+rush-caserne-verbose: --scenario scenarios/rush-caserne.json --verbose --games 2 --seed 9
+replay-85-verbose: --replay scenarios/replays/victoire-tour-85.json --games 1 --turns 30 --verbose
+no-game: --strategy economy --games 0

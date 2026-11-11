@@ -1,0 +1,10 @@
+Stratégie : plan85, 1 parties
+Survie : 0 % (1 défaites, 0 victoires)
+Tours joués en moyenne : 53.0
+Raids repoussés / perdus en moyenne : 8.0 / 4.0
+Bruit total moyen : 920.0
+Première défaite : tour 53
+Faille prise : 1/1 parties, tour 30.0 en moyenne
+Cheminée prise : 1/1 parties, tour 39.0 en moyenne
+Noyau pris : 1/1 parties, tour 50.0 en moyenne
+Léviathan : 1/1 parties, tour 34.0 en moyenne

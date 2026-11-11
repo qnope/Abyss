@@ -1,0 +1,3560 @@
+{
+"fr": {
+"newGameNameTooShort": [
+  {"args": {"min": 7}, "text": "Le nom doit contenir au moins 7 caractères"}
+],
+"newGameFactionsCount": [
+  {"args": {"count": 0}, "text": "0 faction court avec toi vers le Volcan"},
+  {"args": {"count": 1}, "text": "1 faction court avec toi vers le Volcan"},
+  {"args": {"count": 2}, "text": "2 factions courent avec toi vers le Volcan"},
+  {"args": {"count": 5}, "text": "5 factions courent avec toi vers le Volcan"},
+  {"args": {"count": 21}, "text": "21 factions courent avec toi vers le Volcan"},
+  {"args": {"count": 1000000}, "text": "1000000 factions courent avec toi vers le Volcan"}
+],
+"buildingHeadquartersDescription": [
+  {"args": {"coral": 7, "ore": 7}, "text": "Centre de commandement de votre base sous-marine. Son niveau détermine les capacités de votre colonie. Une fois bâti, il fournit 7 corail et 7 minerai par tour."}
+],
+"unitScoutCount": [
+  {"args": {"count": 0}, "text": "0 éclaireur"},
+  {"args": {"count": 1}, "text": "1 éclaireur"},
+  {"args": {"count": 2}, "text": "2 éclaireurs"},
+  {"args": {"count": 5}, "text": "5 éclaireurs"},
+  {"args": {"count": 21}, "text": "21 éclaireurs"},
+  {"args": {"count": 1000000}, "text": "1000000 éclaireurs"}
+],
+"unitHarpoonistCount": [
+  {"args": {"count": 0}, "text": "0 harponneur"},
+  {"args": {"count": 1}, "text": "1 harponneur"},
+  {"args": {"count": 2}, "text": "2 harponneurs"},
+  {"args": {"count": 5}, "text": "5 harponneurs"},
+  {"args": {"count": 21}, "text": "21 harponneurs"},
+  {"args": {"count": 1000000}, "text": "1000000 harponneurs"}
+],
+"unitGuardianCount": [
+  {"args": {"count": 0}, "text": "0 gardien"},
+  {"args": {"count": 1}, "text": "1 gardien"},
+  {"args": {"count": 2}, "text": "2 gardiens"},
+  {"args": {"count": 5}, "text": "5 gardiens"},
+  {"args": {"count": 21}, "text": "21 gardiens"},
+  {"args": {"count": 1000000}, "text": "1000000 gardiens"}
+],
+"unitDomeBreakerCount": [
+  {"args": {"count": 0}, "text": "0 briseur"},
+  {"args": {"count": 1}, "text": "1 briseur"},
+  {"args": {"count": 2}, "text": "2 briseurs"},
+  {"args": {"count": 5}, "text": "5 briseurs"},
+  {"args": {"count": 21}, "text": "21 briseurs"},
+  {"args": {"count": 1000000}, "text": "1000000 briseurs"}
+],
+"unitAbyssAdmiralCount": [
+  {"args": {"count": 0}, "text": "0 amiral des abysses"},
+  {"args": {"count": 1}, "text": "1 amiral des abysses"},
+  {"args": {"count": 2}, "text": "2 amiraux des abysses"},
+  {"args": {"count": 5}, "text": "5 amiraux des abysses"},
+  {"args": {"count": 21}, "text": "21 amiraux des abysses"},
+  {"args": {"count": 1000000}, "text": "1000000 amiraux des abysses"}
+],
+"unitSaboteurCount": [
+  {"args": {"count": 0}, "text": "0 saboteur"},
+  {"args": {"count": 1}, "text": "1 saboteur"},
+  {"args": {"count": 2}, "text": "2 saboteurs"},
+  {"args": {"count": 5}, "text": "5 saboteurs"},
+  {"args": {"count": 21}, "text": "21 saboteurs"},
+  {"args": {"count": 1000000}, "text": "1000000 saboteurs"}
+],
+"monsterFamilyGenericCount": [
+  {"args": {"count": 0}, "text": "0 monstre"},
+  {"args": {"count": 1}, "text": "1 monstre"},
+  {"args": {"count": 2}, "text": "2 monstres"},
+  {"args": {"count": 5}, "text": "5 monstres"},
+  {"args": {"count": 21}, "text": "21 monstres"},
+  {"args": {"count": 1000000}, "text": "1000000 monstres"}
+],
+"monsterFamilySwarmCount": [
+  {"args": {"count": 0}, "text": "0 Dents-de-verre"},
+  {"args": {"count": 1}, "text": "1 Dents-de-verre"},
+  {"args": {"count": 2}, "text": "2 Dents-de-verre"},
+  {"args": {"count": 5}, "text": "5 Dents-de-verre"},
+  {"args": {"count": 21}, "text": "21 Dents-de-verre"},
+  {"args": {"count": 1000000}, "text": "1000000 Dents-de-verre"}
+],
+"monsterFamilyArmouredCount": [
+  {"args": {"count": 0}, "text": "0 Isopode cuirassé"},
+  {"args": {"count": 1}, "text": "1 Isopode cuirassé"},
+  {"args": {"count": 2}, "text": "2 Isopodes cuirassés"},
+  {"args": {"count": 5}, "text": "5 Isopodes cuirassés"},
+  {"args": {"count": 21}, "text": "21 Isopodes cuirassés"},
+  {"args": {"count": 1000000}, "text": "1000000 Isopodes cuirassés"}
+],
+"monsterFamilyHunterCount": [
+  {"args": {"count": 0}, "text": "0 Calmar-chasseur"},
+  {"args": {"count": 1}, "text": "1 Calmar-chasseur"},
+  {"args": {"count": 2}, "text": "2 Calmars-chasseurs"},
+  {"args": {"count": 5}, "text": "5 Calmars-chasseurs"},
+  {"args": {"count": 21}, "text": "21 Calmars-chasseurs"},
+  {"args": {"count": 1000000}, "text": "1000000 Calmars-chasseurs"}
+],
+"monsterFamilyColossusCount": [
+  {"args": {"count": 0}, "text": "0 Requin dormeur"},
+  {"args": {"count": 1}, "text": "1 Requin dormeur"},
+  {"args": {"count": 2}, "text": "2 Requins dormeurs"},
+  {"args": {"count": 5}, "text": "5 Requins dormeurs"},
+  {"args": {"count": 21}, "text": "21 Requins dormeurs"},
+  {"args": {"count": 1000000}, "text": "1000000 Requins dormeurs"}
+],
+"monsterFamilyKrakenCount": [
+  {"args": {"count": 0}, "text": "0 Kraken"},
+  {"args": {"count": 1}, "text": "1 Kraken"},
+  {"args": {"count": 2}, "text": "2 Krakens"},
+  {"args": {"count": 5}, "text": "5 Krakens"},
+  {"args": {"count": 21}, "text": "21 Krakens"},
+  {"args": {"count": 1000000}, "text": "1000000 Krakens"}
+],
+"monsterLairGroupsAnd": [
+  {"args": {"first": "Zed", "second": "Zed"}, "text": "Zed et Zed"}
+],
+"monsterLairWave": [
+  {"args": {"monsters": "Zed", "level": 7}, "text": "Zed niv. 7"}
+],
+"monsterLairWeakAgainst": [
+  {"args": {"units": "Zed"}, "text": "Faibles contre : Zed"}
+],
+"eventCountdown": [
+  {"args": {"label": "Zed", "turns": 0}, "text": "Zed : encore 0 tour"},
+  {"args": {"label": "Zed", "turns": 1}, "text": "Zed : encore 1 tour"},
+  {"args": {"label": "Zed", "turns": 2}, "text": "Zed : encore 2 tours"},
+  {"args": {"label": "Zed", "turns": 5}, "text": "Zed : encore 5 tours"},
+  {"args": {"label": "Zed", "turns": 21}, "text": "Zed : encore 21 tours"},
+  {"args": {"label": "Zed", "turns": 1000000}, "text": "Zed : encore 1000000 tours"}
+],
+"eventColdCurrentHeated": [
+  {"args": {"label": "Zed"}, "text": "Zed (serres chauffées)"}
+],
+"techExploredAreaEffect": [
+  {"args": {"size": 7}, "text": "Zone explorée 7×7"}
+],
+"temporaryObjectiveWreckTitle": [
+  {"args": {"turn": 7}, "text": "Fouille l'épave d'ici la fin du tour 7"}
+],
+"historyBuildingTitle": [
+  {"args": {"building": "Zed", "level": 7}, "text": "Zed niv. 7"}
+],
+"historyResearchUnlocked": [
+  {"args": {"branch": "Zed"}, "text": "Zed débloquée"}
+],
+"historyResearchLevel": [
+  {"args": {"branch": "Zed", "level": 7}, "text": "Zed niv. 7"}
+],
+"historyResearchImproved": [
+  {"args": {"branch": "Zed"}, "text": "Zed améliorée"}
+],
+"historyRecruitTitle": [
+  {"args": {"count": 0, "units": "Zed"}, "text": "Zed recruté"},
+  {"args": {"count": 1, "units": "Zed"}, "text": "Zed recruté"},
+  {"args": {"count": 2, "units": "Zed"}, "text": "Zed recrutés"},
+  {"args": {"count": 5, "units": "Zed"}, "text": "Zed recrutés"},
+  {"args": {"count": 21, "units": "Zed"}, "text": "Zed recrutés"},
+  {"args": {"count": 1000000, "units": "Zed"}, "text": "Zed recrutés"}
+],
+"historyExploreTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Exploration (7, 7)"}
+],
+"historyCollectTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Trésor collecté (7, 7)"}
+],
+"historyCombatVictory": [
+  {"args": {"level": 7}, "text": "Victoire vs Repaire niv. 7"}
+],
+"historyCombatDefeat": [
+  {"args": {"level": 7}, "text": "Défaite vs Repaire niv. 7"}
+],
+"historyTurnEndTitle": [
+  {"args": {"turn": 7}, "text": "Tour 7 terminé"}
+],
+"historyCaptureTitle": [
+  {"args": {"name": "Zed"}, "text": "Capture : Zed"}
+],
+"historyCaptureVictory": [
+  {"args": {"turns": 0}, "text": "Victoire en 0 tour"},
+  {"args": {"turns": 1}, "text": "Victoire en 1 tour"},
+  {"args": {"turns": 2}, "text": "Victoire en 2 tours"},
+  {"args": {"turns": 5}, "text": "Victoire en 5 tours"},
+  {"args": {"turns": 21}, "text": "Victoire en 21 tours"},
+  {"args": {"turns": 1000000}, "text": "Victoire en 1000000 tours"}
+],
+"historyCaptureMissed": [
+  {"args": {"name": "Zed"}, "text": "Pas de prise : Zed"}
+],
+"historyDescentTitle": [
+  {"args": {"level": 7}, "text": "Descente au Niveau 7"}
+],
+"historyDescentUnits": [
+  {"args": {"count": 0}, "text": "0 unité envoyée"},
+  {"args": {"count": 1}, "text": "1 unité envoyée"},
+  {"args": {"count": 2}, "text": "2 unités envoyées"},
+  {"args": {"count": 5}, "text": "5 unités envoyées"},
+  {"args": {"count": 21}, "text": "21 unités envoyées"},
+  {"args": {"count": 1000000}, "text": "1000000 unités envoyées"}
+],
+"historyReinforcementTitle": [
+  {"args": {"level": 7}, "text": "Renforts vers Niveau 7"}
+],
+"historyReinforcementUnits": [
+  {"args": {"count": 0}, "text": "0 unité en transit"},
+  {"args": {"count": 1}, "text": "1 unité en transit"},
+  {"args": {"count": 2}, "text": "2 unités en transit"},
+  {"args": {"count": 5}, "text": "5 unités en transit"},
+  {"args": {"count": 21}, "text": "21 unités en transit"},
+  {"args": {"count": 1000000}, "text": "1000000 unités en transit"}
+],
+"historyAssaultWon": [
+  {"args": {"name": "Zed"}, "text": "Assaut réussi contre Zed"}
+],
+"historyAssaultFailed": [
+  {"args": {"name": "Zed"}, "text": "Assaut repoussé par Zed"}
+],
+"historyAssaultSuffered": [
+  {"args": {"name": "Zed"}, "text": "Base attaquée par Zed"}
+],
+"historyAssaultRepelled": [
+  {"args": {"name": "Zed"}, "text": "Assaut de Zed repoussé"}
+],
+"commonTurn": [
+  {"args": {"turn": 7}, "text": "Tour 7"}
+],
+"fightTurnCount": [
+  {"args": {"count": 0}, "text": "Combat en 0 tour"},
+  {"args": {"count": 1}, "text": "Combat en 1 tour"},
+  {"args": {"count": 2}, "text": "Combat en 2 tours"},
+  {"args": {"count": 5}, "text": "Combat en 5 tours"},
+  {"args": {"count": 21}, "text": "Combat en 21 tours"},
+  {"args": {"count": 1000000}, "text": "Combat en 1000000 tours"}
+],
+"fightUnitAccounting": [
+  {"args": {"sent": 7, "intact": 7, "wounded": 7, "dead": 7}, "text": "Envoyés : 7 / Intactes : 7 / Blessés : 7 / Morts : 7"}
+],
+"fightEnemiesKilled": [
+  {"args": {"killed": 7, "total": 7}, "text": "Ennemis tués : 7/7"}
+],
+"fightGuardiansKilled": [
+  {"args": {"killed": 7, "total": 7}, "text": "Gardiens éliminés : 7/7"}
+],
+"fightTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Combat (7, 7)"}
+],
+"fightAssaultTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Assaut (7, 7)"}
+],
+"fightAssaultOn": [
+  {"args": {"target": "Zed"}, "text": "Assaut : Zed"}
+],
+"fightStock": [
+  {"args": {"count": 7}, "text": "Stock : 7"}
+],
+"fightAlliesAlive": [
+  {"args": {"count": 7}, "text": "Alliés vivants : 7"}
+],
+"fightAlliesHp": [
+  {"args": {"hp": 7}, "text": "PV alliés : 7"}
+],
+"fightDamageDealt": [
+  {"args": {"damage": 7}, "text": "Dégâts infligés : 7"}
+],
+"fightEnemiesAlive": [
+  {"args": {"count": 7}, "text": "Ennemis vivants : 7"}
+],
+"fightEnemiesHp": [
+  {"args": {"hp": 7}, "text": "PV ennemis : 7"}
+],
+"fightDamageTaken": [
+  {"args": {"damage": 7}, "text": "Dégâts subis : 7"}
+],
+"fightCriticalHits": [
+  {"args": {"count": 7}, "text": "Coups critiques : 7"}
+],
+"fightMilitaryBonus": [
+  {"args": {"bonuses": "Zed"}, "text": "Bonus militaire : Zed"}
+],
+"fightLevel": [
+  {"args": {"level": 7}, "text": "Niveau 7"}
+],
+"fightWeakAgainst": [
+  {"args": {"unit": "Zed"}, "text": "Faible contre : Zed"}
+],
+"mapLevelChip": [
+  {"args": {"level": 7, "name": "Zed"}, "text": "Niv. 7 : Zed"}
+],
+"mapPearlsPerTurn": [
+  {"args": {"count": 0}, "text": "+0 perle par tour"},
+  {"args": {"count": 1}, "text": "+1 perle par tour"},
+  {"args": {"count": 2}, "text": "+2 perles par tour"},
+  {"args": {"count": 5}, "text": "+5 perles par tour"},
+  {"args": {"count": 21}, "text": "+21 perles par tour"},
+  {"args": {"count": 1000000}, "text": "+1000000 perles par tour"}
+],
+"mapBuildingRequired": [
+  {"args": {"building": "Zed"}, "text": "Bâtiment requis pour envoyer des unités : Zed"}
+],
+"mapDefendersOnLevel": [
+  {"args": {"level": 7}, "text": "Défenseurs au Niveau 7"}
+],
+"postDefenceThreat": [
+  {"args": {"faction": "Zed", "units": 0, "turn": 7}, "text": "Zed : 0 combattant (rapport du tour 7)"},
+  {"args": {"faction": "Zed", "units": 1, "turn": 7}, "text": "Zed : 1 combattant (rapport du tour 7)"},
+  {"args": {"faction": "Zed", "units": 2, "turn": 7}, "text": "Zed : 2 combattants (rapport du tour 7)"},
+  {"args": {"faction": "Zed", "units": 5, "turn": 7}, "text": "Zed : 5 combattants (rapport du tour 7)"},
+  {"args": {"faction": "Zed", "units": 21, "turn": 7}, "text": "Zed : 21 combattants (rapport du tour 7)"},
+  {"args": {"faction": "Zed", "units": 1000000, "turn": 7}, "text": "Zed : 1000000 combattants (rapport du tour 7)"}
+],
+"postDefenceIfFalls": [
+  {"args": {"kind": "faille"}, "text": "Si la Faille tombe"},
+  {"args": {"kind": "zzz"}, "text": "Si la Cheminée tombe"}
+],
+"postDefencePassageLost": [
+  {"args": {"building": "descentModule"}, "text": "Module de descente détruit"},
+  {"args": {"building": "zzz"}, "text": "Capsule pressurisée détruite"}
+],
+"postDefenceUnitsLost": [
+  {"args": {"count": 0, "level": 7}, "text": "0 unité du niveau 7 perdue"},
+  {"args": {"count": 1, "level": 7}, "text": "1 unité du niveau 7 perdue"},
+  {"args": {"count": 2, "level": 7}, "text": "2 unités du niveau 7 perdues"},
+  {"args": {"count": 5, "level": 7}, "text": "5 unités du niveau 7 perdues"},
+  {"args": {"count": 21, "level": 7}, "text": "21 unités du niveau 7 perdues"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 unités du niveau 7 perdues"}
+],
+"postDefenceReinforcementsLost": [
+  {"args": {"count": 0}, "text": "0 renfort en route annulé"},
+  {"args": {"count": 1}, "text": "1 renfort en route annulé"},
+  {"args": {"count": 2}, "text": "2 renforts en route annulés"},
+  {"args": {"count": 5}, "text": "5 renforts en route annulés"},
+  {"args": {"count": 21}, "text": "21 renforts en route annulés"},
+  {"args": {"count": 1000000}, "text": "1000000 renforts en route annulés"}
+],
+"mapSendUnitsToLevel": [
+  {"args": {"level": 7}, "text": "Envoyer des unités au Niveau 7"}
+],
+"mapExploreTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Explorer (7, 7)"}
+],
+"mapAreaCells": [
+  {"args": {"side": 7}, "text": "7×7 cellules"}
+],
+"mapTreasureTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Trésor (7, 7)"}
+],
+"raidPredatorsTitle": [
+  {"args": {"turn": 7}, "text": "Banc de prédateurs (tour 7)"}
+],
+"raidTitle": [
+  {"args": {"turn": 7}, "text": "Raid sur la base (tour 7)"}
+],
+"raidRampart": [
+  {"args": {"level": 7}, "text": "Rempart de la Citadelle niv. 7"}
+],
+"raidLostInARow": [
+  {"args": {"lost": 7, "limit": 7}, "text": "Raids perdus d'affilée : 7/7"}
+],
+"raidIncomingThisTurn": [
+  {"args": {"wave": "Zed"}, "text": "Raid à la fin de ce tour : Zed"}
+],
+"raidIncomingOnTurn": [
+  {"args": {"turn": 7, "wave": "Zed"}, "text": "Raid à la fin du tour 7 : Zed"}
+],
+"raidAnnounced": [
+  {"args": {"wave": "Zed", "turn": 7}, "text": "Un raid approche : Zed, fin du tour 7"}
+],
+"raidDueThisTurn": [
+  {"args": {"attacker": "Zed", "wave": "Zed", "defenders": "Zed"}, "text": "Zed ce tour : Zed contre Zed"}
+],
+"raidDefenders": [
+  {"args": {"count": 0}, "text": "aucun défenseur"},
+  {"args": {"count": 1}, "text": "1 défenseur"},
+  {"args": {"count": 2}, "text": "2 défenseurs"},
+  {"args": {"count": 5}, "text": "5 défenseurs"},
+  {"args": {"count": 21}, "text": "21 défenseurs"},
+  {"args": {"count": 1000000}, "text": "1000000 défenseurs"}
+],
+"volcanoWaveTitle": [
+  {"args": {"turn": 7}, "text": "Vague sur le Noyau (tour 7)"}
+],
+"volcanoKernelHolds": [
+  {"args": {"level": 7}, "text": "Le Noyau tient au niveau 7"}
+],
+"volcanoKernelDrops": [
+  {"args": {"level": 7}, "text": "Le Noyau retombe au niveau 7"}
+],
+"volcanoMagmaRampart": [
+  {"args": {"stats": "Zed"}, "text": "Rempart de magma : Zed"}
+],
+"volcanoKernelLevel": [
+  {"args": {"level": 7}, "text": "Noyau niveau 7"}
+],
+"volcanoOutsideGarrison": [
+  {"args": {"count": 0, "level": 7}, "text": "Hors garnison, au Niveau 7 : 0 unité"},
+  {"args": {"count": 1, "level": 7}, "text": "Hors garnison, au Niveau 7 : 1 unité"},
+  {"args": {"count": 2, "level": 7}, "text": "Hors garnison, au Niveau 7 : 2 unités"},
+  {"args": {"count": 5, "level": 7}, "text": "Hors garnison, au Niveau 7 : 5 unités"},
+  {"args": {"count": 21, "level": 7}, "text": "Hors garnison, au Niveau 7 : 21 unités"},
+  {"args": {"count": 1000000, "level": 7}, "text": "Hors garnison, au Niveau 7 : 1000000 unités"}
+],
+"volcanoNextWave": [
+  {"args": {"wave": "Zed"}, "text": "Prochaine vague, à la fin du tour : Zed"}
+],
+"volcanoLevelsLost": [
+  {"args": {"count": 7}, "text": "Niveaux perdus face aux vagues : 7"}
+],
+"undefendedPostWarning": [
+  {"args": {"kind": "faille", "level": 7}, "text": "Ta Faille n'a aucun défenseur au niveau 7"},
+  {"args": {"kind": "zzz", "level": 7}, "text": "Ta Cheminée n'a aucun défenseur au niveau 7"}
+],
+"volcanoDueWarning": [
+  {"args": {"wave": "Zed"}, "text": "Vague sur le Noyau ce tour : Zed, et aucune garnison. Le Noyau perdra probablement un niveau."}
+],
+"volcanoStatus": [
+  {"args": {"level": 7, "wave": "Zed", "size": 7}, "text": "Noyau niv. 7, fin du tour : Zed contre une garnison de 7"}
+],
+"volcanoRepelled": [
+  {"args": {"losses": "Zed"}, "text": "Volcan : vague repoussée, Zed"}
+],
+"volcanoKernelFell": [
+  {"args": {"level": 7}, "text": "Volcan : le Noyau retombe au niveau 7"}
+],
+"volcanoWounded": [
+  {"args": {"count": 0}, "text": "0 blessé"},
+  {"args": {"count": 1}, "text": "1 blessé"},
+  {"args": {"count": 2}, "text": "2 blessés"},
+  {"args": {"count": 5}, "text": "5 blessés"},
+  {"args": {"count": 21}, "text": "21 blessés"},
+  {"args": {"count": 1000000}, "text": "1000000 blessés"}
+],
+"volcanoDead": [
+  {"args": {"count": 0}, "text": "0 mort"},
+  {"args": {"count": 1}, "text": "1 mort"},
+  {"args": {"count": 2}, "text": "2 morts"},
+  {"args": {"count": 5}, "text": "5 morts"},
+  {"args": {"count": 21}, "text": "21 morts"},
+  {"args": {"count": 1000000}, "text": "1000000 morts"}
+],
+"volcanoKrakenRises": [
+  {"args": {"wave": "Zed"}, "text": "Le Kraken remonte : Zed au prochain tour"}
+],
+"eventCardPredatorsWave": [
+  {"args": {"wave": "Zed", "defenders": "Zed"}, "text": "Zed contre Zed du niveau 1."}
+],
+"eventCardStormLine1": [
+  {"args": {"turns": 0}, "text": "Exploration impossible pendant 0 tour."},
+  {"args": {"turns": 1}, "text": "Exploration impossible pendant 1 tour."},
+  {"args": {"turns": 2}, "text": "Exploration impossible pendant 2 tours."},
+  {"args": {"turns": 5}, "text": "Exploration impossible pendant 5 tours."},
+  {"args": {"turns": 21}, "text": "Exploration impossible pendant 21 tours."},
+  {"args": {"turns": 1000000}, "text": "Exploration impossible pendant 1000000 tours."}
+],
+"eventCardStormLine2": [
+  {"args": {"relief": 7}, "text": "La tempête couvre le bruit : jauge −7."}
+],
+"eventCardWreckLine2": [
+  {"args": {"turns": 0, "noise": 7}, "text": "Explore-la avec un Éclaireur puis fouille-la avant 0 tour (+7 bruit)."},
+  {"args": {"turns": 1, "noise": 7}, "text": "Explore-la avec un Éclaireur puis fouille-la avant 1 tour (+7 bruit)."},
+  {"args": {"turns": 2, "noise": 7}, "text": "Explore-la avec un Éclaireur puis fouille-la avant 2 tours (+7 bruit)."},
+  {"args": {"turns": 5, "noise": 7}, "text": "Explore-la avec un Éclaireur puis fouille-la avant 5 tours (+7 bruit)."},
+  {"args": {"turns": 21, "noise": 7}, "text": "Explore-la avec un Éclaireur puis fouille-la avant 21 tours (+7 bruit)."},
+  {"args": {"turns": 1000000, "noise": 7}, "text": "Explore-la avec un Éclaireur puis fouille-la avant 1000000 tours (+7 bruit)."}
+],
+"eventCardWarmAccept": [
+  {"args": {"percent": 7, "turns": 7, "noise": 7}, "text": "Exploiter (+7 % algues, corail, minerai pendant 7 tours, +7 bruit/tour)"}
+],
+"eventCardColdAccept": [
+  {"args": {"energy": 7, "turns": 7}, "text": "Chauffer les serres (−7 énergie/tour pendant 7 tours)"}
+],
+"eventCardColdRefuse": [
+  {"args": {"percent": 7, "turns": 7}, "text": "Subir (−7 % d'algues pendant 7 tours)"}
+],
+"eventCardPredatorsAccept": [
+  {"args": {"count": 0}, "text": "L'affronter (0 monstre, fin du tour)"},
+  {"args": {"count": 1}, "text": "L'affronter (1 monstre, fin du tour)"},
+  {"args": {"count": 2}, "text": "L'affronter (2 monstres, fin du tour)"},
+  {"args": {"count": 5}, "text": "L'affronter (5 monstres, fin du tour)"},
+  {"args": {"count": 21}, "text": "L'affronter (21 monstres, fin du tour)"},
+  {"args": {"count": 1000000}, "text": "L'affronter (1000000 monstres, fin du tour)"}
+],
+"eventCardPredatorsRefuse": [
+  {"args": {"algae": 7}, "text": "L'appâter (−7 algues)"}
+],
+"eventCardSurvivorsAccept": [
+  {"args": {"units": "Zed"}, "text": "Accueillir Zed"}
+],
+"eventCardTrade": [
+  {"args": {"give": 7, "from": "Zed", "get": 7, "to": "Zed"}, "text": "Échanger 7 Zed contre 7 Zed"}
+],
+"eventCardPendingWarning": [
+  {"args": {"event": "Zed"}, "text": "Zed : sans choix, l'option prudente s'appliquera"}
+],
+"eventCardStatusPending": [
+  {"args": {"event": "Zed"}, "text": "Événement : Zed — choisir"}
+],
+"techScreenChoiceTitle": [
+  {"args": {"branch": "Zed", "level": 7}, "text": "Zed · Niveau 7 · Choix"}
+],
+"techScreenNodeSubtitle": [
+  {"args": {"branch": "Zed", "level": 7, "effect": "Zed"}, "text": "Zed · Niveau 7 · Zed"}
+],
+"techScreenSurcharge": [
+  {"args": {"factor": "Zed"}, "text": "Toutes les recherches coûteront ×Zed une fois cette branche ouverte."}
+],
+"techScreenResearchPreviousFirst": [
+  {"args": {"level": 7}, "text": "Recherche d'abord le niveau 7"}
+],
+"techScreenLabRequired": [
+  {"args": {"level": 7}, "text": "Laboratoire niveau 7 requis"}
+],
+"techScreenMedallionLevel": [
+  {"args": {"level": 7}, "text": "Niv. 7"}
+],
+"objectiveProgress": [
+  {"args": {"title": "Zed", "current": 7, "target": 7}, "text": "Zed : 7/7"}
+],
+"objectiveCompleted": [
+  {"args": {"title": "Zed"}, "text": "Objectif accompli : Zed"}
+],
+"objectiveRaiseHq": [
+  {"args": {"level": 7}, "text": "Monte le QG au niveau 7"}
+],
+"objectiveBarracksAndScouts": [
+  {"args": {"count": 0}, "text": "Construis la Caserne et recrute 0 Éclaireur"},
+  {"args": {"count": 1}, "text": "Construis la Caserne et recrute 1 Éclaireur"},
+  {"args": {"count": 2}, "text": "Construis la Caserne et recrute 2 Éclaireurs"},
+  {"args": {"count": 5}, "text": "Construis la Caserne et recrute 5 Éclaireurs"},
+  {"args": {"count": 21}, "text": "Construis la Caserne et recrute 21 Éclaireurs"},
+  {"args": {"count": 1000000}, "text": "Construis la Caserne et recrute 1000000 Éclaireurs"}
+],
+"objectiveDescend": [
+  {"args": {"level": 7}, "text": "Descends au niveau 7"}
+],
+"objectiveRaiseKernel": [
+  {"args": {"level": 7}, "text": "Monte le Noyau au niveau 7"}
+],
+"chapterNumbered": [
+  {"args": {"number": 7, "title": "Zed"}, "text": "7. Zed"}
+],
+"tipNoiseGaugeLine2": [
+  {"args": {"threshold": 7}, "text": "Quand la jauge atteint 7, les monstres l'entendent : un raid est annoncé."}
+],
+"tipWorksitesLine1": [
+  {"args": {"level": 7}, "text": "Ton QG niveau 7 ouvre un deuxième chantier : deux bâtiments montent à chaque tour."}
+],
+"tipWorksitesLine2": [
+  {"args": {"level": 7}, "text": "Le QG niveau 7 en ouvrira un troisième. La recherche, elle, reste à une par tour."}
+],
+"tipRaidAnnouncedLine1": [
+  {"args": {"turns": 0}, "text": "Ton bruit a attiré des monstres : ils frapperont ta base dans 0 tour."},
+  {"args": {"turns": 1}, "text": "Ton bruit a attiré des monstres : ils frapperont ta base dans 1 tour."},
+  {"args": {"turns": 2}, "text": "Ton bruit a attiré des monstres : ils frapperont ta base dans 2 tours."},
+  {"args": {"turns": 5}, "text": "Ton bruit a attiré des monstres : ils frapperont ta base dans 5 tours."},
+  {"args": {"turns": 21}, "text": "Ton bruit a attiré des monstres : ils frapperont ta base dans 21 tours."},
+  {"args": {"turns": 1000000}, "text": "Ton bruit a attiré des monstres : ils frapperont ta base dans 1000000 tours."}
+],
+"tipLastChanceLine1": [
+  {"args": {"count": 0}, "text": "Ta base a perdu 0 raid."},
+  {"args": {"count": 1}, "text": "Ta base a perdu 1 raid."},
+  {"args": {"count": 2}, "text": "Ta base a perdu 2 raids d'affilée."},
+  {"args": {"count": 5}, "text": "Ta base a perdu 5 raids d'affilée."},
+  {"args": {"count": 21}, "text": "Ta base a perdu 21 raids d'affilée."},
+  {"args": {"count": 1000000}, "text": "Ta base a perdu 1000000 raids d'affilée."}
+],
+"tipEventsLine1": [
+  {"args": {"minGap": 7, "maxGap": 7}, "text": "Tous les 7 à 7 tours, un événement secoue les abysses."}
+],
+"tipWarmCurrentLine1": [
+  {"args": {"turns": 0}, "text": "Un courant chaud dope ta production pendant 0 tour."},
+  {"args": {"turns": 1}, "text": "Un courant chaud dope ta production pendant 1 tour."},
+  {"args": {"turns": 2}, "text": "Un courant chaud dope ta production pendant 2 tours."},
+  {"args": {"turns": 5}, "text": "Un courant chaud dope ta production pendant 5 tours."},
+  {"args": {"turns": 21}, "text": "Un courant chaud dope ta production pendant 21 tours."},
+  {"args": {"turns": 1000000}, "text": "Un courant chaud dope ta production pendant 1000000 tours."}
+],
+"tipWreckLine1": [
+  {"args": {"turns": 0}, "text": "Un galion englouti reste 0 tour au bord de la zone explorée."},
+  {"args": {"turns": 1}, "text": "Un galion englouti reste 1 tour au bord de la zone explorée."},
+  {"args": {"turns": 2}, "text": "Un galion englouti reste 2 tours au bord de la zone explorée."},
+  {"args": {"turns": 5}, "text": "Un galion englouti reste 5 tours au bord de la zone explorée."},
+  {"args": {"turns": 21}, "text": "Un galion englouti reste 21 tours au bord de la zone explorée."},
+  {"args": {"turns": 1000000}, "text": "Un galion englouti reste 1000000 tours au bord de la zone explorée."}
+],
+"tipWreckLine3": [
+  {"args": {"noise": 7}, "text": "La fouille fait du bruit (+7) : choisis ton moment."}
+],
+"tipStormLine1": [
+  {"args": {"turns": 0}, "text": "La tempête ferme l'exploration pendant 0 tour."},
+  {"args": {"turns": 1}, "text": "La tempête ferme l'exploration pendant 1 tour."},
+  {"args": {"turns": 2}, "text": "La tempête ferme l'exploration pendant 2 tours."},
+  {"args": {"turns": 5}, "text": "La tempête ferme l'exploration pendant 5 tours."},
+  {"args": {"turns": 21}, "text": "La tempête ferme l'exploration pendant 21 tours."},
+  {"args": {"turns": 1000000}, "text": "La tempête ferme l'exploration pendant 1000000 tours."}
+],
+"tipStormLine2": [
+  {"args": {"relief": 7}, "text": "En échange, elle couvre ton bruit : la jauge baisse de 7."}
+],
+"tipColdCurrentLine1": [
+  {"args": {"turns": 0}, "text": "Un courant froid ralentit tes algues pendant 0 tour."},
+  {"args": {"turns": 1}, "text": "Un courant froid ralentit tes algues pendant 1 tour."},
+  {"args": {"turns": 2}, "text": "Un courant froid ralentit tes algues pendant 2 tours."},
+  {"args": {"turns": 5}, "text": "Un courant froid ralentit tes algues pendant 5 tours."},
+  {"args": {"turns": 21}, "text": "Un courant froid ralentit tes algues pendant 21 tours."},
+  {"args": {"turns": 1000000}, "text": "Un courant froid ralentit tes algues pendant 1000000 tours."}
+],
+"guideLessonHqLevel2": [
+  {"args": {"level": 7}, "text": "Le QG niveau 7 débloque la Caserne et le Laboratoire. Mais chaque chantier fait du bruit : surveille la jauge en haut de l'écran, elle attire les monstres."}
+],
+"guideLessonBarracksAndScouts": [
+  {"args": {"count": 0}, "text": "Construis la Caserne, puis recrute 0 Éclaireur dans l'onglet Armée. Chaque unité mange des algues à chaque tour, et chaque recrue fait monter le bruit."},
+  {"args": {"count": 1}, "text": "Construis la Caserne, puis recrute 1 Éclaireur dans l'onglet Armée. Chaque unité mange des algues à chaque tour, et chaque recrue fait monter le bruit."},
+  {"args": {"count": 2}, "text": "Construis la Caserne, puis recrute 2 Éclaireurs dans l'onglet Armée. Chaque unité mange des algues à chaque tour, et chaque recrue fait monter le bruit."},
+  {"args": {"count": 5}, "text": "Construis la Caserne, puis recrute 5 Éclaireurs dans l'onglet Armée. Chaque unité mange des algues à chaque tour, et chaque recrue fait monter le bruit."},
+  {"args": {"count": 21}, "text": "Construis la Caserne, puis recrute 21 Éclaireurs dans l'onglet Armée. Chaque unité mange des algues à chaque tour, et chaque recrue fait monter le bruit."},
+  {"args": {"count": 1000000}, "text": "Construis la Caserne, puis recrute 1000000 Éclaireurs dans l'onglet Armée. Chaque unité mange des algues à chaque tour, et chaque recrue fait monter le bruit."}
+],
+"guideLessonFirstRaid": [
+  {"args": {"turns": 0}, "text": "Le bruit finit toujours par attirer un raid, annoncé 0 tour à l'avance. Recrute des Harponneurs pour défendre ta base. Plus tard, le rempart de la Citadelle t'aidera aussi."},
+  {"args": {"turns": 1}, "text": "Le bruit finit toujours par attirer un raid, annoncé 1 tour à l'avance. Recrute des Harponneurs pour défendre ta base. Plus tard, le rempart de la Citadelle t'aidera aussi."},
+  {"args": {"turns": 2}, "text": "Le bruit finit toujours par attirer un raid, annoncé 2 tours à l'avance. Recrute des Harponneurs pour défendre ta base. Plus tard, le rempart de la Citadelle t'aidera aussi."},
+  {"args": {"turns": 5}, "text": "Le bruit finit toujours par attirer un raid, annoncé 5 tours à l'avance. Recrute des Harponneurs pour défendre ta base. Plus tard, le rempart de la Citadelle t'aidera aussi."},
+  {"args": {"turns": 21}, "text": "Le bruit finit toujours par attirer un raid, annoncé 21 tours à l'avance. Recrute des Harponneurs pour défendre ta base. Plus tard, le rempart de la Citadelle t'aidera aussi."},
+  {"args": {"turns": 1000000}, "text": "Le bruit finit toujours par attirer un raid, annoncé 1000000 tours à l'avance. Recrute des Harponneurs pour défendre ta base. Plus tard, le rempart de la Citadelle t'aidera aussi."}
+],
+"guideStorm": [
+  {"args": {"turn": 7}, "text": "Une tempête ferme l'exploration jusqu'à la fin du tour 7. Patiente : l'objectif t'attend, termine le tour."}
+],
+"guideWreckWithoutBarracks": [
+  {"args": {"turn": 7}, "text": "Une épave a coulé près de ta base, visible jusqu'à la fin du tour 7. Il faut un Éclaireur pour l'atteindre, donc une Caserne : continue ton objectif, elle viendra."}
+],
+"guideWreckWithoutScout": [
+  {"args": {"turn": 7}, "text": "Une épave a coulé près de ta base, visible jusqu'à la fin du tour 7. Recrute un Éclaireur dans l'onglet Armée pour aller la fouiller."}
+],
+"guideRaidIntro": [
+  {"args": {"turn": 7, "monsters": 0}, "text": "Le raid arrive au tour 7 avec 0 monstre."},
+  {"args": {"turn": 7, "monsters": 1}, "text": "Le raid arrive au tour 7 avec 1 monstre."},
+  {"args": {"turn": 7, "monsters": 2}, "text": "Le raid arrive au tour 7 avec 2 monstres."},
+  {"args": {"turn": 7, "monsters": 5}, "text": "Le raid arrive au tour 7 avec 5 monstres."},
+  {"args": {"turn": 7, "monsters": 21}, "text": "Le raid arrive au tour 7 avec 21 monstres."},
+  {"args": {"turn": 7, "monsters": 1000000}, "text": "Le raid arrive au tour 7 avec 1000000 monstres."}
+],
+"guideRaidNeeded": [
+  {"args": {"needed": 0, "missing": 0}, "text": "Aie au moins 0 Harponneur au niveau 1 : il t'en manque 0."},
+  {"args": {"needed": 0, "missing": 1}, "text": "Aie au moins 0 Harponneur au niveau 1 : il t'en manque 1."},
+  {"args": {"needed": 0, "missing": 2}, "text": "Aie au moins 0 Harponneur au niveau 1 : il t'en manque 2."},
+  {"args": {"needed": 0, "missing": 5}, "text": "Aie au moins 0 Harponneur au niveau 1 : il t'en manque 5."},
+  {"args": {"needed": 0, "missing": 21}, "text": "Aie au moins 0 Harponneur au niveau 1 : il t'en manque 21."},
+  {"args": {"needed": 0, "missing": 1000000}, "text": "Aie au moins 0 Harponneur au niveau 1 : il t'en manque 1000000."},
+  {"args": {"needed": 1, "missing": 0}, "text": "Aie au moins 1 Harponneur au niveau 1 : il t'en manque 0."},
+  {"args": {"needed": 1, "missing": 1}, "text": "Aie au moins 1 Harponneur au niveau 1 : il t'en manque 1."},
+  {"args": {"needed": 1, "missing": 2}, "text": "Aie au moins 1 Harponneur au niveau 1 : il t'en manque 2."},
+  {"args": {"needed": 1, "missing": 5}, "text": "Aie au moins 1 Harponneur au niveau 1 : il t'en manque 5."},
+  {"args": {"needed": 1, "missing": 21}, "text": "Aie au moins 1 Harponneur au niveau 1 : il t'en manque 21."},
+  {"args": {"needed": 1, "missing": 1000000}, "text": "Aie au moins 1 Harponneur au niveau 1 : il t'en manque 1000000."},
+  {"args": {"needed": 2, "missing": 0}, "text": "Aie au moins 2 Harponneurs au niveau 1 : il t'en manque 0."},
+  {"args": {"needed": 2, "missing": 1}, "text": "Aie au moins 2 Harponneurs au niveau 1 : il t'en manque 1."},
+  {"args": {"needed": 2, "missing": 2}, "text": "Aie au moins 2 Harponneurs au niveau 1 : il t'en manque 2."},
+  {"args": {"needed": 2, "missing": 5}, "text": "Aie au moins 2 Harponneurs au niveau 1 : il t'en manque 5."},
+  {"args": {"needed": 2, "missing": 21}, "text": "Aie au moins 2 Harponneurs au niveau 1 : il t'en manque 21."},
+  {"args": {"needed": 2, "missing": 1000000}, "text": "Aie au moins 2 Harponneurs au niveau 1 : il t'en manque 1000000."},
+  {"args": {"needed": 5, "missing": 0}, "text": "Aie au moins 5 Harponneurs au niveau 1 : il t'en manque 0."},
+  {"args": {"needed": 5, "missing": 1}, "text": "Aie au moins 5 Harponneurs au niveau 1 : il t'en manque 1."},
+  {"args": {"needed": 5, "missing": 2}, "text": "Aie au moins 5 Harponneurs au niveau 1 : il t'en manque 2."},
+  {"args": {"needed": 5, "missing": 5}, "text": "Aie au moins 5 Harponneurs au niveau 1 : il t'en manque 5."},
+  {"args": {"needed": 5, "missing": 21}, "text": "Aie au moins 5 Harponneurs au niveau 1 : il t'en manque 21."},
+  {"args": {"needed": 5, "missing": 1000000}, "text": "Aie au moins 5 Harponneurs au niveau 1 : il t'en manque 1000000."},
+  {"args": {"needed": 21, "missing": 0}, "text": "Aie au moins 21 Harponneurs au niveau 1 : il t'en manque 0."},
+  {"args": {"needed": 21, "missing": 1}, "text": "Aie au moins 21 Harponneurs au niveau 1 : il t'en manque 1."},
+  {"args": {"needed": 21, "missing": 2}, "text": "Aie au moins 21 Harponneurs au niveau 1 : il t'en manque 2."},
+  {"args": {"needed": 21, "missing": 5}, "text": "Aie au moins 21 Harponneurs au niveau 1 : il t'en manque 5."},
+  {"args": {"needed": 21, "missing": 21}, "text": "Aie au moins 21 Harponneurs au niveau 1 : il t'en manque 21."},
+  {"args": {"needed": 21, "missing": 1000000}, "text": "Aie au moins 21 Harponneurs au niveau 1 : il t'en manque 1000000."},
+  {"args": {"needed": 1000000, "missing": 0}, "text": "Aie au moins 1000000 Harponneurs au niveau 1 : il t'en manque 0."},
+  {"args": {"needed": 1000000, "missing": 1}, "text": "Aie au moins 1000000 Harponneurs au niveau 1 : il t'en manque 1."},
+  {"args": {"needed": 1000000, "missing": 2}, "text": "Aie au moins 1000000 Harponneurs au niveau 1 : il t'en manque 2."},
+  {"args": {"needed": 1000000, "missing": 5}, "text": "Aie au moins 1000000 Harponneurs au niveau 1 : il t'en manque 5."},
+  {"args": {"needed": 1000000, "missing": 21}, "text": "Aie au moins 1000000 Harponneurs au niveau 1 : il t'en manque 21."},
+  {"args": {"needed": 1000000, "missing": 1000000}, "text": "Aie au moins 1000000 Harponneurs au niveau 1 : il t'en manque 1000000."}
+],
+"guideRaidRecruitNow": [
+  {"args": {"missing": 0}, "text": "Recrute-le dans l'onglet Armée."},
+  {"args": {"missing": 1}, "text": "Recrute-le dans l'onglet Armée."},
+  {"args": {"missing": 2}, "text": "Recrute-les dans l'onglet Armée."},
+  {"args": {"missing": 5}, "text": "Recrute-les dans l'onglet Armée."},
+  {"args": {"missing": 21}, "text": "Recrute-les dans l'onglet Armée."},
+  {"args": {"missing": 1000000}, "text": "Recrute-les dans l'onglet Armée."}
+],
+"guideRaidRecruitNextTurn": [
+  {"args": {"missing": 0}, "text": "Tu as déjà recruté ce tour : recrute-le au prochain tour."},
+  {"args": {"missing": 1}, "text": "Tu as déjà recruté ce tour : recrute-le au prochain tour."},
+  {"args": {"missing": 2}, "text": "Tu as déjà recruté ce tour : recrute-les au prochain tour."},
+  {"args": {"missing": 5}, "text": "Tu as déjà recruté ce tour : recrute-les au prochain tour."},
+  {"args": {"missing": 21}, "text": "Tu as déjà recruté ce tour : recrute-les au prochain tour."},
+  {"args": {"missing": 1000000}, "text": "Tu as déjà recruté ce tour : recrute-les au prochain tour."}
+],
+"guideAdmiralNeedsBarracks": [
+  {"args": {"post": "cheminee", "level": 7}, "text": "Pour prendre une Cheminée, il faut un Amiral. Monte la Caserne au niveau 7."},
+  {"args": {"post": "faille", "level": 7}, "text": "Pour prendre une Faille, il faut un Amiral. Monte la Caserne au niveau 7."},
+  {"args": {"post": "zzz", "level": 7}, "text": "Pour prendre le Noyau, il faut un Amiral. Monte la Caserne au niveau 7."}
+],
+"guideAdmiralToRecruit": [
+  {"args": {"post": "cheminee"}, "text": "Recrute un Amiral : il ne se bat pas, mais sans lui la Cheminée ne se prend pas."},
+  {"args": {"post": "faille"}, "text": "Recrute un Amiral : il ne se bat pas, mais sans lui la Faille ne se prend pas."},
+  {"args": {"post": "zzz"}, "text": "Recrute un Amiral : il ne se bat pas, mais sans lui le Noyau ne se prend pas."}
+],
+"guideAdmiralToSend": [
+  {"args": {"post": "cheminee", "level": 7, "from": 7, "passage": "faille"}, "text": "Pour prendre la Cheminée, ton Amiral doit descendre au niveau 7. Il est au niveau 7 : envoie-le par ta Faille, entourée sur la Carte au niveau 7."},
+  {"args": {"post": "cheminee", "level": 7, "from": 7, "passage": "zzz"}, "text": "Pour prendre la Cheminée, ton Amiral doit descendre au niveau 7. Il est au niveau 7 : envoie-le par ta Cheminée, entourée sur la Carte au niveau 7."},
+  {"args": {"post": "faille", "level": 7, "from": 7, "passage": "faille"}, "text": "Pour prendre la Faille, ton Amiral doit descendre au niveau 7. Il est au niveau 7 : envoie-le par ta Faille, entourée sur la Carte au niveau 7."},
+  {"args": {"post": "faille", "level": 7, "from": 7, "passage": "zzz"}, "text": "Pour prendre la Faille, ton Amiral doit descendre au niveau 7. Il est au niveau 7 : envoie-le par ta Cheminée, entourée sur la Carte au niveau 7."},
+  {"args": {"post": "zzz", "level": 7, "from": 7, "passage": "faille"}, "text": "Pour prendre le Noyau, ton Amiral doit descendre au niveau 7. Il est au niveau 7 : envoie-le par ta Faille, entourée sur la Carte au niveau 7."},
+  {"args": {"post": "zzz", "level": 7, "from": 7, "passage": "zzz"}, "text": "Pour prendre le Noyau, ton Amiral doit descendre au niveau 7. Il est au niveau 7 : envoie-le par ta Cheminée, entourée sur la Carte au niveau 7."}
+],
+"guidePostToFind": [
+  {"args": {"post": "cheminee"}, "text": "Explore la Carte au niveau 2 pour trouver une Cheminée, mais n'oublie pas de continuer à améliorer tes bâtiments et ton armée !"},
+  {"args": {"post": "faille"}, "text": "Explore la Carte pour trouver une Faille, mais n'oublie pas de continuer à améliorer tes bâtiments et ton armée !"},
+  {"args": {"post": "zzz"}, "text": "Explore la Carte au niveau 3 pour trouver le Noyau, mais n'oublie pas de continuer à améliorer tes bâtiments et ton armée !"}
+],
+"guidePostAssault": [
+  {"args": {"post": "cheminee"}, "text": "Une Cheminée ! Ton Amiral doit survivre : couvre-le de Gardiens."},
+  {"args": {"post": "faille"}, "text": "Une Faille ! Ton Amiral doit survivre : couvre-le de Gardiens."},
+  {"args": {"post": "zzz"}, "text": "Le Noyau ! Ton Amiral doit survivre : couvre-le de Gardiens."}
+],
+"guidePostAssaultArmy": [
+  {"args": {"count": 0, "wins": 7, "rehearsals": 7}, "text": "Ton escorte suffit : tu gagnes 7 fois sur 7."},
+  {"args": {"count": 1, "wins": 7, "rehearsals": 7}, "text": "Envoie-le avec au moins 1 Harponneur : tu gagnes 7 fois sur 7."},
+  {"args": {"count": 2, "wins": 7, "rehearsals": 7}, "text": "Envoie-le avec au moins 2 Harponneurs : tu gagnes 7 fois sur 7."},
+  {"args": {"count": 5, "wins": 7, "rehearsals": 7}, "text": "Envoie-le avec au moins 5 Harponneurs : tu gagnes 7 fois sur 7."},
+  {"args": {"count": 21, "wins": 7, "rehearsals": 7}, "text": "Envoie-le avec au moins 21 Harponneurs : tu gagnes 7 fois sur 7."},
+  {"args": {"count": 1000000, "wins": 7, "rehearsals": 7}, "text": "Envoie-le avec au moins 1000000 Harponneurs : tu gagnes 7 fois sur 7."}
+],
+"guideAdmiralFell": [
+  {"args": {"post": "cheminee"}, "text": "Victoire, mais ton Amiral est tombé : la Cheminée n'est pas prise. Couvre-le de Gardiens et recommence."},
+  {"args": {"post": "faille"}, "text": "Victoire, mais ton Amiral est tombé : la Faille n'est pas prise. Couvre-le de Gardiens et recommence."},
+  {"args": {"post": "zzz"}, "text": "Victoire, mais ton Amiral est tombé : le Noyau n'est pas pris. Couvre-le de Gardiens et recommence."}
+],
+"guidePassageNeedsHq": [
+  {"args": {"passage": "descentModule", "level": 7}, "text": "Le Module de descente demande le QG 7. Monte d'abord ton QG."},
+  {"args": {"passage": "zzz", "level": 7}, "text": "La Capsule pressurisée demande le QG 7. Monte d'abord ton QG."}
+],
+"guidePostUndefended": [
+  {"args": {"post": "faille", "level": 7}, "text": "Ta Faille n'est gardée que par tes unités du niveau 7. Si elle tombe, ton Module est détruit et tes unités d'en bas sont perdues."},
+  {"args": {"post": "zzz", "level": 7}, "text": "Ta Cheminée n'est gardée que par tes unités du niveau 7. Si elle tombe, ta Capsule est détruite et tes unités d'en bas sont perdues."}
+],
+"guideKernelWaveNeeded": [
+  {"args": {"needed": 0}, "text": "Les Krakens viennent reprendre le Noyau ! Mets au moins 0 unité en garnison avant la fin du tour, sinon le Noyau perd un niveau."},
+  {"args": {"needed": 1}, "text": "Les Krakens viennent reprendre le Noyau ! Mets au moins 1 unité en garnison avant la fin du tour, sinon le Noyau perd un niveau."},
+  {"args": {"needed": 2}, "text": "Les Krakens viennent reprendre le Noyau ! Mets au moins 2 unités en garnison avant la fin du tour, sinon le Noyau perd un niveau."},
+  {"args": {"needed": 5}, "text": "Les Krakens viennent reprendre le Noyau ! Mets au moins 5 unités en garnison avant la fin du tour, sinon le Noyau perd un niveau."},
+  {"args": {"needed": 21}, "text": "Les Krakens viennent reprendre le Noyau ! Mets au moins 21 unités en garnison avant la fin du tour, sinon le Noyau perd un niveau."},
+  {"args": {"needed": 1000000}, "text": "Les Krakens viennent reprendre le Noyau ! Mets au moins 1000000 unités en garnison avant la fin du tour, sinon le Noyau perd un niveau."}
+],
+"guideKernelWaveAll": [
+  {"args": {"monsters": 7}, "text": "7 Krakens viennent reprendre le Noyau ! Mets en garnison toutes les unités que tu peux avant la fin du tour, sinon le Noyau perd un niveau."}
+],
+"gameOverDefeatSubtitle": [
+  {"args": {"turn": 7, "raids": 0}, "text": "Votre base est tombée à la fin du tour 7, après 0 raid perdu d'affilée."},
+  {"args": {"turn": 7, "raids": 1}, "text": "Votre base est tombée à la fin du tour 7, après 1 raid perdu d'affilée."},
+  {"args": {"turn": 7, "raids": 2}, "text": "Votre base est tombée à la fin du tour 7, après 2 raids perdus d'affilée."},
+  {"args": {"turn": 7, "raids": 5}, "text": "Votre base est tombée à la fin du tour 7, après 5 raids perdus d'affilée."},
+  {"args": {"turn": 7, "raids": 21}, "text": "Votre base est tombée à la fin du tour 7, après 21 raids perdus d'affilée."},
+  {"args": {"turn": 7, "raids": 1000000}, "text": "Votre base est tombée à la fin du tour 7, après 1000000 raids perdus d'affilée."}
+],
+"gameOverFactionWonSubtitle": [
+  {"args": {"name": "Zed", "turn": 7}, "text": "Zed a dompté le Volcan au tour 7."}
+],
+"gameOverTurnsPlayed": [
+  {"args": {"count": 7}, "text": "Tours joués : 7"}
+],
+"gameOverMonstersDefeated": [
+  {"args": {"count": 7}, "text": "Monstres vaincus : 7"}
+],
+"gameOverBasesCaptured": [
+  {"args": {"count": 7}, "text": "Bases capturées : 7"}
+],
+"gameOverResourcesCollected": [
+  {"args": {"count": 7}, "text": "Ressources collectées : 7"}
+],
+"gameOverRaidsRepelled": [
+  {"args": {"count": 7}, "text": "Raids repoussés : 7"}
+],
+"gameOverRaidsLost": [
+  {"args": {"count": 7}, "text": "Raids perdus : 7"}
+],
+"menuBetaVersion": [
+  {"args": {"version": "Zed"}, "text": "Version bêta Zed"}
+],
+"saveDeleteMessage": [
+  {"args": {"name": "Zed"}, "text": "La partie de Zed sera définitivement supprimée."}
+],
+"saveMetaInProgress": [
+  {"args": {"turn": 7, "depth": "Zed", "level": 7}, "text": "Tour 7 · Zed · QG niv. 7"}
+],
+"saveMetaWon": [
+  {"args": {"turn": 7, "depth": "Zed", "difficulty": "Zed"}, "text": "Tour 7 · Zed · Zed"}
+],
+"saveMetaFallen": [
+  {"args": {"turn": 7, "depth": "Zed", "difficulty": "Zed"}, "text": "Tombée au tour 7 · Zed · Zed"}
+],
+"saveResumeLabel": [
+  {"args": {"name": "Zed", "turn": 7, "difficulty": "Zed"}, "text": "Zed · Tour 7 · Zed"}
+],
+"saveMinutesAgo": [
+  {"args": {"minutes": 7}, "text": "il y a 7 min"}
+],
+"saveHoursAgo": [
+  {"args": {"hours": 7}, "text": "il y a 7 h"}
+],
+"saveShortDate": [
+  {"args": {"day": 7, "month": "Zed"}, "text": "7 Zed"}
+],
+"saveShortDateWithYear": [
+  {"args": {"day": 7, "month": "Zed", "year": 7}, "text": "7 Zed 7"}
+],
+"saveMonth": [
+  {"args": {"month": "apr"}, "text": "avr."},
+  {"args": {"month": "aug"}, "text": "août"},
+  {"args": {"month": "feb"}, "text": "févr."},
+  {"args": {"month": "jan"}, "text": "janv."},
+  {"args": {"month": "jul"}, "text": "juil."},
+  {"args": {"month": "jun"}, "text": "juin"},
+  {"args": {"month": "mar"}, "text": "mars"},
+  {"args": {"month": "may"}, "text": "mai"},
+  {"args": {"month": "nov"}, "text": "nov."},
+  {"args": {"month": "oct"}, "text": "oct."},
+  {"args": {"month": "sep"}, "text": "sept."},
+  {"args": {"month": "zzz"}, "text": "déc."}
+],
+"screenReplaySummary": [
+  {"args": {"file": "Zed", "actions": "Zed", "turns": "Zed"}, "text": "Le fichier Zed contient Zed sur Zed."}
+],
+"screenReplayActions": [
+  {"args": {"count": 0}, "text": "0 action"},
+  {"args": {"count": 1}, "text": "1 action"},
+  {"args": {"count": 2}, "text": "2 actions"},
+  {"args": {"count": 5}, "text": "5 actions"},
+  {"args": {"count": 21}, "text": "21 actions"},
+  {"args": {"count": 1000000}, "text": "1000000 actions"}
+],
+"screenReplayTurns": [
+  {"args": {"count": 0}, "text": "0 tour joué"},
+  {"args": {"count": 1}, "text": "1 tour joué"},
+  {"args": {"count": 2}, "text": "2 tours joués"},
+  {"args": {"count": 5}, "text": "5 tours joués"},
+  {"args": {"count": 21}, "text": "21 tours joués"},
+  {"args": {"count": 1000000}, "text": "1000000 tours joués"}
+],
+"screenEventChosen": [
+  {"args": {"event": "Zed", "choice": "Zed"}, "text": "Zed : Zed"}
+],
+"screenGarrisonSize": [
+  {"args": {"count": 0}, "text": "Garnison : 0 unité"},
+  {"args": {"count": 1}, "text": "Garnison : 1 unité"},
+  {"args": {"count": 2}, "text": "Garnison : 2 unités"},
+  {"args": {"count": 5}, "text": "Garnison : 5 unités"},
+  {"args": {"count": 21}, "text": "Garnison : 21 unités"},
+  {"args": {"count": 1000000}, "text": "Garnison : 1000000 unités"}
+],
+"screenTakenByRivalTitle": [
+  {"args": {"name": "Zed"}, "text": "Pris par Zed"}
+],
+"screenPlainTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Plaine (7, 7)"}
+],
+"screenPassageTitle": [
+  {"args": {"name": "Zed"}, "text": "Passage vers Zed"}
+],
+"screenDescendThrough": [
+  {"args": {"base": "Zed"}, "text": "Descendre des troupes par Zed"}
+],
+"screenDescentTitle": [
+  {"args": {"level": 7}, "text": "Descente vers le Niveau 7"}
+],
+"screenDescentConfirm": [
+  {"args": {"count": 0}, "text": "Descendre (0 unité)"},
+  {"args": {"count": 1}, "text": "Descendre (1 unité)"},
+  {"args": {"count": 2}, "text": "Descendre (2 unités)"},
+  {"args": {"count": 5}, "text": "Descendre (5 unités)"},
+  {"args": {"count": 21}, "text": "Descendre (21 unités)"},
+  {"args": {"count": 1000000}, "text": "Descendre (1000000 unités)"}
+],
+"screenDescentDone": [
+  {"args": {"level": 7}, "text": "Descente au Niveau 7 effectuée"}
+],
+"screenReinforcementTitle": [
+  {"args": {"level": 7}, "text": "Renforts vers le Niveau 7"}
+],
+"screenReinforcementConfirm": [
+  {"args": {"count": 0}, "text": "Envoyer (0 unité)"},
+  {"args": {"count": 1}, "text": "Envoyer (1 unité)"},
+  {"args": {"count": 2}, "text": "Envoyer (2 unités)"},
+  {"args": {"count": 5}, "text": "Envoyer (5 unités)"},
+  {"args": {"count": 21}, "text": "Envoyer (21 unités)"},
+  {"args": {"count": 1000000}, "text": "Envoyer (1000000 unités)"}
+],
+"screenReinforcementsSent": [
+  {"args": {"count": 0, "level": 7}, "text": "0 unité en transit vers le Niveau 7"},
+  {"args": {"count": 1, "level": 7}, "text": "1 unité en transit vers le Niveau 7"},
+  {"args": {"count": 2, "level": 7}, "text": "2 unités en transit vers le Niveau 7"},
+  {"args": {"count": 5, "level": 7}, "text": "5 unités en transit vers le Niveau 7"},
+  {"args": {"count": 21, "level": 7}, "text": "21 unités en transit vers le Niveau 7"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 unités en transit vers le Niveau 7"}
+],
+"baseOtherName": [
+  {"args": {"type": "Zed", "number": 7}, "text": "Zed 7"}
+],
+"baseLevel": [
+  {"args": {"level": 7}, "text": "Niveau 7"}
+],
+"baseLevelShort": [
+  {"args": {"level": 7}, "text": "Niv. 7"}
+],
+"baseUpgradeLevels": [
+  {"args": {"from": 7, "to": 7}, "text": "Niveau 7 → 7"}
+],
+"baseCapturedBaseRequired": [
+  {"args": {"base": "Zed"}, "text": "Zed capturée requise"}
+],
+"baseWorksitesFree": [
+  {"args": {"free": 7, "total": 7}, "text": "Chantiers libres ce tour : 7/7"}
+],
+"baseWorksitesNext": [
+  {"args": {"level": 7}, "text": "+1 au QG 7"}
+],
+"baseShield": [
+  {"args": {"rampart": "Zed"}, "text": "Rempart de la base : Zed"}
+],
+"baseRampartCurrent": [
+  {"args": {"rampart": "Zed"}, "text": "Rempart actuel : Zed"}
+],
+"baseRampartNext": [
+  {"args": {"rampart": "Zed"}, "text": "Prochain niveau : Zed"}
+],
+"baseCoralRampartStats": [
+  {"args": {"hp": 7, "def": 7}, "text": "7 PV, DEF 7"}
+],
+"baseMagmaRampartStats": [
+  {"args": {"hp": 7, "atk": 7, "def": 7}, "text": "7 PV, ATK 7, DEF 7"}
+],
+"unitTotalCount": [
+  {"args": {"count": 0}, "text": "0 unité"},
+  {"args": {"count": 1}, "text": "1 unité"},
+  {"args": {"count": 2}, "text": "2 unités"},
+  {"args": {"count": 5}, "text": "5 unités"},
+  {"args": {"count": 21}, "text": "21 unités"},
+  {"args": {"count": 1000000}, "text": "1000000 unités"}
+],
+"unitBarracksRequired": [
+  {"args": {"level": 7}, "text": "Caserne niveau 7 requise pour débloquer"}
+],
+"unitInService": [
+  {"args": {"count": 7}, "text": "En service : 7"}
+],
+"armyLockPill": [
+  {"args": {"level": 7}, "text": "Caserne niv. 7"}
+],
+"armyUnitLocked": [
+  {"args": {"level": 7}, "text": "verrouillé, Caserne niveau 7"}
+],
+"turnTransition": [
+  {"args": {"from": 7, "to": 7}, "text": "Tour 7 → Tour 7"}
+],
+"turnPendingExplorations": [
+  {"args": {"count": 0}, "text": "0 exploration en attente"},
+  {"args": {"count": 1}, "text": "1 exploration en attente"},
+  {"args": {"count": 2}, "text": "2 explorations en attente"},
+  {"args": {"count": 5}, "text": "5 explorations en attente"},
+  {"args": {"count": 21}, "text": "21 explorations en attente"},
+  {"args": {"count": 1000000}, "text": "1000000 explorations en attente"}
+],
+"turnEventDefaulted": [
+  {"args": {"event": "Zed"}, "text": "Zed : option prudente appliquée"}
+],
+"turnEventDrawn": [
+  {"args": {"event": "Zed"}, "text": "Événement : Zed"}
+],
+"turnExplorationTotal": [
+  {"args": {"count": 0}, "text": "Exploration : 0 nouvelle cellule"},
+  {"args": {"count": 1}, "text": "Exploration : 1 nouvelle cellule"},
+  {"args": {"count": 2}, "text": "Exploration : 2 nouvelles cellules"},
+  {"args": {"count": 5}, "text": "Exploration : 5 nouvelles cellules"},
+  {"args": {"count": 21}, "text": "Exploration : 21 nouvelles cellules"},
+  {"args": {"count": 1000000}, "text": "Exploration : 1000000 nouvelles cellules"}
+],
+"turnExplorationCells": [
+  {"args": {"count": 0}, "text": "0 cellule"},
+  {"args": {"count": 1}, "text": "1 cellule"},
+  {"args": {"count": 2}, "text": "2 cellules"},
+  {"args": {"count": 5}, "text": "5 cellules"},
+  {"args": {"count": 21}, "text": "21 cellules"},
+  {"args": {"count": 1000000}, "text": "1000000 cellules"}
+],
+"factionRankingHeadquarters": [
+  {"args": {"level": 7}, "text": "QG niveau 7"}
+],
+"factionRankingDepth": [
+  {"args": {"level": 7}, "text": "Profondeur : niveau 7"}
+],
+"buildingDegradedReason": [
+  {"args": {"level": 7}, "text": "Dégradé : le QG doit être au niveau 7"}
+],
+"factionIntelFresh": [
+  {"args": {"turns": 0}, "text": "Valable encore 0 tour"},
+  {"args": {"turns": 1}, "text": "Valable encore 1 tour"},
+  {"args": {"turns": 2}, "text": "Valable encore 2 tours"},
+  {"args": {"turns": 5}, "text": "Valable encore 5 tours"},
+  {"args": {"turns": 21}, "text": "Valable encore 21 tours"},
+  {"args": {"turns": 1000000}, "text": "Valable encore 1000000 tours"}
+],
+"assaultYouAttacked": [
+  {"args": {"name": "Zed"}, "text": "Vous avez attaqué Zed"}
+],
+"assaultAttackedYou": [
+  {"args": {"name": "Zed"}, "text": "Zed vous a attaqué"}
+],
+"assaultDefendersDown": [
+  {"args": {"killed": 7, "total": 7}, "text": "Défenseurs mis hors de combat : 7/7"}
+],
+"assaultRampart": [
+  {"args": {"before": 7, "after": 7}, "text": "Rempart : niveau 7 → 7"}
+],
+"assaultHeadquarters": [
+  {"args": {"before": 7, "after": 7}, "text": "QG : niveau 7 → 7"}
+],
+"factionAttackRepelled": [
+  {"args": {"faction": "Zed"}, "text": "Zed a attaqué : attaque repoussée"}
+],
+"factionAttackDamaged": [
+  {"args": {"faction": "Zed"}, "text": "Zed a attaqué : base endommagée"}
+],
+"factionAttackPillaged": [
+  {"args": {"faction": "Zed"}, "text": "Zed a attaqué : base pillée"}
+],
+"factionPostTaken": [
+  {"args": {"faction": "Zed", "post": "Zed"}, "text": "Zed a pris ta Zed"}
+],
+"factionPostRepelled": [
+  {"args": {"faction": "Zed", "post": "Zed"}, "text": "Zed a attaqué ta Zed : attaque repoussée"}
+],
+"factionPostUnitsLost": [
+  {"args": {"count": 0, "level": 7}, "text": "0 unité du niveau 7 perdue"},
+  {"args": {"count": 1, "level": 7}, "text": "1 unité du niveau 7 perdue"},
+  {"args": {"count": 2, "level": 7}, "text": "2 unités du niveau 7 perdues"},
+  {"args": {"count": 5, "level": 7}, "text": "5 unités du niveau 7 perdues"},
+  {"args": {"count": 21, "level": 7}, "text": "21 unités du niveau 7 perdues"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 unités du niveau 7 perdues"}
+],
+"factionKernelDamaged": [
+  {"args": {"faction": "Zed"}, "text": "Zed a attaqué le Noyau : un niveau perdu"}
+],
+"factionKernelRepelled": [
+  {"args": {"faction": "Zed"}, "text": "Zed a attaqué le Noyau : attaque repoussée"}
+],
+"factionKernelTaken": [
+  {"args": {"faction": "Zed"}, "text": "Zed a pris le Noyau"}
+],
+"factionKernelGarrisonLost": [
+  {"args": {"count": 0}, "text": "0 unité de la garnison perdue"},
+  {"args": {"count": 1}, "text": "1 unité de la garnison perdue"},
+  {"args": {"count": 2}, "text": "2 unités de la garnison perdues"},
+  {"args": {"count": 5}, "text": "5 unités de la garnison perdues"},
+  {"args": {"count": 21}, "text": "21 unités de la garnison perdues"},
+  {"args": {"count": 1000000}, "text": "1000000 unités de la garnison perdues"}
+],
+"historyPostWon": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Zed prise à Zed"}
+],
+"historyPostFailed": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Assaut sur Zed repoussé par Zed"}
+],
+"historyPostSuffered": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Zed prise par Zed"}
+],
+"historyPostRepelled": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Assaut de Zed sur Zed repoussé"}
+],
+"assaultPostTaken": [
+  {"args": {"post": "Zed"}, "text": "Zed est à vous : son passage est détruit. Construisez le vôtre pour y descendre."}
+],
+"assaultPostLost": [
+  {"args": {"post": "Zed"}, "text": "Zed est perdue : votre passage est détruit, et les unités du niveau en dessous sont perdues avec elle."}
+],
+"assaultKernelLevel": [
+  {"args": {"before": 7, "after": 7}, "text": "Noyau : niveau 7 → 7"}
+],
+"mapHeldBy": [
+  {"args": {"name": "Zed"}, "text": "Tenue par Zed"}
+],
+"assaultPlanAdmiralsIn": [
+  {"args": {"count": 0, "level": 7}, "text": "0 Amiral au niveau 7"},
+  {"args": {"count": 1, "level": 7}, "text": "1 Amiral au niveau 7"},
+  {"args": {"count": 2, "level": 7}, "text": "2 Amiraux au niveau 7"},
+  {"args": {"count": 5, "level": 7}, "text": "5 Amiraux au niveau 7"},
+  {"args": {"count": 21, "level": 7}, "text": "21 Amiraux au niveau 7"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 Amiraux au niveau 7"}
+],
+"assaultPlanAdmiralsLeft": [
+  {"args": {"count": 0, "level": 7}, "text": "Ajoute-le : 0 Amiral au niveau 7"},
+  {"args": {"count": 1, "level": 7}, "text": "Ajoute-le : 1 Amiral au niveau 7"},
+  {"args": {"count": 2, "level": 7}, "text": "Ajoute-le : 2 Amiraux au niveau 7"},
+  {"args": {"count": 5, "level": 7}, "text": "Ajoute-le : 5 Amiraux au niveau 7"},
+  {"args": {"count": 21, "level": 7}, "text": "Ajoute-le : 21 Amiraux au niveau 7"},
+  {"args": {"count": 1000000, "level": 7}, "text": "Ajoute-le : 1000000 Amiraux au niveau 7"}
+],
+"assaultPlanAdmiralRecruit": [
+  {"args": {"level": 7}, "text": "Recrute-en un à la Caserne niveau 7"}
+],
+"assaultPlanGuardians": [
+  {"args": {"count": 0}, "text": "0 Gardien prend les coups pour lui"},
+  {"args": {"count": 1}, "text": "1 Gardien prend les coups pour lui"},
+  {"args": {"count": 2}, "text": "2 Gardiens prennent les coups pour lui"},
+  {"args": {"count": 5}, "text": "5 Gardiens prennent les coups pour lui"},
+  {"args": {"count": 21}, "text": "21 Gardiens prennent les coups pour lui"},
+  {"args": {"count": 1000000}, "text": "1000000 Gardiens prennent les coups pour lui"}
+],
+"assaultPlanNext": [
+  {"args": {"building": "Zed"}, "text": "Ensuite : Zed"}
+],
+"assaultPlanHqNeeded": [
+  {"args": {"required": 7, "current": 7}, "text": "Il demande le QG 7, tu es au QG 7"}
+],
+"assaultPlanHqReady": [
+  {"args": {"current": 7}, "text": "Ton QG 7 le permet déjà"}
+],
+"assaultPlanRating": [
+  {"args": {"rating": "high", "wins": 7, "rehearsals": 7}, "text": "Élevées · 7 sur 7"},
+  {"args": {"rating": "risky", "wins": 7, "rehearsals": 7}, "text": "Risquées · 7 sur 7"},
+  {"args": {"rating": "zzz", "wins": 7, "rehearsals": 7}, "text": "Faibles · 7 sur 7"}
+],
+"assaultPlanAdviceLeader": [
+  {"args": {"count": 0}, "text": "l'Amiral"},
+  {"args": {"count": 1}, "text": "l'Amiral"},
+  {"args": {"count": 2}, "text": "les 2 Amiraux"},
+  {"args": {"count": 5}, "text": "les 5 Amiraux"},
+  {"args": {"count": 21}, "text": "les 21 Amiraux"},
+  {"args": {"count": 1000000}, "text": "les 1000000 Amiraux"}
+],
+"assaultPlanAdvice": [
+  {"args": {"leader": "Zed", "escort": "Zed"}, "text": "Conseil : Zed avec Zed"}
+],
+"tipKernelGarrisonLine2": [
+  {"args": {"level": 7}, "text": "Tes unités restées dehors, au niveau 7, ne combattent pas."}
+],
+"tipKernelGarrisonLine3": [
+  {"args": {"action": "Zed"}, "text": "Fais-les entrer avec « Zed », sur la fiche du Noyau."}
+],
+"leviathanBannerForce": [
+  {"args": {"sentinels": 7, "level": 7, "count": 7}, "text": "Léviathan + 7 Sentinelles · défenseurs niv. 7 : 7"}
+],
+"leviathanDueWarning": [
+  {"args": {"count": 0, "level": 7}, "text": "Le Léviathan frappe ta Faille à la fin du tour, et aucun défenseur ne l'attend au niveau 7."},
+  {"args": {"count": 1, "level": 7}, "text": "Le Léviathan frappe ta Faille à la fin du tour, et seulement 1 défenseur l'attend au niveau 7."},
+  {"args": {"count": 2, "level": 7}, "text": "Le Léviathan frappe ta Faille à la fin du tour, et seulement 2 défenseurs l'attendent au niveau 7."},
+  {"args": {"count": 5, "level": 7}, "text": "Le Léviathan frappe ta Faille à la fin du tour, et seulement 5 défenseurs l'attendent au niveau 7."},
+  {"args": {"count": 21, "level": 7}, "text": "Le Léviathan frappe ta Faille à la fin du tour, et seulement 21 défenseurs l'attendent au niveau 7."},
+  {"args": {"count": 1000000, "level": 7}, "text": "Le Léviathan frappe ta Faille à la fin du tour, et seulement 1000000 défenseurs l'attendent au niveau 7."}
+],
+"guideLeviathanReturn": [
+  {"args": {"level": 7}, "text": "Le Léviathan revient reprendre sa Faille ! Seules tes unités du niveau 7 la défendent. Si elle tombe, ton Module est détruit et tes unités d'en bas sont perdues."}
+],
+"guideLeviathanReinforce": [
+  {"args": {"count": 0}, "text": "Envoie 0 Harponneur de plus."},
+  {"args": {"count": 1}, "text": "Envoie 1 Harponneur de plus."},
+  {"args": {"count": 2}, "text": "Envoie 2 Harponneurs de plus."},
+  {"args": {"count": 5}, "text": "Envoie 5 Harponneurs de plus."},
+  {"args": {"count": 21}, "text": "Envoie 21 Harponneurs de plus."},
+  {"args": {"count": 1000000}, "text": "Envoie 1000000 Harponneurs de plus."}
+],
+"defeatCauseRaid": [
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 0}, "text": "Tour 7 : Zed contre aucun défenseur"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 1}, "text": "Tour 7 : Zed contre 1 défenseur"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 2}, "text": "Tour 7 : Zed contre 2 défenseurs"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 5}, "text": "Tour 7 : Zed contre 5 défenseurs"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 21}, "text": "Tour 7 : Zed contre 21 défenseurs"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 1000000}, "text": "Tour 7 : Zed contre 1000000 défenseurs"}
+],
+"defeatAdviceMoreDefenders": [
+  {"args": {"needed": 7, "defenders": 0}, "text": "Contre ton dernier raid, il fallait environ 7 Harponneurs. Tu avais aucun défenseur."},
+  {"args": {"needed": 7, "defenders": 1}, "text": "Contre ton dernier raid, il fallait environ 7 Harponneurs. Tu avais 1 défenseur."},
+  {"args": {"needed": 7, "defenders": 2}, "text": "Contre ton dernier raid, il fallait environ 7 Harponneurs. Tu avais 2 défenseurs."},
+  {"args": {"needed": 7, "defenders": 5}, "text": "Contre ton dernier raid, il fallait environ 7 Harponneurs. Tu avais 5 défenseurs."},
+  {"args": {"needed": 7, "defenders": 21}, "text": "Contre ton dernier raid, il fallait environ 7 Harponneurs. Tu avais 21 défenseurs."},
+  {"args": {"needed": 7, "defenders": 1000000}, "text": "Contre ton dernier raid, il fallait environ 7 Harponneurs. Tu avais 1000000 défenseurs."}
+],
+"defeatAdviceTooStrong": [
+  {"args": {"max": 7}, "text": "Ton dernier raid demandait plus de 7 Harponneurs : garde la jauge de bruit plus basse et monte le rempart de la Citadelle."}
+]
+},
+"en": {
+"newGameNameTooShort": [
+  {"args": {"min": 7}, "text": "The name must be at least 7 characters long"}
+],
+"newGameFactionsCount": [
+  {"args": {"count": 0}, "text": "0 factions race you to the volcano"},
+  {"args": {"count": 1}, "text": "1 faction races you to the volcano"},
+  {"args": {"count": 2}, "text": "2 factions race you to the volcano"},
+  {"args": {"count": 5}, "text": "5 factions race you to the volcano"},
+  {"args": {"count": 21}, "text": "21 factions race you to the volcano"},
+  {"args": {"count": 1000000}, "text": "1000000 factions race you to the volcano"}
+],
+"buildingHeadquartersDescription": [
+  {"args": {"coral": 7, "ore": 7}, "text": "Command center of your undersea base. Its level sets what your colony can do. Once built, it provides 7 coral and 7 ore per turn."}
+],
+"unitScoutCount": [
+  {"args": {"count": 0}, "text": "0 scouts"},
+  {"args": {"count": 1}, "text": "1 scout"},
+  {"args": {"count": 2}, "text": "2 scouts"},
+  {"args": {"count": 5}, "text": "5 scouts"},
+  {"args": {"count": 21}, "text": "21 scouts"},
+  {"args": {"count": 1000000}, "text": "1000000 scouts"}
+],
+"unitHarpoonistCount": [
+  {"args": {"count": 0}, "text": "0 harpooners"},
+  {"args": {"count": 1}, "text": "1 harpooner"},
+  {"args": {"count": 2}, "text": "2 harpooners"},
+  {"args": {"count": 5}, "text": "5 harpooners"},
+  {"args": {"count": 21}, "text": "21 harpooners"},
+  {"args": {"count": 1000000}, "text": "1000000 harpooners"}
+],
+"unitGuardianCount": [
+  {"args": {"count": 0}, "text": "0 guardians"},
+  {"args": {"count": 1}, "text": "1 guardian"},
+  {"args": {"count": 2}, "text": "2 guardians"},
+  {"args": {"count": 5}, "text": "5 guardians"},
+  {"args": {"count": 21}, "text": "21 guardians"},
+  {"args": {"count": 1000000}, "text": "1000000 guardians"}
+],
+"unitDomeBreakerCount": [
+  {"args": {"count": 0}, "text": "0 breakers"},
+  {"args": {"count": 1}, "text": "1 breaker"},
+  {"args": {"count": 2}, "text": "2 breakers"},
+  {"args": {"count": 5}, "text": "5 breakers"},
+  {"args": {"count": 21}, "text": "21 breakers"},
+  {"args": {"count": 1000000}, "text": "1000000 breakers"}
+],
+"unitAbyssAdmiralCount": [
+  {"args": {"count": 0}, "text": "0 abyss admirals"},
+  {"args": {"count": 1}, "text": "1 abyss admiral"},
+  {"args": {"count": 2}, "text": "2 abyss admirals"},
+  {"args": {"count": 5}, "text": "5 abyss admirals"},
+  {"args": {"count": 21}, "text": "21 abyss admirals"},
+  {"args": {"count": 1000000}, "text": "1000000 abyss admirals"}
+],
+"unitSaboteurCount": [
+  {"args": {"count": 0}, "text": "0 saboteurs"},
+  {"args": {"count": 1}, "text": "1 saboteur"},
+  {"args": {"count": 2}, "text": "2 saboteurs"},
+  {"args": {"count": 5}, "text": "5 saboteurs"},
+  {"args": {"count": 21}, "text": "21 saboteurs"},
+  {"args": {"count": 1000000}, "text": "1000000 saboteurs"}
+],
+"monsterFamilyGenericCount": [
+  {"args": {"count": 0}, "text": "0 monsters"},
+  {"args": {"count": 1}, "text": "1 monster"},
+  {"args": {"count": 2}, "text": "2 monsters"},
+  {"args": {"count": 5}, "text": "5 monsters"},
+  {"args": {"count": 21}, "text": "21 monsters"},
+  {"args": {"count": 1000000}, "text": "1000000 monsters"}
+],
+"monsterFamilySwarmCount": [
+  {"args": {"count": 0}, "text": "0 Glassfangs"},
+  {"args": {"count": 1}, "text": "1 Glassfang"},
+  {"args": {"count": 2}, "text": "2 Glassfangs"},
+  {"args": {"count": 5}, "text": "5 Glassfangs"},
+  {"args": {"count": 21}, "text": "21 Glassfangs"},
+  {"args": {"count": 1000000}, "text": "1000000 Glassfangs"}
+],
+"monsterFamilyArmouredCount": [
+  {"args": {"count": 0}, "text": "0 Armored Isopods"},
+  {"args": {"count": 1}, "text": "1 Armored Isopod"},
+  {"args": {"count": 2}, "text": "2 Armored Isopods"},
+  {"args": {"count": 5}, "text": "5 Armored Isopods"},
+  {"args": {"count": 21}, "text": "21 Armored Isopods"},
+  {"args": {"count": 1000000}, "text": "1000000 Armored Isopods"}
+],
+"monsterFamilyHunterCount": [
+  {"args": {"count": 0}, "text": "0 Hunter Squids"},
+  {"args": {"count": 1}, "text": "1 Hunter Squid"},
+  {"args": {"count": 2}, "text": "2 Hunter Squids"},
+  {"args": {"count": 5}, "text": "5 Hunter Squids"},
+  {"args": {"count": 21}, "text": "21 Hunter Squids"},
+  {"args": {"count": 1000000}, "text": "1000000 Hunter Squids"}
+],
+"monsterFamilyColossusCount": [
+  {"args": {"count": 0}, "text": "0 Sleeper Sharks"},
+  {"args": {"count": 1}, "text": "1 Sleeper Shark"},
+  {"args": {"count": 2}, "text": "2 Sleeper Sharks"},
+  {"args": {"count": 5}, "text": "5 Sleeper Sharks"},
+  {"args": {"count": 21}, "text": "21 Sleeper Sharks"},
+  {"args": {"count": 1000000}, "text": "1000000 Sleeper Sharks"}
+],
+"monsterFamilyKrakenCount": [
+  {"args": {"count": 0}, "text": "0 Krakens"},
+  {"args": {"count": 1}, "text": "1 Kraken"},
+  {"args": {"count": 2}, "text": "2 Krakens"},
+  {"args": {"count": 5}, "text": "5 Krakens"},
+  {"args": {"count": 21}, "text": "21 Krakens"},
+  {"args": {"count": 1000000}, "text": "1000000 Krakens"}
+],
+"monsterLairGroupsAnd": [
+  {"args": {"first": "Zed", "second": "Zed"}, "text": "Zed and Zed"}
+],
+"monsterLairWave": [
+  {"args": {"monsters": "Zed", "level": 7}, "text": "Zed lv. 7"}
+],
+"monsterLairWeakAgainst": [
+  {"args": {"units": "Zed"}, "text": "Weak against: Zed"}
+],
+"eventCountdown": [
+  {"args": {"label": "Zed", "turns": 0}, "text": "Zed: 0 turns left"},
+  {"args": {"label": "Zed", "turns": 1}, "text": "Zed: 1 turn left"},
+  {"args": {"label": "Zed", "turns": 2}, "text": "Zed: 2 turns left"},
+  {"args": {"label": "Zed", "turns": 5}, "text": "Zed: 5 turns left"},
+  {"args": {"label": "Zed", "turns": 21}, "text": "Zed: 21 turns left"},
+  {"args": {"label": "Zed", "turns": 1000000}, "text": "Zed: 1000000 turns left"}
+],
+"eventColdCurrentHeated": [
+  {"args": {"label": "Zed"}, "text": "Zed (heated greenhouses)"}
+],
+"techExploredAreaEffect": [
+  {"args": {"size": 7}, "text": "Explored area 7×7"}
+],
+"temporaryObjectiveWreckTitle": [
+  {"args": {"turn": 7}, "text": "Search the wreck by the end of turn 7"}
+],
+"historyBuildingTitle": [
+  {"args": {"building": "Zed", "level": 7}, "text": "Zed lv. 7"}
+],
+"historyResearchUnlocked": [
+  {"args": {"branch": "Zed"}, "text": "Zed unlocked"}
+],
+"historyResearchLevel": [
+  {"args": {"branch": "Zed", "level": 7}, "text": "Zed lv. 7"}
+],
+"historyResearchImproved": [
+  {"args": {"branch": "Zed"}, "text": "Zed improved"}
+],
+"historyRecruitTitle": [
+  {"args": {"count": 0, "units": "Zed"}, "text": "Zed recruited"},
+  {"args": {"count": 1, "units": "Zed"}, "text": "Zed recruited"},
+  {"args": {"count": 2, "units": "Zed"}, "text": "Zed recruited"},
+  {"args": {"count": 5, "units": "Zed"}, "text": "Zed recruited"},
+  {"args": {"count": 21, "units": "Zed"}, "text": "Zed recruited"},
+  {"args": {"count": 1000000, "units": "Zed"}, "text": "Zed recruited"}
+],
+"historyExploreTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Exploration (7, 7)"}
+],
+"historyCollectTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Treasure collected (7, 7)"}
+],
+"historyCombatVictory": [
+  {"args": {"level": 7}, "text": "Victory vs Lair lv. 7"}
+],
+"historyCombatDefeat": [
+  {"args": {"level": 7}, "text": "Defeat vs Lair lv. 7"}
+],
+"historyTurnEndTitle": [
+  {"args": {"turn": 7}, "text": "Turn 7 ended"}
+],
+"historyCaptureTitle": [
+  {"args": {"name": "Zed"}, "text": "Capture: Zed"}
+],
+"historyCaptureVictory": [
+  {"args": {"turns": 0}, "text": "Victory in 0 turns"},
+  {"args": {"turns": 1}, "text": "Victory in 1 turn"},
+  {"args": {"turns": 2}, "text": "Victory in 2 turns"},
+  {"args": {"turns": 5}, "text": "Victory in 5 turns"},
+  {"args": {"turns": 21}, "text": "Victory in 21 turns"},
+  {"args": {"turns": 1000000}, "text": "Victory in 1000000 turns"}
+],
+"historyCaptureMissed": [
+  {"args": {"name": "Zed"}, "text": "Not captured: Zed"}
+],
+"historyDescentTitle": [
+  {"args": {"level": 7}, "text": "Descent to Level 7"}
+],
+"historyDescentUnits": [
+  {"args": {"count": 0}, "text": "0 units sent"},
+  {"args": {"count": 1}, "text": "1 unit sent"},
+  {"args": {"count": 2}, "text": "2 units sent"},
+  {"args": {"count": 5}, "text": "5 units sent"},
+  {"args": {"count": 21}, "text": "21 units sent"},
+  {"args": {"count": 1000000}, "text": "1000000 units sent"}
+],
+"historyReinforcementTitle": [
+  {"args": {"level": 7}, "text": "Reinforcements to Level 7"}
+],
+"historyReinforcementUnits": [
+  {"args": {"count": 0}, "text": "0 units in transit"},
+  {"args": {"count": 1}, "text": "1 unit in transit"},
+  {"args": {"count": 2}, "text": "2 units in transit"},
+  {"args": {"count": 5}, "text": "5 units in transit"},
+  {"args": {"count": 21}, "text": "21 units in transit"},
+  {"args": {"count": 1000000}, "text": "1000000 units in transit"}
+],
+"historyAssaultWon": [
+  {"args": {"name": "Zed"}, "text": "Assault on Zed succeeded"}
+],
+"historyAssaultFailed": [
+  {"args": {"name": "Zed"}, "text": "Assault repelled by Zed"}
+],
+"historyAssaultSuffered": [
+  {"args": {"name": "Zed"}, "text": "Base attacked by Zed"}
+],
+"historyAssaultRepelled": [
+  {"args": {"name": "Zed"}, "text": "Assault by Zed repelled"}
+],
+"commonTurn": [
+  {"args": {"turn": 7}, "text": "Turn 7"}
+],
+"fightTurnCount": [
+  {"args": {"count": 0}, "text": "Fight over 0 turns"},
+  {"args": {"count": 1}, "text": "Fight over 1 turn"},
+  {"args": {"count": 2}, "text": "Fight over 2 turns"},
+  {"args": {"count": 5}, "text": "Fight over 5 turns"},
+  {"args": {"count": 21}, "text": "Fight over 21 turns"},
+  {"args": {"count": 1000000}, "text": "Fight over 1000000 turns"}
+],
+"fightUnitAccounting": [
+  {"args": {"sent": 7, "intact": 7, "wounded": 7, "dead": 7}, "text": "Sent: 7 / Unhurt: 7 / Wounded: 7 / Dead: 7"}
+],
+"fightEnemiesKilled": [
+  {"args": {"killed": 7, "total": 7}, "text": "Enemies killed: 7/7"}
+],
+"fightGuardiansKilled": [
+  {"args": {"killed": 7, "total": 7}, "text": "Guardians defeated: 7/7"}
+],
+"fightTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Fight (7, 7)"}
+],
+"fightAssaultTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Assault (7, 7)"}
+],
+"fightAssaultOn": [
+  {"args": {"target": "Zed"}, "text": "Assault: Zed"}
+],
+"fightStock": [
+  {"args": {"count": 7}, "text": "Stock: 7"}
+],
+"fightAlliesAlive": [
+  {"args": {"count": 7}, "text": "Allies alive: 7"}
+],
+"fightAlliesHp": [
+  {"args": {"hp": 7}, "text": "Allied HP: 7"}
+],
+"fightDamageDealt": [
+  {"args": {"damage": 7}, "text": "Damage dealt: 7"}
+],
+"fightEnemiesAlive": [
+  {"args": {"count": 7}, "text": "Enemies alive: 7"}
+],
+"fightEnemiesHp": [
+  {"args": {"hp": 7}, "text": "Enemy HP: 7"}
+],
+"fightDamageTaken": [
+  {"args": {"damage": 7}, "text": "Damage taken: 7"}
+],
+"fightCriticalHits": [
+  {"args": {"count": 7}, "text": "Critical hits: 7"}
+],
+"fightMilitaryBonus": [
+  {"args": {"bonuses": "Zed"}, "text": "Military bonus: Zed"}
+],
+"fightLevel": [
+  {"args": {"level": 7}, "text": "Level 7"}
+],
+"fightWeakAgainst": [
+  {"args": {"unit": "Zed"}, "text": "Weak against: Zed"}
+],
+"mapLevelChip": [
+  {"args": {"level": 7, "name": "Zed"}, "text": "Lv 7: Zed"}
+],
+"mapPearlsPerTurn": [
+  {"args": {"count": 0}, "text": "+0 pearls per turn"},
+  {"args": {"count": 1}, "text": "+1 pearl per turn"},
+  {"args": {"count": 2}, "text": "+2 pearls per turn"},
+  {"args": {"count": 5}, "text": "+5 pearls per turn"},
+  {"args": {"count": 21}, "text": "+21 pearls per turn"},
+  {"args": {"count": 1000000}, "text": "+1000000 pearls per turn"}
+],
+"mapBuildingRequired": [
+  {"args": {"building": "Zed"}, "text": "Building required to send units: Zed"}
+],
+"mapDefendersOnLevel": [
+  {"args": {"level": 7}, "text": "Defenders on Level 7"}
+],
+"postDefenceThreat": [
+  {"args": {"faction": "Zed", "units": 0, "turn": 7}, "text": "Zed: 0 fighters (report from turn 7)"},
+  {"args": {"faction": "Zed", "units": 1, "turn": 7}, "text": "Zed: 1 fighter (report from turn 7)"},
+  {"args": {"faction": "Zed", "units": 2, "turn": 7}, "text": "Zed: 2 fighters (report from turn 7)"},
+  {"args": {"faction": "Zed", "units": 5, "turn": 7}, "text": "Zed: 5 fighters (report from turn 7)"},
+  {"args": {"faction": "Zed", "units": 21, "turn": 7}, "text": "Zed: 21 fighters (report from turn 7)"},
+  {"args": {"faction": "Zed", "units": 1000000, "turn": 7}, "text": "Zed: 1000000 fighters (report from turn 7)"}
+],
+"postDefenceIfFalls": [
+  {"args": {"kind": "faille"}, "text": "If the Rift falls"},
+  {"args": {"kind": "zzz"}, "text": "If the Vent falls"}
+],
+"postDefencePassageLost": [
+  {"args": {"building": "descentModule"}, "text": "Descent Module destroyed"},
+  {"args": {"building": "zzz"}, "text": "Pressure Capsule destroyed"}
+],
+"postDefenceUnitsLost": [
+  {"args": {"count": 0, "level": 7}, "text": "0 level 7 units lost"},
+  {"args": {"count": 1, "level": 7}, "text": "1 level 7 unit lost"},
+  {"args": {"count": 2, "level": 7}, "text": "2 level 7 units lost"},
+  {"args": {"count": 5, "level": 7}, "text": "5 level 7 units lost"},
+  {"args": {"count": 21, "level": 7}, "text": "21 level 7 units lost"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 level 7 units lost"}
+],
+"postDefenceReinforcementsLost": [
+  {"args": {"count": 0}, "text": "0 reinforcements on the way cancelled"},
+  {"args": {"count": 1}, "text": "1 reinforcement on the way cancelled"},
+  {"args": {"count": 2}, "text": "2 reinforcements on the way cancelled"},
+  {"args": {"count": 5}, "text": "5 reinforcements on the way cancelled"},
+  {"args": {"count": 21}, "text": "21 reinforcements on the way cancelled"},
+  {"args": {"count": 1000000}, "text": "1000000 reinforcements on the way cancelled"}
+],
+"mapSendUnitsToLevel": [
+  {"args": {"level": 7}, "text": "Send units to Level 7"}
+],
+"mapExploreTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Explore (7, 7)"}
+],
+"mapAreaCells": [
+  {"args": {"side": 7}, "text": "7×7 cells"}
+],
+"mapTreasureTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Treasure (7, 7)"}
+],
+"raidPredatorsTitle": [
+  {"args": {"turn": 7}, "text": "Predator Shoal (turn 7)"}
+],
+"raidTitle": [
+  {"args": {"turn": 7}, "text": "Raid on the base (turn 7)"}
+],
+"raidRampart": [
+  {"args": {"level": 7}, "text": "Citadel Rampart lv. 7"}
+],
+"raidLostInARow": [
+  {"args": {"lost": 7, "limit": 7}, "text": "Raids lost in a row: 7/7"}
+],
+"raidIncomingThisTurn": [
+  {"args": {"wave": "Zed"}, "text": "Raid at the end of this turn: Zed"}
+],
+"raidIncomingOnTurn": [
+  {"args": {"turn": 7, "wave": "Zed"}, "text": "Raid at the end of turn 7: Zed"}
+],
+"raidAnnounced": [
+  {"args": {"wave": "Zed", "turn": 7}, "text": "A raid is coming: Zed, end of turn 7"}
+],
+"raidDueThisTurn": [
+  {"args": {"attacker": "Zed", "wave": "Zed", "defenders": "Zed"}, "text": "Zed this turn: Zed against Zed"}
+],
+"raidDefenders": [
+  {"args": {"count": 0}, "text": "no defender"},
+  {"args": {"count": 1}, "text": "1 defender"},
+  {"args": {"count": 2}, "text": "2 defenders"},
+  {"args": {"count": 5}, "text": "5 defenders"},
+  {"args": {"count": 21}, "text": "21 defenders"},
+  {"args": {"count": 1000000}, "text": "1000000 defenders"}
+],
+"volcanoWaveTitle": [
+  {"args": {"turn": 7}, "text": "Wave on the Core (turn 7)"}
+],
+"volcanoKernelHolds": [
+  {"args": {"level": 7}, "text": "The Core holds at level 7"}
+],
+"volcanoKernelDrops": [
+  {"args": {"level": 7}, "text": "The Core falls back to level 7"}
+],
+"volcanoMagmaRampart": [
+  {"args": {"stats": "Zed"}, "text": "Magma rampart: Zed"}
+],
+"volcanoKernelLevel": [
+  {"args": {"level": 7}, "text": "Core level 7"}
+],
+"volcanoOutsideGarrison": [
+  {"args": {"count": 0, "level": 7}, "text": "Outside the garrison, on Level 7: 0 units"},
+  {"args": {"count": 1, "level": 7}, "text": "Outside the garrison, on Level 7: 1 unit"},
+  {"args": {"count": 2, "level": 7}, "text": "Outside the garrison, on Level 7: 2 units"},
+  {"args": {"count": 5, "level": 7}, "text": "Outside the garrison, on Level 7: 5 units"},
+  {"args": {"count": 21, "level": 7}, "text": "Outside the garrison, on Level 7: 21 units"},
+  {"args": {"count": 1000000, "level": 7}, "text": "Outside the garrison, on Level 7: 1000000 units"}
+],
+"volcanoNextWave": [
+  {"args": {"wave": "Zed"}, "text": "Next wave, at the end of the turn: Zed"}
+],
+"volcanoLevelsLost": [
+  {"args": {"count": 7}, "text": "Levels lost to the waves: 7"}
+],
+"undefendedPostWarning": [
+  {"args": {"kind": "faille", "level": 7}, "text": "Your Rift has no defender on level 7"},
+  {"args": {"kind": "zzz", "level": 7}, "text": "Your Vent has no defender on level 7"}
+],
+"volcanoDueWarning": [
+  {"args": {"wave": "Zed"}, "text": "Wave on the Core this turn: Zed, and no garrison. The Core will probably lose a level."}
+],
+"volcanoStatus": [
+  {"args": {"level": 7, "wave": "Zed", "size": 7}, "text": "Core lv. 7, end of turn: Zed against a garrison of 7"}
+],
+"volcanoRepelled": [
+  {"args": {"losses": "Zed"}, "text": "Volcano: wave repelled, Zed"}
+],
+"volcanoKernelFell": [
+  {"args": {"level": 7}, "text": "Volcano: the Core falls back to level 7"}
+],
+"volcanoWounded": [
+  {"args": {"count": 0}, "text": "0 wounded"},
+  {"args": {"count": 1}, "text": "1 wounded"},
+  {"args": {"count": 2}, "text": "2 wounded"},
+  {"args": {"count": 5}, "text": "5 wounded"},
+  {"args": {"count": 21}, "text": "21 wounded"},
+  {"args": {"count": 1000000}, "text": "1000000 wounded"}
+],
+"volcanoDead": [
+  {"args": {"count": 0}, "text": "0 dead"},
+  {"args": {"count": 1}, "text": "1 dead"},
+  {"args": {"count": 2}, "text": "2 dead"},
+  {"args": {"count": 5}, "text": "5 dead"},
+  {"args": {"count": 21}, "text": "21 dead"},
+  {"args": {"count": 1000000}, "text": "1000000 dead"}
+],
+"volcanoKrakenRises": [
+  {"args": {"wave": "Zed"}, "text": "The Kraken rises: Zed next turn"}
+],
+"eventCardPredatorsWave": [
+  {"args": {"wave": "Zed", "defenders": "Zed"}, "text": "Zed against Zed on level 1."}
+],
+"eventCardStormLine1": [
+  {"args": {"turns": 0}, "text": "No exploration for 0 turns."},
+  {"args": {"turns": 1}, "text": "No exploration for 1 turn."},
+  {"args": {"turns": 2}, "text": "No exploration for 2 turns."},
+  {"args": {"turns": 5}, "text": "No exploration for 5 turns."},
+  {"args": {"turns": 21}, "text": "No exploration for 21 turns."},
+  {"args": {"turns": 1000000}, "text": "No exploration for 1000000 turns."}
+],
+"eventCardStormLine2": [
+  {"args": {"relief": 7}, "text": "The storm covers the noise: gauge −7."}
+],
+"eventCardWreckLine2": [
+  {"args": {"turns": 0, "noise": 7}, "text": "Explore it with a Scout, then search it within 0 turns (+7 noise)."},
+  {"args": {"turns": 1, "noise": 7}, "text": "Explore it with a Scout, then search it within 1 turn (+7 noise)."},
+  {"args": {"turns": 2, "noise": 7}, "text": "Explore it with a Scout, then search it within 2 turns (+7 noise)."},
+  {"args": {"turns": 5, "noise": 7}, "text": "Explore it with a Scout, then search it within 5 turns (+7 noise)."},
+  {"args": {"turns": 21, "noise": 7}, "text": "Explore it with a Scout, then search it within 21 turns (+7 noise)."},
+  {"args": {"turns": 1000000, "noise": 7}, "text": "Explore it with a Scout, then search it within 1000000 turns (+7 noise)."}
+],
+"eventCardWarmAccept": [
+  {"args": {"percent": 7, "turns": 7, "noise": 7}, "text": "Exploit (+7% algae, coral, ore for 7 turns, +7 noise/turn)"}
+],
+"eventCardColdAccept": [
+  {"args": {"energy": 7, "turns": 7}, "text": "Heat the greenhouses (−7 energy/turn for 7 turns)"}
+],
+"eventCardColdRefuse": [
+  {"args": {"percent": 7, "turns": 7}, "text": "Endure it (−7% algae for 7 turns)"}
+],
+"eventCardPredatorsAccept": [
+  {"args": {"count": 0}, "text": "Fight it (0 monsters, end of turn)"},
+  {"args": {"count": 1}, "text": "Fight it (1 monster, end of turn)"},
+  {"args": {"count": 2}, "text": "Fight it (2 monsters, end of turn)"},
+  {"args": {"count": 5}, "text": "Fight it (5 monsters, end of turn)"},
+  {"args": {"count": 21}, "text": "Fight it (21 monsters, end of turn)"},
+  {"args": {"count": 1000000}, "text": "Fight it (1000000 monsters, end of turn)"}
+],
+"eventCardPredatorsRefuse": [
+  {"args": {"algae": 7}, "text": "Lure it away (−7 algae)"}
+],
+"eventCardSurvivorsAccept": [
+  {"args": {"units": "Zed"}, "text": "Welcome Zed"}
+],
+"eventCardTrade": [
+  {"args": {"give": 7, "from": "Zed", "get": 7, "to": "Zed"}, "text": "Trade 7 Zed for 7 Zed"}
+],
+"eventCardPendingWarning": [
+  {"args": {"event": "Zed"}, "text": "Zed: without a choice, the prudent option will apply"}
+],
+"eventCardStatusPending": [
+  {"args": {"event": "Zed"}, "text": "Event: Zed — choose"}
+],
+"techScreenChoiceTitle": [
+  {"args": {"branch": "Zed", "level": 7}, "text": "Zed · Level 7 · Choice"}
+],
+"techScreenNodeSubtitle": [
+  {"args": {"branch": "Zed", "level": 7, "effect": "Zed"}, "text": "Zed · Level 7 · Zed"}
+],
+"techScreenSurcharge": [
+  {"args": {"factor": "Zed"}, "text": "All research will cost ×Zed once this branch is open."}
+],
+"techScreenResearchPreviousFirst": [
+  {"args": {"level": 7}, "text": "Research level 7 first"}
+],
+"techScreenLabRequired": [
+  {"args": {"level": 7}, "text": "Laboratory level 7 required"}
+],
+"techScreenMedallionLevel": [
+  {"args": {"level": 7}, "text": "Lv. 7"}
+],
+"objectiveProgress": [
+  {"args": {"title": "Zed", "current": 7, "target": 7}, "text": "Zed: 7/7"}
+],
+"objectiveCompleted": [
+  {"args": {"title": "Zed"}, "text": "Objective complete: Zed"}
+],
+"objectiveRaiseHq": [
+  {"args": {"level": 7}, "text": "Raise the HQ to level 7"}
+],
+"objectiveBarracksAndScouts": [
+  {"args": {"count": 0}, "text": "Build the Barracks and recruit 0 Scouts"},
+  {"args": {"count": 1}, "text": "Build the Barracks and recruit 1 Scout"},
+  {"args": {"count": 2}, "text": "Build the Barracks and recruit 2 Scouts"},
+  {"args": {"count": 5}, "text": "Build the Barracks and recruit 5 Scouts"},
+  {"args": {"count": 21}, "text": "Build the Barracks and recruit 21 Scouts"},
+  {"args": {"count": 1000000}, "text": "Build the Barracks and recruit 1000000 Scouts"}
+],
+"objectiveDescend": [
+  {"args": {"level": 7}, "text": "Go down to level 7"}
+],
+"objectiveRaiseKernel": [
+  {"args": {"level": 7}, "text": "Raise the Core to level 7"}
+],
+"chapterNumbered": [
+  {"args": {"number": 7, "title": "Zed"}, "text": "7. Zed"}
+],
+"tipNoiseGaugeLine2": [
+  {"args": {"threshold": 7}, "text": "When the gauge reaches 7, the monsters hear it: a raid is announced."}
+],
+"tipWorksitesLine1": [
+  {"args": {"level": 7}, "text": "Your HQ at level 7 opens a second build slot: two buildings go up each turn."}
+],
+"tipWorksitesLine2": [
+  {"args": {"level": 7}, "text": "HQ level 7 will open a third. Research stays at one per turn."}
+],
+"tipRaidAnnouncedLine1": [
+  {"args": {"turns": 0}, "text": "Your noise drew monsters: they will strike your base in 0 turns."},
+  {"args": {"turns": 1}, "text": "Your noise drew monsters: they will strike your base in 1 turn."},
+  {"args": {"turns": 2}, "text": "Your noise drew monsters: they will strike your base in 2 turns."},
+  {"args": {"turns": 5}, "text": "Your noise drew monsters: they will strike your base in 5 turns."},
+  {"args": {"turns": 21}, "text": "Your noise drew monsters: they will strike your base in 21 turns."},
+  {"args": {"turns": 1000000}, "text": "Your noise drew monsters: they will strike your base in 1000000 turns."}
+],
+"tipLastChanceLine1": [
+  {"args": {"count": 0}, "text": "Your base has lost 0 raids in a row."},
+  {"args": {"count": 1}, "text": "Your base has lost 1 raid."},
+  {"args": {"count": 2}, "text": "Your base has lost 2 raids in a row."},
+  {"args": {"count": 5}, "text": "Your base has lost 5 raids in a row."},
+  {"args": {"count": 21}, "text": "Your base has lost 21 raids in a row."},
+  {"args": {"count": 1000000}, "text": "Your base has lost 1000000 raids in a row."}
+],
+"tipEventsLine1": [
+  {"args": {"minGap": 7, "maxGap": 7}, "text": "Every 7 to 7 turns, an event shakes the abyss."}
+],
+"tipWarmCurrentLine1": [
+  {"args": {"turns": 0}, "text": "A warm current boosts your production for 0 turns."},
+  {"args": {"turns": 1}, "text": "A warm current boosts your production for 1 turn."},
+  {"args": {"turns": 2}, "text": "A warm current boosts your production for 2 turns."},
+  {"args": {"turns": 5}, "text": "A warm current boosts your production for 5 turns."},
+  {"args": {"turns": 21}, "text": "A warm current boosts your production for 21 turns."},
+  {"args": {"turns": 1000000}, "text": "A warm current boosts your production for 1000000 turns."}
+],
+"tipWreckLine1": [
+  {"args": {"turns": 0}, "text": "A sunken galleon stays 0 turns at the edge of the explored area."},
+  {"args": {"turns": 1}, "text": "A sunken galleon stays 1 turn at the edge of the explored area."},
+  {"args": {"turns": 2}, "text": "A sunken galleon stays 2 turns at the edge of the explored area."},
+  {"args": {"turns": 5}, "text": "A sunken galleon stays 5 turns at the edge of the explored area."},
+  {"args": {"turns": 21}, "text": "A sunken galleon stays 21 turns at the edge of the explored area."},
+  {"args": {"turns": 1000000}, "text": "A sunken galleon stays 1000000 turns at the edge of the explored area."}
+],
+"tipWreckLine3": [
+  {"args": {"noise": 7}, "text": "Searching makes noise (+7): pick your moment."}
+],
+"tipStormLine1": [
+  {"args": {"turns": 0}, "text": "The storm closes exploration for 0 turns."},
+  {"args": {"turns": 1}, "text": "The storm closes exploration for 1 turn."},
+  {"args": {"turns": 2}, "text": "The storm closes exploration for 2 turns."},
+  {"args": {"turns": 5}, "text": "The storm closes exploration for 5 turns."},
+  {"args": {"turns": 21}, "text": "The storm closes exploration for 21 turns."},
+  {"args": {"turns": 1000000}, "text": "The storm closes exploration for 1000000 turns."}
+],
+"tipStormLine2": [
+  {"args": {"relief": 7}, "text": "In return, it covers your noise: the gauge drops by 7."}
+],
+"tipColdCurrentLine1": [
+  {"args": {"turns": 0}, "text": "A cold current slows your algae for 0 turns."},
+  {"args": {"turns": 1}, "text": "A cold current slows your algae for 1 turn."},
+  {"args": {"turns": 2}, "text": "A cold current slows your algae for 2 turns."},
+  {"args": {"turns": 5}, "text": "A cold current slows your algae for 5 turns."},
+  {"args": {"turns": 21}, "text": "A cold current slows your algae for 21 turns."},
+  {"args": {"turns": 1000000}, "text": "A cold current slows your algae for 1000000 turns."}
+],
+"guideLessonHqLevel2": [
+  {"args": {"level": 7}, "text": "HQ level 7 unlocks the Barracks and the Laboratory. But every build makes noise: watch the gauge at the top of the screen, it draws monsters."}
+],
+"guideLessonBarracksAndScouts": [
+  {"args": {"count": 0}, "text": "Build the Barracks, then recruit 0 Scouts in the Army tab. Every unit eats algae each turn, and every recruit raises the noise."},
+  {"args": {"count": 1}, "text": "Build the Barracks, then recruit 1 Scout in the Army tab. Every unit eats algae each turn, and every recruit raises the noise."},
+  {"args": {"count": 2}, "text": "Build the Barracks, then recruit 2 Scouts in the Army tab. Every unit eats algae each turn, and every recruit raises the noise."},
+  {"args": {"count": 5}, "text": "Build the Barracks, then recruit 5 Scouts in the Army tab. Every unit eats algae each turn, and every recruit raises the noise."},
+  {"args": {"count": 21}, "text": "Build the Barracks, then recruit 21 Scouts in the Army tab. Every unit eats algae each turn, and every recruit raises the noise."},
+  {"args": {"count": 1000000}, "text": "Build the Barracks, then recruit 1000000 Scouts in the Army tab. Every unit eats algae each turn, and every recruit raises the noise."}
+],
+"guideLessonFirstRaid": [
+  {"args": {"turns": 0}, "text": "Noise always ends up drawing a raid, announced 0 turns ahead. Recruit Harpooners to defend your base. Later, the Citadel's rampart will help you too."},
+  {"args": {"turns": 1}, "text": "Noise always ends up drawing a raid, announced 1 turn ahead. Recruit Harpooners to defend your base. Later, the Citadel's rampart will help you too."},
+  {"args": {"turns": 2}, "text": "Noise always ends up drawing a raid, announced 2 turns ahead. Recruit Harpooners to defend your base. Later, the Citadel's rampart will help you too."},
+  {"args": {"turns": 5}, "text": "Noise always ends up drawing a raid, announced 5 turns ahead. Recruit Harpooners to defend your base. Later, the Citadel's rampart will help you too."},
+  {"args": {"turns": 21}, "text": "Noise always ends up drawing a raid, announced 21 turns ahead. Recruit Harpooners to defend your base. Later, the Citadel's rampart will help you too."},
+  {"args": {"turns": 1000000}, "text": "Noise always ends up drawing a raid, announced 1000000 turns ahead. Recruit Harpooners to defend your base. Later, the Citadel's rampart will help you too."}
+],
+"guideStorm": [
+  {"args": {"turn": 7}, "text": "A storm closes exploration until the end of turn 7. Be patient: the objective will wait, end the turn."}
+],
+"guideWreckWithoutBarracks": [
+  {"args": {"turn": 7}, "text": "A wreck has sunk near your base, visible until the end of turn 7. Reaching it takes a Scout, so the Barracks: keep going with your objective, they will come."}
+],
+"guideWreckWithoutScout": [
+  {"args": {"turn": 7}, "text": "A wreck has sunk near your base, visible until the end of turn 7. Recruit a Scout in the Army tab to go and search it."}
+],
+"guideRaidIntro": [
+  {"args": {"turn": 7, "monsters": 0}, "text": "The raid arrives on turn 7 with 0 monsters."},
+  {"args": {"turn": 7, "monsters": 1}, "text": "The raid arrives on turn 7 with 1 monster."},
+  {"args": {"turn": 7, "monsters": 2}, "text": "The raid arrives on turn 7 with 2 monsters."},
+  {"args": {"turn": 7, "monsters": 5}, "text": "The raid arrives on turn 7 with 5 monsters."},
+  {"args": {"turn": 7, "monsters": 21}, "text": "The raid arrives on turn 7 with 21 monsters."},
+  {"args": {"turn": 7, "monsters": 1000000}, "text": "The raid arrives on turn 7 with 1000000 monsters."}
+],
+"guideRaidNeeded": [
+  {"args": {"needed": 0, "missing": 0}, "text": "Have at least 0 Harpooners on level 1: you're 0 short."},
+  {"args": {"needed": 0, "missing": 1}, "text": "Have at least 0 Harpooners on level 1: you're 1 short."},
+  {"args": {"needed": 0, "missing": 2}, "text": "Have at least 0 Harpooners on level 1: you're 2 short."},
+  {"args": {"needed": 0, "missing": 5}, "text": "Have at least 0 Harpooners on level 1: you're 5 short."},
+  {"args": {"needed": 0, "missing": 21}, "text": "Have at least 0 Harpooners on level 1: you're 21 short."},
+  {"args": {"needed": 0, "missing": 1000000}, "text": "Have at least 0 Harpooners on level 1: you're 1000000 short."},
+  {"args": {"needed": 1, "missing": 0}, "text": "Have at least 1 Harpooner on level 1: you're 0 short."},
+  {"args": {"needed": 1, "missing": 1}, "text": "Have at least 1 Harpooner on level 1: you're 1 short."},
+  {"args": {"needed": 1, "missing": 2}, "text": "Have at least 1 Harpooner on level 1: you're 2 short."},
+  {"args": {"needed": 1, "missing": 5}, "text": "Have at least 1 Harpooner on level 1: you're 5 short."},
+  {"args": {"needed": 1, "missing": 21}, "text": "Have at least 1 Harpooner on level 1: you're 21 short."},
+  {"args": {"needed": 1, "missing": 1000000}, "text": "Have at least 1 Harpooner on level 1: you're 1000000 short."},
+  {"args": {"needed": 2, "missing": 0}, "text": "Have at least 2 Harpooners on level 1: you're 0 short."},
+  {"args": {"needed": 2, "missing": 1}, "text": "Have at least 2 Harpooners on level 1: you're 1 short."},
+  {"args": {"needed": 2, "missing": 2}, "text": "Have at least 2 Harpooners on level 1: you're 2 short."},
+  {"args": {"needed": 2, "missing": 5}, "text": "Have at least 2 Harpooners on level 1: you're 5 short."},
+  {"args": {"needed": 2, "missing": 21}, "text": "Have at least 2 Harpooners on level 1: you're 21 short."},
+  {"args": {"needed": 2, "missing": 1000000}, "text": "Have at least 2 Harpooners on level 1: you're 1000000 short."},
+  {"args": {"needed": 5, "missing": 0}, "text": "Have at least 5 Harpooners on level 1: you're 0 short."},
+  {"args": {"needed": 5, "missing": 1}, "text": "Have at least 5 Harpooners on level 1: you're 1 short."},
+  {"args": {"needed": 5, "missing": 2}, "text": "Have at least 5 Harpooners on level 1: you're 2 short."},
+  {"args": {"needed": 5, "missing": 5}, "text": "Have at least 5 Harpooners on level 1: you're 5 short."},
+  {"args": {"needed": 5, "missing": 21}, "text": "Have at least 5 Harpooners on level 1: you're 21 short."},
+  {"args": {"needed": 5, "missing": 1000000}, "text": "Have at least 5 Harpooners on level 1: you're 1000000 short."},
+  {"args": {"needed": 21, "missing": 0}, "text": "Have at least 21 Harpooners on level 1: you're 0 short."},
+  {"args": {"needed": 21, "missing": 1}, "text": "Have at least 21 Harpooners on level 1: you're 1 short."},
+  {"args": {"needed": 21, "missing": 2}, "text": "Have at least 21 Harpooners on level 1: you're 2 short."},
+  {"args": {"needed": 21, "missing": 5}, "text": "Have at least 21 Harpooners on level 1: you're 5 short."},
+  {"args": {"needed": 21, "missing": 21}, "text": "Have at least 21 Harpooners on level 1: you're 21 short."},
+  {"args": {"needed": 21, "missing": 1000000}, "text": "Have at least 21 Harpooners on level 1: you're 1000000 short."},
+  {"args": {"needed": 1000000, "missing": 0}, "text": "Have at least 1000000 Harpooners on level 1: you're 0 short."},
+  {"args": {"needed": 1000000, "missing": 1}, "text": "Have at least 1000000 Harpooners on level 1: you're 1 short."},
+  {"args": {"needed": 1000000, "missing": 2}, "text": "Have at least 1000000 Harpooners on level 1: you're 2 short."},
+  {"args": {"needed": 1000000, "missing": 5}, "text": "Have at least 1000000 Harpooners on level 1: you're 5 short."},
+  {"args": {"needed": 1000000, "missing": 21}, "text": "Have at least 1000000 Harpooners on level 1: you're 21 short."},
+  {"args": {"needed": 1000000, "missing": 1000000}, "text": "Have at least 1000000 Harpooners on level 1: you're 1000000 short."}
+],
+"guideRaidRecruitNow": [
+  {"args": {"missing": 0}, "text": "Recruit them in the Army tab."},
+  {"args": {"missing": 1}, "text": "Recruit it in the Army tab."},
+  {"args": {"missing": 2}, "text": "Recruit them in the Army tab."},
+  {"args": {"missing": 5}, "text": "Recruit them in the Army tab."},
+  {"args": {"missing": 21}, "text": "Recruit them in the Army tab."},
+  {"args": {"missing": 1000000}, "text": "Recruit them in the Army tab."}
+],
+"guideRaidRecruitNextTurn": [
+  {"args": {"missing": 0}, "text": "You've already recruited this turn: recruit them next turn."},
+  {"args": {"missing": 1}, "text": "You've already recruited this turn: recruit it next turn."},
+  {"args": {"missing": 2}, "text": "You've already recruited this turn: recruit them next turn."},
+  {"args": {"missing": 5}, "text": "You've already recruited this turn: recruit them next turn."},
+  {"args": {"missing": 21}, "text": "You've already recruited this turn: recruit them next turn."},
+  {"args": {"missing": 1000000}, "text": "You've already recruited this turn: recruit them next turn."}
+],
+"guideAdmiralNeedsBarracks": [
+  {"args": {"post": "cheminee", "level": 7}, "text": "To take a Vent, you need an Admiral. Raise the Barracks to level 7."},
+  {"args": {"post": "faille", "level": 7}, "text": "To take a Rift, you need an Admiral. Raise the Barracks to level 7."},
+  {"args": {"post": "zzz", "level": 7}, "text": "To take the Core, you need an Admiral. Raise the Barracks to level 7."}
+],
+"guideAdmiralToRecruit": [
+  {"args": {"post": "cheminee"}, "text": "Recruit an Admiral: he doesn't fight, but without him the Vent can't be taken."},
+  {"args": {"post": "faille"}, "text": "Recruit an Admiral: he doesn't fight, but without him the Rift can't be taken."},
+  {"args": {"post": "zzz"}, "text": "Recruit an Admiral: he doesn't fight, but without him the Core can't be taken."}
+],
+"guideAdmiralToSend": [
+  {"args": {"post": "cheminee", "level": 7, "from": 7, "passage": "faille"}, "text": "To take the Vent, your Admiral must go down to level 7. He is on level 7: send him through your Rift, highlighted on the Map on level 7."},
+  {"args": {"post": "cheminee", "level": 7, "from": 7, "passage": "zzz"}, "text": "To take the Vent, your Admiral must go down to level 7. He is on level 7: send him through your Vent, highlighted on the Map on level 7."},
+  {"args": {"post": "faille", "level": 7, "from": 7, "passage": "faille"}, "text": "To take the Rift, your Admiral must go down to level 7. He is on level 7: send him through your Rift, highlighted on the Map on level 7."},
+  {"args": {"post": "faille", "level": 7, "from": 7, "passage": "zzz"}, "text": "To take the Rift, your Admiral must go down to level 7. He is on level 7: send him through your Vent, highlighted on the Map on level 7."},
+  {"args": {"post": "zzz", "level": 7, "from": 7, "passage": "faille"}, "text": "To take the Core, your Admiral must go down to level 7. He is on level 7: send him through your Rift, highlighted on the Map on level 7."},
+  {"args": {"post": "zzz", "level": 7, "from": 7, "passage": "zzz"}, "text": "To take the Core, your Admiral must go down to level 7. He is on level 7: send him through your Vent, highlighted on the Map on level 7."}
+],
+"guidePostToFind": [
+  {"args": {"post": "cheminee"}, "text": "Explore the Map on level 2 to find a Vent, but don't forget to keep upgrading your buildings and your army!"},
+  {"args": {"post": "faille"}, "text": "Explore the Map to find a Rift, but don't forget to keep upgrading your buildings and your army!"},
+  {"args": {"post": "zzz"}, "text": "Explore the Map on level 3 to find the Core, but don't forget to keep upgrading your buildings and your army!"}
+],
+"guidePostAssault": [
+  {"args": {"post": "cheminee"}, "text": "A Vent! Your Admiral must survive: cover him with Guardians."},
+  {"args": {"post": "faille"}, "text": "A Rift! Your Admiral must survive: cover him with Guardians."},
+  {"args": {"post": "zzz"}, "text": "The Core! Your Admiral must survive: cover him with Guardians."}
+],
+"guidePostAssaultArmy": [
+  {"args": {"count": 0, "wins": 7, "rehearsals": 7}, "text": "Your escort is enough: you win 7 times out of 7."},
+  {"args": {"count": 1, "wins": 7, "rehearsals": 7}, "text": "Send him with at least 1 Harpooner: you win 7 times out of 7."},
+  {"args": {"count": 2, "wins": 7, "rehearsals": 7}, "text": "Send him with at least 2 Harpooners: you win 7 times out of 7."},
+  {"args": {"count": 5, "wins": 7, "rehearsals": 7}, "text": "Send him with at least 5 Harpooners: you win 7 times out of 7."},
+  {"args": {"count": 21, "wins": 7, "rehearsals": 7}, "text": "Send him with at least 21 Harpooners: you win 7 times out of 7."},
+  {"args": {"count": 1000000, "wins": 7, "rehearsals": 7}, "text": "Send him with at least 1000000 Harpooners: you win 7 times out of 7."}
+],
+"guideAdmiralFell": [
+  {"args": {"post": "cheminee"}, "text": "Victory, but your Admiral fell: the Vent is not taken. Cover him with Guardians and try again."},
+  {"args": {"post": "faille"}, "text": "Victory, but your Admiral fell: the Rift is not taken. Cover him with Guardians and try again."},
+  {"args": {"post": "zzz"}, "text": "Victory, but your Admiral fell: the Core is not taken. Cover him with Guardians and try again."}
+],
+"guidePassageNeedsHq": [
+  {"args": {"passage": "descentModule", "level": 7}, "text": "The Descent Module needs Headquarters level 7. Raise your Headquarters first."},
+  {"args": {"passage": "zzz", "level": 7}, "text": "The Pressure Capsule needs Headquarters level 7. Raise your Headquarters first."}
+],
+"guidePostUndefended": [
+  {"args": {"post": "faille", "level": 7}, "text": "Your Rift is guarded only by your units on level 7. If it falls, your Module is destroyed and your units down there are lost."},
+  {"args": {"post": "zzz", "level": 7}, "text": "Your Vent is guarded only by your units on level 7. If it falls, your Capsule is destroyed and your units down there are lost."}
+],
+"guideKernelWaveNeeded": [
+  {"args": {"needed": 0}, "text": "The Krakens are coming to take the Core back! Put at least 0 units in the garrison before the end of the turn, or the Core loses a level."},
+  {"args": {"needed": 1}, "text": "The Krakens are coming to take the Core back! Put at least 1 unit in the garrison before the end of the turn, or the Core loses a level."},
+  {"args": {"needed": 2}, "text": "The Krakens are coming to take the Core back! Put at least 2 units in the garrison before the end of the turn, or the Core loses a level."},
+  {"args": {"needed": 5}, "text": "The Krakens are coming to take the Core back! Put at least 5 units in the garrison before the end of the turn, or the Core loses a level."},
+  {"args": {"needed": 21}, "text": "The Krakens are coming to take the Core back! Put at least 21 units in the garrison before the end of the turn, or the Core loses a level."},
+  {"args": {"needed": 1000000}, "text": "The Krakens are coming to take the Core back! Put at least 1000000 units in the garrison before the end of the turn, or the Core loses a level."}
+],
+"guideKernelWaveAll": [
+  {"args": {"monsters": 7}, "text": "7 Krakens are coming to take the Core back! Garrison every unit you can before the end of the turn, or the Core loses a level."}
+],
+"gameOverDefeatSubtitle": [
+  {"args": {"turn": 7, "raids": 0}, "text": "Your base fell at the end of turn 7, after 0 raids lost in a row."},
+  {"args": {"turn": 7, "raids": 1}, "text": "Your base fell at the end of turn 7, after 1 raid lost in a row."},
+  {"args": {"turn": 7, "raids": 2}, "text": "Your base fell at the end of turn 7, after 2 raids lost in a row."},
+  {"args": {"turn": 7, "raids": 5}, "text": "Your base fell at the end of turn 7, after 5 raids lost in a row."},
+  {"args": {"turn": 7, "raids": 21}, "text": "Your base fell at the end of turn 7, after 21 raids lost in a row."},
+  {"args": {"turn": 7, "raids": 1000000}, "text": "Your base fell at the end of turn 7, after 1000000 raids lost in a row."}
+],
+"gameOverFactionWonSubtitle": [
+  {"args": {"name": "Zed", "turn": 7}, "text": "Zed tamed the Volcano at turn 7."}
+],
+"gameOverTurnsPlayed": [
+  {"args": {"count": 7}, "text": "Turns played: 7"}
+],
+"gameOverMonstersDefeated": [
+  {"args": {"count": 7}, "text": "Monsters defeated: 7"}
+],
+"gameOverBasesCaptured": [
+  {"args": {"count": 7}, "text": "Bases captured: 7"}
+],
+"gameOverResourcesCollected": [
+  {"args": {"count": 7}, "text": "Resources collected: 7"}
+],
+"gameOverRaidsRepelled": [
+  {"args": {"count": 7}, "text": "Raids repelled: 7"}
+],
+"gameOverRaidsLost": [
+  {"args": {"count": 7}, "text": "Raids lost: 7"}
+],
+"menuBetaVersion": [
+  {"args": {"version": "Zed"}, "text": "Beta version Zed"}
+],
+"saveDeleteMessage": [
+  {"args": {"name": "Zed"}, "text": "Zed's game will be deleted for good."}
+],
+"saveMetaInProgress": [
+  {"args": {"turn": 7, "depth": "Zed", "level": 7}, "text": "Turn 7 · Zed · HQ lv. 7"}
+],
+"saveMetaWon": [
+  {"args": {"turn": 7, "depth": "Zed", "difficulty": "Zed"}, "text": "Turn 7 · Zed · Zed"}
+],
+"saveMetaFallen": [
+  {"args": {"turn": 7, "depth": "Zed", "difficulty": "Zed"}, "text": "Fell on turn 7 · Zed · Zed"}
+],
+"saveResumeLabel": [
+  {"args": {"name": "Zed", "turn": 7, "difficulty": "Zed"}, "text": "Zed · Turn 7 · Zed"}
+],
+"saveMinutesAgo": [
+  {"args": {"minutes": 7}, "text": "7 min ago"}
+],
+"saveHoursAgo": [
+  {"args": {"hours": 7}, "text": "7 h ago"}
+],
+"saveShortDate": [
+  {"args": {"day": 7, "month": "Zed"}, "text": "Zed 7"}
+],
+"saveShortDateWithYear": [
+  {"args": {"day": 7, "month": "Zed", "year": 7}, "text": "Zed 7, 7"}
+],
+"saveMonth": [
+  {"args": {"month": "apr"}, "text": "Apr"},
+  {"args": {"month": "aug"}, "text": "Aug"},
+  {"args": {"month": "feb"}, "text": "Feb"},
+  {"args": {"month": "jan"}, "text": "Jan"},
+  {"args": {"month": "jul"}, "text": "Jul"},
+  {"args": {"month": "jun"}, "text": "Jun"},
+  {"args": {"month": "mar"}, "text": "Mar"},
+  {"args": {"month": "may"}, "text": "May"},
+  {"args": {"month": "nov"}, "text": "Nov"},
+  {"args": {"month": "oct"}, "text": "Oct"},
+  {"args": {"month": "sep"}, "text": "Sep"},
+  {"args": {"month": "zzz"}, "text": "Dec"}
+],
+"screenReplaySummary": [
+  {"args": {"file": "Zed", "actions": "Zed", "turns": "Zed"}, "text": "The file Zed holds Zed over Zed."}
+],
+"screenReplayActions": [
+  {"args": {"count": 0}, "text": "0 actions"},
+  {"args": {"count": 1}, "text": "1 action"},
+  {"args": {"count": 2}, "text": "2 actions"},
+  {"args": {"count": 5}, "text": "5 actions"},
+  {"args": {"count": 21}, "text": "21 actions"},
+  {"args": {"count": 1000000}, "text": "1000000 actions"}
+],
+"screenReplayTurns": [
+  {"args": {"count": 0}, "text": "0 turns played"},
+  {"args": {"count": 1}, "text": "1 turn played"},
+  {"args": {"count": 2}, "text": "2 turns played"},
+  {"args": {"count": 5}, "text": "5 turns played"},
+  {"args": {"count": 21}, "text": "21 turns played"},
+  {"args": {"count": 1000000}, "text": "1000000 turns played"}
+],
+"screenEventChosen": [
+  {"args": {"event": "Zed", "choice": "Zed"}, "text": "Zed: Zed"}
+],
+"screenGarrisonSize": [
+  {"args": {"count": 0}, "text": "Garrison: 0 units"},
+  {"args": {"count": 1}, "text": "Garrison: 1 unit"},
+  {"args": {"count": 2}, "text": "Garrison: 2 units"},
+  {"args": {"count": 5}, "text": "Garrison: 5 units"},
+  {"args": {"count": 21}, "text": "Garrison: 21 units"},
+  {"args": {"count": 1000000}, "text": "Garrison: 1000000 units"}
+],
+"screenTakenByRivalTitle": [
+  {"args": {"name": "Zed"}, "text": "Taken by Zed"}
+],
+"screenPlainTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Plain (7, 7)"}
+],
+"screenPassageTitle": [
+  {"args": {"name": "Zed"}, "text": "Passage to Zed"}
+],
+"screenDescendThrough": [
+  {"args": {"base": "Zed"}, "text": "Send troops down through Zed"}
+],
+"screenDescentTitle": [
+  {"args": {"level": 7}, "text": "Descent to Level 7"}
+],
+"screenDescentConfirm": [
+  {"args": {"count": 0}, "text": "Descend (0 units)"},
+  {"args": {"count": 1}, "text": "Descend (1 unit)"},
+  {"args": {"count": 2}, "text": "Descend (2 units)"},
+  {"args": {"count": 5}, "text": "Descend (5 units)"},
+  {"args": {"count": 21}, "text": "Descend (21 units)"},
+  {"args": {"count": 1000000}, "text": "Descend (1000000 units)"}
+],
+"screenDescentDone": [
+  {"args": {"level": 7}, "text": "Descended to Level 7"}
+],
+"screenReinforcementTitle": [
+  {"args": {"level": 7}, "text": "Reinforcements to Level 7"}
+],
+"screenReinforcementConfirm": [
+  {"args": {"count": 0}, "text": "Send (0 units)"},
+  {"args": {"count": 1}, "text": "Send (1 unit)"},
+  {"args": {"count": 2}, "text": "Send (2 units)"},
+  {"args": {"count": 5}, "text": "Send (5 units)"},
+  {"args": {"count": 21}, "text": "Send (21 units)"},
+  {"args": {"count": 1000000}, "text": "Send (1000000 units)"}
+],
+"screenReinforcementsSent": [
+  {"args": {"count": 0, "level": 7}, "text": "0 units on their way to Level 7"},
+  {"args": {"count": 1, "level": 7}, "text": "1 unit on its way to Level 7"},
+  {"args": {"count": 2, "level": 7}, "text": "2 units on their way to Level 7"},
+  {"args": {"count": 5, "level": 7}, "text": "5 units on their way to Level 7"},
+  {"args": {"count": 21, "level": 7}, "text": "21 units on their way to Level 7"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 units on their way to Level 7"}
+],
+"baseOtherName": [
+  {"args": {"type": "Zed", "number": 7}, "text": "Zed 7"}
+],
+"baseLevel": [
+  {"args": {"level": 7}, "text": "Level 7"}
+],
+"baseLevelShort": [
+  {"args": {"level": 7}, "text": "Lv. 7"}
+],
+"baseUpgradeLevels": [
+  {"args": {"from": 7, "to": 7}, "text": "Level 7 → 7"}
+],
+"baseCapturedBaseRequired": [
+  {"args": {"base": "Zed"}, "text": "Captured Zed required"}
+],
+"baseWorksitesFree": [
+  {"args": {"free": 7, "total": 7}, "text": "Free worksites this turn: 7/7"}
+],
+"baseWorksitesNext": [
+  {"args": {"level": 7}, "text": "+1 at HQ 7"}
+],
+"baseShield": [
+  {"args": {"rampart": "Zed"}, "text": "Base rampart: Zed"}
+],
+"baseRampartCurrent": [
+  {"args": {"rampart": "Zed"}, "text": "Current rampart: Zed"}
+],
+"baseRampartNext": [
+  {"args": {"rampart": "Zed"}, "text": "Next level: Zed"}
+],
+"baseCoralRampartStats": [
+  {"args": {"hp": 7, "def": 7}, "text": "7 HP, DEF 7"}
+],
+"baseMagmaRampartStats": [
+  {"args": {"hp": 7, "atk": 7, "def": 7}, "text": "7 HP, ATK 7, DEF 7"}
+],
+"unitTotalCount": [
+  {"args": {"count": 0}, "text": "0 units"},
+  {"args": {"count": 1}, "text": "1 unit"},
+  {"args": {"count": 2}, "text": "2 units"},
+  {"args": {"count": 5}, "text": "5 units"},
+  {"args": {"count": 21}, "text": "21 units"},
+  {"args": {"count": 1000000}, "text": "1000000 units"}
+],
+"unitBarracksRequired": [
+  {"args": {"level": 7}, "text": "Barracks level 7 required to unlock"}
+],
+"unitInService": [
+  {"args": {"count": 7}, "text": "In service: 7"}
+],
+"armyLockPill": [
+  {"args": {"level": 7}, "text": "Barracks lv. 7"}
+],
+"armyUnitLocked": [
+  {"args": {"level": 7}, "text": "locked, Barracks level 7"}
+],
+"turnTransition": [
+  {"args": {"from": 7, "to": 7}, "text": "Turn 7 → Turn 7"}
+],
+"turnPendingExplorations": [
+  {"args": {"count": 0}, "text": "0 pending explorations"},
+  {"args": {"count": 1}, "text": "1 pending exploration"},
+  {"args": {"count": 2}, "text": "2 pending explorations"},
+  {"args": {"count": 5}, "text": "5 pending explorations"},
+  {"args": {"count": 21}, "text": "21 pending explorations"},
+  {"args": {"count": 1000000}, "text": "1000000 pending explorations"}
+],
+"turnEventDefaulted": [
+  {"args": {"event": "Zed"}, "text": "Zed: cautious option applied"}
+],
+"turnEventDrawn": [
+  {"args": {"event": "Zed"}, "text": "Event: Zed"}
+],
+"turnExplorationTotal": [
+  {"args": {"count": 0}, "text": "Exploration: 0 new cells"},
+  {"args": {"count": 1}, "text": "Exploration: 1 new cell"},
+  {"args": {"count": 2}, "text": "Exploration: 2 new cells"},
+  {"args": {"count": 5}, "text": "Exploration: 5 new cells"},
+  {"args": {"count": 21}, "text": "Exploration: 21 new cells"},
+  {"args": {"count": 1000000}, "text": "Exploration: 1000000 new cells"}
+],
+"turnExplorationCells": [
+  {"args": {"count": 0}, "text": "0 cells"},
+  {"args": {"count": 1}, "text": "1 cell"},
+  {"args": {"count": 2}, "text": "2 cells"},
+  {"args": {"count": 5}, "text": "5 cells"},
+  {"args": {"count": 21}, "text": "21 cells"},
+  {"args": {"count": 1000000}, "text": "1000000 cells"}
+],
+"factionRankingHeadquarters": [
+  {"args": {"level": 7}, "text": "HQ level 7"}
+],
+"factionRankingDepth": [
+  {"args": {"level": 7}, "text": "Depth: level 7"}
+],
+"buildingDegradedReason": [
+  {"args": {"level": 7}, "text": "Degraded: the headquarters must be level 7"}
+],
+"factionIntelFresh": [
+  {"args": {"turns": 0}, "text": "Fresh for 0 more turns"},
+  {"args": {"turns": 1}, "text": "Fresh for 1 more turn"},
+  {"args": {"turns": 2}, "text": "Fresh for 2 more turns"},
+  {"args": {"turns": 5}, "text": "Fresh for 5 more turns"},
+  {"args": {"turns": 21}, "text": "Fresh for 21 more turns"},
+  {"args": {"turns": 1000000}, "text": "Fresh for 1000000 more turns"}
+],
+"assaultYouAttacked": [
+  {"args": {"name": "Zed"}, "text": "You attacked Zed"}
+],
+"assaultAttackedYou": [
+  {"args": {"name": "Zed"}, "text": "Zed attacked you"}
+],
+"assaultDefendersDown": [
+  {"args": {"killed": 7, "total": 7}, "text": "Defenders put out of action: 7/7"}
+],
+"assaultRampart": [
+  {"args": {"before": 7, "after": 7}, "text": "Rampart: level 7 → 7"}
+],
+"assaultHeadquarters": [
+  {"args": {"before": 7, "after": 7}, "text": "Headquarters: level 7 → 7"}
+],
+"factionAttackRepelled": [
+  {"args": {"faction": "Zed"}, "text": "Zed attacked: attack repelled"}
+],
+"factionAttackDamaged": [
+  {"args": {"faction": "Zed"}, "text": "Zed attacked: base damaged"}
+],
+"factionAttackPillaged": [
+  {"args": {"faction": "Zed"}, "text": "Zed attacked: base pillaged"}
+],
+"factionPostTaken": [
+  {"args": {"faction": "Zed", "post": "Zed"}, "text": "Zed took your Zed"}
+],
+"factionPostRepelled": [
+  {"args": {"faction": "Zed", "post": "Zed"}, "text": "Zed attacked your Zed: attack repelled"}
+],
+"factionPostUnitsLost": [
+  {"args": {"count": 0, "level": 7}, "text": "0 level 7 units lost"},
+  {"args": {"count": 1, "level": 7}, "text": "1 level 7 unit lost"},
+  {"args": {"count": 2, "level": 7}, "text": "2 level 7 units lost"},
+  {"args": {"count": 5, "level": 7}, "text": "5 level 7 units lost"},
+  {"args": {"count": 21, "level": 7}, "text": "21 level 7 units lost"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 level 7 units lost"}
+],
+"factionKernelDamaged": [
+  {"args": {"faction": "Zed"}, "text": "Zed attacked the Core: one level lost"}
+],
+"factionKernelRepelled": [
+  {"args": {"faction": "Zed"}, "text": "Zed attacked the Core: attack repelled"}
+],
+"factionKernelTaken": [
+  {"args": {"faction": "Zed"}, "text": "Zed took the Core"}
+],
+"factionKernelGarrisonLost": [
+  {"args": {"count": 0}, "text": "0 garrison units lost"},
+  {"args": {"count": 1}, "text": "1 garrison unit lost"},
+  {"args": {"count": 2}, "text": "2 garrison units lost"},
+  {"args": {"count": 5}, "text": "5 garrison units lost"},
+  {"args": {"count": 21}, "text": "21 garrison units lost"},
+  {"args": {"count": 1000000}, "text": "1000000 garrison units lost"}
+],
+"historyPostWon": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Zed taken from Zed"}
+],
+"historyPostFailed": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Assault on Zed repelled by Zed"}
+],
+"historyPostSuffered": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Zed taken by Zed"}
+],
+"historyPostRepelled": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Assault by Zed on Zed repelled"}
+],
+"assaultPostTaken": [
+  {"args": {"post": "Zed"}, "text": "Zed is yours: its passage is destroyed. Build your own to go down through it."}
+],
+"assaultPostLost": [
+  {"args": {"post": "Zed"}, "text": "Zed is lost: your passage is destroyed, and the units on the level below are lost with it."}
+],
+"assaultKernelLevel": [
+  {"args": {"before": 7, "after": 7}, "text": "Core: level 7 → 7"}
+],
+"mapHeldBy": [
+  {"args": {"name": "Zed"}, "text": "Held by Zed"}
+],
+"assaultPlanAdmiralsIn": [
+  {"args": {"count": 0, "level": 7}, "text": "0 Admirals on level 7"},
+  {"args": {"count": 1, "level": 7}, "text": "1 Admiral on level 7"},
+  {"args": {"count": 2, "level": 7}, "text": "2 Admirals on level 7"},
+  {"args": {"count": 5, "level": 7}, "text": "5 Admirals on level 7"},
+  {"args": {"count": 21, "level": 7}, "text": "21 Admirals on level 7"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 Admirals on level 7"}
+],
+"assaultPlanAdmiralsLeft": [
+  {"args": {"count": 0, "level": 7}, "text": "Add one: 0 Admirals on level 7"},
+  {"args": {"count": 1, "level": 7}, "text": "Add one: 1 Admiral on level 7"},
+  {"args": {"count": 2, "level": 7}, "text": "Add one: 2 Admirals on level 7"},
+  {"args": {"count": 5, "level": 7}, "text": "Add one: 5 Admirals on level 7"},
+  {"args": {"count": 21, "level": 7}, "text": "Add one: 21 Admirals on level 7"},
+  {"args": {"count": 1000000, "level": 7}, "text": "Add one: 1000000 Admirals on level 7"}
+],
+"assaultPlanAdmiralRecruit": [
+  {"args": {"level": 7}, "text": "Recruit one at the Barracks level 7"}
+],
+"assaultPlanGuardians": [
+  {"args": {"count": 0}, "text": "0 Guardians take the blows for him"},
+  {"args": {"count": 1}, "text": "1 Guardian takes the blows for him"},
+  {"args": {"count": 2}, "text": "2 Guardians take the blows for him"},
+  {"args": {"count": 5}, "text": "5 Guardians take the blows for him"},
+  {"args": {"count": 21}, "text": "21 Guardians take the blows for him"},
+  {"args": {"count": 1000000}, "text": "1000000 Guardians take the blows for him"}
+],
+"assaultPlanNext": [
+  {"args": {"building": "Zed"}, "text": "Next: Zed"}
+],
+"assaultPlanHqNeeded": [
+  {"args": {"required": 7, "current": 7}, "text": "It needs HQ 7, you are at HQ 7"}
+],
+"assaultPlanHqReady": [
+  {"args": {"current": 7}, "text": "Your HQ 7 already allows it"}
+],
+"assaultPlanRating": [
+  {"args": {"rating": "high", "wins": 7, "rehearsals": 7}, "text": "High · 7 in 7"},
+  {"args": {"rating": "risky", "wins": 7, "rehearsals": 7}, "text": "Risky · 7 in 7"},
+  {"args": {"rating": "zzz", "wins": 7, "rehearsals": 7}, "text": "Low · 7 in 7"}
+],
+"assaultPlanAdviceLeader": [
+  {"args": {"count": 0}, "text": "the 0 Admirals"},
+  {"args": {"count": 1}, "text": "the Admiral"},
+  {"args": {"count": 2}, "text": "the 2 Admirals"},
+  {"args": {"count": 5}, "text": "the 5 Admirals"},
+  {"args": {"count": 21}, "text": "the 21 Admirals"},
+  {"args": {"count": 1000000}, "text": "the 1000000 Admirals"}
+],
+"assaultPlanAdvice": [
+  {"args": {"leader": "Zed", "escort": "Zed"}, "text": "Advice: Zed with Zed"}
+],
+"tipKernelGarrisonLine2": [
+  {"args": {"level": 7}, "text": "Your units left outside, on level 7, do not fight."}
+],
+"tipKernelGarrisonLine3": [
+  {"args": {"action": "Zed"}, "text": "Move them in with \"Zed\", on the Core's sheet."}
+],
+"leviathanBannerForce": [
+  {"args": {"sentinels": 7, "level": 7, "count": 7}, "text": "Leviathan + 7 Sentinels · level 7 defenders: 7"}
+],
+"leviathanDueWarning": [
+  {"args": {"count": 0, "level": 7}, "text": "The Leviathan strikes your Rift at the end of the turn, and no defender awaits it on level 7."},
+  {"args": {"count": 1, "level": 7}, "text": "The Leviathan strikes your Rift at the end of the turn, and only 1 defender awaits it on level 7."},
+  {"args": {"count": 2, "level": 7}, "text": "The Leviathan strikes your Rift at the end of the turn, and only 2 defenders await it on level 7."},
+  {"args": {"count": 5, "level": 7}, "text": "The Leviathan strikes your Rift at the end of the turn, and only 5 defenders await it on level 7."},
+  {"args": {"count": 21, "level": 7}, "text": "The Leviathan strikes your Rift at the end of the turn, and only 21 defenders await it on level 7."},
+  {"args": {"count": 1000000, "level": 7}, "text": "The Leviathan strikes your Rift at the end of the turn, and only 1000000 defenders await it on level 7."}
+],
+"guideLeviathanReturn": [
+  {"args": {"level": 7}, "text": "The Leviathan is coming back to take its Rift! Only your units on level 7 defend it. If it falls, your Module is destroyed and your units down there are lost."}
+],
+"guideLeviathanReinforce": [
+  {"args": {"count": 0}, "text": "Send 0 more Harpooners."},
+  {"args": {"count": 1}, "text": "Send 1 more Harpooner."},
+  {"args": {"count": 2}, "text": "Send 2 more Harpooners."},
+  {"args": {"count": 5}, "text": "Send 5 more Harpooners."},
+  {"args": {"count": 21}, "text": "Send 21 more Harpooners."},
+  {"args": {"count": 1000000}, "text": "Send 1000000 more Harpooners."}
+],
+"defeatCauseRaid": [
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 0}, "text": "Turn 7: Zed against no defender"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 1}, "text": "Turn 7: Zed against 1 defender"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 2}, "text": "Turn 7: Zed against 2 defenders"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 5}, "text": "Turn 7: Zed against 5 defenders"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 21}, "text": "Turn 7: Zed against 21 defenders"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 1000000}, "text": "Turn 7: Zed against 1000000 defenders"}
+],
+"defeatAdviceMoreDefenders": [
+  {"args": {"needed": 7, "defenders": 0}, "text": "Against your last raid, it took about 7 Harpooners. You had no defender."},
+  {"args": {"needed": 7, "defenders": 1}, "text": "Against your last raid, it took about 7 Harpooners. You had 1 defender."},
+  {"args": {"needed": 7, "defenders": 2}, "text": "Against your last raid, it took about 7 Harpooners. You had 2 defenders."},
+  {"args": {"needed": 7, "defenders": 5}, "text": "Against your last raid, it took about 7 Harpooners. You had 5 defenders."},
+  {"args": {"needed": 7, "defenders": 21}, "text": "Against your last raid, it took about 7 Harpooners. You had 21 defenders."},
+  {"args": {"needed": 7, "defenders": 1000000}, "text": "Against your last raid, it took about 7 Harpooners. You had 1000000 defenders."}
+],
+"defeatAdviceTooStrong": [
+  {"args": {"max": 7}, "text": "Your last raid called for more than 7 Harpooners: keep the noise gauge lower and raise the Citadel's rampart."}
+]
+},
+"es": {
+"newGameNameTooShort": [
+  {"args": {"min": 7}, "text": "El nombre debe tener al menos 7 caracteres"}
+],
+"newGameFactionsCount": [
+  {"args": {"count": 0}, "text": "0 facciones corren contigo hacia el Volcán"},
+  {"args": {"count": 1}, "text": "1 facción corre contigo hacia el Volcán"},
+  {"args": {"count": 2}, "text": "2 facciones corren contigo hacia el Volcán"},
+  {"args": {"count": 5}, "text": "5 facciones corren contigo hacia el Volcán"},
+  {"args": {"count": 21}, "text": "21 facciones corren contigo hacia el Volcán"},
+  {"args": {"count": 1000000}, "text": "1000000 facciones corren contigo hacia el Volcán"}
+],
+"buildingHeadquartersDescription": [
+  {"args": {"coral": 7, "ore": 7}, "text": "Centro de mando de tu base submarina. Su nivel determina las capacidades de tu colonia. Una vez construido, aporta 7 de coral y 7 de mineral por turno."}
+],
+"unitScoutCount": [
+  {"args": {"count": 0}, "text": "0 exploradores"},
+  {"args": {"count": 1}, "text": "1 explorador"},
+  {"args": {"count": 2}, "text": "2 exploradores"},
+  {"args": {"count": 5}, "text": "5 exploradores"},
+  {"args": {"count": 21}, "text": "21 exploradores"},
+  {"args": {"count": 1000000}, "text": "1000000 exploradores"}
+],
+"unitHarpoonistCount": [
+  {"args": {"count": 0}, "text": "0 arponeros"},
+  {"args": {"count": 1}, "text": "1 arponero"},
+  {"args": {"count": 2}, "text": "2 arponeros"},
+  {"args": {"count": 5}, "text": "5 arponeros"},
+  {"args": {"count": 21}, "text": "21 arponeros"},
+  {"args": {"count": 1000000}, "text": "1000000 arponeros"}
+],
+"unitGuardianCount": [
+  {"args": {"count": 0}, "text": "0 guardianes"},
+  {"args": {"count": 1}, "text": "1 guardián"},
+  {"args": {"count": 2}, "text": "2 guardianes"},
+  {"args": {"count": 5}, "text": "5 guardianes"},
+  {"args": {"count": 21}, "text": "21 guardianes"},
+  {"args": {"count": 1000000}, "text": "1000000 guardianes"}
+],
+"unitDomeBreakerCount": [
+  {"args": {"count": 0}, "text": "0 rompedores"},
+  {"args": {"count": 1}, "text": "1 rompedor"},
+  {"args": {"count": 2}, "text": "2 rompedores"},
+  {"args": {"count": 5}, "text": "5 rompedores"},
+  {"args": {"count": 21}, "text": "21 rompedores"},
+  {"args": {"count": 1000000}, "text": "1000000 rompedores"}
+],
+"unitAbyssAdmiralCount": [
+  {"args": {"count": 0}, "text": "0 almirantes del abismo"},
+  {"args": {"count": 1}, "text": "1 almirante del abismo"},
+  {"args": {"count": 2}, "text": "2 almirantes del abismo"},
+  {"args": {"count": 5}, "text": "5 almirantes del abismo"},
+  {"args": {"count": 21}, "text": "21 almirantes del abismo"},
+  {"args": {"count": 1000000}, "text": "1000000 almirantes del abismo"}
+],
+"unitSaboteurCount": [
+  {"args": {"count": 0}, "text": "0 saboteadores"},
+  {"args": {"count": 1}, "text": "1 saboteador"},
+  {"args": {"count": 2}, "text": "2 saboteadores"},
+  {"args": {"count": 5}, "text": "5 saboteadores"},
+  {"args": {"count": 21}, "text": "21 saboteadores"},
+  {"args": {"count": 1000000}, "text": "1000000 saboteadores"}
+],
+"monsterFamilyGenericCount": [
+  {"args": {"count": 0}, "text": "0 monstruos"},
+  {"args": {"count": 1}, "text": "1 monstruo"},
+  {"args": {"count": 2}, "text": "2 monstruos"},
+  {"args": {"count": 5}, "text": "5 monstruos"},
+  {"args": {"count": 21}, "text": "21 monstruos"},
+  {"args": {"count": 1000000}, "text": "1000000 monstruos"}
+],
+"monsterFamilySwarmCount": [
+  {"args": {"count": 0}, "text": "0 Dientes de vidrio"},
+  {"args": {"count": 1}, "text": "1 Diente de vidrio"},
+  {"args": {"count": 2}, "text": "2 Dientes de vidrio"},
+  {"args": {"count": 5}, "text": "5 Dientes de vidrio"},
+  {"args": {"count": 21}, "text": "21 Dientes de vidrio"},
+  {"args": {"count": 1000000}, "text": "1000000 Dientes de vidrio"}
+],
+"monsterFamilyArmouredCount": [
+  {"args": {"count": 0}, "text": "0 Isópodos acorazados"},
+  {"args": {"count": 1}, "text": "1 Isópodo acorazado"},
+  {"args": {"count": 2}, "text": "2 Isópodos acorazados"},
+  {"args": {"count": 5}, "text": "5 Isópodos acorazados"},
+  {"args": {"count": 21}, "text": "21 Isópodos acorazados"},
+  {"args": {"count": 1000000}, "text": "1000000 Isópodos acorazados"}
+],
+"monsterFamilyHunterCount": [
+  {"args": {"count": 0}, "text": "0 Calamares cazadores"},
+  {"args": {"count": 1}, "text": "1 Calamar cazador"},
+  {"args": {"count": 2}, "text": "2 Calamares cazadores"},
+  {"args": {"count": 5}, "text": "5 Calamares cazadores"},
+  {"args": {"count": 21}, "text": "21 Calamares cazadores"},
+  {"args": {"count": 1000000}, "text": "1000000 Calamares cazadores"}
+],
+"monsterFamilyColossusCount": [
+  {"args": {"count": 0}, "text": "0 Tiburones dormilones"},
+  {"args": {"count": 1}, "text": "1 Tiburón dormilón"},
+  {"args": {"count": 2}, "text": "2 Tiburones dormilones"},
+  {"args": {"count": 5}, "text": "5 Tiburones dormilones"},
+  {"args": {"count": 21}, "text": "21 Tiburones dormilones"},
+  {"args": {"count": 1000000}, "text": "1000000 Tiburones dormilones"}
+],
+"monsterFamilyKrakenCount": [
+  {"args": {"count": 0}, "text": "0 Krakens"},
+  {"args": {"count": 1}, "text": "1 Kraken"},
+  {"args": {"count": 2}, "text": "2 Krakens"},
+  {"args": {"count": 5}, "text": "5 Krakens"},
+  {"args": {"count": 21}, "text": "21 Krakens"},
+  {"args": {"count": 1000000}, "text": "1000000 Krakens"}
+],
+"monsterLairGroupsAnd": [
+  {"args": {"first": "Zed", "second": "Zed"}, "text": "Zed y Zed"}
+],
+"monsterLairWave": [
+  {"args": {"monsters": "Zed", "level": 7}, "text": "Zed niv. 7"}
+],
+"monsterLairWeakAgainst": [
+  {"args": {"units": "Zed"}, "text": "Débiles contra: Zed"}
+],
+"eventCountdown": [
+  {"args": {"label": "Zed", "turns": 0}, "text": "Zed: quedan 0 turnos"},
+  {"args": {"label": "Zed", "turns": 1}, "text": "Zed: queda 1 turno"},
+  {"args": {"label": "Zed", "turns": 2}, "text": "Zed: quedan 2 turnos"},
+  {"args": {"label": "Zed", "turns": 5}, "text": "Zed: quedan 5 turnos"},
+  {"args": {"label": "Zed", "turns": 21}, "text": "Zed: quedan 21 turnos"},
+  {"args": {"label": "Zed", "turns": 1000000}, "text": "Zed: quedan 1000000 turnos"}
+],
+"eventColdCurrentHeated": [
+  {"args": {"label": "Zed"}, "text": "Zed (invernaderos caldeados)"}
+],
+"techExploredAreaEffect": [
+  {"args": {"size": 7}, "text": "Zona explorada 7×7"}
+],
+"temporaryObjectiveWreckTitle": [
+  {"args": {"turn": 7}, "text": "Registra el pecio antes del final del turno 7"}
+],
+"historyBuildingTitle": [
+  {"args": {"building": "Zed", "level": 7}, "text": "Zed niv. 7"}
+],
+"historyResearchUnlocked": [
+  {"args": {"branch": "Zed"}, "text": "Zed desbloqueada"}
+],
+"historyResearchLevel": [
+  {"args": {"branch": "Zed", "level": 7}, "text": "Zed niv. 7"}
+],
+"historyResearchImproved": [
+  {"args": {"branch": "Zed"}, "text": "Zed mejorada"}
+],
+"historyRecruitTitle": [
+  {"args": {"count": 0, "units": "Zed"}, "text": "Zed reclutados"},
+  {"args": {"count": 1, "units": "Zed"}, "text": "Zed reclutado"},
+  {"args": {"count": 2, "units": "Zed"}, "text": "Zed reclutados"},
+  {"args": {"count": 5, "units": "Zed"}, "text": "Zed reclutados"},
+  {"args": {"count": 21, "units": "Zed"}, "text": "Zed reclutados"},
+  {"args": {"count": 1000000, "units": "Zed"}, "text": "Zed reclutados"}
+],
+"historyExploreTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Exploración (7, 7)"}
+],
+"historyCollectTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Tesoro recogido (7, 7)"}
+],
+"historyCombatVictory": [
+  {"args": {"level": 7}, "text": "Victoria contra Guarida niv. 7"}
+],
+"historyCombatDefeat": [
+  {"args": {"level": 7}, "text": "Derrota contra Guarida niv. 7"}
+],
+"historyTurnEndTitle": [
+  {"args": {"turn": 7}, "text": "Turno 7 terminado"}
+],
+"historyCaptureTitle": [
+  {"args": {"name": "Zed"}, "text": "Captura: Zed"}
+],
+"historyCaptureVictory": [
+  {"args": {"turns": 0}, "text": "Victoria en 0 turnos"},
+  {"args": {"turns": 1}, "text": "Victoria en 1 turno"},
+  {"args": {"turns": 2}, "text": "Victoria en 2 turnos"},
+  {"args": {"turns": 5}, "text": "Victoria en 5 turnos"},
+  {"args": {"turns": 21}, "text": "Victoria en 21 turnos"},
+  {"args": {"turns": 1000000}, "text": "Victoria en 1000000 turnos"}
+],
+"historyCaptureMissed": [
+  {"args": {"name": "Zed"}, "text": "Sin captura: Zed"}
+],
+"historyDescentTitle": [
+  {"args": {"level": 7}, "text": "Descenso al Nivel 7"}
+],
+"historyDescentUnits": [
+  {"args": {"count": 0}, "text": "0 unidades enviadas"},
+  {"args": {"count": 1}, "text": "1 unidad enviada"},
+  {"args": {"count": 2}, "text": "2 unidades enviadas"},
+  {"args": {"count": 5}, "text": "5 unidades enviadas"},
+  {"args": {"count": 21}, "text": "21 unidades enviadas"},
+  {"args": {"count": 1000000}, "text": "1000000 unidades enviadas"}
+],
+"historyReinforcementTitle": [
+  {"args": {"level": 7}, "text": "Refuerzos hacia el Nivel 7"}
+],
+"historyReinforcementUnits": [
+  {"args": {"count": 0}, "text": "0 unidades en tránsito"},
+  {"args": {"count": 1}, "text": "1 unidad en tránsito"},
+  {"args": {"count": 2}, "text": "2 unidades en tránsito"},
+  {"args": {"count": 5}, "text": "5 unidades en tránsito"},
+  {"args": {"count": 21}, "text": "21 unidades en tránsito"},
+  {"args": {"count": 1000000}, "text": "1000000 unidades en tránsito"}
+],
+"historyAssaultWon": [
+  {"args": {"name": "Zed"}, "text": "Asalto a Zed logrado"}
+],
+"historyAssaultFailed": [
+  {"args": {"name": "Zed"}, "text": "Asalto rechazado por Zed"}
+],
+"historyAssaultSuffered": [
+  {"args": {"name": "Zed"}, "text": "Base atacada por Zed"}
+],
+"historyAssaultRepelled": [
+  {"args": {"name": "Zed"}, "text": "Asalto de Zed rechazado"}
+],
+"commonTurn": [
+  {"args": {"turn": 7}, "text": "Turno 7"}
+],
+"fightTurnCount": [
+  {"args": {"count": 0}, "text": "Combate en 0 turnos"},
+  {"args": {"count": 1}, "text": "Combate en 1 turno"},
+  {"args": {"count": 2}, "text": "Combate en 2 turnos"},
+  {"args": {"count": 5}, "text": "Combate en 5 turnos"},
+  {"args": {"count": 21}, "text": "Combate en 21 turnos"},
+  {"args": {"count": 1000000}, "text": "Combate en 1000000 turnos"}
+],
+"fightUnitAccounting": [
+  {"args": {"sent": 7, "intact": 7, "wounded": 7, "dead": 7}, "text": "Enviadas: 7 / Intactas: 7 / Heridas: 7 / Muertas: 7"}
+],
+"fightEnemiesKilled": [
+  {"args": {"killed": 7, "total": 7}, "text": "Enemigos abatidos: 7/7"}
+],
+"fightGuardiansKilled": [
+  {"args": {"killed": 7, "total": 7}, "text": "Guardianes eliminados: 7/7"}
+],
+"fightTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Combate (7, 7)"}
+],
+"fightAssaultTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Asalto (7, 7)"}
+],
+"fightAssaultOn": [
+  {"args": {"target": "Zed"}, "text": "Asalto: Zed"}
+],
+"fightStock": [
+  {"args": {"count": 7}, "text": "Reserva: 7"}
+],
+"fightAlliesAlive": [
+  {"args": {"count": 7}, "text": "Aliados vivos: 7"}
+],
+"fightAlliesHp": [
+  {"args": {"hp": 7}, "text": "PV aliados: 7"}
+],
+"fightDamageDealt": [
+  {"args": {"damage": 7}, "text": "Daño infligido: 7"}
+],
+"fightEnemiesAlive": [
+  {"args": {"count": 7}, "text": "Enemigos vivos: 7"}
+],
+"fightEnemiesHp": [
+  {"args": {"hp": 7}, "text": "PV enemigos: 7"}
+],
+"fightDamageTaken": [
+  {"args": {"damage": 7}, "text": "Daño recibido: 7"}
+],
+"fightCriticalHits": [
+  {"args": {"count": 7}, "text": "Golpes críticos: 7"}
+],
+"fightMilitaryBonus": [
+  {"args": {"bonuses": "Zed"}, "text": "Bonificación militar: Zed"}
+],
+"fightLevel": [
+  {"args": {"level": 7}, "text": "Nivel 7"}
+],
+"fightWeakAgainst": [
+  {"args": {"unit": "Zed"}, "text": "Débil contra: Zed"}
+],
+"mapLevelChip": [
+  {"args": {"level": 7, "name": "Zed"}, "text": "Niv 7: Zed"}
+],
+"mapPearlsPerTurn": [
+  {"args": {"count": 0}, "text": "+0 perlas por turno"},
+  {"args": {"count": 1}, "text": "+1 perla por turno"},
+  {"args": {"count": 2}, "text": "+2 perlas por turno"},
+  {"args": {"count": 5}, "text": "+5 perlas por turno"},
+  {"args": {"count": 21}, "text": "+21 perlas por turno"},
+  {"args": {"count": 1000000}, "text": "+1000000 perlas por turno"}
+],
+"mapBuildingRequired": [
+  {"args": {"building": "Zed"}, "text": "Edificio necesario para enviar unidades: Zed"}
+],
+"mapDefendersOnLevel": [
+  {"args": {"level": 7}, "text": "Defensores en el Nivel 7"}
+],
+"postDefenceThreat": [
+  {"args": {"faction": "Zed", "units": 0, "turn": 7}, "text": "Zed: 0 combatientes (informe del turno 7)"},
+  {"args": {"faction": "Zed", "units": 1, "turn": 7}, "text": "Zed: 1 combatiente (informe del turno 7)"},
+  {"args": {"faction": "Zed", "units": 2, "turn": 7}, "text": "Zed: 2 combatientes (informe del turno 7)"},
+  {"args": {"faction": "Zed", "units": 5, "turn": 7}, "text": "Zed: 5 combatientes (informe del turno 7)"},
+  {"args": {"faction": "Zed", "units": 21, "turn": 7}, "text": "Zed: 21 combatientes (informe del turno 7)"},
+  {"args": {"faction": "Zed", "units": 1000000, "turn": 7}, "text": "Zed: 1000000 combatientes (informe del turno 7)"}
+],
+"postDefenceIfFalls": [
+  {"args": {"kind": "faille"}, "text": "Si la Falla cae"},
+  {"args": {"kind": "zzz"}, "text": "Si la Chimenea cae"}
+],
+"postDefencePassageLost": [
+  {"args": {"building": "descentModule"}, "text": "Módulo de Descenso destruido"},
+  {"args": {"building": "zzz"}, "text": "Cápsula Presurizada destruida"}
+],
+"postDefenceUnitsLost": [
+  {"args": {"count": 0, "level": 7}, "text": "0 unidades del nivel 7 perdidas"},
+  {"args": {"count": 1, "level": 7}, "text": "1 unidad del nivel 7 perdida"},
+  {"args": {"count": 2, "level": 7}, "text": "2 unidades del nivel 7 perdidas"},
+  {"args": {"count": 5, "level": 7}, "text": "5 unidades del nivel 7 perdidas"},
+  {"args": {"count": 21, "level": 7}, "text": "21 unidades del nivel 7 perdidas"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 unidades del nivel 7 perdidas"}
+],
+"postDefenceReinforcementsLost": [
+  {"args": {"count": 0}, "text": "0 refuerzos en camino cancelados"},
+  {"args": {"count": 1}, "text": "1 refuerzo en camino cancelado"},
+  {"args": {"count": 2}, "text": "2 refuerzos en camino cancelados"},
+  {"args": {"count": 5}, "text": "5 refuerzos en camino cancelados"},
+  {"args": {"count": 21}, "text": "21 refuerzos en camino cancelados"},
+  {"args": {"count": 1000000}, "text": "1000000 refuerzos en camino cancelados"}
+],
+"mapSendUnitsToLevel": [
+  {"args": {"level": 7}, "text": "Enviar unidades al Nivel 7"}
+],
+"mapExploreTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Explorar (7, 7)"}
+],
+"mapAreaCells": [
+  {"args": {"side": 7}, "text": "7×7 casillas"}
+],
+"mapTreasureTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Tesoro (7, 7)"}
+],
+"raidPredatorsTitle": [
+  {"args": {"turn": 7}, "text": "Banco de depredadores (turno 7)"}
+],
+"raidTitle": [
+  {"args": {"turn": 7}, "text": "Incursión en la base (turno 7)"}
+],
+"raidRampart": [
+  {"args": {"level": 7}, "text": "Muralla de la Ciudadela niv. 7"}
+],
+"raidLostInARow": [
+  {"args": {"lost": 7, "limit": 7}, "text": "Incursiones perdidas seguidas: 7/7"}
+],
+"raidIncomingThisTurn": [
+  {"args": {"wave": "Zed"}, "text": "Incursión al final de este turno: Zed"}
+],
+"raidIncomingOnTurn": [
+  {"args": {"turn": 7, "wave": "Zed"}, "text": "Incursión al final del turno 7: Zed"}
+],
+"raidAnnounced": [
+  {"args": {"wave": "Zed", "turn": 7}, "text": "Se acerca una incursión: Zed, final del turno 7"}
+],
+"raidDueThisTurn": [
+  {"args": {"attacker": "Zed", "wave": "Zed", "defenders": "Zed"}, "text": "Zed este turno: Zed contra Zed"}
+],
+"raidDefenders": [
+  {"args": {"count": 0}, "text": "ningún defensor"},
+  {"args": {"count": 1}, "text": "1 defensor"},
+  {"args": {"count": 2}, "text": "2 defensores"},
+  {"args": {"count": 5}, "text": "5 defensores"},
+  {"args": {"count": 21}, "text": "21 defensores"},
+  {"args": {"count": 1000000}, "text": "1000000 defensores"}
+],
+"volcanoWaveTitle": [
+  {"args": {"turn": 7}, "text": "Oleada sobre el Núcleo (turno 7)"}
+],
+"volcanoKernelHolds": [
+  {"args": {"level": 7}, "text": "El Núcleo resiste en el nivel 7"}
+],
+"volcanoKernelDrops": [
+  {"args": {"level": 7}, "text": "El Núcleo cae al nivel 7"}
+],
+"volcanoMagmaRampart": [
+  {"args": {"stats": "Zed"}, "text": "Muralla de magma: Zed"}
+],
+"volcanoKernelLevel": [
+  {"args": {"level": 7}, "text": "Núcleo nivel 7"}
+],
+"volcanoOutsideGarrison": [
+  {"args": {"count": 0, "level": 7}, "text": "Fuera de la guarnición, en el Nivel 7: 0 unidades"},
+  {"args": {"count": 1, "level": 7}, "text": "Fuera de la guarnición, en el Nivel 7: 1 unidad"},
+  {"args": {"count": 2, "level": 7}, "text": "Fuera de la guarnición, en el Nivel 7: 2 unidades"},
+  {"args": {"count": 5, "level": 7}, "text": "Fuera de la guarnición, en el Nivel 7: 5 unidades"},
+  {"args": {"count": 21, "level": 7}, "text": "Fuera de la guarnición, en el Nivel 7: 21 unidades"},
+  {"args": {"count": 1000000, "level": 7}, "text": "Fuera de la guarnición, en el Nivel 7: 1000000 unidades"}
+],
+"volcanoNextWave": [
+  {"args": {"wave": "Zed"}, "text": "Próxima oleada, al final del turno: Zed"}
+],
+"volcanoLevelsLost": [
+  {"args": {"count": 7}, "text": "Niveles perdidos ante las oleadas: 7"}
+],
+"undefendedPostWarning": [
+  {"args": {"kind": "faille", "level": 7}, "text": "Tu Falla no tiene defensores en el nivel 7"},
+  {"args": {"kind": "zzz", "level": 7}, "text": "Tu Chimenea no tiene defensores en el nivel 7"}
+],
+"volcanoDueWarning": [
+  {"args": {"wave": "Zed"}, "text": "Oleada sobre el Núcleo este turno: Zed, y sin guarnición. El Núcleo probablemente perderá un nivel."}
+],
+"volcanoStatus": [
+  {"args": {"level": 7, "wave": "Zed", "size": 7}, "text": "Núcleo niv. 7, final del turno: Zed contra una guarnición de 7"}
+],
+"volcanoRepelled": [
+  {"args": {"losses": "Zed"}, "text": "Volcán: oleada repelida, Zed"}
+],
+"volcanoKernelFell": [
+  {"args": {"level": 7}, "text": "Volcán: el Núcleo cae al nivel 7"}
+],
+"volcanoWounded": [
+  {"args": {"count": 0}, "text": "0 heridos"},
+  {"args": {"count": 1}, "text": "1 herido"},
+  {"args": {"count": 2}, "text": "2 heridos"},
+  {"args": {"count": 5}, "text": "5 heridos"},
+  {"args": {"count": 21}, "text": "21 heridos"},
+  {"args": {"count": 1000000}, "text": "1000000 heridos"}
+],
+"volcanoDead": [
+  {"args": {"count": 0}, "text": "0 muertos"},
+  {"args": {"count": 1}, "text": "1 muerto"},
+  {"args": {"count": 2}, "text": "2 muertos"},
+  {"args": {"count": 5}, "text": "5 muertos"},
+  {"args": {"count": 21}, "text": "21 muertos"},
+  {"args": {"count": 1000000}, "text": "1000000 muertos"}
+],
+"volcanoKrakenRises": [
+  {"args": {"wave": "Zed"}, "text": "El Kraken asciende: Zed el próximo turno"}
+],
+"eventCardPredatorsWave": [
+  {"args": {"wave": "Zed", "defenders": "Zed"}, "text": "Zed contra Zed del nivel 1."}
+],
+"eventCardStormLine1": [
+  {"args": {"turns": 0}, "text": "Exploración imposible durante 0 turnos."},
+  {"args": {"turns": 1}, "text": "Exploración imposible durante 1 turno."},
+  {"args": {"turns": 2}, "text": "Exploración imposible durante 2 turnos."},
+  {"args": {"turns": 5}, "text": "Exploración imposible durante 5 turnos."},
+  {"args": {"turns": 21}, "text": "Exploración imposible durante 21 turnos."},
+  {"args": {"turns": 1000000}, "text": "Exploración imposible durante 1000000 turnos."}
+],
+"eventCardStormLine2": [
+  {"args": {"relief": 7}, "text": "La tormenta cubre el ruido: indicador −7."}
+],
+"eventCardWreckLine2": [
+  {"args": {"turns": 0, "noise": 7}, "text": "Explóralo con un Explorador y regístralo antes de 0 turnos (+7 ruido)."},
+  {"args": {"turns": 1, "noise": 7}, "text": "Explóralo con un Explorador y regístralo antes de 1 turno (+7 ruido)."},
+  {"args": {"turns": 2, "noise": 7}, "text": "Explóralo con un Explorador y regístralo antes de 2 turnos (+7 ruido)."},
+  {"args": {"turns": 5, "noise": 7}, "text": "Explóralo con un Explorador y regístralo antes de 5 turnos (+7 ruido)."},
+  {"args": {"turns": 21, "noise": 7}, "text": "Explóralo con un Explorador y regístralo antes de 21 turnos (+7 ruido)."},
+  {"args": {"turns": 1000000, "noise": 7}, "text": "Explóralo con un Explorador y regístralo antes de 1000000 turnos (+7 ruido)."}
+],
+"eventCardWarmAccept": [
+  {"args": {"percent": 7, "turns": 7, "noise": 7}, "text": "Aprovechar (+7 % algas, coral, mineral durante 7 turnos, +7 ruido/turno)"}
+],
+"eventCardColdAccept": [
+  {"args": {"energy": 7, "turns": 7}, "text": "Calentar los invernaderos (−7 energía/turno durante 7 turnos)"}
+],
+"eventCardColdRefuse": [
+  {"args": {"percent": 7, "turns": 7}, "text": "Aguantar (−7 % de algas durante 7 turnos)"}
+],
+"eventCardPredatorsAccept": [
+  {"args": {"count": 0}, "text": "Enfrentarlo (0 monstruos, final del turno)"},
+  {"args": {"count": 1}, "text": "Enfrentarlo (1 monstruo, final del turno)"},
+  {"args": {"count": 2}, "text": "Enfrentarlo (2 monstruos, final del turno)"},
+  {"args": {"count": 5}, "text": "Enfrentarlo (5 monstruos, final del turno)"},
+  {"args": {"count": 21}, "text": "Enfrentarlo (21 monstruos, final del turno)"},
+  {"args": {"count": 1000000}, "text": "Enfrentarlo (1000000 monstruos, final del turno)"}
+],
+"eventCardPredatorsRefuse": [
+  {"args": {"algae": 7}, "text": "Atraerlo con cebo (−7 algas)"}
+],
+"eventCardSurvivorsAccept": [
+  {"args": {"units": "Zed"}, "text": "Acoger a Zed"}
+],
+"eventCardTrade": [
+  {"args": {"give": 7, "from": "Zed", "get": 7, "to": "Zed"}, "text": "Cambiar 7 Zed por 7 Zed"}
+],
+"eventCardPendingWarning": [
+  {"args": {"event": "Zed"}, "text": "Zed: sin elección, se aplicará la opción prudente"}
+],
+"eventCardStatusPending": [
+  {"args": {"event": "Zed"}, "text": "Evento: Zed — elegir"}
+],
+"techScreenChoiceTitle": [
+  {"args": {"branch": "Zed", "level": 7}, "text": "Zed · Nivel 7 · Elección"}
+],
+"techScreenNodeSubtitle": [
+  {"args": {"branch": "Zed", "level": 7, "effect": "Zed"}, "text": "Zed · Nivel 7 · Zed"}
+],
+"techScreenSurcharge": [
+  {"args": {"factor": "Zed"}, "text": "Todas las investigaciones costarán ×Zed una vez abierta esta rama."}
+],
+"techScreenResearchPreviousFirst": [
+  {"args": {"level": 7}, "text": "Investiga primero el nivel 7"}
+],
+"techScreenLabRequired": [
+  {"args": {"level": 7}, "text": "Laboratorio nivel 7 necesario"}
+],
+"techScreenMedallionLevel": [
+  {"args": {"level": 7}, "text": "Niv. 7"}
+],
+"objectiveProgress": [
+  {"args": {"title": "Zed", "current": 7, "target": 7}, "text": "Zed: 7/7"}
+],
+"objectiveCompleted": [
+  {"args": {"title": "Zed"}, "text": "Objetivo cumplido: Zed"}
+],
+"objectiveRaiseHq": [
+  {"args": {"level": 7}, "text": "Sube el Cuartel General al nivel 7"}
+],
+"objectiveBarracksAndScouts": [
+  {"args": {"count": 0}, "text": "Construye los Barracones y recluta 0 Exploradores"},
+  {"args": {"count": 1}, "text": "Construye los Barracones y recluta 1 Explorador"},
+  {"args": {"count": 2}, "text": "Construye los Barracones y recluta 2 Exploradores"},
+  {"args": {"count": 5}, "text": "Construye los Barracones y recluta 5 Exploradores"},
+  {"args": {"count": 21}, "text": "Construye los Barracones y recluta 21 Exploradores"},
+  {"args": {"count": 1000000}, "text": "Construye los Barracones y recluta 1000000 Exploradores"}
+],
+"objectiveDescend": [
+  {"args": {"level": 7}, "text": "Desciende al nivel 7"}
+],
+"objectiveRaiseKernel": [
+  {"args": {"level": 7}, "text": "Sube el Núcleo al nivel 7"}
+],
+"chapterNumbered": [
+  {"args": {"number": 7, "title": "Zed"}, "text": "7. Zed"}
+],
+"tipNoiseGaugeLine2": [
+  {"args": {"threshold": 7}, "text": "Cuando el medidor llega a 7, los monstruos lo oyen: se anuncia una incursión."}
+],
+"tipWorksitesLine1": [
+  {"args": {"level": 7}, "text": "Tu Cuartel General de nivel 7 abre una segunda obra: suben dos edificios cada turno."}
+],
+"tipWorksitesLine2": [
+  {"args": {"level": 7}, "text": "Con el nivel 7 se abrirá una tercera. La investigación sigue siendo una por turno."}
+],
+"tipRaidAnnouncedLine1": [
+  {"args": {"turns": 0}, "text": "Tu ruido atrajo monstruos: atacarán tu base en 0 turnos."},
+  {"args": {"turns": 1}, "text": "Tu ruido atrajo monstruos: atacarán tu base en 1 turno."},
+  {"args": {"turns": 2}, "text": "Tu ruido atrajo monstruos: atacarán tu base en 2 turnos."},
+  {"args": {"turns": 5}, "text": "Tu ruido atrajo monstruos: atacarán tu base en 5 turnos."},
+  {"args": {"turns": 21}, "text": "Tu ruido atrajo monstruos: atacarán tu base en 21 turnos."},
+  {"args": {"turns": 1000000}, "text": "Tu ruido atrajo monstruos: atacarán tu base en 1000000 turnos."}
+],
+"tipLastChanceLine1": [
+  {"args": {"count": 0}, "text": "Tu base ha perdido 0 incursiones seguidas."},
+  {"args": {"count": 1}, "text": "Tu base ha perdido 1 incursión."},
+  {"args": {"count": 2}, "text": "Tu base ha perdido 2 incursiones seguidas."},
+  {"args": {"count": 5}, "text": "Tu base ha perdido 5 incursiones seguidas."},
+  {"args": {"count": 21}, "text": "Tu base ha perdido 21 incursiones seguidas."},
+  {"args": {"count": 1000000}, "text": "Tu base ha perdido 1000000 incursiones seguidas."}
+],
+"tipEventsLine1": [
+  {"args": {"minGap": 7, "maxGap": 7}, "text": "Cada 7 a 7 turnos, un evento sacude los abismos."}
+],
+"tipWarmCurrentLine1": [
+  {"args": {"turns": 0}, "text": "Una corriente cálida impulsa tu producción durante 0 turnos."},
+  {"args": {"turns": 1}, "text": "Una corriente cálida impulsa tu producción durante 1 turno."},
+  {"args": {"turns": 2}, "text": "Una corriente cálida impulsa tu producción durante 2 turnos."},
+  {"args": {"turns": 5}, "text": "Una corriente cálida impulsa tu producción durante 5 turnos."},
+  {"args": {"turns": 21}, "text": "Una corriente cálida impulsa tu producción durante 21 turnos."},
+  {"args": {"turns": 1000000}, "text": "Una corriente cálida impulsa tu producción durante 1000000 turnos."}
+],
+"tipWreckLine1": [
+  {"args": {"turns": 0}, "text": "Un galeón hundido permanece 0 turnos al borde de la zona explorada."},
+  {"args": {"turns": 1}, "text": "Un galeón hundido permanece 1 turno al borde de la zona explorada."},
+  {"args": {"turns": 2}, "text": "Un galeón hundido permanece 2 turnos al borde de la zona explorada."},
+  {"args": {"turns": 5}, "text": "Un galeón hundido permanece 5 turnos al borde de la zona explorada."},
+  {"args": {"turns": 21}, "text": "Un galeón hundido permanece 21 turnos al borde de la zona explorada."},
+  {"args": {"turns": 1000000}, "text": "Un galeón hundido permanece 1000000 turnos al borde de la zona explorada."}
+],
+"tipWreckLine3": [
+  {"args": {"noise": 7}, "text": "Registrarlo hace ruido (+7): elige tu momento."}
+],
+"tipStormLine1": [
+  {"args": {"turns": 0}, "text": "La tormenta cierra la exploración durante 0 turnos."},
+  {"args": {"turns": 1}, "text": "La tormenta cierra la exploración durante 1 turno."},
+  {"args": {"turns": 2}, "text": "La tormenta cierra la exploración durante 2 turnos."},
+  {"args": {"turns": 5}, "text": "La tormenta cierra la exploración durante 5 turnos."},
+  {"args": {"turns": 21}, "text": "La tormenta cierra la exploración durante 21 turnos."},
+  {"args": {"turns": 1000000}, "text": "La tormenta cierra la exploración durante 1000000 turnos."}
+],
+"tipStormLine2": [
+  {"args": {"relief": 7}, "text": "A cambio, cubre tu ruido: el medidor baja 7."}
+],
+"tipColdCurrentLine1": [
+  {"args": {"turns": 0}, "text": "Una corriente fría frena tus algas durante 0 turnos."},
+  {"args": {"turns": 1}, "text": "Una corriente fría frena tus algas durante 1 turno."},
+  {"args": {"turns": 2}, "text": "Una corriente fría frena tus algas durante 2 turnos."},
+  {"args": {"turns": 5}, "text": "Una corriente fría frena tus algas durante 5 turnos."},
+  {"args": {"turns": 21}, "text": "Una corriente fría frena tus algas durante 21 turnos."},
+  {"args": {"turns": 1000000}, "text": "Una corriente fría frena tus algas durante 1000000 turnos."}
+],
+"guideLessonHqLevel2": [
+  {"args": {"level": 7}, "text": "El Cuartel General de nivel 7 desbloquea los Barracones y el Laboratorio. Pero cada obra hace ruido: vigila el medidor en lo alto de la pantalla, atrae a los monstruos."}
+],
+"guideLessonBarracksAndScouts": [
+  {"args": {"count": 0}, "text": "Construye los Barracones y luego recluta 0 Exploradores en la pestaña Ejército. Cada unidad come algas cada turno, y cada recluta hace subir el ruido."},
+  {"args": {"count": 1}, "text": "Construye los Barracones y luego recluta 1 Explorador en la pestaña Ejército. Cada unidad come algas cada turno, y cada recluta hace subir el ruido."},
+  {"args": {"count": 2}, "text": "Construye los Barracones y luego recluta 2 Exploradores en la pestaña Ejército. Cada unidad come algas cada turno, y cada recluta hace subir el ruido."},
+  {"args": {"count": 5}, "text": "Construye los Barracones y luego recluta 5 Exploradores en la pestaña Ejército. Cada unidad come algas cada turno, y cada recluta hace subir el ruido."},
+  {"args": {"count": 21}, "text": "Construye los Barracones y luego recluta 21 Exploradores en la pestaña Ejército. Cada unidad come algas cada turno, y cada recluta hace subir el ruido."},
+  {"args": {"count": 1000000}, "text": "Construye los Barracones y luego recluta 1000000 Exploradores en la pestaña Ejército. Cada unidad come algas cada turno, y cada recluta hace subir el ruido."}
+],
+"guideLessonFirstRaid": [
+  {"args": {"turns": 0}, "text": "El ruido siempre acaba atrayendo una incursión, anunciada con 0 turnos de antelación. Recluta Arponeros para defender tu base. Más adelante, la muralla de la Ciudadela también te ayudará."},
+  {"args": {"turns": 1}, "text": "El ruido siempre acaba atrayendo una incursión, anunciada con 1 turno de antelación. Recluta Arponeros para defender tu base. Más adelante, la muralla de la Ciudadela también te ayudará."},
+  {"args": {"turns": 2}, "text": "El ruido siempre acaba atrayendo una incursión, anunciada con 2 turnos de antelación. Recluta Arponeros para defender tu base. Más adelante, la muralla de la Ciudadela también te ayudará."},
+  {"args": {"turns": 5}, "text": "El ruido siempre acaba atrayendo una incursión, anunciada con 5 turnos de antelación. Recluta Arponeros para defender tu base. Más adelante, la muralla de la Ciudadela también te ayudará."},
+  {"args": {"turns": 21}, "text": "El ruido siempre acaba atrayendo una incursión, anunciada con 21 turnos de antelación. Recluta Arponeros para defender tu base. Más adelante, la muralla de la Ciudadela también te ayudará."},
+  {"args": {"turns": 1000000}, "text": "El ruido siempre acaba atrayendo una incursión, anunciada con 1000000 turnos de antelación. Recluta Arponeros para defender tu base. Más adelante, la muralla de la Ciudadela también te ayudará."}
+],
+"guideStorm": [
+  {"args": {"turn": 7}, "text": "Una tormenta cierra la exploración hasta el final del turno 7. Ten paciencia: el objetivo te espera, termina el turno."}
+],
+"guideWreckWithoutBarracks": [
+  {"args": {"turn": 7}, "text": "Un pecio se ha hundido cerca de tu base, visible hasta el final del turno 7. Hace falta un Explorador para alcanzarlo, y por tanto unos Barracones: sigue con tu objetivo, ya llegará."}
+],
+"guideWreckWithoutScout": [
+  {"args": {"turn": 7}, "text": "Un pecio se ha hundido cerca de tu base, visible hasta el final del turno 7. Recluta un Explorador en la pestaña Ejército para ir a registrarlo."}
+],
+"guideRaidIntro": [
+  {"args": {"turn": 7, "monsters": 0}, "text": "La incursión llega en el turno 7 con 0 monstruos."},
+  {"args": {"turn": 7, "monsters": 1}, "text": "La incursión llega en el turno 7 con 1 monstruo."},
+  {"args": {"turn": 7, "monsters": 2}, "text": "La incursión llega en el turno 7 con 2 monstruos."},
+  {"args": {"turn": 7, "monsters": 5}, "text": "La incursión llega en el turno 7 con 5 monstruos."},
+  {"args": {"turn": 7, "monsters": 21}, "text": "La incursión llega en el turno 7 con 21 monstruos."},
+  {"args": {"turn": 7, "monsters": 1000000}, "text": "La incursión llega en el turno 7 con 1000000 monstruos."}
+],
+"guideRaidNeeded": [
+  {"args": {"needed": 0, "missing": 0}, "text": "Ten al menos 0 Arponeros en el nivel 1: te faltan 0."},
+  {"args": {"needed": 0, "missing": 1}, "text": "Ten al menos 0 Arponeros en el nivel 1: te falta 1."},
+  {"args": {"needed": 0, "missing": 2}, "text": "Ten al menos 0 Arponeros en el nivel 1: te faltan 2."},
+  {"args": {"needed": 0, "missing": 5}, "text": "Ten al menos 0 Arponeros en el nivel 1: te faltan 5."},
+  {"args": {"needed": 0, "missing": 21}, "text": "Ten al menos 0 Arponeros en el nivel 1: te faltan 21."},
+  {"args": {"needed": 0, "missing": 1000000}, "text": "Ten al menos 0 Arponeros en el nivel 1: te faltan 1000000."},
+  {"args": {"needed": 1, "missing": 0}, "text": "Ten al menos 1 Arponero en el nivel 1: te faltan 0."},
+  {"args": {"needed": 1, "missing": 1}, "text": "Ten al menos 1 Arponero en el nivel 1: te falta 1."},
+  {"args": {"needed": 1, "missing": 2}, "text": "Ten al menos 1 Arponero en el nivel 1: te faltan 2."},
+  {"args": {"needed": 1, "missing": 5}, "text": "Ten al menos 1 Arponero en el nivel 1: te faltan 5."},
+  {"args": {"needed": 1, "missing": 21}, "text": "Ten al menos 1 Arponero en el nivel 1: te faltan 21."},
+  {"args": {"needed": 1, "missing": 1000000}, "text": "Ten al menos 1 Arponero en el nivel 1: te faltan 1000000."},
+  {"args": {"needed": 2, "missing": 0}, "text": "Ten al menos 2 Arponeros en el nivel 1: te faltan 0."},
+  {"args": {"needed": 2, "missing": 1}, "text": "Ten al menos 2 Arponeros en el nivel 1: te falta 1."},
+  {"args": {"needed": 2, "missing": 2}, "text": "Ten al menos 2 Arponeros en el nivel 1: te faltan 2."},
+  {"args": {"needed": 2, "missing": 5}, "text": "Ten al menos 2 Arponeros en el nivel 1: te faltan 5."},
+  {"args": {"needed": 2, "missing": 21}, "text": "Ten al menos 2 Arponeros en el nivel 1: te faltan 21."},
+  {"args": {"needed": 2, "missing": 1000000}, "text": "Ten al menos 2 Arponeros en el nivel 1: te faltan 1000000."},
+  {"args": {"needed": 5, "missing": 0}, "text": "Ten al menos 5 Arponeros en el nivel 1: te faltan 0."},
+  {"args": {"needed": 5, "missing": 1}, "text": "Ten al menos 5 Arponeros en el nivel 1: te falta 1."},
+  {"args": {"needed": 5, "missing": 2}, "text": "Ten al menos 5 Arponeros en el nivel 1: te faltan 2."},
+  {"args": {"needed": 5, "missing": 5}, "text": "Ten al menos 5 Arponeros en el nivel 1: te faltan 5."},
+  {"args": {"needed": 5, "missing": 21}, "text": "Ten al menos 5 Arponeros en el nivel 1: te faltan 21."},
+  {"args": {"needed": 5, "missing": 1000000}, "text": "Ten al menos 5 Arponeros en el nivel 1: te faltan 1000000."},
+  {"args": {"needed": 21, "missing": 0}, "text": "Ten al menos 21 Arponeros en el nivel 1: te faltan 0."},
+  {"args": {"needed": 21, "missing": 1}, "text": "Ten al menos 21 Arponeros en el nivel 1: te falta 1."},
+  {"args": {"needed": 21, "missing": 2}, "text": "Ten al menos 21 Arponeros en el nivel 1: te faltan 2."},
+  {"args": {"needed": 21, "missing": 5}, "text": "Ten al menos 21 Arponeros en el nivel 1: te faltan 5."},
+  {"args": {"needed": 21, "missing": 21}, "text": "Ten al menos 21 Arponeros en el nivel 1: te faltan 21."},
+  {"args": {"needed": 21, "missing": 1000000}, "text": "Ten al menos 21 Arponeros en el nivel 1: te faltan 1000000."},
+  {"args": {"needed": 1000000, "missing": 0}, "text": "Ten al menos 1000000 Arponeros en el nivel 1: te faltan 0."},
+  {"args": {"needed": 1000000, "missing": 1}, "text": "Ten al menos 1000000 Arponeros en el nivel 1: te falta 1."},
+  {"args": {"needed": 1000000, "missing": 2}, "text": "Ten al menos 1000000 Arponeros en el nivel 1: te faltan 2."},
+  {"args": {"needed": 1000000, "missing": 5}, "text": "Ten al menos 1000000 Arponeros en el nivel 1: te faltan 5."},
+  {"args": {"needed": 1000000, "missing": 21}, "text": "Ten al menos 1000000 Arponeros en el nivel 1: te faltan 21."},
+  {"args": {"needed": 1000000, "missing": 1000000}, "text": "Ten al menos 1000000 Arponeros en el nivel 1: te faltan 1000000."}
+],
+"guideRaidRecruitNow": [
+  {"args": {"missing": 0}, "text": "Reclútalos en la pestaña Ejército."},
+  {"args": {"missing": 1}, "text": "Reclútalo en la pestaña Ejército."},
+  {"args": {"missing": 2}, "text": "Reclútalos en la pestaña Ejército."},
+  {"args": {"missing": 5}, "text": "Reclútalos en la pestaña Ejército."},
+  {"args": {"missing": 21}, "text": "Reclútalos en la pestaña Ejército."},
+  {"args": {"missing": 1000000}, "text": "Reclútalos en la pestaña Ejército."}
+],
+"guideRaidRecruitNextTurn": [
+  {"args": {"missing": 0}, "text": "Ya has reclutado este turno: reclútalos en el próximo turno."},
+  {"args": {"missing": 1}, "text": "Ya has reclutado este turno: reclútalo en el próximo turno."},
+  {"args": {"missing": 2}, "text": "Ya has reclutado este turno: reclútalos en el próximo turno."},
+  {"args": {"missing": 5}, "text": "Ya has reclutado este turno: reclútalos en el próximo turno."},
+  {"args": {"missing": 21}, "text": "Ya has reclutado este turno: reclútalos en el próximo turno."},
+  {"args": {"missing": 1000000}, "text": "Ya has reclutado este turno: reclútalos en el próximo turno."}
+],
+"guideAdmiralNeedsBarracks": [
+  {"args": {"post": "cheminee", "level": 7}, "text": "Para tomar una Chimenea, necesitas un Almirante. Sube los Barracones al nivel 7."},
+  {"args": {"post": "faille", "level": 7}, "text": "Para tomar una Falla, necesitas un Almirante. Sube los Barracones al nivel 7."},
+  {"args": {"post": "zzz", "level": 7}, "text": "Para tomar el Núcleo, necesitas un Almirante. Sube los Barracones al nivel 7."}
+],
+"guideAdmiralToRecruit": [
+  {"args": {"post": "cheminee"}, "text": "Recluta un Almirante: no combate, pero sin él la Chimenea no se toma."},
+  {"args": {"post": "faille"}, "text": "Recluta un Almirante: no combate, pero sin él la Falla no se toma."},
+  {"args": {"post": "zzz"}, "text": "Recluta un Almirante: no combate, pero sin él el Núcleo no se toma."}
+],
+"guideAdmiralToSend": [
+  {"args": {"post": "cheminee", "level": 7, "from": 7, "passage": "faille"}, "text": "Para tomar la Chimenea, tu Almirante debe bajar al nivel 7. Está en el nivel 7: envíalo por tu Falla, resaltada en el Mapa en el nivel 7."},
+  {"args": {"post": "cheminee", "level": 7, "from": 7, "passage": "zzz"}, "text": "Para tomar la Chimenea, tu Almirante debe bajar al nivel 7. Está en el nivel 7: envíalo por tu Chimenea, resaltada en el Mapa en el nivel 7."},
+  {"args": {"post": "faille", "level": 7, "from": 7, "passage": "faille"}, "text": "Para tomar la Falla, tu Almirante debe bajar al nivel 7. Está en el nivel 7: envíalo por tu Falla, resaltada en el Mapa en el nivel 7."},
+  {"args": {"post": "faille", "level": 7, "from": 7, "passage": "zzz"}, "text": "Para tomar la Falla, tu Almirante debe bajar al nivel 7. Está en el nivel 7: envíalo por tu Chimenea, resaltada en el Mapa en el nivel 7."},
+  {"args": {"post": "zzz", "level": 7, "from": 7, "passage": "faille"}, "text": "Para tomar el Núcleo, tu Almirante debe bajar al nivel 7. Está en el nivel 7: envíalo por tu Falla, resaltada en el Mapa en el nivel 7."},
+  {"args": {"post": "zzz", "level": 7, "from": 7, "passage": "zzz"}, "text": "Para tomar el Núcleo, tu Almirante debe bajar al nivel 7. Está en el nivel 7: envíalo por tu Chimenea, resaltada en el Mapa en el nivel 7."}
+],
+"guidePostToFind": [
+  {"args": {"post": "cheminee"}, "text": "Explora el Mapa en el nivel 2 para encontrar una Chimenea, pero no olvides seguir mejorando tus edificios y tu ejército."},
+  {"args": {"post": "faille"}, "text": "Explora el Mapa para encontrar una Falla, pero no olvides seguir mejorando tus edificios y tu ejército."},
+  {"args": {"post": "zzz"}, "text": "Explora el Mapa en el nivel 3 para encontrar el Núcleo, pero no olvides seguir mejorando tus edificios y tu ejército."}
+],
+"guidePostAssault": [
+  {"args": {"post": "cheminee"}, "text": "¡Una Chimenea! Tu Almirante debe sobrevivir: cúbrelo con Guardianes."},
+  {"args": {"post": "faille"}, "text": "¡Una Falla! Tu Almirante debe sobrevivir: cúbrelo con Guardianes."},
+  {"args": {"post": "zzz"}, "text": "¡El Núcleo! Tu Almirante debe sobrevivir: cúbrelo con Guardianes."}
+],
+"guidePostAssaultArmy": [
+  {"args": {"count": 0, "wins": 7, "rehearsals": 7}, "text": "Tu escolta basta: ganas 7 veces de 7."},
+  {"args": {"count": 1, "wins": 7, "rehearsals": 7}, "text": "Envíalo con al menos 1 Arponero: ganas 7 veces de 7."},
+  {"args": {"count": 2, "wins": 7, "rehearsals": 7}, "text": "Envíalo con al menos 2 Arponeros: ganas 7 veces de 7."},
+  {"args": {"count": 5, "wins": 7, "rehearsals": 7}, "text": "Envíalo con al menos 5 Arponeros: ganas 7 veces de 7."},
+  {"args": {"count": 21, "wins": 7, "rehearsals": 7}, "text": "Envíalo con al menos 21 Arponeros: ganas 7 veces de 7."},
+  {"args": {"count": 1000000, "wins": 7, "rehearsals": 7}, "text": "Envíalo con al menos 1000000 Arponeros: ganas 7 veces de 7."}
+],
+"guideAdmiralFell": [
+  {"args": {"post": "cheminee"}, "text": "Victoria, pero tu Almirante cayó: la Chimenea no está tomada. Cúbrelo con Guardianes y vuelve a intentarlo."},
+  {"args": {"post": "faille"}, "text": "Victoria, pero tu Almirante cayó: la Falla no está tomada. Cúbrelo con Guardianes y vuelve a intentarlo."},
+  {"args": {"post": "zzz"}, "text": "Victoria, pero tu Almirante cayó: el Núcleo no está tomado. Cúbrelo con Guardianes y vuelve a intentarlo."}
+],
+"guidePassageNeedsHq": [
+  {"args": {"passage": "descentModule", "level": 7}, "text": "El Módulo de descenso requiere el Cuartel General de nivel 7. Sube primero tu Cuartel General."},
+  {"args": {"passage": "zzz", "level": 7}, "text": "La Cápsula presurizada requiere el Cuartel General de nivel 7. Sube primero tu Cuartel General."}
+],
+"guidePostUndefended": [
+  {"args": {"post": "faille", "level": 7}, "text": "Tu Falla solo la defienden tus unidades del nivel 7. Si cae, tu Módulo queda destruido y tus unidades de abajo se pierden."},
+  {"args": {"post": "zzz", "level": 7}, "text": "Tu Chimenea solo la defienden tus unidades del nivel 7. Si cae, tu Cápsula queda destruida y tus unidades de abajo se pierden."}
+],
+"guideKernelWaveNeeded": [
+  {"args": {"needed": 0}, "text": "¡Los Krakens vienen a recuperar el Núcleo! Pon al menos 0 unidades en guarnición antes del final del turno, o el Núcleo pierde un nivel."},
+  {"args": {"needed": 1}, "text": "¡Los Krakens vienen a recuperar el Núcleo! Pon al menos 1 unidad en guarnición antes del final del turno, o el Núcleo pierde un nivel."},
+  {"args": {"needed": 2}, "text": "¡Los Krakens vienen a recuperar el Núcleo! Pon al menos 2 unidades en guarnición antes del final del turno, o el Núcleo pierde un nivel."},
+  {"args": {"needed": 5}, "text": "¡Los Krakens vienen a recuperar el Núcleo! Pon al menos 5 unidades en guarnición antes del final del turno, o el Núcleo pierde un nivel."},
+  {"args": {"needed": 21}, "text": "¡Los Krakens vienen a recuperar el Núcleo! Pon al menos 21 unidades en guarnición antes del final del turno, o el Núcleo pierde un nivel."},
+  {"args": {"needed": 1000000}, "text": "¡Los Krakens vienen a recuperar el Núcleo! Pon al menos 1000000 unidades en guarnición antes del final del turno, o el Núcleo pierde un nivel."}
+],
+"guideKernelWaveAll": [
+  {"args": {"monsters": 7}, "text": "¡7 Krakens vienen a recuperar el Núcleo! Pon en guarnición todas las unidades que puedas antes del final del turno, o el Núcleo pierde un nivel."}
+],
+"gameOverDefeatSubtitle": [
+  {"args": {"turn": 7, "raids": 0}, "text": "Tu base cayó al final del turno 7, tras 0 incursiones perdidas seguidas."},
+  {"args": {"turn": 7, "raids": 1}, "text": "Tu base cayó al final del turno 7, tras 1 incursión perdida seguida."},
+  {"args": {"turn": 7, "raids": 2}, "text": "Tu base cayó al final del turno 7, tras 2 incursiones perdidas seguidas."},
+  {"args": {"turn": 7, "raids": 5}, "text": "Tu base cayó al final del turno 7, tras 5 incursiones perdidas seguidas."},
+  {"args": {"turn": 7, "raids": 21}, "text": "Tu base cayó al final del turno 7, tras 21 incursiones perdidas seguidas."},
+  {"args": {"turn": 7, "raids": 1000000}, "text": "Tu base cayó al final del turno 7, tras 1000000 incursiones perdidas seguidas."}
+],
+"gameOverFactionWonSubtitle": [
+  {"args": {"name": "Zed", "turn": 7}, "text": "Zed domó el Volcán en el turno 7."}
+],
+"gameOverTurnsPlayed": [
+  {"args": {"count": 7}, "text": "Turnos jugados: 7"}
+],
+"gameOverMonstersDefeated": [
+  {"args": {"count": 7}, "text": "Monstruos vencidos: 7"}
+],
+"gameOverBasesCaptured": [
+  {"args": {"count": 7}, "text": "Bases capturadas: 7"}
+],
+"gameOverResourcesCollected": [
+  {"args": {"count": 7}, "text": "Recursos recogidos: 7"}
+],
+"gameOverRaidsRepelled": [
+  {"args": {"count": 7}, "text": "Incursiones repelidas: 7"}
+],
+"gameOverRaidsLost": [
+  {"args": {"count": 7}, "text": "Incursiones perdidas: 7"}
+],
+"menuBetaVersion": [
+  {"args": {"version": "Zed"}, "text": "Versión beta Zed"}
+],
+"saveDeleteMessage": [
+  {"args": {"name": "Zed"}, "text": "La partida de Zed se eliminará definitivamente."}
+],
+"saveMetaInProgress": [
+  {"args": {"turn": 7, "depth": "Zed", "level": 7}, "text": "Turno 7 · Zed · CG niv. 7"}
+],
+"saveMetaWon": [
+  {"args": {"turn": 7, "depth": "Zed", "difficulty": "Zed"}, "text": "Turno 7 · Zed · Zed"}
+],
+"saveMetaFallen": [
+  {"args": {"turn": 7, "depth": "Zed", "difficulty": "Zed"}, "text": "Caída en el turno 7 · Zed · Zed"}
+],
+"saveResumeLabel": [
+  {"args": {"name": "Zed", "turn": 7, "difficulty": "Zed"}, "text": "Zed · Turno 7 · Zed"}
+],
+"saveMinutesAgo": [
+  {"args": {"minutes": 7}, "text": "hace 7 min"}
+],
+"saveHoursAgo": [
+  {"args": {"hours": 7}, "text": "hace 7 h"}
+],
+"saveShortDate": [
+  {"args": {"day": 7, "month": "Zed"}, "text": "7 Zed"}
+],
+"saveShortDateWithYear": [
+  {"args": {"day": 7, "month": "Zed", "year": 7}, "text": "7 Zed 7"}
+],
+"saveMonth": [
+  {"args": {"month": "apr"}, "text": "abr"},
+  {"args": {"month": "aug"}, "text": "ago"},
+  {"args": {"month": "feb"}, "text": "feb"},
+  {"args": {"month": "jan"}, "text": "ene"},
+  {"args": {"month": "jul"}, "text": "jul"},
+  {"args": {"month": "jun"}, "text": "jun"},
+  {"args": {"month": "mar"}, "text": "mar"},
+  {"args": {"month": "may"}, "text": "may"},
+  {"args": {"month": "nov"}, "text": "nov"},
+  {"args": {"month": "oct"}, "text": "oct"},
+  {"args": {"month": "sep"}, "text": "sept"},
+  {"args": {"month": "zzz"}, "text": "dic"}
+],
+"screenReplaySummary": [
+  {"args": {"file": "Zed", "actions": "Zed", "turns": "Zed"}, "text": "El archivo Zed contiene Zed en Zed."}
+],
+"screenReplayActions": [
+  {"args": {"count": 0}, "text": "0 acciones"},
+  {"args": {"count": 1}, "text": "1 acción"},
+  {"args": {"count": 2}, "text": "2 acciones"},
+  {"args": {"count": 5}, "text": "5 acciones"},
+  {"args": {"count": 21}, "text": "21 acciones"},
+  {"args": {"count": 1000000}, "text": "1000000 acciones"}
+],
+"screenReplayTurns": [
+  {"args": {"count": 0}, "text": "0 turnos jugados"},
+  {"args": {"count": 1}, "text": "1 turno jugado"},
+  {"args": {"count": 2}, "text": "2 turnos jugados"},
+  {"args": {"count": 5}, "text": "5 turnos jugados"},
+  {"args": {"count": 21}, "text": "21 turnos jugados"},
+  {"args": {"count": 1000000}, "text": "1000000 turnos jugados"}
+],
+"screenEventChosen": [
+  {"args": {"event": "Zed", "choice": "Zed"}, "text": "Zed: Zed"}
+],
+"screenGarrisonSize": [
+  {"args": {"count": 0}, "text": "Guarnición: 0 unidades"},
+  {"args": {"count": 1}, "text": "Guarnición: 1 unidad"},
+  {"args": {"count": 2}, "text": "Guarnición: 2 unidades"},
+  {"args": {"count": 5}, "text": "Guarnición: 5 unidades"},
+  {"args": {"count": 21}, "text": "Guarnición: 21 unidades"},
+  {"args": {"count": 1000000}, "text": "Guarnición: 1000000 unidades"}
+],
+"screenTakenByRivalTitle": [
+  {"args": {"name": "Zed"}, "text": "Tomado por Zed"}
+],
+"screenPlainTitle": [
+  {"args": {"x": 7, "y": 7}, "text": "Llanura (7, 7)"}
+],
+"screenPassageTitle": [
+  {"args": {"name": "Zed"}, "text": "Paso hacia Zed"}
+],
+"screenDescendThrough": [
+  {"args": {"base": "Zed"}, "text": "Bajar tropas por Zed"}
+],
+"screenDescentTitle": [
+  {"args": {"level": 7}, "text": "Descenso al Nivel 7"}
+],
+"screenDescentConfirm": [
+  {"args": {"count": 0}, "text": "Descender (0 unidades)"},
+  {"args": {"count": 1}, "text": "Descender (1 unidad)"},
+  {"args": {"count": 2}, "text": "Descender (2 unidades)"},
+  {"args": {"count": 5}, "text": "Descender (5 unidades)"},
+  {"args": {"count": 21}, "text": "Descender (21 unidades)"},
+  {"args": {"count": 1000000}, "text": "Descender (1000000 unidades)"}
+],
+"screenDescentDone": [
+  {"args": {"level": 7}, "text": "Descenso al Nivel 7 completado"}
+],
+"screenReinforcementTitle": [
+  {"args": {"level": 7}, "text": "Refuerzos hacia el Nivel 7"}
+],
+"screenReinforcementConfirm": [
+  {"args": {"count": 0}, "text": "Enviar (0 unidades)"},
+  {"args": {"count": 1}, "text": "Enviar (1 unidad)"},
+  {"args": {"count": 2}, "text": "Enviar (2 unidades)"},
+  {"args": {"count": 5}, "text": "Enviar (5 unidades)"},
+  {"args": {"count": 21}, "text": "Enviar (21 unidades)"},
+  {"args": {"count": 1000000}, "text": "Enviar (1000000 unidades)"}
+],
+"screenReinforcementsSent": [
+  {"args": {"count": 0, "level": 7}, "text": "0 unidades en tránsito hacia el Nivel 7"},
+  {"args": {"count": 1, "level": 7}, "text": "1 unidad en tránsito hacia el Nivel 7"},
+  {"args": {"count": 2, "level": 7}, "text": "2 unidades en tránsito hacia el Nivel 7"},
+  {"args": {"count": 5, "level": 7}, "text": "5 unidades en tránsito hacia el Nivel 7"},
+  {"args": {"count": 21, "level": 7}, "text": "21 unidades en tránsito hacia el Nivel 7"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 unidades en tránsito hacia el Nivel 7"}
+],
+"baseOtherName": [
+  {"args": {"type": "Zed", "number": 7}, "text": "Zed 7"}
+],
+"baseLevel": [
+  {"args": {"level": 7}, "text": "Nivel 7"}
+],
+"baseLevelShort": [
+  {"args": {"level": 7}, "text": "Niv. 7"}
+],
+"baseUpgradeLevels": [
+  {"args": {"from": 7, "to": 7}, "text": "Nivel 7 → 7"}
+],
+"baseCapturedBaseRequired": [
+  {"args": {"base": "Zed"}, "text": "Zed capturada requerida"}
+],
+"baseWorksitesFree": [
+  {"args": {"free": 7, "total": 7}, "text": "Obras libres este turno: 7/7"}
+],
+"baseWorksitesNext": [
+  {"args": {"level": 7}, "text": "+1 en el CG 7"}
+],
+"baseShield": [
+  {"args": {"rampart": "Zed"}, "text": "Muralla de la base: Zed"}
+],
+"baseRampartCurrent": [
+  {"args": {"rampart": "Zed"}, "text": "Muralla actual: Zed"}
+],
+"baseRampartNext": [
+  {"args": {"rampart": "Zed"}, "text": "Próximo nivel: Zed"}
+],
+"baseCoralRampartStats": [
+  {"args": {"hp": 7, "def": 7}, "text": "7 PV, DEF 7"}
+],
+"baseMagmaRampartStats": [
+  {"args": {"hp": 7, "atk": 7, "def": 7}, "text": "7 PV, ATK 7, DEF 7"}
+],
+"unitTotalCount": [
+  {"args": {"count": 0}, "text": "0 unidades"},
+  {"args": {"count": 1}, "text": "1 unidad"},
+  {"args": {"count": 2}, "text": "2 unidades"},
+  {"args": {"count": 5}, "text": "5 unidades"},
+  {"args": {"count": 21}, "text": "21 unidades"},
+  {"args": {"count": 1000000}, "text": "1000000 unidades"}
+],
+"unitBarracksRequired": [
+  {"args": {"level": 7}, "text": "Barracones de nivel 7 requeridos para desbloquear"}
+],
+"unitInService": [
+  {"args": {"count": 7}, "text": "En servicio: 7"}
+],
+"armyLockPill": [
+  {"args": {"level": 7}, "text": "Barracones niv. 7"}
+],
+"armyUnitLocked": [
+  {"args": {"level": 7}, "text": "bloqueado, Barracones de nivel 7"}
+],
+"turnTransition": [
+  {"args": {"from": 7, "to": 7}, "text": "Turno 7 → Turno 7"}
+],
+"turnPendingExplorations": [
+  {"args": {"count": 0}, "text": "0 exploraciones pendientes"},
+  {"args": {"count": 1}, "text": "1 exploración pendiente"},
+  {"args": {"count": 2}, "text": "2 exploraciones pendientes"},
+  {"args": {"count": 5}, "text": "5 exploraciones pendientes"},
+  {"args": {"count": 21}, "text": "21 exploraciones pendientes"},
+  {"args": {"count": 1000000}, "text": "1000000 exploraciones pendientes"}
+],
+"turnEventDefaulted": [
+  {"args": {"event": "Zed"}, "text": "Zed: opción prudente aplicada"}
+],
+"turnEventDrawn": [
+  {"args": {"event": "Zed"}, "text": "Evento: Zed"}
+],
+"turnExplorationTotal": [
+  {"args": {"count": 0}, "text": "Exploración: 0 casillas nuevas"},
+  {"args": {"count": 1}, "text": "Exploración: 1 casilla nueva"},
+  {"args": {"count": 2}, "text": "Exploración: 2 casillas nuevas"},
+  {"args": {"count": 5}, "text": "Exploración: 5 casillas nuevas"},
+  {"args": {"count": 21}, "text": "Exploración: 21 casillas nuevas"},
+  {"args": {"count": 1000000}, "text": "Exploración: 1000000 casillas nuevas"}
+],
+"turnExplorationCells": [
+  {"args": {"count": 0}, "text": "0 casillas"},
+  {"args": {"count": 1}, "text": "1 casilla"},
+  {"args": {"count": 2}, "text": "2 casillas"},
+  {"args": {"count": 5}, "text": "5 casillas"},
+  {"args": {"count": 21}, "text": "21 casillas"},
+  {"args": {"count": 1000000}, "text": "1000000 casillas"}
+],
+"factionRankingHeadquarters": [
+  {"args": {"level": 7}, "text": "CG nivel 7"}
+],
+"factionRankingDepth": [
+  {"args": {"level": 7}, "text": "Profundidad: nivel 7"}
+],
+"buildingDegradedReason": [
+  {"args": {"level": 7}, "text": "Degradado: el Cuartel General debe ser de nivel 7"}
+],
+"factionIntelFresh": [
+  {"args": {"turns": 0}, "text": "Vigente 0 turnos más"},
+  {"args": {"turns": 1}, "text": "Vigente 1 turno más"},
+  {"args": {"turns": 2}, "text": "Vigente 2 turnos más"},
+  {"args": {"turns": 5}, "text": "Vigente 5 turnos más"},
+  {"args": {"turns": 21}, "text": "Vigente 21 turnos más"},
+  {"args": {"turns": 1000000}, "text": "Vigente 1000000 turnos más"}
+],
+"assaultYouAttacked": [
+  {"args": {"name": "Zed"}, "text": "Has atacado a Zed"}
+],
+"assaultAttackedYou": [
+  {"args": {"name": "Zed"}, "text": "Zed te ha atacado"}
+],
+"assaultDefendersDown": [
+  {"args": {"killed": 7, "total": 7}, "text": "Defensores fuera de combate: 7/7"}
+],
+"assaultRampart": [
+  {"args": {"before": 7, "after": 7}, "text": "Muralla: nivel 7 → 7"}
+],
+"assaultHeadquarters": [
+  {"args": {"before": 7, "after": 7}, "text": "Cuartel general: nivel 7 → 7"}
+],
+"factionAttackRepelled": [
+  {"args": {"faction": "Zed"}, "text": "Zed atacó: ataque rechazado"}
+],
+"factionAttackDamaged": [
+  {"args": {"faction": "Zed"}, "text": "Zed atacó: base dañada"}
+],
+"factionAttackPillaged": [
+  {"args": {"faction": "Zed"}, "text": "Zed atacó: base saqueada"}
+],
+"factionPostTaken": [
+  {"args": {"faction": "Zed", "post": "Zed"}, "text": "Zed tomó tu Zed"}
+],
+"factionPostRepelled": [
+  {"args": {"faction": "Zed", "post": "Zed"}, "text": "Zed atacó tu Zed: ataque rechazado"}
+],
+"factionPostUnitsLost": [
+  {"args": {"count": 0, "level": 7}, "text": "0 unidades del nivel 7 perdidas"},
+  {"args": {"count": 1, "level": 7}, "text": "1 unidad del nivel 7 perdida"},
+  {"args": {"count": 2, "level": 7}, "text": "2 unidades del nivel 7 perdidas"},
+  {"args": {"count": 5, "level": 7}, "text": "5 unidades del nivel 7 perdidas"},
+  {"args": {"count": 21, "level": 7}, "text": "21 unidades del nivel 7 perdidas"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 unidades del nivel 7 perdidas"}
+],
+"factionKernelDamaged": [
+  {"args": {"faction": "Zed"}, "text": "Zed atacó el Núcleo: un nivel perdido"}
+],
+"factionKernelRepelled": [
+  {"args": {"faction": "Zed"}, "text": "Zed atacó el Núcleo: ataque rechazado"}
+],
+"factionKernelTaken": [
+  {"args": {"faction": "Zed"}, "text": "Zed tomó el Núcleo"}
+],
+"factionKernelGarrisonLost": [
+  {"args": {"count": 0}, "text": "0 unidades de la guarnición perdidas"},
+  {"args": {"count": 1}, "text": "1 unidad de la guarnición perdida"},
+  {"args": {"count": 2}, "text": "2 unidades de la guarnición perdidas"},
+  {"args": {"count": 5}, "text": "5 unidades de la guarnición perdidas"},
+  {"args": {"count": 21}, "text": "21 unidades de la guarnición perdidas"},
+  {"args": {"count": 1000000}, "text": "1000000 unidades de la guarnición perdidas"}
+],
+"historyPostWon": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Zed tomada a Zed"}
+],
+"historyPostFailed": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Asalto a Zed rechazado por Zed"}
+],
+"historyPostSuffered": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Zed tomada por Zed"}
+],
+"historyPostRepelled": [
+  {"args": {"post": "Zed", "name": "Zed"}, "text": "Asalto de Zed a Zed rechazado"}
+],
+"assaultPostTaken": [
+  {"args": {"post": "Zed"}, "text": "Zed es tuya: su pasaje está destruido. Construye el tuyo para bajar por ella."}
+],
+"assaultPostLost": [
+  {"args": {"post": "Zed"}, "text": "Zed está perdida: tu pasaje está destruido y las unidades del nivel inferior se pierden con ella."}
+],
+"assaultKernelLevel": [
+  {"args": {"before": 7, "after": 7}, "text": "Núcleo: nivel 7 → 7"}
+],
+"mapHeldBy": [
+  {"args": {"name": "Zed"}, "text": "En manos de Zed"}
+],
+"assaultPlanAdmiralsIn": [
+  {"args": {"count": 0, "level": 7}, "text": "0 Almirantes en el nivel 7"},
+  {"args": {"count": 1, "level": 7}, "text": "1 Almirante en el nivel 7"},
+  {"args": {"count": 2, "level": 7}, "text": "2 Almirantes en el nivel 7"},
+  {"args": {"count": 5, "level": 7}, "text": "5 Almirantes en el nivel 7"},
+  {"args": {"count": 21, "level": 7}, "text": "21 Almirantes en el nivel 7"},
+  {"args": {"count": 1000000, "level": 7}, "text": "1000000 Almirantes en el nivel 7"}
+],
+"assaultPlanAdmiralsLeft": [
+  {"args": {"count": 0, "level": 7}, "text": "Añádelo: 0 Almirantes en el nivel 7"},
+  {"args": {"count": 1, "level": 7}, "text": "Añádelo: 1 Almirante en el nivel 7"},
+  {"args": {"count": 2, "level": 7}, "text": "Añádelo: 2 Almirantes en el nivel 7"},
+  {"args": {"count": 5, "level": 7}, "text": "Añádelo: 5 Almirantes en el nivel 7"},
+  {"args": {"count": 21, "level": 7}, "text": "Añádelo: 21 Almirantes en el nivel 7"},
+  {"args": {"count": 1000000, "level": 7}, "text": "Añádelo: 1000000 Almirantes en el nivel 7"}
+],
+"assaultPlanAdmiralRecruit": [
+  {"args": {"level": 7}, "text": "Recluta uno en los Barracones nivel 7"}
+],
+"assaultPlanGuardians": [
+  {"args": {"count": 0}, "text": "0 Guardianes reciben los golpes por él"},
+  {"args": {"count": 1}, "text": "1 Guardián recibe los golpes por él"},
+  {"args": {"count": 2}, "text": "2 Guardianes reciben los golpes por él"},
+  {"args": {"count": 5}, "text": "5 Guardianes reciben los golpes por él"},
+  {"args": {"count": 21}, "text": "21 Guardianes reciben los golpes por él"},
+  {"args": {"count": 1000000}, "text": "1000000 Guardianes reciben los golpes por él"}
+],
+"assaultPlanNext": [
+  {"args": {"building": "Zed"}, "text": "Después: Zed"}
+],
+"assaultPlanHqNeeded": [
+  {"args": {"required": 7, "current": 7}, "text": "Requiere el CG 7, estás en el CG 7"}
+],
+"assaultPlanHqReady": [
+  {"args": {"current": 7}, "text": "Tu CG 7 ya lo permite"}
+],
+"assaultPlanRating": [
+  {"args": {"rating": "high", "wins": 7, "rehearsals": 7}, "text": "Altas · 7 de 7"},
+  {"args": {"rating": "risky", "wins": 7, "rehearsals": 7}, "text": "Arriesgadas · 7 de 7"},
+  {"args": {"rating": "zzz", "wins": 7, "rehearsals": 7}, "text": "Bajas · 7 de 7"}
+],
+"assaultPlanAdviceLeader": [
+  {"args": {"count": 0}, "text": "los 0 Almirantes"},
+  {"args": {"count": 1}, "text": "el Almirante"},
+  {"args": {"count": 2}, "text": "los 2 Almirantes"},
+  {"args": {"count": 5}, "text": "los 5 Almirantes"},
+  {"args": {"count": 21}, "text": "los 21 Almirantes"},
+  {"args": {"count": 1000000}, "text": "los 1000000 Almirantes"}
+],
+"assaultPlanAdvice": [
+  {"args": {"leader": "Zed", "escort": "Zed"}, "text": "Consejo: Zed con Zed"}
+],
+"tipKernelGarrisonLine2": [
+  {"args": {"level": 7}, "text": "Tus unidades que quedan fuera, en el nivel 7, no combaten."}
+],
+"tipKernelGarrisonLine3": [
+  {"args": {"action": "Zed"}, "text": "Hazlas entrar con «Zed», en la ficha del Núcleo."}
+],
+"leviathanBannerForce": [
+  {"args": {"sentinels": 7, "level": 7, "count": 7}, "text": "Leviatán + 7 Centinelas · defensores niv. 7: 7"}
+],
+"leviathanDueWarning": [
+  {"args": {"count": 0, "level": 7}, "text": "El Leviatán ataca tu Falla al final del turno, y ningún defensor lo espera en el nivel 7."},
+  {"args": {"count": 1, "level": 7}, "text": "El Leviatán ataca tu Falla al final del turno, y solo 1 defensor lo espera en el nivel 7."},
+  {"args": {"count": 2, "level": 7}, "text": "El Leviatán ataca tu Falla al final del turno, y solo 2 defensores lo esperan en el nivel 7."},
+  {"args": {"count": 5, "level": 7}, "text": "El Leviatán ataca tu Falla al final del turno, y solo 5 defensores lo esperan en el nivel 7."},
+  {"args": {"count": 21, "level": 7}, "text": "El Leviatán ataca tu Falla al final del turno, y solo 21 defensores lo esperan en el nivel 7."},
+  {"args": {"count": 1000000, "level": 7}, "text": "El Leviatán ataca tu Falla al final del turno, y solo 1000000 defensores lo esperan en el nivel 7."}
+],
+"guideLeviathanReturn": [
+  {"args": {"level": 7}, "text": "¡El Leviatán vuelve a recuperar su Falla! Solo tus unidades del nivel 7 la defienden. Si cae, tu Módulo queda destruido y tus unidades de abajo se pierden."}
+],
+"guideLeviathanReinforce": [
+  {"args": {"count": 0}, "text": "Envía 0 Arponeros más."},
+  {"args": {"count": 1}, "text": "Envía 1 Arponero más."},
+  {"args": {"count": 2}, "text": "Envía 2 Arponeros más."},
+  {"args": {"count": 5}, "text": "Envía 5 Arponeros más."},
+  {"args": {"count": 21}, "text": "Envía 21 Arponeros más."},
+  {"args": {"count": 1000000}, "text": "Envía 1000000 Arponeros más."}
+],
+"defeatCauseRaid": [
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 0}, "text": "Turno 7: Zed contra ningún defensor"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 1}, "text": "Turno 7: Zed contra 1 defensor"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 2}, "text": "Turno 7: Zed contra 2 defensores"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 5}, "text": "Turno 7: Zed contra 5 defensores"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 21}, "text": "Turno 7: Zed contra 21 defensores"},
+  {"args": {"turn": 7, "wave": "Zed", "defenders": 1000000}, "text": "Turno 7: Zed contra 1000000 defensores"}
+],
+"defeatAdviceMoreDefenders": [
+  {"args": {"needed": 7, "defenders": 0}, "text": "Contra tu última incursión hacían falta unos 7 Arponeros. Tenías ningún defensor."},
+  {"args": {"needed": 7, "defenders": 1}, "text": "Contra tu última incursión hacían falta unos 7 Arponeros. Tenías 1 defensor."},
+  {"args": {"needed": 7, "defenders": 2}, "text": "Contra tu última incursión hacían falta unos 7 Arponeros. Tenías 2 defensores."},
+  {"args": {"needed": 7, "defenders": 5}, "text": "Contra tu última incursión hacían falta unos 7 Arponeros. Tenías 5 defensores."},
+  {"args": {"needed": 7, "defenders": 21}, "text": "Contra tu última incursión hacían falta unos 7 Arponeros. Tenías 21 defensores."},
+  {"args": {"needed": 7, "defenders": 1000000}, "text": "Contra tu última incursión hacían falta unos 7 Arponeros. Tenías 1000000 defensores."}
+],
+"defeatAdviceTooStrong": [
+  {"args": {"max": 7}, "text": "Tu última incursión pedía más de 7 Arponeros: mantén más baja la barra de ruido y mejora la muralla de la Ciudadela."}
+]
+}
+}

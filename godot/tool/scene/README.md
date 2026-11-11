@@ -3,7 +3,7 @@
 Review renders of the game's 3D prototype and screens, not game code, left out
 of exports.
 
-    tool/scene_capture.sh [out dir] [scene | app | base | army | turn | kit]
+    tool/scene_capture.sh [out dir] [scene | app | base | army | turn | tech | threat | kit]
 
 `capture.gd` opens `app/prototype/prototype.tscn` (or `scene`) in a window the size of a
 phone held upright at 2x (780 x 1688, the project's 390 x 844 points), lets
@@ -98,3 +98,19 @@ English, without a rebuild), and `kit_dialog.png`, `kit_sheet.png` and
 `kit_page.png` (a dialog, a bottom sheet and a full page over the first page),
 each with its draw calls and primitives. Review tooling, not game code; never
 commit the renders.
+
+## The threats
+
+`threat_capture.gd` (`tool/scene_capture.sh [out dir] threat`, or after the
+research's views when no scene is given) plays a game where the guardians strike
+the Faille, a kraken wave rises and a raid is due, through the real screens, and
+renders: `threat_bars.png` (the game screen under the resource bar: the noise
+gauge and the raids lost in a row, the red strip of the guardians, the kraken
+wave's) and `threat_bars_raid.png` (the raid alert in place of the gauge),
+`threat_confirm.png` (the question with the raid, the school of predators, the
+guardians and the kraken wave all warned of), `threat_summary.png` (the turn's
+lines), `threat_summary_announced.png` (a raid and a wave announced),
+`threat_raid_report.png`, `threat_raid_report_end.png` (the report of a raid
+lost, top and foot), `threat_predators_report.png` (the school of predators), `threat_raid_report_won.png` (a raid won behind a rampart),
+`threat_wave_report.png` and `threat_wave_report_en.png` (the kernel taken a
+level), each with its draw calls and primitives. Never commit the renders.

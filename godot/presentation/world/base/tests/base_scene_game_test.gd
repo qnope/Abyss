@@ -25,6 +25,17 @@ func test_stands_the_buildings_the_player_has_built() -> void:
 	assert_true(_base.pads.is_empty(&"Laboratory"), "a level of 0 is not built")
 
 
+func test_the_same_buildings_again_change_nothing() -> void:
+	var player := GameSamples.player_with("Nemo", {BuildingType.Value.HEADQUARTERS: 1})
+	_base.show_base(player.buildings)
+	var standing := _base.buildings.building(&"Headquarters")
+	_base.show_base(player.buildings)
+	assert_eq(_base.buildings.building(&"Headquarters"), standing)
+	player.buildings[BuildingType.Value.SOLAR_PANEL] = Building.new(BuildingType.Value.SOLAR_PANEL, 1)
+	_base.show_base(player.buildings)
+	assert_not_null(_base.buildings.building(&"SolarPanel"))
+
+
 func test_a_building_with_no_model_leaves_its_pad_bare_not_empty() -> void:
 	var player := GameSamples.player_with("Nemo", {BuildingType.Value.BARRACKS: 2})
 	_base.show_base(player.buildings)

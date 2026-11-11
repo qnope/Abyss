@@ -20,8 +20,8 @@ func test_the_menu_offers_to_continue_the_latest_game_in_progress() -> void:
 	_flow.show_menu()
 	assert_not_null(find_text("Alice · Tour 14 · Normal"))
 	press("CONTINUER")
-	assert_true(_flow.current is GamePlaceholderScreen)
-	assert_eq((_flow.current as GamePlaceholderScreen).game.human_player().name, "Alice")
+	assert_true(_flow.current is GameHud)
+	assert_eq((_flow.current as GameHud).game.human_player().name, "Alice")
 	assert_eq(alice.turn, 14)
 
 
@@ -44,7 +44,7 @@ func test_starts_a_new_game_through_the_opening_story_to_the_game() -> void:
 	assert_true(_flow.current is OpeningStoryScreen)
 	assert_eq(_playing.back(), false)
 	press("Passer")
-	var game := _flow.current as GamePlaceholderScreen
+	var game := _flow.current as GameHud
 	assert_not_null(game)
 	assert_eq(game.game.human_player().name, "Alice")
 	assert_eq(_playing.back(), true)
@@ -69,7 +69,7 @@ func test_quitting_saves_the_game_and_goes_back_to_the_menu() -> void:
 	var alice := _save("Alice", 3)
 	_flow.play(alice)
 	alice.turn = 5
-	press("Sauvegarder et quitter")
+	_save_and_quit()
 	assert_true(_flow.current is MainMenuScreen)
 	assert_eq(_playing.back(), false)
 	var saved := _repository.load_all().games
@@ -111,7 +111,7 @@ func test_the_menu_opens_the_language_settings_on_the_modals() -> void:
 func test_the_language_not_saved_is_told_and_the_menu_stays() -> void:
 	_block_folder()
 	_language = LanguageSettings.new(_folder.path.path_join("blocker/settings.json"))
-	_flow = AppFlow.new(_repository, _language, _screens, modals())
+	_flow = AppFlow.new(_repository, _language, _screens, modals(), _world)
 	_flow.show_menu()
 	(_flow.current as MainMenuScreen).language_chosen.emit(LanguageChoice.Value.SPANISH)
 	assert_eq(_language.choice(), LanguageChoice.Value.SPANISH)

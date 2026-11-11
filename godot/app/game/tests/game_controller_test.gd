@@ -40,11 +40,12 @@ func test_shows_the_base_of_the_game_in_the_world() -> void:
 
 
 func test_the_world_follows_the_tab_on_show() -> void:
-	press("Carte")
-	assert_false(_world.visible)
-	assert_eq(_world.process_mode, Node.PROCESS_MODE_DISABLED)
 	press("Tech")
 	assert_false(_world.visible)
+	assert_eq(_world.process_mode, Node.PROCESS_MODE_DISABLED)
+	press("Carte")
+	assert_true(_world.visible)
+	assert_eq(_world.view, WorldHost.View.MAP)
 	press("Armée")
 	assert_true(_world.visible)
 	assert_eq(_world.view, WorldHost.View.PARADE)

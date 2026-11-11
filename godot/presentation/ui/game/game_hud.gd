@@ -3,10 +3,9 @@ extends RefreshingPanel
 ## The game screen, over the 3D world (lib/presentation/screens/game/
 ## game_screen.dart): the resource bar and the status strips at the top, the
 ## row of the settings, the turn counter and the next turn button, then the
-## tabs, at the foot. Between them [member content] is clear on the base and
-## the army's parade ground, so that the world shows and answers the player's
-## touches; the other tabs cover it with their page, a placeholder until
-## their lot builds them.
+## tabs, at the foot. Between them [member content] is clear on the base, the
+## map and the army's parade ground, so that the world shows and answers the
+## player's touches; the research covers it with its page.
 ##
 ## It tells what the player wants with signals and changes the game only
 ## through the [GameActions]. The tab on show is its own state; it is not
@@ -25,7 +24,7 @@ signal language_chosen(choice: LanguageChoice.Value)
 ## How far the banners sit from the corner of the base.
 const BANNER_MARGIN := 8
 ## The tabs the world shows through, the page of the others covering it.
-const WORLD_TABS: Array[GameTab.Value] = [GameTab.Value.BASE, GameTab.Value.ARMY]
+const WORLD_TABS: Array[GameTab.Value] = [GameTab.Value.BASE, GameTab.Value.MAP, GameTab.Value.ARMY]
 
 var actions: GameActions
 var game: Game
@@ -40,10 +39,8 @@ var banners: BaseBanners
 var content := Control.new()
 var turn_bar: TurnBar
 var tab_bar := GameTabBar.new()
-## What covers the world on the tabs that are not the base, and the
-## placeholder of each, until their lots build them.
+## What covers the world on the tabs it does not show through.
 var page := PanelContainer.new()
-var pages: Dictionary[GameTab.Value, TabPlaceholder] = {}
 ## The research tree, the page of the Tech tab.
 var tech_tab: TechTab
 var _modals: ModalLayer
@@ -88,8 +85,6 @@ func show_tab(next: GameTab.Value) -> void:
 	tab = next
 	tab_bar.select(tab)
 	page.visible = not WORLD_TABS.has(tab)
-	for each: GameTab.Value in pages:
-		pages[each].visible = each == tab
 	tech_tab.visible = tab == GameTab.Value.TECH
 	if changed:
 		tab_changed.emit(tab)
@@ -107,8 +102,6 @@ func refresh() -> void:
 	status_bars.refresh()
 	banners.refresh()
 	tech_tab.refresh()
-	for each: GameTab.Value in pages:
-		pages[each].name_label.text = GameTab.label(each)
 
 
 ## Opens the sheet of the building [param type] on the modals.
@@ -143,8 +136,5 @@ func _on_settings_closed(result: Variant) -> void:
 func _fill_page() -> void:
 	page.theme_type_variation = AbyssSurfaceTheme.PAGE
 	page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var map := TabPlaceholder.new(GameTab.icon_path(GameTab.Value.MAP), "")
-	pages[GameTab.Value.MAP] = map
-	page.add_child(map)
 	tech_tab = TechTab.new(actions, _modals)
 	page.add_child(tech_tab)

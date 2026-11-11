@@ -67,6 +67,52 @@ func test_a_mark_runs_any_change_of_the_game() -> void:
 	assert_eq(_acted, [null])
 
 
+func test_ends_the_turn_and_returns_what_it_did() -> void:
+	_game.human_player().buildings[BuildingType.Value.ALGAE_FARM].level = 2
+	var turn := _game.turn
+	var made := _game.human_player().resources[ResourceType.Value.ALGAE].amount
+	var result := _actions.end_turn()
+	assert_eq(_game.turn, turn + 1)
+	assert_eq(result.previous_turn, turn)
+	assert_eq(result.new_turn, turn + 1)
+	assert_true(_game.human_player().resources[ResourceType.Value.ALGAE].amount > made)
+	assert_eq(_acted.size(), 1, "the end of the turn is a change to save")
+	var told: EndTurnActionResult = _acted[0]
+	assert_eq(told.turn_result, result)
+	assert_true(_game.human_player().history_entries[0] is TurnEndEntry)
+
+
+func test_tells_the_victory_once_a_kernel_stands_at_the_last_level() -> void:
+	var told: Array[String] = []
+	_actions.acted.connect(func(_result: Variant) -> void: told.append("acted"))
+	_actions.victory_reached.connect(func() -> void: told.append("victory"))
+	var player := _game.human_player()
+	player.buildings[BuildingType.Value.HEADQUARTERS].level = 10
+	player.buildings[BuildingType.Value.VOLCANIC_KERNEL].level = 9
+	_rich()
+	_actions.execute(UpgradeBuildingAction.new(BuildingType.Value.ALGAE_FARM))
+	assert_eq(_game.status, GameStatus.Value.PLAYING)
+	assert_eq(told, ["acted"] as Array[String])
+	player.buildings[BuildingType.Value.VOLCANIC_KERNEL].level = 10
+	player.worksite.upgrades = 0
+	_rich()
+	_actions.execute(UpgradeBuildingAction.new(BuildingType.Value.ALGAE_FARM))
+	assert_eq(_game.status, GameStatus.Value.VICTORY)
+	assert_eq(told, ["acted", "acted", "victory"] as Array[String], "told once the change is told, to be saved with it")
+
+
+func test_a_game_already_won_is_not_won_again() -> void:
+	_game.status = GameStatus.Value.FREE_PLAY
+	_game.human_player().buildings[BuildingType.Value.HEADQUARTERS].level = 10
+	_game.human_player().buildings[BuildingType.Value.VOLCANIC_KERNEL].level = 10
+	var told: Array[String] = []
+	_actions.victory_reached.connect(func() -> void: told.append("victory"))
+	_rich()
+	assert_true(_actions.execute(UpgradeBuildingAction.new(BuildingType.Value.ALGAE_FARM)).is_success)
+	assert_eq(_game.status, GameStatus.Value.FREE_PLAY)
+	assert_eq(told, [] as Array[String])
+
+
 func _hq() -> Building:
 	return _game.human_player().buildings[BuildingType.Value.HEADQUARTERS]
 

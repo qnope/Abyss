@@ -11,6 +11,9 @@ extends RefCounted
 ## The game changed: [param result] is the action's ActionResult, null for a
 ## mark. Not told for an action that failed: it changed nothing.
 signal acted(result: Variant)
+## An action raised a kernel to the last level: the game is won (its status is
+## VICTORY and [signal acted] has been told, so it is saved with it).
+signal victory_reached
 
 var game: Game
 var _executor := ActionExecutor.new()
@@ -21,13 +24,27 @@ func _init(game_: Game) -> void:
 
 
 ## Runs [param action] for the human player and returns its result. A
-## success is told with [signal acted]; a failure is only returned, for the
-## caller to explain.
+## success is told with [signal acted], then the victory if it brought one
+## (game_screen_actions.dart: showBuildingDetailAction); a failure is only
+## returned, for the caller to explain.
 func execute(action: Action) -> ActionResult:
 	var result := _executor.execute(action, game, game.human_player())
 	if result.is_success:
+		var won: bool = VictoryChecker.check(game) == GameStatus.Value.VICTORY
+		if won:
+			game.status = GameStatus.Value.VICTORY
 		acted.emit(result)
+		if won:
+			victory_reached.emit()
 	return result
+
+
+## Ends the turn of the game (game_screen_end_turn.dart: confirmAndEndTurn,
+## once confirmed) with a die of its own, and returns what the turn did to the
+## human's base. Told with [signal acted] like any action, so the game is saved.
+func end_turn() -> TurnResult:
+	var result := execute(EndTurnAction.new(SeededRandom.fresh()))
+	return (result as EndTurnActionResult).turn_result
 
 
 ## Changes the game with [param change] (called with it), then tells it

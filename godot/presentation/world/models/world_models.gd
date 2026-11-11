@@ -24,6 +24,11 @@ const MODELS: Dictionary[BuildingType.Value, PackedScene] = {
 const UNIT_MODELS: Dictionary[UnitType.Value, PackedScene] = {}
 
 
+## The contents of the map that have a model, by kind. None yet; step 7 adds
+## them here.
+const MAP_MODELS: Dictionary[MapContent.Kind, PackedScene] = {}
+
+
 ## Whether the building [param type] has a model.
 static func has_model(type: BuildingType.Value) -> bool:
 	return MODELS.has(type)
@@ -56,6 +61,30 @@ static func unit(
 	if ghost:
 		_grey(model)
 	return model
+
+
+## What stands on a cell of the map, its origin the floor under the cell's
+## centre (the middle of the four cells of the volcano): the model of the
+## [param kind] when [param models] has one (this file's [constant MAP_MODELS]; a
+## test gives its own), else its [MapStandIn]. [param tint] (a Color, or null)
+## is the colour of whoever holds a post, a rival base, or the seal of the
+## volcano; [param dimmed] is a content already emptied, in the degraded grey.
+static func map_content(
+	kind: MapContent.Kind, tint: Variant = null, dimmed := false,
+	models: Dictionary[MapContent.Kind, PackedScene] = MAP_MODELS
+) -> Node3D:
+	if not models.has(kind):
+		return MapStandIn.new(kind, tint, dimmed)
+	var model := models[kind].instantiate() as Node3D
+	if dimmed:
+		_grey(model)
+	return model
+
+
+## The floor of a cell of [param terrain], [param revealed] or under the fog: a
+## colour and the height of its top.
+static func terrain(terrain_: TerrainType.Value, revealed: bool) -> TerrainLook:
+	return TerrainLook.of(terrain_, revealed)
 
 
 ## The stand-in of the building [param type], whether it has a model or not.

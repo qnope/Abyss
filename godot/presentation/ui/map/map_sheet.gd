@@ -20,7 +20,8 @@ var _buttons: Dictionary[Button, Callable] = {}
 
 
 ## A sheet with [param picture] (a control, or null) over a title written by
-## [param title] (a function with no argument returning a String).
+## [param title] (a function with no argument returning a String; none for a
+## picture that names itself, and [member title_label] is then null).
 func _init(picture: Control, title: Callable) -> void:
 	super()
 	column.add_theme_constant_override(&"separation", GAP)
@@ -32,9 +33,10 @@ func _init(picture: Control, title: Callable) -> void:
 	body.add_child(padding)
 	if picture != null:
 		column.add_child(picture)
-	title_label = label(title, &"HeadlineSmall")
-	title_label.add_theme_color_override(&"font_color", AbyssColors.BIOLUM_CYAN)
-	column.add_child(title_label)
+	if not title.is_null():
+		title_label = label(title, &"HeadlineSmall")
+		title_label.add_theme_color_override(&"font_color", AbyssColors.BIOLUM_CYAN)
+		column.add_child(title_label)
 	failure_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	failure_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	failure_label.add_theme_color_override(&"font_color", AbyssColors.WARNING)

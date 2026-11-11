@@ -172,7 +172,7 @@ level), each with its draw calls and primitives. Never commit the renders.
 ## The posts and the Volcanic Kernel
 
 `post_capture.gd` (`tool/scene_capture.sh [out dir] post`, or after the events' views
-when no scene is given) plays a game against three factions where the Faille of the
+when no scene is given) plays the game of `post_capture_game.gd`, against three factions, where the Faille of the
 surface and the volcano are seen, with an army and its Abyss Admiral on each level, a
 Descent Module and a kernel at level 3, through the real screens, and renders:
 `post_sheet_guarded.png` (the Faille nobody holds: picture, difficulty, income, guardians,

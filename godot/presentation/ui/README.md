@@ -9,6 +9,10 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
 ## Subfolders
 
 - `theme/`: the shared theme (`theme/README.md`).
+- `common/`: the UI kit: the panel that follows the language, the modal layer
+  with dialogs, bottom sheets and full pages, icons and portraits, and the
+  small components (pills, banners, segmented bar, switch...)
+  (`common/README.md`). Its tests run on `UiTestCase` (`tool/test/README.md`).
 - `l10n/`: the texts. The ARB files of the Flutter version are turned into
   `fr.po`, `en.po` and `es.po` by `tool/arb_to_po.py` (checked in CI); `Texts.t`
   writes a message of the language on, `IcuFormat` its plurals and selects

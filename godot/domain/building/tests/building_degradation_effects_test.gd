@@ -1,9 +1,8 @@
 extends TestCase
 ## test/domain/building/building_degradation_effects_test.dart: what a
-## degraded building still does. 'TurnProduction sees the degraded
-## buildings' goes with the turn module. 'the production bonus of the
-## research is halved too' takes the buildings and the research of a
-## Player: the same maps are built here.
+## degraded building still does. 'the production bonus of the research is
+## halved too' takes the buildings and the research of a Player: the same
+## maps are built here.
 
 const HQ := BuildingType.Value.HEADQUARTERS
 const FARM := BuildingType.Value.ALGAE_FARM
@@ -54,6 +53,16 @@ func test_production_buildings_make_half_when_degraded_a_degraded_building_still
 	var b := DomainSamples.base(1, {EXTRACTOR: 3})
 	assert_true(BuildingDegradation.is_degraded(b, EXTRACTOR))
 	assert_eq(ConsumptionCalculator.total_building_consumption(b), 3 * 1 + 3 * 3)
+
+
+func test_production_buildings_make_half_when_degraded_turn_production_sees_the_degraded_buildings() -> void:
+	var of := func(hq: int) -> Dictionary[ResourceType.Value, int]:
+		var farm: Dictionary[BuildingType.Value, int] = {FARM: 3}
+		var player := Player.new("P", null, 0, 0, null, DomainSamples.base(hq, farm))
+		return TurnProduction.of(player, 1, Difficulty.Value.NORMAL)
+	var low: Dictionary[ResourceType.Value, int] = of.call(1)
+	var high: Dictionary[ResourceType.Value, int] = of.call(4)
+	assert_true(low[ALGAE] < high[ALGAE])
 
 
 func test_degraded_laboratory_halves_the_research_effects_the_production_bonus_of_the_research_is_halved_too() -> void:

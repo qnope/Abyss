@@ -193,6 +193,7 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
+| `script/strategies_test.dart` (whole games through `ScriptRunner` and `BatchRunner`) | `turn` (`EndTurnAction`), then the runners of `script` |
 | `script/action_spec.dart` (a typedef: an `ActionSpec` is a `Callable` taking a `DartRandom` and giving an `Action`) | `script/action_codec.dart`, its only reader |
 | `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |
 | `held_attack_report/held_kernel_report_test.dart`, `held_post_report_test.dart`; `announce_attack/announced_attack_report_test.dart`, `announced_attack_resolve_test.dart` (they end the turn; `held_attack_reports_test.gd` and `announced_attack_resolver_test.gd` call the two steps meanwhile) | `turn` (`EndTurnAction`, `TurnResult.attacks`) |
@@ -202,7 +203,6 @@ Files and tests of the modules above that wait for another module:
 | `game_factory_factions_test.dart` (the human exploring) | `turn` (`EndTurnAction`) |
 | `pearl_income_test.dart` (its two tests of the end of turn) | `turn` |
 | `resource/consumption_integration_test.dart` | `turn` |
-| `building_degradation_effects_test.dart` (`TurnProduction sees the degraded buildings`) | `turn` |
 | `building_degradation_solo_test.dart` | `script` |
 | `difficulty_faction_test.dart` (its two tests of the end of a turn) | `turn` |
 | `history/entries/turn_end_entry_factory.dart`, the group `TurnEndEntryFactory` of `turn_end_entry_test.dart`, the group `TurnResult` of `turn_result_test.dart` | `turn` (`TurnResult`, which holds the reports of the raids, the volcano and the factions) |

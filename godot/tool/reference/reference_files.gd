@@ -22,3 +22,10 @@ static func vectors_dir() -> String:
 ## The path of `reference/vectors/<file_name>.json`.
 static func vector_path(file_name: String) -> String:
 	return vectors_dir().path_join(file_name + ".json")
+
+
+## The text of a file of the repository by its path from the root
+## (`scenarios/replays/victoire-tour-85.json`), "" when there is none: the
+## reader `PlanLibrary.use_reader` takes.
+static func text_of(path: String) -> String:
+	return FileAccess.get_file_as_string(repo_root().path_join(path))

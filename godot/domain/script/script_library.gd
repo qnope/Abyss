@@ -1,14 +1,16 @@
 class_name ScriptLibrary
 extends RefCounted
 ## lib/domain/script/script_library.dart: the built-in strategies, by the
-## name a scenario or the command line uses. The human plans of
-## `PlanLibrary` (`plan85`...) wait for the module `script/variant`.
+## name a scenario or the command line uses, with the human plans of
+## `PlanLibrary` (`plan85`, `plan85-newmap`...), which need its reader.
 
-const NAMES: Array[String] = ["economy", "balanced", "idle", "conquest", "rush", "tutorial"]
+const BUILT_IN: Array[String] = ["economy", "balanced", "idle", "conquest", "rush", "tutorial"]
 
 
 static func names() -> Array[String]:
-	return NAMES
+	var all := BUILT_IN.duplicate()
+	all.append_array(PlanLibrary.names())
+	return all
 
 
 ## Where Dart throws on an unknown name, logs an error and gives null.
@@ -30,5 +32,7 @@ static func by_name(name: String) -> GameScript:
 			)
 		"tutorial":
 			return TutorialStrategy.new()
-	push_error("Stratégie inconnue : %s (connues : %s)" % [name, ", ".join(NAMES)])
+	if PlanLibrary.names().has(name):
+		return PlanLibrary.by_name(name)
+	push_error("Stratégie inconnue : %s (connues : %s)" % [name, ", ".join(names())])
 	return null

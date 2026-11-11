@@ -202,8 +202,6 @@ Files and tests of the modules above that wait for another module:
 | `faction_replay_test.dart` but its last test (`ScenarioParser`, `ScriptRunner`, `TimelineScript`, `GameScript.factionsPlay`) | a later lot: the runners of `script` are ported |
 | The replays of `test/domain/replay/` through `ScenarioParser` and `ScriptRunner`: the last two tests of `replay_export_test.dart` and of `replay_difficulty_test.dart`, three of `replay_all_players_test.dart`, `announced_attack_replay_test.dart`, `base_attack_replay_test.dart`, `leviathan_replay_test.dart`; `SpyExecutor`, `replayOn` and `Fallback` of their helpers | a later lot: the runners of `script` are ported |
 | `faction_race_test.dart` (60 games of 200 turns): whole games too long even for the long cases of `tool/replay/`, which play `faction_play_test.dart`'s games of 60 turns, `faction_research_play_test.dart` and `faction_attack_play_test.dart` | `faction_race.dart`, and a longer tier |
-| `script/strategies_test.dart` (whole games through `ScriptRunner` and `BatchRunner`), the third test of `script_milestones_test.dart` (`BatchRunner`) | `BatchRunner` and the human plans of `script/variant` |
-| `script_runner_player_test.dart`, `script_runner_faction_win_test.dart`, `script_runner_performance_test.dart` | a later lot |
 | `game/save_outcome.dart`, `save_sections.dart`, `save_summary.dart`, their tests; `game_last_played_test.dart` (the dates `Game` leaves out) | `data` (the saves) |
 | `building_degradation_solo_test.dart` | `script` |
 | `choiceEvents` of `event_test_helper.dart` (no test of `domain` reads it; `producingPlayer` is `EventSamples.producing_player`) | the tests of the presentation that use it |

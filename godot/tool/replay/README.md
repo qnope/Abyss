@@ -42,6 +42,9 @@ found wrong (`CaseChecks`, an `expect` per line):
 | `faction-play-3`, `faction-play-10` | '$count factions play 60 turns and every one of them grows' of `faction_play_test.dart` |
 | `faction-research-play` | `faction_research_play_test.dart` |
 | `faction-attack-play` | `faction_attack_play_test.dart`, its four tests of `playIdleFactionGame(3, 100)` on one game |
+| `calibration` | the three games of `calibration_test.dart`: the plan `plan85` wins or falls by seed and difficulty (`ScriptCases`) |
+| `careful-script` | 'the careful script loses most games' of `strategies_test.dart` |
+| `script-performance` | `script_runner_performance_test.dart`: a conquest of 100 turns within 120 s, ten times what Godot takes (Dart's budget is 8 s, ten times its own) |
 
 To find what went wrong, dump the turn on the Dart side
 (`dart run bin/export_reference.dart --reference reference/games/x.json

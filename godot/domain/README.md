@@ -193,6 +193,9 @@ Files and tests of the modules above that wait for another module:
 
 | Dart | Waits for |
 | --- | --- |
+| `ExpeditionMoves.assault` (`script/strategies/expedition_moves.dart`) | `AttackTransitionBaseAction` |
+| `ConquestMoves` but its constants (`advanceConquest`), `conquest_strategy.dart`, `tutorial_strategy.dart`, `contest_moves.dart`, `siege_moves.dart`, `leviathan_guard_moves.dart`, their tests and those that play them (`attack_defence_test.dart`, `hunt_under_raid_test.dart`, `leviathan_guard_test.dart`, `contest_moves_test.dart`, `siege_moves_test.dart`, `tutorial_strategy_test.dart`) | `ExpeditionMoves.assault` above, `faction` (`FactionKernelWar`, `FactionPostWar`, `KernelSiege`), `leviathan` |
+| The second test of `script_player_helpers_test.dart` (`ScriptMilestones`); `DeepScouts.turn` builds the dice of a `FactionTurn` itself (`tool/samples/deep_scouts.gd`) | the runners of `script`; `faction` (`FactionTurn`) |
 | `script/strategies_test.dart` (whole games through `ScriptRunner` and `BatchRunner`) | `turn` (`EndTurnAction`), then the runners of `script` |
 | `script/action_spec.dart` (a typedef: an `ActionSpec` is a `Callable` taking a `DartRandom` and giving an `Action`) | `script/action_codec.dart`, its only reader |
 | `action/end_turn_action.dart`, `end_turn_action_result.dart`, their tests, the last test of `worksite_limits_test.dart` (the end of a turn frees the worksites) | `turn` (`PlayerTurnResolver`, the turns of the factions) |

@@ -14,6 +14,8 @@ extends RefreshingPanel
 
 ## The tab on show changed: the world shows [param tab].
 signal tab_changed(tab: GameTab.Value)
+## A strip of the threats points at [param level] of the map: the map shows it.
+signal map_requested(level: int)
 ## The player wants to end the turn.
 signal end_turn_requested
 ## The player wants to save the game and leave it.
@@ -59,7 +61,7 @@ func _init(actions_: GameActions, language_: LanguageChoice.Value, modals: Modal
 		TurnFigures.consumption(game, human), _modals)
 	turn_bar = TurnBar.new(game.turn)
 	banners = BaseBanners.new(human)
-	ThreatBars.add_to(status_bars, game)
+	ThreatBars.add_to(status_bars, game, map_requested.emit)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override(&"separation", 0)
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE

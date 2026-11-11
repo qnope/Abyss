@@ -93,6 +93,21 @@ stays in the selection page. `FightController.report(result, route)` is where th
 fight ends: step 7 plays the strike on the map before it opens the report, and
 the history reopens one with `HistoryReports.fight_summary(entry)`.
 
+The posts are the `PostController` and the volcano the `KernelController` (`game/`), made by
+the `GameController`, which register for `CellRoute.Kind.POST` and `KERNEL`: a touch opens
+the `TransitionBaseSheet` or the `VolcanicKernelSheet` (or a `RivalPostSheet` for what a rival
+holds). Flow of an assault: cell tapped -> sheet -> `assault_requested` -> `ArmySelection`
+(`AssaultSelections`, an Admiral required) -> `AttackTransitionBaseAction` /
+`AttackVolcanicKernelAction` through `GameActions.execute` -> `acted` -> save -> `changed` ->
+the page closes with the result -> `TransitionFightSummaryPage` / `KernelFightSummaryPage`; a
+refusal stays in the page. Going down: `descend_requested` -> `DescentDialog` -> `DescendAction`
+-> the map shows the level reached (`MapController.show_level`) and a `MessageDialog` tells it
+(or why it was refused). The garrison: `garrison_requested` / `withdraw_requested` ->
+`UnitPickerDialog` -> `GarrisonKernelAction` -> a `MessageDialog` with its size. The victory of
+a kernel raised to the last level is `GameActions.victory_reached`, which the `GameController`
+turns into the victory screen. A post or a volcano a rival holds tells
+`rival_attack_requested(owner, level, x, y)` on its controller: the rival assault is lot 13's.
+
 The end of a turn is `EndTurnFlow` (`presentation/ui/turn/`), made by the
 `GameController`: the HUD's `end_turn_requested` asks, the confirmed turn goes
 through `GameActions.end_turn()` (so it is saved by `acted` and redrawn before

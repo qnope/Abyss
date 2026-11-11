@@ -104,7 +104,8 @@ func test_follows_the_language_in_the_bars() -> void:
 	assert_eq(texts(hud.tab_bar), PackedStringArray(["Base", "Map", "Army", "Tech"]))
 
 
-func test_has_a_place_for_the_status_strips_under_the_resource_bar() -> void:
+func test_has_the_status_strips_under_the_resource_bar() -> void:
 	var hud := _show()
 	assert_eq(hud.status_bars.get_index(), hud.resource_bar.get_index() + 1)
-	assert_false(hud.status_bars.bars().is_empty(), "the lots of the threats add their strips")
+	assert_false(hud.status_bars.bars().is_empty(), "the lots of the threats and the events add their strips")
+	assert_eq(hud.status_bars.bars().filter(func(each: Control) -> bool: return each is EventStatusBar).size(), 1)

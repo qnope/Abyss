@@ -36,7 +36,8 @@ player's actions. Never on `data/`, `app/` or `presentation/world/`.
   gear), the new game form with its pickers, the saved games (cards, list,
   empty state, confirmed deletion), the opening story and the language
   dialog, the settings of a game (`SettingsDialog`: language, guide and tip
-  switches, save and quit) and the game screen (`game/`: `GameHud` with the
+  switches, the links to the history and the replay export, save and quit;
+  `SettingsFollowUp` gives the page each way out opens) and the game screen (`game/`: `GameHud` with the
   resource bar, the content area left clear for the 3D base, the turn bar, the
   four tabs (`GameTabBar`) and a placeholder page for the tabs not built yet;
   `GameActions`, the one door the screen's actions go through, tells each

@@ -91,7 +91,7 @@ func test_a_post_taken_meanwhile_is_refused() -> void:
 	assert_eq(page.failure_label.text, ActionFailureTexts.message(ActionFailure.Value.BASE_ALREADY_CAPTURED))
 
 
-func test_a_faille_a_rival_holds_opens_the_attack_to_lot_13() -> void:
+func test_a_faille_a_rival_holds_tells_the_attack_to_the_factions() -> void:
 	var rival := game.players[game.factions()[0].id()]
 	faille().captured_by = rival.id
 	var told: Array[Array] = []

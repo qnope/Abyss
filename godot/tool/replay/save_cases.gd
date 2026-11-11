@@ -11,11 +11,15 @@ const PREFIX := "saves-"
 const MANY := 3
 
 
-## `saves-<game>`, one per game of `reference/games/`.
+## `saves-<game>`, one per game of `reference/games/`, the biggest file
+## (the longest case) first, as ReferenceRun.every_name orders the games.
 static func names() -> Array[String]:
+	var games := CommittedGame.all()
+	games.sort_custom(func(a: CommittedGame, b: CommittedGame) -> bool:
+		return a.text_length > b.text_length or (a.text_length == b.text_length and a.name < b.name))
 	var all: Array[String] = []
-	for game: String in CommittedGame.names():
-		all.append(PREFIX + game)
+	for game: CommittedGame in games:
+		all.append(PREFIX + game.name)
 	return all
 
 

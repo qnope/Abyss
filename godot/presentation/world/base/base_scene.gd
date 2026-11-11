@@ -48,6 +48,7 @@ var pads: BasePads
 var motion: BaseMotion
 var snow := MarineSnow.new()
 var bubbles := RisingBubbles.new()
+var _standing: Array[StringName] = []
 var _rampart := RAMPART.instantiate() as Node3D
 
 
@@ -77,6 +78,7 @@ func _init() -> void:
 ## Stands the buildings [param names] on their pads, the others empty. One
 ## with no model yet leaves its pad bare, not marked as empty.
 func build(names: Array[StringName]) -> void:
+	_standing = names.duplicate()
 	buildings.build(names, pads)
 	pads.mark(names)
 	motion.track()
@@ -88,13 +90,15 @@ func build(names: Array[StringName]) -> void:
 
 
 ## Shows the base of a game: the buildings of [param held] that stand (a
-## level of 1 or more) on their pads.
+## level of 1 or more) on their pads. The same buildings again change
+## nothing.
 func show_base(held: Dictionary[BuildingType.Value, Building]) -> void:
 	var names: Array[StringName] = []
 	for type: BuildingType.Value in held:
 		if held[type].level > 0:
 			names.append(BaseBuildings.pad_of(type))
-	build(names)
+	if names != _standing:
+		build(names)
 
 
 ## Fits the default view to the screen, the island centred between the top

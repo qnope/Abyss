@@ -8,7 +8,7 @@ func test_resumes_a_game_chosen_among_the_saves() -> void:
 	var bob := _save("Bob", 9)
 	_flow.show_load_game()
 	press(_card_of("Bob").tap_button)
-	assert_eq((_flow.current as GamePlaceholderScreen).game.human_player().name, "Bob")
+	assert_eq((_flow.current as GameHud).game.human_player().name, "Bob")
 	assert_eq(bob.turn, 9)
 
 
@@ -17,7 +17,7 @@ func test_resumes_a_lost_game_on_the_placeholder_too() -> void:
 	_repository.save(lost)
 	_flow.show_load_game()
 	press(_card_of("Cousteau").tap_button)
-	assert_true(_flow.current is GamePlaceholderScreen)
+	assert_true(_flow.current is GameHud)
 
 
 func test_deletes_a_game_once_confirmed_and_shows_the_others() -> void:
@@ -82,5 +82,5 @@ func test_the_game_goes_on_when_it_cannot_be_saved() -> void:
 	press(screen.start_button)
 	assert_true(_flow.current is OpeningStoryScreen)
 	press("Passer")
-	press("Sauvegarder et quitter")
+	_save_and_quit()
 	assert_true(_flow.current is MainMenuScreen)

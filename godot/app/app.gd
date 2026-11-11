@@ -41,7 +41,7 @@ func _ready() -> void:
 		_open_prototype()
 		return
 	screens.add_theme_constant_override(&"margin_top", SafeArea.top(get_viewport()))
-	flow = AppFlow.new(repository, language, screens, modals)
+	flow = AppFlow.new(repository, language, screens, modals, world)
 	flow.playing_changed.connect(_on_playing_changed)
 	flow.show_menu()
 

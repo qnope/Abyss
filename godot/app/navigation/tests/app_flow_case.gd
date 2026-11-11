@@ -8,6 +8,7 @@ var _folder: TempFolder
 var _repository: GameRepository
 var _language: LanguageSettings
 var _flow: AppFlow
+var _world: WorldHost
 var _screens: Control
 var _clock := SavedGameSamples.now()
 var _playing: Array[bool] = []
@@ -19,7 +20,10 @@ func before_each() -> void:
 	_repository = GameRepository.new(_folder.path.path_join("saves"), _tick)
 	_language = LanguageSettings.new(_folder.path.path_join("settings.json"))
 	_screens = mount(Control.new())
-	_flow = AppFlow.new(_repository, _language, _screens, modals())
+	_world = WorldHost.new()
+	(Engine.get_main_loop() as SceneTree).root.add_child(_world)
+	add_cleanup(_world.free)
+	_flow = AppFlow.new(_repository, _language, _screens, modals(), _world)
 	_flow.playing_changed.connect(_playing.append)
 
 
@@ -29,6 +33,12 @@ func _save(player_name: String, turn := 1) -> Game:
 	var game := SavedGameSamples.game(player_name, turn)
 	_repository.save(game)
 	return game
+
+
+## Leaves the game on show through its settings: save and quit.
+func _save_and_quit() -> void:
+	(_flow.current as GameHud).open_settings()
+	press("Sauvegarder et quitter")
 
 
 ## A file where a folder is wanted: nothing can be written under "blocker".

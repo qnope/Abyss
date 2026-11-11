@@ -70,9 +70,10 @@ func test_begins_a_game_and_leaves_it() -> void:
 	assert_true(app.flow.current is OpeningStoryScreen)
 	assert_true(app.world.drifting)
 	press("Passer")
-	assert_true(app.flow.current is GamePlaceholderScreen)
-	assert_not_null(find_text("Alice · Tour 1 · Normal", app))
+	assert_true(app.flow.current is GameHud)
+	assert_not_null(find_text("Tour 1", app))
 	assert_false(app.world.drifting, "the camera is the player's")
+	(app.flow.current as GameHud).open_settings()
 	press("Sauvegarder et quitter")
 	assert_true(app.flow.current is MainMenuScreen)
 	assert_true(app.world.drifting)
@@ -86,7 +87,7 @@ func test_resumes_a_saved_game_from_the_menu() -> void:
 	saved.save(SavedGameSamples.game("Alice", 14))
 	var app := _app()
 	press("CONTINUER")
-	assert_not_null(find_text("Alice · Tour 14 · Normal", app))
+	assert_not_null(find_text("Tour 14", app))
 	assert_false(app.world.drifting)
 
 

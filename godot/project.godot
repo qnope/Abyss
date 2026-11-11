@@ -44,6 +44,11 @@ scene={
 "meshes/ensure_tangents": false
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://presentation/ui/l10n/fr.po", "res://presentation/ui/l10n/en.po", "res://presentation/ui/l10n/es.po")
+locale/fallback="en"
+
 [rendering]
 
 renderer/rendering_method="mobile"

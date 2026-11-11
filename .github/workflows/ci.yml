@@ -193,6 +193,8 @@ jobs:
       - name: Import the project
         # Once more on failure: Godot once crashed while importing a font.
         run: godot --headless --path godot --import || godot --headless --path godot --import
+      - name: Translations are up to date with the ARB files
+        run: python3 tool/arb_to_po.py --check
       - run: tool/godot_test.sh
       - name: Test the Python tools
         run: python3 -m unittest discover -s tool -p '*_test.py'

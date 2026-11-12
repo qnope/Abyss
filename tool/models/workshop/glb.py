@@ -50,6 +50,24 @@ class GlbReport:
         return [material.get("name", "") for material in self._document.get("materials", [])]
 
     @property
+    def bones(self):
+        """The joints of the skins, each counted once."""
+        return len({joint for skin in self._document.get("skins", []) for joint in skin["joints"]})
+
+    @property
+    def animations(self):
+        """The names of the animations."""
+        return [animation.get("name", "") for animation in self._document.get("animations", [])]
+
+    @property
+    def keyframes(self):
+        """The keyframes of the animations: the times of every sampler."""
+        accessors = self._document.get("accessors", [])
+        return sum(accessors[sampler["input"]]["count"]
+                   for animation in self._document.get("animations", [])
+                   for sampler in animation["samplers"])
+
+    @property
     def triangles(self):
         """The triangles drawn, a mesh counted once per node showing it."""
         return sum(self.triangles_under(root) for root in self.roots)

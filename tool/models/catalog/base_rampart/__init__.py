@@ -25,6 +25,7 @@ BUDGET = Budget(triangles=20_000, materials=4, texture_px=512)
 OCCLUSION = Occlusion(rays=20, distance=0.6, floor=0.35,
                       strength={"reef": 0.6, "glow": 0.0, "glow_pink": 0.0})
 TIERS = ["Tier1", "Tier2", "Tier3"]
+FAMILY = "decor"
 NODES = TIERS
 
 # The courses of the wall: (bottom, height, depth) for tiers 1 and 2.

@@ -2,7 +2,10 @@
 
     NAME, SEED        the glb's name, and the seed of everything it draws
     MATERIALS         the materials it may use (from palette)
-    BUDGET            triangles, materials and texture size, enforced on build
+    FAMILY            building, unit, monster, map or decor: the caps its BUDGET
+                      stays within (families.py)
+    BUDGET            triangles, materials, texture size, bones and keyframes,
+                      enforced on build
     OCCLUSION         how its ambient occlusion is baked
     NODES             the node paths the game relies on
     build(model)      fills the workshop's Model

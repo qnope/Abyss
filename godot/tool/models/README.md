@@ -13,3 +13,5 @@ the glb files): editor and review tools, not game code, left out of exports.
 - `portrait.gd`, `portrait_camera.gd` (with `studio.gd` in its clear mode): the
   renders of `tool/models/portraits.sh` into `assets/portraits/`, 256 px
   square, transparent, from one fixed 3/4 camera that fits the model's box.
+- `board.gd`, `board_row.gd`: the review board of `tool/models/board.sh`, one
+  row of renders, portrait and budget figures a model.

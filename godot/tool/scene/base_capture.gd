@@ -55,6 +55,9 @@ func _capture() -> void:
 		hud.open_building(sheets[sheet])
 		await _shot("base_sheet_%s" % sheet)
 		_app.modals.close_top()
+	_app.flow.show_menu()
+	_app.flow.play(_full_game())
+	await _shot("base_full")
 	_folder.remove()
 	quit(0)
 
@@ -73,6 +76,17 @@ func _game() -> Game:
 		player.buildings[type].level = levels[type]
 	for resource: GameResource in player.resources.values():
 		resource.amount = resource.max_storage
+	return game
+
+
+## A game whose base has all eleven buildings, at each of the three tiers.
+func _full_game() -> Game:
+	var game := GameFactory.new_single_player("Nemo", 1)
+	var player := game.human_player()
+	var level := 0
+	for type: BuildingType.Value in BuildingType.Value.values():
+		player.buildings[type].level = 10 if type == Type.HEADQUARTERS else [1, 4, 8][level % 3]
+		level += 1
 	return game
 
 

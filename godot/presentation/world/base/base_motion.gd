@@ -3,7 +3,8 @@ extends Node
 ## The base's slow life, the moving parts the models leave as nodes: the
 ## headquarters' Beacon spins and flashes and its Dish sweeps the water,
 ## the solar panel's Array tracks the light, the citadel's Heart beats, and
-## the empty pads breathe. A few transforms and two lamps a frame.
+## the empty pads breathe; [BasePartsMotion] moves the other buildings' parts.
+## A few transforms and two lamps a frame.
 
 ## A flash of the beacon, a beat of the heart, in seconds.
 const FLASH_CYCLE := 2.0
@@ -13,13 +14,6 @@ const DISH_SWEEP := 50.0
 const DISH_CYCLE := 14.0
 const ARRAY_SWEEP := 22.0
 const ARRAY_CYCLE := 30.0
-## The drill's, the winch wheels' and the drone's turns, in degrees per second.
-const DRILL_SPIN := 240.0
-const WHEEL_SPIN := 70.0
-const DRONE_SPIN := 40.0
-## The drone's bob: its height each way, and its period in seconds.
-const DRONE_BOB := 0.03
-const DRONE_CYCLE := 4.0
 ## The beacon's and the heart's turns, in degrees per second.
 const BEACON_SPIN := 90.0
 const HEART_SPIN := 18.0
@@ -33,7 +27,7 @@ var _marker: PadMarker
 var _time := 0.0
 var _parts: Dictionary[StringName, Node3D] = {}
 var _lamps: Dictionary[StringName, StandardMaterial3D] = {}
-var _rest_height: Dictionary[StringName, float] = {}
+var _others := BasePartsMotion.new()
 
 
 func _init(buildings: BaseBuildings, marker: PadMarker) -> void:
@@ -45,15 +39,11 @@ func _init(buildings: BaseBuildings, marker: PadMarker) -> void:
 func track() -> void:
 	_parts.clear()
 	_lamps.clear()
-	_rest_height.clear()
 	_track(&"Headquarters", &"Beacon", true)
 	_track(&"Headquarters", &"Dish", false)
 	_track(&"SolarPanel", &"Array", false)
 	_track(&"CoralCitadel", &"Heart", true)
-	_track(&"AlgaeFarm", &"Drone", false)
-	_track(&"CoralMine", &"Wheel", false)
-	_track(&"CoralMine", &"CrownWheel", false)
-	_track(&"OreExtractor", &"Drill", false)
+	_others.track(_buildings)
 
 
 func _process(delta: float) -> void:
@@ -68,17 +58,12 @@ func advance(seconds: float) -> void:
 	_turn(&"Dish", sweep(t, DISH_SWEEP, DISH_CYCLE))
 	_turn(&"Array", sweep(t, ARRAY_SWEEP, ARRAY_CYCLE))
 	_turn(&"Heart", deg_to_rad(HEART_SPIN * t))
-	_turn(&"Drill", deg_to_rad(DRILL_SPIN * t))
-	_turn(&"Drone", deg_to_rad(DRONE_SPIN * t))
-	_bob(&"Drone", t)
-	for wheel: StringName in [&"Wheel", &"CrownWheel"]:
-		if _parts.has(wheel):
-			_parts[wheel].rotation.z = deg_to_rad(WHEEL_SPIN * t)
 	var beat := 0.5 + 0.5 * sin(TAU * t / BEAT_CYCLE)
 	if _parts.has(&"Heart"):
 		_parts[&"Heart"].scale = Vector3.ONE * (1.0 + HEART_SWELL * beat)
 	_light(&"Beacon", lerpf(BEACON_LIGHT.x, BEACON_LIGHT.y, flash(t)))
 	_light(&"Heart", lerpf(HEART_LIGHT.x, HEART_LIGHT.y, beat))
+	_others.advance(t)
 	_marker.breathe(t)
 
 
@@ -99,21 +84,15 @@ func _track(building: StringName, part: StringName, lit: bool) -> void:
 	if model == null or _buildings.is_degraded(building):
 		return
 	# A stand-in has no moving part.
-	var node := model.find_child(part, true, false) as Node3D
+	var node := model.get_node_or_null("%s/%s" % [building, part]) as Node3D
 	if node == null:
 		return
 	_parts[part] = node
-	_rest_height[part] = node.position.y
 	if lit:
 		var mesh := node as MeshInstance3D
 		var lamp := mesh.mesh.surface_get_material(1).duplicate() as StandardMaterial3D
 		mesh.set_surface_override_material(1, lamp)
 		_lamps[part] = lamp
-
-
-func _bob(part: StringName, t: float) -> void:
-	if _parts.has(part):
-		_parts[part].position.y = _rest_height[part] + DRONE_BOB * sin(TAU * t / DRONE_CYCLE)
 
 
 func _turn(part: StringName, angle: float) -> void:

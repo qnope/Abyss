@@ -79,7 +79,7 @@ func test_shows_the_barracks_plot_or_the_building() -> void:
 	_parade.show_army(_army(1), PadState.new(BType.BARRACKS, 0, false, true))
 	assert_null(_parade.barracks.building)
 	_parade.show_army(_army(1), PadState.new(BType.BARRACKS, 3))
-	assert_eq((_parade.barracks.building as StandIn).level, 3)
+	assert_false(_parade.barracks.building is StandIn)
 
 
 func test_tells_the_squad_tapped_whatever_the_state_it_is_in() -> void:

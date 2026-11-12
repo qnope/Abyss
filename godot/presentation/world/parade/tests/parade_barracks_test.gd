@@ -30,19 +30,21 @@ func test_stands_at_the_back_of_the_ground() -> void:
 
 func test_a_built_barracks_stands_at_its_level() -> void:
 	_barracks.show_state(PadState.new(Type.BARRACKS, 5))
-	var stand_in := _barracks.building as StandIn
-	assert_eq(stand_in.type, Type.BARRACKS)
-	assert_eq(stand_in.level, 5)
+	var model := _barracks.building
+	assert_false(model is StandIn)
+	assert_eq(ModelTiers.count(model), 3)
+	assert_false((model.find_child("Tier3", true, false) as Node3D).visible, "level 5 is tier 2")
 	assert_false(_barracks.plot.visible)
 	var level := _barracks.find_child("Level", false, false) as PadLevelLabel
 	assert_eq(level.text, "5")
-	assert_true(level.position.y > ModelBounds.top_of(stand_in))
+	assert_true(level.position.y > ModelBounds.top_of(model))
 	assert_eq(_kinds(), [] as Array[PadMark.Kind])
 
 
 func test_a_degraded_barracks_is_grey_and_warned_of() -> void:
 	_barracks.show_state(PadState.new(Type.BARRACKS, 2, true, true))
-	assert_true((_barracks.building as StandIn).degraded)
+	var mesh := _barracks.building.find_children("*", "GeometryInstance3D", true, false)[0] as GeometryInstance3D
+	assert_not_null(mesh.material_overlay)
 	assert_eq(_kinds(), [PadMark.Kind.DEGRADED] as Array[PadMark.Kind])
 
 

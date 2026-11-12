@@ -18,7 +18,8 @@ func test_has_a_model_for_the_buildings_that_have_one() -> void:
 			with_model.append(type)
 	assert_eq(with_model, [
 		Type.HEADQUARTERS, Type.ALGAE_FARM, Type.CORAL_MINE, Type.ORE_EXTRACTOR, Type.SOLAR_PANEL,
-		Type.CORAL_CITADEL,
+		Type.LABORATORY, Type.BARRACKS, Type.CORAL_CITADEL, Type.DESCENT_MODULE, Type.PRESSURE_CAPSULE,
+		Type.VOLCANIC_KERNEL,
 	] as Array[BuildingType.Value])
 
 
@@ -28,12 +29,10 @@ func test_gives_the_model_when_there_is_one() -> void:
 	assert_not_null(node.get_node("Headquarters/Beacon"))
 
 
-func test_gives_a_stand_in_when_there_is_none() -> void:
+func test_every_building_has_a_model() -> void:
 	for type: BuildingType.Value in BuildingType.Value.values():
-		if not WorldModels.has_model(type):
-			var node := _make(type, 2)
-			assert_true(node is StandIn, str(type))
-			assert_eq((node as StandIn).type, type)
+		assert_true(WorldModels.has_model(type), str(type))
+		assert_false(_make(type, 2) is StandIn, str(type))
 
 
 func test_the_stand_in_can_be_asked_for_whatever_the_building() -> void:
@@ -47,7 +46,8 @@ func test_the_stand_in_can_be_asked_for_whatever_the_building() -> void:
 
 
 func test_hands_the_level_and_the_degradation_to_the_stand_in() -> void:
-	var node := _make(Type.BARRACKS, 8, true) as StandIn
+	var node := WorldModels.stand_in(Type.BARRACKS, 8, true)
+	_made.append(node)
 	assert_eq([node.level, node.degraded], [8, true])
 
 

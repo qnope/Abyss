@@ -45,7 +45,8 @@ left), `base_close.png` (the same, nearer), `base_models.png` (the models there
 are, in place of their stand-ins) and the sheets of a building that can rise,
 a degraded one, the Coral Citadel and a plot held back by a prerequisite
 (`base_sheet_upgrade.png`, `_degraded.png`, `_citadel.png`, `_locked.png`), each
-with its draw calls and primitives. Never commit the renders.
+with its draw calls and primitives, then `base_full.png`: the eleven buildings
+at the three tiers of their models. Never commit the renders.
 
 ## The army
 

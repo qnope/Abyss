@@ -13,6 +13,7 @@ var from: Vector3
 var to: Vector3
 ## How far along the swim it is, from 0 to 1.
 var progress: float
+var _animator: ModelAnimator
 
 
 ## A scout going from [param from_] to [param to_] (on the floor): it swims
@@ -21,7 +22,10 @@ func _init(from_: Vector3, to_: Vector3, swims: bool) -> void:
 	from = from_
 	to = to_
 	progress = 0.0 if swims else 1.0
-	add_child(WorldModels.unit(UnitType.Value.SCOUT))
+	var figure := WorldModels.unit(UnitType.Value.SCOUT)
+	add_child(figure)
+	_animator = WorldModels.animator(figure)
+	_play(&"swim" if swims else &"idle")
 	_place()
 
 
@@ -33,6 +37,12 @@ func is_swimming() -> bool:
 func advance(seconds: float) -> void:
 	progress = minf(progress + seconds / SWIM, 1.0)
 	_place()
+	_play(&"idle" if progress >= 1.0 else &"swim")
+
+
+func _play(animation: StringName) -> void:
+	if _animator != null and _animator.current() != animation:
+		_animator.play(animation)
 
 
 func _place() -> void:

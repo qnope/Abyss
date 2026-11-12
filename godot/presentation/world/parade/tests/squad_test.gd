@@ -33,12 +33,12 @@ func test_stands_as_many_figures_as_the_count_tier() -> void:
 		assert_eq(_squad.figures.get_child_count(), SquadSize.of(count), "%d units" % count)
 
 
-func test_the_figures_are_the_stand_ins_of_the_unit_on_their_slots() -> void:
+func test_the_figures_are_the_models_of_the_unit_on_their_slots() -> void:
 	_squad.show_state(SquadState.new(Type.HARPOONIST, 6))
 	for index in 3:
-		var figure := _squad.figures.get_child(index) as UnitStandIn
-		assert_eq(figure.type, Type.HARPOONIST)
-		assert_false(figure.ghost)
+		var figure := _squad.figures.get_child(index) as Node3D
+		assert_eq(figure.scene_file_path, WorldModels.UNIT_MODELS[Type.HARPOONIST].resource_path)
+		assert_not_null(WorldModels.animator(figure))
 		assert_eq(figure.position.x, ParadeLayout.slot(index).x)
 		assert_almost_eq(figure.position.y, Squad.PAD_HEIGHT, 1e-5)
 
@@ -46,7 +46,9 @@ func test_the_figures_are_the_stand_ins_of_the_unit_on_their_slots() -> void:
 func test_a_locked_squad_is_one_ghost_and_a_padlock() -> void:
 	_squad.show_state(SquadState.new(Type.HARPOONIST, 40, true, false, "Caserne niv. 3"))
 	assert_eq(_squad.figures.get_child_count(), 1)
-	assert_true((_squad.figures.get_child(0) as UnitStandIn).ghost)
+	var ghost := _squad.figures.get_child(0)
+	for mesh: Node in ghost.find_children("*", "GeometryInstance3D", true, false):
+		assert_not_null((mesh as GeometryInstance3D).material_overlay)
 	assert_eq(_marks().size(), 1)
 	assert_eq(_marks()[0].kind, PadMark.Kind.LOCKED)
 	assert_eq(_squad.plaque.text, "Caserne niv. 3")

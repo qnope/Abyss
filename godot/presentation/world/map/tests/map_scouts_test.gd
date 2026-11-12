@@ -20,6 +20,7 @@ func test_the_scouts_already_sent_when_the_level_appears_wait_at_their_target() 
 	_scouts.show_scouts(_pending([Vector2i(3, 3)]), 1, 6, 6)
 	var token := _scouts.tokens[Vector2i(3, 3)]
 	assert_false(token.is_swimming())
+	assert_eq(WorldModels.animator(token.get_child(0)).current(), &"idle", "it rests where it waits")
 	assert_eq(token.position, MapGrid.at(3, 3, 6, 6) + Vector3.UP * ScoutToken.HOVER)
 	assert_false(_scouts.is_processing())
 
@@ -29,6 +30,8 @@ func test_a_scout_just_sent_swims_from_its_origin_to_its_target() -> void:
 	_scouts.show_scouts({Vector2i(3, 3): Vector2i(0, 0)}, 1, 6, 6)
 	var token := _scouts.tokens[Vector2i(3, 3)]
 	assert_true(token.is_swimming())
+	var animator := WorldModels.animator(token.get_child(0))
+	assert_eq(animator.current(), &"swim", "it swims through the water")
 	assert_eq(token.position, MapGrid.at(0, 0, 6, 6) + Vector3.UP * ScoutToken.HOVER)
 	assert_true(_scouts.is_processing())
 	_scouts._process(ScoutToken.SWIM / 2.0)
@@ -36,6 +39,7 @@ func test_a_scout_just_sent_swims_from_its_origin_to_its_target() -> void:
 	assert_true(_scouts.is_processing())
 	_scouts._process(ScoutToken.SWIM)
 	assert_false(token.is_swimming())
+	assert_eq(animator.current(), &"idle", "and rests when it is there")
 	assert_eq(token.position, MapGrid.at(3, 3, 6, 6) + Vector3.UP * ScoutToken.HOVER)
 	assert_false(_scouts.is_processing())
 
@@ -61,5 +65,5 @@ func test_another_level_shows_its_scouts_at_rest() -> void:
 func test_the_token_is_the_scout_unit() -> void:
 	_scouts.show_scouts(_pending([Vector2i(3, 3)]), 1, 6, 6)
 	var figure := _scouts.tokens[Vector2i(3, 3)].get_child(0)
-	assert_true(figure is UnitStandIn)
-	assert_eq((figure as UnitStandIn).type, UnitType.Value.SCOUT)
+	assert_false(figure is UnitStandIn)
+	assert_eq(figure.scene_file_path, WorldModels.UNIT_MODELS[UnitType.Value.SCOUT].resource_path)

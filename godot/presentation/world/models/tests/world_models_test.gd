@@ -72,17 +72,22 @@ func _make(type: BuildingType.Value, level: int, degraded := false) -> Node3D:
 	return node
 
 
-func test_gives_a_stand_in_for_every_unit_until_step_7() -> void:
+func test_gives_a_model_to_every_unit_that_swims_attacks_and_is_hit() -> void:
 	for type: UnitType.Value in UnitType.Value.values():
 		var node := _unit(type)
-		assert_true(node is UnitStandIn, str(type))
-		assert_eq((node as UnitStandIn).type, type)
-		assert_false((node as UnitStandIn).ghost)
+		assert_false(node is UnitStandIn, str(type))
+		assert_eq(node.rotation_degrees.y, WorldModels.FIGURE_YAW)
+		var animator := WorldModels.animator(node)
+		assert_eq(animator.animations(), [&"attack", &"hit", &"idle", &"swim"] as Array[StringName], str(type))
+		assert_eq(animator.current(), ModelAnimator.IDLE)
 
 
-func test_gives_the_ghost_of_a_locked_unit() -> void:
-	var node := _unit(UnitType.Value.GUARDIAN, true)
-	assert_true((node as UnitStandIn).ghost)
+func test_gives_a_stand_in_to_a_unit_with_no_model() -> void:
+	var none: Dictionary[UnitType.Value, PackedScene] = {}
+	var node := _unit(UnitType.Value.SCOUT, false, none)
+	assert_true(node is UnitStandIn)
+	assert_null(WorldModels.animator(node))
+	assert_true((_unit(UnitType.Value.GUARDIAN, true, none) as UnitStandIn).ghost)
 
 
 func test_gives_the_model_of_a_unit_when_there_is_one() -> void:

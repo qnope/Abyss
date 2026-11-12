@@ -55,15 +55,15 @@ func test_stands_the_squads_by_their_counts() -> void:
 	assert_eq(_parade.squads[Type.SCOUT].figures.get_child_count(), 6)
 
 
-func test_every_unit_stands_as_a_different_solid_in_a_different_colour() -> void:
+func test_every_unit_stands_as_its_own_animated_model() -> void:
 	_parade.show_army(_army(1), PadState.new(BType.BARRACKS, 1))
 	var seen: Dictionary[String, bool] = {}
 	for type: UnitType.Value in Type.values():
-		var figure := _parade.squads[type].figures.get_child(0) as UnitStandIn
-		var material := figure.body.material_override as StandardMaterial3D
-		seen["%s %s" % [figure.shape.kind, material.albedo_color]] = true
-		seen[str(figure.shape.kind)] = true
-	assert_eq(seen.size(), 12, "six kinds, six colours")
+		var figure := _parade.squads[type].figures.get_child(0)
+		assert_false(figure is UnitStandIn, str(type))
+		assert_not_null(WorldModels.animator(figure), str(type))
+		seen[figure.scene_file_path] = true
+	assert_eq(seen.size(), 6, "six models")
 
 
 func test_the_same_army_again_changes_nothing() -> void:

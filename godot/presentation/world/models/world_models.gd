@@ -27,9 +27,19 @@ const MODELS: Dictionary[BuildingType.Value, PackedScene] = {
 }
 
 
-## The units that have a model, by type: one figure of a squad. None yet; step
-## 7 adds them here.
-const UNIT_MODELS: Dictionary[UnitType.Value, PackedScene] = {}
+## The units that have a model, by type: one figure of a squad.
+const UNIT_MODELS: Dictionary[UnitType.Value, PackedScene] = {
+	UnitType.Value.SCOUT: preload("res://assets/models/scout.glb"),
+	UnitType.Value.HARPOONIST: preload("res://assets/models/harpoonist.glb"),
+	UnitType.Value.GUARDIAN: preload("res://assets/models/guardian.glb"),
+	UnitType.Value.DOME_BREAKER: preload("res://assets/models/dome_breaker.glb"),
+	UnitType.Value.ABYSS_ADMIRAL: preload("res://assets/models/abyss_admiral.glb"),
+	UnitType.Value.SABOTEUR: preload("res://assets/models/saboteur.glb"),
+}
+## The units are modelled facing -Z: this turns a figure to the game's camera.
+const FIGURE_YAW := -135.0
+## The meta of a figure that holds its [ModelAnimator].
+const ANIMATOR := &"animator"
 
 
 ## The contents of the map that have a model, by kind. None yet; step 7 adds
@@ -68,9 +78,19 @@ static func unit(
 	if not models.has(type):
 		return UnitStandIn.new(type, ghost)
 	var model := models[type].instantiate() as Node3D
+	model.rotation_degrees.y = FIGURE_YAW
+	model.set_meta(ANIMATOR, ModelAnimator.new(model))
 	if ghost:
 		_grey(model)
 	return model
+
+
+## The animator of a [param figure] of [method unit], or null for a stand-in.
+static func animator(figure: Node) -> ModelAnimator:
+	if not figure.has_meta(ANIMATOR):
+		return null
+	var held: Object = figure.get_meta(ANIMATOR)
+	return held as ModelAnimator
 
 
 ## What stands on a cell of the map, its origin the floor under the cell's

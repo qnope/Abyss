@@ -103,6 +103,17 @@ class GlbTest(unittest.TestCase):
         report = read_glb(self.write(_glb(document, b"1234" + png)))
         self.assertEqual(report.images, [(256, 128), (512, 512)])
 
+    def test_reads_the_skeleton_and_the_animations(self):
+        document = dict(DOCUMENT, skins=[{"joints": [1, 2]}, {"joints": [2, 3]}],
+                        animations=[{"name": "idle_loop", "samplers": [{"input": 1}, {"input": 1}]},
+                                    {"name": "hit", "samplers": [{"input": 0}]}])
+        report = read_glb(self.write(_glb(document, b"1234")))
+        self.assertEqual(report.bones, 3)
+        self.assertEqual(report.animations, ["idle_loop", "hit"])
+        self.assertEqual(report.keyframes, 12 + 12 + 6)
+        plain = read_glb(self.write(_glb(DOCUMENT, b"1234")))
+        self.assertEqual((plain.bones, plain.keyframes, plain.animations), (0, 0, []))
+
     def test_refuses_a_file_that_is_no_glb(self):
         with self.assertRaises(ValueError):
             read_glb(self.write(b"not a glb at all"))

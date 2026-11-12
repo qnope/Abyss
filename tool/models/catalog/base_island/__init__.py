@@ -26,6 +26,7 @@ MATERIALS = [palette.ROCK, palette.STONE, palette.METAL, palette.CORAL, palette.
 BUDGET = Budget(triangles=80_000, materials=10)
 OCCLUSION = Occlusion(rays=20, distance=1.0, floor=0.3,
                       strength={"coral": 0.55, "algae": 0.45, "glow": 0.0, "glow_pink": 0.0})
+FAMILY = "decor"
 NODES = ["Island", "Pads"] + [f"Pads/{slot.node}" for slot in layout.SLOTS]
 
 GROUP = "Island"

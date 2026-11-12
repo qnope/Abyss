@@ -13,6 +13,7 @@ SEED = 1
 MATERIALS = palette.ALL
 BUDGET = Budget(triangles=6_000, materials=len(palette.ALL))
 OCCLUSION = Occlusion(rays=16)
+FAMILY = "decor"
 NODES = ["Swatches", "Unit"]
 
 COLORS = {"rock": "#3a4658", "stone": "#5d6b7e", "metal": "#8d9bb0", "coral": "#e2507a",

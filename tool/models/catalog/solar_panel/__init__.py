@@ -25,6 +25,7 @@ BUDGET = Budget(triangles=12_000, materials=5, texture_px=1024)
 OCCLUSION = Occlusion(rays=20, distance=0.4, floor=0.3,
                       strength={"reef": 0.6, "algae": 0.45, "lamp": 0.0, "glass": 0.4})
 GROUP = "SolarPanel"
+FAMILY = "building"
 NODES = [GROUP, f"{GROUP}/Array"]
 
 

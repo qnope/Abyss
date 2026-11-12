@@ -25,6 +25,7 @@ from catalog import (
     laboratory,
     material_swatches,
     ore_extractor,
+    pressure_capsule,
     probe_fish,
     solar_panel,
 )
@@ -41,6 +42,7 @@ MODELS = {script.NAME: script for script in (
     laboratory,
     material_swatches,
     ore_extractor,
+    pressure_capsule,
     probe_fish,
     solar_panel,
 )}

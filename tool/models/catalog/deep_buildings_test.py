@@ -11,6 +11,7 @@ from model_builds import built
 from workshop import tiers
 
 # Each building: the node its tier 3 holds for the game to animate.
+TIERS = ["Tier1", "Tier2", "Tier3"]
 BUILDINGS = {"descent_module": "Beacon", "pressure_capsule": "Beacon", "volcanic_kernel": "Flame"}
 
 
@@ -19,17 +20,17 @@ class DeepBuildingsTest(unittest.TestCase):
         for name, moving in BUILDINGS.items():
             with self.subTest(name):
                 report = built(name)[1]
-                self.assertTrue(tiers.has_tiers(report))
-                for tier in tiers.TIERS:
+                self.assertEqual(tiers.count(report), 3)
+                for tier in TIERS:
                     self.assertIn(tier, report.paths)
                 self.assertIn(f"Tier3/{moving}", report.paths)
-                self.assertEqual(MODELS[name].NODES, [*tiers.TIERS, f"Tier3/{moving}"])
+                self.assertEqual(MODELS[name].NODES, [*TIERS, f"Tier3/{moving}"])
 
     def test_every_tier_adds_to_the_one_before_and_the_whole_is_within_the_budget(self):
         for name in BUILDINGS:
             with self.subTest(name):
                 report = built(name)[1]
-                (_, one, _), (_, two, _), (_, three, _) = tiers.stages(report)
+                (one, _), (two, _), (three, _) = tiers.shown(report)
                 self.assertGreater(one, 1500)
                 self.assertGreater(two, one * 1.25)
                 self.assertGreater(three, two * 1.2)
@@ -59,8 +60,8 @@ class DeepBuildingsTest(unittest.TestCase):
         for name in BUILDINGS:
             with self.subTest(name):
                 report = built(name)[1]
-                for stage in tiers.stages(report):
-                    self.assertLessEqual(stage[2], 11)
+                for _, calls in tiers.shown(report):
+                    self.assertLessEqual(calls, 11)
 
 
 if __name__ == "__main__":

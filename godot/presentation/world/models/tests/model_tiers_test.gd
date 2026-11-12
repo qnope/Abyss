@@ -1,7 +1,6 @@
 extends TestCase
 ## A model's tiers are the nodes Tier<N>, wherever they stand in it.
 
-const ModelTiers := preload("res://tool/models/model_tiers.gd")
 
 var _model: Node3D
 

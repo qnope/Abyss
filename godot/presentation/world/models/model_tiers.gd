@@ -1,3 +1,4 @@
+class_name ModelTiers
 extends RefCounted
 ## The tiers of a building model: the nodes Tier1, Tier2 and Tier3, which add
 ## up (the game shows Tier1, then Tier1 and Tier2, then all three). Review

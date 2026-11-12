@@ -13,7 +13,6 @@ extends SceneTree
 const Studio := preload("res://tool/models/studio.gd")
 const ModelBounds := preload("res://tool/models/model_bounds.gd")
 const ModelPads := preload("res://tool/models/model_pads.gd")
-const ModelTiers := preload("res://tool/models/model_tiers.gd")
 
 ## The phone's viewport (project.godot), rendered at 2x.
 const SCALE := 2

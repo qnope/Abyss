@@ -29,13 +29,13 @@ func test_fills_the_eleven_pads_of_a_full_base() -> void:
 
 
 func test_a_stand_in_rises_with_the_level_of_its_building() -> void:
-	var player := GameSamples.player_with("Nemo", {Type.HEADQUARTERS: 10, Type.ALGAE_FARM: 1})
+	var player := GameSamples.player_with("Nemo", {Type.HEADQUARTERS: 10, Type.LABORATORY: 1})
 	_base.show_base(player.buildings)
-	var low := _base.buildings.building(&"AlgaeFarm") as StandIn
+	var low := _base.buildings.building(&"Laboratory") as StandIn
 	assert_almost_eq(low.scale.y, StandIn.TIER_HEIGHT[1], 1e-5)
-	player.buildings[Type.ALGAE_FARM].level = 5
+	player.buildings[Type.LABORATORY].level = 5
 	_base.show_base(player.buildings)
-	var risen := _base.buildings.building(&"AlgaeFarm") as StandIn
+	var risen := _base.buildings.building(&"Laboratory") as StandIn
 	assert_almost_eq(risen.scale.y, StandIn.TIER_HEIGHT[2], 1e-5)
 
 

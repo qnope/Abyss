@@ -14,6 +14,9 @@ const VEIL := 0.6
 ## The buildings that have a model, by type.
 const MODELS: Dictionary[BuildingType.Value, PackedScene] = {
 	BuildingType.Value.HEADQUARTERS: preload("res://assets/models/headquarters.glb"),
+	BuildingType.Value.ALGAE_FARM: preload("res://assets/models/algae_farm.glb"),
+	BuildingType.Value.CORAL_MINE: preload("res://assets/models/coral_mine.glb"),
+	BuildingType.Value.ORE_EXTRACTOR: preload("res://assets/models/ore_extractor.glb"),
 	BuildingType.Value.SOLAR_PANEL: preload("res://assets/models/solar_panel.glb"),
 	BuildingType.Value.CORAL_CITADEL: preload("res://assets/models/coral_citadel.glb"),
 }
@@ -35,7 +38,8 @@ static func has_model(type: BuildingType.Value) -> bool:
 
 
 ## The building [param type] at [param level] (1 or more), greyed when
-## [param degraded]: its model, or its stand-in when it has none or
+## [param degraded]: its model (showing the tiers its level has risen to,
+## [BuildingTier], when it has any), or its stand-in when it has none or
 ## [param models] is false (the stand-ins alone, for a review).
 static func building(
 	type: BuildingType.Value, level := 1, degraded := false, models := true
@@ -43,6 +47,7 @@ static func building(
 	if not (models and has_model(type)):
 		return StandIn.new(type, level, degraded)
 	var model := MODELS[type].instantiate() as Node3D
+	ModelTiers.show_up_to(model, BuildingTier.of_level(level))
 	if degraded:
 		_grey(model)
 	return model

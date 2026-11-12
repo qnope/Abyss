@@ -8,7 +8,9 @@ is never edited by hand: change its script and build it again.
     tool/models/preview.sh <name> [prefix]    # renders to /tmp/models_preview/
     tool/models/preview.sh base_island+base_rampart   # several models together
     tool/models/portraits.sh [name ...]       # the interface's pictures, committed
+    tool/models/preview.sh headquarters@2     # a building up to its tier 2
     tool/models/board.sh a,b,c /tmp/lot.png   # the review board of a lot
+    tool/models/board.sh a,b /tmp/lot.png --tiers   # ... with each building's tiers
     cd tool/models && python -m unittest discover -s . -p '*_test.py'
 
 Both Python commands need Python 3.13 with `pip install bpy==5.2.3` (the CI job
@@ -98,9 +100,26 @@ model its colour, from the tile it maps. Blender exports the UVs and no image:
 `glb_atlas` then names the PNG in the glb (an image by `uri`, sampled with
 mipmaps and clamped), so the game imports it as a texture of its own,
 compressed for the GPU: its `.png.import` (committed) asks for `VRAM
-Compressed` with mipmaps, and the import script samples it anisotropically.
+Compressed` with mipmaps, and the import script samples it anisotropically. A new model's first import writes
+the file with the defaults: set `compress/mode=2` and `mipmaps/generate=true` in it, import again.
 A model with an atlas and a big flat side cuts it in a grid
 (`geometry.subdivide`), so that its baked occlusion has corners to darken.
+
+## Tiers
+
+A building rises with its level (`BuildingTier`: tier 1 = levels 1-3, tier 2 = levels
+4-7, tier 3 = level 8 and up), so its model holds three additive groups under its
+root node: `<Root>/Tier1` (the base of the building, always shown), `<Root>/Tier2` (what
+rising adds) and `<Root>/Tier3` (the crown). The game shows Tier1, then Tier1 + Tier2, then
+all three; the budget counts the three together, so the lower tiers cost less. A moving
+part the game already finds at a fixed path stays a child of the root, shown at every
+tier (`Headquarters/Beacon`, `Headquarters/Dish`, `CoralCitadel/Heart`, and the hull
+`Headquarters/Headquarters_hull`); the tiers add the rest. A script fills
+`Into(model, f"{GROUP}/Tier{k}")`; `catalog/parts/command.py` has a `Collector` to build
+a tier in its own frame and `lay` it turned toward the game's camera (`FACING`, 45
+degrees). `preview.sh <name>@<tier>` renders a building up to that tier, framed as with
+all three, and `board.sh ... --tiers` shows each building's game view at the three tiers
+and the triangles of each tier added to the ones below.
 
 ## Budgets
 
@@ -297,3 +316,21 @@ parts as nodes the game can animate:
 
 Each has its own 1024 px atlas painted from `textures/colony.py`; the rampart
 has a 512 px one, its seamless reef stone.
+
+The command buildings (`textures/command.py` adds their tiles to the colony's atlas,
+`parts/command.py` and `parts/command_tech.py` their parts) have three tiers each:
+
+- `headquarters`: command post (hull, airlocks, gallery, a drum of cyan windows), headquarters
+  (glass cupola, mast, tanks, generator, cargo), command tower (a lattice,
+  sensor pods); the root's own hull, `Beacon` (on the gallery's deck) and `Dish` are always
+  shown. By far the tallest.
+- `laboratory`: field lab (a scrubbed ceramic hall, glowing specimen tanks), research wing
+  (control room, bioreactor sphere), institute (a tower crowned by an atom, node `Tier3/Atom`).
+  Teal is its light.
+- `barracks`: bunker hall (banner, harpoon rack), garrison (gate tower, bunks), fortress (keep
+  tower, harpoon launchers, red-lit portal, hedgehogs). Crimson cloth and red lights. It also
+  stands at the back of the parade ground, on a round plot 2.3 wide (`ParadeBarracks`),
+  at the deck's level: nothing of it may stand past that plot.
+- `coral_citadel`: keep (polyp, calyx, the root's node `Heart`, low curtain, gate), stronghold
+  (towers, merlons, thorns), crown of thorns (a cage of tentacles, spires, arches). It stays
+  well inside `base_rampart`.

@@ -25,9 +25,10 @@ def _header(path):
 
 
 class PortraitsTest(unittest.TestCase):
-    def test_the_buildings_of_the_prototype_and_the_production_declare_one(self):
+    def test_the_buildings_with_a_picture_declare_one(self):
         declared = portraits.declared()
-        for name in ("headquarters", "solar_panel", "coral_citadel", "algae_farm", "coral_mine", "ore_extractor"):
+        for name in ("headquarters", "solar_panel", "coral_citadel", "algae_farm", "coral_mine",
+                     "ore_extractor", "laboratory", "barracks"):
             self.assertIn(name, declared)
 
     def test_every_declared_portrait_is_committed_as_a_square_transparent_png(self):

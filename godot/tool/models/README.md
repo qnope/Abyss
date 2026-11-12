@@ -24,3 +24,8 @@ the glb files): editor and review tools, not game code, left out of exports.
   turns a creature (a model with a `Rig`) to the camera for every render, and
   `model_bounds.gd` boxes it as turned. `board_row.gd` lays them out under a
   creature's views.
+- `cells.gd`, `cell_row.gd`, `board_cells.gd`: the renders of `tool/models/cells.sh`,
+  models side by side on the cells of a map with the game's floor, light and camera
+  (`MapTiles`, `UnderwaterEnvironment`, `KeyLight`, `MapCamera`), a name tinted
+  (`@rrggbb`, the node `Tint`) or dimmed (`!`) as the game does; `board.sh` shows them
+  at the head of a board with `CELLS=`.

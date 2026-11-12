@@ -12,7 +12,7 @@ extends RefCounted
 static func quad(size: float, centre: float, rim: float) -> QuadMesh:
 	var mesh := QuadMesh.new()
 	mesh.size = Vector2(size, size)
-	mesh.material = _material(_dot(centre, rim))
+	mesh.material = _material(dot(centre, rim))
 	return mesh
 
 
@@ -27,7 +27,9 @@ static func _material(texture: Texture2D) -> StandardMaterial3D:
 	return material
 
 
-static func _dot(centre: float, rim: float) -> GradientTexture2D:
+## The soft radial gradient alone, white, from [param centre] to [param rim]
+## (their alpha), transparent beyond: what a glow is drawn with.
+static func dot(centre: float, rim: float) -> GradientTexture2D:
 	var gradient := Gradient.new()
 	gradient.offsets = PackedFloat32Array([0.0, 0.7, 1.0])
 	gradient.colors = PackedColorArray([

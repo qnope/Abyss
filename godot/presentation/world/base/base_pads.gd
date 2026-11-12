@@ -38,6 +38,14 @@ func origin_of(name: StringName) -> Vector3:
 	return _pads[name].position
 
 
+## The top centres of the pads [param named], in the island's space.
+func origins_of(named: Array[StringName]) -> PackedVector3Array:
+	var origins := PackedVector3Array()
+	for name in named:
+		origins.append(origin_of(name))
+	return origins
+
+
 ## How far the pad of [param name] reaches from its middle, in metres.
 func radius_of(name: StringName) -> float:
 	var size := _pads[name].get_aabb().size

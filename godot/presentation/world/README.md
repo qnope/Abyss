@@ -29,6 +29,12 @@ camera.
   level 1, the rampart at its first tier if the citadel is among them.
 - `buildings.use_models = false` shows every building as its stand-in, to
   review the shapes (`tool/scene_capture.sh`).
+- `PadHalos` glows behind each building that can rise (and works well: a degraded
+  one is warned of, not glowed), beside the arrow of `PadMark`: a soft additive disc
+  facing the camera at the building's mid height, sized by the building's height or
+  its pad's width, all of them sharing one quad and one material that a single tween
+  breathes (`CYCLE` 3 s, `reduced_motion` holds it at its brightest). The same
+  `ParticleDot.dot` gradient as the specks; no extra model, one draw per building.
 
 ## guide/
 

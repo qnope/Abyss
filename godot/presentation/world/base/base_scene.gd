@@ -4,8 +4,8 @@ extends Node3D
 ## their pads and the empty pads marked on the deck, lit from the surface
 ## and seen by the orbit camera. Each pad shows its building, a model or a
 ## stand-in ([WorldModels]), its level and the signs that tell what it needs
-## ([PadMarks]); a tap on a pad, built or not, or on its building, is told by
-## building_tapped.
+## ([PadMarks], and the glow of [PadHalos] behind a building that can rise); a
+## tap on a pad, built or not, or on its building, is told by building_tapped.
 
 ## The player tapped the pad, or the building on it, of [param type].
 signal building_tapped(type: BuildingType.Value)
@@ -39,6 +39,8 @@ var key_light := KeyLight.new()
 var water := UnderwaterEnvironment.new()
 var buildings := BaseBuildings.new()
 var marks := PadMarks.new()
+## The glow of the buildings that can rise.
+var halos := PadHalos.new()
 ## The ring the tutorial's guide puts around the pad it points at.
 var guide := GuideRing.new()
 var pads: BasePads
@@ -56,17 +58,10 @@ func _init() -> void:
 	pads = BasePads.new(island.get_node("Pads") as Node3D)
 	_rampart.name = &"Rampart"
 	add_child(_rampart)
-	add_child(buildings)
-	add_child(marks)
-	add_child(guide)
-	add_child(key_light)
-	add_child(water)
-	add_child(LightShafts.new(RAYS))
 	motion = BaseMotion.new(buildings, pads.marker)
-	add_child(motion)
-	add_child(snow)
-	add_child(bubbles)
-	add_child(camera)
+	for part: Node in [buildings, marks, halos, guide, key_light, water, LightShafts.new(RAYS),
+			motion, snow, bubbles, camera]:
+		add_child(part)
 	build(BUILT)
 	BaseShadows.quiet(island)
 	BaseShadows.quiet(_rampart)
@@ -134,11 +129,9 @@ func _show(states: Array[PadState]) -> void:
 	pads.fit_reach(buildings)
 	motion.track()
 	marks.show_marks(states, pads, buildings)
-	var sources := PackedVector3Array()
-	for name in buildings.names():
-		sources.append(pads.origin_of(name))
-		BaseShadows.quiet(buildings.building(name))
-	bubbles.rise_from(sources)
+	halos.show_halos(states, pads, buildings)
+	BaseShadows.quiet(buildings)
+	bubbles.rise_from(pads.origins_of(buildings.names()))
 
 
 func _on_tapped(position: Vector2) -> void:

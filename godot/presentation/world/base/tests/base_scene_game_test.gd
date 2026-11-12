@@ -98,3 +98,12 @@ func test_frames_the_island_between_the_bars() -> void:
 		size.x / size.y, OrbitCamera.FOV, 0.1, 0.2)
 	assert_almost_eq(_base.camera.rig.default_distance, fitted.x, 1e-4)
 	assert_almost_eq(_base.camera.rig.lift, fitted.y, 1e-4)
+
+
+func test_a_building_that_can_rise_glows_and_the_others_do_not() -> void:
+	var player := GameSamples.player_with("Nemo", {Type.HEADQUARTERS: 5, Type.SOLAR_PANEL: 3})
+	_base.show_base(player.buildings, {Type.SOLAR_PANEL: true})
+	assert_eq(_base.halos.get_child_count(), 1)
+	assert_true(_base.halos.is_pulsing())
+	_base.show_base(player.buildings)
+	assert_eq(_base.halos.get_child_count(), 0)

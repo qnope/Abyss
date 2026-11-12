@@ -90,7 +90,7 @@ func test_extra_views_make_one_more_line_before_the_name() -> void:
 	var image := Image.create(8, 4, false, Image.FORMAT_RGBA8)
 	for file: String in ["y_game", "y_front", "y_right", "y_back", "y_left", "y_close", "y_grid", "y_far", "y"]:
 		image.save_png("%s/%s.png" % [folder, file])
-	_row = BoardRow.new(ProjectSettings.globalize_path(folder), "y", PackedStringArray(["one"]), 0,
+	_row = BoardRow.new(ProjectSettings.globalize_path(folder), "y", PackedStringArray(["one"]), 0, false,
 		PackedStringArray(["grid", "far"]))
 	assert_eq(_row.get_child_count(), 4)
 	var more := _row.get_child(1) as Control

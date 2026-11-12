@@ -36,13 +36,13 @@ func test_a_won_assault_takes_the_post_and_opens_the_report() -> void:
 
 
 func test_the_assault_is_saved_and_the_post_is_lit_for_the_player_on_the_map() -> void:
-	var before := (world.map.contents.by_cell[faille_at] as MapStandIn).body.material_override as StandardMaterial3D
-	assert_eq(before.albedo_color, MapPalette.HOLDERS[PostHolder.Value.GUARDIANS])
+	var before := MapProbe.tint_of(world.map.contents.by_cell[faille_at])
+	assert_eq(before, MapPalette.HOLDERS[PostHolder.Value.GUARDIANS])
 	assault(open_assault(), Harpoonist, 150)
 	var kept := saved()
 	assert_eq(kept.levels[1].cell_at(faille_at.x, faille_at.y).transition_base.captured_by, human.id)
-	var after := (world.map.contents.by_cell[faille_at] as MapStandIn).body.material_override as StandardMaterial3D
-	assert_eq(after.albedo_color, MapPalette.HOLDERS[PostHolder.Value.HUMAN])
+	var after := MapProbe.tint_of(world.map.contents.by_cell[faille_at])
+	assert_eq(after, MapPalette.HOLDERS[PostHolder.Value.HUMAN])
 	assert_true(kept.human_player().history_entries.any(func(e: HistoryEntry) -> bool: return e is CaptureEntry))
 
 

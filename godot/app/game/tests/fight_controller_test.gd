@@ -51,12 +51,12 @@ func test_a_victory_gives_the_loot_marks_the_lair_and_opens_the_report() -> void
 
 
 func test_the_fight_is_saved_and_the_beaten_lair_is_dimmed_on_the_map() -> void:
-	assert_false((world.map.contents.by_cell[lair_at] as MapStandIn).dimmed)
+	assert_false(MapProbe.is_dimmed(world.map.contents.by_cell[lair_at]))
 	send(open_selection(), Harpoonist, 2)
 	var kept := saved()
 	assert_true(kept.levels[1].cell_at(lair_at.x, lair_at.y).is_collected())
 	assert_eq(kept.human_player().units_on_level(1)[Harpoonist].count, stock(Harpoonist))
-	assert_true((world.map.contents.by_cell[lair_at] as MapStandIn).dimmed)
+	assert_true(MapProbe.is_dimmed(world.map.contents.by_cell[lair_at]))
 	assert_eq(kept.human_player().history_entries.size(), 1, "the fight is in the history")
 	assert_true(kept.human_player().history_entries[0] is CombatEntry)
 
@@ -72,7 +72,7 @@ func test_a_defeat_costs_units_and_leaves_the_lair() -> void:
 	assert_null(find_text("Butin", report))
 	assert_eq(stock(Scout), 2 - report.result.dead.get(Scout, 0))
 	assert_false(game.levels[1].cell_at(lair_at.x, lair_at.y).is_collected())
-	assert_false((world.map.contents.by_cell[lair_at] as MapStandIn).dimmed)
+	assert_false(MapProbe.is_dimmed(world.map.contents.by_cell[lair_at]))
 	assert_eq(saved().human_player().units_on_level(1)[Scout].count, stock(Scout))
 
 

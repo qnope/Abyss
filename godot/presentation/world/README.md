@@ -35,6 +35,16 @@ camera.
   its pad's width, all of them sharing one quad and one material that a single tween
   breathes (`CYCLE` 3 s, `reduced_motion` holds it at its brightest). The same
   `ParticleDot.dot` gradient as the specks; no extra model, one draw per building.
+- `IsletLife` (`base.life`) is the base's own life over the snow and the bubbles:
+  more bubbles (`RisingBubbles.new(30)`) round the buildings that carry a lamp
+  (`LAMPS`: the headquarters, the citadel, the descent module, the capsule, the
+  kernel; none for a degraded one), the map's turtle swimming round the island (a
+  `CreatureLap`, the one `MapAmbient` is made of) and a `FishSchool` drifting round
+  it (14 small ellipsoids in one `MultiMesh`, moved by the processor). It stops and
+  hides with the quality panel's particles (`set_particles`).
+- A building under construction is not drawn: the rules have none. An upgrade is
+  immediate (`UpgradeBuildingAction` raises the level at once and `Worksite` only
+  counts the upgrades of the turn), so no state says that a pad is a site.
 
 ## guide/
 

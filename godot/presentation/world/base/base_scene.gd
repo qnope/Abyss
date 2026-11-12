@@ -4,8 +4,9 @@ extends Node3D
 ## their pads and the empty pads marked on the deck, lit from the surface
 ## and seen by the orbit camera. Each pad shows its building, a model or a
 ## stand-in ([WorldModels]), its level and the signs that tell what it needs
-## ([PadMarks], and the glow of [PadHalos] behind a building that can rise); a
-## tap on a pad, built or not, or on its building, is told by building_tapped.
+## ([PadMarks], and the glow of [PadHalos] behind a building that can rise),
+## with the life of the islet ([IsletLife]); a tap on a pad, built or not, or
+## on its building, is told by building_tapped.
 
 ## The player tapped the pad, or the building on it, of [param type].
 signal building_tapped(type: BuildingType.Value)
@@ -47,6 +48,8 @@ var pads: BasePads
 var motion: BaseMotion
 var snow := MarineSnow.new()
 var bubbles := RisingBubbles.new()
+## The bubbles round the lamps, the turtle and the school of fish.
+var life := IsletLife.new()
 var _shown := ""
 var _rampart := RAMPART.instantiate() as Node3D
 
@@ -60,7 +63,7 @@ func _init() -> void:
 	add_child(_rampart)
 	motion = BaseMotion.new(buildings, pads.marker)
 	for part: Node in [buildings, marks, halos, guide, key_light, water, LightShafts.new(RAYS),
-			motion, snow, bubbles, camera]:
+			motion, snow, bubbles, life, camera]:
 		add_child(part)
 	build(BUILT)
 	BaseShadows.quiet(island)
@@ -107,10 +110,12 @@ func set_glow(enabled: bool) -> void:
 	water.set_glow(enabled)
 
 
-## Runs the marine snow and the bubbles, or stops and hides them.
+## Runs the marine snow, the bubbles and the life of the islet, or stops and
+## hides them.
 func set_particles(enabled: bool) -> void:
 	snow.set_running(enabled)
 	bubbles.set_running(enabled)
+	life.set_running(enabled)
 
 
 func set_rampart_tier(tier: int) -> void:
@@ -130,6 +135,7 @@ func _show(states: Array[PadState]) -> void:
 	motion.track()
 	marks.show_marks(states, pads, buildings)
 	halos.show_halos(states, pads, buildings)
+	life.show_lamps(pads, buildings)
 	BaseShadows.quiet(buildings)
 	bubbles.rise_from(pads.origins_of(buildings.names()))
 

@@ -53,6 +53,9 @@ const EMPTY_SQUAD := 0.55
 ## The guide's ring around the pad or the cell it points at (the interface's
 ## cyan, which a test in app/ holds together with this one).
 const GUIDE := Color("00e5ff")
+## The small fish of the islet's school: a pale silver-blue that reads in the
+## dark water.
+const FISH := Color("9ed8ff")
 ## The level written over a building, and its outline.
 const LEVEL := Color("ffffff")
 const LEVEL_OUTLINE := Color("0a0e1a")

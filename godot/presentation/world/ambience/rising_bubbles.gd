@@ -11,8 +11,10 @@ const SEED := 7
 const COLOUR := Color(0.75, 0.95, 1.0, 0.7)
 
 
-func _init() -> void:
-	amount = AMOUNT
+## [param count] bubbles are alive at a time: a place with more to say about
+## it asks for more.
+func _init(count := AMOUNT) -> void:
+	amount = count
 	lifetime = LIFETIME
 	preprocess = LIFETIME
 	randomness = 0.6

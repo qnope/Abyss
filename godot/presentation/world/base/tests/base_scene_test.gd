@@ -61,13 +61,13 @@ func test_turns_its_costly_effects_on_and_off() -> void:
 	_base.set_particles(false)
 	assert_false(_base.key_light.shadow_enabled)
 	assert_false(_base.water.environment.glow_enabled)
-	assert_false(_base.snow.emitting or _base.bubbles.emitting)
+	assert_false(_base.snow.emitting or _base.bubbles.emitting or _base.life.visible)
 	_base.set_shadows(true)
 	_base.set_glow(true)
 	_base.set_particles(true)
 	assert_true(_base.key_light.shadow_enabled)
 	assert_true(_base.water.environment.glow_enabled)
-	assert_true(_base.snow.emitting and _base.bubbles.emitting)
+	assert_true(_base.snow.emitting and _base.bubbles.emitting and _base.life.visible)
 
 
 func test_casts_the_shadows_worth_their_cost_only() -> void:

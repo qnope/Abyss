@@ -51,6 +51,26 @@ func test_the_camera_is_shaken_by_the_blows() -> void:
 	assert_true(_scene.camera.jolt != 0.0)
 
 
+func test_a_siege_plays_over_the_place_it_besieges() -> void:
+	_scene.show_level(_level())
+	var attack := MapSiege.by_wave(Vector2i(3, 3), StrikeSamples.lair(), StrikeSamples.fight([5], [1]), true)
+	_scene.siege(attack, _done)
+	var effect := _scene.effects.current as SiegeEffect
+	assert_not_null(effect)
+	assert_eq(effect.geometry.place, Vector2i(3, 3))
+	assert_eq(effect.get_parent(), _scene.effects)
+	_scene.effects.finish()
+	assert_eq(_ended, 1)
+
+
+func test_without_a_level_the_siege_is_over_at_once() -> void:
+	var attack := MapSiege.by_wave(Vector2i(3, 3), StrikeSamples.lair(), StrikeSamples.fight([5], [1]), true)
+	_scene.siege(attack, _done)
+	assert_eq(_ended, 1)
+	_scene.siege(attack)
+	assert_false(_scene.effects.is_playing())
+
+
 func _level() -> MapLevelState:
 	var state := level_of(8, 8, [Vector2i(1, 1), Vector2i(3, 3)])
 	put(state, 3, 3, Content.RESOURCE_BONUS)

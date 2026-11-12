@@ -30,5 +30,6 @@ func test_it_fades_over_its_second_half() -> void:
 	assert_eq(_number.modulate.a, 1.0)
 	_number.show_loss(Vector3.ZERO, 3, 0.75)
 	assert_almost_eq(_number.modulate.a, 0.5, 1e-6)
+	assert_almost_eq(_number.outline_modulate.a, 0.5, 1e-6)
 	_number.show_loss(Vector3.ZERO, 3, 1.0)
 	assert_eq(_number.modulate.a, 0.0)

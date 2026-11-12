@@ -11,12 +11,15 @@ func after_each() -> void:
 		node.free()
 
 
-func test_has_a_model_for_the_three_buildings_that_have_one() -> void:
+func test_has_a_model_for_the_buildings_that_have_one() -> void:
 	var with_model: Array[BuildingType.Value] = []
 	for type: BuildingType.Value in BuildingType.Value.values():
 		if WorldModels.has_model(type):
 			with_model.append(type)
-	assert_eq(with_model, [Type.HEADQUARTERS, Type.SOLAR_PANEL, Type.CORAL_CITADEL] as Array[BuildingType.Value])
+	assert_eq(with_model, [
+		Type.HEADQUARTERS, Type.ALGAE_FARM, Type.CORAL_MINE, Type.ORE_EXTRACTOR, Type.SOLAR_PANEL,
+		Type.CORAL_CITADEL,
+	] as Array[BuildingType.Value])
 
 
 func test_gives_the_model_when_there_is_one() -> void:

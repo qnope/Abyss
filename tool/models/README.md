@@ -222,7 +222,7 @@ plateau, as a creature, it frames the wrong place: judge it by the sides). It ru
 web's) under `xvfb-run`. Models shown together with `base_island` stand on
 its pad of the same name (`model_pads.gd`), as in the game. The renders go to `/tmp/models_preview/` by default:
 never into the repo. `TIER=n tool/models/preview.sh <name>` shows a building up to
-its tier n (the nodes `Tier1`..`Tier3` add up, `model_tiers.gd` hides the
+its tier n (the nodes `Tier1`..`Tier3` add up, `ModelTiers` hides the
 others) and renders only `_game` and `_close`.
 
 ## Portraits

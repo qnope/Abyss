@@ -9,8 +9,8 @@ the glb files): editor and review tools, not game code, left out of exports.
   run it. An atlas (`<model>_atlas.png` beside its glb) is a texture of the
   project: its `.png.import` asks for VRAM compression and mipmaps.
 - `preview.gd`, `studio.gd`, `model_bounds.gd`: the renders of
-  `tool/models/preview.sh`; `model_tiers.gd` shows a building up to a tier
-  (`TIER=n`: its nodes `Tier1`..`Tier3` add up) for them.
+  `tool/models/preview.sh`; `ModelTiers` (presentation/world/models) shows a
+  building up to a tier (`TIER=n`: its nodes `Tier1`..`Tier3` add up) for them.
 - `portrait.gd`, `portrait_camera.gd` (with `studio.gd` in its clear mode): the
   renders of `tool/models/portraits.sh` into `assets/portraits/`, 256 px
   square, transparent, from one fixed 3/4 camera that fits the model's box.

@@ -9,6 +9,8 @@ extends VBoxContainer
 ## creature (with actions) adds how it reads at phone size after its portrait,
 ## and two lines of poses: three of each action, idle and swim, then attack and
 ## hit (poses.gd writes them as <name>_<action>_<k>.png and <name>_phone.png).
+## The extra views of a floor (board_figures.py) make one more line, as
+## <name>_<view>.png.
 
 const VIEWS: Array[String] = ["game", "front", "right", "back", "left", "close"]
 ## A creature has no close view: its poses and its phone view tell the rest.
@@ -40,7 +42,8 @@ static func views(tiers: int, creature := false) -> Array[Array]:
 	return [TIERED_GAME, TIERED_CLOSE]
 
 
-func _init(folder: String, name_: String, lines: PackedStringArray, tiers := 0, poses := false) -> void:
+func _init(folder: String, name_: String, lines: PackedStringArray, tiers := 0, poses := false,
+		extras := PackedStringArray()) -> void:
 	add_theme_constant_override(&"separation", 6)
 	var first := true
 	var rows := views(tiers, poses)
@@ -57,6 +60,12 @@ func _init(folder: String, name_: String, lines: PackedStringArray, tiers := 0, 
 				pictures.add_child(_cell("%s/%s_phone.png" % [folder, name_], "phone size"))
 			first = false
 		add_child(pictures)
+	if not extras.is_empty():
+		var more := HBoxContainer.new()
+		more.add_theme_constant_override(&"separation", 10)
+		for view in extras:
+			more.add_child(_cell("%s/%s_%s.png" % [folder, name_, view], view))
+		add_child(more)
 	add_child(_label(name_, TEXT, SIZE + 6))
 	for line in lines:
 		add_child(_label(line, DIM, SIZE))

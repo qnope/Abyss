@@ -13,6 +13,7 @@ is never edited by hand: change its script and build it again.
     tool/models/poses.sh scout [prefix]       # three poses of each action, and the phone view
     tool/models/board.sh a,b /tmp/lot.png --tiers   # ... with each building's tiers
     tool/models/cells.sh a,b,c /tmp/cells     # models side by side on the map's cells (see The map)
+    tool/models/grid.sh <level 1-3> [prefix]  # a level's floor tiles laid on a grid, fog or not
     cd tool/models && python -m unittest discover -s . -p '*_test.py'
 
 Both Python commands need Python 3.13 with `pip install bpy==5.2.3` (the CI job
@@ -157,7 +158,37 @@ once). The others are first guesses, to be tightened by the bench of each lot:
   figures: a larger mesh, a 512 px atlas, up to 40 bones.
 - *map*: dozens of contents are drawn at once on a level, so each is under a
   building's third (6 000), with few materials (one draw call each) and no
-  animation (the living creatures of the map are monsters).
+  animation (the living creatures of the map are monsters). The floor, the fog
+  and the backdrops of the map are made of it too, see below.
+
+## The map's floor, fog, backdrops and creatures
+
+Family *map* for the floor and the fog, *decor* for the backdrops (a rim and
+silhouettes are scenery, tens of thousands of triangles are theirs, not the
+map's 6 000), *monster* for the three creatures (small, harmless, idle and swim
+loops only).
+
+- `map_terrain_<level>`: `Lit1..Lit3` (a cell seen) and `Fog1..Fog2` (not seen
+  yet, 0.2 lower, dark), each node's mesh a one-cell tile whose border is held at
+  one height and one colour, so that any two meet turned by any quarter turn;
+  the game uses each node's mesh (the nodes' places are for review). One atlas
+  of 512 px a level (`catalog/textures/seabed.py`), the `seabed` material
+  textured and the glowing `glow` one at most.
+- `map_fog`: `Cloud1..Cloud3` (the shroud of a cell: three stacked translucent
+  sheets) and `Wisp1..Wisp3` (puffs for the edge a scout lifts). One
+  `translucent` material (`workshop/materials.py`): drawn blended, its alpha the
+  fourth channel of the vertex colours; the importer gives it no shadows, and the
+  game should not let it cast one.
+- `map_backdrop_<level>`: `Edge1`, `Edge2` (2 long along x, outward +z, the
+  slab's edge at z = 0), `Corner`, and far silhouettes; the pieces meet on the
+  bare section, so the game repeats them round the map.
+- `map_turtle`, `map_jelly`, `map_ray` (levels 1, 2, 3): origin at the body's
+  centre, `idle` and `swim` loops (`catalog/ambient.py`).
+- `grid.sh` lays a level's tiles on a grid as the game's camera sees it, in
+  the game's own light and water (`grid_view.gd`), with a patch seen and the
+  rest under the fog, and the whole map in the phone's frame; `poses.sh` stops a
+  loop at four moments. `board.sh` calls them for `map_terrain_*` and for any
+  model with a `swim` loop.
 
 ## Measure
 

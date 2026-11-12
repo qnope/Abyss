@@ -82,3 +82,22 @@ func test_builds_its_lines_then_its_name_and_figures() -> void:
 	for file: String in DirAccess.get_files_at(folder):
 		DirAccess.remove_absolute("%s/%s" % [ProjectSettings.globalize_path(folder), file])
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(folder))
+
+
+func test_extra_views_make_one_more_line_before_the_name() -> void:
+	var folder := "user://board_row_extras_test"
+	DirAccess.make_dir_recursive_absolute(folder)
+	var image := Image.create(8, 4, false, Image.FORMAT_RGBA8)
+	for file: String in ["y_game", "y_front", "y_right", "y_back", "y_left", "y_close", "y_grid", "y_far", "y"]:
+		image.save_png("%s/%s.png" % [folder, file])
+	_row = BoardRow.new(ProjectSettings.globalize_path(folder), "y", PackedStringArray(["one"]), 0,
+		PackedStringArray(["grid", "far"]))
+	assert_eq(_row.get_child_count(), 4)
+	var more := _row.get_child(1) as Control
+	assert_eq(more.get_child_count(), 2)
+	assert_eq(((more.get_child(0) as Control).get_child(1) as Label).text, "grid")
+	assert_eq(((more.get_child(1) as Control).get_child(1) as Label).text, "far")
+	assert_eq((_row.get_child(2) as Label).text, "y")
+	for file: String in DirAccess.get_files_at(folder):
+		DirAccess.remove_absolute("%s/%s" % [ProjectSettings.globalize_path(folder), file])
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(folder))

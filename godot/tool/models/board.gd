@@ -5,8 +5,9 @@ extends SceneTree
 ##   godot --path godot --script res://tool/models/board.gd -- <folder> <out.png> <figures.json>
 ## The folder holds <name>_<view>.png and <name>.png (and the cells_near.png and
 ## cells_far.png of cells.sh, shown first); the figures file is
-## {"models": [{"name": ..., "lines": [...], "tiers": n, "poses": bool}, ...]}
-## (board_figures.py; a creature's poses are rendered by poses.gd).
+## {"models": [{"name": ..., "lines": [...], "tiers": n, "poses": bool,
+## "extras": [...]}, ...]} (board_figures.py; a creature's poses are rendered
+## by poses.gd, a floor's extra views by grid.sh).
 
 const Studio := preload("res://tool/models/studio.gd")
 const BoardRow := preload("res://tool/models/board_row.gd")
@@ -49,7 +50,10 @@ func _compose(folder: String, out: String, models: Array) -> void:
 			lines.append(line)
 		var tiers: float = model.get("tiers", 0.0)
 		var poses: bool = model.get("poses", false)
-		column.add_child(BoardRow.new(folder, name_, lines, int(tiers), poses))
+		var extras: PackedStringArray = []
+		for view: String in model.get("extras", []):
+			extras.append(view)
+		column.add_child(BoardRow.new(folder, name_, lines, int(tiers), poses, extras))
 	var margin := MarginContainer.new()
 	for side: String in ["left", "right", "top", "bottom"]:
 		margin.add_theme_constant_override(StringName("margin_" + side), MARGIN)

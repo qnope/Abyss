@@ -33,6 +33,12 @@ class BoardFiguresTest(unittest.TestCase):
         self.assertIn("keyframes", lines[0])
         self.assertEqual(lines[1], "animations: attack, hit, idle_loop, swim_loop")
 
+    def test_a_floor_asks_for_extra_views(self):
+        self.assertEqual(board_figures.extras("map_terrain_2"), ["grid", "gridfog", "far"])
+        self.assertEqual(board_figures.extras("map_ray"), [])
+        self.assertEqual(board_figures.extras("headquarters"), [])
+        self.assertEqual(board_figures.extras("map_fog"), [])
+
     def test_says_when_a_model_is_over_its_caps(self):
         script = board_figures.MODELS["headquarters"]
         small = script.BUDGET.__class__(triangles=10, materials=5, texture_px=1024)
@@ -48,6 +54,8 @@ class BoardFiguresTest(unittest.TestCase):
         self.assertEqual([m["name"] for m in document["models"]], ["headquarters", "probe_fish"])
         self.assertTrue(all(m["lines"] for m in document["models"]))
         self.assertEqual([m["tiers"] for m in document["models"]], [3, 0])
+        self.assertEqual([m["poses"] for m in document["models"]], [False, True])
+        self.assertEqual([m["extras"] for m in document["models"]], [[], []])
 
     def test_refuses_an_unknown_model_or_none(self):
         with self.assertRaises(SystemExit):

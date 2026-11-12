@@ -30,12 +30,18 @@ var actions: GameActions
 var modals: ModalLayer
 ## Shows a level on the map (a Callable taking the level).
 var _show_level: Callable
+## Plays a strike on the map: a Callable taking it and what to do then.
+var _strike: Callable
 
 
-func _init(actions_: GameActions, router: CellRouter, modals_: ModalLayer, show_level: Callable) -> void:
+func _init(
+	actions_: GameActions, router: CellRouter, modals_: ModalLayer, show_level: Callable,
+	strike := Callable(),
+) -> void:
 	actions = actions_
 	modals = modals_
 	_show_level = show_level
+	_strike = strike
 	router.register(CellRoute.Kind.POST, open_post)
 
 
@@ -71,11 +77,15 @@ func _assault(picks: Dictionary[UnitType.Value, int], route: CellRoute) -> Actio
 	return actions.execute(AttackTransitionBaseAction.new(route.x, route.y, route.level, picks, SeededRandom.fresh()))
 
 
-## Opens the report of the assault [param result] made on the cell of [param route].
+## Plays the assault [param result] made on the cell of [param route] on the map,
+## then opens its report.
 func _on_assaulted(result: Variant, route: CellRoute) -> void:
 	var assault: AttackTransitionBaseResult = result
-	if assault != null:
-		modals.open(TransitionFightSummaryPage.new(assault, route.x, route.y))
+	if assault == null:
+		return
+	var attack := MapStrike.fought(Vector2i(route.x, route.y), assault.fight, assault.sent, assault.victory)
+	StrikeReports.play(_strike, attack, func() -> void:
+		modals.open(TransitionFightSummaryPage.new(assault, route.x, route.y)))
 
 
 func _select_descent(route: CellRoute) -> void:

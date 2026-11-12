@@ -1,7 +1,7 @@
 extends TestCase
-## The time of the map's effects (the world's `MapMotion`) is the interface's
-## (`AbyssMotion`): the world reads none of the interface, so `app/` holds the
-## two together.
+## The time and the colours of the map's effects (the world's `MapMotion` and
+## `MapPalette`) are the interface's (`AbyssMotion`, `AbyssColors`): the world reads
+## none of the interface, so `app/` holds the two together.
 
 
 func test_the_steps_are_the_interfaces() -> void:
@@ -19,3 +19,10 @@ func test_a_swim_lasts_longer_over_a_farther_cell_up_to_three_swims() -> void:
 	assert_eq(MapMotion.swim_over(100.0), MapMotion.SWIM * 3.0)
 
 
+func test_the_colours_are_the_interfaces() -> void:
+	assert_eq(MapPalette.FLASH, AbyssColors.DAYLIGHT)
+	assert_eq(MapPalette.DAMAGE, AbyssColors.ERROR)
+	assert_eq(MapPalette.ALERT, AbyssColors.ERROR)
+	assert_eq(MapPalette.CAPTURE, AbyssColors.BIOLUM_CYAN)
+	assert_eq(MapPalette.SHIELD, AbyssColors.BIOLUM_CYAN)
+	assert_eq(MapPalette.COUNT, AbyssColors.PEARL_WHITE)

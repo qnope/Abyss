@@ -56,6 +56,12 @@ func show_level(level: int) -> void:
 	tab.choose(level)
 
 
+## Plays [param attack] on the map, calling [param then] once it is over (at once
+## when the map is not on show).
+func strike(attack: MapStrike, then: Callable) -> void:
+	_world.map.strike(attack, then)
+
+
 ## A strip points at [param level]: the Map tab shows it.
 func _open(level: int) -> void:
 	show_level(level)

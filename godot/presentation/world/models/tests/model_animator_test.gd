@@ -59,6 +59,12 @@ func test_the_speed_scales_the_animation() -> void:
 	assert_eq(animator.player.get_playing_speed(), 2.0)
 
 
+func test_it_tells_how_long_an_animation_lasts() -> void:
+	var animator := _animator()
+	assert_true(animator.length_of(&"attack") > 0.0)
+	assert_eq(animator.length_of(&"dance"), 0.0)
+
+
 func test_the_tail_moves_when_the_fish_swims() -> void:
 	var fish := _fish()
 	var animator := ModelAnimator.new(fish)

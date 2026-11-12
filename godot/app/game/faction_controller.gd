@@ -19,15 +19,21 @@ extends RefCounted
 ##
 ## It registers itself for the faction bases on the router it is given and
 ## keeps nothing of it: whoever made it holds it as long as the screen is played.
-## The assault played on the map before the report is step 7's.
+## The assault is played on the map before the report opens.
 
 var actions: GameActions
 var modals: ModalLayer
+## Plays a strike on the map: a Callable taking it and what to do then.
+var _strike: Callable
 
 
-func _init(actions_: GameActions, router: CellRouter, modals_: ModalLayer, post: PostController, kernel: KernelController) -> void:
+func _init(
+	actions_: GameActions, router: CellRouter, modals_: ModalLayer, post: PostController,
+	kernel: KernelController, strike := Callable(),
+) -> void:
 	actions = actions_
 	modals = modals_
+	_strike = strike
 	router.register(CellRoute.Kind.FACTION_BASE, open_base)
 	post.rival_attack_requested.connect(_attack_post)
 	kernel.rival_attack_requested.connect(_attack_kernel)
@@ -44,7 +50,7 @@ func open_base(route: CellRoute) -> void:
 		AttackBaseValidator.refusal(game, human, target.id), intel, game.turn,
 		SpyBaseAction.refusal(game, human, target.id))
 	sheet.spy_requested.connect(_spy.bind(route, target))
-	sheet.attack_requested.connect(_assault.bind(target, AttackBaseAction.LEVEL, null,
+	sheet.attack_requested.connect(_assault.bind(target, AttackBaseAction.LEVEL, null, Vector2i(route.x, route.y), 1,
 		func(picks: Dictionary[UnitType.Value, int]) -> Action:
 			return AttackBaseAction.new(target.id, picks, SeededRandom.fresh())))
 	modals.open(sheet)
@@ -62,34 +68,41 @@ func _spy(route: CellRoute, target: Player) -> void:
 
 func _attack_post(owner: Player, level: int, x: int, y: int) -> void:
 	var post := actions.game.levels[level].cell_at(x, y).transition_base
-	_assault(owner, level, post.name, func(picks: Dictionary[UnitType.Value, int]) -> Action:
+	_assault(owner, level, post.name, Vector2i(x, y), 1, func(picks: Dictionary[UnitType.Value, int]) -> Action:
 		return AttackPostAction.new(x, y, level, picks, SeededRandom.fresh()))
 
 
 func _attack_kernel(owner: Player, level: int, x: int, y: int) -> void:
-	_assault(owner, level, AttackHeldKernelAction.KERNEL_CODE, func(picks: Dictionary[UnitType.Value, int]) -> Action:
+	_assault(owner, level, AttackHeldKernelAction.KERNEL_CODE, Vector2i(x, y), VolcanicKernelPlacer.SIDE,
+		func(picks: Dictionary[UnitType.Value, int]) -> Action:
 		return AttackHeldKernelAction.new(x, y, picks, SeededRandom.fresh()))
 
 
 ## Opens the choice of the army to send from [param level] against [param target]:
 ## [param make] builds the action from the picks, and the report opens once the
 ## assault is over. [param post_name] is the post (or the kernel) attacked, null
-## for the base.
-func _assault(target: Player, level: int, post_name: Variant, make: Callable) -> void:
+## for the base; [param cell] is where it stands on the map, [param span] cells across.
+func _assault(
+	target: Player, level: int, post_name: Variant, cell: Vector2i, span: int, make: Callable,
+) -> void:
 	var send := func(picks: Dictionary[UnitType.Value, int]) -> ActionResult:
 		var action: Action = make.call(picks)
 		return actions.execute(action)
 	var page := AssaultSelections.rival(actions.game.human_player(), level, target.name, send)
-	page.closed.connect(_report.bind(target, post_name))
+	page.closed.connect(_report.bind(target, post_name, cell, span))
 	modals.open(page)
 
 
-## Opens the report of the assault [param result] made on [param target].
-func _report(result: Variant, target: Player, post_name: Variant) -> void:
+## Plays the assault [param result] made on [param target] on the map, then opens
+## its report.
+func _report(result: Variant, target: Player, post_name: Variant, cell: Vector2i, span: int) -> void:
 	var assault: AttackBaseResult = result
-	if assault != null:
-		var entry := AttackBaseEntries.for_attacker(actions.game.turn, target.name, assault, post_name)
-		modals.open(BaseAssaultSummaryPage.new(entry))
+	if assault == null:
+		return
+	var entry := AttackBaseEntries.for_attacker(actions.game.turn, target.name, assault, post_name)
+	var attack := MapStrike.fought(cell, assault.fight, assault.sent, assault.victory, null, span)
+	StrikeReports.play(_strike, attack, func() -> void:
+		modals.open(BaseAssaultSummaryPage.new(entry)))
 
 
 ## The faction whose base stands on ([param x], [param y]) of the first level.

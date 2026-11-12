@@ -7,10 +7,17 @@ extends OrbitCamera
 
 ## The view, which pans where the base's orbits.
 var pan := MapRig.new()
+## How far a blow shakes the view to the side, in metres (see [MapEffects]).
+var jolt := 0.0
 
 
 func _init() -> void:
 	super(pan)
+
+
+func _process(delta: float) -> void:
+	super(delta)
+	position += basis.x * jolt
 
 
 ## Fits the default view to a map of [param width] by [param height] cells,

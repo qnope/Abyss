@@ -37,6 +37,8 @@ func before_each() -> void:
 	mount(hud)
 	controller = GameController.new(session, hud, world, modals())
 	add_cleanup(func() -> void: controller = null)
+	# The strikes are over at once: the reports open as the fights end.
+	world.map.effects.reduced_motion = true
 	world.frame_between(0.15, 0.15)
 	press("Carte")
 

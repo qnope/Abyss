@@ -70,6 +70,20 @@ func show_level(next: MapLevelState) -> void:
 		camera.home()
 
 
+## Plays [param attack], an army against what stands on a cell of the level shown
+## (a lair's monsters, a post, a base, the volcano), calling [param then] once it
+## is over: at once when no level is shown.
+func strike(attack: MapStrike, then := Callable()) -> void:
+	if state == null:
+		if then.is_valid():
+			then.call()
+		return
+	var origin := ScoutOrigin.of(attack.target, state.base, state.passage_holders, state.revealed)
+	var geometry := StrikeGeometry.new(origin, attack.target, state.map.width, state.map.height, attack.span)
+	var content: Node3D = contents.by_cell.get(attack.target)
+	effects.play(StrikeEffect.new(attack, geometry, content), then)
+
+
 ## Forgets what the levels showed: the next one shown lifts no fog.
 func forget() -> void:
 	_lifts.forget()
@@ -104,7 +118,7 @@ func _lift_fog(looks: Array[MapLook], left: Array[Vector2i]) -> void:
 
 
 func _on_jolted(offset: float) -> void:
-	camera.h_offset = offset
+	camera.jolt = offset
 
 
 func _on_tapped(position: Vector2) -> void:

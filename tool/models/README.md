@@ -12,6 +12,7 @@ is never edited by hand: change its script and build it again.
     tool/models/board.sh a,b,c /tmp/lot.png   # the review board of a lot
     tool/models/poses.sh scout [prefix]       # three poses of each action, and the phone view
     tool/models/board.sh a,b /tmp/lot.png --tiers   # ... with each building's tiers
+    tool/models/cells.sh a,b,c /tmp/cells     # models side by side on the map's cells (see The map)
     cd tool/models && python -m unittest discover -s . -p '*_test.py'
 
 Both Python commands need Python 3.13 with `pip install bpy==5.2.3` (the CI job
@@ -395,3 +396,42 @@ attack in `moves.py`. Their `catalog/units_test.py` checks the contract.
   gold epaulettes and a bicorne, a violet visor, a gold baton. Attacks by giving the order.
 - `saboteur`: a small mint-green hooded figure with red gas-mask lenses, a ragged
   cloak, a dagger and the limpet mine on its hip. Attacks by placing the mine.
+
+## The map
+
+One model per kind of content of the map (`MapContent.Kind`), family `map`,
+named `map_<kind>`. Each stands on the floor under the centre of its cell, 1 unit
+a cell (the volcano on the middle of its 2 x 2), its front toward -y; the node
+`Body` holds everything static, joined per material (`catalog/mapkit/` is what
+they share, `parts/bank.py`, `loot.py`, `fronds.py`, `lair.py`, `extrude.py`
+their parts and `textures/map.py` their 512 px atlas, cut in 8 x 8 cells of 64 px,
+of which each takes only the tiles it maps). The tintable ones also have the
+node `Tint`: one lamp mesh in neutral white that the game recolours with a
+`material_override` (the holder's colour).
+
+| Model | What it is | Tint | Look |
+|---|---|---|---|
+| `map_treasure` | a chest, lid open on gold, on a bank of silt | - | gold, the smallest |
+| `map_resource_algae` / `_coral` / `_ore` | a rosette of green blades, a pink and red coral, blue crystals in dark boulders | - | green, red-pink, blue |
+| `map_ruins` | a drowned temple of pale stone, two columns and a lintel | - | cream, with a teal orb |
+| `map_wreck` | a heeled hull of rusted plate, split open | - | rust orange |
+| `map_lair_easy` / `_medium` / `_hard` | a mound with a toothed mouth, horns and bones, growing | - | salmon, red, dark crimson |
+| `map_faille` | a violet portal in a field of black plates | ring, banner | violet |
+| `map_cheminee` | three black smokers banded in sulphur, a plume of smoke | ring, banner | black and yellow, amber glow |
+| `map_passage` | an opened way down, a steel collar with its lid thrown back | ring, banner | blue-grey, amber light |
+| `map_kernel` | the volcano, 2 x 2 cells, 2 high: black cone, lava flows, molten kernel | seal | black and orange |
+| `map_home` | the colony's dome (headquarters' language), cyan windows | - | pale, cyan |
+| `map_faction_base` | a rival's walled outpost, four towers and a keep | ring, banner, pennants | dark steel, red gate |
+
+The heights keep the legend: the volcano under `MapGrid.TALLEST` (2.0), then
+the smokers, the hard lair over the medium one over the easy one, and the
+treasure under all (`catalog/map_test.py`). To judge them side by side, as
+the player's camera shows them:
+
+    tool/models/cells.sh a,b,map_faille@69f0ae,map_wreck! /tmp/cells   # _near.png and _far.png
+    CELLS=a,b,c tool/models/board.sh a,b,c /tmp/lot.png       # the same, at the head of the board
+
+`cells.sh` lays the models on cells with the map's floor, camera and light
+(`godot/tool/models/cell_row.gd`); `@rrggbb` tints a node `Tint` as the game
+does and `!` dims the model as an emptied content is. Contents are drawn dozens
+at a time, so each is held to under 4 800 triangles.

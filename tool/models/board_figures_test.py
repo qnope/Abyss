@@ -25,7 +25,7 @@ class BoardFiguresTest(unittest.TestCase):
         self.assertIn("; tiers 1+2: ", lines[1])
         self.assertIn("; tiers 1+2+3: ", lines[1])
         self.assertEqual(board_figures.tier_count("algae_farm"), 3)
-        self.assertEqual(board_figures.tier_count("headquarters"), 0)
+        self.assertEqual(board_figures.tier_count("material_swatches"), 0)
 
     def test_a_creature_tells_its_bones_keyframes_and_animations(self):
         lines = board_figures.figures("probe_fish")

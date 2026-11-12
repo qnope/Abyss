@@ -28,6 +28,7 @@ from catalog import (
     pressure_capsule,
     probe_fish,
     solar_panel,
+    volcanic_kernel,
 )
 
 MODELS = {script.NAME: script for script in (
@@ -45,4 +46,5 @@ MODELS = {script.NAME: script for script in (
     pressure_capsule,
     probe_fish,
     solar_panel,
+    volcanic_kernel,
 )}

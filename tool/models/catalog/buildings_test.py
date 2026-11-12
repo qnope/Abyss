@@ -14,7 +14,9 @@ BUILDINGS = {"headquarters": ("Headquarters", ["Beacon", "Dish"]),
              "coral_citadel": ("CoralCitadel", ["Heart"]),
              "algae_farm": ("AlgaeFarm", ["Tier2/Drone"]),
              "coral_mine": ("CoralMine", ["Tier1/Wheel", "Tier3/CrownWheel"]),
-             "ore_extractor": ("OreExtractor", ["Tier1/Drill"])}
+             "ore_extractor": ("OreExtractor", ["Tier1/Drill"]),
+             "laboratory": ("Laboratory", ["Tier3/Atom"]),
+             "barracks": ("Barracks", [])}
 SPILL = 0.3  # how far the reef at a building's foot may reach past its pad
 
 

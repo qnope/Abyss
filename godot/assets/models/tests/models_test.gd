@@ -9,10 +9,12 @@ const FOLDER := "res://assets/models/"
 
 ## The root nodes of each model, under the scene's own root.
 const ROOTS := {
+	"barracks": ["Barracks"],
 	"base_island": ["Island", "Pads"],
 	"base_rampart": ["Tier1", "Tier2", "Tier3"],
 	"coral_citadel": ["CoralCitadel"],
 	"headquarters": ["Headquarters"],
+	"laboratory": ["Laboratory"],
 	"material_swatches": ["Swatches", "Unit"],
 	"probe_fish": ["Rig", "AnimationPlayer"],
 	"solar_panel": ["SolarPanel"],
@@ -22,7 +24,10 @@ const ROOTS := {
 }
 
 ## The models that paint an atlas (<model>_atlas.png beside the glb).
-const TEXTURED: Array[String] = ["base_rampart", "coral_citadel", "headquarters", "solar_panel", "algae_farm", "coral_mine", "ore_extractor"]
+const TEXTURED: Array[String] = [
+	"algae_farm", "barracks", "base_rampart", "coral_citadel", "coral_mine", "headquarters",
+	"laboratory", "ore_extractor", "solar_panel",
+]
 
 ## The island's pads, one per building, where the buildings stand.
 const PADS: Array[String] = [

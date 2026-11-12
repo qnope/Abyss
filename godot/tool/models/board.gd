@@ -43,7 +43,8 @@ func _compose(folder: String, out: String, models: Array) -> void:
 		var lines: PackedStringArray = []
 		for line: String in model["lines"]:
 			lines.append(line)
-		column.add_child(BoardRow.new(folder, name_, lines, int(model.get("tiers", 0))))
+		var tiers: float = model.get("tiers", 0.0)
+		column.add_child(BoardRow.new(folder, name_, lines, int(tiers)))
 	var margin := MarginContainer.new()
 	for side: String in ["left", "right", "top", "bottom"]:
 		margin.add_theme_constant_override(StringName("margin_" + side), MARGIN)

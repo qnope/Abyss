@@ -12,6 +12,9 @@ const TIERED_GAME: Array[String] = ["t1_game", "t2_game", "game", "front", "righ
 const TIERED_CLOSE: Array[String] = ["t1_close", "t2_close", "close", "back", "left"]
 ## The height of every picture of the row, in pixels.
 const TILE := 320
+## The share of a game view's height kept, around its centre: the phone's
+## portrait frame is mostly empty sea above and below the building.
+const GAME_KEPT := 0.52
 const TEXT := Color("e8f1ff")
 const DIM := Color("8fa8c8")
 const SIZE := 18
@@ -53,18 +56,22 @@ static func _caption(view: String) -> String:
 func _cell(path: String, caption: String) -> VBoxContainer:
 	var cell := VBoxContainer.new()
 	var rect := TextureRect.new()
-	rect.texture = _texture(path)
+	rect.texture = _texture(path, caption.begins_with("game"))
 	rect.custom_minimum_size = Vector2(rect.texture.get_size()) if rect.texture != null else Vector2(TILE, TILE)
 	cell.add_child(rect)
 	cell.add_child(_label(caption if rect.texture != null else caption + " (missing)", DIM, SIZE - 4))
 	return cell
 
 
-## The picture at [param path] scaled to [constant TILE] high, or null.
-func _texture(path: String) -> ImageTexture:
+## The picture at [param path] scaled to [constant TILE] high, or null; a game
+## view is cut to its middle ([constant GAME_KEPT]) first.
+func _texture(path: String, game: bool) -> ImageTexture:
 	var image := Image.load_from_file(path)
 	if image == null:
 		return null
+	if game:
+		var kept := maxi(1, roundi(image.get_height() * GAME_KEPT))
+		image = image.get_region(Rect2i(0, (image.get_height() - kept) >> 1, image.get_width(), kept))
 	var scale := float(TILE) / image.get_height()
 	image.resize(roundi(image.get_width() * scale), TILE, Image.INTERPOLATE_LANCZOS)
 	return ImageTexture.create_from_image(image)

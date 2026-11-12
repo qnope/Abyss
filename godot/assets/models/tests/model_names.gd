@@ -17,6 +17,16 @@ const ROOTS := {
 	"headquarters": ["Headquarters"],
 	"laboratory": ["Laboratory"],
 	"map_cheminee": ["Body", "Tint"],
+	"map_backdrop_1": ["Corner", "Edge1", "Edge2", "Kelp", "Outcrop"],
+	"map_backdrop_2": ["Corner", "Edge1", "Edge2", "Kelp", "Whale"],
+	"map_backdrop_3": ["Chimney", "Corner", "Edge1", "Edge2", "Spires"],
+	"map_fog": ["Cloud1", "Cloud2", "Cloud3", "Wisp1", "Wisp2", "Wisp3"],
+	"map_jelly": ["Rig", "AnimationPlayer"],
+	"map_ray": ["Rig", "AnimationPlayer"],
+	"map_terrain_1": ["Fog1", "Fog2", "Lit1", "Lit2", "Lit3"],
+	"map_terrain_2": ["Fog1", "Fog2", "Lit1", "Lit2", "Lit3"],
+	"map_terrain_3": ["Fog1", "Fog2", "Lit1", "Lit2", "Lit3"],
+	"map_turtle": ["Rig", "AnimationPlayer"],
 	"map_faction_base": ["Body", "Tint"],
 	"map_faille": ["Body", "Tint"],
 	"map_home": ["Body"],
@@ -59,6 +69,7 @@ const TEXTURED: Array[String] = [
 	"map_cheminee", "map_faction_base", "map_faille", "map_home", "map_kernel", "map_lair_easy",
 	"map_lair_hard", "map_lair_medium", "map_passage", "map_resource_algae", "map_resource_coral",
 	"map_resource_ore", "map_ruins", "map_treasure", "map_wreck",
+	"map_terrain_1", "map_terrain_2", "map_terrain_3",
 ]
 
 ## The monsters, each of which plays the four actions the game asks for by name.

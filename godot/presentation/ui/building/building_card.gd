@@ -4,7 +4,7 @@ extends RefreshingPanel
 ## is to build), its level or that it is to build, and a degraded marker if
 ## the headquarters is too low for it
 ## (lib/presentation/widgets/building/building_card.dart). A touch tells
-## [signal tapped].
+## [signal tapped]. A level that rises pops the picture ([IncreasePop]).
 
 ## The player touched the card.
 signal tapped
@@ -20,6 +20,8 @@ var tap_button := Button.new()
 var name_label := Label.new()
 var level_label := Label.new()
 var degraded: DegradedBadge
+## The picture, which pops when the level rises.
+var pop: IncreasePop
 
 
 func _init(building_: Building, missing_headquarters_ := 0) -> void:
@@ -45,7 +47,9 @@ func _init(building_: Building, missing_headquarters_ := 0) -> void:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override(&"separation", GAP)
 	var picture := PortraitFiles.building(building.type) if built else ""
-	row.add_child(Portrait.new(title, PORTRAIT_SIZE, color if built else AbyssColors.DISABLED, picture))
+	var portrait := Portrait.new(title, PORTRAIT_SIZE, color if built else AbyssColors.DISABLED, picture)
+	pop = IncreasePop.new(portrait, Vector2.ONE * PORTRAIT_SIZE, AbyssColors.BIOLUM_CYAN, building.level)
+	row.add_child(pop)
 	row.add_child(texts)
 	panel.add_child(row)
 	tap_button.theme_type_variation = AbyssSurfaceTheme.TAP
@@ -60,6 +64,7 @@ func refresh() -> void:
 	# Called once by the base class, before there are labels to write.
 	if building == null:
 		return
+	pop.set_value(building.level)
 	name_label.text = BuildingTexts.display_name(building.type)
 	level_label.text = Texts.t(&"baseLevel", {"level": building.level}) if building.level > 0 \
 		else Texts.t(&"baseNotBuilt")

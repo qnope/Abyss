@@ -70,3 +70,8 @@ func test_the_turn_counter_is_bold_cyan_and_the_amounts_bold() -> void:
 	assert_eq(_theme.get_font("font", "ResourceAmount"), AbyssFonts.BOLD)
 	assert_eq(_theme.get_font_size("font_size", "ResourceRate"), 11)
 	assert_eq(_theme.get_color("font_color", "ResourceRate"), AbyssColors.ON_SURFACE_DIM)
+
+
+func test_the_figure_floating_up_is_small_and_bold() -> void:
+	assert_eq(_theme.get_font_size("font_size", "DeltaFloat"), 12)
+	assert_eq(_theme.get_font("font", "DeltaFloat"), AbyssFonts.BOLD)

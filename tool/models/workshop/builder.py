@@ -77,7 +77,7 @@ class MeshBuilder:
         for material in self.materials:
             mesh.materials.append(materials[material])
         colors = mesh.color_attributes.new(COLOR_ATTRIBUTE, "BYTE_COLOR", "CORNER")
-        colors.data.foreach_set("color", [c for color in self.colors for c in (*color, 1.0)])
+        colors.data.foreach_set("color", [c for color in self.colors for c in (*color, 1.0)[:4]])
         mesh.color_attributes.active_color = colors
         if self.blank is not None:
             mesh.uv_layers.new(name="UVMap").data.foreach_set(

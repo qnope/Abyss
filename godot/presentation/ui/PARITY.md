@@ -433,7 +433,7 @@ These are gaps of the interface, not of the rules: `godot/domain` is complete.
 | `map_floor.dart` | `MapTiles` (world/map/map_tiles.gd) |
 | `map_floor_sprites.dart` | `MapTiles` (world/map/map_tiles.gd) |
 | `map_floor_tiles.dart` | `MapTiles` (world/map/map_tiles.gd) |
-| `map_fog.dart` | `MapTiles` (world/map/map_tiles.gd) (the fog is a tile colour) |
+| `map_fog.dart` | `MapTiles` (world/map/map_tiles.gd) (the fog is the dark tiles under it) |
 | `map_glow_sprites.dart` | `MapContents` (world/map/map_contents.gd), `MapLook` (world/map/map_look.gd) (3D stand-ins on the cells) |
 | `map_layers.dart` | `MapScene` (world/map/map_scene.gd) |
 | `map_level_info.dart` | `MapLevelState` (world/map/map_level_state.gd) |

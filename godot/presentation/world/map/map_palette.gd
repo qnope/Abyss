@@ -34,3 +34,15 @@ const HOLDERS: Dictionary[PostHolder.Value, Color] = {
 	PostHolder.Value.HUMAN: Color("69f0ae"),
 	PostHolder.Value.FACTION: Color("ff80ab"),
 }
+
+## The effects: the white flash of a blow, the damage floating up (the interface's
+## error red, which a test in app/ holds together with this one), the cyan of a
+## place taken and of the shield that holds a siege back, the red of its alert
+## and of the attackers breaking in, the pearl of the army's count.
+const FLASH := Color("ffffff")
+const DAMAGE := Color("ff5252")
+const CAPTURE := Color("00e5ff")
+const SHIELD := Color("00e5ff")
+const ALERT := Color("ff5252")
+const COUNT := Color("e0f7fa")
+const COUNT_OUTLINE := WorldPalette.LEVEL_OUTLINE

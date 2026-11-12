@@ -73,7 +73,14 @@ func test_a_game_forgotten_lifts_no_fog_for_the_next() -> void:
 
 
 func test_a_blow_shakes_the_camera_to_the_side_and_it_rests_after() -> void:
+	_scene.camera._process(0.016)
+	var rest := _scene.camera.position
 	_scene.effects.jolted.emit(0.07)
-	assert_almost_eq(_scene.camera.h_offset, 0.07, 1e-6)
+	assert_eq(_scene.camera.jolt, 0.07)
+	_scene.camera._process(0.016)
+	assert_almost_eq((_scene.camera.position - rest).length(), 0.07, 1e-4)
+	assert_true((_scene.camera.position - rest).dot(_scene.camera.basis.x) > 0.0, "to the side")
 	_scene.effects.jolted.emit(0.0)
-	assert_eq(_scene.camera.h_offset, 0.0)
+	assert_eq(_scene.camera.jolt, 0.0)
+	_scene.camera._process(0.016)
+	assert_almost_eq((_scene.camera.position - rest).length(), 0.0, 1e-4)

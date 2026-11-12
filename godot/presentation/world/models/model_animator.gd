@@ -71,3 +71,9 @@ func current() -> StringName:
 ## Whether [param animation] ends by itself (an action) and does not loop.
 func is_one_shot(animation: StringName) -> bool:
 	return has_animation(animation) and player.get_animation(animation).loop_mode == Animation.LOOP_NONE
+
+
+## How long [param animation] lasts at its own speed, in seconds; 0 when the
+## model has none.
+func length_of(animation: StringName) -> float:
+	return player.get_animation(animation).length if has_animation(animation) else 0.0

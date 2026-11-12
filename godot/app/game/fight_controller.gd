@@ -13,16 +13,19 @@ extends RefCounted
 ##
 ## It registers itself for the lairs on the router it is given and keeps
 ## nothing of it: whoever made it holds it as long as the screen is played.
-## [method report] is the one place the fight ends in, where step 7 will play
-## the strike on the map before the report opens.
+## [method report] is the one place the fight ends in: it plays the strike on the
+## map ([MapController.strike]) and opens the report once it is over.
 
 var actions: GameActions
 var modals: ModalLayer
+## Plays a strike on the map: a Callable taking it and what to do then.
+var _strike: Callable
 
 
-func _init(actions_: GameActions, router: CellRouter, modals_: ModalLayer) -> void:
+func _init(actions_: GameActions, router: CellRouter, modals_: ModalLayer, strike := Callable()) -> void:
 	actions = actions_
 	modals = modals_
+	_strike = strike
 	router.register(CellRoute.Kind.LAIR, open_lair)
 
 
@@ -54,6 +57,9 @@ func _on_selected(result: Variant, route: CellRoute) -> void:
 		report(fought, route)
 
 
-## Opens the report of the fight [param result] fought on the lair of [param route].
+## Plays the fight [param result] fought on the lair of [param route] on the map,
+## then opens its report.
 func report(result: FightMonsterResult, route: CellRoute) -> void:
-	modals.open(FightSummaryPage.new(result, route.cell.lair, route.x, route.y))
+	var attack := MapStrike.on_lair(Vector2i(route.x, route.y), route.cell.lair, result)
+	StrikeReports.play(_strike, attack, func() -> void:
+		modals.open(FightSummaryPage.new(result, route.cell.lair, route.x, route.y)))

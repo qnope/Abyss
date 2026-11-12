@@ -27,6 +27,13 @@ const ROOTS := {
 	"scout": ["Rig", "AnimationPlayer"],
 	"solar_panel": ["SolarPanel"],
 	"algae_farm": ["AlgaeFarm"],
+	"armoured": ["Rig", "AnimationPlayer"],
+	"colossus": ["Rig", "AnimationPlayer"],
+	"hunter": ["Rig", "AnimationPlayer"],
+	"kraken": ["Rig", "AnimationPlayer"],
+	"leviathan": ["Rig", "AnimationPlayer"],
+	"monster_generic": ["Rig", "AnimationPlayer"],
+	"swarm": ["Rig", "AnimationPlayer"],
 	"coral_mine": ["CoralMine"],
 	"ore_extractor": ["OreExtractor"],
 	"volcanic_kernel": ["Tier1", "Tier2", "Tier3"],
@@ -37,6 +44,12 @@ const TEXTURED: Array[String] = [
 	"algae_farm", "barracks", "base_rampart", "coral_citadel", "coral_mine", "descent_module",
 	"headquarters", "laboratory", "ore_extractor", "pressure_capsule", "solar_panel", "volcanic_kernel",
 	"abyss_admiral", "dome_breaker", "guardian", "harpoonist", "saboteur", "scout",
+	"armoured", "colossus", "hunter", "kraken", "leviathan", "monster_generic", "swarm",
+]
+
+## The monsters, each of which plays the four actions the game asks for by name.
+const MONSTERS: Array[String] = [
+	"armoured", "colossus", "hunter", "kraken", "leviathan", "monster_generic", "swarm",
 ]
 
 
@@ -114,6 +127,18 @@ func test_every_atlas_is_compressed_with_mipmaps_and_sampled_anisotropically() -
 				if material.emission_enabled:
 					assert_eq(material.emission_texture, material.albedo_texture, model)
 		assert_true(textured > 0, "%s has no textured surface" % model)
+		scene.free()
+
+
+func test_every_monster_plays_the_four_actions_the_game_asks_for() -> void:
+	for model in MONSTERS:
+		var scene := _instantiate(model)
+		var animator := ModelAnimator.new(scene)
+		assert_eq(animator.animations(), [&"attack", &"hit", &"idle", &"swim"] as Array[StringName], model)
+		assert_false(animator.is_one_shot(&"idle"), model)
+		assert_false(animator.is_one_shot(&"swim"), model)
+		assert_true(animator.is_one_shot(&"attack"), model)
+		assert_true(animator.is_one_shot(&"hit"), model)
 		scene.free()
 
 

@@ -30,6 +30,7 @@ func test_fills_the_eleven_pads_of_a_full_base() -> void:
 
 func test_a_stand_in_rises_with_the_level_of_its_building() -> void:
 	var player := GameSamples.player_with("Nemo", {Type.HEADQUARTERS: 10, Type.LABORATORY: 1})
+	_base.buildings.use_models = false
 	_base.show_base(player.buildings)
 	var low := _base.buildings.building(&"Laboratory") as StandIn
 	assert_almost_eq(low.scale.y, StandIn.TIER_HEIGHT[1], 1e-5)
@@ -41,6 +42,7 @@ func test_a_stand_in_rises_with_the_level_of_its_building() -> void:
 
 func test_greys_the_buildings_the_headquarters_is_too_low_for() -> void:
 	var player := GameSamples.player_with("Nemo", {Type.HEADQUARTERS: 1, Type.BARRACKS: 3})
+	_base.buildings.use_models = false
 	_base.show_base(player.buildings)
 	assert_true((_base.buildings.building(&"Barracks") as StandIn).degraded)
 	player.buildings[Type.HEADQUARTERS].level = 6

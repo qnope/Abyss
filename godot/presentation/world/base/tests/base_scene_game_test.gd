@@ -39,6 +39,7 @@ func test_the_same_base_again_changes_nothing() -> void:
 
 func test_a_building_with_no_model_stands_as_a_stand_in_on_a_pad_that_is_not_empty() -> void:
 	var player := GameSamples.player_with("Nemo", {Type.BARRACKS: 2})
+	_base.buildings.use_models = false
 	_base.show_base(player.buildings)
 	assert_eq(_base.buildings.names(), [&"Barracks"] as Array[StringName])
 	assert_true(_base.buildings.building(&"Barracks") is StandIn)

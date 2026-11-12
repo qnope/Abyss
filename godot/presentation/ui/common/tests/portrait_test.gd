@@ -56,7 +56,7 @@ func test_shows_the_render_of_a_model_that_has_one() -> void:
 
 
 func test_falls_back_to_the_initials_without_a_render() -> void:
-	for picture: String in ["", PortraitFiles.building(BuildingType.Value.BARRACKS), "nothing_at_all"]:
+	for picture: String in ["", "no_such_portrait", "nothing_at_all"]:
 		var portrait := mount(Portrait.new("Ferme d'algues", 64.0, AbyssColors.ALGAE_GREEN, picture)) as Portrait
 		assert_null(portrait.picture_rect, picture)
 		assert_true(portrait.initials_label.visible, picture)

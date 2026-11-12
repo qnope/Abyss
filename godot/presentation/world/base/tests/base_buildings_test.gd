@@ -36,12 +36,13 @@ func test_builds_anew_in_place_of_the_last_ones() -> void:
 
 
 func test_a_building_with_no_model_stands_as_its_stand_in() -> void:
+	_buildings.use_models = false
 	_build([&"Headquarters", &"Barracks"])
 	assert_eq(_buildings.names(), [&"Headquarters", &"Barracks"] as Array[StringName])
 	var barracks := _buildings.building(&"Barracks") as StandIn
 	assert_not_null(barracks)
 	assert_eq(barracks.position, _pads.origin_of(&"Barracks"))
-	assert_false(_buildings.building(&"Headquarters") is StandIn)
+	assert_true(_buildings.building(&"Headquarters") is StandIn)
 
 
 func test_stands_the_plots_nowhere() -> void:
@@ -51,6 +52,7 @@ func test_stands_the_plots_nowhere() -> void:
 
 
 func test_stands_a_building_at_its_level_and_greyed_when_degraded() -> void:
+	_buildings.use_models = false
 	var states: Array[PadState] = [
 		PadState.new(BuildingType.Value.BARRACKS, 8, true),
 		PadState.new(BuildingType.Value.LABORATORY, 2),

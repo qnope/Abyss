@@ -18,7 +18,12 @@ const MODELS: Dictionary[BuildingType.Value, PackedScene] = {
 	BuildingType.Value.CORAL_MINE: preload("res://assets/models/coral_mine.glb"),
 	BuildingType.Value.ORE_EXTRACTOR: preload("res://assets/models/ore_extractor.glb"),
 	BuildingType.Value.SOLAR_PANEL: preload("res://assets/models/solar_panel.glb"),
+	BuildingType.Value.LABORATORY: preload("res://assets/models/laboratory.glb"),
+	BuildingType.Value.BARRACKS: preload("res://assets/models/barracks.glb"),
 	BuildingType.Value.CORAL_CITADEL: preload("res://assets/models/coral_citadel.glb"),
+	BuildingType.Value.DESCENT_MODULE: preload("res://assets/models/descent_module.glb"),
+	BuildingType.Value.PRESSURE_CAPSULE: preload("res://assets/models/pressure_capsule.glb"),
+	BuildingType.Value.VOLCANIC_KERNEL: preload("res://assets/models/volcanic_kernel.glb"),
 }
 
 

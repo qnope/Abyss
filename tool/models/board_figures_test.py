@@ -16,7 +16,7 @@ class BoardFiguresTest(unittest.TestCase):
         self.assertIn("/ 20000 triangles", lines[0])
         self.assertIn("draw calls", lines[0])
         self.assertEqual(lines[-1], "within its budget and its family's caps")
-        self.assertEqual(len(lines), 2)
+        self.assertEqual(len(lines), 3)
 
     def test_a_building_with_tiers_tells_what_each_costs(self):
         lines = board_figures.figures("algae_farm")
@@ -47,7 +47,7 @@ class BoardFiguresTest(unittest.TestCase):
                 document = json.load(file)
         self.assertEqual([m["name"] for m in document["models"]], ["headquarters", "probe_fish"])
         self.assertTrue(all(m["lines"] for m in document["models"]))
-        self.assertEqual([m["tiers"] for m in document["models"]], [0, 0])
+        self.assertEqual([m["tiers"] for m in document["models"]], [3, 0])
 
     def test_refuses_an_unknown_model_or_none(self):
         with self.assertRaises(SystemExit):

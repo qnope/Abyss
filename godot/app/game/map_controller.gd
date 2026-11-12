@@ -62,6 +62,13 @@ func strike(attack: MapStrike, then: Callable) -> void:
 	_world.map.strike(attack, then)
 
 
+## Plays [param attack], attackers besieging a place of the level on show, calling
+## [param then] once it is over: what the turn story will tell of the raids and
+## the waves that struck during the turn.
+func siege(attack: MapSiege, then: Callable) -> void:
+	_world.map.siege(attack, then)
+
+
 ## A strip points at [param level]: the Map tab shows it.
 func _open(level: int) -> void:
 	show_level(level)

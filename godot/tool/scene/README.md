@@ -82,6 +82,19 @@ reason), `map_treasure_sheet.png`, `map_found.png` (what the search gave) and
 `map_visited.png` (the cell once searched), each with its draw calls and
 primitives. Never commit the renders.
 
+## The map's effects
+
+`effects_capture.gd` (`tool/scene_capture.sh [out dir] effects`, or after the map's
+shots when no scene is given) plays the effects of the map by hand, a moment at a time, on
+the game of the map capture and renders: `effects_fog_hold.png`, `_fog_lift.png` and
+`_fog_done.png` (the cells a scout has just seen, under their clouds, lifting, bare),
+`effects_strike_swim.png`, `_strike_hit.png` and `_strike_fall.png` (an army swimming to a lair
+of hunters, a blow landing with what each side lost, the monster beaten), `effects_strike_place.png`
+(a place taken), `effects_siege_alert.png`, `_siege_clash.png`, `_siege_shield.png` and
+`_siege_breach.png` (the alert round the base, a clash, the shield pushing the attackers back, a
+breach), each with its draw calls and primitives. The camera cannot come nearer than the game's
+closest zoom: crop the renders to read them. Never commit the renders.
+
 ## The fights
 
 `fight_capture.gd` (`tool/scene_capture.sh [out dir] fight`, or after the map's shots

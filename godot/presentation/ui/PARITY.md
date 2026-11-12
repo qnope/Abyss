@@ -22,8 +22,9 @@ How to read a row:
 These are gaps of the interface, not of the rules: `godot/domain` is complete.
 
 1. **The animations of step 7.** The turn's story on the map (`screens/game/story/`,
-   `game_screen_story.dart`, its skip button), the strike, siege and fog-lift effects of
-   the map (`widgets/map/effects/`), the creatures drawn alive on the map
+   `game_screen_story.dart`, its skip button: the siege and the fog lift are made, as
+   `MapScene.siege` and the fog lifting as a scout's exploration ends, but nothing plays
+   the chapters in order yet), the creatures drawn alive on the map
    (`living_creatures.dart`, `map_creature_sheets.dart`, `map_cell_motion.dart`), the
    decor scattered on the map's floor (`widgets/map/decor/`), the squads' arrival on the
    parade ground (`army_arrival*`, `squad_arrival`). The figures that float and pop when a
@@ -481,36 +482,36 @@ These are gaps of the interface, not of the rules: `godot/domain` is complete.
 
 | Flutter file | Godot |
 | --- | --- |
-| `map_effect.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `map_effect_painter.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `map_effects.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `map_effects_layer.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `map_jolt.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
+| `map_effect.dart` | `MapEffect` (world/map/effects/map_effect.gd) |
+| `map_effect_painter.dart` | Replaced by 3D: the effects are nodes of the scene (`MapEffects`, world/map/effects/map_effects.gd) |
+| `map_effects.dart` | `MapEffects` (world/map/effects/map_effects.gd) |
+| `map_effects_layer.dart` | Replaced by 3D: `MapEffects` (world/map/effects/map_effects.gd) is a part of `MapScene` |
+| `map_jolt.dart` | `MapJolt` (world/map/effects/map_jolt.gd), `MapCamera.jolt` (world/map/map_camera.gd) |
 
 ### `lib/presentation/widgets/map/effects/story/`
 
 | Flutter file | Godot |
 | --- | --- |
-| `fog_lift_run.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `map_fog_lift.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `map_siege.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `map_siege_run.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `siege_floor.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `siege_geometry.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `siege_timeline.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
+| `fog_lift_run.dart` | `FogLift` (world/map/effects/fog_lift.gd) |
+| `map_fog_lift.dart` | `FogLift` (world/map/effects/fog_lift.gd), `FogLifts` (world/map/effects/fog_lifts.gd) |
+| `map_siege.dart` | `MapSiege` (world/map/effects/map_siege.gd) |
+| `map_siege_run.dart` | `SiegeEffect` (world/map/effects/siege_effect.gd), `SiegeAttackers` (world/map/effects/siege_attackers.gd) |
+| `siege_floor.dart` | `FloorMark` (world/map/effects/floor_mark.gd) |
+| `siege_geometry.dart` | `SiegeGeometry` (world/map/effects/siege_geometry.gd) |
+| `siege_timeline.dart` | `SiegeTimeline` (world/map/effects/siege_timeline.gd) |
 
 ### `lib/presentation/widgets/map/effects/strike/`
 
 | Flutter file | Godot |
 | --- | --- |
-| `fight_pace.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `map_strike.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `map_strike_run.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `strike_geometry.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `strike_lead.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `strike_marks.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `strike_round.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
-| `strike_timeline.dart` | **Missing.** The strike, siege and fog-lift animations of the map (step 7). |
+| `fight_pace.dart` | `FightPace` (world/map/effects/fight_pace.gd) |
+| `map_strike.dart` | `MapStrike` (world/map/effects/map_strike.gd) |
+| `map_strike_run.dart` | `StrikeEffect` (world/map/effects/strike_effect.gd), `StrikeSquad` (world/map/effects/strike_squad.gd), `HitFlash` (world/map/effects/hit_flash.gd), `MonsterFigure` (world/models/monster_figure.gd) |
+| `strike_geometry.dart` | `StrikeGeometry` (world/map/effects/strike_geometry.gd) |
+| `strike_lead.dart` | `StrikeLead` (world/map/effects/strike_lead.gd) |
+| `strike_marks.dart` | `FloatingNumber` (world/map/effects/floating_number.gd), `FightLosses` (world/map/effects/fight_losses.gd) |
+| `strike_round.dart` | `StrikeRounds` (world/map/effects/strike_rounds.gd) |
+| `strike_timeline.dart` | `StrikeTimeline` (world/map/effects/strike_timeline.gd), `StrikeCues` (world/map/effects/strike_cues.gd) |
 
 ### `lib/presentation/widgets/map/slab/`
 

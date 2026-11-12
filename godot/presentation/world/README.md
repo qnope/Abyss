@@ -117,6 +117,39 @@ a tap. The 2D painters, the projection, the slabs and the viewport of Flutter's
 - `MapPick` casts the tap's ray on the plane of the cells to the cell it
   falls in (`MapGrid.cell_at`). `MapPalette` holds every colour of the stand-ins.
 
+### map/effects/
+
+What the map plays over a level (`lib/presentation/widgets/map/effects/`). `MapEffects`
+(a part of `MapScene`) plays one `MapEffect` at a time: `play(effect, then)` ends the
+one playing, calls `then` once the new one is over, and plays it over at once (never
+staged) when the map is out of sight or `reduced_motion` is set; `finish()` ends the
+one playing with its last moment shown, which is what the turn story will use to skip.
+An effect is told the time (`advance(seconds)`, so a test drives it), never reads a
+clock, and leaves the map as it was drawn without it. `jolted(offset)` shakes the
+`MapCamera` to the side (`MapJolt`). The seconds are `MapMotion`'s, the colours
+`MapPalette`'s; both repeat the interface's and a test in `app/` holds them together.
+
+- The fog. `MapFog` is the shroud over the cells not seen: `Cloud1..3` of `map_fog.glb`
+  as three `MultiMesh`es (a cloud is 384 triangles, so every cell within `BAND` of a cell
+  seen has one, the others every other cell), blended and shadowless. `FogLifts` tells the
+  cells a level shows seen that it did not before; `FogLift` holds the clouds of those cells
+  and the wisps along the fog still there, then lifts and fades the clouds as the wisps puff
+  out and the contents show, a scout whose exploration is over (`ScoutToken.leave`) rising
+  with them.
+- A strike (`MapScene.strike(MapStrike, then)`): `StrikeEffect` over `StrikeTimeline`,
+  `StrikeGeometry`, `StrikeCues` and `FightPace`, all pure. A `StrikeSquad` (the figures of
+  `StrikeLead.figures`, the "×N" over them) swims to the cell beside the target
+  (`StrikeGeometry.approach`), lunges at it once per round, and the `MonsterFigure` of the
+  lair (`models/`: the model of its family scaled to a cell, the generic one when it has none)
+  plays `hit` and strikes back; each blow flashes the target (`HitFlash`), shakes the camera
+  and floats what each side lost (`FightLosses`). A monster beaten rolls over and shrinks into
+  its foot, a place taken lights up in cyan, an army beaten falls back; the army shrinks
+  away at the end.
+- A siege (`MapScene.siege(MapSiege, then)`): `SiegeEffect` over `SiegeTimeline` and
+  `SiegeGeometry`. A red ring (`FloorMark`) pulses twice round the place, three
+  `SiegeAttackers` close in, clash once per round, then a cyan shield pushes them back or
+  they break in under a red flash and a harder shake.
+
 `WorldModels.map_content(kind, tint, dimmed)` is the seam for what stands on a
 cell, as `building` and `unit` are: the `.glb` of `MAP_MODELS` (empty today: step 7
 adds them there), a `MapStandIn` when it has none. The twelve kinds are told apart

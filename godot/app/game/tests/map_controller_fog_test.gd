@@ -1,6 +1,7 @@
 extends UiTestCase
-## The map tab and the fog its scouts lift: the cells a scout has seen since the
-## map was last drawn lift their fog while the map shows.
+## The map tab and the effects the map plays: the fog its scouts lift (the cells a
+## scout has seen since the map was last drawn lift their fog while the map
+## shows), the strikes and the sieges it is given.
 
 var _folder: TempFolder
 var _session: GameSession
@@ -53,3 +54,17 @@ func test_closing_the_screen_forgets_what_the_levels_showed() -> void:
 	_hidden_next_to_the_seen()
 	_world.map.show_level(MapStates.of(_game, 1))
 	assert_false(_world.map.effects.is_playing())
+
+
+func test_the_map_plays_the_strikes_and_the_sieges_it_is_given() -> void:
+	press("Carte")
+	var told: Array[String] = []
+	var base := Vector2i(_human.base_x, _human.base_y)
+	_controller.map.strike(StrikeSamples.strike(base), func() -> void: told.append("strike"))
+	assert_true(_world.map.effects.current is StrikeEffect)
+	_controller.map.siege(MapSiege.by_wave(base, StrikeSamples.lair(), StrikeSamples.fight([1], [1]), true),
+		func() -> void: told.append("siege"))
+	assert_eq(told, ["strike"] as Array[String], "the strike ends as the siege begins")
+	assert_true(_world.map.effects.current is SiegeEffect)
+	_world.map.effects.finish()
+	assert_eq(told, ["strike", "siege"] as Array[String])

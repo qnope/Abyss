@@ -15,28 +15,30 @@
 
 from catalog import (
     algae_farm,
+    barracks,
     base_island,
     base_rampart,
     coral_citadel,
     coral_mine,
     headquarters,
+    laboratory,
     material_swatches,
     ore_extractor,
     probe_fish,
     solar_panel,
-    laboratory,
 )
 
 MODELS = {script.NAME: script for script in (
     algae_farm,
+    barracks,
     base_island,
     base_rampart,
     coral_citadel,
     coral_mine,
     headquarters,
+    laboratory,
     material_swatches,
     ore_extractor,
     probe_fish,
     solar_panel,
-    laboratory,
 )}

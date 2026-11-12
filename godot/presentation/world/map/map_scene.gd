@@ -1,7 +1,8 @@
 class_name MapScene
 extends Node3D
 ## The map of a level in 3D, shown on the map tab as the base is on the base
-## tab: a tile for each cell (dark and lower while it is not seen), what stands
+## tab: a tile for each cell (dark and lower while it is not seen), the
+## backdrop round the slab and the creature that swims by, what stands
 ## on the cells seen (a stand-in until step 7: treasures, lairs, posts, bases,
 ## the volcano...) and the scouts on their way. Lit from the surface and seen by
 ## a camera that pans and zooms; the ambience (the water, the sky) is the
@@ -20,6 +21,8 @@ const LEVEL_BAR_ROOM := 0.08
 var camera := MapCamera.new()
 var key_light := KeyLight.new()
 var tiles := MapTiles.new()
+var backdrop := MapBackdrop.new()
+var ambient := MapAmbient.new()
 var contents := MapContents.new()
 var scouts := MapScouts.new()
 ## The ring the tutorial's guide puts around the cell it points at.
@@ -33,7 +36,7 @@ var _foot := 0.0
 
 func _init() -> void:
 	name = &"Map"
-	for part: Node in [tiles, contents, scouts, guide, key_light, camera]:
+	for part: Node in [backdrop, tiles, ambient, contents, scouts, guide, key_light, camera]:
 		add_child(part)
 	camera.tapped.connect(_on_tapped)
 
@@ -47,7 +50,9 @@ func show_level(next: MapLevelState) -> void:
 	state = next
 	level = next.level
 	var looks := MapLooks.of(next)
-	tiles.show_looks(looks, next.map.width, next.map.height)
+	tiles.show_looks(looks, next.map.width, next.map.height, level)
+	backdrop.show_level(level, next.map.width, next.map.height)
+	ambient.show_level(level, next.map.width, next.map.height)
 	contents.show_looks(looks, next.map.width, next.map.height)
 	scouts.show_scouts(next.pending, level, next.map.width, next.map.height)
 	guide.shown_on(next)

@@ -22,30 +22,45 @@ func test_every_terrain_has_a_colour_of_its_own() -> void:
 	assert_eq(colours.size(), TerrainType.Value.size())
 
 
-func test_lays_a_tile_per_cell_dark_and_lower_where_not_seen() -> void:
+func test_lays_a_tile_per_cell_lit_where_seen_and_under_the_fog_where_not() -> void:
 	var state := level_of(4, 3, [Vector2i(1, 1), Vector2i(2, 1)])
 	var tiles := MapTiles.new()
 	add_cleanup(tiles.free)
 	tiles.show_looks(MapLooks.of(state), 4, 3)
-	assert_eq(tiles.multimesh.instance_count, 12)
-	var seen := 1 * 4 + 1
+	var lit := 0
 	var fog := 0
-	assert_eq(tiles.colours[fog], MapPalette.FOG)
-	assert_true(tiles.colours[fog].v < tiles.colours[seen].v)
-	assert_eq(tiles.tops[seen], 0.0)
-	assert_almost_eq(tiles.tops[fog], -TerrainLook.FOG_DROP, 1e-6)
-	assert_eq(tiles.tops.size(), 12)
-	assert_eq(tiles.colours.size(), 12)
+	for part_name in tiles.counts:
+		if String(part_name).begins_with("Lit"):
+			lit += tiles.counts[part_name]
+		else:
+			fog += tiles.counts[part_name]
+	assert_eq([lit, fog], [2, 10])
+	assert_eq(tiles.get_child_count(), tiles.counts.size())
 
 
-func test_every_other_tile_is_a_little_lighter() -> void:
+func test_the_tiles_of_a_level_are_laid_again_in_place_of_the_ones_before() -> void:
 	var tiles := MapTiles.new()
 	add_cleanup(tiles.free)
-	tiles.show_looks(MapLooks.of(level_of(3, 1, [], true)), 3, 1)
-	var plain := MapPalette.TERRAINS[TerrainType.Value.PLAIN]
-	assert_eq(tiles.colours[0], plain)
-	assert_eq(tiles.colours[1], plain.lightened(MapPalette.CHECKER))
-	assert_eq(tiles.colours[2], plain)
+	var looks := MapLooks.of(level_of(3, 3, [], true))
+	tiles.show_looks(looks, 3, 3, 1)
+	tiles.show_looks(looks, 3, 3, 2)
+	var total := 0
+	for part_name in tiles.counts:
+		total += tiles.counts[part_name]
+	assert_eq(total, 9)
+	assert_eq(tiles.get_child_count(), tiles.counts.size())
+
+
+func test_the_floor_is_the_same_every_time_and_turns_by_quarters() -> void:
+	assert_eq(MapTiles.hash_of(3, 4), MapTiles.hash_of(3, 4))
+	assert_ne(MapTiles.hash_of(3, 4), MapTiles.hash_of(4, 3))
+	var turns: Dictionary[int, bool] = {}
+	for x in 12:
+		for y in 12:
+			var turn := MapTiles.turn_of(x, y)
+			assert_true(turn.is_equal_approx(Basis(Vector3.UP, roundi(turn.get_euler().y / (PI / 2.0)) * PI / 2.0)))
+			turns[roundi(turn.get_euler().y * 10.0)] = true
+	assert_true(turns.size() >= 4)
 
 
 func test_stands_the_contents_on_their_tiles() -> void:

@@ -24,7 +24,10 @@ func test_shows_the_fog_where_the_game_has_not_seen_and_the_floor_where_it_has()
 	var state := MapLevelState.new(1, game.levels[1], human.id, human.revealed_cells_set_on_level(1))
 	_scene.show_level(state)
 	var seen := human.revealed_cells_on_level(1).size()
-	var fog := _scene.tiles.colours.count(MapPalette.FOG)
+	var fog := 0
+	for part_name in _scene.tiles.counts:
+		if String(part_name).begins_with("Fog"):
+			fog += _scene.tiles.counts[part_name]
 	assert_eq(fog + seen, game.levels[1].cells.size())
 	assert_true(seen > 0 and fog > seen)
 	assert_eq(_scene.level, 1)

@@ -35,6 +35,13 @@ from catalog import (
     scout,
     solar_panel,
     volcanic_kernel,
+    armoured,
+    colossus,
+    hunter,
+    kraken,
+    leviathan,
+    monster_generic,
+    swarm,
 )
 
 MODELS = {script.NAME: script for script in (
@@ -59,4 +66,11 @@ MODELS = {script.NAME: script for script in (
     scout,
     solar_panel,
     volcanic_kernel,
+    armoured,
+    colossus,
+    hunter,
+    kraken,
+    leviathan,
+    monster_generic,
+    swarm,
 )}

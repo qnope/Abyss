@@ -26,9 +26,9 @@ These are gaps of the interface, not of the rules: `godot/domain` is complete.
    the map (`widgets/map/effects/`), the creatures drawn alive on the map
    (`living_creatures.dart`, `map_creature_sheets.dart`, `map_cell_motion.dart`), the
    decor scattered on the map's floor (`widgets/map/decor/`), the squads' arrival on the
-   parade ground (`army_arrival*`, `squad_arrival`), the figures that float and pop when a
-   resource changes (`delta_float`, `increase_pop`) and the glow of a building that can
-   rise (`rise_*`).
+   parade ground (`army_arrival*`, `squad_arrival`). The figures that float and pop when a
+   resource changes and the glow of a building that can rise are done (`DeltaFloat`,
+   `IncreasePop`, `PadHalos`).
 2. **The pictures of buildings, units, posts and monsters** are `Portrait`s (initials on a
    tinted panel) until step 7 fills them with renders of the 3D models. This touches the
    cards, the sheets and the tips' illustrations (`TipIllustrations`).
@@ -152,11 +152,11 @@ These are gaps of the interface, not of the rules: `godot/domain` is complete.
 | `bubbles_painter.dart` | Replaced by 3D: `RisingBubbles` (world/ambience/rising_bubbles.gd) |
 | `creature_sheet.dart` | Replaced by 3D: The pose and undulation of the 2D sprites are the 3D models' own motion: `BaseMotion` (world/base/base_motion.gd). |
 | `creature_undulation.dart` | Replaced by 3D: The pose and undulation of the 2D sprites are the 3D models' own motion: `BaseMotion` (world/base/base_motion.gd). |
-| `delta_float.dart` | **Missing.** The figure floating up after a gain (step 7). |
-| `increase_pop.dart` | **Missing.** The pop of a number that rose (step 7). |
+| `delta_float.dart` | `DeltaFloat` (ui/common/delta_float.gd): on the resource bar (`AnimatedAmount`) and the unit card |
+| `increase_pop.dart` | `IncreasePop` (ui/common/increase_pop.gd): on the pictures of `BuildingCard` and `UnitCard` |
 | `pose_box.dart` | Replaced by 3D: The pose and undulation of the 2D sprites are the 3D models' own motion: `BaseMotion` (world/base/base_motion.gd). |
-| `rise_glow_painter.dart` | **Missing.** The glow of a building that can rise (step 7; the arrow is `PadMark` (world/base/pad_mark.gd)). |
-| `rise_motion.dart` | **Missing.** The glow of a building that can rise (step 7; the arrow is `PadMark` (world/base/pad_mark.gd)). |
+| `rise_glow_painter.dart` | `IncreasePop`'s two glow discs (ui/common/increase_pop.gd); the glow of a building that can rise is `PadHalos` (world/base/pad_halos.gd), beside the arrow `PadMark` |
+| `rise_motion.dart` | `IncreasePop.scale_at`, `drop_at` and `glow_at` (ui/common/increase_pop.gd) |
 | `sprite_motion.dart` | Replaced by 3D: The pose and undulation of the 2D sprites are the 3D models' own motion: `BaseMotion` (world/base/base_motion.gd). |
 
 ### `lib/presentation/widgets/army/`

@@ -51,6 +51,8 @@ static func apply(theme: Theme) -> void:
 		# resource's colour, and the rate of production under it.
 		&"HudTurn": AbyssTextStyle.new(16, BOLD, AbyssColors.BIOLUM_CYAN, 1),
 		&"ResourceAmount": AbyssTextStyle.new(14, BOLD, AbyssColors.ON_SURFACE),
+		# The change floating up from a figure that moved.
+		&"DeltaFloat": AbyssTextStyle.new(12, BOLD, AbyssColors.ON_SURFACE),
 		&"ResourceRate": AbyssTextStyle.new(11, AbyssFonts.Weight.DEFAULT, AbyssColors.ON_SURFACE_DIM),
 	}
 	for name in styles:

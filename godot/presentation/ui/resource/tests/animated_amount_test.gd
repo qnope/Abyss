@@ -47,6 +47,16 @@ func test_a_second_change_restarts_the_flash() -> void:
 	assert_eq(amount.get_theme_color(&"font_color"), AbyssColors.ERROR)
 
 
+func test_floats_the_change_up_from_the_amount() -> void:
+	var amount := _amount(100)
+	amount.set_amount(130)
+	assert_eq(amount.floater.text, "+30")
+	assert_true(amount.floater.is_floating())
+	amount.set_amount(110)
+	assert_eq(amount.floater.text, "−20")
+	assert_eq(amount.floater.get_theme_color(&"font_color"), AbyssColors.ERROR)
+
+
 func test_the_same_amount_changes_nothing() -> void:
 	var amount := _amount(100)
 	amount.set_amount(100)
@@ -62,6 +72,7 @@ func test_with_fewer_animations_it_just_changes() -> void:
 	assert_eq(amount.get_theme_color(&"font_color"), Base)
 	assert_eq(amount.scale, Vector2.ONE)
 	assert_false(amount.is_flashing())
+	assert_false(amount.floater.is_floating())
 
 
 func test_outside_the_tree_it_just_changes() -> void:

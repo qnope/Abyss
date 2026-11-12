@@ -4,8 +4,9 @@ extends RefreshingPanel
 ## locked) and, under it, how many serve (at each place when it serves in
 ## several: "Niv. 1: 5 · Niv. 2: 3") or that it is locked
 ## (lib/presentation/widgets/unit/unit_card.dart). A touch tells [signal
-## tapped]. The pop and the floating gain of its count are not ported: the
-## parade shows a recruit arriving.
+## tapped]. A count that rises pops the picture ([IncreasePop]) and floats the
+## gain up from the line under the name ([DeltaFloat]); the parade shows the
+## recruit arriving as well.
 
 ## The player touched the card.
 signal tapped
@@ -23,6 +24,9 @@ var tap_button := Button.new()
 var name_label := Label.new()
 var detail_label := Label.new()
 var lock_icon: UiIcon
+## The picture, which pops when the count rises, and the gain floating up.
+var pop: IncreasePop
+var floater := DeltaFloat.new()
 
 
 func _init(type_: UnitType.Value, counts_per_level_: Dictionary[int, int], unlocked_: bool) -> void:
@@ -47,20 +51,37 @@ func _init(type_: UnitType.Value, counts_per_level_: Dictionary[int, int], unloc
 	texts.add_child(detail)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override(&"separation", GAP)
-	row.add_child(UnitPortrait.of(type, PORTRAIT_SIZE, not unlocked, not unlocked))
+	var portrait := UnitPortrait.of(type, PORTRAIT_SIZE, not unlocked, not unlocked)
+	pop = IncreasePop.new(portrait, Vector2.ONE * PORTRAIT_SIZE, UnitColors.of(type), _count())
+	row.add_child(pop)
 	row.add_child(texts)
 	panel.add_child(row)
 	tap_button.theme_type_variation = AbyssSurfaceTheme.TAP
 	tap_button.pressed.connect(tapped.emit)
+	detail_label.add_child(floater)
 	add_child(panel)
 	add_child(tap_button)
 	refresh()
 
 
 func refresh() -> void:
+	# Called once by the base class, before there is a card to refresh.
+	if pop == null:
+		return
+	var count := _count()
+	floater.float_from(detail_label, count - pop.value)
+	pop.set_value(count)
 	name_label.text = UnitTexts.display_name(type)
 	tap_button.accessibility_name = name_label.text
 	detail_label.text = _detail() if unlocked else Texts.t(&"unitLocked")
+
+
+## How many serve, wherever.
+func _count() -> int:
+	var total := 0
+	for place: int in counts_per_level:
+		total += counts_per_level[place]
+	return total
 
 
 ## "7 unités", or the count at each place when there are several.

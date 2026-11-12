@@ -68,3 +68,25 @@ func test_follows_the_language() -> void:
 	assert_not_null(find_text("Scout", card))
 	assert_not_null(find_text("1 unit", card))
 	assert_no_raw_keys()
+
+
+func test_a_count_that_rises_pops_the_picture_and_floats_the_gain() -> void:
+	var counts: Dictionary[int, int] = {1: 5}
+	var card := _show(counts)
+	assert_false(card.pop.is_rising(), "nothing moves when first shown")
+	assert_false(card.floater.is_floating())
+	counts[1] = 8
+	card.refresh()
+	assert_true(card.pop.is_rising())
+	assert_eq(card.floater.text, "+3")
+	assert_eq(card.pop.glow_color, UnitColors.of(Type.SCOUT))
+	assert_not_null(find_text("8 unités", card))
+
+
+func test_a_count_that_falls_floats_the_loss_and_does_not_pop() -> void:
+	var counts: Dictionary[int, int] = {1: 5}
+	var card := _show(counts)
+	counts[1] = 2
+	card.refresh()
+	assert_false(card.pop.is_rising())
+	assert_eq(card.floater.text, "−3")

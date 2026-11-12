@@ -66,3 +66,14 @@ func test_follows_the_language() -> void:
 	use_language("en")
 	assert_eq(card.level_label.text, "Level 3")
 	assert_eq(card.name_label.text, BuildingTexts.display_name(Type.ALGAE_FARM))
+
+
+func test_a_level_that_rises_pops_the_picture() -> void:
+	set_levels({Type.ALGAE_FARM: 3})
+	var card := _card(Type.ALGAE_FARM)
+	assert_false(card.pop.is_rising(), "nothing moves when first shown")
+	assert_eq(card.pop.glow_color, AbyssColors.BIOLUM_CYAN)
+	human.buildings[Type.ALGAE_FARM].level = 4
+	card.refresh()
+	assert_true(card.pop.is_rising())
+	assert_eq(card.level_label.text, "Niveau 4")

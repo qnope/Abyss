@@ -51,6 +51,21 @@ font leaned), `GuideHalo` (a pulsing cyan halo around any control while
 `TabPlaceholder` ("coming soon" follows the language). `Greyscale` turns any
 icon grey with a shader (a locked or given-up technology).
 
+## Figures that rise
+
+- `DeltaFloat` is the "+30" or "−12" that floats up from a value that changed: a
+  top-level `Label` (so no container clips or lays it out), `float_from(anchor,
+  delta)` starts it from the top centre of the control `anchor`, 22 points up over
+  `AbyssMotion.DELTA_FLOAT` while it fades; a new change replaces the one under way,
+  none for `delta == 0`, and `reduced_motion` floats nothing. `AnimatedAmount` carries
+  one (the resource bar), `UnitCard` another under the name.
+- `IncreasePop(picture, box, glow_color, start)` wraps a picture that pops once each
+  time `set_value(n)` goes above the last value seen (a level, a count): it starts
+  low and small, overshoots and settles from its foot while two soft discs of the glow
+  colour climb and fade (`scale_at`, `drop_at`, `glow_at`, Flutter's `RiseMotion`).
+  Nothing moves when first shown nor when the value stays or falls. `BuildingCard` and
+  `UnitCard` wrap their pictures with it; their `refresh()` reads the value again.
+
 ## Not one to one
 
 - A text a component receives is written once: a screen that must follow the

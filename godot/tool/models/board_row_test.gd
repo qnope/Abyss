@@ -43,6 +43,8 @@ func test_builds_its_lines_then_its_name_and_figures() -> void:
 	assert_eq((_row.get_child(0) as Control).get_child_count(), 6)
 	assert_eq((_row.get_child(1) as Control).get_child_count(), 5)
 	assert_eq((_row.get_child(2) as Label).text, "x")
+	var game := (_row.get_child(0).get_child(0).get_child(0) as TextureRect).texture
+	assert_eq(game.get_height(), BoardRow.TILE)
 	for file: String in DirAccess.get_files_at(folder):
 		DirAccess.remove_absolute("%s/%s" % [ProjectSettings.globalize_path(folder), file])
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(folder))

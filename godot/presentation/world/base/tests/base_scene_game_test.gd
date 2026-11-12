@@ -107,3 +107,10 @@ func test_a_building_that_can_rise_glows_and_the_others_do_not() -> void:
 	assert_true(_base.halos.is_pulsing())
 	_base.show_base(player.buildings)
 	assert_eq(_base.halos.get_child_count(), 0)
+
+
+func test_bubbles_rise_round_the_headquarters_lamp() -> void:
+	var player := GameSamples.player_with("Nemo", {Type.HEADQUARTERS: 1, Type.SOLAR_PANEL: 3})
+	_base.show_base(player.buildings)
+	assert_true(_base.life.lamps.emitting)
+	assert_eq(_base.life.lamps.emission_points.size(), 6)

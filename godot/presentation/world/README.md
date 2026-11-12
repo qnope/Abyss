@@ -178,3 +178,12 @@ so that the level and the signs clear it whatever it is. A degraded building
 stays still: `BaseMotion` leaves its parts alone. Models are freed in the
 tree, as `BaseBuildings` does: a node with its own materials freed outside it
 makes the renderer complain.
+
+`ModelAnimator.new(model)` plays the animations of a unit's or monster's model
+by name: it finds the `AnimationPlayer` the glb's importer put in the scene,
+stands the model in `idle`, `play(name, speed)` starts `swim`, `attack`, `hit`
+or any action the script declared (a loop goes on, a one-shot ends by giving
+back to `idle`) and says false for a name the model lacks. A model with no
+animation, a building, is a model with nothing to play. The workshop's test
+model `probe_fish` (a body, a tail of three bones, the four actions) proves it;
+no scene shows it. `tool/models/README.md` says how a script declares a rig.

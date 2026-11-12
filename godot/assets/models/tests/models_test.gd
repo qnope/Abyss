@@ -14,6 +14,7 @@ const ROOTS := {
 	"coral_citadel": ["CoralCitadel"],
 	"headquarters": ["Headquarters"],
 	"material_swatches": ["Swatches", "Unit"],
+	"probe_fish": ["Rig", "AnimationPlayer"],
 	"solar_panel": ["SolarPanel"],
 }
 

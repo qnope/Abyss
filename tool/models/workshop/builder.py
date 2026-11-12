@@ -5,6 +5,7 @@ for a model with an atlas, each corner's place in it (UV)."""
 import bpy
 
 from workshop.materials import COLOR_ATTRIBUTE
+from workshop.skin import rigid
 
 
 def painted(geometry, paint):
@@ -22,18 +23,21 @@ class MeshBuilder:
         self.verts, self.faces, self.smooth = [], [], []
         self.colors, self.face_materials, self.materials = [], [], []
         self.sharp, self.uvs, self.blank = [], [], blank
+        self.weights = []  # per vertex: {bone: weight}, or None of a part not skinned
 
     @property
     def triangles(self):
         return sum(len(face) - 2 for face in self.faces)
 
-    def add(self, geometry, material, paint, uv=None):
+    def add(self, geometry, material, paint, uv=None, bone=None):
         """Adds [geometry] in [material], each corner coloured by [paint]: a
         linear (r, g, b), a function of the corner's position and of its
         face's normal giving one, or what painted() gave (a part painted in
         its own frame before it was turned). [uv] maps its faces into the
         atlas: one of Atlas' mappings, or what one gave (a part maps itself
-        before it is turned into place); the white tile without it."""
+        before it is turned into place); the white tile without it. [bone]
+        skins it: the name of the one bone it follows, or a function of a
+        vertex's position giving {bone: weight} (workshop.skin)."""
         if uv is not None and self.blank is None:
             raise ValueError("a mapping into an atlas, but the model has none")
         if self.blank is not None:
@@ -44,6 +48,8 @@ class MeshBuilder:
         if material not in self.materials:
             self.materials.append(material)
         slot = self.materials.index(material)
+        weigh = rigid(bone) if isinstance(bone, str) else bone
+        self.weights += [weigh(v) if weigh else None for v in geometry.verts]
         base = len(self.verts)
         self.sharp += [(a + base, b + base) for a, b in geometry.sharp_edges()]
         self.verts += geometry.verts

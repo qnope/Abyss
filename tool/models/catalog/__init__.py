@@ -12,7 +12,8 @@
 """
 
 from catalog import (base_island, base_rampart, coral_citadel, headquarters, material_swatches,
-                     solar_panel)
+                     probe_fish, solar_panel)
 
 MODELS = {script.NAME: script for script in (base_island, base_rampart, headquarters,
-                                             solar_panel, coral_citadel, material_swatches)}
+                                             solar_panel, coral_citadel, material_swatches,
+                                             probe_fish)}

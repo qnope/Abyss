@@ -90,8 +90,13 @@ tapped -> sheet -> `prepare_requested` -> selection -> `execute` -> `acted` -> s
 `changed` -> map redrawn (the lair of a victory dimmed, the stock and the noise
 changed) -> the page closes with the result -> `FightSummaryPage`; a refusal
 stays in the selection page. `FightController.report(result, route)` is where the
-fight ends: step 7 plays the strike on the map before it opens the report, and
-the history reopens one with `HistoryReports.fight_summary(entry)`.
+fight ends: it plays the strike on the map (`MapController.strike`, through
+`StrikeReports.play`) and opens the report once it is over, and the history
+reopens one with `HistoryReports.fight_summary(entry)`. The assaults on a post, on
+the volcano and on a rival's base (`PostController`, `KernelController`,
+`FactionController`) play their strike the same way before their reports open.
+`MapController.siege(attack, then)` is the way in for the siege of the turn's story
+(a raid, a wave, a rival's attack), which nothing tells yet.
 
 The posts are the `PostController` and the volcano the `KernelController` (`game/`), made by
 the `GameController`, which register for `CellRoute.Kind.POST` and `KERNEL`: a touch opens

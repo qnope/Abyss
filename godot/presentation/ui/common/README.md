@@ -30,9 +30,13 @@ its style box with `AbyssBox` from it. Depends on `domain/` and `../theme`,
   its mipmaps (`assets/icons/README.md` says why and how it stays crisp);
   `UiIcon.glyph(name)` a tinted glyph of `assets/icons/ui/`. `ResourceIcon(type,
   size)` is a resource's.
-- `Portrait(name, size, tint)` is the stand-in for the 3D renders of buildings,
-  units and monsters until step 7: a tinted panel with the initials of the
-  name. Never an SVG: the world's art comes from the models.
+- `Portrait(name, size, tint, picture)` is the picture of a building, a unit or a
+  monster: a tinted panel with the render of its 3D model
+  (`assets/portraits/<picture>.png`, made by `tool/models/portraits.sh`) when the
+  file exists, or else the initials of the name. `PortraitFiles` is the one place
+  that names the renders (`building(type)`, `unit(type)`, `monster(family)`: the
+  lower-case enum value) and loads them, so a model lot adds a render and no
+  code. Never an SVG: the world's art comes from the models.
 
 ## Small components
 

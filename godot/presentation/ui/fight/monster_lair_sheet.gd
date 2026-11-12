@@ -25,7 +25,8 @@ var prepare_button: Button
 func _init(lair_: MonsterLair, x: int, y: int) -> void:
 	lair = lair_
 	stats = MonsterUnitStats.of(lair.family, lair.level())
-	super(Portrait.new(MonsterFamilyTexts.label(lair.family), PICTURE_SIZE, AbyssColors.CORAL_PINK),
+	super(Portrait.new(MonsterFamilyTexts.label(lair.family), PICTURE_SIZE, AbyssColors.CORAL_PINK,
+		PortraitFiles.monster(lair.family)),
 		func() -> String: return "%s (%d, %d)" % [MonsterFamilyTexts.label(lair_.family), x, y])
 	column.add_child(_row(&"mapDifficulty", func() -> String: return MonsterDifficultyTexts.label(lair_.difficulty)))
 	column.add_child(_row(&"mapLevel", func() -> String: return str(lair_.level())))

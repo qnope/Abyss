@@ -15,7 +15,8 @@ func _init(building: Building) -> void:
 	var color := BuildingColors.of(building.type)
 	var title := BuildingTexts.display_name(building.type)
 	add_theme_constant_override(&"separation", GAP)
-	portrait = Portrait.new(title, PORTRAIT_SIZE, color if building.level > 0 else AbyssColors.DISABLED)
+	var picture := PortraitFiles.building(building.type) if building.level > 0 else ""
+	portrait = Portrait.new(title, PORTRAIT_SIZE, color if building.level > 0 else AbyssColors.DISABLED, picture)
 	name_label.text = title
 	name_label.theme_type_variation = &"HeadlineSmall"
 	name_label.add_theme_color_override(&"font_color", color)

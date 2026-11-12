@@ -1,6 +1,6 @@
 extends UiTestCase
-## The stand-in for the 3D renders of buildings, units and monsters: a tinted
-## panel with the initials of the name.
+## The picture of a building, a unit or a monster: a tinted panel with the
+## render of its model, or the initials of the name when it has none yet.
 
 
 func test_shows_the_initials_of_the_name_on_a_tinted_panel() -> void:
@@ -40,3 +40,24 @@ func test_is_cyan_unless_told_and_takes_no_touch() -> void:
 	assert_eq(portrait.initials_label.mouse_filter, Control.MOUSE_FILTER_IGNORE)
 	portrait.free()
 
+
+
+func test_shows_the_render_of_a_model_that_has_one() -> void:
+	var portrait := mount(Portrait.new("Quartier Général", 64.0, AbyssColors.ALGAE_GREEN,
+		PortraitFiles.building(BuildingType.Value.HEADQUARTERS))) as Portrait
+	assert_not_null(portrait.picture_rect)
+	assert_eq(portrait.picture_rect.texture, PortraitFiles.texture("headquarters"))
+	assert_false(portrait.initials_label.visible)
+	assert_eq(portrait.picture_rect.mouse_filter, Control.MOUSE_FILTER_IGNORE)
+	assert_eq(portrait.picture_rect.stretch_mode, TextureRect.STRETCH_KEEP_ASPECT_CENTERED)
+	assert_eq(portrait.picture_rect.texture_filter, CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS)
+	var box := portrait.get_theme_stylebox(&"panel") as StyleBoxFlat
+	assert_eq(box.bg_color, Color(AbyssColors.ALGAE_GREEN, 0.18), "the tinted panel stays under it")
+
+
+func test_falls_back_to_the_initials_without_a_render() -> void:
+	for picture: String in ["", PortraitFiles.building(BuildingType.Value.ALGAE_FARM), "nothing_at_all"]:
+		var portrait := mount(Portrait.new("Ferme d'algues", 64.0, AbyssColors.ALGAE_GREEN, picture)) as Portrait
+		assert_null(portrait.picture_rect, picture)
+		assert_true(portrait.initials_label.visible, picture)
+		assert_eq(portrait.initials_label.text, "FE", picture)

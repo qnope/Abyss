@@ -44,7 +44,8 @@ func _init(building_: Building, missing_headquarters_ := 0) -> void:
 		texts.add_child(degraded)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override(&"separation", GAP)
-	row.add_child(Portrait.new(title, PORTRAIT_SIZE, color if built else AbyssColors.DISABLED))
+	var picture := PortraitFiles.building(building.type) if built else ""
+	row.add_child(Portrait.new(title, PORTRAIT_SIZE, color if built else AbyssColors.DISABLED, picture))
 	row.add_child(texts)
 	panel.add_child(row)
 	tap_button.theme_type_variation = AbyssSurfaceTheme.TAP

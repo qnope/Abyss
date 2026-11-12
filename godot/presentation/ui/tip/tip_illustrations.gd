@@ -35,9 +35,13 @@ const ICONS: Dictionary[TipId.Value, String] = {
 ## The picture of the tip [param id], [param size] points across.
 func of(id: TipId.Value, size: float) -> Control:
 	if BUILDINGS.has(id):
-		return Portrait.new(BuildingTexts.display_name(BUILDINGS[id]), size)
+		var building: BuildingType.Value = BUILDINGS[id]
+		return Portrait.new(BuildingTexts.display_name(building), size, AbyssColors.BIOLUM_CYAN,
+			PortraitFiles.building(building))
 	if UNITS.has(id):
-		return Portrait.new(UnitTexts.display_name(UNITS[id]), size)
+		var unit: UnitType.Value = UNITS[id]
+		return Portrait.new(UnitTexts.display_name(unit), size, AbyssColors.BIOLUM_CYAN,
+			PortraitFiles.unit(unit))
 	if ICONS.has(id):
 		return UiIcon.new(ICONS[id], size)
 	var event: Variant = DartEnum.by_name(RandomEventType.Value, DartEnum.name_of(TipId.Value, id))

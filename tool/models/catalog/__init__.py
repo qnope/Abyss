@@ -6,6 +6,8 @@
                       stays within (families.py)
     BUDGET            triangles, materials, texture size, bones and keyframes,
                       enforced on build
+    PORTRAIT          optional, True when portraits.sh renders the model's picture
+                      for the interface (godot/assets/portraits/<name>.png)
     OCCLUSION         how its ambient occlusion is baked
     NODES             the node paths the game relies on
     build(model)      fills the workshop's Model

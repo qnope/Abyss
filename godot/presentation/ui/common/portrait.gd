@@ -1,9 +1,10 @@
 class_name Portrait
 extends PanelContainer
-## The picture of a building, a unit or a monster, until step 7 fills it with
-## renders of the 3D models: a rounded panel tinted with [param tint] holding
-## the initials of the name. It is never an SVG: the world's art comes from
-## the models, and this stand-in has their API (a name, a size, a tint).
+## The picture of a building, a unit or a monster: a rounded panel tinted with
+## [param tint] holding the render of its 3D model when one exists
+## ([PortraitFiles]: `assets/portraits/<picture>.png`, made by
+## tool/models/portraits.sh), or else the initials of the name. It is never an
+## SVG: the world's art comes from the models.
 
 ## Below this size the initials are set small, from this one larger.
 const SMALL := 40.0
@@ -11,9 +12,15 @@ const LARGE := 96.0
 
 var display_name: String
 var initials_label := Label.new()
+## The render, or null while the panel shows initials.
+var picture_rect: TextureRect
 
 
-func _init(name_text: String, portrait_size := 64.0, tint := AbyssColors.BIOLUM_CYAN) -> void:
+## [param picture] names the render ([PortraitFiles.building], `unit`,
+## `monster`); none, or a name without a file yet, leaves the initials.
+func _init(
+	name_text: String, portrait_size := 64.0, tint := AbyssColors.BIOLUM_CYAN, picture := ""
+) -> void:
 	display_name = name_text
 	custom_minimum_size = Vector2(portrait_size, portrait_size)
 	size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -29,6 +36,11 @@ func _init(name_text: String, portrait_size := 64.0, tint := AbyssColors.BIOLUM_
 	initials_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(initials_label)
+	var texture := PortraitFiles.texture(picture)
+	if texture != null:
+		initials_label.visible = false
+		picture_rect = _picture(texture)
+		add_child(picture_rect)
 
 
 ## The capitals of [param name_text]: the first letters of its first two words
@@ -44,6 +56,17 @@ static func initials(name_text: String) -> String:
 	if words.size() == 1:
 		return words[0].left(2).to_upper()
 	return (words[0].left(1) + words[1].left(1)).to_upper()
+
+
+static func _picture(texture: Texture2D) -> TextureRect:
+	var rect := TextureRect.new()
+	rect.texture = texture
+	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	# A render shown at half its size or less: its mipmaps keep it smooth.
+	rect.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return rect
 
 
 static func _role(portrait_size: float) -> StringName:

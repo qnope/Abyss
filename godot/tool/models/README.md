@@ -10,3 +10,6 @@ the glb files): editor and review tools, not game code, left out of exports.
   project: its `.png.import` asks for VRAM compression and mipmaps.
 - `preview.gd`, `studio.gd`, `model_bounds.gd`: the renders of
   `tool/models/preview.sh`.
+- `portrait.gd`, `portrait_camera.gd` (with `studio.gd` in its clear mode): the
+  renders of `tool/models/portraits.sh` into `assets/portraits/`, 256 px
+  square, transparent, from one fixed 3/4 camera that fits the model's box.

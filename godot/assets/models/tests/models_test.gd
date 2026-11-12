@@ -13,20 +13,23 @@ const ROOTS := {
 	"base_island": ["Island", "Pads"],
 	"base_rampart": ["Tier1", "Tier2", "Tier3"],
 	"coral_citadel": ["CoralCitadel"],
+	"descent_module": ["Tier1", "Tier2", "Tier3"],
 	"headquarters": ["Headquarters"],
 	"laboratory": ["Laboratory"],
 	"material_swatches": ["Swatches", "Unit"],
+	"pressure_capsule": ["Tier1", "Tier2", "Tier3"],
 	"probe_fish": ["Rig", "AnimationPlayer"],
 	"solar_panel": ["SolarPanel"],
 	"algae_farm": ["AlgaeFarm"],
 	"coral_mine": ["CoralMine"],
 	"ore_extractor": ["OreExtractor"],
+	"volcanic_kernel": ["Tier1", "Tier2", "Tier3"],
 }
 
 ## The models that paint an atlas (<model>_atlas.png beside the glb).
 const TEXTURED: Array[String] = [
-	"algae_farm", "barracks", "base_rampart", "coral_citadel", "coral_mine", "headquarters",
-	"laboratory", "ore_extractor", "solar_panel",
+	"algae_farm", "barracks", "base_rampart", "coral_citadel", "coral_mine", "descent_module",
+	"headquarters", "laboratory", "ore_extractor", "pressure_capsule", "solar_panel", "volcanic_kernel",
 ]
 
 ## The island's pads, one per building, where the buildings stand.

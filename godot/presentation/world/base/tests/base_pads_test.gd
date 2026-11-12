@@ -23,6 +23,12 @@ func test_knows_every_pad_and_where_it_stands() -> void:
 	assert_true(_pads.origin_of(&"Headquarters").is_equal_approx(Vector3(0.4, 0.12, 0.4)))
 
 
+func test_gives_the_origins_of_the_pads_asked_in_order() -> void:
+	var origins := _pads.origins_of([&"SolarPanel", &"Headquarters"] as Array[StringName])
+	assert_eq(origins, PackedVector3Array([_pads.origin_of(&"SolarPanel"), _pads.origin_of(&"Headquarters")]))
+	assert_eq(_pads.origins_of([] as Array[StringName]).size(), 0)
+
+
 func test_marks_the_empty_pads_and_leaves_the_built_ones() -> void:
 	_pads.mark([&"Headquarters", &"SolarPanel"] as Array[StringName])
 	var empty := _pad(&"Barracks")

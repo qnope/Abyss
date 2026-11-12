@@ -33,10 +33,10 @@ func test_a_built_building_wears_its_colour_and_tells_its_level() -> void:
 
 
 func test_the_render_of_a_built_building_with_a_model_is_in_its_card() -> void:
-	set_levels({Type.SOLAR_PANEL: 1, Type.ALGAE_FARM: 1})
+	set_levels({Type.SOLAR_PANEL: 1, Type.BARRACKS: 1})
 	var with_model := find_type("Portrait", _card(Type.SOLAR_PANEL))
 	assert_not_null((with_model[0] as Portrait).picture_rect)
-	var without := find_type("Portrait", _card(Type.ALGAE_FARM))
+	var without := find_type("Portrait", _card(Type.BARRACKS))
 	assert_null((without[0] as Portrait).picture_rect)
 
 

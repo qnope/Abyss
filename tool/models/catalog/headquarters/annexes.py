@@ -1,6 +1,6 @@
 """What stands around the keep at the diagonals: twin pressure tanks piped
-into the hull (back right), a generator with its exhaust (back left), a lamp
-post, and the reef growing at the foot of it all."""
+into the hull (back right), a generator with its exhaust (back left), and
+the reef growing at the foot of it all, by clusters a tier at a time."""
 
 import math
 
@@ -16,13 +16,19 @@ CLUSTERS = ((-45, 1.36, 1.15), (-20, 1.32, 0.7), (-70, 1.33, 0.75), (200, 1.34, 
             (160, 1.38, 0.9), (110, 1.3, 0.6), (250, 1.3, 0.6))
 
 
-def annexes(model, group):
+def reefs(model, group, which):
+    """The clusters of CLUSTERS numbered [which] at the keep's foot."""
+    atlas, rng, into = model.atlas, model.rng, Into(model, group)
+    for index in which:
+        angle, distance, size = CLUSTERS[index]
+        a = math.radians(angle)
+        reef.cluster(into, rng, atlas, (distance * math.cos(a), distance * math.sin(a), 0), size, 3)
+
+
+def works(model, group):
     atlas, rng, into = model.atlas, model.rng, Into(model, group)
     _tanks(into, atlas, math.radians(45))
     _generator(into, atlas, math.radians(135))
-    for angle, distance, size in CLUSTERS:
-        a = math.radians(angle)
-        reef.cluster(into, rng, atlas, (distance * math.cos(a), distance * math.sin(a), 0), size, 3)
     ledge = reef.around(rng, radius_at(0.2) + 0.04, PLINTH[0] - 0.08, 6, 0.16,
                         arcs=((-80, -10), (100, 170), (190, 260)), z=PLINTH[1] * 0.95)
     reef.grow(into, rng, atlas, ledge, reef.SMALL)

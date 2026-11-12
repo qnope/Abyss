@@ -1,6 +1,6 @@
-"""The keep's upper works: a railed gallery on brackets, the bridge's drum
-ringed with cyan windows, a ribbed glass cupola, and the crown: a mast with
-a yard of lamps, the beacon (node Beacon) and a dish (node Dish)."""
+"""The keep's upper works: a railed gallery on brackets and the bridge's drum
+ringed with cyan windows under a flat cap (the first tier), a ribbed glass
+cupola and a mast with a yard of lamps over it (the second)."""
 
 import math
 
@@ -15,10 +15,11 @@ from workshop import shapes, sweep
 GALLERY = (1.05, HULL[3], 0.05)  # radius, bottom, thickness
 DRUM = (0.68, 0.64, 1.2, 1.62)  # radius at foot and top, from z to z
 DOME = [(0.66, 1.67), (0.65, 1.8), (0.6, 1.94), (0.5, 2.06), (0.36, 2.16), (0.2, 2.23), (0.12, 2.25)]
-MAST = (2.32, 0.7)  # foot, height
+MAST = (2.32, 0.62)  # foot, height
+BEACON = (0.88, 0.0)  # where the rotating beacon stands on the gallery's deck
 
 
-def bridge(model, group):
+def gallery(model, group):
     atlas, into = model.atlas, Into(model, group)
     radius, bottom, thick = GALLERY
     deck = shapes.prism(shapes.polygon(SIDES, radius, PHASE), thick, bevel=0.012,
@@ -37,8 +38,21 @@ def bridge(model, group):
             for a in (PHASE + math.pi * k / SIDES for k in range(2 * SIDES))]
     place(into, rails.railing(atlas, edge, 0.13))
     _drum(into, atlas)
-    _cupola(into, atlas)
-    _crown(model, group, into, atlas)
+    cap = shapes.cylinder(DRUM[1] + 0.03, 0.05, sides=16, smooth=False).transform((0, 0, DRUM[3] + 0.04))
+    into.add(cap, "hull", machined(colors.HULL, 34, soot=0.0), atlas.fit("tread")(cap))
+    top = DRUM[3] + 0.09
+    place(into, fittings.mast(atlas, 0.3, 0.025), (0, 0, top))
+    place(into, [(shapes.octahedron(0.035).transform((0, 0, 0.34)), *light(atlas, "amber"))], (0, 0, top))
+    for k in range(8):
+        a = 2 * math.pi * (k + 0.5) / 8
+        place(into, [(shapes.octahedron(0.026).transform((0, 0, 0.02)), *light(atlas, "cyan"))],
+              (0.56 * math.cos(a), 0.56 * math.sin(a), top))
+
+
+def cupola(model, group):
+    into = Into(model, group)
+    _cupola(into, model.atlas)
+    _mast(into, model.atlas)
 
 
 def _drum(into, atlas):
@@ -78,7 +92,7 @@ def _cupola(into, atlas):
     into.add(collar, "hull", machined(colors.METAL_DARK, 33, soot=0.0), atlas.fit("bolt"))
 
 
-def _crown(model, group, into, atlas):
+def _mast(into, atlas):
     foot, height = MAST
     place(into, fittings.mast(atlas, height, 0.035), (0, 0, foot))
     yard = shapes.box((0.42, 0.025, 0.025), bevel=0.005).transform((0, 0, foot + height * 0.62))
@@ -86,8 +100,19 @@ def _crown(model, group, into, atlas):
     for x in (-0.21, 0.21):
         lamp = shapes.octahedron(0.03).transform((x, 0, foot + height * 0.62 + 0.03))
         into.add(lamp, *light(atlas, "amber"))
-    place(model.piece(f"{group}/Beacon", (0, 0, foot + height)), fittings.beacon(atlas, 0.06))
+    into.add(shapes.octahedron(0.045).transform((0, 0, foot + height + 0.03)), *light(atlas, "amber"))
+
+
+def fixtures(model, root):
+    """What the game turns, shown at every tier: the beacon on a post of the
+    gallery's deck (node Beacon) and the dish on the drum's shoulder (node Dish)."""
+    atlas, into = model.atlas, Into(model, root)
+    deck = GALLERY[1] + GALLERY[2]
+    post = shapes.cylinder(0.03, 0.26, sides=6, top_radius=0.022, bottom=False)
+    into.add(post.transform((*BEACON, deck)), "hull", machined(colors.METAL_DARK, 35, soot=0.0),
+             atlas.solid("plain")(post))
+    place(model.piece(f"{root}/Beacon", (*BEACON, deck + 0.26)), fittings.beacon(atlas, 0.06))
     arm = sweep.tube([(0.3, 0.48, 1.66), (0.4, 0.62, 1.84)], [0.022, 0.016], sides=5, cap=False)
     into.add(arm, "hull", colors.HULL_DARK, None)
-    dish = model.piece(f"{group}/Dish", (0.4, 0.62, 1.86))
+    dish = model.piece(f"{root}/Dish", (0.4, 0.62, 1.86))
     place(dish, fittings.dish(atlas, 0.17, 0.08), rotation=(0.55, 0, 0.6))

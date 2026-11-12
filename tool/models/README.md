@@ -10,6 +10,7 @@ is never edited by hand: change its script and build it again.
     tool/models/portraits.sh [name ...]       # the interface's pictures, committed
     tool/models/preview.sh headquarters@2     # a building up to its tier 2
     tool/models/board.sh a,b,c /tmp/lot.png   # the review board of a lot
+    tool/models/poses.sh scout [prefix]       # three poses of each action, and the phone view
     tool/models/board.sh a,b /tmp/lot.png --tiers   # ... with each building's tiers
     cd tool/models && python -m unittest discover -s . -p '*_test.py'
 
@@ -183,7 +184,10 @@ calls or the primitives against the previous lot blocks the lot.
 3. **Preview**: `tool/models/preview.sh <name>` to judge it while working.
 4. **Board**: `tool/models/board.sh a,b,c /tmp/lot.png` composes the review board
    of the lot, each model's views, portrait and figures: the owner validates the
-   lot from this one image. A building with tiers (`Tier1`..`Tier3`) shows its
+   lot from this one image. A creature (a model with actions) shows its game and
+   side views, its portrait, how it reads at phone size and two lines of poses
+   (`poses.sh`: three of each of idle, swim, attack, hit); its renders are turned
+   to the camera (`ModelFacing`), since it is built facing Godot's forward, -Z. A building with tiers (`Tier1`..`Tier3`) shows its
    game and close views at tier 1, tiers 1+2 and all tiers, and the cost of each
    (`workshop/tiers.py`). Never commit it.
 5. **Owner validates** the board; nothing enters the game before.
@@ -236,8 +240,8 @@ it in a neutral studio (a key light with shadows, a cool fill, a dark blue
 background, a ground disc): `<prefix>_game.png` from the game's default 3/4
 camera at the phone's portrait size, and `_front`, `_right`, `_back`, `_left`
 from the four sides, all at 2x, and `_close`, the game's view zoomed on the
-front quarter, to judge the detail (for a model that does not stand on the
-plateau, as a creature, it frames the wrong place: judge it by the sides). It runs Godot's Compatibility renderer (the
+front quarter, to judge the detail (a creature, which does not stand on the
+plateau, is turned to the camera and framed whole, and has no `_close`). It runs Godot's Compatibility renderer (the
 web's) under `xvfb-run`. Models shown together with `base_island` stand on
 its pad of the same name (`model_pads.gd`), as in the game. The renders go to `/tmp/models_preview/` by default:
 never into the repo. `TIER=n tool/models/preview.sh <name>` shows a building up to
@@ -359,3 +363,35 @@ The command buildings (`textures/command.py` adds their tiles to the colony's at
 - `coral_citadel`: keep (polyp, calyx, the root's node `Heart`, low curtain, gate), stronghold
   (towers, merlons, thorns), crown of thorns (a cage of tentacles, spires, arches). It stays
   well inside `base_rampart`.
+
+## The army
+
+The six units, one figure of a squad each (family `unit`, 3 materials, one
+256 px atlas, a skeleton of 14 to 16 bones, the four actions), standing on the
+floor under their origin and facing +Y in Blender (Godot's -Z): `scout`,
+`harpoonist`, `guardian`, `dome_breaker`, `abyss_admiral`, `saboteur`, named
+after `UnitType` so that their portraits are found with no code. They share
+`catalog/unit_kit/`: `body.py` (one diver's skeleton and a `Build` of
+proportions each), `forms.py` and `looks.py` (shapes placed by points, and what a
+part is made of: neoprene `suit`, `hull` metal, `lamp` lights, all from the one
+atlas `textures/units.py`), `diver.py` (legs, arms, trunk, helmet) and
+`actions.py`: a pose is a rotation (degrees, about the model's axes, at the bone's
+head: positive X swings a hanging limb forward and a standing body back) and
+a location; an action is poses at frames; idle, swim and hit are shared and
+each unit has its own attack (`held` aims a tool, which turns with the arm
+that carries it). Each unit's own parts are in `catalog/<name>/gear.py` and its
+attack in `moves.py`. Their `catalog/units_test.py` checks the contract.
+
+- `scout`: a small (0.8 m) blue diver with the biggest helmet, a wide cyan
+  visor, an antenna with a red bulb, a thruster pack with swept fins, long
+  flippers and a shock prod. Swims low and fast; attacks by lunging in.
+- `harpoonist`: a red diver with a round brass helmet, three amber ports, twin tanks
+  and a hose, and a harpoon taller than itself. Attacks by twisting and thrusting.
+- `guardian`: a broad steel and white figure in a great helm with a cyan slit,
+  a tower shield bearing the emblem and a maul. Attacks with a shield bash.
+- `dome_breaker`: a hulking orange and charcoal diver, horned helmet, a spiked
+  pauldron, hazard stripes and the breaching hammer. Attacks with an overhead smash.
+- `abyss_admiral`: the tallest (1.45 m), a violet coat with tails on two bones,
+  gold epaulettes and a bicorne, a violet visor, a gold baton. Attacks by giving the order.
+- `saboteur`: a small mint-green hooded figure with red gas-mask lenses, a ragged
+  cloak, a dagger and the limpet mine on its hip. Attacks by placing the mine.

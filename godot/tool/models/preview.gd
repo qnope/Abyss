@@ -13,6 +13,7 @@ extends SceneTree
 const Studio := preload("res://tool/models/studio.gd")
 const ModelBounds := preload("res://tool/models/model_bounds.gd")
 const ModelPads := preload("res://tool/models/model_pads.gd")
+const ModelFacing := preload("res://tool/models/model_facing.gd")
 
 ## The phone's viewport (project.godot), rendered at 2x.
 const SCALE := 2
@@ -29,6 +30,7 @@ const SIDE_FOV := 30.0
 
 var _viewport: SubViewport
 var _camera: Camera3D
+var _model: Node3D
 
 
 func _initialize() -> void:
@@ -62,6 +64,7 @@ func _load(names: String) -> Node3D:
 
 
 func _render(model: Node3D, prefix: String, tiered: bool) -> void:
+	_model = model
 	_viewport = SubViewport.new()
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	_viewport.msaa_3d = Viewport.MSAA_4X
@@ -84,18 +87,24 @@ func _render(model: Node3D, prefix: String, tiered: bool) -> void:
 		Shot.new("left", SIDE, 270.0, SIDE_PITCH, SIDE_FOV, false),
 	]
 	for shot in shots:
-		if tiered and not shot.game:
+		if tiered and not shot.game or shot.name == "close" and ModelFacing.is_creature(model):
 			continue
-		await _shoot(bounds, shot, "%s_%s.png" % [prefix, shot.name])
+		await _shoot(shot, "%s_%s.png" % [prefix, shot.name])
 	quit(0)
 
 
-func _shoot(bounds: AABB, shot: Shot, path: String) -> void:
+func _shoot(shot: Shot, path: String) -> void:
+	# A creature faces the camera, the game's or the front one (model_facing.gd).
+	var creature := ModelFacing.is_creature(_model)
+	ModelFacing.face(_model, ModelFacing.GAME if shot.game else ModelFacing.FRONT)
+	var bounds := ModelBounds.of(_model, creature)
 	_viewport.size = shot.size * SCALE
 	_camera.fov = shot.fov
-	var target := Vector3.ZERO if shot.game else bounds.get_center()
-	var radius := ModelBounds.top_radius(bounds) if shot.game else bounds.size.length() * 0.5
-	if shot.fov < GAME_FOV and shot.game:
+	# A building is framed as the game frames the plateau; a creature, whole.
+	var framed := shot.game and not creature
+	var target := Vector3.ZERO if framed else bounds.get_center()
+	var radius := ModelBounds.top_radius(bounds) if framed else bounds.size.length() * 0.5
+	if shot.fov < GAME_FOV and framed:
 		# A close-up of the front quarter, as the player zooms in.
 		target = Vector3(1.0, 0.0, 1.0) * radius * 0.35
 		radius /= 2.5

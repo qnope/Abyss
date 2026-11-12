@@ -8,6 +8,7 @@ is never edited by hand: change its script and build it again.
     tool/models/preview.sh <name> [prefix]    # renders to /tmp/models_preview/
     tool/models/preview.sh base_island+base_rampart   # several models together
     tool/models/portraits.sh [name ...]       # the interface's pictures, committed
+    tool/models/board.sh a,b,c /tmp/lot.png   # the review board of a lot
     cd tool/models && python -m unittest discover -s . -p '*_test.py'
 
 Both Python commands need Python 3.13 with `pip install bpy==5.2.3` (the CI job
@@ -104,9 +105,70 @@ A model with an atlas and a big flat side cuts it in a grid
 ## Budgets
 
 Each script's `BUDGET` caps its triangles (every mesh counted once per node
-that draws it), materials and texture size. `build.py` refuses to write a model
-over it, and so do the tests. A textured model costs one texture of its own:
-1024 px in VRAM-compressed form is about 1.3 MB with its mipmaps.
+that draws it), materials, texture size and, for a creature, bones and
+keyframes. `build.py` refuses to write a model over it, and so do the tests. A
+textured model costs one texture of its own: 1024 px in VRAM-compressed form is
+about 1.3 MB with its mipmaps.
+
+A script also declares its `FAMILY`, and its `BUDGET` must stay within the caps
+of the family, `catalog/families.py` (checked by `families_test.py`):
+
+| Family | Triangles | Materials | Texture | Bones | Keyframes |
+| --- | --- | --- | --- | --- | --- |
+| building | 20 000 | 5 | 1024 px | - | - |
+| unit | 3 000 | 3 | 256 px | 24 | 3 000 |
+| monster | 8 000 | 4 | 512 px | 40 | 6 000 |
+| map (what stands on a cell) | 6 000 | 4 | 512 px | - | - |
+| decor (island, rampart, terrain, backdrops) | 80 000 | 10 | 512 px | - | - |
+
+Mobile and WebGL 2 first. The building row is the prototype's largest model
+(the headquarters: 18 462 triangles, 5 materials, one 1024 px atlas), which ran
+smooth on an iPhone, and the decor row is the island's (77 623 triangles, drawn
+once). The others are first guesses, to be tightened by the bench of each lot:
+
+- *unit*: the parade ground draws several figures of six types at once, so a
+  figure is a sixth of a building (a few thousand triangles, three materials,
+  a small atlas) with a skeleton of at most 24 bones (a mobile skinning limit
+  that keeps the palette small). Keyframes are the times of every sampler of the
+  four actions: 24 bones with their three channels over about 70 frames is
+  already a few thousand, and an unmoving channel still costs two.
+- *monster*: a few on screen, but the Kraken and the Leviathan are single big
+  figures: a larger mesh, a 512 px atlas, up to 40 bones.
+- *map*: dozens of contents are drawn at once on a level, so each is under a
+  building's third (6 000), with few materials (one draw call each) and no
+  animation (the living creatures of the map are monsters).
+
+## Measure
+
+A lot is measured before its integration, on two tools. `tool/scene_capture.sh`
+(`godot/tool/scene/README.md`) renders the prototype and the base in the
+Compatibility renderer under `xvfb-run` and prints each view's draw calls and
+primitives: its frame rate means nothing in software, the counts do. Compare them
+with the lot's models in `WorldModels` against the counts before it; a model
+that adds more draw calls or primitives than its budget says is over. On a
+device, open the web build with `?bench=1` (`?bench=40` for 40 s) in the
+address, or run `-- --bench` natively: a fixed orbit of the prototype with the
+frame counter (`godot/app/README.md`). A regression of the frame time, the draw
+calls or the primitives against the previous lot blocks the lot.
+
+## How a model lot goes
+
+1. **Script**: one catalog script per model (its `FAMILY`, `BUDGET`, `NODES`,
+   `PORTRAIT = True` for a type the interface shows; a rig for a creature),
+   registered in `catalog/__init__.py`, with its tests first.
+2. **Build**: `tool/models/build.py <names>` writes the glb (and atlas) into
+   `godot/assets/models/`, refusing a model over its budget; commit them with
+   their `.import`.
+3. **Preview**: `tool/models/preview.sh <name>` to judge it while working.
+4. **Board**: `tool/models/board.sh a,b,c /tmp/lot.png` composes the review board
+   of the lot, each model's views, portrait and figures: the owner validates the
+   lot from this one image. Never commit it.
+5. **Owner validates** the board; nothing enters the game before.
+6. **Integrate** through `WorldModels` (`MODELS`, `UNIT_MODELS`...; a creature's
+   `ModelAnimator` plays its actions), the interface and `app/` untouched.
+7. **Portraits**: `tool/models/portraits.sh` renders the models' pictures; the
+   interface picks them up by the type's name, no code.
+8. **Bench**: measure as above before the pull request.
 
 ## Rigs and animations
 
@@ -151,7 +213,8 @@ it in a neutral studio (a key light with shadows, a cool fill, a dark blue
 background, a ground disc): `<prefix>_game.png` from the game's default 3/4
 camera at the phone's portrait size, and `_front`, `_right`, `_back`, `_left`
 from the four sides, all at 2x, and `_close`, the game's view zoomed on the
-front quarter, to judge the detail. It runs Godot's Compatibility renderer (the
+front quarter, to judge the detail (for a model that does not stand on the
+plateau, as a creature, it frames the wrong place: judge it by the sides). It runs Godot's Compatibility renderer (the
 web's) under `xvfb-run`. Models shown together with `base_island` stand on
 its pad of the same name (`model_pads.gd`), as in the game. The renders go to `/tmp/models_preview/` by default:
 never into the repo.

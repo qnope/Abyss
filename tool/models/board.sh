@@ -12,7 +12,9 @@
 # It reuses preview.sh and the portrait render, then composes the sheet in
 # Godot (board.gd). The intermediate renders go to a temporary folder; write
 # the board outside the repo: never commit it. GODOT names the engine binary,
-# PYTHON the Python 3.13 with bpy that reads the catalog.
+# PYTHON the Python 3.13 with bpy that reads the catalog. CELLS=<name>[,<name>...]
+# adds two views of those models side by side on the cells of the map
+# (cells.sh: near, and a phone's width of the map) at the head of the board.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 list="${1:?usage: tool/models/board.sh <name>[,<name>...] <out.png>}"
@@ -40,6 +42,7 @@ for name in "${names[@]}"; do
     tool/models/poses.sh "$name" "$work/$name" > /dev/null
   fi
 done
+[[ -z ${CELLS:-} ]] || tool/models/cells.sh "$CELLS" "$work/cells" > /dev/null
 xvfb-run -a -s "-screen 0 1280x1024x24" "$godot" --path godot --audio-driver Dummy \
   --rendering-method gl_compatibility --rendering-driver opengl3 \
   --script res://tool/models/portrait.gd -- "$work" "${names[@]}" 2>&1 \

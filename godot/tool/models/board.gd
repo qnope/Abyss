@@ -3,12 +3,14 @@ extends SceneTree
 ## model in a row (board_row.gd). tool/models/board.sh runs it, after the
 ## renders and the figures are made:
 ##   godot --path godot --script res://tool/models/board.gd -- <folder> <out.png> <figures.json>
-## The folder holds <name>_<view>.png and <name>.png; the figures file is
+## The folder holds <name>_<view>.png and <name>.png (and the cells_near.png and
+## cells_far.png of cells.sh, shown first); the figures file is
 ## {"models": [{"name": ..., "lines": [...], "tiers": n, "poses": bool}, ...]}
 ## (board_figures.py; a creature's poses are rendered by poses.gd).
 
 const Studio := preload("res://tool/models/studio.gd")
 const BoardRow := preload("res://tool/models/board_row.gd")
+const BoardCells := preload("res://tool/models/board_cells.gd")
 const MARGIN := 24
 
 
@@ -38,6 +40,7 @@ func _compose(folder: String, out: String, models: Array) -> void:
 	background.color = Studio.BACKGROUND
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override(&"separation", 28)
+	column.add_child(BoardCells.new(folder))
 	for entry: Variant in models:
 		var model: Dictionary = entry
 		var name_: String = model["name"]

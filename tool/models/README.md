@@ -162,7 +162,9 @@ calls or the primitives against the previous lot blocks the lot.
 3. **Preview**: `tool/models/preview.sh <name>` to judge it while working.
 4. **Board**: `tool/models/board.sh a,b,c /tmp/lot.png` composes the review board
    of the lot, each model's views, portrait and figures: the owner validates the
-   lot from this one image. Never commit it.
+   lot from this one image. A building with tiers (`Tier1`..`Tier3`) shows its
+   game and close views at tier 1, tiers 1+2 and all tiers, and the cost of each
+   (`workshop/tiers.py`). Never commit it.
 5. **Owner validates** the board; nothing enters the game before.
 6. **Integrate** through `WorldModels` (`MODELS`, `UNIT_MODELS`...; a creature's
    `ModelAnimator` plays its actions), the interface and `app/` untouched.
@@ -217,7 +219,9 @@ front quarter, to judge the detail (for a model that does not stand on the
 plateau, as a creature, it frames the wrong place: judge it by the sides). It runs Godot's Compatibility renderer (the
 web's) under `xvfb-run`. Models shown together with `base_island` stand on
 its pad of the same name (`model_pads.gd`), as in the game. The renders go to `/tmp/models_preview/` by default:
-never into the repo.
+never into the repo. `TIER=n tool/models/preview.sh <name>` shows a building up to
+its tier n (the nodes `Tier1`..`Tier3` add up, `model_tiers.gd` hides the
+others) and renders only `_game` and `_close`.
 
 ## Portraits
 
@@ -272,6 +276,19 @@ parts as nodes the game can animate:
 - `solar_panel`: a heliostat. A low housing (gauges, capacitors, cables) and on
   its turntable the node `Array`, two wings of glass cells tilted to the light,
   algae hanging from them. Gold is its light.
+- `algae_farm`, `coral_mine`, `ore_extractor`, `solar_panel`: the production
+  buildings, on a pad of two cells, each in **3 tiers that add up** (the nodes
+  `Tier1`..`Tier3`, shown up to the building's tier) and with its own colour.
+  The farm is a glasshouse of green panes, basins of kelp and a tank (Tier2: a
+  ridge lantern, a second basin and the node `Drone`; Tier3: the bioreactor
+  column). The mine is a headframe over a pink glowing shaft (the nodes
+  `Wheel`, `CrownWheel`), with a crusher, bin and belt (Tier2) and an upper
+  mast with a beacon (Tier3). The extractor is a blue tripod rig whose string
+  is the node `Drill`, with a belt, hopper and cab (Tier2) and a silo (Tier3).
+  The solar panel is a housing under its `Array` (the same at every tier), with
+  battery cabinets (Tier2) and a gold collector tower (Tier3). Their parts
+  (`parts/glasshouse.py`, `production.py`, `lattice.py`, `crystals.py`,
+  `belts.py`) and textures (`textures/production.py`) are shared by the four.
 - `coral_citadel`: a fortress grown rather than built: walls of living stone
   with thorns, four cupped towers, a keep crowned by a polyp calyx holding the
   node `Heart`, a pink crystal. Pink is its light.

@@ -2,7 +2,9 @@
 # The review board of a lot of models: one contact sheet, each model in a row
 # with its game view, its four sides, its close view and its portrait, its name
 # and its budget figures written under it, so that the owner validates a lot
-# from one image:
+# from one image. A building with tiers (the nodes Tier1..Tier3) has two lines:
+# its game views and its close views at tier 1, tiers 1+2 and all tiers, and
+# its figures give the cost of each:
 #   tool/models/board.sh <name>[,<name>...] <out.png>
 # The models are the glb of godot/assets/models/ (tool/models/build.py first).
 # It reuses preview.sh and the portrait render, then composes the sheet in
@@ -22,10 +24,15 @@ godot="${GODOT:-godot}"
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 mkdir -p "$(dirname "$out")"
+"${PYTHON:-python3}" tool/models/board_figures.py "$work/figures.json" "${names[@]}"
 for name in "${names[@]}"; do
   tool/models/preview.sh "$name" "$work/$name" > /dev/null
+  # A building with tiers shows its game and close views up to each lower tier.
+  tiers="$("${PYTHON:-python3}" -c 'import json,sys; print(next(m["tiers"] for m in json.load(open(sys.argv[1]))["models"] if m["name"] == sys.argv[2]))' "$work/figures.json" "$name")"
+  for ((tier = 1; tier < tiers; tier++)); do
+    TIER=$tier tool/models/preview.sh "$name" "$work/${name}_t$tier" > /dev/null
+  done
 done
-"${PYTHON:-python3}" tool/models/board_figures.py "$work/figures.json" "${names[@]}"
 xvfb-run -a -s "-screen 0 1280x1024x24" "$godot" --path godot --audio-driver Dummy \
   --rendering-method gl_compatibility --rendering-driver opengl3 \
   --script res://tool/models/portrait.gd -- "$work" "${names[@]}" 2>&1 \

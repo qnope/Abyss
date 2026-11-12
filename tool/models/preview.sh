@@ -3,7 +3,8 @@
 #   tool/models/preview.sh <name>[+<name>...] [out prefix]
 # writes <out prefix>_game.png (the game's 3/4 camera), _close (zoomed on its
 # front quarter) and _front, _right,
-# _back, _left.png, at twice the phone's scale. The prefix defaults to
+# _back, _left.png, at twice the phone's scale. TIER=n shows the model up to its
+# tier n (its nodes Tier1..Tier3 add up) and renders only _game and _close. The prefix defaults to
 # /tmp/models_preview/<name>: never write the renders in the repo.
 # Godot imports the project, then draws with its Compatibility renderer (the
 # web's) in a virtual X display (xvfb-run). GODOT names the engine binary.
@@ -24,6 +25,6 @@ godot="${GODOT:-godot}"
 "$godot" --headless --path godot --import > /dev/null 2>&1
 xvfb-run -a -s "-screen 0 1280x1024x24" "$godot" --path godot --audio-driver Dummy \
   --rendering-method gl_compatibility --rendering-driver opengl3 \
-  --script res://tool/models/preview.gd -- "$name" "$prefix" 2>&1 \
+  --script res://tool/models/preview.gd -- "$name" "$prefix" ${TIER:+"$TIER"} 2>&1 \
   | grep -E "\.png$|ERROR|error" || true
 [[ -f ${prefix}_game.png ]] || { echo "The preview did not render." >&2; exit 1; }

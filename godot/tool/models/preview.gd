@@ -6,11 +6,14 @@ extends SceneTree
 ## writes <out prefix>_game.png, _close.png (the front quarter, zoomed in),
 ## _front.png, _right.png, _back.png, _left.png. Names joined by "+"
 ## (base_island+base_rampart) render those models together, each building on
-## the island's pad named after it.
+## the island's pad named after it. A third argument, a tier number, shows the
+## model up to that tier (model_tiers.gd) and renders only its game and close
+## views: the board's rows of a building's tiers.
 
 const Studio := preload("res://tool/models/studio.gd")
 const ModelBounds := preload("res://tool/models/model_bounds.gd")
 const ModelPads := preload("res://tool/models/model_pads.gd")
+const ModelTiers := preload("res://tool/models/model_tiers.gd")
 
 ## The phone's viewport (project.godot), rendered at 2x.
 const SCALE := 2
@@ -31,15 +34,18 @@ var _camera: Camera3D
 
 func _initialize() -> void:
 	var args := OS.get_cmdline_user_args()
-	if args.size() != 2:
-		printerr("usage: preview.gd -- <model name> <out prefix>")
+	if args.size() < 2 or args.size() > 3:
+		printerr("usage: preview.gd -- <model name> <out prefix> [tier]")
 		quit(2)
 		return
 	var model := _load(args[0])
 	if model == null:
 		quit(1)
 		return
-	_render(model, args[1])
+	var tier := int(args[2]) if args.size() == 3 else 0
+	if tier > 0:
+		ModelTiers.show_up_to(model, tier)
+	_render(model, args[1], tier > 0)
 
 
 func _load(names: String) -> Node3D:
@@ -56,7 +62,7 @@ func _load(names: String) -> Node3D:
 	return group
 
 
-func _render(model: Node3D, prefix: String) -> void:
+func _render(model: Node3D, prefix: String, tiered: bool) -> void:
 	_viewport = SubViewport.new()
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	_viewport.msaa_3d = Viewport.MSAA_4X
@@ -79,6 +85,8 @@ func _render(model: Node3D, prefix: String) -> void:
 		Shot.new("left", SIDE, 270.0, SIDE_PITCH, SIDE_FOV, false),
 	]
 	for shot in shots:
+		if tiered and not shot.game:
+			continue
 		await _shoot(bounds, shot, "%s_%s.png" % [prefix, shot.name])
 	quit(0)
 

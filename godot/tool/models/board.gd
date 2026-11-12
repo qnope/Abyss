@@ -4,7 +4,7 @@ extends SceneTree
 ## renders and the figures are made:
 ##   godot --path godot --script res://tool/models/board.gd -- <folder> <out.png> <figures.json>
 ## The folder holds <name>_<view>.png and <name>.png; the figures file is
-## {"models": [{"name": ..., "lines": [...]}, ...]} (board_figures.py).
+## {"models": [{"name": ..., "lines": [...], "tiers": n}, ...]} (board_figures.py).
 
 const Studio := preload("res://tool/models/studio.gd")
 const BoardRow := preload("res://tool/models/board_row.gd")
@@ -43,7 +43,7 @@ func _compose(folder: String, out: String, models: Array) -> void:
 		var lines: PackedStringArray = []
 		for line: String in model["lines"]:
 			lines.append(line)
-		column.add_child(BoardRow.new(folder, name_, lines))
+		column.add_child(BoardRow.new(folder, name_, lines, int(model.get("tiers", 0))))
 	var margin := MarginContainer.new()
 	for side: String in ["left", "right", "top", "bottom"]:
 		margin.add_theme_constant_override(StringName("margin_" + side), MARGIN)

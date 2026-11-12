@@ -1,7 +1,8 @@
 class_name TerrainLook
 extends RefCounted
-## How the floor of a cell looks until a model of the terrain exists: a colour
-## and the height of its top. A cell not seen is dark and lower, as under a
+## How the floor of a cell stands: a colour (of the stand-in floor, the model's
+## tiles being drawn by [MapTiles]) and the height of its top, which is where
+## what stands on the cell is put. A cell not seen is dark and lower, as under a
 ## cover of fog. [method WorldModels.terrain] is the one place that says it.
 
 ## How far below the sea floor a cell not seen lies.

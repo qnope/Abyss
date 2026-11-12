@@ -12,8 +12,6 @@ const TERRAINS: Dictionary[TerrainType.Value, Color] = {
 }
 ## The floor of a cell not seen yet, dark under the water.
 const FOG := Color("0a111d")
-## How much lighter every other tile is, so that the grid reads.
-const CHECKER := 0.06
 
 const TREASURE := Color("ffd740")
 const RUINS := Color("d7ccc8")

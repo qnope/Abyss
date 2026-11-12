@@ -5,7 +5,7 @@ Blender's module (`bpy`), exported as a glb into `godot/assets/models/`. A glb
 is never edited by hand: change its script and build it again.
 
     tool/models/build.py [name ...]           # all models without a name
-    tool/models/preview.sh <name> [prefix]    # renders to /tmp/models_preview/
+    tool/models/preview.sh <name> [prefix] [tier]   # renders to /tmp/models_preview/
     tool/models/preview.sh base_island+base_rampart   # several models together
     tool/models/portraits.sh [name ...]       # the interface's pictures, committed
     tool/models/preview.sh headquarters@2     # a building up to its tier 2
@@ -244,6 +244,20 @@ never into the repo. `TIER=n tool/models/preview.sh <name>` shows a building up 
 its tier n (the nodes `Tier1`..`Tier3` add up, `ModelTiers` hides the
 others) and renders only `_game` and `_close`.
 
+## Tiers
+
+A building the game shows at a level has three tiers that add up, in one glb:
+the nodes `Tier1` (its base, always shown), `Tier2` (what rising adds) and
+`Tier3` (its crown), listed in its `NODES` (a moving part is a piece under a
+tier, `Tier3/Beacon`). The game shows `Tier1`, `Tier1 + Tier2`, then all three
+(`BuildingTier.of_level`: levels 1-3, 4-7, 8 and up); the budget counts the three
+together, so the lower tiers cost less. `preview.sh <name> <prefix> <1|2|3>` renders
+the game and close views of a building up to that tier (`godot/tool/models/
+model_tiers.gd` hides the others), and `board.sh` adds, for a model with a
+`Tier1` node, a row of those views at each tier and the triangles and draw
+calls of each stage (`workshop/tiers.py`). The occlusion is baked on the whole
+model, so a lower tier alone is a little darker where a higher one would shade it.
+
 ## Portraits
 
 The interface shows a building, a unit or a monster as a picture, rendered from
@@ -313,6 +327,17 @@ parts as nodes the game can animate:
 - `coral_citadel`: a fortress grown rather than built: walls of living stone
   with thorns, four cupped towers, a keep crowned by a polyp calyx holding the
   node `Heart`, a pink crystal. Pink is its light.
+
+- `descent_module`, `pressure_capsule`, `volcanic_kernel` (in tiers): the
+  descent module, a gantry over a well of blue light with its pod on cables, in
+  grey-green steel; the pressure capsule, a white and steel blue hull sphere
+  with a cyan viewport, cradled by legs, then ribbed, then in gimbal rings,
+  by two black chimneys; the base's volcanic kernel, a basalt mound with a
+  molten core, then pillars caging a spire of lava, then a crown of obsidian
+  prongs round a flame (nodes `Tier3/Beacon` for the first two, `Tier3/Flame`).
+  Their tiles are `textures/deep.py` (lava and its fire, basalt, blue lights,
+  painted plates, a hatch) in the colony atlas' free cells, their shared parts
+  `parts/deep.py`.
 
 Each has its own 1024 px atlas painted from `textures/colony.py`; the rampart
 has a 512 px one, its seamless reef stone.

@@ -20,6 +20,15 @@ func test_uses_the_vertex_colours_of_a_surface_as_albedo() -> void:
 	assert_false((mesh.surface_get_material(1) as BaseMaterial3D).vertex_color_use_as_albedo)
 
 
+func test_a_blended_surface_takes_no_shadows() -> void:
+	_scene = _scene_with([true, true])
+	var mesh := (_scene.get_child(0) as MeshInstance3D).mesh
+	(mesh.surface_get_material(0) as BaseMaterial3D).transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	ModelSurfaces.use_vertex_colours(_scene)
+	assert_true((mesh.surface_get_material(0) as BaseMaterial3D).disable_receive_shadows)
+	assert_false((mesh.surface_get_material(1) as BaseMaterial3D).disable_receive_shadows)
+
+
 func test_skips_a_surface_without_material() -> void:
 	_scene = _scene_with([true])
 	((_scene.get_child(0) as MeshInstance3D).mesh as ArrayMesh).surface_set_material(0, null)

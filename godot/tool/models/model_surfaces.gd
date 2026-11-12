@@ -5,7 +5,8 @@ extends RefCounted
 
 ## Turns the vertex colours (glTF COLOR_0) of each surface under [param scene]
 ## into a factor of its albedo, as glTF means them; Godot's importer leaves
-## them out.
+## them out. A blended surface (the fog's murk, whose alpha is its colours')
+## takes no shadows: the light's shadow map would stripe a veil this thin.
 static func use_vertex_colours(scene: Node) -> void:
 	for node: Node in scene.find_children("*", "MeshInstance3D", true, false):
 		var mesh := (node as MeshInstance3D).mesh as ArrayMesh
@@ -13,6 +14,8 @@ static func use_vertex_colours(scene: Node) -> void:
 			var material := mesh.surface_get_material(surface) as BaseMaterial3D
 			if material != null and mesh.surface_get_format(surface) & Mesh.ARRAY_FORMAT_COLOR:
 				material.vertex_color_use_as_albedo = true
+				if material.transparency != BaseMaterial3D.TRANSPARENCY_DISABLED:
+					material.disable_receive_shadows = true
 
 
 ## Samples the atlas of each textured surface under [param scene] (the PNG

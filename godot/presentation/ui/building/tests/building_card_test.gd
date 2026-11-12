@@ -32,6 +32,14 @@ func test_a_built_building_wears_its_colour_and_tells_its_level() -> void:
 	assert_no_raw_keys()
 
 
+func test_the_render_of_a_built_building_with_a_model_is_in_its_card() -> void:
+	set_levels({Type.SOLAR_PANEL: 1, Type.ALGAE_FARM: 1})
+	var with_model := find_type("Portrait", _card(Type.SOLAR_PANEL))
+	assert_not_null((with_model[0] as Portrait).picture_rect)
+	var without := find_type("Portrait", _card(Type.ALGAE_FARM))
+	assert_null((without[0] as Portrait).picture_rect)
+
+
 func test_a_building_to_build_is_dimmed_and_says_so() -> void:
 	var card := _card(Type.LABORATORY)
 	assert_eq(card.level_label.text, "Non construit")

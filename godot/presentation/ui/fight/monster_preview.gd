@@ -18,12 +18,13 @@ var count_label := text_label(&"BodyMedium", AbyssColors.ON_SURFACE_DIM)
 ## The chips of the stats: hit points, attack, defence.
 var chips: Array[Label] = []
 var traits: MonsterFamilyTraits
-var portrait := Portrait.new("", PORTRAIT_SIZE, AbyssColors.CORAL_PINK)
+var portrait: Portrait
 
 
 func _init(lair_: MonsterLair) -> void:
 	lair = lair_
 	stats = MonsterUnitStats.of(lair.family, lair.level())
+	portrait = Portrait.new("", PORTRAIT_SIZE, AbyssColors.CORAL_PINK, PortraitFiles.monster(lair.family))
 	super()
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override(&"separation", GAP)

@@ -1,28 +1,31 @@
 extends Node3D
 ## The neutral studio a model is reviewed in: a key light with shadows, a cool
-## fill, a dark blue background and a ground disc under the model.
+## fill, a dark blue background and a ground disc under the model. For a
+## portrait ([param clear]) the background is the viewport's own, transparent,
+## with no ground and no glow.
 
 const BACKGROUND := Color("0d1b2a")
 const GROUND := Color("101c2c")
 
 
-func _init(model: Node3D, bounds: AABB) -> void:
-	add_child(_environment())
+func _init(model: Node3D, bounds: AABB, clear := false) -> void:
+	add_child(_environment(clear))
 	add_child(_key_light(bounds))
 	add_child(_fill_light())
-	add_child(_ground(bounds))
+	if not clear:
+		add_child(_ground(bounds))
 	add_child(model)
 
 
-func _environment() -> WorldEnvironment:
+func _environment(clear: bool) -> WorldEnvironment:
 	var environment := Environment.new()
-	environment.background_mode = Environment.BG_COLOR
+	environment.background_mode = Environment.BG_CLEAR_COLOR if clear else Environment.BG_COLOR
 	environment.background_color = BACKGROUND
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	environment.ambient_light_color = Color("8fa8c8")
 	environment.ambient_light_energy = 1.0
 	environment.tonemap_mode = Environment.TONE_MAPPER_AGX
-	environment.glow_enabled = true
+	environment.glow_enabled = not clear
 	environment.glow_intensity = 0.5
 	environment.glow_bloom = 0.0
 	environment.glow_hdr_threshold = 1.0

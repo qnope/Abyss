@@ -27,6 +27,7 @@ OCCLUSION = Occlusion(rays=20, distance=0.45, floor=0.3,
                       strength={"reef": 0.75, "algae": 0.45, "lamp": 0.0})
 GROUP = "CoralCitadel"
 FAMILY = "building"
+PORTRAIT = True
 NODES = [GROUP, f"{GROUP}/Heart"]
 
 

@@ -53,7 +53,7 @@ func _picture() -> Control:
 	if base != null:
 		return PostPicture.of(base.type, PostHolder.Value.FACTION)
 	return Portrait.new(BuildingTexts.display_name(BuildingType.Value.VOLCANIC_KERNEL), PostPicture.SIZE,
-		PassagePicture.tint_of(PostHolder.Value.FACTION))
+		PassagePicture.tint_of(PostHolder.Value.FACTION), PortraitFiles.building(BuildingType.Value.VOLCANIC_KERNEL))
 
 
 func _title() -> String:

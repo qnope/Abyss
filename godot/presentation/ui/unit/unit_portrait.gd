@@ -12,7 +12,8 @@ static func of(
 	type: UnitType.Value, portrait_size := 40.0, greyscale := false, faded := false
 ) -> Portrait:
 	var tint := AbyssColors.DISABLED if greyscale else UnitColors.of(type)
-	var portrait := Portrait.new(UnitTexts.display_name(type), portrait_size, tint)
+	var picture := "" if greyscale else PortraitFiles.unit(type)
+	var portrait := Portrait.new(UnitTexts.display_name(type), portrait_size, tint, picture)
 	if faded:
 		portrait.modulate.a = AbyssColors.UNAVAILABLE_OPACITY
 	return portrait

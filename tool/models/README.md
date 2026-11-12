@@ -7,6 +7,7 @@ is never edited by hand: change its script and build it again.
     tool/models/build.py [name ...]           # all models without a name
     tool/models/preview.sh <name> [prefix]    # renders to /tmp/models_preview/
     tool/models/preview.sh base_island+base_rampart   # several models together
+    tool/models/portraits.sh [name ...]       # the interface's pictures, committed
     cd tool/models && python -m unittest discover -s . -p '*_test.py'
 
 Both Python commands need Python 3.13 with `pip install bpy==5.2.3` (the CI job
@@ -154,6 +155,33 @@ front quarter, to judge the detail. It runs Godot's Compatibility renderer (the
 web's) under `xvfb-run`. Models shown together with `base_island` stand on
 its pad of the same name (`model_pads.gd`), as in the game. The renders go to `/tmp/models_preview/` by default:
 never into the repo.
+
+## Portraits
+
+The interface shows a building, a unit or a monster as a picture, rendered from
+its model: `tool/models/portraits.sh [names]` writes
+`godot/assets/portraits/<name>.png` (and its `.import`, committed like the
+glb) for every model whose script declares `PORTRAIT = True`, or for the names
+given. It is a fixed 3/4 camera (45 degrees round, 28 above, 30 of field,
+`godot/tool/models/portrait_camera.gd` backs it off until the model's box just
+fills the square), the studio's light, a transparent background, no ground, 256
+px square: twice the largest portrait of the interface (128 points). The command
+imports the project and draws under `xvfb-run` as `preview.sh` does, then asks
+the import for mipmaps, which a portrait shown at half its size wants. A portrait
+is never edited by hand and is regenerated whenever its model changes.
+
+`Portrait` shows it when the file exists (`PortraitFiles`, in
+`presentation/ui/common/`, names it after the lower-case enum value: a
+building `headquarters`, `solar_panel`; a unit `scout`, `dome_breaker`; a monster
+family `swarm`, `kraken`) and keeps the initials otherwise. So **a lot names
+its model after its type (`scout`, `swarm`), declares `PORTRAIT = True`, runs
+`portraits.sh`, and no code changes**: `portrait_files_test.gd` fails for a
+portrait that no type is called.
+
+The Models job of CI (`portraits_test.py`) checks that each declared portrait is
+committed, a square PNG of the declared side with its `.import`, and that none is
+committed for a model that declares none. It does not compare pixels: another
+machine's renderer draws the last bits differently.
 
 ## The base
 

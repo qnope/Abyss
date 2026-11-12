@@ -180,7 +180,8 @@ jobs:
 
   # The 3D models' scripts (tool/models/), over Blender's Python module: each
   # model builds, stays under its budget, gives the same geometry twice and
-  # matches the glb committed in godot/assets/models/.
+  # matches the glb committed in godot/assets/models/, and has its portrait
+  # committed in godot/assets/portraits/ when it declares one.
   models:
     name: Models
     runs-on: ubuntu-latest

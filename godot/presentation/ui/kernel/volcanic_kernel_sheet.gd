@@ -30,7 +30,8 @@ var garrison_panel: KernelGarrisonPanel
 func _init(game: Game, captured: bool, plan: Control = null) -> void:
 	is_captured = captured
 	super(Portrait.new(BuildingTexts.display_name(BuildingType.Value.VOLCANIC_KERNEL), PICTURE_SIZE,
-		AbyssColors.CORAL_PINK), func() -> String: return BuildingTexts.display_name(BuildingType.Value.VOLCANIC_KERNEL))
+		AbyssColors.CORAL_PINK, PortraitFiles.building(BuildingType.Value.VOLCANIC_KERNEL)),
+		func() -> String: return BuildingTexts.display_name(BuildingType.Value.VOLCANIC_KERNEL))
 	description_label = label(func() -> String: return Texts.t(&"mapKernelCaptured" if captured else &"mapKernelUncaptured"))
 	description_label.add_theme_color_override(&"font_color", AbyssColors.ON_SURFACE_DIM)
 	column.add_child(description_label)

@@ -48,6 +48,7 @@ func close() -> void:
 	_world.map.cell_tapped.disconnect(router.route)
 	_hud.content.remove_child(tab)
 	tab.free()
+	_world.map.forget()
 
 
 ## Shows [param level] on the map, if the game holds it.

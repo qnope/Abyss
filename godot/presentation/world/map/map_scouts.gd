@@ -4,8 +4,10 @@ extends Node3D
 ## scout_token_layer.dart): a [ScoutToken] over each cell a scout was sent to
 ## and not back from. A scout sent while the level is shown swims there; the
 ## ones already sent when the level appears wait. A scout whose target is no
-## longer pending (its exploration is over) leaves at once. The tokens never
-## catch a tap: the map picks the cell under them.
+## longer pending (its exploration is over) leaves at once, and
+## [method show_scouts] says which: the story of the turn fades it out with the
+## fog it lifts ([FogLift]). The tokens never catch a tap: the map picks the
+## cell under them.
 
 ## The scouts by the cell they were sent to.
 var tokens: Dictionary[Vector2i, ScoutToken] = {}
@@ -14,14 +16,18 @@ var _level := 0
 
 ## Shows the scouts of [param pending] (each target with the cell its scout
 ## set off from) on the level [param level] of a map [param width] by
-## [param height] cells.
+## [param height] cells. Gives the targets of the scouts that were waiting on
+## this level and left, their exploration over.
 func show_scouts(
 	pending: Dictionary[Vector2i, Vector2i], level: int, width: int, height: int
-) -> void:
+) -> Array[Vector2i]:
 	var appearing := level != _level
 	_level = level
+	var left: Array[Vector2i] = []
 	for target: Vector2i in tokens.keys():
 		if appearing or not pending.has(target):
+			if not appearing:
+				left.append(target)
 			tokens[target].free()
 			tokens.erase(target)
 	for target: Vector2i in pending:
@@ -33,6 +39,7 @@ func show_scouts(
 		tokens[target] = token
 		add_child(token)
 	set_process(_is_swimming())
+	return left
 
 
 func _process(delta: float) -> void:

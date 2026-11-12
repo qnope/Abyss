@@ -34,29 +34,32 @@ func test_a_scout_just_sent_swims_from_its_origin_to_its_target() -> void:
 	assert_eq(animator.current(), &"swim", "it swims through the water")
 	assert_eq(token.position, MapGrid.at(0, 0, 6, 6) + Vector3.UP * ScoutToken.HOVER)
 	assert_true(_scouts.is_processing())
-	_scouts._process(ScoutToken.SWIM / 2.0)
+	_scouts._process(token.swim / 2.0)
 	assert_almost_eq(token.position.x, (MapGrid.at(0, 0, 6, 6).x + MapGrid.at(3, 3, 6, 6).x) / 2.0, 1e-4)
 	assert_true(_scouts.is_processing())
-	_scouts._process(ScoutToken.SWIM)
+	_scouts._process(token.swim)
 	assert_false(token.is_swimming())
 	assert_eq(animator.current(), &"idle", "and rests when it is there")
 	assert_eq(token.position, MapGrid.at(3, 3, 6, 6) + Vector3.UP * ScoutToken.HOVER)
 	assert_false(_scouts.is_processing())
 
 
-func test_a_scout_whose_exploration_is_over_leaves_at_once() -> void:
+func test_a_scout_whose_exploration_is_over_leaves_at_once_and_is_told() -> void:
 	_scouts.show_scouts(_pending([Vector2i(3, 3), Vector2i(4, 4)]), 1, 6, 6)
 	var stays := _scouts.tokens[Vector2i(4, 4)]
-	_scouts.show_scouts(_pending([Vector2i(4, 4)]), 1, 6, 6)
+	var left := _scouts.show_scouts(_pending([Vector2i(4, 4)]), 1, 6, 6)
+	assert_eq(left, [Vector2i(3, 3)])
 	assert_eq(_scouts.tokens.keys(), [Vector2i(4, 4)])
 	assert_eq(_scouts.tokens[Vector2i(4, 4)], stays)
 	assert_eq(_scouts.get_child_count(), 1)
 
 
-func test_another_level_shows_its_scouts_at_rest() -> void:
+func test_another_level_shows_its_scouts_at_rest_and_none_left() -> void:
 	_scouts.show_scouts(_pending([Vector2i(3, 3)]), 1, 6, 6)
 	var first := _scouts.tokens[Vector2i(3, 3)]
-	_scouts.show_scouts(_pending([Vector2i(3, 3), Vector2i(1, 1)]), 2, 6, 6)
+	var left := _scouts.show_scouts(_pending([Vector2i(1, 1)]), 2, 6, 6)
+	assert_eq(left, [] as Array[Vector2i], "the scouts of the level before are not told as having left")
+	left = _scouts.show_scouts(_pending([Vector2i(3, 3), Vector2i(1, 1)]), 2, 6, 6)
 	assert_ne(_scouts.tokens[Vector2i(3, 3)], first, "the scouts of the first level are gone")
 	assert_false(_scouts.tokens[Vector2i(1, 1)].is_swimming())
 	assert_eq(_scouts.get_child_count(), 2)

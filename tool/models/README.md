@@ -107,6 +107,42 @@ that draws it), materials and texture size. `build.py` refuses to write a model
 over it, and so do the tests. A textured model costs one texture of its own:
 1024 px in VRAM-compressed form is about 1.3 MB with its mipmaps.
 
+## Rigs and animations
+
+A unit or a monster moves, so its script declares a skeleton, in
+`workshop/rig.py`, with no Blender needed to read it:
+
+    rig = model.rig
+    rig.bone("Body", None, head=(0, -0.35, 0.5), tail=(0, 0.45, 0.5))
+    tail = rig.chain("Tail", "Body", [(0, -0.35, 0.5), (0, -0.65, 0.5), ...])  # Tail1..
+    rig.action("swim", 24, {"Tail1": [Key(0), Key(6, (0, 0, 22)), ...]}, loop=True)
+
+A bone has a parent declared before it. A `Key(frame, rotation, location)`
+poses a bone at a frame: rotation in degrees and location offset, **about the
+model's own axes** at rest (Blender's, Z up) and on top of the parent's pose,
+so a tail bone bends from the one before it. Actions play at `rig.fps` (24):
+`idle` and `swim` loop (a loop must end where it starts, checked at
+declaration), `attack` and `hit` play once. The units and monsters share these
+four names; the game asks for them by name.
+
+Geometry is skinned as it is added, `model.add(group, geometry, material,
+paint, bone=...)`: a bone's name binds a rigid part to it alone, and
+`skin.along(chain, rig.centres(chain))` blends a ribbon or a tail along a chain
+of bones, from the weights of the vertex's place along it (`workshop/skin.py`).
+Every part of a rigged model needs a bone. The meshes of a rigged model are the
+children of the node `Rig` (the armature, `workshop/armature.py`), which is its
+node to list in `NODES`; the group names only name the meshes.
+
+The export writes each action as a glTF animation on an NLA track; a loop is
+named `<action>_loop`, which Godot's importer reads as loop mode and drops
+from the name (the game plays `swim`, not `swim_loop`). The budget gains
+`bones` (the joints of the skin) and `keyframes` (the times of every sampler:
+a channel that does not move still costs its two). In Godot,
+`ModelAnimator` (`presentation/world/models/`) plays them by name.
+`catalog/probe_fish` (a body and a three-bone tail with the four actions) is the
+workshop's proof, tested in Python and played in a GDScript test; the game does
+not show it.
+
 ## Preview
 
 `preview.sh` imports the project, then renders the model as the game imports

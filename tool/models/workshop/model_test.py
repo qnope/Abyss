@@ -5,12 +5,13 @@ import unittest
 
 import numpy
 
-from workshop import shapes
+from workshop import shapes, skin
 from workshop.atlas import Atlas, Tile
 from workshop.builder import painted
 from workshop.materials import COLOR_ATTRIBUTE, Material
 from workshop.model import Model
 from workshop.occlusion import Occlusion
+from workshop.rig import Key
 from workshop.scene import fresh_scene
 
 ROCK, GLOW = Material("rock", 0.9), Material("glow", 0.4, emission="#00ffff")
@@ -112,6 +113,34 @@ class ModelTest(unittest.TestCase):
     def test_refuses_a_material_it_does_not_have(self):
         with self.assertRaises(KeyError):
             _model().add("Island", shapes.octahedron(1), "coral", GREY)
+
+    def test_skins_the_parts_of_a_rigged_model_under_its_armature(self):
+        fresh_scene()
+        model = Model("test", 3, [ROCK])
+        model.rig.bone("Root", None, (0, 0, 0), (0, 1, 0))
+        model.rig.bone("Tip", "Root", (0, 1, 0), (0, 2, 0))
+        model.rig.action("idle", 4, {"Tip": [Key(0), Key(2, (0, 0, 30)), Key(4)]}, loop=True)
+        model.add("Fish", shapes.octahedron(0.5), "rock", GREY, bone="Root")
+        model.add("Fish", shapes.octahedron(0.2).transform((0, 2, 0)), "rock", GREY,
+                  bone=skin.along(["Root", "Tip"], model.rig.centres(["Root", "Tip"])))
+        (obj,) = model.emit()
+        self.assertEqual(obj.parent.name, "Rig")
+        self.assertEqual(obj.modifiers[0].object, obj.parent)
+        self.assertEqual(sorted(group.name for group in obj.vertex_groups), ["Root", "Tip"])
+        self.assertEqual([t.name for t in obj.parent.animation_data.nla_tracks], ["idle_loop"])
+
+    def test_refuses_a_part_without_bone_in_a_rigged_model_and_a_bone_without_rig(self):
+        fresh_scene()
+        model = Model("test", 3, [ROCK])
+        model.rig.bone("Root", None, (0, 0, 0), (0, 1, 0))
+        model.add("Fish", shapes.octahedron(0.5), "rock", GREY)
+        with self.assertRaises(ValueError):
+            model.emit()
+        fresh_scene()
+        model = Model("test", 3, [ROCK])
+        model.add("Fish", shapes.octahedron(0.5), "rock", GREY, bone="Root")
+        with self.assertRaises(ValueError):
+            model.emit()
 
 
 if __name__ == "__main__":

@@ -17,13 +17,10 @@ class GlbReport:
     """What a glb holds, from its JSON chunk and its binary chunk."""
 
     def __init__(self, document, binary, folder):
-        self._document = document
-        self._nodes = document.get("nodes", [])
-        self._paths = {}
+        self._document, self.binary = document, binary
+        self._nodes, self._paths = document.get("nodes", []), {}
         self._index_paths(document)
-        self.binary = binary
-        self.images = [_image_size(image, document, binary, folder)
-                       for image in document.get("images", [])]
+        self.images = [_image_size(i, document, binary, folder) for i in document.get("images", [])]
 
     def _index_paths(self, document):
         scene = document.get("scenes", [{}])[document.get("scene", 0)]
@@ -41,8 +38,7 @@ class GlbReport:
         return list(self._paths)
 
     @property
-    def document(self):
-        """The glb's JSON chunk."""
+    def document(self):  # the glb's JSON chunk
         return self._document
 
     @property
@@ -57,15 +53,14 @@ class GlbReport:
     @property
     def animations(self):
         """The names of the animations."""
-        return [animation.get("name", "") for animation in self._document.get("animations", [])]
+        return [a.get("name", "") for a in self._document.get("animations", [])]
 
     @property
     def keyframes(self):
         """The keyframes of the animations: the times of every sampler."""
-        accessors = self._document.get("accessors", [])
-        return sum(accessors[sampler["input"]]["count"]
-                   for animation in self._document.get("animations", [])
-                   for sampler in animation["samplers"])
+        counts = self._document.get("accessors", [])
+        return sum(counts[s["input"]]["count"] for a in self._document.get("animations", [])
+                   for s in a["samplers"])
 
     @property
     def triangles(self):

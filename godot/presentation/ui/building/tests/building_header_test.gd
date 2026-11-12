@@ -31,6 +31,6 @@ func test_a_built_building_with_a_model_shows_its_render() -> void:
 
 
 func test_a_building_without_a_model_or_not_built_keeps_its_initials() -> void:
-	set_levels({Type.ALGAE_FARM: 1})
-	assert_null(_header(Type.ALGAE_FARM).portrait.picture_rect)
+	set_levels({Type.BARRACKS: 1})
+	assert_null(_header(Type.BARRACKS).portrait.picture_rect)
 	assert_null(_header(Type.HEADQUARTERS).portrait.picture_rect, "to build: no picture")

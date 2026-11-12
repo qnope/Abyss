@@ -158,7 +158,9 @@ calls or the primitives against the previous lot blocks the lot.
    registered in `catalog/__init__.py`, with its tests first.
 2. **Build**: `tool/models/build.py <names>` writes the glb (and atlas) into
    `godot/assets/models/`, refusing a model over its budget; commit them with
-   their `.import`.
+   their `.import` (a new atlas's `.png.import` is first imported uncompressed:
+   set `compress/mode=2` and `mipmaps/generate=true` in it, as the other atlases
+   have, and import again: `models_test.gd` checks it).
 3. **Preview**: `tool/models/preview.sh <name>` to judge it while working.
 4. **Board**: `tool/models/board.sh a,b,c /tmp/lot.png` composes the review board
    of the lot, each model's views, portrait and figures: the owner validates the

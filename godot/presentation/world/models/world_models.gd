@@ -42,9 +42,23 @@ const FIGURE_YAW := -135.0
 const ANIMATOR := &"animator"
 
 
-## The contents of the map that have a model, by kind. None yet; step 7 adds
-## them here.
-const MAP_MODELS: Dictionary[MapContent.Kind, PackedScene] = {}
+## The contents of the map that have a model, by kind. (The three resource
+## models, map_resource_*, wait for a bonus that is one resource: the game's
+## bonus holds a mix of all three, and stands as the treasure.)
+const MAP_MODELS: Dictionary[MapContent.Kind, PackedScene] = {
+	MapContent.Kind.TREASURE: preload("res://assets/models/map_treasure.glb"),
+	MapContent.Kind.RUINS: preload("res://assets/models/map_ruins.glb"),
+	MapContent.Kind.WRECK: preload("res://assets/models/map_wreck.glb"),
+	MapContent.Kind.LAIR_EASY: preload("res://assets/models/map_lair_easy.glb"),
+	MapContent.Kind.LAIR_MEDIUM: preload("res://assets/models/map_lair_medium.glb"),
+	MapContent.Kind.LAIR_HARD: preload("res://assets/models/map_lair_hard.glb"),
+	MapContent.Kind.FAILLE: preload("res://assets/models/map_faille.glb"),
+	MapContent.Kind.CHEMINEE: preload("res://assets/models/map_cheminee.glb"),
+	MapContent.Kind.PASSAGE: preload("res://assets/models/map_passage.glb"),
+	MapContent.Kind.KERNEL: preload("res://assets/models/map_kernel.glb"),
+	MapContent.Kind.HOME: preload("res://assets/models/map_home.glb"),
+	MapContent.Kind.FACTION_BASE: preload("res://assets/models/map_faction_base.glb"),
+}
 
 
 ## Whether the building [param type] has a model.
@@ -106,6 +120,9 @@ static func map_content(
 	if not models.has(kind):
 		return MapStandIn.new(kind, tint, dimmed)
 	var model := models[kind].instantiate() as Node3D
+	if tint != null:
+		var colour: Color = tint
+		MapTint.apply(model, colour)
 	if dimmed:
 		_grey(model)
 	return model

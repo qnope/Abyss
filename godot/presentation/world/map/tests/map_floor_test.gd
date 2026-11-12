@@ -59,7 +59,7 @@ func test_stands_the_contents_on_their_tiles() -> void:
 	assert_eq(contents.by_cell[Vector2i(1, 1)].position, MapGrid.at(1, 1, 6, 6))
 	assert_eq(contents.by_cell[Vector2i(2, 2)].position, MapGrid.at(2, 2, 6, 6) + Vector3(0.5, 0.0, 0.5))
 	assert_eq(contents.by_cell[Vector2i(1, 1)].name, &"Cell1_1")
-	assert_true(contents.by_cell[Vector2i(1, 1)] is MapStandIn)
+	assert_false(contents.by_cell[Vector2i(1, 1)] is MapStandIn)
 
 
 func test_a_wreck_in_the_fog_stands_on_the_lower_tile() -> void:

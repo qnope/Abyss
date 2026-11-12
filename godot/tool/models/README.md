@@ -18,3 +18,9 @@ the glb files): editor and review tools, not game code, left out of exports.
   row of renders, portrait and budget figures a model; a building with tiers
   has two lines, its game views and its close views at tier 1, tiers 1+2 and
   all tiers.
+- `poses.gd`: the renders of `tool/models/poses.sh`: three poses of each action
+  of a creature (the animation player seeked) and how it reads at phone size
+  (the game's camera on a 10 m ground, cut round the figure). `model_facing.gd`
+  turns a creature (a model with a `Rig`) to the camera for every render, and
+  `model_bounds.gd` boxes it as turned. `board_row.gd` lays them out under a
+  creature's views.

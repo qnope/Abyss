@@ -32,6 +32,40 @@ func test_captions_say_which_tiers_a_view_shows() -> void:
 	assert_eq(BoardRow._caption("t2_game"), "game, tiers 1-2")
 
 
+func test_a_creature_has_no_close_view() -> void:
+	assert_eq(BoardRow.views(0, true), [BoardRow.CREATURE] as Array[Array])
+	assert_false(BoardRow.CREATURE.has("close"))
+	assert_eq(BoardRow.POSES.size(), 2)
+	assert_eq(BoardRow.POSES[1], ["attack_0", "attack_1", "attack_2", "hit_0", "hit_1", "hit_2"])
+
+
+func test_captions_number_the_poses_of_an_action() -> void:
+	assert_eq(BoardRow._caption("swim_0"), "swim 1/3")
+	assert_eq(BoardRow._caption("attack_2"), "attack 3/3")
+
+
+func test_a_creature_adds_its_phone_view_and_two_lines_of_poses() -> void:
+	var folder := "user://board_row_creature_test"
+	DirAccess.make_dir_recursive_absolute(folder)
+	var image := Image.create(8, 4, false, Image.FORMAT_RGBA8)
+	var files: Array[String] = ["x", "x_phone"]
+	for view: Array in BoardRow.views(0, true) + BoardRow.POSES:
+		for name_: String in view:
+			files.append("x_" + name_)
+	for file in files:
+		image.save_png("%s/%s.png" % [folder, file])
+	_row = BoardRow.new(ProjectSettings.globalize_path(folder), "x", PackedStringArray(["one"]), 0, true)
+	# Three lines of pictures, then the name and one line of figures.
+	assert_eq(_row.get_child_count(), 5)
+	# The views, the portrait and the phone view; then six poses a line.
+	assert_eq((_row.get_child(0) as Control).get_child_count(), 7)
+	assert_eq((_row.get_child(1) as Control).get_child_count(), 6)
+	assert_eq((_row.get_child(2) as Control).get_child_count(), 6)
+	for file in DirAccess.get_files_at(folder):
+		DirAccess.remove_absolute("%s/%s" % [ProjectSettings.globalize_path(folder), file])
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(folder))
+
+
 func test_builds_its_lines_then_its_name_and_figures() -> void:
 	var folder := "user://board_row_test"
 	DirAccess.make_dir_recursive_absolute(folder)

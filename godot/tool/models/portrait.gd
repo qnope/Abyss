@@ -9,6 +9,7 @@ extends SceneTree
 const Studio := preload("res://tool/models/studio.gd")
 const ModelBounds := preload("res://tool/models/model_bounds.gd")
 const PortraitCamera := preload("res://tool/models/portrait_camera.gd")
+const ModelFacing := preload("res://tool/models/model_facing.gd")
 
 ## The side of a portrait in pixels.
 const SIDE := 256
@@ -44,7 +45,9 @@ func _render(name: String, path: String) -> bool:
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	viewport.positional_shadow_atlas_size = 2048
 	root.add_child(viewport)
-	var bounds := ModelBounds.of(model)
+	# A creature faces the camera; the box that fits the picture is the turned one.
+	ModelFacing.face(model, ModelFacing.GAME)
+	var bounds := ModelBounds.of(model, ModelFacing.is_creature(model))
 	viewport.add_child(Studio.new(model, bounds, true))
 	var camera := Camera3D.new()
 	viewport.add_child(camera)

@@ -9,7 +9,8 @@ figures (triangles, materials, texture, and for a creature its bones and
 keyframes, against the model's BUDGET), its draw calls and its animations, and
 whether it stays within its family's caps. A building with tiers (the nodes
 Tier1..Tier3 that add up) tells what it costs shown up to each, and the
-document gives their number as "tiers" for the board's rows. Needs Python 3.13 with bpy, as
+document gives their number as "tiers" for the board's rows, and a creature (a model
+with animations) "poses": true, for the strips of its actions. Needs Python 3.13 with bpy, as
 build.py does, for the catalog."""
 
 import json
@@ -49,6 +50,11 @@ def figures(name, folder=MODELS_FOLDER):
     return lines
 
 
+def has_poses(name, folder=MODELS_FOLDER):
+    """Whether the glb of the model [name] has animations to show as poses."""
+    return bool(read_glb(os.path.join(folder, f"{name}.glb")).animations)
+
+
 def tier_count(name, folder=MODELS_FOLDER):
     """How many tiers the glb of the model [name] has: 0 for none."""
     return tiers.count(read_glb(os.path.join(folder, f"{name}.glb")))
@@ -63,8 +69,8 @@ def main(argv):
     for name in argv[1:]:
         if not os.path.exists(os.path.join(MODELS_FOLDER, f"{name}.glb")):
             sys.exit(f"no godot/assets/models/{name}.glb: tool/models/build.py {name}")
-    document = {"models": [{"name": name, "lines": figures(name), "tiers": tier_count(name)}
-                           for name in argv[1:]]}
+    document = {"models": [{"name": name, "lines": figures(name), "tiers": tier_count(name),
+                            "poses": has_poses(name)} for name in argv[1:]]}
     with open(argv[0], "w", encoding="utf-8") as file:
         json.dump(document, file, indent=1)
 

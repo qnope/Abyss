@@ -4,7 +4,9 @@
 # and its budget figures written under it, so that the owner validates a lot
 # from one image. A building with tiers (the nodes Tier1..Tier3) has two lines:
 # its game views and its close views at tier 1, tiers 1+2 and all tiers, and
-# its figures give the cost of each:
+# its figures give the cost of each. A creature (a model with actions) adds how
+# it reads at phone size and, in two lines, three poses of each action
+# (poses.sh):
 #   tool/models/board.sh <name>[,<name>...] <out.png>
 # The models are the glb of godot/assets/models/ (tool/models/build.py first).
 # It reuses preview.sh and the portrait render, then composes the sheet in
@@ -32,6 +34,11 @@ for name in "${names[@]}"; do
   for ((tier = 1; tier < tiers; tier++)); do
     TIER=$tier tool/models/preview.sh "$name" "$work/${name}_t$tier" > /dev/null
   done
+  # A creature shows three poses of each of its actions.
+  poses="$("${PYTHON:-python3}" -c 'import json,sys; print(next(m["poses"] for m in json.load(open(sys.argv[1]))["models"] if m["name"] == sys.argv[2]))' "$work/figures.json" "$name")"
+  if [[ $poses == True ]]; then
+    tool/models/poses.sh "$name" "$work/$name" > /dev/null
+  fi
 done
 xvfb-run -a -s "-screen 0 1280x1024x24" "$godot" --path godot --audio-driver Dummy \
   --rendering-method gl_compatibility --rendering-driver opengl3 \

@@ -22,7 +22,7 @@ func test_every_name_is_told_once() -> void:
 func test_gives_the_render_of_a_model_that_has_one_and_null_for_the_others() -> void:
 	assert_not_null(PortraitFiles.texture("headquarters"))
 	assert_eq(PortraitFiles.texture("headquarters").get_width(), 256)
-	assert_null(PortraitFiles.texture("algae_farm"))
+	assert_null(PortraitFiles.texture("no_such_portrait"))
 	assert_null(PortraitFiles.texture(""))
 	assert_eq(PortraitFiles.path("scout"), "res://assets/portraits/scout.png")
 

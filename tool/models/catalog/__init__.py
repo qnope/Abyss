@@ -13,9 +13,10 @@
     build(model)      fills the workshop's Model
 """
 
-from catalog import (base_island, base_rampart, coral_citadel, headquarters, material_swatches,
-                     probe_fish, solar_panel)
+from catalog import (algae_farm, base_island, base_rampart, coral_citadel, coral_mine,
+                     headquarters, material_swatches, ore_extractor, probe_fish, solar_panel)
 
 MODELS = {script.NAME: script for script in (base_island, base_rampart, headquarters,
                                              solar_panel, coral_citadel, material_swatches,
-                                             probe_fish)}
+                                             probe_fish, algae_farm, coral_mine,
+                                             ore_extractor)}

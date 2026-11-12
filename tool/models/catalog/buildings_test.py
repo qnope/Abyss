@@ -11,7 +11,10 @@ from model_builds import built
 # Each building: its slot on the island, and its nodes the game moves.
 BUILDINGS = {"headquarters": ("Headquarters", ["Beacon", "Dish"]),
              "solar_panel": ("SolarPanel", ["Array"]),
-             "coral_citadel": ("CoralCitadel", ["Heart"])}
+             "coral_citadel": ("CoralCitadel", ["Heart"]),
+             "algae_farm": ("AlgaeFarm", ["Tier2/Drone"]),
+             "coral_mine": ("CoralMine", ["Tier1/Wheel", "Tier3/CrownWheel"]),
+             "ore_extractor": ("OreExtractor", ["Tier1/Drill"])}
 SPILL = 0.3  # how far the reef at a building's foot may reach past its pad
 
 

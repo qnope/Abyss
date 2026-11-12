@@ -16,10 +16,13 @@ const ROOTS := {
 	"material_swatches": ["Swatches", "Unit"],
 	"probe_fish": ["Rig", "AnimationPlayer"],
 	"solar_panel": ["SolarPanel"],
+	"algae_farm": ["AlgaeFarm"],
+	"coral_mine": ["CoralMine"],
+	"ore_extractor": ["OreExtractor"],
 }
 
 ## The models that paint an atlas (<model>_atlas.png beside the glb).
-const TEXTURED: Array[String] = ["base_rampart", "coral_citadel", "headquarters", "solar_panel"]
+const TEXTURED: Array[String] = ["base_rampart", "coral_citadel", "headquarters", "solar_panel", "algae_farm", "coral_mine", "ore_extractor"]
 
 ## The island's pads, one per building, where the buildings stand.
 const PADS: Array[String] = [

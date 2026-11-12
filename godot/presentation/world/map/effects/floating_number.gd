@@ -31,3 +31,4 @@ func show_loss(from: Vector3, damage: int, progress: float) -> void:
 	text = "−%d" % damage
 	position = from + Vector3.UP * RISE * MapMotion.enter(progress)
 	modulate.a = 1.0 if progress < 0.5 else maxf(2.0 - 2.0 * progress, 0.0)
+	outline_modulate.a = modulate.a

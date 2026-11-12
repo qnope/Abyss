@@ -27,8 +27,10 @@ const SINK := 0.25
 ## How long the monsters take to come out, how far they stand toward the army.
 const EMERGE := 0.3
 const STAND_OUT := 0.3
-## How high over the floor, at least, the losses float up from.
+## How high over the floor, at least, the losses float up from, and how much
+## higher what the army lost, to clear its count.
 const LOSS_HEIGHT := 1.0
+const COUNT_ROOM := 0.4
 
 var strike: MapStrike
 var geometry: StrikeGeometry
@@ -36,9 +38,10 @@ var timeline: StrikeTimeline
 var squad: StrikeSquad
 ## The monsters of the lair, or null when a place is attacked.
 var monster: MonsterFigure
-var dealt := FloatingNumber.new()
-var taken := FloatingNumber.new()
+var losses := FightLosses.new()
 var _cues: Array[StrikeCues]
+## What stands on the lair, hidden while its monsters are out.
+var _hidden: Node3D
 var _next := 0
 var _flash: HitFlash
 var _top: float
@@ -66,13 +69,13 @@ func _init(strike_: MapStrike, geometry_: StrikeGeometry, content: Node3D = null
 		monster.position = lair + toward.normalized() * STAND_OUT
 		monster.rotation.y = atan2(toward.x, toward.z) + PI
 		add_child(monster)
+		_hidden = content
 	elif content != null:
 		_top = maxf(ModelBounds.top_of(content), LOSS_HEIGHT)
 	var flashed: Node3D = monster if monster != null else content
 	if flashed != null:
 		_flash = HitFlash.new(flashed)
-	add_child(dealt)
-	add_child(taken)
+	add_child(losses)
 	_show(0.0)
 
 
@@ -92,7 +95,10 @@ func _show(t: float) -> void:
 	while _next < _cues.size() and _cues[_next].at <= t:
 		_play(_cues[_next])
 		_next += 1
-	_show_losses(t)
+	losses.show_at(t, timeline.pace(), strike.rounds, geometry.lair() + Vector3.UP * _top,
+		squad.position + Vector3.UP * (LOSS_HEIGHT + COUNT_ROOM))
+	if _hidden != null and is_instance_valid(_hidden):
+		_hidden.visible = t >= duration()
 	_show_target(t, outcome, gone)
 
 
@@ -104,22 +110,6 @@ func _play(cue: StrikeCues) -> void:
 	elif monster != null:
 		var length := monster.length_of(cue.animation)
 		monster.play(cue.animation, length / seconds if seconds > 0.0 and length > 0.0 else 1.0)
-
-
-## What each side lost in the round showing now: what the army dealt over the
-## target, what it took over the army.
-func _show_losses(t: float) -> void:
-	dealt.visible = false
-	taken.visible = false
-	var pace := timeline.pace()
-	for index in strike.rounds.size():
-		if not pace.shows_hit(index, t):
-			continue
-		var progress := pace.fade_of(index, t)
-		if strike.rounds[index].x > 0:
-			dealt.show_loss(geometry.lair() + Vector3.UP * _top, strike.rounds[index].x, progress)
-		if strike.rounds[index].y > 0:
-			taken.show_loss(squad.position + Vector3.UP * LOSS_HEIGHT, strike.rounds[index].y, progress)
 
 
 ## The target flashing as each hit lands; a beaten monster rolls over and shrinks

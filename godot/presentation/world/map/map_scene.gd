@@ -84,6 +84,18 @@ func strike(attack: MapStrike, then := Callable()) -> void:
 	effects.play(StrikeEffect.new(attack, geometry, content), then)
 
 
+## Plays [param attack], attackers besieging a place of the level shown, calling
+## [param then] once it is over (at once when no level is shown).
+func siege(attack: MapSiege, then := Callable()) -> void:
+	if state == null:
+		if then.is_valid():
+			then.call()
+		return
+	var geometry := SiegeGeometry.new(attack.place, state.map.width, state.map.height, attack.span)
+	var content: Node3D = contents.by_cell.get(attack.place)
+	effects.play(SiegeEffect.new(attack, geometry, content), then)
+
+
 ## Forgets what the levels showed: the next one shown lifts no fog.
 func forget() -> void:
 	_lifts.forget()

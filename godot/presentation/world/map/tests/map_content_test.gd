@@ -63,22 +63,35 @@ func test_a_held_volcano_wears_a_seal_in_its_owners_colour() -> void:
 	stand_in.free()
 
 
-func test_the_seam_gives_a_stand_in_until_step_7_and_a_model_when_there_is_one() -> void:
-	assert_true(WorldModels.MAP_MODELS.is_empty())
+func test_every_content_has_a_model_and_a_stand_in_when_there_is_none() -> void:
+	var none: Dictionary[Kind, PackedScene] = {}
 	for kind: Kind in Kind.values():
+		assert_true(WorldModels.MAP_MODELS.has(kind), str(kind))
 		var node := WorldModels.map_content(kind)
-		assert_true(node is MapStandIn, str(kind))
-		assert_eq((node as MapStandIn).kind, kind)
+		assert_false(node is MapStandIn, str(kind))
 		node.free()
-	var models: Dictionary[Kind, PackedScene] = {
-		Kind.RUINS: WorldModels.MODELS[BuildingType.Value.HEADQUARTERS],
-	}
-	var model := mounted(WorldModels.map_content(Kind.RUINS, null, false, models))
-	assert_false(model is MapStandIn)
+		var stand_in := WorldModels.map_content(kind, null, false, none)
+		assert_eq((stand_in as MapStandIn).kind, kind)
+		stand_in.free()
+
+
+func test_a_dull_content_is_veiled_and_a_whole_one_is_not() -> void:
+	var model := mounted(WorldModels.map_content(Kind.RUINS))
 	for mesh: Node in model.find_children("*", "GeometryInstance3D", true, false):
 		assert_null((mesh as GeometryInstance3D).material_overlay)
-	var dull := mounted(WorldModels.map_content(Kind.RUINS, null, true, models))
+	var dull := mounted(WorldModels.map_content(Kind.RUINS, null, true))
 	for mesh: Node in dull.find_children("*", "GeometryInstance3D", true, false):
 		assert_not_null((mesh as GeometryInstance3D).material_overlay)
-	var other := mounted(WorldModels.map_content(Kind.TREASURE, null, false, models))
-	assert_true(other is MapStandIn, "the others stay stand-ins")
+
+
+func test_a_held_post_takes_the_colour_of_its_holder_on_its_tint() -> void:
+	for kind: Kind in [Kind.FAILLE, Kind.CHEMINEE, Kind.PASSAGE, Kind.KERNEL, Kind.FACTION_BASE]:
+		var model := mounted(WorldModels.map_content(kind, Color.CYAN))
+		var lamp := model.find_child("Tint", true, false) as MeshInstance3D
+		assert_not_null(lamp, str(kind))
+		var material := lamp.get_surface_override_material(0) as StandardMaterial3D
+		assert_eq(material.albedo_color, Color.CYAN, str(kind))
+		if material.emission_enabled:
+			assert_eq(material.emission, Color.CYAN, str(kind))
+	var home := mounted(WorldModels.map_content(Kind.HOME, Color.CYAN))
+	assert_null(home.find_child("Tint", true, false), "the home takes no colour")

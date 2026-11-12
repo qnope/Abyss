@@ -14,6 +14,7 @@
 """
 
 from catalog import (
+    abyss_admiral,
     algae_farm,
     barracks,
     base_island,
@@ -21,17 +22,23 @@ from catalog import (
     coral_citadel,
     coral_mine,
     descent_module,
+    dome_breaker,
+    guardian,
+    harpoonist,
     headquarters,
     laboratory,
     material_swatches,
     ore_extractor,
     pressure_capsule,
     probe_fish,
+    saboteur,
+    scout,
     solar_panel,
     volcanic_kernel,
 )
 
 MODELS = {script.NAME: script for script in (
+    abyss_admiral,
     algae_farm,
     barracks,
     base_island,
@@ -39,12 +46,17 @@ MODELS = {script.NAME: script for script in (
     coral_citadel,
     coral_mine,
     descent_module,
+    dome_breaker,
+    guardian,
+    harpoonist,
     headquarters,
     laboratory,
     material_swatches,
     ore_extractor,
     pressure_capsule,
     probe_fish,
+    saboteur,
+    scout,
     solar_panel,
     volcanic_kernel,
 )}

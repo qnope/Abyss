@@ -9,16 +9,22 @@ const FOLDER := "res://assets/models/"
 
 ## The root nodes of each model, under the scene's own root.
 const ROOTS := {
+	"abyss_admiral": ["Rig", "AnimationPlayer"],
 	"barracks": ["Barracks"],
 	"base_island": ["Island", "Pads"],
 	"base_rampart": ["Tier1", "Tier2", "Tier3"],
 	"coral_citadel": ["CoralCitadel"],
 	"descent_module": ["Tier1", "Tier2", "Tier3"],
+	"dome_breaker": ["Rig", "AnimationPlayer"],
+	"guardian": ["Rig", "AnimationPlayer"],
+	"harpoonist": ["Rig", "AnimationPlayer"],
 	"headquarters": ["Headquarters"],
 	"laboratory": ["Laboratory"],
 	"material_swatches": ["Swatches", "Unit"],
 	"pressure_capsule": ["Tier1", "Tier2", "Tier3"],
 	"probe_fish": ["Rig", "AnimationPlayer"],
+	"saboteur": ["Rig", "AnimationPlayer"],
+	"scout": ["Rig", "AnimationPlayer"],
 	"solar_panel": ["SolarPanel"],
 	"algae_farm": ["AlgaeFarm"],
 	"coral_mine": ["CoralMine"],
@@ -30,7 +36,9 @@ const ROOTS := {
 const TEXTURED: Array[String] = [
 	"algae_farm", "barracks", "base_rampart", "coral_citadel", "coral_mine", "descent_module",
 	"headquarters", "laboratory", "ore_extractor", "pressure_capsule", "solar_panel", "volcanic_kernel",
+	"abyss_admiral", "dome_breaker", "guardian", "harpoonist", "saboteur", "scout",
 ]
+
 
 ## The island's pads, one per building, where the buildings stand.
 const PADS: Array[String] = [

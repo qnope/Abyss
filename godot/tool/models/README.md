@@ -29,3 +29,7 @@ the glb files): editor and review tools, not game code, left out of exports.
   (`MapTiles`, `UnderwaterEnvironment`, `KeyLight`, `MapCamera`), a name tinted
   (`@rrggbb`, the node `Tint`) or dimmed (`!`) as the game does; `board.sh` shows them
   at the head of a board with `CELLS=`.
+- `grid_view.gd` (with `grid_floor.gd`, `grid_layout.gd`, `grid_cover.gd`,
+  `grid_backdrop.gd`, `grid_instances.gd`): the renders of `tool/models/grid.sh`,
+  a level's floor tiles on a grid of cells in the game's map camera, light and
+  water, seen or under the fog. `board_row.gd` adds their line to the board.

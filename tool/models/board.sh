@@ -10,7 +10,9 @@
 #   tool/models/board.sh <name>[,<name>...] <out.png>
 # The models are the glb of godot/assets/models/ (tool/models/build.py first).
 # It reuses preview.sh and the portrait render, then composes the sheet in
-# Godot (board.gd). The intermediate renders go to a temporary folder; write
+# Godot (board.gd). A level's floor (map_terrain_<level>) adds a line of its
+# tiles laid on a grid of cells (grid.sh), a creature that swims one of the
+# poses of its loop (poses.sh). The intermediate renders go to a temporary folder; write
 # the board outside the repo: never commit it. GODOT names the engine binary,
 # PYTHON the Python 3.13 with bpy that reads the catalog. CELLS=<name>[,<name>...]
 # adds two views of those models side by side on the cells of the map
@@ -41,6 +43,10 @@ for name in "${names[@]}"; do
   if [[ $poses == True ]]; then
     tool/models/poses.sh "$name" "$work/$name" > /dev/null
   fi
+  extras="$("${PYTHON:-python3}" -c 'import json,sys; print(" ".join(next(m["extras"] for m in json.load(open(sys.argv[1]))["models"] if m["name"] == sys.argv[2])))' "$work/figures.json" "$name")"
+  case " $extras " in
+    *" grid "*) tool/models/grid.sh "${name##*_}" "$work/$name" > /dev/null ;;
+  esac
 done
 [[ -z ${CELLS:-} ]] || tool/models/cells.sh "$CELLS" "$work/cells" > /dev/null
 xvfb-run -a -s "-screen 0 1280x1024x24" "$godot" --path godot --audio-driver Dummy \

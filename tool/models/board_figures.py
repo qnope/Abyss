@@ -9,8 +9,10 @@ figures (triangles, materials, texture, and for a creature its bones and
 keyframes, against the model's BUDGET), its draw calls and its animations, and
 whether it stays within its family's caps. A building with tiers (the nodes
 Tier1..Tier3 that add up) tells what it costs shown up to each, and the
-document gives their number as "tiers" for the board's rows, and a creature (a model
-with animations) "poses": true, for the strips of its actions. Needs Python 3.13 with bpy, as
+document gives their number as "tiers" for the board's rows, a creature (a model
+with animations) "poses": true, for the strips of its actions, and the "extras"
+of a floor (the nodes Lit1...): its tiles on a grid of cells, with and without
+fog, as board.sh renders them. Needs Python 3.13 with bpy, as
 build.py does, for the catalog."""
 
 import json
@@ -20,6 +22,7 @@ import sys
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+GRID_VIEWS = ("grid", "gridfog", "far")
 MODELS_FOLDER = os.path.normpath(os.path.join(HERE, "..", "..", "godot", "assets", "models"))
 
 try:
@@ -60,6 +63,15 @@ def tier_count(name, folder=MODELS_FOLDER):
     return tiers.count(read_glb(os.path.join(folder, f"{name}.glb")))
 
 
+def extras(name, folder=MODELS_FOLDER):
+    """The extra views of the model [name] on the board: the grid views of a
+    level's floor, none otherwise."""
+    report = read_glb(os.path.join(folder, f"{name}.glb"))
+    if "Lit1" in report.paths:
+        return list(GRID_VIEWS)
+    return []
+
+
 def main(argv):
     if len(argv) < 2:
         sys.exit("usage: board_figures.py <out.json> <name> [name ...]")
@@ -70,7 +82,8 @@ def main(argv):
         if not os.path.exists(os.path.join(MODELS_FOLDER, f"{name}.glb")):
             sys.exit(f"no godot/assets/models/{name}.glb: tool/models/build.py {name}")
     document = {"models": [{"name": name, "lines": figures(name), "tiers": tier_count(name),
-                            "poses": has_poses(name)} for name in argv[1:]]}
+                            "poses": has_poses(name), "extras": extras(name)}
+                           for name in argv[1:]]}
     with open(argv[0], "w", encoding="utf-8") as file:
         json.dump(document, file, indent=1)
 

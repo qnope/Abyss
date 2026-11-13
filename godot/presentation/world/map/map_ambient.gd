@@ -1,7 +1,8 @@
 class_name MapAmbient
 extends CreatureLap
 ## The creature of the level (a turtle, a jelly, a ray) that swims round the
-## slab of the map, a lap every [constant LAP] seconds ([CreatureLap]).
+## slab of the map, a lap every [constant LAP] seconds ([CreatureLap]). The
+## creature of the level drawn again swims on where it is.
 
 ## Seconds a lap takes.
 const LAP := 80.0
@@ -11,7 +12,7 @@ const HEIGHT := 0.9
 
 
 ## Sets the creature of [param level] swimming round a map of [param width] by
-## [param height] cells, in place of the one before.
+## [param height] cells, in place of the one before unless it is the same.
 func show_level(level: int, width: int, height: int) -> void:
 	swim(MapScenery.CREATURES[MapScenery.index_of(level)],
 		Vector2(width, height) / 2.0 + Vector2.ONE * ROOM, HEIGHT, LAP)

@@ -18,6 +18,15 @@ func _tap(x: int, y: int, width := 6, height := 6) -> void:
 	_scene.camera.tapped.emit(_scene.camera.unproject_position(point))
 
 
+## Every node the level is drawn with: the creature, the tiles, the clouds, the
+## scenery, the contents and the scouts.
+func _nodes() -> Array[Node]:
+	var found: Array[Node] = [_scene.surroundings.ambient.creature]
+	for part: Node in [_scene.tiles, _scene.fog, _scene.surroundings.backdrop, _scene.contents, _scene.scouts]:
+		found.append_array(part.get_children())
+	return found
+
+
 func test_shows_the_fog_where_the_game_has_not_seen_and_the_floor_where_it_has() -> void:
 	var game := GameFactory.new_single_player("Nemo", 1)
 	var human := game.human_player()
@@ -39,9 +48,25 @@ func test_stands_what_the_cells_seen_hold() -> void:
 	put(state, 4, 4, Content.RUINS)
 	_scene.show_level(state)
 	assert_eq(_scene.contents.by_cell.keys(), [Vector2i(1, 1)])
+	var ruins := _scene.contents.by_cell[Vector2i(1, 1)]
 	state.revealed[Vector2i(4, 4)] = true
 	_scene.show_level(state)
 	assert_eq(_scene.contents.by_cell.size(), 2)
+	assert_eq(_scene.contents.by_cell[Vector2i(1, 1)], ruins, "the one already standing keeps its node")
+
+
+func test_the_same_state_again_keeps_every_node_of_the_level() -> void:
+	var state := level_of(6, 6, [Vector2i(1, 1), Vector2i(2, 1)])
+	put(state, 1, 1, Content.RUINS)
+	put(state, 4, 4, Content.WRECK)
+	state.pending[Vector2i(3, 3)] = Vector2i(1, 1)
+	_scene.show_level(state)
+	var before := _nodes()
+	var counts := [_scene.tiles.counts.duplicate(), _scene.fog.counts.duplicate()]
+	_scene.show_level(state)
+	assert_eq(_nodes(), before, "the very nodes drawn first")
+	assert_true(before.size() >= 14, "tiles, clouds, scenery, a creature, two contents and a scout")
+	assert_eq([_scene.tiles.counts, _scene.fog.counts], counts)
 
 
 func test_shows_the_scouts_on_their_way() -> void:

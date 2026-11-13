@@ -135,6 +135,22 @@ a tap. The 2D painters, the projection, the slabs and the viewport of Flutter's
   cells, centred on them). `MapScouts` shows a `ScoutToken` for each scout on
   its way, sliding from the cell it left (`ScoutOrigin`) to its target, and
   swimming or hovering as Flutter's token does.
+- A level is drawn again on every change of the game (each action of the player,
+  each turn) and each time the tab is shown, most often with one cell changed or
+  none, and rebuilding the floor, the shroud, the scenery and a few hundred
+  contents that did not change took 8 to 25 ms on a desktop, where a frame lasts
+  16.7. So `show_level` rebuilds only what changed (about half that time, what is
+  left being `MapLooks.of`), and the picture is the one a whole rebuild gives. The
+  floor, the shroud and the scenery (`MapTiles`, `MapFog`, `MapBackdrop`) remember what they were
+  laid for in a `Drawn` (the values that decide them: the level's model, the size,
+  the cells seen) and lay nothing when asked the same again; any difference lays
+  them whole. `MapContents` keeps the node of each content whose look is the same
+  (its kind, its tint, whether it is dimmed, where it stands), in sight again
+  whatever effect hid it, and stands, replaces or frees only the others, its
+  children in the order of the looks (one freed alone has the renderer brought up
+  to date first, which the whole map freed at once did by chance: `_free`). The
+  creature (`MapAmbient`) swims on while the level's model is the same, as the
+  specks drift on and the scouts stay.
 - `MapCamera` (a `MapRig`) looks down at a steep angle that never changes; a
   drag pans over the map (clamped to it), a pinch or the wheel zooms, and
   `fit_map` frames the whole level between the bars of the game screen (and
@@ -175,7 +191,8 @@ one playing, calls `then` once the new one is over, and plays it over at once (n
 staged) when the map is out of sight or `reduced_motion` is set; `finish()` ends the
 one playing with its last moment shown, which is what the turn story uses to skip (`app/game/story/`).
 An effect is told the time (`advance(seconds)`, so a test drives it), never reads a
-clock, and leaves the map as it was drawn without it. `jolted(offset)` shakes the
+clock, and leaves the map as it was drawn without it (a content it hid or flashed is the
+very node the next draw keeps). `jolted(offset)` shakes the
 `MapCamera` to the side (`MapJolt`). The seconds are `MapMotion`'s, the colours
 `MapPalette`'s; both repeat the interface's and a test in `app/` holds them together.
 

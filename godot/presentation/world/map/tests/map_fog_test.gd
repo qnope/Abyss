@@ -78,7 +78,38 @@ func test_the_murk_is_blended_without_a_depth_pre_pass_and_takes_no_shadows() ->
 func test_the_shroud_is_laid_again_in_place_of_the_one_before() -> void:
 	var state := level_of(8, 8, [Vector2i(0, 0)])
 	_fog.show_looks(MapLooks.of(state), 8, 8)
-	var before := _total()
+	var before := _fog.get_child(0)
+	state.revealed[Vector2i(4, 4)] = true
 	_fog.show_looks(MapLooks.of(state), 8, 8)
-	assert_eq(_total(), before)
-	assert_eq(_fog.get_child_count(), _fog.counts.size())
+	assert_false(is_instance_valid(before), "the layers before are gone")
+	assert_eq(_total(), _clouded(state).size())
+	var fresh := MapFog.new()
+	add_cleanup(fresh.free)
+	fresh.show_looks(MapLooks.of(state), 8, 8)
+	assert_eq(laid(_fog), laid(fresh))
+	assert_eq(_fog.counts, fresh.counts)
+
+
+func test_the_same_shroud_again_keeps_its_layers() -> void:
+	var state := level_of(8, 8, [Vector2i(0, 0)])
+	put(state, 5, 5, Content.WRECK)
+	_fog.show_looks(MapLooks.of(state), 8, 8)
+	var layers := _fog.get_children()
+	var counts := _fog.counts.duplicate()
+	_fog.show_looks(MapLooks.of(state), 8, 8)
+	assert_eq(_fog.get_children(), layers, "the very layers laid first")
+	assert_eq(_fog.counts, counts)
+
+
+func test_a_wreck_searched_or_a_map_of_another_size_relays_the_shroud() -> void:
+	var state := level_of(8, 8, [Vector2i(0, 0)])
+	put(state, 6, 6, Content.WRECK)
+	_fog.show_looks(MapLooks.of(state), 8, 8)
+	var before := _total()
+	put(state, 6, 6, Content.EMPTY)
+	_fog.show_looks(MapLooks.of(state), 8, 8)
+	assert_eq(_total(), before + 1, "a cloud where the wreck showed through")
+	var wide := level_of(10, 8, [Vector2i(0, 0)])
+	_fog.show_looks(MapLooks.of(wide), 10, 8)
+	assert_eq(_total(), _clouded(wide).size())
+	assert_true(_total() > before + 1)

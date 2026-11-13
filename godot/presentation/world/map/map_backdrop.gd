@@ -4,7 +4,8 @@ extends MapLayers
 ## pieces, 2 long and falling away to the outside, along each side, a corner
 ## piece at each corner, and the far silhouettes (kelp, a whale, spires) beyond.
 ## The rim is repeated from the pieces the model gives, so the map can be of any
-## size. It takes shadows only while the view is close ([MapLayers]).
+## size. It takes shadows only while the view is close ([MapLayers]), and stays
+## as it is while the map drawn again has the same model and size.
 
 const PIECE := 2.0
 ## The yaw of the south, west, north and east sides: the pieces as modelled stand
@@ -13,11 +14,13 @@ const SIDES: Array[float] = [0.0, -90.0, 180.0, 90.0]
 
 
 ## Dresses the map of [param width] by [param height] cells with the backdrop
-## of [param level] in place of the one before.
+## of [param level] in place of the one before; the same again lays nothing.
 func show_level(level: int, width: int, height: int) -> void:
-	for child: Node in get_children():
-		child.free()
-	var parts := MapScenery.parts(MapScenery.BACKDROPS[MapScenery.index_of(level)])
+	var model := MapScenery.index_of(level)
+	if _laid.again([model, width, height]):
+		return
+	_clear()
+	var parts := MapScenery.parts(MapScenery.BACKDROPS[model])
 	var edges := MapScenery.named(parts, "Edge")
 	var edge_spots := edge_places(width, height)
 	for index in edges.size():

@@ -42,6 +42,30 @@ func test_a_strike_on_a_lair_has_its_monster() -> void:
 	assert_not_null((_scene.effects.current as StrikeEffect).monster)
 
 
+func test_a_level_drawn_again_in_the_middle_of_a_blow_keeps_the_place_as_it_stood() -> void:
+	var state := _level()
+	_scene.show_level(state)
+	var treasure := _scene.contents.by_cell[Vector2i(3, 3)]
+	_scene.strike(StrikeSamples.strike(Vector2i(3, 3)))
+	var effect := _scene.effects.current as StrikeEffect
+	effect.advance(effect.timeline.pace().hit_at(0) + 0.01)
+	assert_true(_flashed(treasure))
+	_scene.show_level(state)
+	assert_eq(_scene.contents.by_cell[Vector2i(3, 3)], treasure, "the very node")
+	assert_false(_flashed(treasure), "the flash did not stay on it")
+
+
+func test_a_level_drawn_again_while_the_monsters_are_out_puts_the_lair_back_in_sight() -> void:
+	var state := _level()
+	_scene.show_level(state)
+	var lair := _scene.contents.by_cell[Vector2i(3, 3)]
+	_scene.strike(StrikeSamples.strike(Vector2i(3, 3), true, StrikeSamples.lair()))
+	assert_false(lair.visible)
+	_scene.show_level(state)
+	assert_eq(_scene.contents.by_cell[Vector2i(3, 3)], lair, "the very node")
+	assert_true(lair.visible)
+
+
 func test_the_camera_is_shaken_by_the_blows() -> void:
 	_scene.show_level(_level())
 	_scene.strike(StrikeSamples.strike(Vector2i(3, 3)))
@@ -75,3 +99,9 @@ func _level() -> MapLevelState:
 	var state := level_of(8, 8, [Vector2i(1, 1), Vector2i(3, 3)])
 	put(state, 3, 3, Content.RESOURCE_BONUS)
 	return state
+
+
+## Whether a mesh of [param content] wears an overlay: the flash of a blow.
+func _flashed(content: Node) -> bool:
+	return content.find_children("*", "GeometryInstance3D", true, false).any(
+		func(mesh: GeometryInstance3D) -> bool: return mesh.material_overlay != null)

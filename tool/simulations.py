@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-"""Checks that the Godot simulator prints what the Dart one prints.
+"""Checks that the Godot simulator prints what the Flutter version printed.
 
-    tool/simulations.py --update            # Dart's outputs, written
-    tool/simulations.py                     # Dart's outputs, checked
-    tool/simulations.py --engine godot      # Godot's outputs, checked
-    tool/simulations.py --engine godot balanced no-game
+    tool/simulations.py                     # every case, checked
+    tool/simulations.py balanced no-game    # some cases only
 
 Plays each case of reference/simulations/cases.txt (`name: options`) with
-`dart run bin/simulate.dart <options>` or `tool/godot_simulate.sh <options>`
-from the repository, and compares what it prints with <name>.txt. Prints a
-line per case and exits with 1 when one differs, fails or has no case.
-Only Dart writes the reference (reference/simulations/README.md).
+`tool/godot_simulate.sh <options>` from the repository, and compares what it
+prints with <name>.txt, which the last Flutter version wrote. Prints a line
+per case and exits with 1 when one differs, fails or has no case
+(reference/simulations/README.md).
 """
 
 import argparse
@@ -20,10 +18,7 @@ import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FOLDER = os.path.join(REPO, "reference", "simulations")
-ENGINES = {
-    "dart": ["dart", "run", "bin/simulate.dart"],
-    "godot": ["tool/godot_simulate.sh"],
-}
+COMMAND = ["tool/godot_simulate.sh"]
 
 
 class SimulationError(Exception):
@@ -65,24 +60,18 @@ def _read(path):
         return f.read()
 
 
-def _one(name, options, path, engine, update):
+def _one(name, options, path, engine):
     try:
         printed = engine(options)
     except SimulationError as e:
         return False, "FAILED, %s" % e
-    if update:
-        if _read(path) == printed:
-            return True, "ok"
-        with open(path, "w", encoding="utf-8", newline="") as f:
-            f.write(printed)
-        return True, "written"
     expected = _read(path)
     if expected is None:
         return False, "no output yet"
     return expected == printed, "ok" if expected == printed else "differs"
 
 
-def run(folder, names, engine, update):
+def run(folder, names, engine):
     """Plays the cases, prints a line each; True when all went well."""
     cases = parse_cases(_read(os.path.join(folder, "cases.txt")) or "")
     unknown = [n for n in names if n not in cases]
@@ -94,7 +83,7 @@ def run(folder, names, engine, update):
     for name, options in cases.items():
         if names and name not in names:
             continue
-        ok, verdict = _one(name, options, os.path.join(folder, name + ".txt"), engine, update)
+        ok, verdict = _one(name, options, os.path.join(folder, name + ".txt"), engine)
         good = good and ok
         print("%s: %s" % (name, verdict), flush=True)
     if names:
@@ -102,26 +91,17 @@ def run(folder, names, engine, update):
     for file in sorted(os.listdir(folder)):
         name, extension = os.path.splitext(file)
         if extension == ".txt" and file != "cases.txt" and name not in cases:
-            if update:
-                os.remove(os.path.join(folder, file))
-                print("%s: removed" % name)
-            else:
-                print("%s: no case in cases.txt" % name)
-                good = False
+            print("%s: no case in cases.txt" % name)
+            good = False
     return good
 
 
 def main(argv, simulate=play):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("names", nargs="*", help="cases to play, all by default")
-    parser.add_argument("--engine", choices=sorted(ENGINES), default="dart")
-    parser.add_argument("--update", action="store_true", help="write Dart's outputs")
     parser.add_argument("--folder", default=FOLDER, help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
-    if args.update and args.engine != "dart":
-        parser.error("only Dart writes the reference: --update needs --engine dart")
-    command = ENGINES[args.engine]
-    good = run(args.folder, args.names, lambda options: simulate(command, options), args.update)
+    good = run(args.folder, args.names, lambda options: simulate(COMMAND, options))
     return 0 if good else 1
 
 

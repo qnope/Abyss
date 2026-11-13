@@ -1,5 +1,14 @@
 # Reference games
 
+> **Frozen.** The Flutter version that wrote these files, and the Dart tools
+> this document mentions (`bin/`, `lib/domain`, `tool/vectors/`), were removed
+> when the game switched to Godot; they are in the git history, in the
+> parent of the commit that removed them. What is here is what they computed
+> and is no longer written again: the Godot port is checked against it
+> (`tool/godot_reference.sh`, `tool/simulations.py`, the tests of
+> `godot/tool/reference/`). Only change a file by hand with a rule change
+> that is meant, and say why in the commit.
+
 The rules of ABYSSES are being ported from Dart (`lib/domain`) to GDScript
 (`godot/domain`), and the port must play **exactly the same game**. The proof
 is here: games played by the Flutter rules, each with the journal of its
@@ -13,10 +22,9 @@ Beside the games, `reference/vectors/` holds inputs and outputs of single
 pieces of the rules (Dart's random generator, sort and arithmetic, costs,
 fights, maps...), for the modules ported before a whole game can be replayed:
 see `reference/vectors/README.md`. And `reference/simulations/` holds what
-`bin/simulate.dart` prints for a few sets of options, which the Godot
-simulator must print the same (`reference/simulations/README.md`): after a
-change of rules, `python3 tool/simulations.py --update` writes them again.
-CI's `Reference` job checks all three.
+`bin/simulate.dart` printed for a few sets of options, which the Godot
+simulator must print the same (`reference/simulations/README.md`). CI's
+`Godot Reference` job and the `Godot Test` job check all three.
 
 ## Canonical text
 

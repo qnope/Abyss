@@ -1,5 +1,14 @@
 # Vectors
 
+> **Frozen.** The Flutter version that wrote these files, and the Dart tools
+> this document mentions (`bin/`, `lib/domain`, `tool/vectors/`), were removed
+> when the game switched to Godot; they are in the git history, in the
+> parent of the commit that removed them. What is here is what they computed
+> and is no longer written again: the Godot port is checked against it
+> (`tool/godot_reference.sh`, `tool/simulations.py`, the tests of
+> `godot/tool/reference/`). Only change a file by hand with a rule change
+> that is meant, and say why in the commit.
+
 Inputs and what the Dart code answers to them, one JSON file per subject.
 A module of `lib/domain` ported to GDScript reads the file of its subject,
 calls its own code with each input and must find the same output, to the

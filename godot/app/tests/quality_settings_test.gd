@@ -35,6 +35,17 @@ func test_scales_the_3d_resolution() -> void:
 	var settings := QualitySettings.new(_base, _viewport, _idle, false)
 	settings.apply(QualityPanel.SCALE, 0.5)
 	assert_eq(_viewport.scaling_3d_scale, 0.5)
+	settings.apply(QualityPanel.SCALE, 1.0)
+	assert_eq(_viewport.scaling_3d_scale, 1.0)
+
+
+func test_scales_what_the_game_draws_on_a_dense_screen() -> void:
+	RenderScale.apply(_viewport, 3.0)
+	var settings := QualitySettings.new(_base, _viewport, _idle, false)
+	settings.apply(QualityPanel.SCALE, 0.75)
+	assert_almost_eq(_viewport.scaling_3d_scale, 0.5, 1e-6, "three quarters of two thirds")
+	settings.apply(QualityPanel.SCALE, 1.0)
+	assert_almost_eq(_viewport.scaling_3d_scale, 2.0 / 3.0, 1e-6, "the cap, not every pixel")
 
 
 func test_keeps_an_hdr_2d_buffer_for_the_glow_of_the_compatibility_renderer() -> void:

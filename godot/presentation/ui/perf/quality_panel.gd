@@ -1,13 +1,13 @@
 class_name QualityPanel
 extends PanelContainer
 ## A small panel to compare the scene's costs live on a phone: shadows,
-## glow and particles on or off, the 3D render scale, and a frame rate
-## capped when nothing moves. Folded under its title until opened, its
-## buttons sized for a finger. It only tells what the player chose
-## (changed); the app applies it.
+## glow and particles on or off, the 3D render scale (a share of the one
+## the game draws at), and a frame rate capped when nothing moves. Folded
+## under its title until opened, its buttons sized for a finger. It only
+## tells what the player chose (changed); the app applies it.
 
 ## The player turned [param setting] to [param value]: a bool, or the
-## render scale as a float.
+## share of the game's render scale as a float.
 signal changed(setting: StringName, value: Variant)
 
 const SHADOWS := &"shadows"
@@ -15,7 +15,8 @@ const GLOW := &"glow"
 const PARTICLES := &"particles"
 const IDLE_CAP := &"idle_cap"
 const SCALE := &"scale"
-## The render scales offered, the full resolution first.
+## The render scales offered, as shares of the scale the game draws at (the
+## full resolution, or less on a dense screen): the game's own first.
 const SCALES: Array[float] = [1.0, 0.75, 0.5]
 const SWITCHES: Dictionary[StringName, String] = {
 	SHADOWS: "Ombres", GLOW: "Lueur", PARTICLES: "Particules", IDLE_CAP: "30 i/s au repos",

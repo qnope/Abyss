@@ -177,9 +177,26 @@ A save that cannot be read is skipped and named in a warning (and in
 fails is warned of and the player goes on. Tests give the app a `TempFolder` of
 saves and settings (`app.repository`, `app.language`) before it enters the tree.
 
+The 3D is drawn at twice the points at most, however dense the screen
+(`RenderScale`, which the `App` applies to its window when it starts, before
+the menus or a bench open: the base, the parade ground and the map all draw
+in it). The game is fill-rate bound on a phone: the lighting, the shadows, the
+map's fog and the glow are paid per pixel, and the web canvas follows the
+screen's density, so an iPhone (density 3) would draw 2.6 million pixels where
+density 2 draws 1.15. The scale is `min(1, 2 / density)`, the density being
+`DisplayServer.screen_get_scale()` (the device pixel ratio on the web), read
+once at startup: 2/3 on that iPhone (about 30 % off the frame time of the map
+in a software render; `?bench=1` tells what it gives on a device). Only the
+3D is scaled (`Viewport.scaling_3d_scale`, bilinear on the Compatibility
+renderer): the 2D interface keeps every pixel, and nothing changes on a screen
+of density 1 or 2. A test sets `app.density` before the app enters the tree.
+
 The 3D prototype (`prototype/`) opens on the base with the frame counter and
 the quality panel over it (`presentation/ui/perf/`): `QualitySettings` applies
-the panel's choices (to the map too, when a bench measures one), `IdleFrameCap`
+the panel's choices (to the map too, when a bench measures one; its render
+scales are shares of the scale the game draws at, so ×1 is the game's own, capped
+on a dense screen, and the frame counter names the resolution really drawn,
+"804×1428 (×0.67)"), `IdleFrameCap`
 caps the frame rate at 30 while the view stands still, and `bench/` runs a fixed
 path of the camera when the launch asks for one: `?bench=1` (`?bench=40` for 40 s)
 in the web page's address, `-- --bench[=seconds]` on the command line. A launch with a

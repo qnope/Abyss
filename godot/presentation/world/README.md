@@ -123,7 +123,7 @@ What the map plays over a level (`lib/presentation/widgets/map/effects/`). `MapE
 (a part of `MapScene`) plays one `MapEffect` at a time: `play(effect, then)` ends the
 one playing, calls `then` once the new one is over, and plays it over at once (never
 staged) when the map is out of sight or `reduced_motion` is set; `finish()` ends the
-one playing with its last moment shown, which is what the turn story will use to skip.
+one playing with its last moment shown, which is what the turn story uses to skip (`app/game/story/`).
 An effect is told the time (`advance(seconds)`, so a test drives it), never reads a
 clock, and leaves the map as it was drawn without it. `jolted(offset)` shakes the
 `MapCamera` to the side (`MapJolt`). The seconds are `MapMotion`'s, the colours

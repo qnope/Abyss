@@ -6,7 +6,7 @@ extends Node3D
 ## is over. With the map out of sight (another tab is shown), or when the player
 ## asked for fewer animations, an effect is over at once, never staged: every
 ## effect leaves nothing behind. A new effect ends the one playing, and
-## [method finish] ends it on request, which is how the turn story will skip.
+## [method finish] ends it on request, which is how the turn story skips (`app/game/story/`).
 ##
 ## The effects are told the time here, frame by frame, and the shake of the
 ## camera they ask for is told by [signal jolted].

@@ -88,15 +88,33 @@ func _on_next() -> void:
 		go(index + 1)
 
 
-## A swipe to the left shows the next card, to the right the previous one.
-func _on_input(event: InputEvent) -> void:
-	var touch := event as InputEventMouseButton
-	if touch == null or touch.button_index != MOUSE_BUTTON_LEFT:
+## A finger's swipe, read before the controls under it: a card's own
+## controls take the press, and a phone's finger never reaches [signal gui_input].
+func _input(event: InputEvent) -> void:
+	var touch := event as InputEventScreenTouch
+	if touch == null or touch.index != 0 or not is_visible_in_tree():
 		return
+	var local: InputEventScreenTouch = make_input_local(touch)
 	if touch.pressed:
-		_press = touch.position
+		_press = local.position
+	elif Rect2(Vector2.ZERO, size).has_point(_press):
+		_swipe(local.position.x - _press.x)
+
+
+## A swipe to the left shows the next card, to the right the previous one;
+## the mouse of a desktop, not the one a touch emulates.
+func _on_input(event: InputEvent) -> void:
+	var click := event as InputEventMouseButton
+	if click == null or click.button_index != MOUSE_BUTTON_LEFT \
+			or click.device == InputEvent.DEVICE_ID_EMULATION:
 		return
-	var dx := touch.position.x - _press.x
+	if click.pressed:
+		_press = click.position
+	else:
+		_swipe(click.position.x - _press.x)
+
+
+func _swipe(dx: float) -> void:
 	if dx <= -SWIPE:
 		go(index + 1)
 	elif dx >= SWIPE:

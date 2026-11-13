@@ -44,6 +44,8 @@ func test_pictures_the_dome_the_swarm_the_core_and_the_archivist() -> void:
 	assert_eq(dome.display_name, BuildingTexts.display_name(BuildingType.Value.HEADQUARTERS))
 	assert_eq(swarm.display_name, MonsterFamilyTexts.label(MonsterFamily.Value.SWARM))
 	assert_eq(core.display_name, BuildingTexts.display_name(BuildingType.Value.VOLCANIC_KERNEL))
+	for picture: Portrait in [dome, swarm, core]:
+		assert_not_null(picture.picture_rect, "the render, not initials")
 	assert_eq(archivist.icon_path, GUIDE)
 	assert_eq(archivist.custom_minimum_size, Vector2.ONE * OpeningStory.PICTURE_SIZE)
 	for picture: Control in [dome, swarm, core, archivist]:

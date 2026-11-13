@@ -58,6 +58,16 @@ func test_unlocking_a_branch_changes_the_game_saves_it_and_redraws_the_tree() ->
 	assert_eq(ore.amount_label.text, str(human.resources[ResourceType.Value.ORE].amount), "the stock is paid")
 
 
+func test_a_change_on_another_tab_redraws_the_tree_once_the_tech_tab_shows() -> void:
+	press("Base")
+	var before := _hud.tech_tab.tree.get_instance_id()
+	_session.actions.mark(func(game: Game) -> void:
+		game.human_player().tech_branches[Branch.EXPLORER].unlocked = true)
+	assert_eq(_hud.tech_tab.tree.get_instance_id(), before, "no tree is built behind the base")
+	press("Tech")
+	assert_true(_hud.tech_tab.tree.columns[Branch.EXPLORER].medallion.unlocked)
+
+
 func test_researching_a_node_spends_the_turns_research_until_the_next_turn() -> void:
 	_game.human_player().tech_branches[Branch.EXPLORER].unlocked = true
 	_session.actions.mark(func(_g: Game) -> void: pass)

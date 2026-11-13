@@ -55,7 +55,8 @@ bar hides the world behind it like any tab but the base, a touch on a node opens
 its sheet, and unlocking or researching goes through the same actions: node
 touched -> sheet -> `GameActions.execute` -> `acted` -> save -> `changed` ->
 `GameHud.refresh()` redraws the tree. `GameController` has nothing of its own to
-do for it.
+do for it. The tree is built again only while the Tech tab is on show: a change
+made on another tab is drawn when the player comes to it (`TechTab`).
 
 The army tab is the `ArmyController`, made by the `GameController`: it puts the
 `ArmyTab` (`presentation/ui/army/`) over the world on the Army tab only and

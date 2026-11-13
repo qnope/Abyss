@@ -76,6 +76,21 @@ func test_a_tab_covers_the_world_with_its_page_and_tells_the_view_to_show() -> v
 	assert_eq(_tabs, [GameTab.Value.MAP, GameTab.Value.TECH, GameTab.Value.BASE] as Array[GameTab.Value])
 
 
+func test_the_research_tree_is_built_again_only_on_the_tech_tab() -> void:
+	var hud := _show()
+	var before := hud.tech_tab.tree.get_instance_id()
+	_game.human_player().buildings[BuildingType.Value.LABORATORY].level = 1
+	hud.refresh()
+	assert_eq(hud.tech_tab.tree.get_instance_id(), before, "hidden on the base, it waits")
+	press("Tech")
+	assert_ne(hud.tech_tab.tree.get_instance_id(), before)
+	assert_null(hud.tech_tab.tree.notice, "the laboratory stands in the tree shown")
+	var shown := hud.tech_tab.tree.get_instance_id()
+	press("Base")
+	press("Tech")
+	assert_eq(hud.tech_tab.tree.get_instance_id(), shown, "nothing changed meanwhile")
+
+
 func test_the_tab_on_show_is_not_told_again() -> void:
 	_show()
 	press("Base")

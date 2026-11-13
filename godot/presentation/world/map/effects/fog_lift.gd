@@ -103,7 +103,7 @@ func _show(t: float) -> void:
 
 
 func _layer(part_name: StringName, mesh: Mesh, places: Array) -> MultiMeshInstance3D:
-	var layer := MapLayer.of(part_name, mesh, places)
+	var layer := MapLayer.new(part_name, mesh, places)
 	layer.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	layer.material_override = _cloud_fade
 	add_child(layer)

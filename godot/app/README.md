@@ -188,8 +188,9 @@ of a level (`BenchGame`: a game against three factions, part of each level seen)
 with `&scene=map&level=2` (`-- --bench --bench-scene=map --bench-level=2`): the map
 then takes the base's place, its water lit as the level, and the camera loops over
 it zooming in and out (`BenchPose`), which brings the contents' shadows on and off
-as a player's pinch does. The summary names the scene it measured ("Bench 20 s on
-map level 2: 58.0 FPS avg · 49.0 FPS 1% low"), on the frame counter and in the console.
+(and the floor to take them or not) as a player's pinch does. The summary names the
+scene it measured ("Bench 20 s on map level 2: 58.0 FPS avg · 49.0 FPS 1% low"), on the
+frame counter and in the console.
 `tool/scene_capture.sh` renders the prototype and the app's screens.
 
 `locale/AppLocale` is the language of the game: it reads the player's

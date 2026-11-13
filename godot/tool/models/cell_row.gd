@@ -26,6 +26,8 @@ func _init(models: Array[Node3D], spans: Array[int], per_row: int) -> void:
 		for x in size.x:
 			looks.append(MapLook.new(x, y, TerrainType.Value.PLAIN, true))
 	var tiles := MapTiles.new()
+	# The models cast their shadows here whatever the view: the floor takes them.
+	tiles.receive_shadows(true)
 	tiles.show_looks(looks, size.x, size.y)
 	add_child(tiles)
 	for index in models.size():

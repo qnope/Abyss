@@ -5,8 +5,10 @@ extends Node3D
 ## on the cells seen, the scouts on their way, and round and over the slab the
 ## scenery, the creature and the specks. Lit as its level is (the key light
 ## is its own, the water the base's, which shares it) and seen by a camera that
-## pans and zooms. One level at a time: [method show_level] draws what `app/`
-## reads from the game, and a tap on a cell is told by [signal cell_tapped].
+## pans and zooms: while it is close, and only then, what stands on the cells
+## casts its shadows and the floor and the scenery take them. One level at a
+## time: [method show_level] draws what `app/` reads from the game, and a tap on
+## a cell is told by [signal cell_tapped].
 
 ## The player tapped the cell ([param x], [param y]) of [param level].
 signal cell_tapped(level: int, x: int, y: int)
@@ -42,8 +44,9 @@ func _init() -> void:
 	for part: Node in [surroundings, tiles, fog, contents, scouts, effects, guide, key_light, camera]:
 		add_child(part)
 	camera.tapped.connect(_on_tapped)
-	camera.zoomed.connect(contents.cast_shadows)
-	effects.jolted.connect(_on_jolted)
+	for shaded: Callable in [contents.cast_shadows, tiles.receive_shadows, surroundings.receive_shadows]:
+		camera.zoomed.connect(shaded)
+	effects.jolted.connect(func(offset: float) -> void: camera.jolt = offset)
 
 
 ## Shows the level of [param next]: its floor, its contents and its scouts. A
@@ -131,10 +134,6 @@ func _lift_fog(looks: Array[MapLook], left: Array[Vector2i]) -> void:
 		if seen.has(target):
 			waited.append(target)
 	effects.play(FogLift.new(seen, state.map.width, state.map.height, FogLifts.hidden(looks), contents, waited))
-
-
-func _on_jolted(offset: float) -> void:
-	camera.jolt = offset
 
 
 func _on_tapped(position: Vector2) -> void:

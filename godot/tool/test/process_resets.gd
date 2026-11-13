@@ -20,4 +20,5 @@ static func all() -> Array[Callable]:
 		LeviathanDefenceAdvisor.debug_reset,
 		PlanLibrary.debug_reset,
 		AppLocale.debug_reset,
+		ShadowlessMesh.debug_reset,
 	]

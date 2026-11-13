@@ -9,7 +9,8 @@ extends Node3D
 ## beyond only every other cell, as the black squares of a chessboard (a cloud
 ## spreads over its neighbours, so the blanket holds), over the dark tiles. A
 ## wreck seen through the fog has none over it. Which cloud, and its quarter
-## turn, come from the cell alone, as the tiles' do.
+## turn, come from the cell alone, as the tiles' do. The map is drawn again on
+## each action of the player: the same shroud again keeps its layers ([Drawn]).
 
 ## How high the clouds' floor lies: level with the floor of a cell seen, over
 ## the fog tiles, which lie lower.
@@ -19,11 +20,16 @@ const BAND := 2
 
 ## How many clouds stand, by the name of the cloud ("Cloud2").
 var counts: Dictionary[StringName, int] = {}
+## What the clouds were laid for.
+var _laid := Drawn.new()
 
 
 ## Covers the cells of [param looks] not seen (a map [param width] by
-## [param height]) with clouds, in place of the ones before.
+## [param height]) with clouds, in place of the ones before; the same shroud
+## again lays nothing.
 func show_looks(looks: Array[MapLook], width: int, height: int) -> void:
+	if _laid.again([width, height, _deciding(looks, width)]):
+		return
 	for child: Node in get_children():
 		child.free()
 	counts.clear()
@@ -56,6 +62,16 @@ static func clouded(looks: Array[MapLook], width: int, height: int) -> Array[Map
 ## beacon (a wreck, which must show through the fog).
 static func shrouded(look: MapLook) -> bool:
 	return not look.revealed and not look.beacon
+
+
+## The cells of [param looks] (a map [param width] wide), each with whether it
+## is seen and whether it shows through the fog: all that [method clouded]
+## reads, which is cheaper to compare than its answer is to work out.
+static func _deciding(looks: Array[MapLook], width: int) -> PackedInt32Array:
+	var found := PackedInt32Array()
+	for look in looks:
+		found.append((look.y * width + look.x) * 4 + int(look.revealed) * 2 + int(look.beacon))
+	return found
 
 
 ## The cells within [constant BAND] cells of a cell seen (the seen ones too).

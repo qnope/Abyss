@@ -32,6 +32,32 @@ func test_dresses_a_level_with_its_pieces_and_its_silhouettes() -> void:
 	assert_eq(backdrop.get_child_count(), 5)
 
 
+func test_the_same_level_and_size_again_keep_the_scenery() -> void:
+	var backdrop := MapBackdrop.new()
+	add_cleanup(backdrop.free)
+	backdrop.show_level(3, 8, 6)
+	var layers := backdrop.get_children()
+	backdrop.show_level(3, 8, 6)
+	assert_eq(backdrop.get_children(), layers, "the very layers laid first")
+	backdrop.show_level(4, 8, 6)
+	assert_eq(backdrop.get_children(), layers, "the levels under the third share its scenery")
+
+
+func test_another_level_or_size_relays_the_scenery_and_the_first_comes_back_as_it_was() -> void:
+	var backdrop := MapBackdrop.new()
+	add_cleanup(backdrop.free)
+	backdrop.show_level(1, 8, 6)
+	var first := laid(backdrop)
+	var before := backdrop.get_child(0)
+	backdrop.show_level(1, 10, 6)
+	assert_false(is_instance_valid(before), "the layers before are gone")
+	assert_eq(laid(backdrop)[&"Edge1"].size() + laid(backdrop)[&"Edge2"].size() - 2, MapBackdrop.edge_places(10, 6).size())
+	backdrop.show_level(2, 10, 6)
+	assert_ne(laid(backdrop)[&"Corner"][0], first[&"Corner"][0], "the pieces of another model")
+	backdrop.show_level(1, 8, 6)
+	assert_eq(laid(backdrop), first)
+
+
 func test_a_creature_swims_round_the_slab_facing_where_it_goes() -> void:
 	var ambient := MapAmbient.new()
 	mounted(ambient)
@@ -60,3 +86,18 @@ func test_the_creature_changes_with_the_level_and_plays_its_swim() -> void:
 	assert_ne(ambient.creature, turtle)
 	ambient._process(0.5)
 	assert_eq(ambient.get_child_count(), 1)
+
+
+func test_the_creature_of_the_same_level_swims_on_and_another_takes_over_where_it_was() -> void:
+	var ambient := MapAmbient.new()
+	mounted(ambient)
+	ambient.show_level(2, 8, 6)
+	ambient.advance(MapAmbient.LAP / 4.0)
+	var jelly := ambient.creature
+	var place := jelly.position
+	ambient.show_level(2, 8, 6)
+	assert_eq(ambient.creature, jelly, "no new one")
+	assert_eq(jelly.position, place, "nor back at the start of its lap")
+	ambient.show_level(3, 8, 6)
+	assert_false(is_instance_valid(jelly))
+	assert_almost_eq(ambient.creature.position.z, 3.0 + MapAmbient.ROOM, 1e-3)

@@ -24,6 +24,7 @@ func test_a_place_taken_lights_up_in_cyan_between_the_blows_and_the_end() -> voi
 	effect.finish()
 	assert_true(effect.is_done)
 	assert_eq(effect.jolt(), 0.0, "rests at the end")
+	assert_null(_content_made.material_overlay, "and the place wears what it wore: the map keeps its node")
 
 
 func test_a_place_not_taken_does_not_light_up() -> void:

@@ -37,3 +37,15 @@ func mounted(node: Node) -> Node:
 	(Engine.get_main_loop() as SceneTree).root.add_child(node)
 	add_cleanup(node.free)
 	return node
+
+
+## What the layers of [param part] draw: by the name of each, its mesh, then
+## where each of its pieces lies.
+func laid(part: Node) -> Dictionary[StringName, Array]:
+	var found: Dictionary[StringName, Array] = {}
+	for layer: MultiMeshInstance3D in part.get_children():
+		var drawn: Array = [layer.multimesh.mesh]
+		for index in layer.multimesh.instance_count:
+			drawn.append(layer.multimesh.get_instance_transform(index))
+		found[layer.name] = drawn
+	return found

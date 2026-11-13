@@ -6,6 +6,10 @@ extends Node3D
 
 ## What stands on each cell, by its key.
 var by_cell: Dictionary[Vector2i, Node3D] = {}
+## Whether they cast shadows: only while the view is close ([MapCamera.zoomed]).
+## From far a shadow is a few pixels of a few hundred nodes, and the pass that
+## draws them costs as much as the contents themselves.
+var _casting := false
 
 
 ## Stands the contents of [param looks] (the cells of a map [param width] by
@@ -28,3 +32,21 @@ func show_looks(looks: Array[MapLook], width: int, height: int) -> void:
 			+ Vector3.UP * floor_.height
 		by_cell[look.key()] = content
 		add_child(content)
+		_cast(content)
+
+
+## Lets the contents cast their shadows, or not.
+func cast_shadows(enabled: bool) -> void:
+	_casting = enabled
+	for content in get_children():
+		_cast(content)
+
+
+## Sets the shadows of [param content] and of every mesh in it as the contents'.
+func _cast(content: Node) -> void:
+	var mode := GeometryInstance3D.SHADOW_CASTING_SETTING_ON if _casting else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var meshes := content.find_children("*", "GeometryInstance3D", true, false)
+	if content is GeometryInstance3D:
+		meshes.append(content)
+	for node: Node in meshes:
+		(node as GeometryInstance3D).cast_shadow = mode

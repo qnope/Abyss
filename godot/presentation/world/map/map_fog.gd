@@ -39,9 +39,7 @@ func show_looks(looks: Array[MapLook], width: int, height: int) -> void:
 	for cloud in spots:
 		var places: Array = spots[cloud]
 		counts[cloud] = places.size()
-		var layer := MapLayer.of(cloud, parts[cloud], places)
-		layer.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		add_child(layer)
+		add_child(MapLayer.of(cloud, parts[cloud], places))
 
 
 ## The cells of [param looks] that stand under a cloud.

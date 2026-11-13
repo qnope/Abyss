@@ -21,3 +21,10 @@ func test_is_the_same_game_each_time() -> void:
 func test_stays_within_the_levels_there_are() -> void:
 	assert_eq(BenchGame.map_of(9).level, 3)
 	assert_eq(BenchGame.map_of(0).level, 1)
+
+
+func test_looks_for_the_volcano_and_falls_back_on_the_middle() -> void:
+	assert_eq(BenchGame._volcano(MapSamples.plain_map(6, 4)), Vector2i(3, 2))
+	var map := MapSamples.plain_map(6, 4)
+	map.set_cell(1, 2, MapCell.new(TerrainType.Value.PLAIN, CellContentType.Value.VOLCANIC_KERNEL))
+	assert_eq(BenchGame._volcano(map), Vector2i(1, 2))

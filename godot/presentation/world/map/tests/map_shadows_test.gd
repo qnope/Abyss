@@ -59,6 +59,15 @@ func test_the_contents_cast_theirs_when_the_view_comes_close() -> void:
 		assert_true(_all_off(content), "and stop when it leaves")
 
 
+func test_a_content_that_is_a_mesh_itself_is_set_too() -> void:
+	var mesh := MeshInstance3D.new()
+	_scene.contents.add_child(mesh)
+	_scene.contents.cast_shadows(true)
+	assert_eq(mesh.cast_shadow, GeometryInstance3D.SHADOW_CASTING_SETTING_ON)
+	_scene.contents.cast_shadows(false)
+	assert_eq(mesh.cast_shadow, GeometryInstance3D.SHADOW_CASTING_SETTING_OFF)
+
+
 func test_the_contents_drawn_while_close_cast_at_once() -> void:
 	_zoom(0.5)
 	var state := level_of(6, 6, [], true)

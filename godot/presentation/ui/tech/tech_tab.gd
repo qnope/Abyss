@@ -5,8 +5,15 @@ extends RefreshingPanel
 ## hidden behind it. A touch on a branch or a node opens its [TechTargetSheet]
 ## on the modals; the sheet changes the game through the [GameActions], and
 ## the owner calls [method refresh] after each change (and the language does
-## it by itself): the tree is built again from the game. It saves nothing and
-## navigates nothing.
+## it by itself). It saves nothing and navigates nothing.
+##
+## The tree is built again from the game only while the tab is on show: a
+## refresh of a tab hidden in the scene tree only notes that the tree is out
+## of date, and the tab builds it once when it is shown again. Building it
+## costs far more than the rest of a refresh, and every action of the player
+## on another tab asks for one. Out of the scene tree nothing tells whether
+## the tab is on show, so the tree is built at once: [member tree] is there
+## once the tab is built.
 ##
 ## Flow: node touched -> [signal TechTreeView.target_tapped] -> sheet ->
 ## [method GameActions.execute] -> [signal GameActions.acted] -> save ->
@@ -15,11 +22,13 @@ extends RefreshingPanel
 const PAD := 12
 
 var actions: GameActions
-## The tree on show, replaced on each refresh.
+## The tree on show, replaced each time it is built again.
 var tree: TechTreeView
 var scroll := ScrollContainer.new()
 var _padding := MarginContainer.new()
 var _modals: ModalLayer
+## The game or the language changed since the tree was built.
+var _stale := false
 
 
 func _init(actions_: GameActions, modals: ModalLayer) -> void:
@@ -35,11 +44,25 @@ func _init(actions_: GameActions, modals: ModalLayer) -> void:
 	refresh()
 
 
-## Builds the tree again from the game.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_VISIBILITY_CHANGED and _stale and is_visible_in_tree():
+		_build()
+
+
+## Builds the tree again from the game, at once unless the tab is hidden in
+## the scene tree: it then waits to be shown.
 func refresh() -> void:
 	# Called once by the base class, before there is a game to read.
 	if actions == null:
 		return
+	if is_inside_tree() and not is_visible_in_tree():
+		_stale = true
+	else:
+		_build()
+
+
+func _build() -> void:
+	_stale = false
 	if tree != null:
 		_padding.remove_child(tree)
 		tree.free()

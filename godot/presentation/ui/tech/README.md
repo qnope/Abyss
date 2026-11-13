@@ -12,11 +12,19 @@ world, which rests hidden behind it) shows the `TechTreeView` and builds it
 again from the game on `refresh()`, which the HUD calls after each change. A
 touch on a node or a medallion opens a `TechTargetSheet` on the modals.
 
+The tree is built only while the tab is on show. Building it is the costly part
+of a refresh, and the HUD asks for one after every action on any tab: a tab
+hidden in the scene tree only notes that its tree is out of date (the game or
+the language changed) and builds it once when it is shown again, not at all
+when nothing changed. Out of the scene tree it builds at once, so `tree` is
+there once the tab is built.
+
     node or medallion touched -> TechTreeView.target_tapped(TechTarget)
       -> TechTab opens a TechTargetSheet
       -> its button: GameActions.execute(UnlockBranchAction | ResearchTechAction)
       -> success: acted -> GameSession saves -> changed -> GameHud.refresh()
-         -> TechTab.refresh(); the sheet closes with the ActionResult
+         -> TechTab.refresh(), which builds the tree again, on show as it
+            is; the sheet closes with the ActionResult
       -> refusal: told in the sheet (ActionFailureTexts), which reads the game
          again and stays open
 

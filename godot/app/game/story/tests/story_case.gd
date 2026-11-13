@@ -30,13 +30,12 @@ func find(level: int, content: CellContentType.Value) -> Vector2i:
 ## A cell of the first level the player has not seen, the [param nth] of them.
 func hidden(nth := 0) -> Vector2i:
 	var seen := human.revealed_cells_set_on_level(1)
+	var found: Array[Vector2i] = []
 	for y in game.levels[1].height:
 		for x in game.levels[1].width:
 			if not seen.has(Vector2i(x, y)):
-				if nth == 0:
-					return Vector2i(x, y)
-				nth -= 1
-	return Vector2i.ZERO
+				found.append(Vector2i(x, y))
+	return found[nth]
 
 
 func see(level: int, at: Vector2i) -> void:

@@ -4,10 +4,16 @@ extends RefCounted
 ## measures one, to the viewport and to the idle frame cap. In the Compatibility
 ## renderer (the web's) the glow needs an HDR 2D buffer, twice the memory
 ## traffic of an 8-bit one: the buffer is on only while the glow is.
+##
+## The panel's render scale is a share of the scale the game draws at, the one
+## the viewport had when the settings were made (RenderScale caps it on a dense
+## screen): ×1 is what the player gets, never more pixels than the game draws.
 
 var _base: BaseScene
 var _map: MapScene
 var _viewport: Viewport
+## The 3D render scale of the game: the panel's ×1.
+var _scale: float
 var _idle: IdleFrameCap
 var _compatibility: bool
 
@@ -17,6 +23,7 @@ func _init(base: BaseScene, viewport: Viewport, idle: IdleFrameCap,
 	_base = base
 	_map = map
 	_viewport = viewport
+	_scale = viewport.scaling_3d_scale
 	_idle = idle
 	_compatibility = compatibility
 	_viewport.use_hdr_2d = _compatibility
@@ -25,7 +32,8 @@ func _init(base: BaseScene, viewport: Viewport, idle: IdleFrameCap,
 ## Turns [param setting] (a QualityPanel setting) to [param value].
 func apply(setting: StringName, value: Variant) -> void:
 	if setting == QualityPanel.SCALE:
-		_viewport.scaling_3d_scale = value
+		var share: float = value
+		_viewport.scaling_3d_scale = _scale * share
 		return
 	var on: bool = value
 	match setting:

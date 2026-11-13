@@ -20,6 +20,13 @@ func test_names_the_renderer_and_its_resolution() -> void:
 		"Forward+ · vulkan · 100×100")
 
 
+func test_rounds_the_scale_of_a_dense_screen() -> void:
+	# A viewport keeps its scale as a 32-bit float: two thirds come back as 0.66666668...
+	var kept := PackedFloat32Array([2.0 / 3.0])[0]
+	assert_eq(FrameReport.renderer("gl_compatibility", "opengl3", Vector2i(1206, 2142), kept),
+		"Compatibility · opengl3 · 804×1428 (×0.67)")
+
+
 func test_counts_the_draw_calls_and_the_primitives() -> void:
 	assert_eq(FrameReport.load(88, 212128), "88 draw calls · 212k primitives")
 	assert_eq(FrameReport.load(3, 950), "3 draw calls · 950 primitives")

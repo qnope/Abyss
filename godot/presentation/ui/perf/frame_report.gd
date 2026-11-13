@@ -7,6 +7,9 @@ const RENDERERS: Dictionary[String, String] = {
 	"mobile": "Mobile",
 	"forward_plus": "Forward+",
 }
+## The 3D scale is written to the hundredth: a viewport keeps it as a 32-bit
+## float, and the two thirds of a dense screen would read 0.66666668653488.
+const SCALE_STEP := 0.01
 
 
 ## The frame rate, as "59 FPS".
@@ -20,11 +23,12 @@ static func timing(stats: FrameStats) -> String:
 
 
 ## The renderer, its driver, and the 3D resolution: the window's
-## [param size] in pixels times the 3D [param scale].
+## [param size] in pixels times the 3D [param scale], the scale named when
+## the 3D is not drawn at every pixel (a dense screen, the quality panel).
 static func renderer(method: String, driver: String, size: Vector2i, scale: float) -> String:
 	var rendered := Vector2i((Vector2(size) * scale).round())
 	var line := "%s · %s · %d×%d" % [RENDERERS.get(method, method), driver, rendered.x, rendered.y]
-	return line if scale == 1.0 else line + " (×%s)" % scale
+	return line if scale == 1.0 else line + " (×%s)" % snappedf(scale, SCALE_STEP)
 
 
 ## The draw calls and the primitives of the last frame.

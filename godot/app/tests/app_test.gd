@@ -47,6 +47,7 @@ func test_opens_the_saves_and_the_settings_of_the_player_unless_told_otherwise()
 	mount(app)
 	assert_eq(app.repository.folder, GameRepository.FOLDER)
 	assert_eq(app.language.path, LanguageSettings.PATH)
+	assert_eq(app.density, DisplayServer.screen_get_scale())
 
 
 func test_speaks_the_language_of_the_player_or_the_device() -> void:

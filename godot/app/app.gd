@@ -7,7 +7,9 @@ extends Control
 ## (dialogs and sheets).
 ##
 ## A launch that asks for a bench (`?bench=1`, BenchOptions) opens the 3D
-## prototype instead, which measures the scene alone.
+## prototype instead, which measures the scene alone. Either way the 3D of
+## the window is first capped for the screen's density (RenderScale), so a
+## bench measures what the game draws.
 
 const PROTOTYPE := preload("res://app/prototype/prototype.tscn")
 
@@ -21,6 +23,9 @@ var locale: AppLocale
 var flow: AppFlow
 ## What the launch asks to bench.
 var bench := BenchOptions.from_launch()
+## The screen's pixels per point, which cap the 3D (RenderScale): the screen's
+## own unless a test sets another before the app enters the tree.
+var density := DisplayServer.screen_get_scale()
 
 @onready var world: WorldHost = $World
 @onready var screens: MarginContainer = $Screens
@@ -37,6 +42,7 @@ func _ready() -> void:
 	if language == null:
 		language = LanguageSettings.new()
 	locale = AppLocale.new(language)
+	RenderScale.apply(get_viewport(), density)
 	if bench.seconds > 0.0:
 		_open_prototype()
 		return

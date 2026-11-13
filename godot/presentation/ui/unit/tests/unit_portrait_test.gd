@@ -11,6 +11,8 @@ func test_is_the_portrait_of_the_unit_in_its_colour() -> void:
 	assert_eq(portrait.initials_label.get_theme_color(&"font_color"), UnitColors.of(Type.GUARDIAN))
 	assert_eq(portrait.custom_minimum_size, Vector2(64.0, 64.0))
 	assert_eq(portrait.modulate.a, 1.0)
+	assert_not_null(portrait.picture_rect)
+	assert_null(portrait.picture_rect.material, "in its colours")
 
 
 func test_each_unit_has_a_colour_of_its_own() -> void:
@@ -26,6 +28,8 @@ func test_each_unit_has_a_colour_of_its_own() -> void:
 func test_is_grey_while_locked() -> void:
 	var portrait := UnitPortrait.of(Type.GUARDIAN, 64.0, true)
 	assert_eq(portrait.initials_label.get_theme_color(&"font_color"), AbyssColors.DISABLED)
+	assert_not_null(portrait.picture_rect, "its render, never the initials")
+	assert_eq((portrait.picture_rect.material as ShaderMaterial).shader, Greyscale.SHADER)
 	portrait.free()
 
 

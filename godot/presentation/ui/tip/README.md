@@ -11,7 +11,8 @@ first time a system shows up, then kept in the Guide.
   are greyed « ??? ». Opened from the guide settings (`../settings/GuideSettings`,
   « Revoir les fiches »). `TipGuideRow` is one line of it.
 - `TipIllustrations`: the picture of a tip; a `Portrait` for a building, unit,
-  post or monster until step 7, an icon for an event, a faction or the guide.
+  monster (the render of its model) or post, chest and ruins (initials, no model
+  render yet), an icon for an event, a faction or the guide.
 - `TipPresenter`: the stack of the tips waiting (`TipCatalog.pending_for`), marked
   seen with one `GameActions.mark_tips_seen` (one save) before it shows; null
   when tips are off, none waits, or the game is over. Its `step()` ends the pages

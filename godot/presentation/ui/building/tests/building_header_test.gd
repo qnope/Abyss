@@ -30,5 +30,7 @@ func test_a_built_building_with_a_model_shows_its_render() -> void:
 	assert_not_null(_header(Type.HEADQUARTERS).portrait.picture_rect)
 
 
-func test_a_building_not_built_keeps_its_initials() -> void:
-	assert_null(_header(Type.HEADQUARTERS).portrait.picture_rect, "to build: no picture")
+func test_a_building_not_built_shows_its_render_in_grey() -> void:
+	var portrait := _header(Type.HEADQUARTERS).portrait
+	assert_not_null(portrait.picture_rect, "to build: never the initials")
+	assert_eq((portrait.picture_rect.material as ShaderMaterial).shader, Greyscale.SHADER)

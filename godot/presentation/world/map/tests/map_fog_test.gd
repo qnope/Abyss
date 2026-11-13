@@ -64,6 +64,17 @@ func test_the_clouds_are_laid_in_a_layer_each_that_casts_no_shadow() -> void:
 		assert_eq(layer.multimesh.instance_count, _fog.counts[layer.name])
 
 
+func test_the_murk_is_blended_without_a_depth_pre_pass_and_takes_no_shadows() -> void:
+	var parts := MapScenery.parts(MapScenery.FOG)
+	var clouds := MapScenery.named(parts, "Cloud")
+	assert_eq(clouds.size(), 3)
+	for cloud in clouds:
+		assert_eq(parts[cloud].get_surface_count(), 1, cloud)
+		var murk := parts[cloud].surface_get_material(0) as BaseMaterial3D
+		assert_eq(murk.transparency, BaseMaterial3D.TRANSPARENCY_ALPHA, "no fragment of it is opaque")
+		assert_true(murk.disable_receive_shadows)
+
+
 func test_the_shroud_is_laid_again_in_place_of_the_one_before() -> void:
 	var state := level_of(8, 8, [Vector2i(0, 0)])
 	_fog.show_looks(MapLooks.of(state), 8, 8)

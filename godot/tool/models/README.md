@@ -5,9 +5,14 @@ the glb files): editor and review tools, not game code, left out of exports.
 
 - `model_import.gd`: the import script of every scene (`project.godot`,
   `[importer_defaults]`): vertex colours as albedo, a model's atlas sampled
-  anisotropically; `model_surfaces.gd` holds what it does, so that a test can
-  run it. An atlas (`<model>_atlas.png` beside its glb) is a texture of the
-  project: its `.png.import` asks for VRAM compression and mipmaps.
+  anisotropically, a blended material that is nowhere opaque (the fog's murk)
+  blended without the depth pre-pass Godot gives it, which would keep none of
+  its fragments; `model_surfaces.gd` holds what it does, so that a test can
+  run it. Godot does not import a model again when only these scripts change:
+  `rm -rf godot/.godot/imported godot/.godot/uid_cache.bin`, then
+  `godot --headless --path godot --import`. An atlas (`<model>_atlas.png`
+  beside its glb) is a texture of the project: its `.png.import` asks for VRAM
+  compression and mipmaps.
 - `preview.gd`, `studio.gd`, `model_bounds.gd`: the renders of
   `tool/models/preview.sh`; `ModelTiers` (presentation/world/models) shows a
   building up to a tier (`TIER=n`: its nodes `Tier1`..`Tier3` add up) for them.

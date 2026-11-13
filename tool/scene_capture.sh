@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Renders the 3D prototype, the app's screens and the UI kit for review, as a
 # phone held upright shows them (390 x 844 points at 2x):
-#   tool/scene_capture.sh [out dir] [scene | app | base | army | map | effects | fight | turn | tech | threat | event | post | faction | guide | kit]
+#   tool/scene_capture.sh [out dir] [scene | app | base | army | map | effects | story | fight | turn | tech | threat | event | post | faction | guide | kit]
 # With no scene, it writes default.png, rotated.png, close.png and top.png from
 # the views of godot/tool/scene/capture.gd, then app_menu_empty.png,
 # app_menu.png, app_new_game.png, app_saves.png, app_story.png, app_game.png,
@@ -15,7 +15,8 @@
 # map_close.png, map_exploration_sheet.png, _storm.png, map_treasure_sheet.png, map_found.png and
 # map_visited.png from godot/tool/scene/map_capture.gd, then effects_fog_hold.png, _fog_lift, _fog_done,
 # _strike_swim, _strike_hit, _strike_fall, _strike_place, _siege_alert, _siege_clash, _siege_shield and
-# _siege_breach from godot/tool/scene/effects_capture.gd, then fight_lair_sheet.png, fight_lair_generic.png,
+# _siege_breach from godot/tool/scene/effects_capture.gd, then story_fog_hold.png, _fog_lift, _siege_clash,
+# _siege_breach and _summary from godot/tool/scene/story_capture.gd, then fight_lair_sheet.png, fight_lair_generic.png,
 # fight_selection.png, fight_selection_en.png, fight_refused.png, fight_report_won.png, fight_report_won_end.png,
 # fight_map_beaten.png and fight_report_lost.png from godot/tool/scene/fight_capture.gd, then kit_a.png, kit_b.png, kit_b_en.png,
 # kit_dialog.png, kit_sheet.png and kit_page.png from
@@ -36,7 +37,7 @@
 # from godot/tool/scene/faction_capture.gd, then guide_first.png, _tab, _tech, _cell, _tip, _objectives,
 # _summary and _summary_en from godot/tool/scene/guide_capture.gd,
 # and prints each view's draw calls and primitives. With a scene (res://...tscn) only the first, on that scene; with
-# `app` only the second; with `base` only the third; with `army` only the army tab's; with `map` only the map's; with `effects` only the map's effects; with `fight` only the fights of the lairs; with `kit` only the kit's;
+# `app` only the second; with `base` only the third; with `army` only the army tab's; with `map` only the map's; with `effects` only the map's effects; with `story` only the story of a turn; with `fight` only the fights of the lairs; with `kit` only the kit's;
 # with `turn` only the end of a turn and of a game; with `tech` only the research; with `threat` only the raid, guardians and kraken wave; with `event` only the events, the history and the replay export; with `post` only the posts and the Volcanic Kernel; with `faction` only the rival factions; with `guide` only the tutorial. The out dir defaults to
 # /tmp/scene_capture: never write the renders in the repo. Godot draws with
 # its Compatibility renderer (the web's) in a virtual X display (xvfb-run), in
@@ -61,7 +62,7 @@ capture() {
     --script "$1" -- "$out" ${2:+"$2"} 2>&1 | grep -vE "^(Godot Engine|OpenGL API|$)" || true
 }
 
-if [[ $which != kit && $which != app && $which != base && $which != army && $which != map && $which != effects && $which != fight && $which != turn && $which != tech && $which != threat && $which != event && $which != post && $which != faction && $which != guide ]]; then
+if [[ $which != kit && $which != app && $which != base && $which != army && $which != map && $which != effects && $which != story && $which != fight && $which != turn && $which != tech && $which != threat && $which != event && $which != post && $which != faction && $which != guide ]]; then
   capture res://tool/scene/capture.gd "$which"
   [[ -f $out/default.png ]] || { echo "The scene did not render." >&2; exit 1; }
 fi
@@ -84,6 +85,10 @@ fi
 if [[ -z $which || $which == effects ]]; then
   capture res://tool/scene/effects_capture.gd
   [[ -f $out/effects_siege_breach.png ]] || { echo "The map's effects did not render." >&2; exit 1; }
+fi
+if [[ -z $which || $which == story ]]; then
+  capture res://tool/scene/story_capture.gd
+  [[ -f $out/story_summary.png ]] || { echo "The story of a turn did not render." >&2; exit 1; }
 fi
 if [[ -z $which || $which == fight ]]; then
   capture res://tool/scene/fight_capture.gd

@@ -95,6 +95,17 @@ of hunters, a blow landing with what each side lost, the monster beaten), `effec
 breach), each with its draw calls and primitives. The camera cannot come nearer than the game's
 closest zoom: crop the renders to read them. Never commit the renders.
 
+## The story of a turn
+
+`story_capture.gd` (`tool/scene_capture.sh [out dir] story`, or after the map's effects when
+no scene is given) plays the game of the map capture through the real screens, a scout out and
+a raid due, presses "next turn" and drives the story by hand, a moment at a time, and renders:
+`story_fog_hold.png` and `story_fog_lift.png` (the cells the scout saw under their clouds, then
+lifting, the "Passer" button floating over the map), `story_siege_clash.png` and
+`story_siege_breach.png` (the raid besieging the base: a clash, then the breach) and
+`story_summary.png` (the summary that opens once "Passer" skipped the rest), each with its draw
+calls and primitives. Never commit the renders.
+
 ## The fights
 
 `fight_capture.gd` (`tool/scene_capture.sh [out dir] fight`, or after the map's shots

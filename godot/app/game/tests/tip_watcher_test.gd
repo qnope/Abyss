@@ -6,6 +6,7 @@ var _folder: TempFolder
 var _session: GameSession
 var _watcher: TipWatcher
 var _game: Game
+var _second: TipWatcher
 
 
 func before_each() -> void:
@@ -33,6 +34,17 @@ func test_waits_while_a_modal_covers_the_screen() -> void:
 	assert_false(_game.human_player().saved_objective_state.has_seen(TipId.Value.NOISE_GAUGE))
 	cover.close()
 	_watcher._show()
+	assert_true(current_modal() is TipStack)
+
+
+func test_waits_while_the_screen_is_busy_with_a_story() -> void:
+	var busy := [true]
+	_second = TipWatcher.new(_session, modals(), func() -> bool: return busy[0])
+	add_cleanup(_second.close)
+	_second._show()
+	assert_null(current_modal())
+	busy[0] = false
+	_second._show()
 	assert_true(current_modal() is TipStack)
 
 

@@ -75,7 +75,7 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost, modals: Moda
 	kernel = KernelController.new(session.actions, map.router, modals, map.strike)
 	faction = FactionController.new(session.actions, map.router, modals, post, kernel, map.strike)
 	guide = GuideController.new(session.actions.guide, world)
-	tips = TipWatcher.new(session, modals)
+	tips = TipWatcher.new(session, modals, end_turn.is_telling)
 	session.changed.connect(_on_changed)
 	_show_base()
 	_frame()

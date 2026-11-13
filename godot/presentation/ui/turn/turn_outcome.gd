@@ -15,7 +15,7 @@ extends RefCounted
 ## - after the summary, the reports of the raid, of the predators and of a
 ##   kraken wave lost ([ThreatPages]), then the card of the event drawn
 ##   ([EventStep]), then the tips the turn brought ([TipPresenter]).
-##   The turn's story told on the map is step 7's.
+##   The turn's story told on the map comes before them all (`EndTurnFlow.observe`).
 
 ## The turn lost the game: the defeat screen is next.
 signal defeated

@@ -65,6 +65,12 @@ func drag(points: Vector2, seconds: float) -> void:
 	_fling = clampf(lerpf(_fling, speed, 0.6), -MAX_FLING, MAX_FLING)
 
 
+## Holds the view still under two fingers that pinch: a fling stops at once.
+func hold() -> void:
+	_held = true
+	_fling = 0.0
+
+
 ## Lets go of the drag: the view flings on at the drag's last speed.
 func release() -> void:
 	_held = false

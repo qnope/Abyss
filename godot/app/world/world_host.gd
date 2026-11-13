@@ -8,7 +8,8 @@ extends Node3D
 ## What it shows is one view at a time ([enum View]): the base, the army's
 ## parade ground, the map of a level, or nothing behind a page that covers the
 ## world. The
-## ambience (the water, the sky) is the base's and stays on for every view.
+## ambience (the water, the sky) is the base's and stays on for every view,
+## lit as the view is: by the base's light, or by the one of the level the map shows.
 
 ## How fast the ambience turns around the island, in degrees per second.
 const DRIFT := 4.0
@@ -36,6 +37,7 @@ func _init() -> void:
 	add_child(base)
 	add_child(parade)
 	add_child(map)
+	map.level_shown.connect(_light)
 	show_view(View.BASE)
 
 
@@ -95,8 +97,14 @@ func show_view(next: View) -> void:
 	_activate(base, next == View.BASE)
 	_activate(parade, next == View.PARADE)
 	_activate(map, next == View.MAP)
+	_light()
 	if next != View.NONE:
 		_camera_of(next).current = true
+
+
+## Lights the water as the view on show: the level of the map, or the base's.
+func _light(_level := 0) -> void:
+	base.water.set_mood(LightMoods.of_level(map.level) if view == View.MAP else LightMoods.base())
 
 
 func _camera_of(shown: View) -> Camera3D:

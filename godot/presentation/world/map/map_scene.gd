@@ -13,6 +13,8 @@ extends Node3D
 
 ## The player tapped the cell ([param x], [param y]) of [param level].
 signal cell_tapped(level: int, x: int, y: int)
+## The level shown changed or was drawn again: the light and the water follow it.
+signal level_shown(level: int)
 
 ## The share of the screen kept free at the top for the level selector, which
 ## floats there.
@@ -56,6 +58,7 @@ func show_level(next: MapLevelState) -> void:
 	var changed := next.level != level
 	state = next
 	level = next.level
+	key_light.set_mood(LightMoods.of_level(level))
 	var looks := MapLooks.of(next)
 	tiles.show_looks(looks, next.map.width, next.map.height, level)
 	fog.show_looks(looks, next.map.width, next.map.height)
@@ -65,6 +68,7 @@ func show_level(next: MapLevelState) -> void:
 	var left := scouts.show_scouts(next.pending, level, next.map.width, next.map.height)
 	guide.shown_on(next)
 	_lift_fog(looks, left)
+	level_shown.emit(level)
 	if changed:
 		frame(_hud, _foot)
 		camera.home()

@@ -2,7 +2,7 @@ extends TestCase
 ## Every section of every vector file is held by a test of the port or
 ## waits for a module: none can be forgotten.
 
-const LIB_DOMAIN := "lib/domain"
+const DOMAIN := "godot/domain"
 
 
 func test_every_section_of_every_vector_file_is_tested_or_pending() -> void:
@@ -42,8 +42,8 @@ func test_a_tested_section_is_read_by_its_test() -> void:
 				assert_has(source, 'cases("%s")' % section, state)
 
 
-func test_a_pending_section_waits_for_a_module_of_lib_domain() -> void:
-	var modules := DirAccess.get_directories_at(ReferenceFiles.repo_root().path_join(LIB_DOMAIN))
+func test_a_pending_section_waits_for_a_module_of_the_domain() -> void:
+	var modules := DirAccess.get_directories_at(ReferenceFiles.repo_root().path_join(DOMAIN))
 	assert_has(modules, "resource")
 	for file_name: String in VectorRegistry.FILES:
 		var states: Dictionary = VectorRegistry.FILES[file_name]

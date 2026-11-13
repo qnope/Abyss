@@ -2,13 +2,20 @@
 
 [![CI](https://github.com/qnope/Abyss/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/qnope/Abyss/actions/workflows/ci.yml)
 [![Deploy](https://github.com/qnope/Abyss/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/qnope/Abyss/actions/workflows/deploy.yml)
-[![Coverage](https://img.shields.io/endpoint?url=https://qnope.github.io/Abyss/coverage/badge.json)](https://qnope.github.io/Abyss/coverage/)
 
-A deep-sea turn-based strategy game built with Flutter.
+A deep-sea turn-based strategy game in real 3D, built with Godot (typed
+GDScript) for the web, Android and iOS.
 
 Play it in the browser: https://qnope.github.io/Abyss/
 
-See `ABYSS.md` for the full game design.
+See `PRD.md` for the full game design. The game lives in `godot/`; each of its
+layers has a README saying what it is and what it may depend on.
+
+The game was first written with Flutter. It was replaced by the Godot version
+once the Godot one played the same game (the rules are checked against games
+the Flutter version played, kept in `reference/`) and ran well on a phone. The
+last commit that holds the Flutter version is the parent of the one that
+removed it: `git log --diff-filter=D -- lib/domain` finds it.
 
 ## Continuous integration
 
@@ -18,50 +25,22 @@ Two GitHub Actions workflows live in `.github/workflows/`.
 
 | Job | What it does |
 |---|---|
-| Analyze | `flutter analyze --fatal-infos` |
-| Test | `tool/test.sh --coverage`, then reports the coverage |
-| Build Web | `flutter build web`, uploaded as the `web-build` artifact |
-| Build Android | `flutter build apk`, uploaded as the `android-apk` artifact |
-| Build iOS | `flutter build ios --no-codesign`, uploaded as the `ios-build` artifact |
+| Models | tests the Blender scripts of the 3D models (`tool/models/`) |
+| Godot Test | the translations are up to date, the Python tools' tests, the suite with its line coverage (100 % required) |
+| Godot Reference | replays the reference games and the simulations (`reference/`) |
+| Godot Web | exports the web build |
+| Godot Android | exports the APK |
+| Godot iOS | exports the Xcode project and builds it unsigned |
 
-**Deploy** (`deploy.yml`) runs on every push to `main`: it analyzes, tests,
-builds the web version and publishes it to GitHub Pages, together with the
-coverage report.
+**Deploy** (`deploy.yml`) runs on every push to `main`: it tests the game,
+exports the web build and publishes it to GitHub Pages, at the root of the
+site. The old address `/Abyss/godot/` redirects to it.
 
-### App icon
+### Working on the game
 
-The `ios/` folder is versioned, with the Abyss icon and the three languages
-already in place (bundle id `com.morriatech.abyss`; to run on a device, pick your
-own Team under Signing & Capabilities in Xcode). The other platform folders
-(`web/`, `android/`) are not versioned: each build job runs `flutter create`,
-then `.github/scripts/generate_app_icons.sh` replaces the default Flutter icon
-with the Abyss one. The sources live in
-`assets/app_icon/` (SVG, with the rendered PNGs next to them, regenerated
-with `node tool/app_icon_png.js`), and `flutter_launcher_icons.yaml` maps
-them to each platform. Run the script
-after `flutter create` to get the icon in a local build too.
-
-### Code coverage
-
-Generated code is left out of the numbers: the Hive `*.g.dart` files and
-the `app_localizations*.dart` files `flutter gen-l10n` writes from the ARB.
-
-- **On a pull request**: a comment on the PR gives the total coverage, the
-  coverage per layer and the least covered files. It is updated on each push.
-- **On `main`**: the full HTML report is online at
-  https://qnope.github.io/Abyss/coverage/ and the badge above shows the total.
-- **On any CI run**: the same table is in the Test job's summary, and the
-  `coverage` artifact holds `lcov.info` and the HTML report.
-- **Locally**: `tool/test.sh --coverage`, then
-  `.github/scripts/coverage_summary.sh coverage/lcov.info`.
-- **Minimum**: the Test job fails when the total drops below 97 %. Set
-  `COVERAGE_MIN` to apply the same check locally.
-
-## Migration
-
-After the `game-player-decoupling` refactor (2026-04), pre-existing Hive saves
-are incompatible and will be deleted automatically on first launch. This is
-intentional while the game is in development: `GameRepository.initialize` wraps
-the box open in a `try/catch` that deletes the box on any decode failure, so
-players on older saves will simply start with a clean slate the next time they
-launch the app.
+- Tests: `tool/godot_test.sh` (paths restrict it); coverage:
+  `COVERAGE_MIN=100 python3 tool/godot_coverage.py`.
+- Texts: the three languages are written in `tool/l10n/app_*.arb`;
+  `python3 tool/arb_to_po.py` writes the `.po` files Godot loads.
+- Web export: `.github/scripts/godot_export.sh Web build/web/index.html`.
+- More in `CLAUDE.md`, and the README of each folder of `godot/`.

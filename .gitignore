@@ -23,32 +23,8 @@ migrate_working_dir/
 # is commented out by default.
 #.vscode/
 
-# Generated files are committed for Hive adapters
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
 /build/
 /coverage/
-
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-
-# Test bundles, written by tool/test_bundles.dart on each tool/test.sh run
-/test/bundles/
 
 # Godot: the editor's cache and imported assets, rebuilt by --import, and the
 # export outputs. The .import and .uid sidecar files are committed.
@@ -59,7 +35,3 @@ app.*.map.json
 /godot/*.ipa
 /godot/*.pck
 
-# The dump and the trace of a turn of a reference game, written beside it
-# by bin/export_reference.dart to find where a replay goes wrong
-/reference/games/*.dump.json
-/reference/games/*.trace.json

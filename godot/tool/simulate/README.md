@@ -61,9 +61,9 @@ and exits with 1, where Dart exits with 255. The message is Godot's own.
   which gives Dart's double up to 15 significant digits
   (`domain/dart/README.md`); a longer text may land one bit away.
 
-## Checked against Dart
+## Checked against the Flutter version
 
-`reference/simulations/` holds what Dart prints for a few option sets, and
-`tool/simulations.py --engine godot` plays them with `tool/godot_simulate.sh`
+`reference/simulations/` holds what the Flutter version printed for a few option sets, and
+`tool/simulations.py` plays them with `tool/godot_simulate.sh`
 (`reference/simulations/README.md`); `tests/simulation_test.gd` plays two in
 the unit tests.

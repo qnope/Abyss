@@ -1,7 +1,7 @@
 class_name VectorRegistry
 extends RefCounted
 ## Where every section of every file of reference/vectors stands: held by a
-## test of the port, or waiting for a module of lib/domain to be ported.
+## test of the port, or waiting for a module of godot/domain.
 ## vector_registry_test.gd fails on a section that is in neither state, so a
 ## new vector file or section cannot be forgotten, and on a test that does
 ## not read the section it is listed for.
@@ -15,7 +15,7 @@ const _BUILDING := "res://domain/building/tests/"
 const _RESOURCE := "res://domain/resource/tests/"
 
 ## file → state → sections. A state is the path of the test that reads the
-## sections, or PENDING and the module of lib/domain they wait for.
+## sections, or PENDING and the module of godot/domain they wait for.
 const FILES: Dictionary[String, Dictionary] = {
 	"dart_random": {
 		_DART + "dart_random_test.gd": [

@@ -5,10 +5,19 @@ extends OrbitCamera
 ## fitted to the screen with the whole map showing, between the bars of the
 ## game screen.
 
+## The view came close to the map (it is zoomed in to [constant CLOSE] of its
+## default distance or nearer), or left it again.
+signal zoomed(close: bool)
+
+## How near the default distance the view is close: what stands on the map then
+## is worth its shadows, which a view of the whole map cannot tell.
+const CLOSE := 0.8
+
 ## The view, which pans where the base's orbits.
 var pan := MapRig.new()
 ## How far a blow shakes the view to the side, in metres (see [MapEffects]).
 var jolt := 0.0
+var _close := false
 
 
 func _init() -> void:
@@ -18,6 +27,10 @@ func _init() -> void:
 func _process(delta: float) -> void:
 	super(delta)
 	position += basis.x * jolt
+	var close := pan.distance <= pan.default_distance * CLOSE
+	if close != _close:
+		_close = close
+		zoomed.emit(close)
 
 
 ## Fits the default view to a map of [param width] by [param height] cells,

@@ -32,8 +32,8 @@ var guide := MapGuide.new()
 ## The level on show, 0 before the first.
 var level := 0
 var state: MapLevelState
-var _hud := 0.0
-var _foot := 0.0
+## The shares of the screen the bars keep free, at the top and at the bottom.
+var _bars := Vector2.ZERO
 var _lifts := FogLifts.new()
 
 
@@ -42,6 +42,7 @@ func _init() -> void:
 	for part: Node in [surroundings, tiles, fog, contents, scouts, effects, guide, key_light, camera]:
 		add_child(part)
 	camera.tapped.connect(_on_tapped)
+	camera.zoomed.connect(contents.cast_shadows)
 	effects.jolted.connect(_on_jolted)
 
 
@@ -65,7 +66,7 @@ func show_level(next: MapLevelState) -> void:
 	_lift_fog(looks, left)
 	level_shown.emit(level)
 	if changed:
-		frame(_hud, _foot)
+		frame(_bars.x, _bars.y)
 		camera.home()
 
 
@@ -104,8 +105,7 @@ func forget() -> void:
 ## [param hud] share of it and its bottom [param foot] share (and the room of
 ## the level selector).
 func frame(hud: float, foot := 0.0) -> void:
-	_hud = hud
-	_foot = foot
+	_bars = Vector2(hud, foot)
 	if state != null and is_inside_tree():
 		camera.fit_map(state.map.width, state.map.height, hud + LEVEL_BAR_ROOM, foot)
 

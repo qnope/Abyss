@@ -143,6 +143,14 @@ a tap. The 2D painters, the projection, the slabs and the viewport of Flutter's
 - `MapPick` casts the tap's ray on the plane of the cells to the cell it
   falls in (`MapGrid.cell_at`). `MapPalette` holds every colour of the stand-ins.
 
+Shadows are the costliest part of the map's frame (the shadow pass draws every caster
+again, in two cascades: with none, a view of level 1 goes from 95 000 primitives and 249
+draw calls to 48 000 and 149). The floor, the scenery and the clouds (`MapLayer`) cast
+none: the tiles' relief is baked into their colours. What stands on the cells (`MapContents`)
+casts its shadow only while the view is close (`MapCamera.zoomed(close)`, from `CLOSE` = 0.8 of
+the default distance), when it can be seen; the key light's own shadow stays on, so that
+nothing pops when the view comes close.
+
 ### map/effects/
 
 What the map plays over a level (`lib/presentation/widgets/map/effects/`). `MapEffects`

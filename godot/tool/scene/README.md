@@ -16,7 +16,8 @@ it run 240 frames, then writes `default.png` (the game's view),
 above, the quality panel open), printing each view's draw calls, primitives
 and objects. Godot draws with its Compatibility renderer (the web's) under
 `xvfb-run`, in software: its frame rate means nothing, its draw calls and
-primitives do. The renders go to `/tmp/scene_capture/` by default: never into
+primitives do. (The counts include the shadow pass and the meshes' LODs, and a MultiMesh
+counts every instance: a view without shadows is about half the primitives.) The renders go to `/tmp/scene_capture/` by default: never into
 the repo.
 
 ## The app

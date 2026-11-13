@@ -56,6 +56,10 @@ missing from the wheel: harmless, neither is used.
   twice and compare the geometry, and compare it with the committed glb within
   a tolerance (`workshop/glb_compare.py`): another machine computes the last
   bits of a float otherwise, which can also flip an occlusion ray on a few corners.
+  The accessors are met by what uses them (a mesh primitive, a skin, an
+  animation channel, played over time), never by their index: the exporter
+  writes data equal to the last bit once, so another machine (Ubuntu 26.04's
+  maths library against 24.04's) shares other accessors and numbers them otherwise.
 
 ## Materials
 

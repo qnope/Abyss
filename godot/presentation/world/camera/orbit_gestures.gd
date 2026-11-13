@@ -2,8 +2,11 @@ class_name OrbitGestures
 extends RefCounted
 ## Turns the player's input into moves of an OrbitRig: one finger or the
 ## mouse's left button drags the view around, two fingers pinch it, the
-## wheel and a trackpad's pinch or scroll zoom it. A touch or a click that
-## barely moved is a tap, for the scene to pick what lies under it.
+## wheel and a trackpad's pinch or scroll zoom it. A finger turns the view
+## only once it left the tap's slop, and a pinch only zooms until every finger
+## lifts: neither the first finger, down before the second, nor the last one,
+## lifted after the other, turns it. A touch or a click that barely moved is a
+## tap, for the scene to pick what lies under it.
 
 ## A tap on this point of the screen, in the viewport's coordinates.
 signal tapped(position: Vector2)
@@ -23,6 +26,8 @@ var _pressed_at := Vector2.ZERO
 var _last_move := 0.0
 ## Whether the current touch moved too far, or pinched, to be a tap.
 var _moved := false
+## Whether a second finger came down since the first: the touch then zooms.
+var _pinched := false
 
 
 func _init(rig: OrbitRig) -> void:
@@ -80,8 +85,11 @@ func _touch(index: int, position: Vector2, pressed: bool, canceled: bool, now: f
 		if _touches.size() == 1:
 			_pressed_at = position
 			_moved = false
+			_pinched = false
 		else:
 			_moved = true
+			_pinched = true
+			_rig.hold()
 		return
 	_touches.erase(index)
 	_last_move = now
@@ -95,8 +103,9 @@ func _move(index: int, position: Vector2, relative: Vector2, now: float) -> bool
 	if not _touches.has(index):
 		return false
 	if _touches.size() == 1:
-		_rig.drag(relative, now - _last_move)
 		_moved = _moved or position.distance_to(_pressed_at) > TAP_SLOP
+		if _moved and not _pinched:
+			_rig.drag(relative, now - _last_move)
 	else:
 		var before := _span()
 		_touches[index] = position

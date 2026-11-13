@@ -215,3 +215,19 @@ before the session saves and redraws; the bubble, the objective banner and the 2
   and saves them first. The tips of a turn come last in its pages (`TurnOutcome`).
 
 Both are made by the `GameController` and let go in `close()`.
+
+## The web download
+
+`.github/scripts/godot_export.sh Web build/web/index.html` writes `godot/build/web/`
+(never committed). Measured at the end of step 7: `index.wasm` 39.5 MB (the engine's
+stock single-thread template, 10.1 MB gzipped: nothing in the project shrinks it) and
+`index.pck` 40.9 MB (22.6 MB gzipped), 81.5 MB in all (33.5 MB gzipped). The pck is
+11.8 MB of ETC2 atlases and as much of S3TC ones (each device uses one of the two; the
+preset keeps both so that iPhones, Androids and desktops all play; turning
+`vram_texture_compression/for_desktop` off in the Web preset would save the second
+half, at the price of desktop browsers without ETC2), 8.8 MB of models (the base's
+island alone is 2.3 MB), 5.8 MB of icons and portraits and 1.2 MB of scripts.
+The presets leave out the models no code loads (`leviathan`, `map_resource_*`,
+`probe_fish`, `material_swatches`: 2.2 MB of the pck) and the Web preset the project
+icon's texture; `assets/models/tests/export_filters_test.gd` fails if a script loads
+one of them, so the day the Leviathan has a figure, take it off the filters.

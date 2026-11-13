@@ -25,6 +25,9 @@ is a chain of signals, no `await`. It saves and navigates nothing: `app/` joins
 - `TurnOutcome`: the ordered queue of pages shown after a turn
   (`default_steps(actions)`: the summary, the reports, the card of the event
   drawn `EventStep`, then the tips the turn brought, `TipPresenter`).
+- `StorySkipButton`: the "Passer ›" that floats in a corner of the area over the map
+  while the story of a turn is told (`float_in(area)`, `skipped`); the story is
+  `app/game/story/`'s.
 - Components: `SummaryLine`, `SummaryNoteLine`, `MissedObjectiveLine`, `ResourceChangeLine`, `LossSection` (built by
   `TurnLosses`, `UndefendedPostWarning` by `TurnWarnings`). Factories are in
   `RefCounted` classes, not static functions of the nodes: a node class that

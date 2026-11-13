@@ -10,6 +10,8 @@ class_name AbyssButtonTheme
 
 ## Flutter's disabled ink for a button that sets none: onSurface at 38 %.
 const DISABLED_INK := Color(AbyssColors.ON_SURFACE, 0.38)
+## The variation of a button that floats over the map.
+const OVER_MAP := &"OverMapButton"
 
 
 ## Adds the buttons to [param theme].
@@ -20,7 +22,7 @@ static func apply(theme: Theme) -> void:
 	filled().apply_to(theme, &"Button")
 	outlined().apply_to(theme, &"OutlinedButton")
 	text().apply_to(theme, &"TextButton")
-	over_map().apply_to(theme, &"OverMapButton")
+	over_map().apply_to(theme, OVER_MAP)
 
 
 ## Glowing cyan fill, dark ink; a cyan shadow rises as it is pressed.

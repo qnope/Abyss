@@ -40,6 +40,11 @@ func _init(actions_: GameActions, modals: ModalLayer) -> void:
 	_modals = modals
 
 
+## Whether the story of a turn is being told: its summary is not open yet.
+func is_telling() -> bool:
+	return _telling
+
+
 ## Asks the player to confirm the end of the turn, with what it will make and
 ## cost.
 func request() -> void:

@@ -99,3 +99,13 @@ func test_no_second_turn_can_be_asked_during_the_story() -> void:
 	press("Tour suivant")
 	assert_null(current_modal())
 	assert_eq(game.turn, 13)
+
+
+func test_no_tip_opens_over_the_story_the_summary_comes_first() -> void:
+	human.saved_objective_state = ObjectiveState.new([], false, true)
+	human.raid_state.add_noise(DartMath.trunc_div(NoiseRules.THRESHOLD, 4))
+	_end_turn_with_a_raid()
+	controller.tips._show()
+	assert_null(current_modal(), "the tips of a turn come last in its pages")
+	press("Passer ›")
+	assert_true(current_modal() is TurnSummary)

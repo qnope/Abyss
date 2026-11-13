@@ -40,7 +40,9 @@ func test_the_summary_waits_for_the_story_and_opens_once_it_is_told() -> void:
 	_end_turn()
 	assert_null(current_modal(), "the story is being told")
 	assert_null(_flow.outcome)
+	assert_true(_flow.is_telling())
 	_then.call()
+	assert_false(_flow.is_telling())
 	assert_true(current_modal() is TurnSummary)
 
 

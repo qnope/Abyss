@@ -3,16 +3,21 @@ extends RefCounted
 ## Opens the next tips after a player's action (lib/.../tip_presenter.dart,
 ## `showAfterAction`): once the change is saved and drawn, unless a page, a
 ## sheet or a dialog covers the screen by then (a fight, a report: the tips of
-## a turn come last in its pages, [TipPresenter] and [TurnOutcome]).
+## a turn come last in its pages, [TipPresenter] and [TurnOutcome]), or while
+## the story of a turn is told on the map, whose summary is not open yet.
 
 var presenter: TipPresenter
 var _session: GameSession
 var _modals: ModalLayer
+var _busy: Callable
 
 
-func _init(session: GameSession, modals: ModalLayer) -> void:
+## [param busy] (a Callable giving a bool) tells that the screen is not free
+## though no modal covers it.
+func _init(session: GameSession, modals: ModalLayer, busy := Callable()) -> void:
 	_session = session
 	_modals = modals
+	_busy = busy
 	presenter = TipPresenter.new(session.actions)
 	_session.changed.connect(_queue)
 	_queue()
@@ -30,7 +35,7 @@ func _queue() -> void:
 
 ## Opens the stack of the tips waiting, if the screen is free for it.
 func _show() -> void:
-	if _modals.depth() > 0:
+	if _modals.depth() > 0 or (_busy.is_valid() and _busy.call()):
 		return
 	var stack := presenter.next_stack()
 	if stack != null:

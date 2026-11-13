@@ -28,7 +28,7 @@ func _init(count := AMOUNT) -> void:
 	scale_amount_max = 1.4
 	scale_amount_curve = _swelling()
 	color = COLOUR
-	color_ramp = _fading()
+	color_ramp = ParticleDot.fading()
 	mesh = ParticleDot.quad(0.12, 0.15, 0.9)
 	cast_shadow = SHADOW_CASTING_SETTING_OFF
 	rise_from(PackedVector3Array([Vector3.ZERO]))
@@ -60,11 +60,3 @@ static func _swelling() -> Curve:
 	curve.add_point(Vector2(1.0, 1.0))
 	return curve
 
-
-static func _fading() -> Gradient:
-	var ramp := Gradient.new()
-	ramp.offsets = PackedFloat32Array([0.0, 0.15, 0.75, 1.0])
-	ramp.colors = PackedColorArray([
-		Color(1.0, 1.0, 1.0, 0.0), Color.WHITE, Color.WHITE, Color(1.0, 1.0, 1.0, 0.0),
-	])
-	return ramp

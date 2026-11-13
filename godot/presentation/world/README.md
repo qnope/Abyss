@@ -62,6 +62,16 @@ tells `level_shown(level)`, and `WorldHost` (`app/world/`) lights the water,
 which the base owns, with the mood of the level on the map view, the base's on
 the others.
 
+`LevelSpecks` are the specks of a level of the map, a `SpeckLook` of the palette
+`SpeckLooks`: marine snow falling on the surface (140), bubbles rising from the
+floor in the depths (70), warm ash and embers drifting up in the core (110).
+Cheap on purpose, as the base's snow and bubbles: one `CPUParticles3D` (one draw
+call, no particle shader to compile on the web), dots of `ParticleDot`, no
+shadow, redrawn only when the level or its size changes. `MapSurroundings`
+holds them with the backdrop and the creature of the level; `MapScene.set_particles`
+(the quality panel's setting) stops and hides them, and a map out of sight is not
+processed at all.
+
 ## guide/
 
 The tutorial's halo in 3D: `GuideRing`, a pulsing cyan torus lying on the floor

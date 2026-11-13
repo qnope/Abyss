@@ -43,3 +43,14 @@ static func dot(centre: float, rim: float) -> GradientTexture2D:
 	texture.width = 32
 	texture.height = 32
 	return texture
+
+
+## The fade of a particle's life: in over its first moments, out over its
+## last, so that none pops in or out of the water.
+static func fading() -> Gradient:
+	var ramp := Gradient.new()
+	ramp.offsets = PackedFloat32Array([0.0, 0.15, 0.75, 1.0])
+	ramp.colors = PackedColorArray([
+		Color(1.0, 1.0, 1.0, 0.0), Color.WHITE, Color.WHITE, Color(1.0, 1.0, 1.0, 0.0),
+	])
+	return ramp

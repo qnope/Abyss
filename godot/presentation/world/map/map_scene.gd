@@ -1,19 +1,16 @@
 class_name MapScene
 extends Node3D
 ## The map of a level in 3D, shown on the map tab as the base is on the base
-## tab: a tile for each cell (dark and lower while it is not seen), the
-## backdrop round the slab and the creature that swims by, what stands
-## on the cells seen (a stand-in until step 7: treasures, lairs, posts, bases,
-## the volcano...) and the scouts on their way. Lit from the surface and seen by
-## a camera that pans and zooms; the ambience (the water, the sky) is the
-## base's, which shares it.
-##
-## One level at a time: [method show_level] draws what `app/` reads from the
-## game, and a tap on a cell is told by [signal cell_tapped] with the level.
+## tab: a tile for each cell (dark and lower while it is not seen), what lies
+## on the cells seen, the scouts on their way, and round and over the slab the
+## scenery, the creature and the specks. Lit as its level is (the key light
+## is its own, the water the base's, which shares it) and seen by a camera that
+## pans and zooms. One level at a time: [method show_level] draws what `app/`
+## reads from the game, and a tap on a cell is told by [signal cell_tapped].
 
 ## The player tapped the cell ([param x], [param y]) of [param level].
 signal cell_tapped(level: int, x: int, y: int)
-## The level shown changed or was drawn again: the light and the water follow it.
+## A level was drawn: the water's light follows it.
 signal level_shown(level: int)
 
 ## The share of the screen kept free at the top for the level selector, which
@@ -23,10 +20,9 @@ const LEVEL_BAR_ROOM := 0.08
 var camera := MapCamera.new()
 var key_light := KeyLight.new()
 var tiles := MapTiles.new()
-## The shroud of clouds over the cells not seen.
 var fog := MapFog.new()
-var backdrop := MapBackdrop.new()
-var ambient := MapAmbient.new()
+## The scenery, the creature and the specks round and over the slab.
+var surroundings := MapSurroundings.new()
 var contents := MapContents.new()
 var scouts := MapScouts.new()
 ## What plays over the cells: the fog lifting, the strikes and sieges.
@@ -43,7 +39,7 @@ var _lifts := FogLifts.new()
 
 func _init() -> void:
 	name = &"Map"
-	for part: Node in [backdrop, tiles, fog, ambient, contents, scouts, effects, guide, key_light, camera]:
+	for part: Node in [surroundings, tiles, fog, contents, scouts, effects, guide, key_light, camera]:
 		add_child(part)
 	camera.tapped.connect(_on_tapped)
 	effects.jolted.connect(_on_jolted)
@@ -62,8 +58,7 @@ func show_level(next: MapLevelState) -> void:
 	var looks := MapLooks.of(next)
 	tiles.show_looks(looks, next.map.width, next.map.height, level)
 	fog.show_looks(looks, next.map.width, next.map.height)
-	backdrop.show_level(level, next.map.width, next.map.height)
-	ambient.show_level(level, next.map.width, next.map.height)
+	surroundings.show_level(level, next.map.width, next.map.height)
 	contents.show_looks(looks, next.map.width, next.map.height)
 	var left := scouts.show_scouts(next.pending, level, next.map.width, next.map.height)
 	guide.shown_on(next)
@@ -118,6 +113,11 @@ func frame(hud: float, foot := 0.0) -> void:
 ## Turns the key light's shadows on or off.
 func set_shadows(enabled: bool) -> void:
 	key_light.set_shadows(enabled)
+
+
+## Lets the specks of the water drift, or stops them (the quality panel's setting).
+func set_particles(enabled: bool) -> void:
+	surroundings.set_particles(enabled)
 
 
 ## Lifts the fog from the cells [param looks] sees for the first time, the scouts

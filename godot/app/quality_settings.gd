@@ -1,19 +1,21 @@
 class_name QualitySettings
 extends RefCounted
-## Applies the quality panel's choices to the base, the viewport and the
-## idle frame cap. In the Compatibility renderer (the web's) the glow needs
-## an HDR 2D buffer, twice the memory traffic of an 8-bit one: the buffer
-## is on only while the glow is.
+## Applies the quality panel's choices to the base, to the map when a bench
+## measures one, to the viewport and to the idle frame cap. In the Compatibility
+## renderer (the web's) the glow needs an HDR 2D buffer, twice the memory
+## traffic of an 8-bit one: the buffer is on only while the glow is.
 
 var _base: BaseScene
+var _map: MapScene
 var _viewport: Viewport
 var _idle: IdleFrameCap
 var _compatibility: bool
 
 
 func _init(base: BaseScene, viewport: Viewport, idle: IdleFrameCap,
-		compatibility := is_compatibility()) -> void:
+		compatibility := is_compatibility(), map: MapScene = null) -> void:
 	_base = base
+	_map = map
 	_viewport = viewport
 	_idle = idle
 	_compatibility = compatibility
@@ -29,11 +31,15 @@ func apply(setting: StringName, value: Variant) -> void:
 	match setting:
 		QualityPanel.SHADOWS:
 			_base.set_shadows(on)
+			if _map != null:
+				_map.set_shadows(on)
 		QualityPanel.GLOW:
 			_base.set_glow(on)
 			_viewport.use_hdr_2d = _compatibility and on
 		QualityPanel.PARTICLES:
 			_base.set_particles(on)
+			if _map != null:
+				_map.set_particles(on)
 		QualityPanel.IDLE_CAP:
 			_idle.enabled = on
 

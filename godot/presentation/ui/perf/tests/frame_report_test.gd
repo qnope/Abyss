@@ -32,3 +32,5 @@ func test_sums_up_a_bench() -> void:
 		stats.add(0.02)
 	stats.add(0.1)
 	assert_eq(FrameReport.bench(stats, 20.0), "Bench 20 s: 48.1 FPS avg · 10.0 FPS 1% low")
+	assert_eq(FrameReport.bench(stats, 20.0, "map level 2"),
+		"Bench 20 s on map level 2: 48.1 FPS avg · 10.0 FPS 1% low", "it names the scene")

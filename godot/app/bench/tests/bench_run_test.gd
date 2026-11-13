@@ -42,7 +42,21 @@ func test_sums_up_at_the_end() -> void:
 		_bench._process(1.0 / 60.0)
 	_bench._process(0.1)
 	assert_eq(_summaries.size(), 1)
-	assert_has(_summaries[0], "Bench 10 s")
+	assert_has(_summaries[0], "Bench 10 s on base:", "it names the scene")
 	assert_true(_counter.line(4).visible)
 	assert_eq(_camera.rig.yaw, OrbitRig.DEFAULT_YAW, "back on the game's view")
 	assert_eq(_camera.rig.distance, 25.0, "the fitted one")
+
+
+func test_follows_the_pose_it_is_given_and_names_its_scene() -> void:
+	var shares: Array[float] = []
+	var bench := BenchRun.new(_camera, _counter, 10.0,
+		func(share: float, _zoom: float) -> void: shares.append(share), "map level 2")
+	bench.finished.connect(_summaries.append)
+	bench._process(BenchRun.WARM_UP)
+	bench._process(5.0)
+	assert_almost_eq(shares[0], 0.5, 1e-4)
+	bench._process(6.0)
+	assert_has(_summaries[0], "on map level 2")
+	assert_eq(shares[-1], 0.0, "and back at the start")
+	bench.free()

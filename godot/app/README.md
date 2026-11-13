@@ -179,12 +179,18 @@ saves and settings (`app.repository`, `app.language`) before it enters the tree.
 
 The 3D prototype (`prototype/`) opens on the base with the frame counter and
 the quality panel over it (`presentation/ui/perf/`): `QualitySettings` applies
-the panel's choices, `IdleFrameCap` caps the frame rate at 30 while the view
-stands still, and `bench/` runs a fixed orbit when the launch asks for one:
-`?bench=1` (`?bench=40` for 40 s) in the web page's address,
-`-- --bench[=seconds]` on the command line. A launch with a bench opens the
-prototype alone, in place of the menus; `tool/scene_capture.sh` renders it, and
-the app's screens.
+the panel's choices (to the map too, when a bench measures one), `IdleFrameCap`
+caps the frame rate at 30 while the view stands still, and `bench/` runs a fixed
+path of the camera when the launch asks for one: `?bench=1` (`?bench=40` for 40 s)
+in the web page's address, `-- --bench[=seconds]` on the command line. A launch with a
+bench opens the prototype alone, in place of the menus, on the base, or on the map
+of a level (`BenchGame`: a game against three factions, part of each level seen)
+with `&scene=map&level=2` (`-- --bench --bench-scene=map --bench-level=2`): the map
+then takes the base's place, its water lit as the level, and the camera loops over
+it zooming in and out (`BenchPose`), which brings the contents' shadows on and off
+as a player's pinch does. The summary names the scene it measured ("Bench 20 s on
+map level 2: 58.0 FPS avg · 49.0 FPS 1% low"), on the frame counter and in the console.
+`tool/scene_capture.sh` renders the prototype and the app's screens.
 
 `locale/AppLocale` is the language of the game: it reads the player's
 `LanguageSettings` (`data/`), resolves AUTOMATIC from the device

@@ -23,6 +23,11 @@ func show_level(level: int, width: int, height: int) -> void:
 	specks.show_level(level, width, height)
 
 
+## Lets the scenery take the shadows of what stands on the map, or not.
+func receive_shadows(on: bool) -> void:
+	backdrop.receive_shadows(on)
+
+
 ## Lets the specks drift, or stops and hides them (the quality panel's setting).
 func set_particles(enabled: bool) -> void:
 	specks.set_running(enabled)

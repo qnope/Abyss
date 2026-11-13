@@ -1,10 +1,10 @@
 class_name MapBackdrop
-extends Node3D
+extends MapLayers
 ## The scenery round the slab of the map (map_backdrop_<n>): the rim's straight
 ## pieces, 2 long and falling away to the outside, along each side, a corner
 ## piece at each corner, and the far silhouettes (kelp, a whale, spires) beyond.
 ## The rim is repeated from the pieces the model gives, so the map can be of any
-## size.
+## size. It takes shadows only while the view is close ([MapLayers]).
 
 const PIECE := 2.0
 ## The yaw of the south, west, north and east sides: the pieces as modelled stand
@@ -24,15 +24,15 @@ func show_level(level: int, width: int, height: int) -> void:
 		var mine: Array[Transform3D] = []
 		for at in range(index, edge_spots.size(), edges.size()):
 			mine.append(edge_spots[at])
-		add_child(MapLayer.of(edges[index], parts[edges[index]], mine))
-	add_child(MapLayer.of(&"Corner", parts[&"Corner"], corner_places(width, height)))
+		_lay(edges[index], parts[edges[index]], mine)
+	_lay(&"Corner", parts[&"Corner"], corner_places(width, height))
 	var spots := far_places(width, height)
 	var far := 0
 	for part_name in parts:
 		if part_name == &"Corner" or edges.has(part_name):
 			continue
 		var spot := spots[far % spots.size()]
-		add_child(MapLayer.of(part_name, parts[part_name], [Transform3D(Basis.IDENTITY, spot)]))
+		_lay(part_name, parts[part_name], [Transform3D(Basis.IDENTITY, spot)])
 		far += 1
 
 

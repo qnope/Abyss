@@ -151,6 +151,22 @@ casts its shadow only while the view is close (`MapCamera.zoomed(close)`, from `
 the default distance), when it can be seen; the key light's own shadow stays on, so that
 nothing pops when the view comes close.
 
+Taking a shadow costs as well. The Compatibility renderer (the web's) draws every lit
+surface that receives shadows a second time, an additive pass over the first, and the
+floor and the scenery (`MapTiles` and `MapBackdrop`, both `MapLayers`) fill most of the
+screen: a fifth of the frame of a software render, and a phone too is bound by the
+pixels it fills. So they
+take shadows only while the view is close too (`receive_shadows`, told by the same
+`zoomed`, and remembered for the levels drawn later): from far the contents cast none, and
+the picture is the same but for the shadow of what still casts, the creature swimming by
+and the scouts, which is no longer drawn there. Turning the key light's shadow off instead
+would change the whole lighting. Nor does a material change its `disable_receive_shadows`:
+a `BaseMaterial3D` frees a shader when its last user leaves it, so each crossing of
+`CLOSE` would compile one again, a hitch on WebGL. A `MapLayer` swaps the mesh its
+`MultiMesh` draws, the places kept, between the model's own and its `ShadowlessMesh`
+(`models/`), so that both shaders stay alive. The murk of the fog takes no shadow by its
+import: its layers are left as they are.
+
 ### map/effects/
 
 What the map plays over a level (`lib/presentation/widgets/map/effects/`). `MapEffects`
@@ -261,6 +277,13 @@ so that the level and the signs clear it whatever it is. A degraded building
 stays still: `BaseMotion` leaves its parts alone. Models are freed in the
 tree, as `BaseBuildings` does: a node with its own materials freed outside it
 makes the renderer complain.
+
+`ShadowlessMesh.of(mesh)` is the twin of a model's mesh that takes no shadow: a copy
+of the mesh (its surfaces and their levels of detail) drawn by copies of its materials
+with `disable_receive_shadows`, one copy for all the meshes a material draws. The
+model's mesh and materials are shared by every scene made of it and are never changed;
+the twins are made once and kept, for the map to switch between the two without a
+shader to compile (see `map/`).
 
 `ModelAnimator.new(model)` plays the animations of a unit's or monster's model
 by name: it finds the `AnimationPlayer` the glb's importer put in the scene,

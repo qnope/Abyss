@@ -39,7 +39,7 @@ func show_looks(looks: Array[MapLook], width: int, height: int) -> void:
 	for cloud in spots:
 		var places: Array = spots[cloud]
 		counts[cloud] = places.size()
-		add_child(MapLayer.of(cloud, parts[cloud], places))
+		add_child(MapLayer.new(cloud, parts[cloud], places))
 
 
 ## The cells of [param looks] that stand under a cloud.

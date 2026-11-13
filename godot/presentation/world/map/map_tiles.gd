@@ -1,11 +1,12 @@
 class_name MapTiles
-extends Node3D
+extends MapLayers
 ## The floor of the map: one tile of the level's floor model (map_terrain_<n>)
 ## per cell, laid by [method MapScenery.parts] in one MultiMesh for each of its
 ## tiles (a handful of draw calls for the whole level). A cell seen takes one of
 ## the lit tiles and a cell not seen one of the tiles under the fog, lower and
 ## dark; which one, and its quarter turn, come from the cell alone, so that the
-## floor is the same every time and any two tiles meet.
+## floor is the same every time and any two tiles meet. It takes shadows only
+## while the view is close ([MapLayers]).
 
 ## How many tiles lie on the floor, by the name of the tile ("Lit2").
 var counts: Dictionary[StringName, int] = {}
@@ -31,7 +32,7 @@ func show_looks(looks: Array[MapLook], width: int, height: int, level := 1) -> v
 	for part_name in spots:
 		var tiles: Array = spots[part_name]
 		counts[part_name] = tiles.size()
-		add_child(MapLayer.of(part_name, parts[part_name], tiles))
+		_lay(part_name, parts[part_name], tiles)
 
 
 ## A number of the cell ([param x], [param y]) alone, never negative.

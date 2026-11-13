@@ -18,7 +18,8 @@ extends RefCounted
 ##   save and redraw.
 ## - The island is framed in the area the HUD leaves clear between its bars.
 ## - The "next turn" button starts the [EndTurnFlow]: the question, the turn
-##   (saved and redrawn by the session), the summary, and once the pages are
+##   (saved and redrawn by the session), its story told on the map
+##   ([StoryTeller]), the summary, and once the pages are
 ##   seen the screen is redrawn again. A game lost is told with
 ##   [signal defeated], for `app/` to show the defeat screen.
 ## - A kernel raised to the last level (the actions tell [signal
@@ -46,6 +47,7 @@ var kernel: KernelController
 var faction: FactionController
 var guide: GuideController
 var tips: TipWatcher
+var story: StoryTeller
 var _modals: ModalLayer
 
 
@@ -66,6 +68,8 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost, modals: Moda
 	world.base.building_tapped.connect(hud.open_building)
 	army = ArmyController.new(session, hud, world, modals)
 	map = MapController.new(session, hud, world, modals)
+	story = StoryTeller.new(session.game, map, hud)
+	end_turn.observe = story.observe
 	fight = FightController.new(session.actions, map.router, modals, map.strike)
 	post = PostController.new(session.actions, map.router, modals, map.show_level, map.strike)
 	kernel = KernelController.new(session.actions, map.router, modals, map.strike)
@@ -79,6 +83,7 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost, modals: Moda
 
 ## The screen is gone: the world goes back to the menus' ambience.
 func close() -> void:
+	story.close()
 	army.close()
 	map.close()
 	guide.close()

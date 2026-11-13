@@ -29,7 +29,7 @@ a screen is shown, and replaces the screen on show.
     the game -> settings -> save and quit -> (saved) -> menu
     the game -> settings -> language -> kept, the language set
     the game -> next turn -> question (threats due warned) -> turn ended (saved)
-      -> summary -> the reports of the raid, the predators and a kraken wave lost
+      -> its story told on the map ("Passer" skips it) -> summary -> the reports of the raid, the predators and a kraken wave lost
       -> the card of an event drawn -> the game
     the game -> a turn lost it -> summary -> defeat screen -> menu, or the replay export over it
     the game -> the kernel at the last level -> victory screen over the game
@@ -96,7 +96,7 @@ reopens one with `HistoryReports.fight_summary(entry)`. The assaults on a post, 
 the volcano and on a rival's base (`PostController`, `KernelController`,
 `FactionController`) play their strike the same way before their reports open.
 `MapController.siege(attack, then)` is the way in for the siege of the turn's story
-(a raid, a wave, a rival's attack), which nothing tells yet.
+(a raid, a wave, a rival's attack): see "The turn's story" below.
 
 The posts are the `PostController` and the volcano the `KernelController` (`game/`), made by
 the `GameController`, which register for `CellRoute.Kind.POST` and `KERNEL`: a touch opens
@@ -130,6 +130,39 @@ of the actions, set by the action that raised the kernel to the last level)
 opens the `VictoryScreen` over the game: "continue" sets free play through
 `GameActions.continue_in_free_play` (saved, the same game goes on), "menu"
 saves and leaves through `quit_requested`.
+
+## The turn's story
+
+After "Tour suivant" the turn is told on the map before its summary opens
+(`game/story/`, Flutter's `game_screen_story.dart` and `screens/game/story/`). The turn
+itself does not wait for it: it is resolved, saved by `acted` and redrawn as ever, and
+`EndTurnFlow.observe` (`presentation/ui/turn/`) only holds the summary back.
+
+    EndTurnFlow.observe -> StoryTeller.observe: TurnStorySnapshot.of(human)  (before the turn)
+    GameActions.end_turn() -> turn_ended(result)
+    StoryTeller._tell(result, then): TurnStory.plan -> chapters -> StoryPlayer -> then
+    then -> TurnOutcome: the summary, the reports, the tips
+
+- `TurnStory.plan(game, before, result)` is pure: the chapters, in Flutter's order. The
+  fog lifting from the cells the scouts saw (`StoryFog`: the level where the most were
+  seen, read against the `TurnStorySnapshot` taken before the turn), then the raid, the
+  school of predators, the kraken wave on the volcano, then each attack of a faction or of
+  the guardians on the base, a post or the volcano (`SiegeChapters`, `StoryPlaces`): a
+  `StoryChapter` is a level and a `MapSiege`, or the fog. A turn with nothing to tell has
+  no chapter and the summary opens at once.
+- `StoryPlayer` plays the chapters one after the other: `MapController.tell_level` opens
+  the Map tab on the chapter's level, then the siege is `MapController.siege` and the next
+  chapter is its `then`. The time is the map's (`MapEffects` advance the effect playing,
+  frame by frame; a test calls `effects.current.advance(seconds)`). The fog is the map's
+  own lift (drawing a level lifts the fog from the cells seen since it was last drawn):
+  the fog chapter opens the level and waits for it (`MapController.after_effects`).
+- `skip()` finishes the effect playing (its last moment shown), plays no other chapter and
+  tells the story over; it never tells twice, and `cancel()` (the screen closed) never tells.
+  The "Passer" is the `StorySkipButton`, floated over the map's area by the `StoryTeller`
+  while the story plays and taken away when it is over. Leaving the Map tab skips too: the
+  world behind another tab is paused, its effects would never end.
+- A player who asked for fewer animations (`reduced_motion` of the map's effects) is told
+  no story and stays on his tab. No second turn can be asked during the story.
 
 The threats show without `app/`: the `GameHud` stacks the raid, Leviathan and
 kraken strips in its status bars (`ThreatBars`) and `session.changed` redraws

@@ -63,10 +63,38 @@ func strike(attack: MapStrike, then: Callable) -> void:
 
 
 ## Plays [param attack], attackers besieging a place of the level on show, calling
-## [param then] once it is over: what the turn story will tell of the raids and
-## the waves that struck during the turn.
+## [param then] once it is over: what the turn story tells of the raids, the waves
+## and the attacks that struck during the turn (`story/`).
 func siege(attack: MapSiege, then: Callable) -> void:
 	_world.map.siege(attack, then)
+
+
+## Shows [param level] on the Map tab, for a chapter of the turn's story ([StoryPlayer]):
+## nothing is drawn again when it is already there, which would cut the effect the
+## map is playing.
+func tell_level(level: int) -> void:
+	if _hud.tab != GameTab.Value.MAP or tab.level != level:
+		_open(level)
+
+
+## Calls [param then] once the effect the map is playing is over (the fog lifting
+## from the cells a scout saw, as the level was drawn), at once when there is none.
+func after_effects(then: Callable) -> void:
+	var playing := _world.map.effects.current
+	if playing == null:
+		then.call()
+	else:
+		playing.finished.connect(then, CONNECT_ONE_SHOT)
+
+
+## Ends the effect the map is playing, its last moment shown.
+func finish_effects() -> void:
+	_world.map.effects.finish()
+
+
+## Whether the player asked for fewer animations: the effects are over at once.
+func is_reduced_motion() -> bool:
+	return _world.map.effects.reduced_motion
 
 
 ## A strip points at [param level]: the Map tab shows it.

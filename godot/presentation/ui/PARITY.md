@@ -21,15 +21,15 @@ How to read a row:
 
 These are gaps of the interface, not of the rules: `godot/domain` is complete.
 
-1. **The animations of step 7.** The turn's story on the map (`screens/game/story/`,
-   `game_screen_story.dart`, its skip button: the siege and the fog lift are made, as
-   `MapScene.siege` and the fog lifting as a scout's exploration ends, but nothing plays
-   the chapters in order yet), the creatures drawn alive on the map
+1. **The animations of step 7.** The creatures drawn alive on the map
    (`living_creatures.dart`, `map_creature_sheets.dart`, `map_cell_motion.dart`), the
    decor scattered on the map's floor (`widgets/map/decor/`), the squads' arrival on the
    parade ground (`army_arrival*`, `squad_arrival`). The figures that float and pop when a
    resource changes and the glow of a building that can rise are done (`DeltaFloat`,
-   `IncreasePop`, `PadHalos`).
+   `IncreasePop`, `PadHalos`), and so is the turn's story on the map (the fog lifting, the
+   raids, the waves and the attacks as sieges, the "Passer" button: `app/game/story/`),
+   which does not pan the camera to the cells the scouts saw, as Flutter's fog chapter
+   did, and tells no story to a player who asked for fewer animations (`reduced_motion`).
 2. **The pictures of buildings, units, posts and monsters** are `Portrait`s (initials on a
    tinted panel) until step 7 fills them with renders of the 3D models. This touches the
    cards, the sheets and the tips' illustrations (`TipIllustrations`).
@@ -80,7 +80,7 @@ These are gaps of the interface, not of the rules: `godot/domain` is complete.
 | `game_screen_map_actions.dart` | `MapController` (app/game/map_controller.gd) |
 | `game_screen_rival_attack.dart` | `FactionController` (app/game/faction_controller.gd) |
 | `game_screen_settings_actions.dart` | `GameHud` (ui/game/game_hud.gd), `SettingsFollowUp` (ui/settings/settings_follow_up.gd) (`open_settings`) |
-| `game_screen_story.dart` | **Missing.** The turn story (step 7: the animations of the turn on the map). |
+| `game_screen_story.dart` | `StoryTeller` (app/game/story/story_teller.gd), `StoryPlayer` (app/game/story/story_player.gd), `EndTurnFlow.observe` (ui/turn/end_turn_flow.gd) |
 | `game_screen_tabs.dart` | `GameTab` (ui/game/game_tab.gd), `GameTabBar` (ui/game/game_tab_bar.gd), `TabViews` (app/game/tab_views.gd) |
 | `game_screen_tech_actions.dart` | `TechTab` (ui/tech/tech_tab.gd), `GameActions` (ui/game/game_actions.gd) |
 | `game_screen_transition_actions.dart` | `PostController` (app/game/post_controller.gd) |
@@ -119,12 +119,12 @@ These are gaps of the interface, not of the rules: `godot/domain` is complete.
 
 | Flutter file | Godot |
 | --- | --- |
-| `attack_chapter.dart` | **Missing.** The turn story (step 7). |
-| `story_chapter.dart` | **Missing.** The turn story (step 7). |
-| `story_places.dart` | **Missing.** The turn story (step 7). |
-| `turn_story.dart` | **Missing.** The turn story (step 7). |
-| `turn_story_fog.dart` | **Missing.** The turn story (step 7). |
-| `turn_story_snapshot.dart` | **Missing.** The turn story (step 7). |
+| `attack_chapter.dart` | `SiegeChapters` (app/game/story/siege_chapters.gd) |
+| `story_chapter.dart` | `StoryChapter` (app/game/story/story_chapter.gd) |
+| `story_places.dart` | `StoryPlaces` (app/game/story/story_places.gd) |
+| `turn_story.dart` | `TurnStory` (app/game/story/turn_story.gd), `SiegeChapters` (app/game/story/siege_chapters.gd) |
+| `turn_story_fog.dart` | `StoryFog` (app/game/story/story_fog.gd) |
+| `turn_story_snapshot.dart` | `TurnStorySnapshot` (app/game/story/turn_story_snapshot.gd) |
 
 ### `lib/presentation/screens/game/volcano/`
 
@@ -635,7 +635,7 @@ These are gaps of the interface, not of the rules: `godot/domain` is complete.
 | `exploration_summary_section.dart` | `ExplorationTurnSection` (ui/turn/exploration_turn_section.gd) |
 | `objective_turn_section.dart` | `ObjectiveTurnSection` (ui/turn/objective_turn_section.gd) |
 | `resource_change_line.dart` | `ResourceChangeLine` (ui/turn/resource_change_line.gd) |
-| `story_skip_button.dart` | **Missing.** The skip of the turn story (step 7). |
+| `story_skip_button.dart` | `StorySkipButton` (ui/turn/story_skip_button.gd) |
 | `summary_line.dart` | `SummaryLine` (ui/turn/summary_line.gd) |
 | `turn_confirmation_dialog.dart` | `TurnConfirmation` (ui/turn/turn_confirmation.gd) |
 | `turn_loss_sections.dart` | `TurnLosses` (ui/turn/turn_losses.gd), `LossSection` (ui/turn/loss_section.gd) |

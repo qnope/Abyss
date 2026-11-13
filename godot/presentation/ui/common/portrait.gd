@@ -4,7 +4,8 @@ extends PanelContainer
 ## [param tint] holding the render of its 3D model when one exists
 ## ([PortraitFiles]: `assets/portraits/<picture>.png`, made by
 ## tool/models/portraits.sh), or else the initials of the name. It is never an
-## SVG: the world's art comes from the models.
+## SVG: the world's art comes from the models. What is locked or not built yet
+## shows its render in greys, never its initials ([Greyscale]).
 
 ## Below this size the initials are set small, from this one larger.
 const SMALL := 40.0
@@ -18,8 +19,10 @@ var picture_rect: TextureRect
 
 ## [param picture] names the render ([PortraitFiles.building], `unit`,
 ## `monster`); none, or a name without a file yet, leaves the initials.
+## [param greyed] draws the render in greys.
 func _init(
-	name_text: String, portrait_size := 64.0, tint := AbyssColors.BIOLUM_CYAN, picture := ""
+	name_text: String, portrait_size := 64.0, tint := AbyssColors.BIOLUM_CYAN, picture := "",
+	greyed := false
 ) -> void:
 	display_name = name_text
 	custom_minimum_size = Vector2(portrait_size, portrait_size)
@@ -40,6 +43,7 @@ func _init(
 	if texture != null:
 		initials_label.visible = false
 		picture_rect = _picture(texture)
+		Greyscale.apply(picture_rect, greyed)
 		add_child(picture_rect)
 
 

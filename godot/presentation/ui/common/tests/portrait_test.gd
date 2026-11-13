@@ -51,8 +51,17 @@ func test_shows_the_render_of_a_model_that_has_one() -> void:
 	assert_eq(portrait.picture_rect.mouse_filter, Control.MOUSE_FILTER_IGNORE)
 	assert_eq(portrait.picture_rect.stretch_mode, TextureRect.STRETCH_KEEP_ASPECT_CENTERED)
 	assert_eq(portrait.picture_rect.texture_filter, CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS)
+	assert_null(portrait.picture_rect.material, "in its colours")
 	var box := portrait.get_theme_stylebox(&"panel") as StyleBoxFlat
 	assert_eq(box.bg_color, Color(AbyssColors.ALGAE_GREEN, 0.18), "the tinted panel stays under it")
+
+
+func test_greys_the_render_of_what_is_locked_rather_than_hiding_it() -> void:
+	var portrait := mount(Portrait.new("Quartier Général", 64.0, AbyssColors.DISABLED,
+		PortraitFiles.building(BuildingType.Value.HEADQUARTERS), true)) as Portrait
+	assert_not_null(portrait.picture_rect)
+	assert_false(portrait.initials_label.visible)
+	assert_eq((portrait.picture_rect.material as ShaderMaterial).shader, Greyscale.SHADER)
 
 
 func test_falls_back_to_the_initials_without_a_render() -> void:

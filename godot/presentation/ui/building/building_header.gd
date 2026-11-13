@@ -15,12 +15,13 @@ func _init(building: Building) -> void:
 	var color := BuildingColors.of(building.type)
 	var title := BuildingTexts.display_name(building.type)
 	add_theme_constant_override(&"separation", GAP)
-	var picture := PortraitFiles.building(building.type) if building.level > 0 else ""
-	portrait = Portrait.new(title, PORTRAIT_SIZE, color if building.level > 0 else AbyssColors.DISABLED, picture)
+	var built := building.level > 0
+	portrait = Portrait.new(title, PORTRAIT_SIZE, color if built else AbyssColors.DISABLED,
+		PortraitFiles.building(building.type), not built)
 	name_label.text = title
 	name_label.theme_type_variation = &"HeadlineSmall"
 	name_label.add_theme_color_override(&"font_color", color)
-	level_label.text = Texts.t(&"baseLevel", {"level": building.level}) if building.level > 0 \
+	level_label.text = Texts.t(&"baseLevel", {"level": building.level}) if built \
 		else Texts.t(&"baseNotBuilt")
 	add_child(portrait)
 	for each: Label in [name_label, level_label]:

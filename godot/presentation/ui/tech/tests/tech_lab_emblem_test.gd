@@ -15,3 +15,5 @@ func test_a_laboratory_to_build_is_grey() -> void:
 	assert_false(emblem.built)
 	assert_eq(emblem.level_label.text, "Non construit")
 	assert_eq(emblem.level_label.get_theme_color(&"font_color"), AbyssColors.DISABLED)
+	assert_not_null(emblem.portrait.picture_rect, "its render, never the initials")
+	assert_eq((emblem.portrait.picture_rect.material as ShaderMaterial).shader, Greyscale.SHADER)

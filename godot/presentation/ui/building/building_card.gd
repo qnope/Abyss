@@ -46,8 +46,8 @@ func _init(building_: Building, missing_headquarters_ := 0) -> void:
 		texts.add_child(degraded)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override(&"separation", GAP)
-	var picture := PortraitFiles.building(building.type) if built else ""
-	var portrait := Portrait.new(title, PORTRAIT_SIZE, color if built else AbyssColors.DISABLED, picture)
+	var portrait := Portrait.new(title, PORTRAIT_SIZE, color if built else AbyssColors.DISABLED,
+		PortraitFiles.building(building.type), not built)
 	pop = IncreasePop.new(portrait, Vector2.ONE * PORTRAIT_SIZE, AbyssColors.BIOLUM_CYAN, building.level)
 	row.add_child(pop)
 	row.add_child(texts)

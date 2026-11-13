@@ -27,5 +27,20 @@ func test_an_event_a_faction_and_the_guide_are_icons() -> void:
 	assert_eq((_of(Id.EVENTS) as UiIcon).icon_path, GuideBubble.PORTRAIT)
 
 
-func test_a_monster_is_a_portrait_of_the_tips_name() -> void:
-	assert_eq((_of(Id.LAIR) as Portrait).display_name, TipTexts.title(Id.LAIR))
+func test_a_monster_tip_shows_the_render_of_a_family() -> void:
+	var raid := _of(Id.RAID_ANNOUNCED) as Portrait
+	assert_eq(raid.display_name, MonsterFamilyTexts.label(MonsterFamily.Value.SWARM), "the Harponneurs' prey")
+	assert_eq(raid.picture_rect.texture, PortraitFiles.texture(PortraitFiles.monster(MonsterFamily.Value.SWARM)))
+	assert_eq((_of(Id.AWAKENING) as Portrait).picture_rect.texture, PortraitFiles.texture("kraken"))
+	for id: TipId.Value in TipIllustrations.MONSTERS:
+		assert_not_null((_of(id) as Portrait).picture_rect, str(id))
+
+
+func test_only_a_tip_whose_subject_has_no_render_shows_initials() -> void:
+	var initials: Array = []
+	for each in TipCatalog.all():
+		var portrait := _of(each.id) as Portrait
+		if portrait != null and portrait.picture_rect == null:
+			initials.append(each.id)
+	initials.sort()
+	assert_eq(initials, [Id.CHEST_AND_RUINS, Id.ANCIENTS, Id.FORGE_TOWERS], "no model of a post or a chest yet")

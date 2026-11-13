@@ -2,9 +2,10 @@ class_name TipIllustrations
 extends RefCounted
 ## The picture on the card of a tip (lib/presentation/extensions/
 ## tip_id_extensions.dart, `illustration`): the building, the unit, the event,
-## the post or the faction it explains, the guide's portrait when none fits.
-## Buildings, units, posts and monsters are [Portrait]s until the renders of
-## the 3D models replace them; events, factions and the guide are icons.
+## the monster, the post or the faction it explains, the guide's portrait when
+## none fits. Buildings, units and monsters are [Portrait]s of the renders of
+## their 3D models; posts, chests and ruins keep their initials until they have
+## one; events, factions and the guide are icons.
 
 const Id := TipId.Value
 const GUIDE := GuideBubble.PORTRAIT
@@ -24,6 +25,17 @@ const UNITS: Dictionary[TipId.Value, UnitType.Value] = {
 	Id.FACTION_ATTACK: UnitType.Value.GUARDIAN,
 	Id.ADMIRAL: UnitType.Value.ABYSS_ADMIRAL,
 }
+## Flutter drew a generic monster of a difficulty for some: a family stands
+## in for it, the swarm the Harponneurs are made for in a raid.
+const MONSTERS: Dictionary[TipId.Value, MonsterFamily.Value] = {
+	Id.NOISE_GAUGE: MonsterFamily.Value.HUNTER,
+	Id.RAID_ANNOUNCED: MonsterFamily.Value.SWARM,
+	Id.LAIR: MonsterFamily.Value.COLOSSUS,
+	Id.MONSTER_FAMILIES: MonsterFamily.Value.ARMOURED,
+	Id.VOLCANO_WAVE: MonsterFamily.Value.KRAKEN,
+	Id.ABYSS_LISTENS: MonsterFamily.Value.SWARM,
+	Id.AWAKENING: MonsterFamily.Value.KRAKEN,
+}
 const ICONS: Dictionary[TipId.Value, String] = {
 	Id.POST_LOST: HOSTILE,
 	Id.RIVAL_COLONIES: NEUTRAL,
@@ -42,6 +54,10 @@ func of(id: TipId.Value, size: float) -> Control:
 		var unit: UnitType.Value = UNITS[id]
 		return Portrait.new(UnitTexts.display_name(unit), size, AbyssColors.BIOLUM_CYAN,
 			PortraitFiles.unit(unit))
+	if MONSTERS.has(id):
+		var family: MonsterFamily.Value = MONSTERS[id]
+		return Portrait.new(MonsterFamilyTexts.label(family), size, AbyssColors.CORAL_PINK,
+			PortraitFiles.monster(family))
 	if ICONS.has(id):
 		return UiIcon.new(ICONS[id], size)
 	var event: Variant = DartEnum.by_name(RandomEventType.Value, DartEnum.name_of(TipId.Value, id))

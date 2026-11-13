@@ -32,12 +32,14 @@ func test_a_built_building_wears_its_colour_and_tells_its_level() -> void:
 	assert_no_raw_keys()
 
 
-func test_the_render_of_a_built_building_is_in_its_card_and_a_plot_has_none() -> void:
+func test_the_render_of_a_building_is_in_its_card_in_grey_until_it_is_built() -> void:
 	set_levels({Type.SOLAR_PANEL: 1})
-	var with_model := find_type("Portrait", _card(Type.SOLAR_PANEL))
-	assert_not_null((with_model[0] as Portrait).picture_rect)
-	var without := find_type("Portrait", _card(Type.LABORATORY))
-	assert_null((without[0] as Portrait).picture_rect)
+	var built := find_type("Portrait", _card(Type.SOLAR_PANEL))[0] as Portrait
+	assert_not_null(built.picture_rect)
+	assert_null(built.picture_rect.material, "in its colours")
+	var to_build := find_type("Portrait", _card(Type.LABORATORY))[0] as Portrait
+	assert_not_null(to_build.picture_rect, "never the initials")
+	assert_eq((to_build.picture_rect.material as ShaderMaterial).shader, Greyscale.SHADER)
 
 
 func test_a_building_to_build_is_dimmed_and_says_so() -> void:

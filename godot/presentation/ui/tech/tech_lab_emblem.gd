@@ -16,8 +16,8 @@ func _init(lab_level: int) -> void:
 	built = lab_level > 0
 	add_theme_constant_override(&"separation", GAP)
 	var tint := AbyssColors.BIOLUM_TEAL if built else AbyssColors.DISABLED
-	var picture := PortraitFiles.building(BuildingType.Value.LABORATORY) if built else ""
-	portrait = Portrait.new(BuildingTexts.display_name(BuildingType.Value.LABORATORY), SIZE, tint, picture)
+	portrait = Portrait.new(BuildingTexts.display_name(BuildingType.Value.LABORATORY), SIZE, tint,
+		PortraitFiles.building(BuildingType.Value.LABORATORY), not built)
 	level_label.text = Texts.t(&"baseLevel", {"level": lab_level}) if built else Texts.t(&"baseNotBuilt")
 	level_label.theme_type_variation = &"BodySmall"
 	level_label.add_theme_color_override(&"font_color", tint)

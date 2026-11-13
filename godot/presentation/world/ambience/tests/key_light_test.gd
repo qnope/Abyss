@@ -25,6 +25,17 @@ func test_turns_its_shadows_on_and_off() -> void:
 	light.free()
 
 
+func test_wears_the_mood_of_a_place() -> void:
+	var light := KeyLight.new()
+	assert_eq(light.light_color, LightMoods.base().key_colour)
+	assert_almost_eq(light.light_energy, LightMoods.base().key_energy, 1e-4)
+	light.set_mood(LightMoods.core())
+	assert_eq(light.light_color, LightMoods.core().key_colour)
+	assert_almost_eq(light.light_energy, LightMoods.core().key_energy, 1e-4)
+	assert_true(light.shadow_enabled, "its shadows are not the mood's")
+	light.free()
+
+
 func test_its_shadows_fit_a_phone_s_memory() -> void:
 	var atlas: int = ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/size")
 	assert_eq(atlas, 2048, "a 4096 atlas would cost 64 MB on the web of an iPhone")

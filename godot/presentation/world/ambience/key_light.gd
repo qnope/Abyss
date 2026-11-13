@@ -5,9 +5,6 @@ extends DirectionalLight3D
 ## that keep the deck's shadows sharp from the game's view to the farthest
 ## zoom; a third would cost a pass more of every caster each frame.
 
-## The light's colour: daylight after metres of water.
-const COLOUR := Color("fff3e2")
-const ENERGY := 2.0
 ## From high over the upper left of the game's camera, as the models were
 ## reviewed in (tool/models/studio.gd).
 const ANGLES := Vector3(-52.0, 15.0, 0.0)
@@ -16,9 +13,9 @@ const ANGLES := Vector3(-52.0, 15.0, 0.0)
 const SHADOW_DISTANCE := 56.0
 
 
-func _init() -> void:
-	light_color = COLOUR
-	light_energy = ENERGY
+## The light of [param mood] (its colour and energy), the base's by default.
+func _init(mood := LightMoods.base()) -> void:
+	set_mood(mood)
 	rotation_degrees = ANGLES
 	shadow_enabled = true
 	shadow_blur = 1.0
@@ -26,6 +23,12 @@ func _init() -> void:
 	directional_shadow_split_1 = 0.45
 	directional_shadow_blend_splits = false
 	directional_shadow_max_distance = SHADOW_DISTANCE
+
+
+## Lights with the colour and the energy of [param mood].
+func set_mood(mood: LightMood) -> void:
+	light_color = mood.key_colour
+	light_energy = mood.key_energy
 
 
 ## Turns the shadows on or off: the costliest part of the scene's lighting.

@@ -46,6 +46,22 @@ camera.
   immediate (`UpgradeBuildingAction` raises the level at once and `Worksite` only
   counts the upgrades of the turn), so no state says that a pad is a site.
 
+## ambience/
+
+The water around the scenes: `UnderwaterEnvironment` (the sky gradient that lights
+the water, the fog, the glow), `KeyLight` (the one directional light and its
+shadows), the light shafts, the marine snow and the bubbles, the fish and the
+turtle. The light is a `LightMood` (the key light's colour and energy, the
+sky's three colours, the ambient strength, the fog), the palette of
+`LightMoods`: the base's (the one the base was reviewed in), and one for each
+level of the map: the surface a bright teal under a clear key light, the
+depths a twilight blue under a colder one, the core a dark red and orange.
+`UnderwaterEnvironment.set_mood` and `KeyLight.set_mood` wear a mood at once (a
+level is a cut, not a fade): `MapScene.show_level` lights its own key light and
+tells `level_shown(level)`, and `WorldHost` (`app/world/`) lights the water,
+which the base owns, with the mood of the level on the map view, the base's on
+the others.
+
 ## guide/
 
 The tutorial's halo in 3D: `GuideRing`, a pulsing cyan torus lying on the floor

@@ -13,26 +13,24 @@ const SKY_SHADER := preload("res://presentation/world/ambience/deep_sea_sky.gdsh
 ## curve keeps their hue, the glow carries their brightness.
 const TONEMAPPER := Environment.TONE_MAPPER_LINEAR
 const EXPOSURE := 1.1
-## The ambient light, from the sky: the water lit around the base.
-const AMBIENT_ENERGY := 2.4
 const SATURATION := 1.12
 const CONTRAST := 1.06
-## Fog: its colour, the water's, and how fast it thickens with distance and
-## under FOG_FLOOR.
-const FOG_COLOUR := Color("082a3c")
-const FOG_DENSITY := 0.006
+## Fog: how fast it thickens under FOG_FLOOR (its colour and its density with
+## distance are the mood's, [LightMood]).
 const FOG_FLOOR := -3.0
 const FOG_DEPTH_DENSITY := 0.05
 ## The glow's spread: its weight at each blur level, the finest first.
 const GLOW_LEVELS: Array[float] = [0.0, 1.0, 0.8, 0.5, 0.2, 0.0, 0.0]
 
+var _sky_material := ShaderMaterial.new()
 
-func _init() -> void:
+
+## The water lit by [param mood], the base's by default.
+func _init(mood := LightMoods.base()) -> void:
 	var water := Environment.new()
 	water.background_mode = Environment.BG_SKY
 	water.sky = _sky()
 	water.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	water.ambient_light_energy = AMBIENT_ENERGY
 	water.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
 	water.tonemap_mode = TONEMAPPER
 	water.tonemap_exposure = EXPOSURE
@@ -42,6 +40,17 @@ func _init() -> void:
 	_fog(water)
 	_glow(water)
 	environment = water
+	set_mood(mood)
+
+
+## Lights the water with [param mood]: its sky and ambient light, its fog.
+func set_mood(mood: LightMood) -> void:
+	_sky_material.set_shader_parameter(&"surface_colour", mood.sky_surface)
+	_sky_material.set_shader_parameter(&"horizon_colour", mood.sky_horizon)
+	_sky_material.set_shader_parameter(&"abyss_colour", mood.sky_abyss)
+	environment.ambient_light_energy = mood.ambient_energy
+	environment.fog_light_color = mood.fog_colour
+	environment.fog_density = mood.fog_density
 
 
 ## Turns the glow on or off: a few blurred passes over the whole screen.
@@ -49,11 +58,10 @@ func set_glow(enabled: bool) -> void:
 	environment.glow_enabled = enabled
 
 
-static func _sky() -> Sky:
-	var material := ShaderMaterial.new()
-	material.shader = SKY_SHADER
+func _sky() -> Sky:
+	_sky_material.shader = SKY_SHADER
 	var sky := Sky.new()
-	sky.sky_material = material
+	sky.sky_material = _sky_material
 	sky.radiance_size = Sky.RADIANCE_SIZE_32
 	return sky
 
@@ -61,8 +69,6 @@ static func _sky() -> Sky:
 static func _fog(water: Environment) -> void:
 	water.fog_enabled = true
 	water.fog_mode = Environment.FOG_MODE_EXPONENTIAL
-	water.fog_light_color = FOG_COLOUR
-	water.fog_density = FOG_DENSITY
 	water.fog_sky_affect = 0.0
 	water.fog_sun_scatter = 0.15
 	water.fog_height = FOG_FLOOR

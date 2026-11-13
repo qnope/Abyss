@@ -325,7 +325,7 @@ machine's renderer draws the last bits differently.
 
 - `base_island`: the plateau of the base, 12 x 12 cells, its deck's top at the
   origin. Its plan (`catalog/base_island/layout.py`) copies the slots of
-  `lib/presentation/widgets/base/base_layout.dart`, which its test checks: each
+  the Flutter version's `base_layout.dart`, which its test holds in a table: each
   slot is an empty pad, the node `Pads/<Building>` (`Pads/CoralMine`), its
   origin where the building stands, at (u - 6, 0.12, v - 6) in Godot.
 - `base_rampart`: the coral wall around the deck, in the band the island keeps

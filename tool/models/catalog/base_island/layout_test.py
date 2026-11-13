@@ -2,29 +2,32 @@
 join them without running under a pad, and the free ground for the decor."""
 
 import math
-import os
-import re
 import unittest
 
 from catalog.base_island import layout
 
-DART = os.path.join(os.path.dirname(__file__), "..", "..", "..", "..",
-                    "lib", "presentation", "widgets", "base", "base_layout.dart")
-
-
-def _dart_slots():
-    with open(DART) as file:
-        text = file.read()
-    pattern = r"BuildingType\.(\w+):\s*BaseSlot\(u: ([\d.]+), v: ([\d.]+), footprint: (\d+)"
-    return {re.sub(r"(?<!^)([A-Z])", r"_\1", name).lower(): (float(u), float(v), int(f))
-            for name, u, v, f in re.findall(pattern, text)}
+# The slots of the base of the Flutter game, which the island keeps:
+# (u, v, footprint) of each building, as that version's base_layout.dart gave them.
+FLUTTER_SLOTS = {
+    "volcanic_kernel": (2.0, 2.0, 2),
+    "laboratory": (2.2, 6.6, 2),
+    "solar_panel": (6.6, 2.2, 2),
+    "coral_mine": (3.7, 9.0, 2),
+    "headquarters": (6.4, 6.4, 3),
+    "algae_farm": (9.0, 3.7, 2),
+    "barracks": (7.4, 10.4, 2),
+    "ore_extractor": (10.4, 7.4, 2),
+    "pressure_capsule": (4.6, 11.0, 2),
+    "descent_module": (11.0, 4.6, 2),
+    "coral_citadel": (10.2, 10.2, 2),
+}
 
 
 class LayoutTest(unittest.TestCase):
     def test_has_the_slots_of_the_flutter_base(self):
         slots = {slot.building: (slot.u, slot.v, slot.footprint) for slot in layout.SLOTS}
         self.assertEqual(len(slots), 11)
-        self.assertEqual(slots, _dart_slots())
+        self.assertEqual(slots, FLUTTER_SLOTS)
 
     def test_names_each_pad_node_after_its_building(self):
         names = {slot.building: slot.node for slot in layout.SLOTS}

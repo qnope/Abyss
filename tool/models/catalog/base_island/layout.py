@@ -1,5 +1,5 @@
 """The plan of the base's island, in cells (pure Python, no bpy): the 12 x 12
-deck, the building slots of lib/presentation/widgets/base/base_layout.dart, the
+deck, the building slots of the Flutter version's base_layout.dart, the
 walkways from the headquarters and the gates where the avenues leave the deck.
 
 A cell (u, v) of the Flutter game lies at plan (x, y) = (u - 6, 6 - v) in

@@ -49,6 +49,13 @@ static func bench(stats: FrameStats, seconds: float, subject := "") -> String:
 	]
 
 
+## What an action of the player costs, after the summary of a bench of the
+## actions: the average and the worst of [param costs], which holds the
+## longest frame that followed each action.
+static func action_cost(costs: FrameStats) -> String:
+	return "action %d ms avg, %d worst" % [roundi(costs.average_ms()), roundi(costs.worst_ms())]
+
+
 static func _count(value: int) -> String:
 	if value >= 1000000:
 		return "%.2fM" % (value / 1e6)

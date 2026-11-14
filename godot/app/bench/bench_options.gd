@@ -2,8 +2,9 @@ class_name BenchOptions
 extends RefCounted
 ## Whether the app runs the bench at launch, how long, and on which scene:
 ## `?bench=1` in the web page's address (`?bench=40` for 40 seconds), then
-## `&scene=map&level=2` for the map of the second level (the base by default),
-## or `-- --bench --bench-scene=map --bench-level=2` on the command line, so
+## `&scene=map&level=2` for the map of the second level (the base by default)
+## or `&scene=game` for the actions of the real game, or
+## `-- --bench --bench-scene=map --bench-level=2` on the command line, so
 ## that the owner measures each scene the same way on each device.
 
 ## A bench's length when none is given, in seconds.
@@ -13,10 +14,12 @@ const SHORTEST := 5.0
 ## The scenes a bench measures.
 const BASE := &"base"
 const MAP := &"map"
+const GAME := &"game"
+const SCENES: Array[StringName] = [BASE, MAP, GAME]
 
 ## The bench's length in seconds, 0 for none.
 var seconds: float
-## What it measures: [constant BASE] or [constant MAP].
+## What it measures: one of [constant SCENES].
 var scene: StringName
 ## The level of the map it measures, from 1.
 var level: int
@@ -64,5 +67,6 @@ static func _of_pairs(pairs: Dictionary[String, String], prefix: String) -> Benc
 	var number := pairs["bench"].to_float()
 	var seconds_ := number if number >= SHORTEST else (DEFAULT_SECONDS if number > 0.0 else 0.0)
 	var scene_name: String = pairs.get(prefix + "scene", "")
+	var scene_ := StringName(scene_name)
 	var level_text: String = pairs.get(prefix + "level", "1")
-	return BenchOptions.new(seconds_, MAP if scene_name == "map" else BASE, maxi(level_text.to_int(), 1))
+	return BenchOptions.new(seconds_, scene_ if SCENES.has(scene_) else BASE, maxi(level_text.to_int(), 1))

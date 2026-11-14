@@ -59,3 +59,11 @@ func test_tells_a_stop_from_frames_lost_here_and_there() -> void:
 	var steady := FrameStats.new(INF)
 	steady.add(1.0 / 60.0)
 	assert_has(FrameReport.bench(steady, 10.0), "· worst 17 ms · 0 slow frames")
+
+
+func test_tells_what_an_action_costs() -> void:
+	var costs := FrameStats.new(INF)
+	assert_eq(FrameReport.action_cost(costs), "action 0 ms avg, 0 worst", "none played")
+	for cost: float in [0.08, 0.088, 0.096]:
+		costs.add(cost)
+	assert_eq(FrameReport.action_cost(costs), "action 88 ms avg, 96 worst")

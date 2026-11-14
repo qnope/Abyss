@@ -7,9 +7,10 @@ extends Control
 ## (dialogs and sheets).
 ##
 ## A launch that asks for a bench (`?bench=1`, BenchOptions) opens the 3D
-## prototype instead, which measures the scene alone. Either way the 3D of
-## the window is first capped for the screen's density (RenderScale), so a
-## bench measures what the game draws.
+## prototype instead, which measures a scene alone, or, for a bench of the
+## actions (`&scene=game`), the game itself on saves that are not the
+## player's (BenchLayer). Either way the 3D of the window is first capped for
+## the screen's density (RenderScale), so a bench measures what the game draws.
 ##
 ## The game saves a change on the frame after it (GameSession), a frame that
 ## may never come once the app goes away: on each of [constant LEAVING] the
@@ -54,13 +55,29 @@ func _ready() -> void:
 		language = LanguageSettings.new()
 	locale = AppLocale.new(language)
 	RenderScale.apply(get_viewport(), density)
-	if bench.seconds > 0.0:
+	if bench.seconds <= 0.0:
+		_open_flow()
+		flow.show_menu()
+	elif bench.scene == BenchOptions.GAME:
+		_open_game_bench()
+	else:
 		_open_prototype()
-		return
+
+
+## The flow between the screens, on the saves of [member repository].
+func _open_flow() -> void:
 	screens.add_theme_constant_override(&"margin_top", SafeArea.top(get_viewport()))
 	flow = AppFlow.new(repository, language, screens, modals, world)
 	flow.playing_changed.connect(_on_playing_changed)
-	flow.show_menu()
+
+
+## The game itself, running the bench of its actions: [member repository]
+## becomes the bench's, a folder beside the player's saves.
+func _open_game_bench() -> void:
+	var saves := BenchSaves.new(repository)
+	repository = saves.repository
+	_open_flow()
+	BenchLayer.open(flow, saves, bench.seconds)
 
 
 func _notification(what: int) -> void:

@@ -33,7 +33,7 @@ func test_raising_the_last_level_opens_the_victory_screen_over_the_game() -> voi
 	var screen := current_modal() as VictoryScreen
 	assert_not_null(screen)
 	assert_true(_flow.current is GameHud, "over the game, not instead of it")
-	assert_eq(_repository.load_all().games[0].status, GameStatus.Value.VICTORY, "saved won")
+	assert_eq(_saved_games()[0].status, GameStatus.Value.VICTORY, "saved won")
 
 
 func test_continuing_goes_on_in_free_play_and_saves_it() -> void:
@@ -41,7 +41,7 @@ func test_continuing_goes_on_in_free_play_and_saves_it() -> void:
 	_win(hud)
 	press("Continuer en mode libre")
 	assert_eq(hud.game.status, GameStatus.Value.FREE_PLAY)
-	assert_eq(_repository.load_all().games[0].status, GameStatus.Value.FREE_PLAY)
+	assert_eq(_saved_games()[0].status, GameStatus.Value.FREE_PLAY)
 	assert_null(current_modal())
 	assert_true(_flow.current is GameHud)
 	assert_eq(_flow.controller.hud, hud, "the same game goes on")

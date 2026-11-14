@@ -11,7 +11,6 @@ extends RefCounted
 ##
 ## The screens only tell what the player wants, with signals; the flow saves
 ## and deletes through the GameRepository and shows what follows, no await.
-## The saves are read again each time a screen is shown.
 
 ## A screen shows: whether it is the game, over the world, or a menu.
 signal playing_changed(playing: bool)
@@ -80,7 +79,7 @@ func play(game: Game) -> void:
 	var session := GameSession.new(game, repository)
 	var screen := GameHud.new(session.actions, language.choice(), _modals)
 	controller = GameController.new(session, screen, world, _modals)
-	controller.quit_requested.connect(_quit.bind(game))
+	controller.quit_requested.connect(_quit)
 	controller.defeated.connect(show_defeat.bind(game))
 	controller.language_chosen.connect(_choose_language)
 	_show(screen, true)
@@ -90,8 +89,14 @@ func play(game: Game) -> void:
 func show_defeat(game: Game) -> void:
 	var screen := GameOverScreens.defeat(game)
 	screen.menu_requested.connect(show_menu)
-	screen.export_requested.connect(_export.bind(game))
+	screen.export_requested.connect(func() -> void: _modals.open(ReplayExportDialog.new(game)))
 	_show(screen, false)
+
+
+## The app goes away or behind another: a save that waits is written at once.
+func flush() -> void:
+	if controller != null:
+		controller.session.flush()
 
 
 func _begin(game: Game) -> void:
@@ -99,20 +104,15 @@ func _begin(game: Game) -> void:
 	show_story(game)
 
 
-func _quit(game: Game) -> void:
-	GameSession.save_game(repository, game)
+func _quit() -> void:
+	controller.session.save()
 	show_menu()
-
-
-func _export(game: Game) -> void:
-	_modals.open(ReplayExportDialog.new(game))
 
 
 func _delete(game: Game) -> void:
 	var error := repository.delete_game(game)
 	if error != OK:
-		push_warning("The game of %s could not be deleted: %s" % [
-			game.human_player().name, error_string(error)])
+		push_warning("The game of %s could not be deleted: %s" % [game.human_player().name, error_string(error)])
 	show_load_game()
 
 
@@ -122,7 +122,7 @@ func _choose_language(choice: LanguageChoice.Value) -> void:
 		push_warning("The language could not be saved: %s" % error_string(error))
 
 
-## The games saved; a file that cannot be read is told and skipped.
+## The games saved, read again for each screen; a file that cannot be read is told and skipped.
 func _read_saves() -> Array[Game]:
 	var found := repository.load_all()
 	unreadable = found.unreadable

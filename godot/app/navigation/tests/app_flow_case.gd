@@ -35,6 +35,13 @@ func _save(player_name: String, turn := 1) -> Game:
 	return game
 
 
+## The games on the disk once the save the game on show waits for, if any,
+## is written as the next frame writes it.
+func _saved_games() -> Array[Game]:
+	_flow.flush()
+	return _repository.load_all().games
+
+
 ## Leaves the game on show through its settings: save and quit.
 func _save_and_quit() -> void:
 	(_flow.current as GameHud).open_settings()

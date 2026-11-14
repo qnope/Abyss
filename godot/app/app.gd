@@ -10,8 +10,19 @@ extends Control
 ## prototype instead, which measures the scene alone. Either way the 3D of
 ## the window is first capped for the screen's density (RenderScale), so a
 ## bench measures what the game draws.
+##
+## The game saves a change on the frame after it (GameSession), a frame that
+## may never come once the app goes away: on each of [constant LEAVING] the
+## save that waits is written at once.
 
 const PROTOTYPE := preload("res://app/prototype/prototype.tscn")
+## What tells that the app goes away or behind another: the window closing
+## (a web page asked to quit too) or losing the focus (on the web the canvas,
+## all the engine tells of a tab left), the back key of Android, the app out
+## of focus or paused by a phone, and the app leaving the tree.
+const LEAVING: Array[int] = [NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_WM_GO_BACK_REQUEST,
+	NOTIFICATION_WM_WINDOW_FOCUS_OUT, NOTIFICATION_APPLICATION_FOCUS_OUT,
+	NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_EXIT_TREE]
 
 ## The saves, and the player's language kept in user://settings.json: a
 ## test or a capture sets them before the app enters the tree, else they are
@@ -50,6 +61,11 @@ func _ready() -> void:
 	flow = AppFlow.new(repository, language, screens, modals, world)
 	flow.playing_changed.connect(_on_playing_changed)
 	flow.show_menu()
+
+
+func _notification(what: int) -> void:
+	if what in LEAVING and flow != null:
+		flow.flush()
 
 
 ## The prototype alone, running the bench.

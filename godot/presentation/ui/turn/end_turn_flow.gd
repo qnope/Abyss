@@ -17,10 +17,11 @@ extends RefCounted
 ## there is nothing to tell. The summary waits for that "next", which is told
 ## once, and no second turn can be asked meanwhile.
 ## [method GameActions.end_turn] tells `acted`, so whoever keeps the game has
-## saved it and redrawn before the first page opens.
+## redrawn before the first page opens, and saves it: on the next frame, which
+## neither the story nor the pages wait for.
 
 ## The turn ended: [param result] is what it did to the human's base. The
-## game has changed (the turn counter, the stocks) and is saved.
+## game has changed (the turn counter, the stocks) and its save is asked for.
 signal turn_ended(result: TurnResult)
 ## Every page of the outcome was seen and the game goes on.
 signal finished

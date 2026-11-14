@@ -69,4 +69,4 @@ func test_the_stock_stops_at_the_storage() -> void:
 
 
 func _saved_turn() -> int:
-	return _repository.load_all().games[0].turn
+	return _saved_games()[0].turn

@@ -5,7 +5,7 @@ extends RefCounted
 ## showTurnOutcome, its `openEventCard`): after the summary and the reports,
 ## and not for a game the turn lost. The card is a page like the others; its
 ## choice goes through the actions it is built with, so the game is changed
-## and saved before the queue goes on.
+## and its save asked for before the queue goes on.
 
 
 ## The step for the game of [param actions]: a Callable taking the game and the

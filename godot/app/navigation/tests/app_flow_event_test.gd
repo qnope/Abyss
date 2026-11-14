@@ -19,7 +19,7 @@ func _play_with_survivors() -> GameHud:
 
 
 func _saved_harpoonists() -> int:
-	var saved := _repository.load_all().games[0]
+	var saved := _saved_games()[0]
 	return saved.human_player().units_on_level(1)[UnitType.Value.HARPOONIST].count
 
 
@@ -42,7 +42,7 @@ func test_the_prudent_option_is_saved_too() -> void:
 	press((find_type("EventStatusBar", hud.status_bars)[0] as EventStatusBar).tap_button)
 	press("Refuser")
 	assert_eq(_saved_harpoonists(), before)
-	var saved := _repository.load_all().games[0]
+	var saved := _saved_games()[0]
 	assert_false(saved.human_player().event_state.has_pending())
 	var entries := EventSamples.event_entries_of(saved.human_player())
 	assert_eq(entries.size(), 1, "the history keeps the choice")

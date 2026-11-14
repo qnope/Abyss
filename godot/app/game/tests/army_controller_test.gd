@@ -106,6 +106,7 @@ func test_recruiting_changes_the_game_saves_it_and_redraws_the_parade() -> void:
 	assert_null(current_modal())
 	assert_eq(_squad(Type.SCOUT).state.count, 4)
 	assert_eq(_squad(Type.SCOUT).figures.get_child_count(), SquadSize.of(4))
+	_session.flush()
 	var saved := _session.repository.load_all().games
 	assert_eq(saved.size(), 1)
 	assert_eq(saved[0].human_player().units_on_level(1)[Type.SCOUT].count, 4)
@@ -118,6 +119,7 @@ func test_a_refusal_is_told_in_the_sheet_and_changes_nothing() -> void:
 	press("Recruter")
 	assert_not_null(find_text("Recrutement déjà effectué ce tour", current_modal()))
 	assert_eq(units_at(Type.SCOUT), 0)
+	_session.flush()
 	assert_eq(_session.repository.load_all().games.size(), 0)
 
 

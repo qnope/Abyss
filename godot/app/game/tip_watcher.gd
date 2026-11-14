@@ -1,7 +1,7 @@
 class_name TipWatcher
 extends RefCounted
 ## Opens the next tips after a player's action (lib/.../tip_presenter.dart,
-## `showAfterAction`): once the change is saved and drawn, unless a page, a
+## `showAfterAction`): once the change is drawn, unless a page, a
 ## sheet or a dialog covers the screen by then (a fight, a report: the tips of
 ## a turn come last in its pages, [TipPresenter] and [TurnOutcome]), or while
 ## the story of a turn is told on the map, whose summary is not open yet.

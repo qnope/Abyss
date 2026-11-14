@@ -78,7 +78,7 @@ func test_a_spy_the_domain_refuses_is_told_in_a_message() -> void:
 	assert_not_null(message)
 	assert_not_null(find_text(ActionFailureTexts.message(ActionFailure.Value.NOT_ENOUGH_UNITS), message))
 	assert_null(human.intel().get(rival.id))
-	assert_eq(repository.load_all().games.size(), 0, "nothing was saved")
+	assert_eq(saved_games().size(), 0, "nothing was saved")
 
 
 func test_the_sheet_speaks_english_and_spanish() -> void:

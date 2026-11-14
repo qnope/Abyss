@@ -4,7 +4,7 @@ The end of a turn, from the "next turn" press to the next playable state
 (lib/presentation/widgets/turn/ and screens/game/game_screen_end_turn.dart).
 
     EndTurnFlow.request() -> TurnConfirmation -> confirmed
-      -> GameActions.end_turn() (saved by `acted`, redrawn by `changed`)
+      -> GameActions.end_turn() (`acted`: redrawn at once, saved on the next frame)
       -> turn_ended -> TurnOutcome: the pages, one after the other
       -> finished, or defeated when the turn lost the game
 

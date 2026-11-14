@@ -16,7 +16,7 @@ extends RefreshingPanel
 ## once the tab is built.
 ##
 ## Flow: node touched -> [signal TechTreeView.target_tapped] -> sheet ->
-## [method GameActions.execute] -> [signal GameActions.acted] -> save ->
+## [method GameActions.execute] -> [signal GameActions.acted] ->
 ## [method refresh].
 
 const PAD := 12

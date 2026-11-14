@@ -28,7 +28,7 @@ a screen is shown, and replaces the screen on show.
     menu -> the game (continue: the latest in progress)
     the game -> settings -> save and quit -> (saved) -> menu
     the game -> settings -> language -> kept, the language set
-    the game -> next turn -> question (threats due warned) -> turn ended (saved)
+    the game -> next turn -> question (threats due warned) -> turn ended (saved on the next frame)
       -> its story told on the map ("Passer" skips it) -> summary -> the reports of the raid, the predators and a kraken wave lost
       -> the card of an event drawn -> the game
     the game -> a turn lost it -> summary -> defeat screen -> menu, or the replay export over it
@@ -37,23 +37,24 @@ a screen is shown, and replaces the screen on show.
     new game, saved games -> menu: back
 
 `game/` is the game played: `GameSession` holds the game, the repository and
-the `GameActions`, and saves the game each time an action succeeds (`acted`)
-before telling `changed`; `GameController` joins the `GameHud` and the
+the `GameActions`; each time an action succeeds (`acted`) it tells `changed` at
+once and saves the game on the next frame (see "The save of a change" below);
+`GameController` joins the `GameHud` and the
 `WorldHost`: the tab on show decides what the world shows (`TabViews`: the base,
 the parade ground or nothing, resting behind a page), `changed` redraws both, the island is framed between the bars, and
 `quit_requested` and `language_chosen` go on to the flow. A tap on a pad of
 the base (`BaseScene.building_tapped`) opens the sheet of its building
-(`GameHud.open_building`); its upgrade goes through the actions, which save
-(`acted`) and redraw (`changed`): the HUD, the pads' levels and signs
+(`GameHud.open_building`); its upgrade goes through the actions, which redraw
+(`acted`, then `changed`) and save: the HUD, the pads' levels and signs
 (`BaseReadiness`: what can rise, what a prerequisite holds back) and the
 rampart's tier. Flow: pad tapped -> sheet -> `GameActions.execute` -> `acted`
--> save -> `changed` -> HUD and base redrawn. `AppFlow.play` builds
+-> `changed` -> HUD and base redrawn -> next frame: saved. `AppFlow.play` builds
 the three and `_leave_game` gives the world back to the menus.
 
 The Tech tab is the research tree (`presentation/ui/tech/`), UI only: the tab
 bar hides the world behind it like any tab but the base, a touch on a node opens
 its sheet, and unlocking or researching goes through the same actions: node
-touched -> sheet -> `GameActions.execute` -> `acted` -> save -> `changed` ->
+touched -> sheet -> `GameActions.execute` -> `acted` -> `changed` ->
 `GameHud.refresh()` redraws the tree. `GameController` has nothing of its own to
 do for it. The tree is built again only while the Tech tab is on show: a change
 made on another tab is drawn when the player comes to it (`TechTab`).
@@ -65,7 +66,7 @@ squads and the barracks of the `ParadeScene` (`ParadeStates`: the counts, the
 captions in the language on, the plus of a type that can recruit, the padlock
 of one the barracks is too low for). Flow: squad tapped
 (`ParadeScene.squad_tapped`) -> `UnitSheet` -> recruit ->
-`GameActions.execute` -> `acted` -> save -> `changed` -> `ArmyTab.refresh` ->
+`GameActions.execute` -> `acted` -> `changed` -> `ArmyTab.refresh` ->
 `changed` -> parade redrawn; the barracks tapped opens its `BuildingSheet`.
 
 The map tab is the `MapController`, made by the `GameController`: it puts the
@@ -75,7 +76,7 @@ seen, the base, the scouts on their way with the cell each left, the colours of
 the rival bases and of whoever can hold the volcano, who holds the post above each
 passage) while the tab is on show, again on each change of the game. Flow: cell
 tapped (`MapScene.cell_tapped(level, x, y)`) -> `CellRouter.route` -> sheet ->
-`GameActions.execute` -> `acted` -> save -> `changed` -> `MapTab.refresh` and the
+`GameActions.execute` -> `acted` -> `changed` -> `MapTab.refresh` and the
 map redrawn; a search then tells what it found. A level chosen on the selector
 (`MapTab.level_changed`) is drawn at once. For the other lots:
 `map.router.register(CellRoute.Kind.POST | KERNEL | FACTION_BASE, handler)` opens
@@ -87,7 +88,7 @@ The lairs are the `FightController` (`game/`), made by the `GameController`, whi
 registers for `CellRoute.Kind.LAIR`: a touch opens the `MonsterLairSheet`,
 "prepare the fight" the `ArmySelection` page over the units of the level, and
 launching runs `FightMonsterAction` through `GameActions.execute`. Flow: cell
-tapped -> sheet -> `prepare_requested` -> selection -> `execute` -> `acted` -> save ->
+tapped -> sheet -> `prepare_requested` -> selection -> `execute` -> `acted` ->
 `changed` -> map redrawn (the lair of a victory dimmed, the stock and the noise
 changed) -> the page closes with the result -> `FightSummaryPage`; a refusal
 stays in the selection page. `FightController.report(result, route)` is where the
@@ -104,7 +105,7 @@ the `GameController`, which register for `CellRoute.Kind.POST` and `KERNEL`: a t
 the `TransitionBaseSheet` or the `VolcanicKernelSheet` (or a `RivalPostSheet` for what a rival
 holds). Flow of an assault: cell tapped -> sheet -> `assault_requested` -> `ArmySelection`
 (`AssaultSelections`, an Admiral required) -> `AttackTransitionBaseAction` /
-`AttackVolcanicKernelAction` through `GameActions.execute` -> `acted` -> save -> `changed` ->
+`AttackVolcanicKernelAction` through `GameActions.execute` -> `acted` -> `changed` ->
 the page closes with the result -> `TransitionFightSummaryPage` / `KernelFightSummaryPage`; a
 refusal stays in the page. Going down: `descend_requested` -> `DescentDialog` -> `DescendAction`
 -> the map shows the level reached (`MapController.show_level`) and a `MessageDialog` tells it
@@ -121,8 +122,9 @@ refusal stays in the page, a refused spy is a `MessageDialog`.
 
 The end of a turn is `EndTurnFlow` (`presentation/ui/turn/`), made by the
 `GameController`: the HUD's `end_turn_requested` asks, the confirmed turn goes
-through `GameActions.end_turn()` (so it is saved by `acted` and redrawn before
-the summary opens), the pages of `TurnOutcome` open on the `ModalLayer`, and
+through `GameActions.end_turn()` (so it is redrawn by `acted` before the
+summary opens, and saved on the next frame), the pages of `TurnOutcome` open on
+the `ModalLayer`, and
 `finished` redraws the screen once the last is closed. `defeated` goes up to
 `AppFlow.show_defeat`, which replaces the game with the `DefeatScreen` (the
 world is the menus' again; its only way out is the menu); `AppFlow.play` shows
@@ -132,11 +134,40 @@ opens the `VictoryScreen` over the game: "continue" sets free play through
 `GameActions.continue_in_free_play` (saved, the same game goes on), "menu"
 saves and leaves through `quit_requested`.
 
+## The save of a change
+
+A save costs more than the redraw it follows (about 25 ms against 10 on a
+desktop, several times that on a phone), so it leaves the frame in which the
+action shows. `GameSession` tells `changed` at once and asks a `NextFrame`
+(`game/`) for the frame after: the tree tells `process_frame` in the very frame
+of a touch, before drawing it, so `NextFrame` waits for the first one of a later
+frame, by the engine's count. The changes of a frame are one save.
+
+Nothing is lost on the ways out, where the next frame may never come or come
+too late; each writes the save that waits at once:
+
+- save and quit, and the victory screen's "menu": `GameSession.save()`, which
+  saves whether or not a save waits;
+- the game left for any other screen (the defeat screen of a turn that lost
+  it, another game played): `GameController.close()` closes the session, which
+  writes the save that waits, then saves and tells nothing more. A game is
+  deleted from the saved games only, once left: nothing can write it back;
+- the app going away or behind another (`App.LEAVING`): the `App` listens to
+  the window closing (`NOTIFICATION_WM_CLOSE_REQUEST`, which a web page asked to
+  quit sends too), the back key of Android (`WM_GO_BACK_REQUEST`), the window
+  losing the focus (`WM_WINDOW_FOCUS_OUT`: on the web the canvas blurred, all
+  the engine tells of a tab left), the app out of focus or paused by a phone
+  (`APPLICATION_FOCUS_OUT`, `APPLICATION_PAUSED`) and its own leaving of the
+  tree, and calls `AppFlow.flush()`.
+
+A test gives the session a `NextFrame` on frames of its own (`ManualFrames`)
+and makes them pass; elsewhere it flushes, since the tests run in one frame.
+
 ## The turn's story
 
 After "Tour suivant" the turn is told on the map before its summary opens
 (`game/story/`, Flutter's `game_screen_story.dart` and `screens/game/story/`). The turn
-itself does not wait for it: it is resolved, saved by `acted` and redrawn as ever, and
+itself does not wait for it: it is resolved, redrawn by `acted` and saved as ever, and
 `EndTurnFlow.observe` (`presentation/ui/turn/`) only holds the summary back.
 
     EndTurnFlow.observe -> StoryTeller.observe: TurnStorySnapshot.of(human)  (before the turn)
@@ -231,7 +262,8 @@ before the session saves and redraws; the bubble, the objective banner and the 2
   ground, a cell on the map (`world.base.guide`, `world.parade.guide`, `world.map.guide`).
 - `TipWatcher`: on `session.changed`, once the frame is drawn and when no modal covers
   the screen, opens the stack of the tips waiting (`TipPresenter`), which marks them seen
-  and saves them first. The tips of a turn come last in its pages (`TurnOutcome`).
+  first: one save with the action that brought them. The tips of a turn come last in its
+  pages (`TurnOutcome`).
 
 Both are made by the `GameController` and let go in `close()`.
 

@@ -23,7 +23,7 @@ func _assert_refused(page: ArmySelection, reason: Failure) -> void:
 	assert_false(page.is_closed())
 	assert_eq(stock(Scout), 3)
 	assert_eq(human.history_entries.size(), 0)
-	assert_eq(repository.load_all().games.size(), 0, "nothing was saved")
+	assert_eq(saved_games().size(), 0, "nothing was saved")
 	assert_no_raw_keys(page)
 
 

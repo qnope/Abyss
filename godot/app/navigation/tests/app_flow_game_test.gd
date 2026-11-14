@@ -25,7 +25,8 @@ func test_a_change_of_the_game_is_saved_by_its_session() -> void:
 	var game := _save("Alice", 3)
 	_flow.play(game)
 	(_flow.current as GameHud).actions.set_tips_enabled(true)
-	var saved := _repository.load_all().games
+	assert_true(_flow.controller.session.is_save_waiting(), "for the next frame")
+	var saved := _saved_games()
 	assert_eq(saved.size(), 1, "the game keeps its file")
 	assert_true(ObjectiveMigration.state_of(saved[0], saved[0].human_player()).tips_enabled)
 

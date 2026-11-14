@@ -50,6 +50,7 @@ func _tap(x: int, y: int, level := 1) -> void:
 
 
 func _saved() -> Game:
+	_session.flush()
 	return _repository.load_all().games[0]
 
 

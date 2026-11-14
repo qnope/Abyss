@@ -11,8 +11,8 @@ extends RefCounted
 ##   ([GuideController]) and the tips an action brings ([TipWatcher]); the other tabs
 ##   cover it with their page until their views are built, and the world is
 ##   hidden and paused behind them.
-## - A change of the game, once saved by the session, redraws the HUD and the
-##   base: its buildings and the signs over its pads.
+## - A change of the game, which the session saves on the next frame, redraws
+##   the HUD and the base: its buildings and the signs over its pads.
 ## - A tap on a pad of the base, built or not, opens the sheet of its
 ##   building; the sheet's upgrade goes through the session's actions, which
 ##   save and redraw.
@@ -81,7 +81,8 @@ func _init(session_: GameSession, hud_: GameHud, world_: WorldHost, modals: Moda
 	_frame()
 
 
-## The screen is gone: the world goes back to the menus' ambience.
+## The screen is gone: the world goes back to the menus' ambience, and the
+## session writes the save that waits and saves nothing more.
 func close() -> void:
 	story.close()
 	army.close()
@@ -92,6 +93,7 @@ func close() -> void:
 	session.actions.victory_reached.disconnect(_on_victory)
 	world.base.building_tapped.disconnect(hud.open_building)
 	world.show_ambience()
+	session.close()
 
 
 func _on_changed() -> void:

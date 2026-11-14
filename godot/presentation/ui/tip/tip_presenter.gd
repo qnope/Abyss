@@ -2,7 +2,7 @@ class_name TipPresenter
 extends RefCounted
 ## Opens the « première fois » tips of the human player of a game
 ## (lib/.../tip_presenter.dart): all the unseen ones whose situation is there,
-## stacked in one [TipStack], saved as seen before it shows.
+## stacked in one [TipStack], marked as seen before it shows.
 ##
 ## Nothing is shown when the tips are off, when none is waiting, or once the
 ## game is over (won or lost, unless the play goes on after the victory).

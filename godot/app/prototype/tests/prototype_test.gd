@@ -65,6 +65,14 @@ func test_keeps_the_panels_off_the_screen_s_edges() -> void:
 	assert_eq(hud.get_theme_constant("margin_left"), 10)
 
 
+func test_keeps_a_bench_s_summary_within_a_phone_s_width() -> void:
+	var counter := _main.get_node("Hud/Top/FrameCounter") as FrameCounter
+	counter.show_bench(
+		"Bench 20 s on map level 1: 59.7 FPS avg · 40.8 FPS 1% low · worst 110 ms · 6 slow frames")
+	var hud := _main.get_node("Hud") as MarginContainer
+	assert_true(hud.get_combined_minimum_size().x <= 390.0, "beside the quality panel, nothing cut")
+
+
 func test_runs_a_bench_uncapped_when_asked() -> void:
 	_main.call(&"start_bench", BenchOptions.new(0.0))
 	assert_eq(_main.find_children("*", "BenchRun", false, false).size(), 0)

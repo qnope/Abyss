@@ -1,6 +1,7 @@
 extends TestCase
 ## The bench: a warm-up, one turn around the base zooming in and out, every
-## frame timed, and its summary shown at the end.
+## frame timed, and its summary shown at the end: the frame rate, the 1 % low,
+## the worst frame and how many were slow.
 
 var _camera: OrbitCamera
 var _counter: FrameCounter
@@ -38,11 +39,16 @@ func test_turns_around_the_base_zooming_in_and_out() -> void:
 
 func test_sums_up_at_the_end() -> void:
 	_bench._process(BenchRun.WARM_UP)
-	for i in 600:
+	for i in 300:
+		_bench._process(1.0 / 60.0)
+	_bench._process(0.11)
+	for i in 290:
 		_bench._process(1.0 / 60.0)
 	_bench._process(0.1)
 	assert_eq(_summaries.size(), 1)
 	assert_has(_summaries[0], "Bench 10 s on base:", "it names the scene")
+	assert_has(_summaries[0], "1% low · worst 110 ms · 1 slow frame", "the stop of the run")
+	assert_eq(_counter.line(4).text, _summaries[0])
 	assert_true(_counter.line(4).visible)
 	assert_eq(_camera.rig.yaw, OrbitRig.DEFAULT_YAW, "back on the game's view")
 	assert_eq(_camera.rig.distance, 25.0, "the fitted one")

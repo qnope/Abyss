@@ -3,11 +3,15 @@ extends PanelContainer
 ## The frame counter over the 3D world, to measure the scene on a phone:
 ## the frame rate, the average and worst frame times of the last second,
 ## the renderer and its 3D resolution, the last frame's draw calls and
-## primitives, and the summary of a bench once one has run. It rewrites
-## its lines a few times a second, not every frame.
+## primitives, and the summary of a bench once one has run, wrapped to fit
+## a phone's width. It rewrites its lines a few times a second, not every
+## frame.
 
 ## How often the lines are rewritten, in seconds.
 const REFRESH := 0.25
+## The width a bench's summary wraps at, in points: two or three lines, the
+## counter no wider than a phone held upright leaves beside the quality panel.
+const BENCH_WIDTH := 232.0
 
 var stats := FrameStats.new(1.0)
 var _since := 0.0
@@ -26,13 +30,14 @@ func _init() -> void:
 	for label: Label in _lines():
 		lines.add_child(label)
 	_bench.visible = false
+	_bench.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_bench.custom_minimum_size.x = BENCH_WIDTH
 	add_child(lines)
 	# Its height is that of its figures from the start: the view fits under it.
 	_headline.text = "– FPS"
 	_timing.text = "– ms avg · – ms worst"
 	_load.text = "– draw calls · – primitives"
 	_renderer.text = "–"
-
 
 
 func _process(delta: float) -> void:

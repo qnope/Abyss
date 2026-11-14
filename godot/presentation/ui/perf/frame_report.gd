@@ -37,11 +37,15 @@ static func load(draw_calls: int, primitives: int) -> String:
 
 
 ## The summary of a bench of [param seconds] on [param subject] (the scene it
-## measured: "base", "map level 2"): its average frame rate and its 1 % low.
+## measured: "base", "map level 2"): its average frame rate, its 1 % low, its
+## worst frame and how many frames were slow, which tell one stop from a
+## few frames lost over the run.
 static func bench(stats: FrameStats, seconds: float, subject := "") -> String:
 	var on := "" if subject.is_empty() else " on " + subject
-	return "Bench %d s%s: %.1f FPS avg · %.1f FPS 1%% low" % [
-		roundi(seconds), on, stats.fps(), stats.low_fps(0.01)
+	var slow := stats.slow_count()
+	return "Bench %d s%s: %.1f FPS avg · %.1f FPS 1%% low · worst %d ms · %d slow frame%s" % [
+		roundi(seconds), on, stats.fps(), stats.low_fps(0.01), roundi(stats.worst_ms()), slow,
+		"" if slow == 1 else "s"
 	]
 
 

@@ -7,7 +7,8 @@ extends RefCounted
 ## lifts: neither the first finger, down before the second, nor the last one,
 ## lifted after the other, turns it. The rig is told of the first finger put
 ## down (`catch`: the map stops under it, the orbit turns on). A touch or a
-## click that barely moved is a tap, for the scene to pick what lies under it.
+## click that barely moved is a tap, for the scene to pick what lies under it,
+## once its press was seen: a release alone, whose press closed a dialog, is not.
 
 ## A tap on this point of the screen, in the viewport's coordinates.
 signal tapped(position: Vector2)
@@ -92,6 +93,10 @@ func _touch(index: int, position: Vector2, pressed: bool, canceled: bool, now: f
 			_moved = true
 			_pinched = true
 			_rig.hold()
+		return
+	if not _touches.has(index):
+		# Its press went elsewhere (a dialog's scrim took it to close itself):
+		# a release alone is no tap.
 		return
 	_touches.erase(index)
 	_last_move = now

@@ -84,13 +84,24 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _scrim_input(event: InputEvent, modal: ModalPanel) -> void:
-	var touch := event as InputEventMouseButton
-	if touch != null and touch.pressed and touch.button_index == MOUSE_BUTTON_LEFT \
-			and modal == top() and modal.dismissible:
-		modal.close()
-		# The scrim is gone with the modal, so the engine no longer takes the
-		# press as used: the screen below would get it, and its release a tap.
-		get_viewport().set_input_as_handled()
+	if not _presses(event) or modal != top() or not modal.dismissible:
+		return
+	modal.close()
+	# The scrim is gone with the modal, so the engine no longer takes the press as
+	# used: the screen below would get it, and its release would be a tap.
+	get_viewport().set_input_as_handled()
+
+
+## Whether [param event] puts a finger or the mouse's left button down. A finger
+## also comes as the mouse the engine emulates from it, ahead of the touch itself:
+## the touch is the one that counts, so that the press it brings is used up too.
+static func _presses(event: InputEvent) -> bool:
+	var touch := event as InputEventScreenTouch
+	if touch != null:
+		return touch.pressed
+	var click := event as InputEventMouseButton
+	return click != null and click.pressed and click.button_index == MOUSE_BUTTON_LEFT \
+		and click.device != InputEvent.DEVICE_ID_EMULATION
 
 
 func _remove(_result: Variant, entry: Entry) -> void:

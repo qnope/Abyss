@@ -19,6 +19,22 @@ func test_a_touch_on_the_scrim_dismisses_the_modal_on_top_only() -> void:
 	assert_eq(current_modal(), first)
 
 
+func test_a_finger_dismisses_the_modal_by_its_touch_not_by_the_mouse_it_emulates() -> void:
+	modals().open(AbyssDialog.new())
+	var scrim := _scrims()[0]
+	var emulated := _touch(MOUSE_BUTTON_LEFT, true)
+	emulated.device = InputEvent.DEVICE_ID_EMULATION
+	scrim.gui_input.emit(emulated)
+	assert_eq(modals().depth(), 1, "the touch comes next, and it is the one that counts")
+	var up := InputEventScreenTouch.new()
+	scrim.gui_input.emit(up)
+	assert_eq(modals().depth(), 1, "a finger lifted does not dismiss")
+	var down := InputEventScreenTouch.new()
+	down.pressed = true
+	scrim.gui_input.emit(down)
+	assert_eq(modals().depth(), 0)
+
+
 func test_a_modal_that_is_not_dismissible_ignores_the_scrim_and_escape() -> void:
 	var dialog := AbyssDialog.new()
 	dialog.dismissible = false

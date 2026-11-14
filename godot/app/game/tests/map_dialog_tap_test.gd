@@ -84,15 +84,11 @@ func _click(at: Vector2, pressed: bool) -> void:
 	host().get_viewport().push_input(event)
 
 
-## A finger, with the mouse the engine emulates from it, as a phone sends it.
+## A finger as a phone sends it: only the touch comes in, and the engine emulates
+## the mouse from it, whose events arrive before the touch's own.
 func _finger(at: Vector2, pressed: bool) -> void:
 	var touch := InputEventScreenTouch.new()
 	touch.position = host().get_viewport().get_final_transform() * at
 	touch.pressed = pressed
-	host().get_viewport().push_input(touch)
-	var click := InputEventMouseButton.new()
-	click.button_index = MOUSE_BUTTON_LEFT
-	click.pressed = pressed
-	click.position = touch.position
-	click.device = InputEvent.DEVICE_ID_EMULATION
-	host().get_viewport().push_input(click)
+	Input.parse_input_event(touch)
+	Input.flush_buffered_events()

@@ -87,6 +87,24 @@ func test_a_cancelled_finger_is_no_swipe() -> void:
 	assert_eq(pager.index, 1)
 
 
+func test_a_mouse_drag_through_the_window_turns_one_page_only() -> void:
+	# Read by the card's own input, not again as a finger.
+	var pager := _pager()
+	pager.size = Vector2(390.0, 600.0)
+	var from := pager.get_global_rect().get_center()
+	_mouse(from, true)
+	_mouse(from + Vector2(-200.0, 0.0), false)
+	assert_eq(pager.index, 1)
+
+
+func _mouse(at: Vector2, pressed: bool) -> void:
+	var event := InputEventMouseButton.new()
+	event.button_index = MOUSE_BUTTON_LEFT
+	event.pressed = pressed
+	event.position = host().get_viewport().get_final_transform() * at
+	host().get_viewport().push_input(event)
+
+
 func _finger(at: Vector2, pressed: bool, index := 0) -> void:
 	var event := InputEventScreenTouch.new()
 	event.index = index

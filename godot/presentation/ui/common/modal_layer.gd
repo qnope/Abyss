@@ -88,6 +88,9 @@ func _scrim_input(event: InputEvent, modal: ModalPanel) -> void:
 	if touch != null and touch.pressed and touch.button_index == MOUSE_BUTTON_LEFT \
 			and modal == top() and modal.dismissible:
 		modal.close()
+		# The scrim is gone with the modal, so the engine no longer takes the
+		# press as used: the screen below would get it, and its release a tap.
+		get_viewport().set_input_as_handled()
 
 
 func _remove(_result: Variant, entry: Entry) -> void:

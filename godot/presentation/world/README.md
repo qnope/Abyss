@@ -152,8 +152,15 @@ a tap. The 2D painters, the projection, the slabs and the viewport of Flutter's
   creature (`MapAmbient`) swims on while the level's model is the same, as the
   specks drift on and the scouts stay.
 - `MapCamera` (a `MapRig`) looks down at a steep angle that never changes; a
-  drag pans over the map (clamped to it), a pinch or the wheel zooms, and
-  `fit_map` frames the whole level between the bars of the game screen (and
+  drag pans over the map (clamped to it) as a drag turns the base: it moves a
+  goal the view eases to, which evens out the touch moves a browser hands out of
+  step with the frames (none in a frame, two in the next), and a drag released
+  while moving flings the view on until friction or the edge of the map stops it;
+  a finger put down stops it where it is (`catch`), so that a tap picks the cell
+  it touched (`MapRig.place` puts the view somewhere at once, with nothing left
+  easing).
+  A pinch or the wheel zooms, and `fit_map` frames the whole level between the
+  bars of the game screen (and
   `LEVEL_BAR_ROOM` more at the top for the level selector). A level not on show
   before is framed anew; the same level again keeps the view where the player left it.
 - `MapPick` casts the tap's ray on the plane of the cells to the cell it

@@ -45,13 +45,13 @@ func _capture() -> void:
 	(_app.modals.top() as TurnConfirmation).confirm_button.pressed.emit()
 	var camera := _app.world.map.camera
 	camera.rig.look(0.0, -58.0, camera.rig.default_distance * 0.5)
-	camera.rig.target = MapGrid.at(base.x - 5, base.y, 26, 26)
+	camera.pan.place(MapGrid.at(base.x - 5, base.y, 26, 26))
 	var lift := _play() as FogLift
 	await _shot("story_fog_hold")
 	lift.advance(0.9)
 	await _shot("story_fog_lift")
 	lift.finish()
-	camera.rig.target = MapGrid.at(base.x, base.y, 26, 26)
+	camera.pan.place(MapGrid.at(base.x, base.y, 26, 26))
 	var siege := _play() as SiegeEffect
 	await _step(siege, siege.timeline.clashes().hit_at(0) - siege.elapsed + 0.05, "story_siege_clash")
 	await _step(siege, siege.timeline.impact() + SiegeTimeline.OUTCOME * 0.5 - siege.elapsed, "story_siege_breach")

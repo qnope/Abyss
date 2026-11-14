@@ -65,6 +65,11 @@ func drag(points: Vector2, seconds: float) -> void:
 	_fling = clampf(lerpf(_fling, speed, 0.6), -MAX_FLING, MAX_FLING)
 
 
+## A finger comes down on the view: the orbit turns on until it drags.
+func catch() -> void:
+	pass
+
+
 ## Holds the view still under two fingers that pinch: a fling stops at once.
 func hold() -> void:
 	_held = true

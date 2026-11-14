@@ -97,9 +97,10 @@ func test_a_new_level_is_framed_anew_with_the_view_on_its_middle() -> void:
 	_scene.frame(0.1, 0.1)
 	_scene.camera.pan.drag(Vector2(200.0, 100.0), 0.016)
 	_scene.show_level(level_of(6, 6))
-	assert_ne(_scene.camera.pan.target, Vector3.ZERO, "the same level again keeps the view")
+	assert_ne(_scene.camera.pan.goal_target, Vector3.ZERO, "the same level again keeps the view")
 	_scene.show_level(level_of(8, 8, [], false, 2))
 	assert_eq(_scene.camera.pan.target, Vector3.ZERO)
+	assert_true(_scene.camera.pan.is_settled())
 	assert_eq(_scene.camera.pan.bounds.size, Vector2(8.0, 8.0))
 	assert_eq(_scene.level, 2)
 

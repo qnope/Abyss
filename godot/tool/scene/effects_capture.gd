@@ -46,7 +46,7 @@ func _capture() -> void:
 	_world.map.frame(0.1, 0.1)
 	_world.map.camera.home()
 	_world.map.camera.rig.look(0.0, -58.0, _world.map.camera.rig.default_distance * 0.4)
-	_world.map.camera.rig.target = MapGrid.at(_base.x + 2, _base.y + 1, 26, 26)
+	_world.map.camera.pan.place(MapGrid.at(_base.x + 2, _base.y + 1, 26, 26))
 	await _fog()
 	await _strikes()
 	await _sieges()
@@ -63,7 +63,7 @@ func _fog() -> void:
 	for y in range(_base.y - 11, _base.y - 7):
 		for x in range(_base.x - 3, _base.x + 6):
 			human.add_revealed_cell(1, GridPosition.new(x, y))
-	_world.map.camera.rig.target = MapGrid.at(_base.x + 1, _base.y - 7, 26, 26)
+	_world.map.camera.pan.place(MapGrid.at(_base.x + 1, _base.y - 7, 26, 26))
 	_show()
 	var lift := _play() as FogLift
 	await _shot("effects_fog_hold")
@@ -71,7 +71,7 @@ func _fog() -> void:
 	await _shot("effects_fog_lift")
 	lift.advance(0.6)
 	await _shot("effects_fog_done")
-	_world.map.camera.rig.target = MapGrid.at(_base.x + 2, _base.y + 1, 26, 26)
+	_world.map.camera.pan.place(MapGrid.at(_base.x + 2, _base.y + 1, 26, 26))
 
 
 func _strikes() -> void:
@@ -94,7 +94,7 @@ func _strikes() -> void:
 func _sieges() -> void:
 	var lair := StrikeSamples.lair(MonsterFamily.Value.KRAKEN)
 	var fight := StrikeSamples.fight([6, 8], [3, 5])
-	_world.map.camera.rig.target = MapGrid.at(_base.x, _base.y, 26, 26)
+	_world.map.camera.pan.place(MapGrid.at(_base.x, _base.y, 26, 26))
 	_world.map.siege(MapSiege.by_wave(_base, lair, fight, true))
 	var siege := _play() as SiegeEffect
 	await _step(siege, SiegeTimeline.ALERT * 0.25, "effects_siege_alert")

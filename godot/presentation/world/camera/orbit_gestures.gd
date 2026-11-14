@@ -5,8 +5,9 @@ extends RefCounted
 ## wheel and a trackpad's pinch or scroll zoom it. A finger turns the view
 ## only once it left the tap's slop, and a pinch only zooms until every finger
 ## lifts: neither the first finger, down before the second, nor the last one,
-## lifted after the other, turns it. A touch or a click that barely moved is a
-## tap, for the scene to pick what lies under it.
+## lifted after the other, turns it. The rig is told of the first finger put
+## down (`catch`: the map stops under it, the orbit turns on). A touch or a
+## click that barely moved is a tap, for the scene to pick what lies under it.
 
 ## A tap on this point of the screen, in the viewport's coordinates.
 signal tapped(position: Vector2)
@@ -86,6 +87,7 @@ func _touch(index: int, position: Vector2, pressed: bool, canceled: bool, now: f
 			_pressed_at = position
 			_moved = false
 			_pinched = false
+			_rig.catch()
 		else:
 			_moved = true
 			_pinched = true

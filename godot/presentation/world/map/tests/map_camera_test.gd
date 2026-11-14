@@ -1,6 +1,6 @@
 extends MapTestCase
 ## The view of the map: it pans after a drag, within the map, zooms on a pinch
-## and is fitted to the screen.
+## and is fitted to the screen. (The pan's ease and fling: map_rig_test.gd.)
 
 var _camera: MapCamera
 
@@ -10,8 +10,10 @@ func before_each() -> void:
 	_camera.fit_map(26, 26, 0.1, 0.1)
 
 
+## A drag of [param points] the view has caught up with, the finger still down.
 func _drag(points: Vector2) -> void:
 	_camera.rig.drag(points, 0.016)
+	_camera.rig.step(5.0)
 
 
 func test_looks_down_at_the_map_from_its_front_and_never_turns() -> void:
@@ -30,6 +32,19 @@ func test_a_drag_moves_the_map_under_the_finger() -> void:
 	_drag(Vector2(0.0, 100.0))
 	assert_true(_camera.rig.target.z < before.z, "dragging down shows what lies behind")
 	assert_eq(_camera.rig.target.y, 0.0)
+
+
+func test_the_view_eases_after_the_drag_frame_by_frame() -> void:
+	_camera.rig.drag(Vector2(100.0, 0.0), 0.016)
+	_camera.rig.release()
+	var before := _camera.position
+	assert_true(_camera.is_moving())
+	_camera._process(1.0 / 60.0)
+	assert_true(_camera.position.x < before.x and _camera.position.x > _camera.pan.goal_target.x)
+	for i in 600:
+		_camera._process(1.0 / 60.0)
+	assert_false(_camera.is_moving())
+	assert_eq(_camera.rig.target, _camera.pan.goal_target)
 
 
 func test_the_farther_the_view_the_more_a_drag_moves() -> void:
@@ -76,6 +91,7 @@ func test_home_puts_the_view_back_on_the_middle_of_the_map() -> void:
 	_drag(Vector2(100.0, 50.0))
 	_camera.rig.zoom(0.5)
 	_camera.home()
+	assert_false(_camera.is_moving())
 	assert_eq(_camera.rig.target, Vector3.ZERO)
 	assert_eq(_camera.rig.distance, _camera.rig.default_distance)
 	assert_eq(_camera.transform, _camera.rig.transform())

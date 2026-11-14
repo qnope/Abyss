@@ -1,9 +1,9 @@
 class_name MapCamera
 extends OrbitCamera
-## The camera of the map: it pans after the player's drag, zooms on a pinch,
-## and tells a tap (OrbitCamera's gestures, on a [MapRig]). Its default view is
-## fitted to the screen with the whole map showing, between the bars of the
-## game screen.
+## The camera of the map: it pans after the player's drag, eased and flung
+## frame by frame as the base's turn is, zooms on a pinch, and tells a tap
+## (OrbitCamera's gestures, on a [MapRig]). Its default view is fitted to the
+## screen with the whole map showing, between the bars of the game screen.
 
 ## The view came close to the map (it is zoomed in to [constant CLOSE] of its
 ## default distance or nearer), or left it again.

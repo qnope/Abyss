@@ -24,6 +24,15 @@ func test_one_finger_turns_the_view() -> void:
 	assert_eq(_taps, [] as Array[Vector2])
 
 
+func test_a_finger_put_down_lets_the_orbit_fling_on() -> void:
+	_rig.drag(Vector2(60.0, 0.0), 1.0 / 60.0)
+	_rig.release()
+	_gestures.handle(_touch(0, Vector2(100, 100), true), 0.0)
+	var yaw := _rig.goal_yaw
+	_rig.step(1.0 / 60.0)
+	assert_ne(_rig.goal_yaw, yaw, "the base turns on under the finger until it drags")
+
+
 func test_a_touch_that_barely_moves_is_a_tap() -> void:
 	_gestures.handle(_touch(0, Vector2(100, 100), true), 0.0)
 	_gestures.handle(_drag(0, Vector2(104, 102), Vector2(4, 2)), 0.016)

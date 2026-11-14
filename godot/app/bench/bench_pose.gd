@@ -18,4 +18,4 @@ static func orbit(share: float, zoom: float, rig: OrbitRig) -> void:
 static func pan(share: float, zoom: float, rig: MapRig) -> void:
 	rig.look(MapRig.YAW, MapRig.PITCH, rig.default_distance * zoom)
 	var reach := minf(rig.bounds.size.x, rig.bounds.size.y) * PAN_REACH
-	rig.target = Vector3(sin(TAU * share), 0.0, (cos(TAU * share) - 1.0) * 0.5) * reach
+	rig.place(Vector3(sin(TAU * share), 0.0, (cos(TAU * share) - 1.0) * 0.5) * reach)

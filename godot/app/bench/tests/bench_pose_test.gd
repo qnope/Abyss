@@ -28,3 +28,17 @@ func test_loops_over_the_map_without_turning_the_view() -> void:
 	BenchPose.pan(0.5, 1.0, rig)
 	assert_almost_eq(rig.target.z, -26.0 * BenchPose.PAN_REACH, 1e-4)
 	assert_true(Rect2(-13.0, -13.0, 26.0, 26.0).has_point(Vector2(rig.target.x, rig.target.z)), "over the map")
+
+
+func test_puts_the_view_where_no_drag_pulls_it_from() -> void:
+	var rig := MapRig.new()
+	rig.bounds = Rect2(-13.0, -13.0, 26.0, 26.0)
+	rig.frame(40.0, 0.0)
+	rig.drag(Vector2(-200.0, 100.0), 1.0 / 60.0)
+	rig.release()
+	rig.step(1.0 / 60.0)
+	BenchPose.pan(0.25, 1.0, rig)
+	var put := rig.target
+	assert_true(rig.is_settled())
+	rig.step(1.0 / 60.0)
+	assert_eq(rig.target, put)

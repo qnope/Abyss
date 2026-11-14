@@ -40,3 +40,12 @@ func test_enter_in_the_field_starts_the_game_too() -> void:
 	_type(screen, "Nemo")
 	screen.name_field.text_submitted.emit("Nemo")
 	assert_eq(_created.size(), 1)
+
+
+func test_the_keyboard_opens_when_the_finger_lifts_not_when_it_lands() -> void:
+	# Opened on the press too, Safari on an iPhone had its field focused on the
+	# finger's landing, then blurred and focused again on its lifting, and
+	# sometimes showed no keyboard.
+	var screen := _screen()
+	assert_false(screen.name_field.virtual_keyboard_show_on_focus)
+	assert_true(screen.name_field.virtual_keyboard_enabled)

@@ -43,6 +43,10 @@ func _init(saved: Array[Game], map_seed: Variant = null) -> void:
 	_prompt.theme_type_variation = &"HeadlineMedium"
 	_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_prompt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	# The keyboard opens as the finger lifts only: opened as it lands too, the
+	# web page focused its hidden field, then blurred and focused it again, and
+	# Safari on an iPhone sometimes showed no keyboard.
+	name_field.virtual_keyboard_show_on_focus = false
 	name_field.text_submitted.connect(_on_submitted)
 	name_field.text_changed.connect(_on_name_changed)
 	error_label.theme_type_variation = &"BodySmall"

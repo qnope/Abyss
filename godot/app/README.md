@@ -238,8 +238,12 @@ with `&scene=map&level=2` (`-- --bench --bench-scene=map --bench-level=2`): the 
 then takes the base's place, its water lit as the level, and the camera loops over
 it zooming in and out (`BenchPose`), which brings the contents' shadows on and off
 (and the floor to take them or not) as a player's pinch does. The summary names the
-scene it measured ("Bench 20 s on map level 2: 58.0 FPS avg · 49.0 FPS 1% low"), on the
-frame counter and in the console.
+scene it measured, on the frame counter (wrapped to a phone's width) and in the console:
+"Bench 20 s on map level 2: 58.0 FPS avg · 49.0 FPS 1% low · worst 110 ms · 6 slow frames".
+The 1 % low is the mean of the slowest hundredth of the frames; the worst frame and the
+count of the slow ones (`FrameStats.slow_count`: longer than one and a half times the
+run's median frame, so the same at 60 and 120 Hz) tell one long stop from a few frames
+lost over the run.
 `tool/scene_capture.sh` renders the prototype and the app's screens.
 
 `locale/AppLocale` is the language of the game: it reads the player's

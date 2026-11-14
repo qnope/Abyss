@@ -3,9 +3,9 @@ extends Node
 ## A run measuring the scene the same way each time: after a warm-up, the
 ## camera goes once around the scene from the game's view (a [BenchPose]: a
 ## turn round the base, a loop over the map), zooming in and out, for a set
-## time. Every frame of it is timed; at the end its average frame rate and its
-## 1 % low show on the frame counter, with the name of the scene measured, and
-## are printed.
+## time. Every frame of it is timed; at the end its average frame rate, its
+## 1 % low, its worst frame and the count of its slow frames show on the frame
+## counter, with the name of the scene measured, and are printed.
 
 ## Its summary, once it is over.
 signal finished(summary: String)

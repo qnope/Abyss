@@ -39,5 +39,16 @@ func test_shows_a_bench_once_run() -> void:
 	assert_eq(_counter.line(4).text, "Bench 20 s")
 
 
+func test_wraps_a_long_summary_on_two_lines() -> void:
+	_root().theme = AbyssTheme.build()
+	_counter.show_bench(
+		"Bench 20 s on map level 1: 59.7 FPS avg · 40.8 FPS 1% low · worst 110 ms · 6 slow frames")
+	var summary := _counter.line(4)
+	assert_eq(summary.get_combined_minimum_size().x, FrameCounter.BENCH_WIDTH)
+	summary.size.x = FrameCounter.BENCH_WIDTH
+	assert_eq(summary.get_line_count(), 2)
+	_root().theme = null
+
+
 func _root() -> Window:
 	return (Engine.get_main_loop() as SceneTree).root

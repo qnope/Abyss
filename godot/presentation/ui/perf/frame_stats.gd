@@ -2,7 +2,12 @@ class_name FrameStats
 extends RefCounted
 ## The times of the frames drawn over the last [member window] seconds, or
 ## of a whole run when the window is INF: the frame rate, the average and
-## worst frame times, and the rate of the slowest frames (the "1 % low").
+## worst frame times, the rate of the slowest frames (the "1 % low") and how
+## many frames were slow.
+
+## A frame is slow when it lasts longer than this many median frames: a frame
+## lost or a stop, at 60 Hz as at 120.
+const SLOW := 1.5
 
 ## How far back the frames count, in seconds.
 var window: float
@@ -54,10 +59,29 @@ func worst_ms() -> float:
 func low_fps(share: float) -> float:
 	if _times.is_empty():
 		return 0.0
-	var sorted := _times.duplicate()
-	sorted.sort()
+	var sorted := _sorted()
 	var slowest := maxi(1, ceili(sorted.size() * share))
 	var total := 0.0
 	for index in slowest:
 		total += sorted[sorted.size() - 1 - index]
 	return slowest / total
+
+
+## How many frames were slow ([constant SLOW]). The 1 % low is a mean: this
+## tells one long stop from a few frames lost here and there.
+func slow_count() -> int:
+	if _times.is_empty():
+		return 0
+	var limit := _sorted()[_times.size() >> 1] * SLOW
+	var slow := 0
+	for seconds in _times:
+		if seconds > limit:
+			slow += 1
+	return slow
+
+
+## The frames' times, the shortest first.
+func _sorted() -> PackedFloat32Array:
+	var sorted := _times.duplicate()
+	sorted.sort()
+	return sorted

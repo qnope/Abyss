@@ -68,7 +68,7 @@ func test_cancelling_at_either_step_changes_nothing() -> void:
 	assert_null(current_modal())
 	assert_eq(on_level(1, Harpoonist), 150)
 	assert_null(faille().captured_by)
-	assert_eq(repository.load_all().games.size(), 0, "nothing was saved")
+	assert_eq(saved_games().size(), 0, "nothing was saved")
 
 
 func test_a_refusal_is_told_in_the_page_and_changes_nothing() -> void:

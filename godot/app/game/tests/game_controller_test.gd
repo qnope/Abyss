@@ -55,12 +55,14 @@ func test_the_world_follows_the_tab_on_show() -> void:
 	assert_eq(_world.process_mode, Node.PROCESS_MODE_INHERIT)
 
 
-func test_a_change_of_the_game_is_saved_then_redraws_the_screen() -> void:
+func test_a_change_of_the_game_redraws_the_screen_and_is_saved() -> void:
 	var before := _hud.turn_bar.turn_label.text
 	_game.turn = 4
 	_session.actions.set_tips_enabled(true)
 	assert_eq(before, "Tour 1")
 	assert_eq(_hud.turn_bar.turn_label.text, "Tour 4")
+	assert_eq(_session.repository.load_all().games.size(), 0, "the save waits for the next frame")
+	_session.flush()
 	assert_eq(_session.repository.load_all().games.size(), 1)
 
 
@@ -109,6 +111,7 @@ func test_closing_gives_the_world_back_to_the_menu() -> void:
 	assert_eq(_world.base.buildings.names(), BaseScene.BUILT)
 	_session.actions.set_tips_enabled(true)
 	assert_eq(_world.base.buildings.names(), BaseScene.BUILT, "a closed screen no longer follows")
+	assert_false(_session.is_save_waiting(), "nor is its game saved any more")
 
 
 func _built_pads() -> Array[StringName]:

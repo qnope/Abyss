@@ -48,6 +48,7 @@ func test_raising_a_building_changes_the_game_saves_it_and_redraws_the_base() ->
 	press("Améliorer")
 	assert_eq(_game.human_player().buildings[Type.HEADQUARTERS].level, 2)
 	assert_null(current_modal())
+	_session.flush()
 	var saved := _session.repository.load_all().games
 	assert_eq(saved.size(), 1)
 	assert_eq(saved[0].human_player().buildings[Type.HEADQUARTERS].level, 2)
@@ -63,6 +64,7 @@ func test_a_refusal_changes_nothing_and_saves_nothing() -> void:
 	press("Améliorer")
 	assert_eq(_game.human_player().buildings[Type.HEADQUARTERS].level, 1)
 	assert_not_null(current_modal())
+	_session.flush()
 	assert_eq(_session.repository.load_all().games.size(), 0)
 
 

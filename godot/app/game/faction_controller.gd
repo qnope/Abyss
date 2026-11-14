@@ -7,10 +7,10 @@ extends RefCounted
 ## be assaulted.
 ##
 ## Flow: cell tapped -> [CellRouter] -> [FactionBaseSheet] -> `spy_requested` ->
-## [SpyBaseAction] through [GameActions.execute] -> `acted` -> save -> `changed`
+## [SpyBaseAction] through [GameActions.execute] -> `acted` -> `changed`
 ## -> the sheet opens again with the report; or `attack_requested` ->
 ## [ArmySelection] ([AssaultSelections.rival]) -> [AttackBaseAction] ->
-## `acted` -> save -> `changed` (the map is redrawn) -> the page closes with the
+## `acted` -> `changed` (the map is redrawn) -> the page closes with the
 ## result -> [BaseAssaultSummaryPage]. A refusal stays in the selection page. A
 ## post or the volcano another player holds opens a [RivalPostSheet] (made by
 ## [PostController] and [KernelController], which tell

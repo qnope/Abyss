@@ -7,7 +7,7 @@ extends RefCounted
 ##
 ## Flow: cell tapped -> [CellRouter] -> [MonsterLairSheet] -> `prepare_requested`
 ## -> [ArmySelection] -> [FightMonsterAction] through [GameActions.execute] ->
-## `acted` -> save -> `changed` (the map is redrawn: the lair of a victory is
+## `acted` -> `changed` (the map is redrawn: the lair of a victory is
 ## dimmed) -> the page closes with the result -> [FightSummaryPage]. A refusal
 ## stays in the selection page. Cancelling, at either step, changes nothing.
 ##

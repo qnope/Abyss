@@ -25,9 +25,10 @@ func test_a_raid_is_told_as_a_siege_of_the_base_before_the_summary() -> void:
 	assert_null(find_text("Passer ›"), "the skip is gone with the story")
 
 
-func test_the_turn_is_saved_before_the_story_is_over() -> void:
+func test_the_turn_is_saved_on_the_next_frame_of_its_story() -> void:
 	_end_turn_with_a_raid()
-	assert_eq(repository.load_all().games[0].turn, 13)
+	assert_true(session.is_save_waiting(), "no page nor story holds the save back")
+	assert_eq(saved().turn, 13)
 	assert_eq(game.turn, 13)
 
 

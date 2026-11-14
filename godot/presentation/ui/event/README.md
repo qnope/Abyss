@@ -7,7 +7,7 @@ the summary.
 
     end of turn -> TurnOutcome: summary -> EventStep -> EventCard
       -> a choice -> GameActions.execute(ChooseEventAction) -> acted
-         (saved by app/game/GameSession) -> changed (the screen redrawn)
+         -> changed (the screen redrawn; app/game/GameSession saves the game)
       -> "later" -> the event stays pending
     status bar (EventStatusBar) -> a touch on the pending line -> EventCard
 

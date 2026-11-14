@@ -17,7 +17,7 @@ func _play(player_name := "Alice") -> GameHud:
 
 
 func _saved_turn() -> int:
-	return _repository.load_all().games[0].turn
+	return _saved_games()[0].turn
 
 
 func test_the_next_turn_button_asks_before_changing_anything() -> void:
@@ -36,7 +36,8 @@ func test_confirming_ends_the_turn_and_saves_the_game() -> void:
 	press("Tour suivant")
 	press("Confirmer")
 	assert_eq(hud.game.turn, 2)
-	assert_eq(_saved_turn(), 2, "saved before the summary shows")
+	assert_true(_flow.controller.session.is_save_waiting(), "the summary does not wait for the save")
+	assert_eq(_saved_turn(), 2, "saved on the next frame")
 	assert_true(hud.game.human_player().resources[ResourceType.Value.CORAL].amount > coral)
 	assert_eq(hud.turn_bar.turn_label.text, "Tour 2")
 	var summary := current_modal() as TurnSummary

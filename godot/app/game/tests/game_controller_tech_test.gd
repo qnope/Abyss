@@ -32,7 +32,9 @@ func before_each() -> void:
 	press("Tech")
 
 
+## The game on the disk once the save that waits for the next frame is written.
 func _saved() -> Game:
+	_session.flush()
 	return _session.repository.load_all().games[0]
 
 
@@ -97,4 +99,5 @@ func test_a_refusal_changes_nothing_and_saves_nothing() -> void:
 	press("Débloquer")
 	assert_false(_game.human_player().tech_branches[Branch.MILITARY].unlocked)
 	assert_not_null(find_text(ActionFailureTexts.message(ActionFailure.Value.LABORATORY_REQUIRED), current_modal()))
+	_session.flush()
 	assert_eq(_session.repository.load_all().games.size(), 0)

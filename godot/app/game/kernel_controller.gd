@@ -7,7 +7,7 @@ extends RefCounted
 ##
 ## Flow: cell tapped -> [CellRouter] -> [VolcanicKernelSheet] ->
 ## `attack_requested` -> [ArmySelection] -> [AttackVolcanicKernelAction]
-## through [GameActions.execute] -> `acted` -> save -> `changed` -> the page
+## through [GameActions.execute] -> `acted` -> `changed` -> the page
 ## closes with the result -> [KernelFightSummaryPage]; a refusal stays in the
 ## selection page. The garrison is `garrison_requested` / `withdraw_requested`
 ## -> [UnitPickerDialog] -> [GarrisonKernelAction], whose size (or refusal) a

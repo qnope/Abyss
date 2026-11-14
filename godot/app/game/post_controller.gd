@@ -8,7 +8,7 @@ extends RefCounted
 ##
 ## Flow: cell tapped -> [CellRouter] -> [TransitionBaseSheet] ->
 ## `assault_requested` -> [ArmySelection] -> [AttackTransitionBaseAction]
-## through [GameActions.execute] -> `acted` -> save -> `changed` (the map is
+## through [GameActions.execute] -> `acted` -> `changed` (the map is
 ## redrawn) -> the page closes with the result -> [TransitionFightSummaryPage];
 ## a refusal stays in the selection page. Going down is `descend_requested` ->
 ## [DescentDialog] -> [DescendAction] -> the map shows the new level, and a

@@ -22,7 +22,7 @@ there once the tab is built.
     node or medallion touched -> TechTreeView.target_tapped(TechTarget)
       -> TechTab opens a TechTargetSheet
       -> its button: GameActions.execute(UnlockBranchAction | ResearchTechAction)
-      -> success: acted -> GameSession saves -> changed -> GameHud.refresh()
+      -> success: acted -> changed (GameSession) -> GameHud.refresh()
          -> TechTab.refresh(), which builds the tree again, on show as it
             is; the sheet closes with the ActionResult
       -> refusal: told in the sheet (ActionFailureTexts), which reads the game

@@ -27,7 +27,7 @@ func test_cancelling_the_sheet_or_the_page_changes_nothing() -> void:
 	assert_null(current_modal())
 	assert_eq(stock(Scout), 3)
 	assert_false(game.levels[1].cell_at(lair_at.x, lair_at.y).is_collected())
-	assert_eq(repository.load_all().games.size(), 0, "nothing was saved")
+	assert_eq(saved_games().size(), 0, "nothing was saved")
 
 
 func test_a_victory_gives_the_loot_marks_the_lair_and_opens_the_report() -> void:

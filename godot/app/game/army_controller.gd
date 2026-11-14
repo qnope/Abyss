@@ -5,8 +5,8 @@ extends RefCounted
 ##
 ## - The tab's roster (the army at the place shown) is written as the squads
 ##   of the parade ([ParadeStates]) and the barracks beside them.
-## - A change of the game, once saved by the session, redraws the tab and the
-##   parade.
+## - A change of the game, which the session saves on the next frame, redraws
+##   the tab and the parade.
 ## - A tap on a squad opens the sheet of its unit, with its recruitment,
 ##   which goes through the session's actions: they save and redraw. A tap on
 ##   the barracks opens the sheet of the building.

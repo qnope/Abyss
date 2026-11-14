@@ -24,7 +24,9 @@ func _ids(stack: TipStack) -> Array:
 	return ids
 
 
+## What the save holds once the one that waits for the next frame is written.
 func _seen_in_the_save() -> ObjectiveState:
+	_session.flush()
 	return _session.repository.load_all().games[0].human_player().saved_objective_state
 
 

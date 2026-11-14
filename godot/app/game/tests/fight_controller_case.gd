@@ -71,5 +71,13 @@ func send(page: ArmySelection, type: UnitType.Value, count: int) -> void:
 	press("Lancer le combat")
 
 
+## The game on the disk, see [method saved_games].
 func saved() -> Game:
-	return repository.load_all().games[0]
+	return saved_games()[0]
+
+
+## The games on the disk once the save that waits for the next frame, if
+## any, is written.
+func saved_games() -> Array[Game]:
+	session.flush()
+	return repository.load_all().games

@@ -40,6 +40,25 @@ func test_a_touch_that_barely_moves_is_a_tap() -> void:
 	assert_eq(_taps, [Vector2(104, 102)] as Array[Vector2])
 
 
+func test_a_release_whose_press_was_not_seen_is_no_tap() -> void:
+	# A dialog's scrim took the press to close itself: only the release reaches the map.
+	_gestures.handle(_touch(0, Vector2(100, 100), false), 0.1)
+	assert_eq(_taps.size(), 0)
+	assert_false(_gestures.is_touching())
+
+
+func test_a_click_released_on_the_map_whose_press_was_not_seen_is_no_tap() -> void:
+	_gestures.handle(_button(MOUSE_BUTTON_LEFT, false, Vector2(50, 50)), 0.1)
+	assert_eq(_taps.size(), 0)
+
+
+func test_a_tap_after_such_a_release_is_a_tap() -> void:
+	_gestures.handle(_touch(0, Vector2(100, 100), false), 0.1)
+	_gestures.handle(_touch(0, Vector2(30, 40), true), 0.5)
+	_gestures.handle(_touch(0, Vector2(30, 40), false), 0.6)
+	assert_eq(_taps, [Vector2(30, 40)] as Array[Vector2])
+
+
 func test_a_cancelled_touch_is_no_tap() -> void:
 	_gestures.handle(_touch(0, Vector2(100, 100), true), 0.0)
 	var cancel := _touch(0, Vector2(100, 100), false)

@@ -1,7 +1,7 @@
 class_name BenchGame
 extends RefCounted
-## The game whose map a bench measures: the same each time, a few turns into
-## a game against three factions, the surface seen around the base and the
+## The game a bench measures, its map or its actions: the same each time, a
+## game against three factions, the surface seen around the base and the
 ## other levels seen where a passage and the volcano lie, the rest in the fog.
 
 ## How far around the base the surface is seen, and around the other spots.
@@ -10,15 +10,21 @@ const SEEN_BELOW := 3
 const SEED := 1
 
 
+## That game, made anew.
+static func game() -> Game:
+	var made := GameFactory.new_game("Bench", SEED, Difficulty.Value.NORMAL, false, 3, null, "me")
+	var human := made.human_player()
+	_see(made, 1, Vector2i(human.base_x, human.base_y), SEEN)
+	for passage: Vector2i in MapStates.of(made, 2).passage_holders:
+		_see(made, 2, passage, SEEN_BELOW)
+	_see(made, 3, _volcano(made.levels[3]), SEEN_BELOW + 1)
+	return made
+
+
 ## The map of [param level] of that game, as the map tab shows it.
 static func map_of(level: int) -> MapLevelState:
-	var game := GameFactory.new_game("Bench", SEED, Difficulty.Value.NORMAL, false, 3, null, "me")
-	var human := game.human_player()
-	_see(game, 1, Vector2i(human.base_x, human.base_y), SEEN)
-	for passage: Vector2i in MapStates.of(game, 2).passage_holders:
-		_see(game, 2, passage, SEEN_BELOW)
-	_see(game, 3, _volcano(game.levels[3]), SEEN_BELOW + 1)
-	return MapStates.of(game, clampi(level, 1, game.levels.size()))
+	var made := game()
+	return MapStates.of(made, clampi(level, 1, made.levels.size()))
 
 
 ## Shows the square around [param centre] on [param level] of [param game].

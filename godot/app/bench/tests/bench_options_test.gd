@@ -39,6 +39,16 @@ func test_reads_the_scene_from_the_command_line() -> void:
 	assert_eq(BenchOptions.of_args(PackedStringArray(["--bench"])).scene, BenchOptions.BASE)
 
 
+func test_measures_the_game_s_actions_when_asked() -> void:
+	var game := BenchOptions.of_query("?bench=20&scene=game")
+	assert_eq(game.scene, BenchOptions.GAME)
+	assert_eq(game.seconds, 20.0)
+	var args := BenchOptions.of_args(PackedStringArray(["--bench", "--bench-scene=game"]))
+	assert_eq(args.scene, BenchOptions.GAME)
+	assert_eq(args.seconds, BenchOptions.DEFAULT_SECONDS)
+	assert_eq(BenchOptions.of_query("?scene=game").seconds, 0.0, "no bench unless asked")
+
+
 func test_runs_none_without_asking() -> void:
 	assert_eq(BenchOptions.from_launch(false).seconds, 0.0, "the tests' command line")
 	assert_eq(BenchOptions.from_launch(true).seconds, 0.0, "no page off the web")

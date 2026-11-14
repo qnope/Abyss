@@ -1,6 +1,6 @@
 extends TestCase
-## The game a bench on the map measures: three levels, the same each time, a
-## part of each seen.
+## The game a bench measures, its map or its actions: three levels, the same
+## each time, a part of each seen.
 
 
 func test_gives_the_map_of_each_level_with_some_of_it_seen() -> void:
@@ -16,6 +16,16 @@ func test_is_the_same_game_each_time() -> void:
 	var two := BenchGame.map_of(1)
 	assert_eq(one.revealed.keys(), two.revealed.keys())
 	assert_eq(one.base, two.base)
+
+
+func test_gives_the_game_itself_for_a_bench_of_its_actions() -> void:
+	var game := BenchGame.game()
+	assert_eq(game.levels.size(), 3)
+	assert_eq(game.players.size(), 4, "the player and three factions")
+	assert_eq(game.status, GameStatus.Value.PLAYING)
+	assert_eq(MapStates.of(game, 1).revealed.keys(), BenchGame.map_of(1).revealed.keys())
+	assert_true(TipCatalog.pending_for(game, game.human_player()).is_empty(), "no tip opens over it")
+	assert_true(BenchGame.game() != game, "a new one each time")
 
 
 func test_stays_within_the_levels_there_are() -> void:

@@ -244,6 +244,25 @@ The 1 % low is the mean of the slowest hundredth of the frames; the worst frame 
 count of the slow ones (`FrameStats.slow_count`: longer than one and a half times the
 run's median frame, so the same at 60 and 120 Hz) tell one long stop from a few frames
 lost over the run.
+
+With `&scene=game` (`-- --bench --bench-scene=game`) the bench measures what an action
+of the player costs, on the real game in place of the prototype. The `App` plays the
+`BenchGame` through the `AppFlow` as any game, on its Map tab, saved in a folder of its
+own (`BenchSaves`: `user://bench` beside `user://saves`, never among the player's saves,
+emptied before the bench and removed at its end), and the `BenchLayer` puts in the area
+the bars leave clear the frame counter, which the game's HUD has not, and the `ActionBench`.
+About twice a second the `ActionBench` plays a mark that changes nothing in the game
+(`GameActions.mark`) but goes the whole way of an action: `acted`, the save, `changed`,
+the redraw. Every frame is timed as in the other benches (`Bench` is what they share:
+the warm-up, the frames timed, the summary), and for each action the longest of the
+three frames that follow it is kept, since the save may fall on the frame after the
+action's. The summary ends with their average and their worst: "Bench 20 s on game:
+58.9 FPS avg · 31.0 FPS 1% low · worst 96 ms · 12 slow frames · action 88 ms avg, 96 worst".
+The run ends once the frames of its last action are in, so the folder is removed after
+that action's save. A frame's time is the `delta` the engine gives `_process`, which it
+caps at about eight physics steps (some 130 ms): a longer stop counts as one of that
+length. A launch without that bench has neither the counter nor the layer.
+
 `tool/scene_capture.sh` renders the prototype and the app's screens.
 
 `locale/AppLocale` is the language of the game: it reads the player's

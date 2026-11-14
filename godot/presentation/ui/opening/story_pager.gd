@@ -14,6 +14,7 @@ const SWIPE := 60.0
 const DOT_HEIGHT := 6
 const DOT_WIDTH := 6
 const CURRENT_DOT_WIDTH := 18
+const NO_FINGER := -1
 
 var pages: Array[StoryPage]
 var index := 0
@@ -25,6 +26,9 @@ var _done_key: StringName
 var _is_done := false
 var _dots := HBoxContainer.new()
 var _press := Vector2.ZERO
+## The number of the finger followed, while it is down: the first one put on
+## the pager. -1 when none is.
+var _finger := NO_FINGER
 
 
 ## [param source] gives the pages in the language on, again when it changes;
@@ -90,15 +94,22 @@ func _on_next() -> void:
 
 ## A finger's swipe, read before the controls under it: a card's own
 ## controls take the press, and a phone's finger never reaches [signal gui_input].
+## The finger followed is the first one down, whatever its number: Safari on an
+## iPhone numbers them from a running count, never from 0.
 func _input(event: InputEvent) -> void:
 	var touch := event as InputEventScreenTouch
-	if touch == null or touch.index != 0 or not is_visible_in_tree():
+	if touch == null:
 		return
 	var local: InputEventScreenTouch = make_input_local(touch)
 	if touch.pressed:
-		_press = local.position
-	elif Rect2(Vector2.ZERO, size).has_point(_press):
-		_swipe(local.position.x - _press.x)
+		if _finger == NO_FINGER and is_visible_in_tree():
+			_finger = touch.index
+			_press = local.position
+	elif touch.index == _finger:
+		_finger = NO_FINGER
+		if not touch.canceled and is_visible_in_tree() \
+				and Rect2(Vector2.ZERO, size).has_point(_press):
+			_swipe(local.position.x - _press.x)
 
 
 ## A swipe to the left shows the next card, to the right the previous one;
